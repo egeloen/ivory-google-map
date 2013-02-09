@@ -1,0 +1,28 @@
+{
+    "name": "egeloen/google-map",
+    "description": "Provides a google map integration for your project.",
+    "keywords": [ "google map" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric GELOEN",
+            "email": "geloen.eric@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "kriswallsmith/buzz": "*",
+        "willdurand/geocoder": "*"
+    },
+    "suggest": {
+        "kriswallsmith/buzz": "Allows to use direction service",
+        "willdurand/geocoder": "Allows to use geocoding service"
+    },
+    "autoload": {
+        "psr-0": {
+            "Ivory\\GoogleMap": "src/"
+        }
+    }
+}
