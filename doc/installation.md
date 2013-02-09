@@ -16,12 +16,12 @@ $ sudo mv composer.phar /usr/local/bin/composer
 ## Define dependencies
 
 Create a ``composer.json`` file at the root directory of your project and simply require the
-``egeloen/ivory-google-map`` package:
+``egeloen/google-map`` package:
 
 ```
 {
     "require": {
-        "egeloen/ivory-google-map": "dev-master"
+        "egeloen/google-map": "dev-master"
     }
 }
 ```
