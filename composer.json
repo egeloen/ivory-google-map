@@ -1,6 +1,6 @@
 {
     "name": "egeloen/google-map",
-    "description": "Provides a google map integration for your project.",
+    "description": "Google Map API v3 integration for PHP 5.3+",
     "keywords": [ "google map" ],
     "license": "MIT",
     "authors": [
