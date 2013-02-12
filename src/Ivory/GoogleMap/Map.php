@@ -374,8 +374,6 @@ class Map extends AbstractJavascriptVariableAsset
      */
     public function setMapOptions(array $mapOptions)
     {
-        $this->mapOptions = array();
-
         foreach ($mapOptions as $mapOption => $value) {
             $this->setMapOption($mapOption, $value);
         }
@@ -467,8 +465,6 @@ class Map extends AbstractJavascriptVariableAsset
      */
     public function setStylesheetOptions(array $stylesheetOptions)
     {
-        $this->stylesheetOptions = array();
-
         foreach ($stylesheetOptions as $stylesheetOption => $value) {
             $this->setStylesheetOption($stylesheetOption, $value);
         }
