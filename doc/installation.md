@@ -15,6 +15,8 @@ $ sudo mv composer.phar /usr/local/bin/composer
 
 ## Define dependencies
 
+### Mandatories dependencies
+
 Create a ``composer.json`` file at the root directory of your project and simply require the
 ``egeloen/google-map`` package:
 
@@ -22,6 +24,28 @@ Create a ``composer.json`` file at the root directory of your project and simply
 {
     "require": {
         "egeloen/google-map": "dev-master"
+    }
+}
+```
+
+### Optional dependencies
+
+If you want to use Geocoding stuff, you will need [Geocoder](http://github.com/willdurand/Geocoder):
+
+```
+{
+    "require": {
+        "willdurand/geocoder": "*"
+    }
+}
+```
+
+If you want to use Directions stuff, you will need [Buzz](http://github.com/kriswallsmith/Buzz):
+
+```
+{
+    "require": {
+        "kriswallsmith/buzz": "*"
     }
 }
 ```
