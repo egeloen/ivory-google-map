@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "willdurand/geocoder": "*"
     },
     "require-dev": {
-        "kriswallsmith/buzz": "*",
-        "willdurand/geocoder": "*"
+        "kriswallsmith/buzz": "*"
     },
     "suggest": {
         "kriswallsmith/buzz": "Allows to use direction service",
