@@ -1054,14 +1054,14 @@ class MapHelper
 
         $encodedPolylines = $map->getEncodedPolylines();
         if (!empty($encodedPolylines)) {
-            $url .= 'libraries=geometry&';
+            $url .= 'libraries=geometry&amp;';
         }
 
         if ($map->isAsync()) {
-            $url .= 'callback=load_ivory_google_map&';
+            $url .= 'callback=load_ivory_google_map&amp;';
         }
 
-        $url .= sprintf('language=%s&sensor=false', $map->getLanguage());
+        $url .= sprintf('language=%s&amp;sensor=false', $map->getLanguage());
 
         return sprintf('<script type="text/javascript" src="%s"></script>'.PHP_EOL, $url);
     }
