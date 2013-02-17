@@ -44,6 +44,9 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
     /** @var array */
     protected $steps;
 
+    /** @var array */
+    protected $viaWaypoint;
+
     /**
      * {@inheritdoc}
      */
@@ -67,6 +70,7 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->steps = array($step);
+        $this->viaWaypoint = array('foo');
 
         $this->directionsLeg = new DirectionsLeg(
             $this->distance,
@@ -75,7 +79,8 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
             $this->endLocation,
             $this->startAddress,
             $this->startLocation,
-            $this->steps
+            $this->steps,
+            $this->viaWaypoint
         );
     }
 
@@ -92,6 +97,7 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
         unset($this->startAddress);
         unset($this->startLocation);
         unset($this->steps);
+        unset($this->viaWaypoint);
     }
 
     public function testInitialState()
@@ -103,6 +109,7 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->startAddress, $this->directionsLeg->getStartAddress());
         $this->assertSame($this->startLocation, $this->directionsLeg->getStartLocation());
         $this->assertSame($this->steps, $this->directionsLeg->getSteps());
+        $this->assertSame($this->viaWaypoint, $this->directionsLeg->getViaWaypoints());
     }
 
     /**

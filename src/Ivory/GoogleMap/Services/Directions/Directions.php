@@ -287,6 +287,7 @@ class Directions extends AbstractService
         $startAddress = $directionsLeg->start_address;
         $startLocation = new Coordinate($directionsLeg->start_location->lat, $directionsLeg->start_location->lng);
         $steps = $this->buildDirectionsSteps($directionsLeg->steps);
+        $viaWaypoint = $directionsLeg->via_waypoint;
 
         return new DirectionsLeg(
             $distance,
@@ -295,7 +296,8 @@ class Directions extends AbstractService
             $endLocation,
             $startAddress,
             $startLocation,
-            $steps
+            $steps,
+            $viaWaypoint
         );
     }
 

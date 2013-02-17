@@ -56,6 +56,7 @@ class DirectionsLeg
      * @param string                                        $startAddress  The start address.
      * @param \Ivory\GoogleMap\Base\Coordinate              $startLocation The start location.
      * @param array                                         $steps         The steps.
+     * @param array                                         $viaWaypoint   The via waypoint.
      */
     public function __construct(
         Distance $distance,
@@ -64,7 +65,8 @@ class DirectionsLeg
         Coordinate $endLocation,
         $startAddress,
         Coordinate $startLocation,
-        array $steps
+        array $steps,
+        array $viaWaypoint
     )
     {
         $this->setDistance($distance);
@@ -74,6 +76,7 @@ class DirectionsLeg
         $this->setStartAddress($startAddress);
         $this->setStartLocation($startLocation);
         $this->setSteps($steps);
+        $this->setViaWaypoints($viaWaypoint);
     }
 
     /**
@@ -240,5 +243,25 @@ class DirectionsLeg
     public function addStep(DirectionsStep $step)
     {
         $this->steps[] = $step;
+    }
+
+    /**
+     * Gets the via waypoint.
+     *
+     * @return array The via waypoint.
+     */
+    public function getViaWaypoints()
+    {
+        return $this->viaWaypoints;
+    }
+
+    /**
+     * Sets the via waypoint.
+     *
+     * @param array $viaWaypoints The via waypoint.
+     */
+    public function setViaWaypoints(array $viaWaypoints)
+    {
+        $this->viaWaypoints = $viaWaypoints;
     }
 }
