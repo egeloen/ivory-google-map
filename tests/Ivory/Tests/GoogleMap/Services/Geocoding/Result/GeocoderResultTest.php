@@ -87,7 +87,7 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->partialMatch, $this->geocoderResult->isPartialMatch());
     }
 
-    public function testAddressComponents()
+    public function testAddressComponentsWithoutType()
     {
         $addressComponent = $this->getMockBuilder('Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent')
             ->disableOriginalConstructor()
@@ -98,6 +98,25 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
         $this->geocoderResult->setAddressComponents($addressComponents);
 
         $this->assertSame($addressComponents, $this->geocoderResult->getAddressComponents());
+    }
+
+    public function testAddressComponentsWithType()
+    {
+        $addressComponent = $this->getMockBuilder('Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $addressComponent
+            ->expects($this->any())
+            ->method('getTypes')
+            ->will($this->returnValue(array('foo')));
+
+        $addressComponents = array($addressComponent);
+
+        $this->geocoderResult->setAddressComponents($addressComponents);
+
+        $this->assertSame($addressComponents, $this->geocoderResult->getAddressComponents('foo'));
+        $this->assertEmpty($this->geocoderResult->getAddressComponents('bar'));
     }
 
     public function testFormattedAddressWithValidValue()

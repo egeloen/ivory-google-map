@@ -63,11 +63,25 @@ class GeocoderResult
     /**
      * Gets the address components.
      *
+     * @param string|null The type of the address components.
+     *
      * @return array The address components.
      */
-    public function getAddressComponents()
+    public function getAddressComponents($type = null)
     {
-        return $this->addressComponents;
+        if ($type === null) {
+            return $this->addressComponents;
+        }
+
+        $addressComponents = array();
+
+        foreach ($this->addressComponents as $addressComponent) {
+            if (in_array($type, $addressComponent->getTypes())) {
+                $addressComponents[] = $addressComponent;
+            }
+        }
+
+        return $addressComponents;
     }
 
     /**
