@@ -153,6 +153,16 @@ class DirectionsException extends ServiceException
     }
 
     /**
+     * Gets the "INVALID DIRECTIONS REQUEST LANGUAGE" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST LANGUAGE" exception.
+     */
+    static public function invalidDirectionsRequestLanguage()
+    {
+        return new static('The directions request language must be a string with two characters.');
+    }
+
+    /**
      * Gets the "INVALID DIRECTIONS REQUEST SENSOR" exception.
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST SENSOR" exception.
