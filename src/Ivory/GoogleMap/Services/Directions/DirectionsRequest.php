@@ -44,6 +44,9 @@ class DirectionsRequest
     protected $region;
 
     /** @var string */
+    protected $language;
+
+    /** @var string */
     protected $travelMode;
 
     /** @var string */
@@ -358,6 +361,42 @@ class DirectionsRequest
         }
 
         $this->region = $region;
+    }
+
+    /**
+     * Checks if the directions request has a language.
+     *
+     * @return boolean TRUE if the directions request has a language else FALSE.
+     */
+    public function hasLanguage()
+    {
+        return $this->language !== null;
+    }
+
+    /**
+     * Gets the directions request language.
+     *
+     * @return string The direction request language.
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Sets the directions request language.
+     *
+     * @param string $language The directions request language.
+     *
+     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the language is not valid.
+     */
+    public function setLanguage($language = null)
+    {
+        if ((!is_string($language) || (strlen($language) !== 2)) && ($language !== null)) {
+            throw DirectionsException::invalidDirectionsRequestLanguage();
+        }
+
+        $this->language = $language;
     }
 
     /**

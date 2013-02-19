@@ -143,6 +143,10 @@ class Directions extends AbstractService
             $httpQuery['region'] = $directionsRequest->getRegion();
         }
 
+        if ($directionsRequest->hasLanguage()) {
+            $httpQuery['language'] = $directionsRequest->getLanguage();
+        }
+
         $httpQuery['sensor'] = $directionsRequest->hasSensor() ? 'true' : 'false';
 
         return sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
