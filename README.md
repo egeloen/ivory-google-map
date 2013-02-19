@@ -32,7 +32,7 @@ controls, overlays, events & services through the Google Map API v3.
       - [Events](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/events.md)
       - [Services](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/index.md)
          - [Geocoding API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/geocoding/geocoder.md)
-         - Directions API (Implemented & tested but not yet documented)
+         - [Directions API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/directions/directions.md)
 
 ## Testing
 
