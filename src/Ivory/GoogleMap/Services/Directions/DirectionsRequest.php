@@ -42,7 +42,7 @@ class DirectionsRequest
 
     /** @var string */
     protected $region;
-    
+
     /** @var string */
     protected $language;
 
@@ -362,7 +362,7 @@ class DirectionsRequest
 
         $this->region = $region;
     }
-    
+
     /**
      * Checks if the directions request has a language.
      *

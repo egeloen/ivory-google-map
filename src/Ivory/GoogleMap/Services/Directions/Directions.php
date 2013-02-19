@@ -142,7 +142,7 @@ class Directions extends AbstractService
         if ($directionsRequest->hasRegion()) {
             $httpQuery['region'] = $directionsRequest->getRegion();
         }
-        
+
         if ($directionsRequest->hasLanguage()) {
             $httpQuery['language'] = $directionsRequest->getLanguage();
         }

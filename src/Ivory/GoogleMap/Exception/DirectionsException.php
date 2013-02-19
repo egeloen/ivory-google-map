@@ -151,7 +151,7 @@ class DirectionsException extends ServiceException
     {
         return new static('The directions request region must be a string with two characters.');
     }
-    
+
     /**
      * Gets the "INVALID DIRECTIONS REQUEST LANGUAGE" exception.
      *
