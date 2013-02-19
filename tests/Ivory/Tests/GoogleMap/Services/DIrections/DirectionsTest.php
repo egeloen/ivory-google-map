@@ -123,6 +123,19 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($response->getRoutes());
     }
 
+    public function testRouteWithDirectionsRequestAndLanguage()
+    {
+        $request = new DirectionsRequest();
+        $request->setOrigin('Lille');
+        $request->setDestination('Paris');
+        $request->setLanguage('fr');
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
+    }
+
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
      */

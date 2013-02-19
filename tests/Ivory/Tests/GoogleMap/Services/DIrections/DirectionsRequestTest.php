@@ -50,6 +50,7 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->directionsRequest->hasOrigin());
         $this->assertFalse($this->directionsRequest->hasProvideRouteAlternatives());
         $this->assertFalse($this->directionsRequest->hasRegion());
+        $this->assertFalse($this->directionsRequest->hasLanguage());
         $this->assertFalse($this->directionsRequest->hasTravelMode());
         $this->assertFalse($this->directionsRequest->hasUnitSystem());
         $this->assertFalse($this->directionsRequest->hasWaypoints());
@@ -255,6 +256,31 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
     public function testRegionWithInvalidValue()
     {
         $this->directionsRequest->setRegion('foo');
+    }
+
+    public function testLanguageWithValidValue()
+    {
+        $this->directionsRequest->setLanguage('fr');
+
+        $this->assertTrue($this->directionsRequest->hasLanguage());
+        $this->assertSame('fr', $this->directionsRequest->getLanguage());
+    }
+
+    public function testLanguageWithNullValue()
+    {
+        $this->directionsRequest->setLanguage('fr');
+        $this->directionsRequest->setLanguage(null);
+
+        $this->assertNull($this->directionsRequest->getLanguage());
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedExceptionMessage The directions request language must be a string with two characters.
+     */
+    public function testLanguageWithInvalidValue()
+    {
+        $this->directionsRequest->setLanguage('foo');
     }
 
     public function testTravelModeWithValidValue()
