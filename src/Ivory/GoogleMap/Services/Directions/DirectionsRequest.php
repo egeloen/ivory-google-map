@@ -128,7 +128,7 @@ class DirectionsRequest
      *
      * @param boolean $avoidTolls TRUE if the directions request avoids tolls else FALSE.
      *
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException If the avoid tolls flag is not valid.
+     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the avoid tolls flag is not valid.
      */
     public function setAvoidTolls($avoidTolls = null)
     {
