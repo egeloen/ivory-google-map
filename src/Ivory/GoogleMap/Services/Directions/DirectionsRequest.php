@@ -564,7 +564,7 @@ class DirectionsRequest
      *
      * @param boolean $sensor TRUE if the directions request has a sensor else FALSE.
      *
-     * @rthrows \Ivory\GoogleMap\Exception\DirectionsException If the sensor flag is not valid.
+     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the sensor flag is not valid.
      */
     public function setSensor($sensor)
     {
