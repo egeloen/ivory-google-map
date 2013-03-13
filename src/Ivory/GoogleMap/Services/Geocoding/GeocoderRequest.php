@@ -35,6 +35,9 @@ class GeocoderRequest
     /** @var string */
     protected $region;
 
+    /** @var string */
+    protected $language;
+
     /** @var boolean */
     protected $sensor;
 
@@ -229,6 +232,17 @@ class GeocoderRequest
     }
 
     /**
+     * Checks if the geocoder request has a language.
+     *
+     * @return boolean TRUE if the geocoder request has a language else FALSE.
+     */
+    public function hasLanguage()
+    {
+        return $this->language !== null;
+    }
+
+
+    /**
      * Gets the geocoder request region
      *
      * @return string
@@ -254,6 +268,32 @@ class GeocoderRequest
         $this->region = $region;
     }
 
+    /**
+     * Gets the geocoder request language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Sets the geocoder request language.
+     *
+     * @param string $language The geocoder request language.
+     *
+     * @throws \Ivory\GoogleMap\Exception\GeocodingException If the language is not valid.
+     */
+    public function setLanguage($language = null)
+    {
+        if ((!is_string($language) || (strlen($language) !== 2)) && ($language !== null)) {
+            throw GeocodingException::invalidGeocoderRequestLanguage();
+        }
+
+        $this->language = $language;
+    }
+    
     /**
      * Checks if the geocoder request has a sensor.
      *

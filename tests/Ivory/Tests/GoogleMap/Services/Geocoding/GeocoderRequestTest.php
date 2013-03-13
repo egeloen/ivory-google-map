@@ -45,6 +45,7 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->geocoderRequest->hasCoordinate());
         $this->assertFalse($this->geocoderRequest->hasBound());
         $this->assertFalse($this->geocoderRequest->hasRegion());
+        $this->assertFalse($this->geocoderRequest->hasLanguage());
         $this->assertFalse($this->geocoderRequest->hasSensor());
     }
 
@@ -190,6 +191,32 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->geocoderRequest->setRegion('foo');
     }
+
+    public function testLanguageWithValidValue()
+    {
+        $this->geocoderRequest->setLanguage('pl');
+
+        $this->assertTrue($this->geocoderRequest->hasLanguage());
+        $this->assertSame('pl', $this->geocoderRequest->getLanguage());
+    }
+
+    public function testLanguageWithNullValue()
+    {
+        $this->geocoderRequest->setLanguage('pl');
+        $this->geocoderRequest->setLanguage(null);
+
+        $this->assertNull($this->geocoderRequest->getLanguage());
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
+     * @expectedExceptionMessage The geocoder request language must be a string with two characters.
+     */
+    public function testLanguageWithInvalidValue()
+    {
+        $this->geocoderRequest->setLanguage('foo');
+    }
+
 
     public function testSensorWithValidValue()
     {

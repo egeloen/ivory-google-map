@@ -171,6 +171,16 @@ class GeocodingException extends ServiceException
     }
 
     /**
+     * Gets the "INVALID GEOCODER REQUEST LANGUAGE" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\GeocodingException The "INVALID GEOCODER REQUEST LANGUAGE" exception.
+     */
+    static public function invalidGeocoderRequestLanguage()
+    {
+        return new static('The geocoder request language must be a string with two characters.');
+    }
+
+    /**
      * Gets the "INVALID GEOCODER REQUEST SENSOR" exception.
      *
      * @return \Ivory\GoogleMap\Exception\GeocodingException The "INVALID GEOCODER REQUEST SENSOR" exception.
