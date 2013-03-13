@@ -138,6 +138,7 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $request->setAddress('Paris');
         $request->setBound(48.815573, 2.224199, 48.9021449, 2.4699208);
         $request->setRegion('FR');
+        $request->setLanguage('PL');
 
         $response = $this->geocoderProvider->getGeocodedData($request);
 
