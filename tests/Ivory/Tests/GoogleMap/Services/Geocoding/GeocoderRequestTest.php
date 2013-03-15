@@ -217,7 +217,6 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
         $this->geocoderRequest->setLanguage('foo');
     }
 
-
     public function testSensorWithValidValue()
     {
         $this->geocoderRequest->setSensor(true);

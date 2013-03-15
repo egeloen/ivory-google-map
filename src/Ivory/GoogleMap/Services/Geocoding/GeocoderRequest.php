@@ -232,17 +232,6 @@ class GeocoderRequest
     }
 
     /**
-     * Checks if the geocoder request has a language.
-     *
-     * @return boolean TRUE if the geocoder request has a language else FALSE.
-     */
-    public function hasLanguage()
-    {
-        return $this->language !== null;
-    }
-
-
-    /**
      * Gets the geocoder request region
      *
      * @return string
@@ -269,9 +258,19 @@ class GeocoderRequest
     }
 
     /**
-     * Gets the geocoder request language
+     * Checks if the geocoder request has a language.
      *
-     * @return string
+     * @return boolean TRUE if the geocoder request has a language else FALSE.
+     */
+    public function hasLanguage()
+    {
+        return $this->language !== null;
+    }
+
+    /**
+     * Gets the geocoder request language.
+     *
+     * @return string The geocoder request language.
      */
     public function getLanguage()
     {
@@ -293,7 +292,7 @@ class GeocoderRequest
 
         $this->language = $language;
     }
-    
+
     /**
      * Checks if the geocoder request has a sensor.
      *
