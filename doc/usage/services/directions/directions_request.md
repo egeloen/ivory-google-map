@@ -29,6 +29,7 @@ $request->setAvoidTolls(true);
 $request->setProvideRouteAlternatives(true);
 
 $request->setRegion('us');
+$request->setLanguage('en');
 $request->setTravelMode(TravelMode::DRIVING);
 $request->setUnitSystem(UnitSystem::METRIC);
 $request->setSensor(false);
