@@ -60,11 +60,11 @@ The complete events configuration is available
 ## Render your map
 
 Now, you have builded & configured your map, you can render it. For this purpose, you will need the
-`Ivory\GoogleMap\Templating\Helper\MapHelper` which allows to render the map html container & some javascript for being
+`Ivory\GoogleMap\Helper\MapHelper` which allows to render the map html container & some javascript for being
 able to render it.
 
 ```
-use Ivory\GoogleMap\Templating\Helper\MapHelper;
+use Ivory\GoogleMap\Helper\MapHelper;
 
 $mapHelper = new MapHelper();
 ```
