@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\RotateControl,
-    Ivory\GoogleMap\Helper\Controls\RotateControlHelper;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\RotateControl;
+use Ivory\GoogleMap\Helper\Controls\RotateControlHelper;
 
 /**
  * Rotate control helper test.

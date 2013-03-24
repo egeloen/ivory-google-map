@@ -29,14 +29,15 @@ class ZoomControlHelper
     /**
      * Create a zoom control helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper  $controlPositionHelper  The control position helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlStyleHelper $zoomControlStyleHelper The zoom control style helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper  $controlPositionHelper  The control position
+     *                                                                                        helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlStyleHelper $zoomControlStyleHelper The zoom control style
+     *                                                                                        helper.
      */
     public function __construct(
         ControlPositionHelper $controlPositionHelper = null,
         ZoomControlStyleHelper $zoomControlStyleHelper = null
-    )
-    {
+    ) {
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -82,7 +83,8 @@ class ZoomControlHelper
     /**
      * Sets the zoom control style helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlStyleHelper $zoomControlStyleHelper The zoom control style helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlStyleHelper $zoomControlStyleHelper The zoom control style
+     *                                                                                        helper.
      */
     public function setZoomControlStyleHelper(ZoomControlStyleHelper $zoomControlStyleHelper)
     {
@@ -98,7 +100,8 @@ class ZoomControlHelper
      */
     public function render(ZoomControl $zoomControl)
     {
-        return sprintf('{"position":%s,"style":%s}',
+        return sprintf(
+            '{"position":%s,"style":%s}',
             $this->controlPositionHelper->render($zoomControl->getControlPosition()),
             $this->zoomControlStyleHelper->render($zoomControl->getZoomControlStyle())
         );

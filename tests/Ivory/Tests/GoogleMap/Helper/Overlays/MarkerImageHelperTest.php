@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\MarkerImage,
-    Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper;
+use Ivory\GoogleMap\Overlays\MarkerImage;
+use Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper;
 
 /**
  * Marker image helper test.

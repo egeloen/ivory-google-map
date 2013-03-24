@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\GroundOverlay,
-    Ivory\GoogleMap\Helper\Base\BoundHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\GroundOverlay;
+use Ivory\GoogleMap\Helper\Base\BoundHelper;
 
 /**
  * Ground overlay helper.
@@ -81,7 +81,8 @@ class GroundOverlayHelper
         $html = array();
 
         $html[] = $this->boundHelper->render($groundOverlay->getBound());
-        $html[] = sprintf('var %s = new google.maps.GroundOverlay("%s", %s, %s);'.PHP_EOL,
+        $html[] = sprintf(
+            'var %s = new google.maps.GroundOverlay("%s", %s, %s);'.PHP_EOL,
             $groundOverlay->getJavascriptVariable(),
             $groundOverlay->getUrl(),
             $groundOverlay->getBound()->getJavascriptVariable(),

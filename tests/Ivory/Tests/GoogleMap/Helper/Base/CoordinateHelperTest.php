@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Base;
 
-use Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Coordinate helper test

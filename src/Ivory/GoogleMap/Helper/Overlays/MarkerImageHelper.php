@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\MarkerImage,
-    Ivory\GoogleMap\Helper\Base\PointHelper,
-    Ivory\GoogleMap\Helper\Base\SizeHelper;
+use Ivory\GoogleMap\Overlays\MarkerImage;
+use Ivory\GoogleMap\Helper\Base\PointHelper;
+use Ivory\GoogleMap\Helper\Base\SizeHelper;
 
 /**
  * Marker image helper.
@@ -99,34 +99,39 @@ class MarkerImageHelper
     {
         $html = array();
 
-        $html[] = sprintf('var %s = new google.maps.MarkerImage("%s");'.PHP_EOL,
+        $html[] = sprintf(
+            'var %s = new google.maps.MarkerImage("%s");'.PHP_EOL,
             $markerImage->getJavascriptVariable(),
             $markerImage->getUrl()
         );
 
         if ($markerImage->hasSize()) {
-            $html[] = sprintf('%s.size = %s;'.PHP_EOL,
+            $html[] = sprintf(
+                '%s.size = %s;'.PHP_EOL,
                 $markerImage->getJavascriptVariable(),
                 $this->sizeHelper->render($markerImage->getSize())
             );
         }
 
         if ($markerImage->hasOrigin()) {
-            $html[] = sprintf('%s.origin = %s;'.PHP_EOL,
+            $html[] = sprintf(
+                '%s.origin = %s;'.PHP_EOL,
                 $markerImage->getJavascriptVariable(),
                 $this->pointHelper->render($markerImage->getOrigin())
             );
         }
 
         if ($markerImage->hasAnchor()) {
-            $html[] = sprintf('%s.anchor = %s;'.PHP_EOL,
+            $html[] = sprintf(
+                '%s.anchor = %s;'.PHP_EOL,
                 $markerImage->getJavascriptVariable(),
                 $this->pointHelper->render($markerImage->getAnchor())
             );
         }
 
         if ($markerImage->hasScaledSize()) {
-            $html[] = sprintf('%s.scaledSize = %s;'.PHP_EOL,
+            $html[] = sprintf(
+                '%s.scaledSize = %s;'.PHP_EOL,
                 $markerImage->getJavascriptVariable(),
                 $this->sizeHelper->render($markerImage->getScaledSize())
             );

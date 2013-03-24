@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Overlays\Animation,
-    Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\Marker;
 
 /**
  * Marker test.

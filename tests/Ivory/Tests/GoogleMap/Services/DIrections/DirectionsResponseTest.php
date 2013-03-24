@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Services\Directions\DirectionsResponse,
-    Ivory\GoogleMap\Services\Directions\DirectionsStatus;
+use Ivory\GoogleMap\Services\Directions\DirectionsResponse;
+use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
 
 /**
  * Directions response test.
@@ -63,11 +63,11 @@ class DirectionsResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions response status can only be : INVALID_REQUEST, MAX_WAYPOINTS_EXCEEDED, NOT_FOUND, OK, OVER_QUERY_LIMIT, REQUEST_DENIED, UNKNOWN_ERROR, ZERO_RESULTS.
+     * @expectedExceptionMessage The directions response status can only be : INVALID_REQUEST,
+     * MAX_WAYPOINTS_EXCEEDED, NOT_FOUND, OK, OVER_QUERY_LIMIT, REQUEST_DENIED, UNKNOWN_ERROR, ZERO_RESULTS.
      */
     public function testStatusWithInvalidValue()
     {
         $this->directionsResponse->setStatus('foo');
     }
 }
-

@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Overlays\Rectangle,
-    Ivory\GoogleMap\Helper\Overlays\RectangleHelper;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Overlays\Rectangle;
+use Ivory\GoogleMap\Helper\Overlays\RectangleHelper;
 
 /**
  * Rectangle helper test.
@@ -74,8 +74,13 @@ class RectangleHelperTest extends \PHPUnit_Framework_TestCase
         $rectangle = new Rectangle($bound);
         $rectangle->setJavascriptVariable('rectangle');
 
+        $expectedRectangle = 'var rectangleBound = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1.1, -2.1, true), '.
+            'new google.maps.LatLng(1.1, 2.1, true)'.
+            ');';
+
         $expected = <<<EOF
-var rectangleBound = new google.maps.LatLngBounds(new google.maps.LatLng(-1.1, -2.1, true), new google.maps.LatLng(1.1, 2.1, true));
+$expectedRectangle
 var rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound});
 
 EOF;
@@ -97,13 +102,15 @@ EOF;
 
         $rectangle = new Rectangle($bound);
         $rectangle->setJavascriptVariable('rectangle');
-        $rectangle->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $rectangle->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
+
+        $expectedRectangle = 'var rectangleBound = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1.1, -2.1, true), '.
+            'new google.maps.LatLng(1.1, 2.1, true)'.
+            ');';
 
         $expected = <<<EOF
-var rectangleBound = new google.maps.LatLngBounds(new google.maps.LatLng(-1.1, -2.1, true), new google.maps.LatLng(1.1, 2.1, true));
+$expectedRectangle
 var rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound,"option1":"value1","option2":"value2"});
 
 EOF;

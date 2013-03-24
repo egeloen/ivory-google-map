@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\InfoWindow,
-    Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper;
+use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper;
 
 /**
  * Info window helper test.
@@ -40,24 +40,6 @@ class InfoWindowHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->infoWindowHelper);
     }
 
-    public function testRenderWithPosition()
-    {
-        $infoWindow = new InfoWindow();
-        $infoWindow->setPosition(1.1, 2.1, true);
-        $infoWindow->setPixelOffset(3, 4, 'px', 'px');
-        $infoWindow->setContent('content');
-        $infoWindow->setOpen(true);
-        $infoWindow->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
-
-        $this->assertSame(
-            'var '.$infoWindow->getJavascriptVariable().' = new google.maps.InfoWindow({"position":new google.maps.LatLng(1.1, 2.1, true),"pixelOffset":new google.maps.Size(3, 4, "px", "px"),"content":"content","option1":"value1","option2":"value2"});'.PHP_EOL,
-            $this->infoWindowHelper->render($infoWindow, true)
-        );
-    }
-
     public function testRenderWithoutPosition()
     {
         $infoWindow = new InfoWindow();
@@ -65,15 +47,33 @@ class InfoWindowHelperTest extends \PHPUnit_Framework_TestCase
         $infoWindow->setPixelOffset(3, 4, 'px', 'px');
         $infoWindow->setContent('content');
         $infoWindow->setOpen(true);
-        $infoWindow->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
 
-        $this->assertSame(
-            'var '.$infoWindow->getJavascriptVariable().' = new google.maps.InfoWindow({"pixelOffset":new google.maps.Size(3, 4, "px", "px"),"content":"content","option1":"value1","option2":"value2"});'.PHP_EOL,
-            $this->infoWindowHelper->render($infoWindow, false)
-        );
+        $expected = 'var '.$infoWindow->getJavascriptVariable().' = new google.maps.InfoWindow({'.
+            '"position":new google.maps.LatLng(1.1, 2.1, true),'.
+            '"pixelOffset":new google.maps.Size(3, 4, "px", "px"),'.
+            '"content":"content"'.
+            '});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->infoWindowHelper->render($infoWindow, true));
+    }
+
+    public function testRenderWithPosition()
+    {
+        $infoWindow = new InfoWindow();
+        $infoWindow->setPosition(1.1, 2.1, true);
+        $infoWindow->setPixelOffset(3, 4, 'px', 'px');
+        $infoWindow->setContent('content');
+        $infoWindow->setOpen(true);
+        $infoWindow->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
+
+        $expected = 'var '.$infoWindow->getJavascriptVariable().' = new google.maps.InfoWindow({'.
+            '"pixelOffset":new google.maps.Size(3, 4, "px", "px"),'.
+            '"content":"content",'.
+            '"option1":"value1",'.
+            '"option2":"value2"'.
+            '});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->infoWindowHelper->render($infoWindow, false));
     }
 
     public function testRenderOpenWithoutMarker()
@@ -89,10 +89,7 @@ class InfoWindowHelperTest extends \PHPUnit_Framework_TestCase
         $infoWindow->setPosition(1.1, 2.1, true);
         $infoWindow->setContent('content');
         $infoWindow->setOpen(true);
-        $infoWindow->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $infoWindow->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
         $this->assertSame('infoWindow.open(map);'.PHP_EOL, $this->infoWindowHelper->renderOpen($infoWindow, $map));
     }
@@ -110,10 +107,7 @@ class InfoWindowHelperTest extends \PHPUnit_Framework_TestCase
         $infoWindow->setPosition(1.1, 2.1, true);
         $infoWindow->setContent('content');
         $infoWindow->setOpen(true);
-        $infoWindow->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $infoWindow->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
         $marker = $this->getMock('Ivory\GoogleMap\Overlays\Marker');
         $marker

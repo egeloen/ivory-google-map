@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\CurlHttpAdapter,
-    Ivory\GoogleMap\Services\Geocoding\GeocoderProvider,
-    Ivory\GoogleMap\Services\Geocoding\GeocoderRequest,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderStatus;
+use Geocoder\HttpAdapter\CurlHttpAdapter;
+use Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
+use Ivory\GoogleMap\Services\Geocoding\GeocoderRequest;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderStatus;
 
 /**
  * Geocoder provider test.
@@ -150,7 +150,8 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The method "Ivory\GoogleMap\Services\Geocoding\GeocoderProvider::parseXML" is not supported.
+     * @expectedExceptionMessage The method "Ivory\GoogleMap\Services\Geocoding\GeocoderProvider::parseXML" is not
+     * supported.
      */
     public function testGeocodedDataWithXmlFormat()
     {

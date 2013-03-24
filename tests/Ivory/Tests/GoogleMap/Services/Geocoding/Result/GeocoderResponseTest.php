@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Geocoding\Result;
 
-use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderStatus;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderStatus;
 
 /**
  * Geocoder response test.
@@ -83,7 +83,8 @@ class GeocoderResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder response status can only be : ERROR, INVALID_REQUEST, OK, OVER_QUERY_LIMIT, REQUEST_DENIED, UNKNOWN_ERROR, ZERO_RESULTS.
+     * @expectedExceptionMessage The geocoder response status can only be : ERROR, INVALID_REQUEST, OK,
+     * OVER_QUERY_LIMIT, REQUEST_DENIED, UNKNOWN_ERROR, ZERO_RESULTS.
      */
     public function testStatusWithInvalidValue()
     {

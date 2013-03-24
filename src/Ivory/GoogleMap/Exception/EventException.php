@@ -23,7 +23,7 @@ class EventException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\EventException The "INVALID CAPTURE" exception.
      */
-    static public function invalidCapture()
+    public static function invalidCapture()
     {
         return new static('The capture property of an event must be a boolean value.');
     }
@@ -33,7 +33,7 @@ class EventException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\EventException The "INVALID EVENT NAME" exception.
      */
-    static public function invalidEventName()
+    public static function invalidEventName()
     {
         return new static('The event name of an event must be a string value.');
     }
@@ -43,7 +43,7 @@ class EventException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\EventException The "INVALID HANDLE" exception.
      */
-    static public function invalidHandle()
+    public static function invalidHandle()
     {
         return new static('The handle of an event must be a string value.');
     }
@@ -53,7 +53,7 @@ class EventException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\EventException The "INVALID INSTANCE" exception.
      */
-    static public function invalidInstance()
+    public static function invalidInstance()
     {
         return new static('The instance of an event must be a string value.');
     }

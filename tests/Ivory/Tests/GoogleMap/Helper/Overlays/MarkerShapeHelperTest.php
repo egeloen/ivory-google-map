@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\MarkerShape,
-    Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper;
+use Ivory\GoogleMap\Overlays\MarkerShape;
+use Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper;
 
 /**
  * Marker shape helper test.

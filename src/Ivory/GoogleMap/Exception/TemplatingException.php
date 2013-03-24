@@ -11,12 +11,12 @@
 
 namespace Ivory\GoogleMap\Exception;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\Controls\ScaleControlStyle,
-    Ivory\GoogleMap\Controls\ZoomControlStyle,
-    Ivory\GoogleMap\Overlays\Animation,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\MapTypeId;
 
 /**
  * Templating exception.
@@ -30,7 +30,7 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID ANIMATION" exception.
      */
-    static public function invalidAnimation()
+    public static function invalidAnimation()
     {
         return new static(sprintf('The animation can only be : %s.', implode(', ', Animation::getAnimations())));
     }
@@ -40,9 +40,12 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID CONTROL POSITION" exception.
      */
-    static public function invalidControlPosition()
+    public static function invalidControlPosition()
     {
-        return new static(sprintf('The control position can only be : %s.', implode(', ', ControlPosition::getControlPositions())));
+        return new static(sprintf(
+            'The control position can only be : %s.',
+            implode(', ', ControlPosition::getControlPositions())
+        ));
     }
 
     /**
@@ -50,7 +53,7 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID ENCODED PATH" exception.
      */
-    static public function invalidEncodedPath()
+    public static function invalidEncodedPath()
     {
         return new static('The encoded path must be a string value.');
     }
@@ -60,9 +63,12 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID MAP TYPE CONTROL STYLE" exception.
      */
-    static public function invalidMapTypeControlStyle()
+    public static function invalidMapTypeControlStyle()
     {
-        return new static(sprintf('The map type control style can only be : %s.', implode(', ', MapTypeControlStyle::getMapTypeControlStyles())));
+        return new static(sprintf(
+            'The map type control style can only be : %s.',
+            implode(', ', MapTypeControlStyle::getMapTypeControlStyles())
+        ));
     }
 
     /**
@@ -70,7 +76,7 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID MAP TYPE ID" exception.
      */
-    static public function invalidMapTypeId()
+    public static function invalidMapTypeId()
     {
         return new static(sprintf('The map type id can only be : %s.', implode(', ', MapTypeId::getMapTypeIds())));
     }
@@ -80,9 +86,12 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID SCALE CONTROL STYLE" exception.
      */
-    static public function invalidScaleControlStyle()
+    public static function invalidScaleControlStyle()
     {
-        return new static(sprintf('The scale control style can only be : %s.', implode(', ', ScaleControlStyle::getScaleControlStyles())));
+        return new static(sprintf(
+            'The scale control style can only be : %s.',
+            implode(', ', ScaleControlStyle::getScaleControlStyles())
+        ));
     }
 
     /**
@@ -90,8 +99,11 @@ class TemplatingException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID ZOOM CONTROL STYLE" exception.
      */
-    static public function invalidZoomControlStyle()
+    public static function invalidZoomControlStyle()
     {
-        return new static(sprintf('The zoom control style can only be : %s.', implode(', ', ZoomControlStyle::getZoomControlStyles())));
+        return new static(sprintf(
+            'The zoom control style can only be : %s.',
+            implode(', ', ZoomControlStyle::getZoomControlStyles())
+        ));
     }
 }

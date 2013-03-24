@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Polygon,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Polygon;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Polygon helper.
@@ -76,7 +76,8 @@ class PolygonHelper
             $polygonCoordinates[] = $this->coordinateHelper->render($coordinate);
         }
 
-        $polygonJSONOptions = sprintf('{"map":%s,"paths":%s',
+        $polygonJSONOptions = sprintf(
+            '{"map":%s,"paths":%s',
             $map->getJavascriptVariable(),
             '['.implode(',', $polygonCoordinates).']'
         );
@@ -87,7 +88,8 @@ class PolygonHelper
             $polygonJSONOptions .= '}';
         }
 
-        return sprintf('var %s = new google.maps.Polygon(%s);'.PHP_EOL,
+        return sprintf(
+            'var %s = new google.maps.Polygon(%s);'.PHP_EOL,
             $polygon->getJavascriptVariable(),
             $polygonJSONOptions
         );

@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\DirectionsException,
-    Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Overlays\EncodedPolyline;
 
 /**
  * A directions step which describes a google map directions step.
@@ -63,8 +63,7 @@ class DirectionsStep
         EncodedPolyline $encodedPolyline,
         Coordinate $startLocation,
         $travelMode
-    )
-    {
+    ) {
         $this->setDistance($distance);
         $this->setDuration($duration);
         $this->setEndLocation($endLocation);

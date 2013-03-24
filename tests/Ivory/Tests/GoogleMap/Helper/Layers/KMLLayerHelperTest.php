@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Layers;
 
-use Ivory\GoogleMap\Layers\KMLLayer,
-    Ivory\GoogleMap\Helper\Layers\KMLLayerHelper;
+use Ivory\GoogleMap\Layers\KMLLayer;
+use Ivory\GoogleMap\Helper\Layers\KMLLayerHelper;
 
 /**
  * KML Layer helper test.
@@ -67,14 +67,13 @@ class KMLLayerHelperTest extends \PHPUnit_Framework_TestCase
 
         $kmlLayer = new KMLLayer('url');
         $kmlLayer->setJavascriptVariable('kmlLayer');
-        $kmlLayer->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $kmlLayer->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $this->assertSame(
-            'var kmlLayer = new google.maps.KmlLayer("url", {"map":map,"option1":"value1","option2":"value2"});'.PHP_EOL,
-            $this->kmlLayerHelper->render($kmlLayer, $map)
-        );
+        $expected = 'var kmlLayer = new google.maps.KmlLayer('.
+            '"url", '.
+            '{"map":map,"option1":"value1","option2":"value2"}'.
+            ');'.PHP_EOL;
+
+        $this->assertSame($expected, $this->kmlLayerHelper->render($kmlLayer, $map));
     }
 }

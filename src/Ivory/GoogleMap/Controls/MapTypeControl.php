@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Exception\ControlException;
+use Ivory\GoogleMap\MapTypeId;
 
 /**
  * Map type control options describes a google map type control options.

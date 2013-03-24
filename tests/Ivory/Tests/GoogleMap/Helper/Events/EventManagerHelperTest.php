@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Events\EventManager,
-    Ivory\GoogleMap\Helper\Events\EventManagerHelper;
+use Ivory\GoogleMap\Events\EventManager;
+use Ivory\GoogleMap\Helper\Events\EventManagerHelper;
 
 /**
  * Event manager helper test.

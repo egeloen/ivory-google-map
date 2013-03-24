@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Marker which describes a google map marker.
@@ -58,8 +58,7 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
         MarkerImage $shadow = null,
         MarkerShape $shape = null,
         InfoWindow $infoWindow = null
-    )
-    {
+    ) {
         parent::__construct();
 
         $this->setPrefixJavascriptVariable('marker_');
@@ -116,18 +115,14 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
 
         if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->position = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             $this->position->setLatitude($args[0]);
             $this->position->setLongitude($args[1]);
 
             if (isset($args[2]) && is_bool($args[2])) {
                 $this->position->setNoWrap($args[2]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->position = null;
         } else {
             throw OverlayException::invalidMarkerPosition();
@@ -209,13 +204,13 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
             }
 
             $this->icon = $args[0];
-        } else if (isset($args[0]) && is_string($args[0])) {
+        } elseif (isset($args[0]) && is_string($args[0])) {
             if ($this->icon === null) {
                 $this->icon = new MarkerImage();
             }
 
             $this->icon->setUrl($args[0]);
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->icon = null;
         } else {
             throw OverlayException::invalidMarkerIcon();
@@ -261,13 +256,13 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
             }
 
             $this->shadow = $args[0];
-        } else if (isset($args[0]) && is_string($args[0])) {
+        } elseif (isset($args[0]) && is_string($args[0])) {
             if ($this->shadow === null) {
                 $this->shadow = new MarkerImage();
             }
 
             $this->shadow->setUrl($args[0]);
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->shadow = null;
         } else {
             throw OverlayException::invalidMarkerShadow();
@@ -313,18 +308,14 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
             }
 
             $this->shape = $args[0];
-        } else if (
-            (isset($args[0]) && is_string($args[0]))
-            &&
-            (isset($args[1]) && is_array($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_string($args[0])) && (isset($args[1]) && is_array($args[1]))) {
             if ($this->shape === null) {
                 $this->shape = new MarkerShape();
             }
 
             $this->shape->setType($args[0]);
             $this->shape->setCoordinates($args[1]);
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->shape = null;
         } else {
             throw OverlayException::invalidMarkerShape();

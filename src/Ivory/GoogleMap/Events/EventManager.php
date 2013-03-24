@@ -44,8 +44,7 @@ class EventManager
         array $domEventsOnce = array(),
         array $events = array(),
         array $eventsOnce = array()
-    )
-    {
+    ) {
         $this->domEvents = array();
         foreach ($domEvents as $domEvent) {
             $this->addDomEvent($domEvent);

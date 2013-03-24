@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\Animation,
-    Ivory\GoogleMap\Helper\Overlays\AnimationHelper;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Helper\Overlays\AnimationHelper;
 
 /**
  * Animation helper test.

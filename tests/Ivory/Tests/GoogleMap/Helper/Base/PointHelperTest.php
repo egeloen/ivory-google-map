@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Base;
 
-use Ivory\GoogleMap\Base\Point,
-    Ivory\GoogleMap\Helper\Base\PointHelper;
+use Ivory\GoogleMap\Base\Point;
+use Ivory\GoogleMap\Helper\Base\PointHelper;
 
 /**
  * Point helper test.

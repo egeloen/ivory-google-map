@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\Animation,
-    Ivory\GoogleMap\Overlays\InfoWindow,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
 
 /**
  * Marker helper test.
@@ -118,11 +118,20 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->setInfoWindow(new InfoWindow('content'));
         $marker->getInfoWindow()->setJavascriptVariable('infoWindow');
 
+        $expectedMarker = 'var marker = new google.maps.Marker({'.
+            '"map":map,'.
+            '"position":new google.maps.LatLng(1.1, 2.1, true), '.
+            '"animation":google.maps.Animation.BOUNCE, '.
+            '"icon":icon, '.
+            '"shadow":shadow, '.
+            '"shape":shape'.
+            '});';
+
         $expected = <<<EOF
 var icon = new google.maps.MarkerImage("url");
 var shadow = new google.maps.MarkerImage("url");
 var shape = new google.maps.MarkerShape({"type":"poly","coords":[1,2,3,4]});
-var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(1.1, 2.1, true), "animation":google.maps.Animation.BOUNCE, "icon":icon, "shadow":shadow, "shape":shape});
+$expectedMarker
 var infoWindow = new google.maps.InfoWindow({"content":"content"});
 
 EOF;
@@ -156,16 +165,24 @@ EOF;
         $marker->getInfoWindow()->setJavascriptVariable('infoWindow');
         $marker->getInfoWindow()->setOpen(true);
 
-        $marker->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $marker->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
+
+        $expectedMarker = 'var marker = new google.maps.Marker({'.
+            '"map":map,'.
+            '"position":new google.maps.LatLng(1.1, 2.1, true), '.
+            '"animation":google.maps.Animation.BOUNCE, '.
+            '"icon":icon, '.
+            '"shadow":shadow, '.
+            '"shape":shape,'.
+            '"option1":"value1",'.
+            '"option2":"value2"'.
+            '});';
 
         $expected = <<<EOF
 var icon = new google.maps.MarkerImage("url");
 var shadow = new google.maps.MarkerImage("url");
 var shape = new google.maps.MarkerShape({"type":"poly","coords":[1,2,3,4]});
-var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(1.1, 2.1, true), "animation":google.maps.Animation.BOUNCE, "icon":icon, "shadow":shadow, "shape":shape,"option1":"value1","option2":"value2"});
+$expectedMarker
 var infoWindow = new google.maps.InfoWindow({"content":"content"});
 infoWindow.open(map, marker);
 

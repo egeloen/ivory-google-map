@@ -161,9 +161,9 @@ foreach ($results as $result) {
 ## Create a marker according to a geocoded location
 
 ``` php
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Services\Geocoding\Geocoder;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Services\Geocoding\Geocoder;
 
 $geocoder = new Geocoder();
 

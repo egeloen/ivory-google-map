@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Base;
 
-use Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Helper\Base\BoundHelper;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Helper\Base\BoundHelper;
 
 /**
  * Bound helper test
@@ -70,10 +70,12 @@ class BoundHelperTest extends \PHPUnit_Framework_TestCase
         $bound = new Bound(new Coordinate(-1.1, -2.1, false), new Coordinate(1.1, 2.1, true));
         $bound->setJavascriptVariable('foo');
 
-        $this->assertSame(
-            'var foo = new google.maps.LatLngBounds(new google.maps.LatLng(-1.1, -2.1, false), new google.maps.LatLng(1.1, 2.1, true));'.PHP_EOL,
-            $this->boundHelper->render($bound)
-        );
+        $expected = 'var foo = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1.1, -2.1, false), '.
+            'new google.maps.LatLng(1.1, 2.1, true)'.
+            ');'.PHP_EOL;
+
+        $this->assertSame($expected, $this->boundHelper->render($bound));
     }
 
     public function testRenderWithExtends()

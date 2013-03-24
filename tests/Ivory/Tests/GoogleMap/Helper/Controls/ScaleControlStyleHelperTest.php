@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ScaleControlStyle,
-    Ivory\GoogleMap\Helper\Controls\ScaleControlStyleHelper;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Helper\Controls\ScaleControlStyleHelper;
 
 /**
  * Scale control style helper test.

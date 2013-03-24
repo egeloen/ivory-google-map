@@ -7,9 +7,9 @@ left corner on touch devices.
 ## Build your zoom control
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ZoomControl,
-    Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\Controls\ControlPosition
+use Ivory\GoogleMap\Controls\ZoomControl;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
 
 $zoomControl = new ZoomControl();
 
@@ -25,8 +25,8 @@ For configurating the zoom control position, the better way is to follow the ori
 position. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ZoomControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ZoomControl;
 
 $zoomControl = new ZoomControl();
 
@@ -75,8 +75,8 @@ For configurating the zoom control style, the better way is to follow the orient
 control style. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\ZoomControl,
-    Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\Controls\ZoomControl;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
 
 $zoomControl = new ZoomControl();
 
@@ -94,9 +94,9 @@ $zoomControl->setZoomControlStyle('small');
 ## Add your zoom control to the map
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ZoomControl,
-    Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ZoomControl;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
 
 $zoomControl = new ZoomControl();
 

@@ -11,10 +11,10 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset,
-    Ivory\GoogleMap\Base\Point,
-    Ivory\GoogleMap\Base\Size,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
+use Ivory\GoogleMap\Base\Point;
+use Ivory\GoogleMap\Base\Size;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Marker image which describes a google map marker image.
@@ -48,8 +48,7 @@ class MarkerImage extends AbstractJavascriptVariableAsset
         Point $origin = null,
         Size $scaledSize = null,
         Size $size = null
-    )
-    {
+    ) {
         $this->setPrefixJavascriptVariable('marker_image_');
         $this->setUrl($url);
 
@@ -131,18 +130,14 @@ class MarkerImage extends AbstractJavascriptVariableAsset
 
         if ($args[0] instanceof Point) {
             $this->anchor = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->anchor === null) {
                 $this->anchor = new Point();
             }
 
             $this->anchor->setX($args[0]);
             $this->anchor->setY($args[1]);
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->anchor = null;
         } else {
             throw OverlayException::invalidMarkerImageAnchor();
@@ -184,18 +179,14 @@ class MarkerImage extends AbstractJavascriptVariableAsset
 
         if (isset($args[0]) && ($args[0] instanceof Point)) {
             $this->origin = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->origin === null) {
                 $this->origin = new Point();
             }
 
             $this->origin->setX($args[0]);
             $this->origin->setY($args[1]);
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->origin = null;
         } else {
             throw OverlayException::invalidMarkerImageOrigin();
@@ -237,11 +228,7 @@ class MarkerImage extends AbstractJavascriptVariableAsset
 
         if (isset($args[0]) && ($args[0] instanceof Size)) {
             $this->scaledSize = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->scaledSize === null) {
                 $this->scaledSize = new Size();
             }
@@ -256,7 +243,7 @@ class MarkerImage extends AbstractJavascriptVariableAsset
             if (isset($args[3]) && is_string($args[3])) {
                 $this->scaledSize->setHeightUnit($args[3]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->scaledSize = null;
         } else {
             throw OverlayException::invalidMarkerImageScaledSize();
@@ -298,11 +285,7 @@ class MarkerImage extends AbstractJavascriptVariableAsset
 
         if (isset($args[0]) && ($args[0] instanceof Size)) {
             $this->size = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->size === null) {
                 $this->size = new Size($args[0], $args[1]);
             }
@@ -317,7 +300,7 @@ class MarkerImage extends AbstractJavascriptVariableAsset
             if (isset($args[3]) && is_string($args[3])) {
                 $this->size->setHeightUnit($args[3]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->size = null;
         } else {
             throw OverlayException::invalidMarkerImageSize();

@@ -23,7 +23,7 @@ class AssetException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\AssetException The "INVALID JAVASCRIPT VARIABLE" exception.
      */
-    static public function invalidJavascriptVariable()
+    public static function invalidJavascriptVariable()
     {
         return new static('The javascript variable must be a string value.');
     }
@@ -33,7 +33,7 @@ class AssetException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\AssetException The "INVALID OPTION" exception.
      */
-    static public function invalidOption()
+    public static function invalidOption()
     {
         return new static('The option property must be a string value.');
     }
@@ -43,7 +43,7 @@ class AssetException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\AssetException The "INVALID PREFIX JAVASCRIPT VARIABLE" exception.
      */
-    static public function invalidPrefixJavascriptVariable()
+    public static function invalidPrefixJavascriptVariable()
     {
         return new static('The prefix of a javascript variable must be a string value.');
     }
@@ -55,7 +55,7 @@ class AssetException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\AssetException The "OPTION DOES NOT EXIST" exception.
      */
-    static public function optionDoesNotExist($option)
+    public static function optionDoesNotExist($option)
     {
         return new static(sprintf('The option "%s" does not exist.', $option));
     }

@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Exception\TemplatingException;
 
 /**
  * Control position helper.
@@ -46,11 +46,8 @@ class ControlPositionHelper
             case ControlPosition::TOP_LEFT:
             case ControlPosition::TOP_RIGHT:
                 return sprintf('google.maps.ControlPosition.%s', strtoupper($controlPosition));
-            break;
-
             default:
                 throw TemplatingException::invalidControlPosition();
-            break;
         }
     }
 }

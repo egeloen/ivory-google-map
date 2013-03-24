@@ -11,22 +11,22 @@
 
 namespace Ivory\Tests\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\Layers\KMLLayer,
-    Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\MapTypeId,
-    Ivory\GoogleMap\Overlays\Circle,
-    Ivory\GoogleMap\Overlays\EncodedPolyline,
-    Ivory\GoogleMap\Overlays\GroundOverlay,
-    Ivory\GoogleMap\Overlays\InfoWindow,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Overlays\Polygon,
-    Ivory\GoogleMap\Overlays\Polyline,
-    Ivory\GoogleMap\Overlays\Rectangle,
-    Ivory\GoogleMap\Helper\MapHelper;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Layers\KMLLayer;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Overlays\Circle;
+use Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Overlays\GroundOverlay;
+use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\Polygon;
+use Ivory\GoogleMap\Overlays\Polyline;
+use Ivory\GoogleMap\Overlays\Rectangle;
+use Ivory\GoogleMap\Helper\MapHelper;
 
 /**
  * Map helper test.
@@ -240,11 +240,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
     {
         $map = new Map();
         $map->setHtmlContainerId('html_container_id');
-        $map->setStylesheetOptions(array(
-            'width'   => '200px',
-            'height'  => '100px',
-            'option1' => 'value1'
-        ));
+        $map->setStylesheetOptions(array('width' => '200px','height' => '100px', 'option1' => 'value1'));
 
         $expected = <<<EOF
 <style type="text/css">
@@ -265,10 +261,15 @@ EOF;
         $map = new Map();
         $map->setJavascriptVariable('map');
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -287,18 +288,28 @@ EOF;
         $map2->setJavascriptVariable('map2');
         $map2->setHtmlContainerId('map_canvas_2');
 
+        $expectedMap1 = 'var map1 = new google.maps.Map('.
+            'document.getElementById("map_canvas_1"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $map1Expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map1 = new google.maps.Map(document.getElementById("map_canvas_1"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap1
 map1.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
 EOF;
 
+        $expectedMap2 = 'var map2 = new google.maps.Map('.
+            'document.getElementById("map_canvas_2"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $map2Expected = <<<EOF
 <script type="text/javascript">
-var map2 = new google.maps.Map(document.getElementById("map_canvas_2"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap2
 map2.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -314,11 +325,21 @@ EOF;
         $map->setJavascriptVariable('map');
         $map->setAsync(true);
 
+        $expectedAsync = '<script '.
+            'type="text/javascript" '.
+            'src="//maps.google.com/maps/api/js?callback=load_ivory_google_map&amp;language=en&amp;sensor=false">'.
+            '</script>';
+
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?callback=load_ivory_google_map&amp;language=en&amp;sensor=false"></script>
+$expectedAsync
 <script type="text/javascript">
 function load_ivory_google_map() {
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 map.setCenter(new google.maps.LatLng(0, 0, true));
 }
 </script>
@@ -334,10 +355,15 @@ EOF;
         $map->setJavascriptVariable('map');
         $map->setCenter(new Coordinate(1, 2, true));
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 map.setCenter(new google.maps.LatLng(1, 2, true));
 </script>
 
@@ -380,10 +406,24 @@ EOF;
 
         // FIXME Add all map controls...
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{'.
+            '"mapTypeId":google.maps.MapTypeId.ROADMAP,'.
+            '"mapTypeControl":true,'.
+            '"mapTypeControlOptions":'.
+            '{'.
+            '"mapTypeIds":[google.maps.MapTypeId.TERRAIN],'.
+            '"position":google.maps.ControlPosition.BOTTOM_CENTER,'.
+            '"style":google.maps.MapTypeControlStyle.HORIZONTAL_BAR'.
+            '},'.
+            '"zoom":3'.
+            '});';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"mapTypeControl":true,"mapTypeControlOptions":{"mapTypeIds":[google.maps.MapTypeId.TERRAIN],"position":google.maps.ControlPosition.BOTTOM_CENTER,"style":google.maps.MapTypeControlStyle.HORIZONTAL_BAR},"zoom":3});
+$expectedMap
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -398,10 +438,15 @@ EOF;
         $map->setJavascriptVariable('map');
         $map->setMapOption('mapTypeControl', false);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"mapTypeControl":false,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"mapTypeControl":false,"zoom":3});
+$expectedMap
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -419,10 +464,15 @@ EOF;
         $marker->setJavascriptVariable('marker');
         $map->addMarker($marker);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(0, 0, true)});
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
@@ -443,11 +493,20 @@ EOF;
 
         $map->addInfoWindow($infoWindow);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedInfoWindow = 'var infoWindow = new google.maps.InfoWindow('.
+            '{"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-var infoWindow = new google.maps.InfoWindow({"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"});
+$expectedMap
+$expectedInfoWindow
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -468,11 +527,20 @@ EOF;
 
         $map->addInfoWindow($infoWindow);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedInfoWindow = 'var infoWindow = new google.maps.InfoWindow('.
+            '{"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-var infoWindow = new google.maps.InfoWindow({"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"});
+$expectedMap
+$expectedInfoWindow
 infoWindow.open(map);
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
@@ -495,14 +563,25 @@ EOF;
         $infoWindow->setJavascriptVariable('infoWindow');
         $marker->setInfoWindow($infoWindow);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedEvent = 'var marker_info_window_event = google.maps.event.addListener('.
+            'marker, '.
+            '"click", '.
+            'function () {infoWindow.open(map, marker);}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(0, 0, true)});
 var infoWindow = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
 map.setCenter(new google.maps.LatLng(0, 0, true));
-var marker_info_window_event = google.maps.event.addListener(marker, "click", function () {infoWindow.open(map, marker);});
+$expectedEvent
 </script>
 
 EOF;
@@ -530,13 +609,22 @@ EOF;
         $infoWindow->setAutoClose(true);
         $map->addInfoWindow($infoWindow);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedInfoWindow = 'var infoWindow = new google.maps.InfoWindow('.
+            '{"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(0, 0, true)});
 var markerInfoWindow = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
-var infoWindow = new google.maps.InfoWindow({"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"});
+$expectedInfoWindow
 map.setCenter(new google.maps.LatLng(0, 0, true));
 var closable_info_windows = Array(infoWindow, markerInfoWindow);
 var marker_info_window_event = google.maps.event.addListener(marker, "click", function () {
@@ -564,11 +652,20 @@ EOF;
 
         $map->addPolyline($polyline);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedPolyline = 'var polyline = new google.maps.Polyline('.
+            '{"map":map,"path":[new google.maps.LatLng(1, 2, true),new google.maps.LatLng(3, 4, true)]}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-var polyline = new google.maps.Polyline({"map":map,"path":[new google.maps.LatLng(1, 2, true),new google.maps.LatLng(3, 4, true)]});
+$expectedMap
+$expectedPolyline
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -587,10 +684,20 @@ EOF;
 
         $map->addEncodedPolyline($encodedPolyline);
 
+        $expectedLibrary = '<script '.
+            'type="text/javascript" '.
+            'src="//maps.google.com/maps/api/js?libraries=geometry&amp;language=en&amp;sensor=false">'.
+            '</script>';
+
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?libraries=geometry&amp;language=en&amp;sensor=false"></script>
+$expectedLibrary
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 var encodedPolyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
@@ -612,11 +719,20 @@ EOF;
 
         $map->addPolygon($polygon);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedPolygon = 'var polygon = new google.maps.Polygon('.
+            '{"map":map,"paths":[new google.maps.LatLng(1, 2, true),new google.maps.LatLng(3, 4, true)]}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-var polygon = new google.maps.Polygon({"map":map,"paths":[new google.maps.LatLng(1, 2, true),new google.maps.LatLng(3, 4, true)]});
+$expectedMap
+$expectedPolygon
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
 
@@ -636,11 +752,21 @@ EOF;
 
         $map->addRectangle($rectangle);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedRectangleBound = 'var rectangleBound = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1, -1, true), '.
+            'new google.maps.LatLng(1, 1, true)'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-var rectangleBound = new google.maps.LatLngBounds(new google.maps.LatLng(-1, -1, true), new google.maps.LatLng(1, 1, true));
+$expectedMap
+$expectedRectangleBound
 var rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound});
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
@@ -660,10 +786,15 @@ EOF;
 
         $map->addCircle($circle);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 var circle = new google.maps.Circle({"map":map,"center":new google.maps.LatLng(0, 0, true),"radius":1});
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
@@ -684,11 +815,21 @@ EOF;
 
         $map->addGroundOverlay($groundOverlay);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
+        $expectedGroundOverlayBound = 'var groundOverlayBound = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1, -1, true), '.
+            'new google.maps.LatLng(1, 1, true)'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-var groundOverlayBound = new google.maps.LatLngBounds(new google.maps.LatLng(-1, -1, true), new google.maps.LatLng(1, 1, true));
+$expectedMap
+$expectedGroundOverlayBound
 var groundOverlay = new google.maps.GroundOverlay("url", groundOverlayBound, {"map":map});
 map.setCenter(new google.maps.LatLng(0, 0, true));
 </script>
@@ -708,10 +849,15 @@ EOF;
 
         $map->addKMLLayer($kmlLayer);
 
+        $expectedMap = 'var map = new google.maps.Map('.
+            'document.getElementById("map_canvas"), '.
+            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
+            ');';
+
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+$expectedMap
 map.setCenter(new google.maps.LatLng(0, 0, true));
 var kmlLayer = new google.maps.KmlLayer("url", {"map":map});
 </script>

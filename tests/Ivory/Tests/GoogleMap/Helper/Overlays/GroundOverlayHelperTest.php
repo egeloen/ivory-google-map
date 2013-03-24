@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Overlays\GroundOverlay,
-    Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Overlays\GroundOverlay;
+use Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper;
 
 /**
  * Ground overlay helper test.
@@ -74,8 +74,13 @@ class GroundOverlayHelperTest extends \PHPUnit_Framework_TestCase
         $groundOverlay = new GroundOverlay('url', $bound);
         $groundOverlay->setJavascriptVariable('groundOverlay');
 
+        $expectedBound = 'var bound = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1.1, -2.1, true), '.
+            'new google.maps.LatLng(1.1, 2.1, true)'.
+            ');';
+
         $expected = <<<EOF
-var bound = new google.maps.LatLngBounds(new google.maps.LatLng(-1.1, -2.1, true), new google.maps.LatLng(1.1, 2.1, true));
+$expectedBound
 var groundOverlay = new google.maps.GroundOverlay("url", bound, {"map":map});
 
 EOF;
@@ -98,13 +103,15 @@ EOF;
 
         $groundOverlay = new GroundOverlay('url', $bound);
         $groundOverlay->setJavascriptVariable('groundOverlay');
-        $groundOverlay->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $groundOverlay->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
+
+        $expectedBound = 'var bound = new google.maps.LatLngBounds('.
+            'new google.maps.LatLng(-1.1, -2.1, true), '.
+            'new google.maps.LatLng(1.1, 2.1, true)'.
+            ');';
 
         $expected = <<<EOF
-var bound = new google.maps.LatLngBounds(new google.maps.LatLng(-1.1, -2.1, true), new google.maps.LatLng(1.1, 2.1, true));
+$expectedBound
 var groundOverlay = new google.maps.GroundOverlay("url", bound, {"map":map,"option1":"value1","option2":"value2"});
 
 EOF;

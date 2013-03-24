@@ -5,8 +5,8 @@ Markers identify locations on the map. By default, they use a standard icon.
 ## Build your marker
 
 ``` php
-use Ivory\GoogleMap\Overlays\Animation,
-    Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\Marker;
 
 $marker = new Marker();
 
@@ -30,8 +30,8 @@ For configurating the marker animation, the better way is to follow the oriented
 If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Overlays\Animation,
-    Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\Marker;
 
 $marker = new Marker();
 

@@ -29,14 +29,15 @@ class ScaleControlHelper
     /**
      * Construct a scale control helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper    $controlPositionHelper   The control position helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControleStyleHelper $scaleControlStyleHelper The scale control style helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper    $controlPositionHelper   The control position
+     *                                                                                           helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControleStyleHelper $scaleControlStyleHelper The scale control
+     *                                                                                           style helper.
      */
     public function __construct(
         ControlPositionHelper $controlPositionHelper = null,
         ScaleControlStyleHelper $scaleControlStyleHelper = null
-    )
-    {
+    ) {
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -82,7 +83,8 @@ class ScaleControlHelper
     /**
      * Sets the scale control style helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControlStyleHelper $scaleControlStyleHelper The scale control style helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControlStyleHelper $scaleControlStyleHelper The scale control style
+     *                                                                                          helper.
      */
     public function setScaleControlStyleHelper(ScaleControlStyleHelper $scaleControlStyleHelper)
     {
@@ -98,7 +100,8 @@ class ScaleControlHelper
      */
     public function render(ScaleControl $scaleControl)
     {
-        return sprintf('{"position":%s,"style":%s}',
+        return sprintf(
+            '{"position":%s,"style":%s}',
             $this->controlPositionHelper->render($scaleControl->getControlPosition()),
             $this->scaleControlStyleHelper->render($scaleControl->getScaleControlStyle())
         );

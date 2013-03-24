@@ -23,7 +23,7 @@ class LayerException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\LayerException The "INVALID KML LAYER URL" exception.
      */
-    static public function invalidKmlLayerUrl()
+    public static function invalidKmlLayerUrl()
     {
         return new static('The kml layer url must be a string value.');
     }

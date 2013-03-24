@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Circle which describes a google map circle.
@@ -74,11 +74,7 @@ class Circle extends AbstractOptionsAsset implements ExtendableInterface
 
         if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->center = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             $this->center->setLatitude($args[0]);
             $this->center->setLongitude($args[1]);
 

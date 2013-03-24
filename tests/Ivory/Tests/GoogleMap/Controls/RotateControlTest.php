@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\RotateControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\RotateControl;
 
 /**
  * Rotate control test.

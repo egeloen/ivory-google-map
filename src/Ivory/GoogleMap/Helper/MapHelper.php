@@ -11,29 +11,29 @@
 
 namespace Ivory\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Events\Event,
-    Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper,
-    Ivory\GoogleMap\Helper\Base\BoundHelper,
-    Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper,
-    Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper,
-    Ivory\GoogleMap\Helper\Controls\PanControlHelper,
-    Ivory\GoogleMap\Helper\Controls\RotateControlHelper,
-    Ivory\GoogleMap\Helper\Controls\ScaleControlHelper,
-    Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper,
-    Ivory\GoogleMap\Helper\Controls\ZoomControlHelper,
-    Ivory\GoogleMap\Helper\Events\EventManagerHelper,
-    Ivory\GoogleMap\Helper\Layers\KMLLayerHelper,
-    Ivory\GoogleMap\Helper\Overlays\CircleHelper,
-    Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper,
-    Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper,
-    Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper,
-    Ivory\GoogleMap\Helper\Overlays\MarkerHelper,
-    Ivory\GoogleMap\Helper\Overlays\PolygonHelper,
-    Ivory\GoogleMap\Helper\Overlays\PolylineHelper,
-    Ivory\GoogleMap\Helper\Overlays\RectangleHelper,
-    Ivory\GoogleMap\Helper\MapTypeIdHelper;
+use Ivory\GoogleMap\Events\Event;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Helper\Base\BoundHelper;
+use Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper;
+use Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper;
+use Ivory\GoogleMap\Helper\Controls\PanControlHelper;
+use Ivory\GoogleMap\Helper\Controls\RotateControlHelper;
+use Ivory\GoogleMap\Helper\Controls\ScaleControlHelper;
+use Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper;
+use Ivory\GoogleMap\Helper\Controls\ZoomControlHelper;
+use Ivory\GoogleMap\Helper\Events\EventManagerHelper;
+use Ivory\GoogleMap\Helper\Layers\KMLLayerHelper;
+use Ivory\GoogleMap\Helper\Overlays\CircleHelper;
+use Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper;
+use Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper;
+use Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper;
+use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
+use Ivory\GoogleMap\Helper\Overlays\PolygonHelper;
+use Ivory\GoogleMap\Helper\Overlays\PolylineHelper;
+use Ivory\GoogleMap\Helper\Overlays\RectangleHelper;
+use Ivory\GoogleMap\Helper\MapTypeIdHelper;
 
 /**
  * Map helper.
@@ -110,24 +110,36 @@ class MapHelper
      *
      * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper             $coordinateHelper         The coordinate helper.
      * @param \Ivory\GoogleMap\Helper\Base\BoundHelper                  $boundHelper              The bound helper.
-     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                   $mapTypeIdHelper          The map type id helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper     $mapTypeControlHelper     The map type control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper $overviewMapControlHelper The overview map control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\PanControlHelper         $panControlHelper         The pan control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\RotateControlHelper      $rotateControlHelper      The rotate control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControlHelper       $scaleControlHelper       The scale control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper  $streetViewControlHelper  The street view control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlHelper        $zoomControlHelper        The zoom control helper.
+     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                   $mapTypeIdHelper          The map type id
+     *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper     $mapTypeControlHelper     The map type control
+     *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper $overviewMapControlHelper The overview map
+     *                                                                                            control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\PanControlHelper         $panControlHelper         The pan control
+     *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\RotateControlHelper      $rotateControlHelper      The rotate control
+     *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControlHelper       $scaleControlHelper       The scale control
+     *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper  $streetViewControlHelper  The street view
+     *                                                                                            control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlHelper        $zoomControlHelper        The zoom control
+     *                                                                                            helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\MarkerHelper             $markerHelper             The marker helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper         $infoWindowHelper         The info window helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper         $infoWindowHelper         The info window
+     *                                                                                            helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\PolylineHelper           $polylineHelper           The polyline helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper    $encodedPolylineHelper    The encoded polyline helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper    $encodedPolylineHelper    The encoded polyline
+     *                                                                                            helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\PolygonHelper            $polygonHelper            The polygon helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\RectangleHelper          $rectangleHelper          The rectangle helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\CircleHelper             $circleHelper             The circle helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper      $groundOverlayHelper      The ground overlay helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper      $groundOverlayHelper      The ground overlay
+     *                                                                                            helper.
      * @param \Ivory\GoogleMap\Helper\Layers\KMLLayerHelper             $kmlLayerHelper           The KML layer helper.
-     * @param \Ivory\GoogleMap\Helper\Events\EventManagerHelper         $eventManagerHelper       The event manager helper.
+     * @param \Ivory\GoogleMap\Helper\Events\EventManagerHelper         $eventManagerHelper       The event manager
+     *                                                                                            helper.
      */
     public function __construct(
         CoordinateHelper $coordinateHelper = null,
@@ -150,8 +162,7 @@ class MapHelper
         GroundOverlayHelper $groundOverlayHelper = null,
         KMLLayerHelper $kmlLayerHelper = null,
         EventManagerHelper $eventManagerHelper = null
-    )
-    {
+    ) {
         $this->loaded = false;
 
         if ($coordinateHelper === null) {
@@ -349,7 +360,8 @@ class MapHelper
     /**
      * Sets the overview map control helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper $overviewMapControlHelper The overview map control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper $overviewMapControlHelper The overview map
+     *                                                                                            control helper.
      */
     public function setOverviewMapControlHelper(OverviewMapControlHelper $overviewMapControlHelper)
     {
@@ -429,7 +441,8 @@ class MapHelper
     /**
      * Sets the street view control helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper $streetViewControlHelper The street view control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper $streetViewControlHelper The street view control
+     *                                                                                          helper.
      */
     public function setStreetViewControlHelper(StreetViewControlHelper $streetViewControlHelper)
     {
@@ -665,7 +678,8 @@ class MapHelper
      */
     public function renderContainer(Map $map)
     {
-        return sprintf('<div id="%s" style="width:%s;height:%s;"></div>'.PHP_EOL,
+        return sprintf(
+            '<div id="%s" style="width:%s;height:%s;"></div>'.PHP_EOL,
             $map->getHtmlContainerId(),
             $map->getStylesheetOption('width'),
             $map->getStylesheetOption('height')
@@ -783,7 +797,8 @@ class MapHelper
             $mapJSONOptions .= '}';
         }
 
-        $html[] = sprintf('var %s = new google.maps.Map(document.getElementById("%s"), %s);'.PHP_EOL,
+        $html[] = sprintf(
+            'var %s = new google.maps.Map(document.getElementById("%s"), %s);'.PHP_EOL,
             $map->getJavascriptVariable(),
             $map->getHtmlContainerId(),
             $mapJSONOptions
@@ -801,7 +816,8 @@ class MapHelper
      */
     public function renderCenter(Map $map)
     {
-        return sprintf('%s.setCenter(%s);'.PHP_EOL,
+        return sprintf(
+            '%s.setCenter(%s);'.PHP_EOL,
             $map->getJavascriptVariable(),
             $this->coordinateHelper->render($map->getCenter())
         );
@@ -819,7 +835,8 @@ class MapHelper
         $html = array();
 
         $html[] = $this->boundHelper->render($map->getBound());
-        $html[] = sprintf('%s.fitBounds(%s);'.PHP_EOL,
+        $html[] = sprintf(
+            '%s.fitBounds(%s);'.PHP_EOL,
             $map->getJavascriptVariable(),
             $map->getBound()->getJavascriptVariable()
         );
@@ -1086,7 +1103,7 @@ class MapHelper
             'ZoomControl',
         );
 
-        foreach($controlNames as $controlName) {
+        foreach ($controlNames as $controlName) {
             $controlHelper = lcfirst($controlName).'Helper';
 
             $mapControlJSONOption = $this->renderMapControl($map, $controlName, $this->$controlHelper);
@@ -1120,7 +1137,8 @@ class MapHelper
                 if ($map->$hasControlMethod()) {
                     $getControlMethod = 'get'.$controlName;
 
-                    $mapControl[] = sprintf('"%sOptions":%s',
+                    $mapControl[] = sprintf(
+                        '"%sOptions":%s',
                         $lcFirstControlName,
                         $controlHelper->render($map->$getControlMethod())
                     );
@@ -1140,7 +1158,8 @@ class MapHelper
      *
      * @param \Ivory\GoogleMap\Map             $map                    The map.
      * @param \Ivory\GoogleMap\Overlays\Marker $marker                 The marker.
-     * @param boolean                          $hasClosableInfoWindows TRUE if the map has closable info windows else FALSE.
+     * @param boolean                          $hasClosableInfoWindows TRUE if the map has closable info windows else
+     *                                                                 FALSE.
      */
     protected function registerMarkerInfoWindowEvent(Map $map, Marker $marker, $hasClosableInfoWindows)
     {

@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\PanControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\PanControl;
 
 /**
  * Pan control test.

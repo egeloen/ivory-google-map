@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Services\Directions\DirectionsStep,
-    Ivory\GoogleMap\Services\Directions\TravelMode;
+use Ivory\GoogleMap\Services\Directions\DirectionsStep;
+use Ivory\GoogleMap\Services\Directions\TravelMode;
 
 /**
  * Directions step test.

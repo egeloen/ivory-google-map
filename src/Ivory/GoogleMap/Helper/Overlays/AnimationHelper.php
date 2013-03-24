@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Exception\TemplatingException,
-    Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Overlays\Animation;
 
 /**
  * Animation helper.
@@ -36,11 +36,8 @@ class AnimationHelper
             case Animation::BOUNCE:
             case Animation::DROP:
                 return sprintf('google.maps.Animation.%s', strtoupper($animation));
-            break;
-
             default:
                 throw TemplatingException::invalidAnimation();
-            break;
         }
     }
 }

@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Events\MouseEvent,
-    Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Events\MouseEvent;
+use Ivory\GoogleMap\Overlays\InfoWindow;
 
 /**
  * Info window test.
@@ -209,7 +209,8 @@ class InfoWindowTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The only available open event are : click, dblclick, mouseup, mousedown, mouseover, mouseout.
+     * @expectedExceptionMessage The only available open event are : click, dblclick, mouseup, mousedown, mouseover,
+     * mouseout.
      */
     public function testOpenEventWithInvalidValue()
     {

@@ -39,11 +39,11 @@ class GeocoderResult
     /**
      * Create a gecoder result.
      *
-     * @param array                                                       $addressComponents The geocoder result address components.
-     * @param string                                                      $formattedAddress  The geocoder result formatted address.
-     * @param \Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry $geometry          The geocoder result geometry.
-     * @param array                                                       $types             The geocoder result types.
-     * @param boolean                                                     $partialMatch      The geocoder result partial match flag.
+     * @param array                                                       $addressComponents The address components.
+     * @param string                                                      $formattedAddress  The formatted address.
+     * @param \Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry $geometry          The geometry.
+     * @param array                                                       $types             The types.
+     * @param boolean                                                     $partialMatch      The partial match flag.
      */
     public function __construct(
         array $addressComponents,
@@ -51,8 +51,7 @@ class GeocoderResult
         GeocoderGeometry $geometry,
         array $types,
         $partialMatch = null
-    )
-    {
+    ) {
         $this->setAddressComponents($addressComponents);
         $this->setFormattedAddress($formattedAddress);
         $this->setGeometry($geometry);
@@ -101,7 +100,8 @@ class GeocoderResult
     /**
      * Adds an address component to the geocoder result.
      *
-     * @param Ivory\GoogleMapBundle\Model\Services\Result\GeocoderAddressComponent $addressComponent The address component to add.
+     * @param \Ivory\GoogleMapBundle\Model\Services\Result\GeocoderAddressComponent $addressComponent The address
+     *                                                                                                component to add.
      */
     public function addAddressComponent(GeocoderAddressComponent $addressComponent)
     {

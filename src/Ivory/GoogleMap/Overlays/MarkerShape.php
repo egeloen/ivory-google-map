@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Marker shape which describes a google map marker shape.
@@ -67,11 +67,9 @@ class MarkerShape extends AbstractJavascriptVariableAsset
             case 'poly':
             case 'rect':
                 $this->type = $type;
-            break;
-
+                break;
             default:
                 throw OverlayException::invalidMarkerShapeType();
-            break;
         }
     }
 
@@ -114,13 +112,16 @@ class MarkerShape extends AbstractJavascriptVariableAsset
     {
         switch (strtolower($this->type)) {
             case 'circle':
-                if ((count($coordinates) === 3) && is_numeric($coordinates[0]) && is_numeric($coordinates[1]) && is_numeric($coordinates[2])) {
+                if ((count($coordinates) === 3)
+                    && is_numeric($coordinates[0])
+                    && is_numeric($coordinates[1])
+                    && is_numeric($coordinates[2])
+                ) {
                     $this->coordinates = $coordinates;
                 } else {
                     throw OverlayException::invalidMarkerShapeCircleCoordinates();
                 }
-            break;
-
+                break;
             case 'poly':
                 if ((count($coordinates) <= 0) || ((count($coordinates) % 2) !== 0)) {
                     throw OverlayException::invalidMarkerShapePolyCoordinates();
@@ -133,15 +134,19 @@ class MarkerShape extends AbstractJavascriptVariableAsset
                 }
 
                 $this->coordinates = $coordinates;
-            break;
-
+                break;
             case 'rect':
-                if ((count($coordinates) === 4) && is_numeric($coordinates[0]) && is_numeric($coordinates[1]) && is_numeric($coordinates[2]) && is_numeric($coordinates[3])) {
+                if ((count($coordinates) === 4)
+                    && is_numeric($coordinates[0])
+                    && is_numeric($coordinates[1])
+                    && is_numeric($coordinates[2])
+                    && is_numeric($coordinates[3])
+                ) {
                     $this->coordinates = $coordinates;
                 } else {
                     throw OverlayException::invalidMarkerShapeRectCoordinates();
                 }
-            break;
+                break;
         }
     }
 
@@ -151,7 +156,8 @@ class MarkerShape extends AbstractJavascriptVariableAsset
      * @param integer $x The X coordinate.
      * @param integer $y The Y coordinate.
      *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the type is not poly or if the poly coordinate is not valid.
+     * @throws \Ivory\GoogleMap\Exception\OverlayException If the type is not poly or if the poly coordinate is not
+     *                                                     valid.
      */
     public function addPolyCoordinate($x, $y)
     {

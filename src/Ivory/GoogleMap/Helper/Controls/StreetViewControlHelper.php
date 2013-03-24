@@ -65,7 +65,8 @@ class StreetViewControlHelper
      */
     public function render(StreetViewControl $streetViewControl)
     {
-        return sprintf('{"position":%s}',
+        return sprintf(
+            '{"position":%s}',
             $this->controlPositionHelper->render($streetViewControl->getControlPosition())
         );
     }

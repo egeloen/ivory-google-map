@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Events\Event,
-    Ivory\GoogleMap\Helper\Events\EventHelper;
+use Ivory\GoogleMap\Events\Event;
+use Ivory\GoogleMap\Helper\Events\EventHelper;
 
 /**
  * Event helper test.

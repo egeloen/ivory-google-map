@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Exception\DirectionsException,
-    Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Overlays\EncodedPolyline;
 
 /**
  * A directions route which describes a google map route.
@@ -63,8 +63,7 @@ class DirectionsRoute
         $summary,
         array $warnings,
         array $waypointOrder
-    )
-    {
+    ) {
         $this->setBound($bound);
         $this->setCopyrights($copyrights);
         $this->setLegs($legs);
@@ -207,7 +206,7 @@ class DirectionsRoute
      */
     public function getWarnings()
     {
-       return $this->warnings;
+        return $this->warnings;
     }
 
     /**

@@ -40,7 +40,7 @@ class MouseEvent
      *
      * @return array The mouse events.
      */
-    static public function getMouseEvents()
+    public static function getMouseEvents()
     {
         return array(
             self::CLICK,

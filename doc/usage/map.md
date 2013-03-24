@@ -3,8 +3,8 @@
 ## Build your map
 
 ``` php
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\MapTypeId;
 
 $map = new Map();
 
@@ -110,8 +110,8 @@ For configurating the map type, the better way is to follow the oriented object 
 want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\MapTypeId;
 
 $map = new Map();
 

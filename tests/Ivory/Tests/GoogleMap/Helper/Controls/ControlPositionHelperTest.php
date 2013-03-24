@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Helper\Controls\ControlPositionHelper;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Helper\Controls\ControlPositionHelper;
 
 /**
  * Control position helper test.
@@ -105,7 +105,8 @@ class ControlPositionHelperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\TemplatingException
-     * @expectedExceptionMessage The control position can only be : bottom_center, bottom_left, bottom_right, left_bottom, left_center, left_top, right_bottom, right_center, right_top, top_center, top_left, top_right.
+     * @expectedExceptionMessage The control position can only be : bottom_center, bottom_left, bottom_right,
+     * left_bottom, left_center, left_top, right_bottom, right_center, right_top, top_center, top_left, top_right.
      */
     public function testRenderWithInvalidValue()
     {

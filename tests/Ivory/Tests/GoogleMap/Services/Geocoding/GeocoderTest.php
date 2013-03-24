@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\CurlHttpAdapter,
-    Geocoder\Provider\GoogleMapsProvider,
-    Ivory\GoogleMap\Services\Geocoding\Geocoder,
-    Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
+use Geocoder\HttpAdapter\CurlHttpAdapter;
+use Geocoder\Provider\GoogleMapsProvider;
+use Ivory\GoogleMap\Services\Geocoding\Geocoder;
+use Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
 
 /**
  * Geocoder test.

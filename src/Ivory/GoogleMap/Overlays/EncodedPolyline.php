@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Encoded polyline.

@@ -5,9 +5,9 @@ The Scale control displays a map scale element. This control is not enabled by d
 ## Build your scale control
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ScaleControl,
-    Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ScaleControl;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
 
 $scaleControl = new ScaleControl();
 
@@ -23,8 +23,8 @@ For configurating the pan control position, the better way is to follow the orie
 position. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ScaleControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ScaleControl;
 
 $scaleControl = new ScaleControl();
 
@@ -73,8 +73,8 @@ For configurating the scale control style, the better way is to follow the orien
 control style. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\ScaleControl,
-    Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ScaleControl;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
 
 $scaleControl = new ScaleControl();
 
@@ -85,9 +85,9 @@ $scaleControl->setScaleControlStyle(ScaleControlStyle::DEFAULT_);
 ## Add your scale control to the map
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ScaleControl,
-    Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ScaleControl;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
 
 $scaleControl = new ScaleControl();
 

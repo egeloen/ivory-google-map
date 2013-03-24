@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Events;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset,
-    Ivory\GoogleMap\Exception\EventException;
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
+use Ivory\GoogleMap\Exception\EventException;
 
 /**
  * Event which describes a google map event.

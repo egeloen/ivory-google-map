@@ -47,7 +47,7 @@ class ControlPosition
      *
      * @return array The control positions.
      */
-    static public function getControlPositions()
+    public static function getControlPositions()
     {
         return array(
             self::BOTTOM_CENTER,

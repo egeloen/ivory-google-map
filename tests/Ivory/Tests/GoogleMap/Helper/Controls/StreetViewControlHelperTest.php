@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\StreetViewControl,
-    Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\StreetViewControl;
+use Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper;
 
 /**
  * Street view control helper test.

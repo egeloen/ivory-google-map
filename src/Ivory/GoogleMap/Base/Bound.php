@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset,
-    Ivory\GoogleMap\Exception\BaseException,
-    Ivory\GoogleMap\Overlays\ExtendableInterface;
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
+use Ivory\GoogleMap\Exception\BaseException;
+use Ivory\GoogleMap\Overlays\ExtendableInterface;
 
 /**
  * Bound wich describes a google map bound.
@@ -79,11 +79,7 @@ class Bound extends AbstractJavascriptVariableAsset
 
         if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->southWest = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->southWest === null) {
                 $this->southWest = new Coordinate();
             }
@@ -94,7 +90,7 @@ class Bound extends AbstractJavascriptVariableAsset
             if (isset($args[2]) && is_bool($args[2])) {
                 $this->southWest->setNoWrap($args[2]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->southWest = null;
         } else {
             throw BaseException::invalidBoundSouthWest();
@@ -126,11 +122,7 @@ class Bound extends AbstractJavascriptVariableAsset
 
         if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->northEast = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->northEast === null) {
                 $this->northEast = new Coordinate();
             }
@@ -141,7 +133,7 @@ class Bound extends AbstractJavascriptVariableAsset
             if (isset($args[2]) && is_bool($args[2])) {
                 $this->northEast->setNoWrap($args[2]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->northEast = null;
         } else {
             throw BaseException::invalidBoundNorthEast();

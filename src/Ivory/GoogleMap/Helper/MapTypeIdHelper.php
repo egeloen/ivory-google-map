@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Exception\TemplatingException,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\MapTypeId;
 
 /**
  * Map type ID helper.
@@ -38,11 +38,8 @@ class MapTypeIdHelper
             case MapTypeId::SATELLITE:
             case MapTypeId::TERRAIN:
                 return sprintf('google.maps.MapTypeId.%s', strtoupper($mapTypeId));
-            break;
-
             default:
                 throw TemplatingException::invalidMapTypeId();
-            break;
         }
     }
 }

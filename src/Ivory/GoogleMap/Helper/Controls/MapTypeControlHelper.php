@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\MapTypeControl,
-    Ivory\GoogleMap\Helper\MapTypeIdHelper;
+use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Helper\MapTypeIdHelper;
 
 /**
  * Map type control helper.
@@ -33,16 +33,19 @@ class MapTypeControlHelper
     /**
      * Construct a map type control helper.
      *
-     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                     $mapTypeIdHelper           The map type ID helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper      $controlPositionHelper     The control position helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControleStyleHelper $mapTypeControlStyleHelper The map type control style helper.
+     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                     $mapTypeIdHelper           The map type ID
+     *                                                                                               helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper      $controlPositionHelper     The control
+     *                                                                                               position helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControleStyleHelper $mapTypeControlStyleHelper The map type
+     *                                                                                               control style
+     *                                                                                               helper.
      */
     public function __construct(
         MapTypeIdHelper $mapTypeIdHelper = null,
         ControlPositionHelper $controlPositionHelper = null,
         MapTypeControlStyleHelper $mapTypeControlStyleHelper = null
-    )
-    {
+    ) {
         if ($mapTypeIdHelper === null) {
             $mapTypeIdHelper = new MapTypeIdHelper();
         }
@@ -113,7 +116,9 @@ class MapTypeControlHelper
     /**
      * Sets the map type control style helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControlStyleHelper $mapTypeControlStyleHelper The map type control style helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControlStyleHelper $mapTypeControlStyleHelper The map type
+     *                                                                                              control style
+     *                                                                                              helper.
      */
     public function setMapTypeControlStyleHelper(MapTypeControlStyleHelper $mapTypeControlStyleHelper)
     {
@@ -135,7 +140,8 @@ class MapTypeControlHelper
             $mapTypeIds[] = $this->mapTypeIdHelper->render($mapTypeId);
         }
 
-        return sprintf('{"mapTypeIds":[%s],"position":%s,"style":%s}',
+        return sprintf(
+            '{"mapTypeIds":[%s],"position":%s,"style":%s}',
             implode(', ', $mapTypeIds),
             $this->controlPositionHelper->render($mapTypeControl->getControlPosition()),
             $this->mapTypeControlStyleHelper->render($mapTypeControl->getMapTypeControlStyle())

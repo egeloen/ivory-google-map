@@ -11,15 +11,15 @@
 
 namespace Ivory\GoogleMap\Helper\Base;
 
-use Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Overlays\Circle,
-    Ivory\GoogleMap\Overlays\EncodedPolyline,
-    Ivory\GoogleMap\Overlays\GroundOverlay,
-    Ivory\GoogleMap\Overlays\InfoWindow,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Overlays\Polyline,
-    Ivory\GoogleMap\Overlays\Polygon,
-    Ivory\GoogleMap\Overlays\Rectangle;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Overlays\Circle;
+use Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Overlays\GroundOverlay;
+use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\Polyline;
+use Ivory\GoogleMap\Overlays\Polygon;
+use Ivory\GoogleMap\Overlays\Rectangle;
 
 /**
  * Bound helper.
@@ -83,7 +83,8 @@ class BoundHelper
                 $html[] = $this->renderExtends($bound);
             }
         } else {
-            $html[] = sprintf('var %s = new google.maps.LatLngBounds(%s, %s);'.PHP_EOL,
+            $html[] = sprintf(
+                'var %s = new google.maps.LatLngBounds(%s, %s);'.PHP_EOL,
                 $bound->getJavascriptVariable(),
                 $this->coordinateHelper->render($bound->getSouthWest()),
                 $this->coordinateHelper->render($bound->getNorthEast())
@@ -106,22 +107,29 @@ class BoundHelper
 
         foreach ($bound->getExtends() as $extend) {
             if (($extend instanceof Marker) || ($extend instanceof InfoWindow)) {
-                $html[] = sprintf('%s.extend(%s.getPosition());'.PHP_EOL,
+                $html[] = sprintf(
+                    '%s.extend(%s.getPosition());'.PHP_EOL,
                     $bound->getJavascriptVariable(),
                     $extend->getJavascriptVariable()
                 );
-            } else if(($extend instanceof Polyline) || ($extend instanceof EncodedPolyline) || ($extend instanceof Polygon)) {
-                $html[] = sprintf('%s.getPath().forEach(function(element){%s.extend(element)});'.PHP_EOL,
+            } elseif (($extend instanceof Polyline)
+                || ($extend instanceof EncodedPolyline)
+                || ($extend instanceof Polygon)
+            ) {
+                $html[] = sprintf(
+                    '%s.getPath().forEach(function(element){%s.extend(element)});'.PHP_EOL,
                     $extend->getJavascriptVariable(),
                     $bound->getJavascriptVariable()
                 );
-            } else if(($extend instanceof Rectangle) || ($extend instanceof GroundOverlay)) {
-                $html[] = sprintf('%s.union(%s);'.PHP_EOL,
+            } elseif (($extend instanceof Rectangle) || ($extend instanceof GroundOverlay)) {
+                $html[] = sprintf(
+                    '%s.union(%s);'.PHP_EOL,
                     $bound->getJavascriptVariable(),
                     $extend->getBound()->getJavascriptVariable()
                 );
-            } else if($extend instanceof Circle) {
-                $html[] = sprintf('%s.union(%s.getBounds());'.PHP_EOL,
+            } elseif ($extend instanceof Circle) {
+                $html[] = sprintf(
+                    '%s.union(%s.getBounds());'.PHP_EOL,
                     $bound->getJavascriptVariable(),
                     $extend->getJavascriptVariable()
                 );

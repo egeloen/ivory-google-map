@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\Polyline,
-    Ivory\GoogleMap\Helper\Overlays\PolylineHelper;
+use Ivory\GoogleMap\Overlays\Polyline;
+use Ivory\GoogleMap\Helper\Overlays\PolylineHelper;
 
 /**
  * Polyline helper test.
@@ -71,10 +71,15 @@ class PolylineHelperTest extends \PHPUnit_Framework_TestCase
         $polyline->addCoordinate(3.1, 4.2);
         $polyline->addCoordinate(7.4, 12.6);
 
-        $this->assertSame(
-            'var polyline = new google.maps.Polyline({"map":map,"path":[new google.maps.LatLng(1.1, 2.1, true),new google.maps.LatLng(3.1, 4.2, true),new google.maps.LatLng(7.4, 12.6, true)]});'.PHP_EOL,
-            $this->polylineHelper->render($polyline, $map)
-        );
+        $expected = 'var polyline = new google.maps.Polyline({'.
+            '"map":map,'.
+            '"path":['.
+            'new google.maps.LatLng(1.1, 2.1, true),'.
+            'new google.maps.LatLng(3.1, 4.2, true),'.
+            'new google.maps.LatLng(7.4, 12.6, true)'.
+            ']});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->polylineHelper->render($polyline, $map));
     }
 
     public function testRenderWithOptions()
@@ -90,14 +95,19 @@ class PolylineHelperTest extends \PHPUnit_Framework_TestCase
         $polyline->addCoordinate(1.1, 2.1);
         $polyline->addCoordinate(3.1, 4.2);
         $polyline->addCoordinate(7.4, 12.6);
-        $polyline->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $polyline->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $this->assertSame(
-            'var polyline = new google.maps.Polyline({"map":map,"path":[new google.maps.LatLng(1.1, 2.1, true),new google.maps.LatLng(3.1, 4.2, true),new google.maps.LatLng(7.4, 12.6, true)],"option1":"value1","option2":"value2"});'.PHP_EOL,
-            $this->polylineHelper->render($polyline, $map)
-        );
+        $expected = 'var polyline = new google.maps.Polyline({'.
+            '"map":map,'.
+            '"path":['.
+            'new google.maps.LatLng(1.1, 2.1, true),'.
+            'new google.maps.LatLng(3.1, 4.2, true),'.
+            'new google.maps.LatLng(7.4, 12.6, true)'.
+            '],'.
+            '"option1":"value1",'.
+            '"option2":"value2"'.
+            '});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->polylineHelper->render($polyline, $map));
     }
 }

@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Services;
 
-use Buzz\Browser,
-    Ivory\GoogleMap\Exception\ServiceException;
+use Buzz\Browser;
+use Ivory\GoogleMap\Exception\ServiceException;
 
 /**
  * Abstract class for accesing google API.

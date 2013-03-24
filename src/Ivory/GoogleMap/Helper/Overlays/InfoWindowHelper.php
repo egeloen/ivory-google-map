@@ -11,11 +11,11 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Overlays\InfoWindow,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper,
-    Ivory\GoogleMap\Helper\Base\SizeHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Helper\Base\SizeHelper;
 
 /**
  * Info window helper.
@@ -61,7 +61,8 @@ class InfoWindowHelper
     public function render(InfoWindow $infoWindow, $renderPosition = true)
     {
         if ($renderPosition) {
-            $infoWindowJSONOptions = sprintf('{"position":%s,',
+            $infoWindowJSONOptions = sprintf(
+                '{"position":%s,',
                 $this->coordinateHelper->render($infoWindow->getPosition())
             );
         } else {
@@ -79,7 +80,8 @@ class InfoWindowHelper
 
         $infoWindowJSONOptions .= substr(json_encode($infoWindowOptions), 1);
 
-        return sprintf('var %s = new google.maps.InfoWindow(%s);'.PHP_EOL,
+        return sprintf(
+            'var %s = new google.maps.InfoWindow(%s);'.PHP_EOL,
             $infoWindow->getJavascriptVariable(),
             $infoWindowJSONOptions
         );
@@ -97,7 +99,8 @@ class InfoWindowHelper
     public function renderOpen(InfoWindow $infoWindow, Map $map, Marker $marker = null)
     {
         if ($marker !== null) {
-            return sprintf('%s.open(%s, %s);'.PHP_EOL,
+            return sprintf(
+                '%s.open(%s, %s);'.PHP_EOL,
                 $infoWindow->getJavascriptVariable(),
                 $map->getJavascriptVariable(),
                 $marker->getJavascriptVariable()

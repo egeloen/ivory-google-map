@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper\Layers;
 
-use Ivory\GoogleMap\Layers\KMLLayer,
-    Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Layers\KMLLayer;
+use Ivory\GoogleMap\Map;
 
 /**
  * KML Layer helper.
@@ -40,7 +40,8 @@ class KMLLayerHelper
             $kmlLayerJSONOptions .= '}';
         }
 
-        return sprintf('var %s = new google.maps.KmlLayer("%s", %s);'.PHP_EOL,
+        return sprintf(
+            'var %s = new google.maps.KmlLayer("%s", %s);'.PHP_EOL,
             $kmlLayer->getJavascriptVariable(),
             $kmlLayer->getUrl(),
             $kmlLayerJSONOptions

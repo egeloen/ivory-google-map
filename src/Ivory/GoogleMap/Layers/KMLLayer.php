@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Layers;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Exception\LayerException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Exception\LayerException;
 
 /**
  * KML Layer which describes a google map KML layer.

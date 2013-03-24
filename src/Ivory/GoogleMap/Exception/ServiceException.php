@@ -23,7 +23,7 @@ class ServiceException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID SERVICE FORMAT" exception.
      */
-    static public function invalidServiceFormat()
+    public static function invalidServiceFormat()
     {
         return new static(sprintf('The service format can only be : %s.', implode(', ', array('json', 'xml'))));
     }
@@ -33,7 +33,7 @@ class ServiceException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID SERVICE HTTPS" exception.
      */
-    static public function invalidServiceHttps()
+    public static function invalidServiceHttps()
     {
         return new static('The service https flag must be a boolean value.');
     }
@@ -43,7 +43,7 @@ class ServiceException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID SERVICE URL" exception.
      */
-    static public function invalidServiceUrl()
+    public static function invalidServiceUrl()
     {
         return new static('The service url must be a string value.');
     }

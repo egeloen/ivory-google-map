@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Services\Geocoding\Result;
 
-use Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\GeocodingException;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\GeocodingException;
 
 /**
  * GeocoderGeometry which describes a google map geocoder geometry.

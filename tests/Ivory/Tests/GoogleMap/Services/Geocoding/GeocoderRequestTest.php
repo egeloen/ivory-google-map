@@ -160,7 +160,14 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
      * The available prototypes are :
      * - function setBound(Ivory\GoogleMap\Base\Bound $bound = null)
      * - function setBound(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     * - function setBound(double $southWestLatitude, double $southWestLongitude, double $northEastLatitude, double $northEastLongitude, boolean southWestNoWrap = true, boolean $northEastNoWrap = true)
+     * - function setBound(
+     *     double $southWestLatitude,
+     *     double $southWestLongitude,
+     *     double $northEastLatitude,
+     *     double $northEastLongitude,
+     *     boolean southWestNoWrap = true,
+     *     boolean $northEastNoWrap = true
+     * )
      */
     public function testBoundWithInvalidValue()
     {

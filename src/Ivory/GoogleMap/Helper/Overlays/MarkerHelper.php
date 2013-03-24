@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Marker,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Marker helper.
@@ -52,8 +52,7 @@ class MarkerHelper
         InfoWindowHelper $infoWindowHelper = null,
         MarkerImageHelper $markerImageHelper = null,
         MarkerShapeHelper $markerShapeHelper = null
-    )
-    {
+    ) {
         if ($coordinateHelper === null) {
             $coordinateHelper = new CoordinateHelper();
         }
@@ -193,7 +192,8 @@ class MarkerHelper
     {
         $html = array();
 
-        $markerJSONOptions = sprintf('{"map":%s,"position":%s',
+        $markerJSONOptions = sprintf(
+            '{"map":%s,"position":%s',
             $map->getJavascriptVariable(),
             $this->coordinateHelper->render($marker->getPosition())
         );
@@ -225,7 +225,8 @@ class MarkerHelper
             $markerJSONOptions .= '}';
         }
 
-        $html[] = sprintf('var %s = new google.maps.Marker(%s);'.PHP_EOL,
+        $html[] = sprintf(
+            'var %s = new google.maps.Marker(%s);'.PHP_EOL,
             $marker->getJavascriptVariable(),
             $markerJSONOptions
         );

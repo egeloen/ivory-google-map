@@ -11,10 +11,10 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Rectangle which describes a google map rectangle.
@@ -58,7 +58,14 @@ class Rectangle extends AbstractOptionsAsset implements ExtendableInterface
      * Available prototypes:
      *  - function setBound(Ivory\GoogleMap\Base\Bound $bound)
      *  - function setBount(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     *  - function setBound(double $southWestLatitude, double $southWestLongitude, double $northEastLatitude, double $northEastLongitude, boolean southWestNoWrap = true, boolean $northEastNoWrap = true)
+     *  - function setBound(
+     *     double $southWestLatitude,
+     *     double $southWestLongitude,
+     *     double $northEastLatitude,
+     *     double $northEastLongitude,
+     *     boolean southWestNoWrap = true,
+     *     boolean $northEastNoWrap = true
+     * )
      *
      * @throws \Ivory\GoogleMap\Exception\OverlayException If the bound is not valid.
      */
@@ -72,21 +79,15 @@ class Rectangle extends AbstractOptionsAsset implements ExtendableInterface
             }
 
             $this->bound = $args[0];
-        } else if (
-            (isset($args[0]) && ($args[0] instanceof Coordinate))
-            &&
-            (isset($args[1]) && ($args[1] instanceof Coordinate))
+        } elseif ((isset($args[0]) && ($args[0] instanceof Coordinate))
+            && (isset($args[1]) && ($args[1] instanceof Coordinate))
         ) {
             $this->bound->setSouthWest($args[0]);
             $this->bound->setNorthEast($args[1]);
-        } else if(
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-            &&
-            (isset($args[2]) && is_numeric($args[2]))
-            &&
-            (isset($args[3]) && is_numeric($args[3]))
+        } elseif ((isset($args[0]) && is_numeric($args[0]))
+            && (isset($args[1]) && is_numeric($args[1]))
+            && (isset($args[2]) && is_numeric($args[2]))
+            && (isset($args[3]) && is_numeric($args[3]))
         ) {
             $this->bound->setSouthWest(new Coordinate($args[0], $args[1]));
             $this->bound->setNorthEast(new Coordinate($args[2], $args[3]));

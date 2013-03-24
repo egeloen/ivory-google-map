@@ -56,8 +56,8 @@ For configurating the info window open event, the better way is to follow the or
 don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Events\MouseEvent,
-    Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Events\MouseEvent;
+use Ivory\GoogleMap\Overlays\InfoWindow;
 
 $infoWindow = new InfoWindow();
 

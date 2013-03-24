@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Circle,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Circle;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Circle helper.
@@ -71,14 +71,16 @@ class CircleHelper
     {
         $circleOptions = array_merge(array('radius' => $circle->getRadius()), $circle->getOptions());
 
-        $circleJSONOptions = sprintf('{"map":%s,"center":%s,',
+        $circleJSONOptions = sprintf(
+            '{"map":%s,"center":%s,',
             $map->getJavascriptVariable(),
             $this->coordinateHelper->render($circle->getCenter())
         );
 
         $circleJSONOptions .= substr(json_encode($circleOptions), 1);
 
-        return sprintf('var %s = new google.maps.Circle(%s);'.PHP_EOL,
+        return sprintf(
+            'var %s = new google.maps.Circle(%s);'.PHP_EOL,
             $circle->getJavascriptVariable(),
             $circleJSONOptions
         );

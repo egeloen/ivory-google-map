@@ -30,7 +30,8 @@ class SizeHelper
     public function render(Size $size)
     {
         if ($size->hasUnits()) {
-            return sprintf('new google.maps.Size(%s, %s, "%s", "%s")',
+            return sprintf(
+                'new google.maps.Size(%s, %s, "%s", "%s")',
                 $size->getWidth(),
                 $size->getHeight(),
                 $size->getWidthUnit(),

@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\Polygon,
-    Ivory\GoogleMap\Helper\Overlays\PolygonHelper;
+use Ivory\GoogleMap\Overlays\Polygon;
+use Ivory\GoogleMap\Helper\Overlays\PolygonHelper;
 
 /**
  * Polygon helper test.
@@ -71,10 +71,15 @@ class PolygonHelperTest extends \PHPUnit_Framework_TestCase
         $polygon->addCoordinate(3.1, 4.2);
         $polygon->addCoordinate(7.4, 12.6);
 
-        $this->assertSame(
-            'var polygon = new google.maps.Polygon({"map":map,"paths":[new google.maps.LatLng(1.1, 2.1, true),new google.maps.LatLng(3.1, 4.2, true),new google.maps.LatLng(7.4, 12.6, true)]});'.PHP_EOL,
-            $this->polygonHelper->render($polygon, $map)
-        );
+        $expected = 'var polygon = new google.maps.Polygon({'.
+            '"map":map,'.
+            '"paths":['.
+            'new google.maps.LatLng(1.1, 2.1, true),'.
+            'new google.maps.LatLng(3.1, 4.2, true),'.
+            'new google.maps.LatLng(7.4, 12.6, true)'.
+            ']});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->polygonHelper->render($polygon, $map));
     }
 
     public function testRenderWithOptions()
@@ -90,14 +95,19 @@ class PolygonHelperTest extends \PHPUnit_Framework_TestCase
         $polygon->addCoordinate(1.1, 2.1);
         $polygon->addCoordinate(3.1, 4.2);
         $polygon->addCoordinate(7.4, 12.6);
-        $polygon->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $polygon->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $this->assertSame(
-            'var polygon = new google.maps.Polygon({"map":map,"paths":[new google.maps.LatLng(1.1, 2.1, true),new google.maps.LatLng(3.1, 4.2, true),new google.maps.LatLng(7.4, 12.6, true)],"option1":"value1","option2":"value2"});'.PHP_EOL,
-            $this->polygonHelper->render($polygon, $map)
-        );
+        $expected = 'var polygon = new google.maps.Polygon({'.
+            '"map":map,'.
+            '"paths":['.
+            'new google.maps.LatLng(1.1, 2.1, true),'.
+            'new google.maps.LatLng(3.1, 4.2, true),'.
+            'new google.maps.LatLng(7.4, 12.6, true)'.
+            '],'.
+            '"option1":"value1",'.
+            '"option2":"value2"'.
+            '});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->polygonHelper->render($polygon, $map));
     }
 }

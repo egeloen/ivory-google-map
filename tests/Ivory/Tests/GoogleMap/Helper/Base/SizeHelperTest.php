@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Base;
 
-use Ivory\GoogleMap\Base\Size,
-    Ivory\GoogleMap\Helper\Base\SizeHelper;
+use Ivory\GoogleMap\Base\Size;
+use Ivory\GoogleMap\Helper\Base\SizeHelper;
 
 /**
  * Size helper test.

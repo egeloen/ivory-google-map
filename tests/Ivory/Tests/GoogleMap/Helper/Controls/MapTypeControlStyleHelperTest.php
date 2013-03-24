@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\Helper\Controls\MapTypeControlStyleHelper;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Helper\Controls\MapTypeControlStyleHelper;
 
 /**
  * Map type control style helper test.

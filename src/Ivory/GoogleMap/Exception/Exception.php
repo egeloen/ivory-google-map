@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Exception;
 
-use \Exception as BaseException;
+use Exception as BaseException;
 
 /**
  * Ivory google map exception.
@@ -27,7 +27,7 @@ class Exception extends BaseException
      *
      * @return \Ivory\GoogleMap\Exception\Exception The "METHOD NOT SUPPORTED" exception.
      */
-    static public function methodNotSupported($method)
+    public static function methodNotSupported($method)
     {
         return new static(sprintf('The method "%s" is not supported.', $method));
     }

@@ -11,11 +11,11 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Services\Directions\Directions,
-    Ivory\GoogleMap\Services\Directions\DirectionsRequest,
-    Ivory\GoogleMap\Services\Directions\DirectionsStatus,
-    Ivory\GoogleMap\Services\Directions\TravelMode,
-    Ivory\GoogleMap\Services\Directions\UnitSystem;
+use Ivory\GoogleMap\Services\Directions\Directions;
+use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
+use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
+use Ivory\GoogleMap\Services\Directions\TravelMode;
+use Ivory\GoogleMap\Services\Directions\UnitSystem;
 
 /**
  * Directions test.

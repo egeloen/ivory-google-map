@@ -23,9 +23,10 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID BOUND NORTH EAST" exception.
      */
-    static public function invalidBoundNorthEast()
+    public static function invalidBoundNorthEast()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The north east setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setNorthEast(Ivory\GoogleMap\Base\Coordinate $northEast)',
@@ -38,9 +39,10 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID BOUND SOUTH WEST" exception.
      */
-    static public function invalidBoundSouthWest()
+    public static function invalidBoundSouthWest()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The south west setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setSouthWest(Ivory\GoogleMap\Base\Coordinate $southWest)',
@@ -53,7 +55,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID COORDINATE LATITUDE" exception.
      */
-    static public function invalidCoordinateLatitude()
+    public static function invalidCoordinateLatitude()
     {
         return new static('The latitude of a coordinate must be a numeric value.');
     }
@@ -63,7 +65,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID COORDINATE LONGITUDE" exception.
      */
-    static public function invalidCoordinateLongitude()
+    public static function invalidCoordinateLongitude()
     {
         return new static('The longitude of a coordinate must be a numeric value.');
     }
@@ -73,7 +75,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID COORDINATE NO WRAP" exception.
      */
-    static public function invalidCoordinateNoWrap()
+    public static function invalidCoordinateNoWrap()
     {
         return new static('The no wrap coordinate property must be a boolean value.');
     }
@@ -83,7 +85,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID POINT X" exception.
      */
-    static public function invalidPointX()
+    public static function invalidPointX()
     {
         return new static('The x coordinate of a point must be a numeric value.');
     }
@@ -93,7 +95,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID POINT Y" exception.
      */
-    static public function invalidPointY()
+    public static function invalidPointY()
     {
         return new static('The y coordinate of a point must be a numeric value.');
     }
@@ -103,7 +105,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID SIZE HEIGHT" exception.
      */
-    static public function invalidSizeHeight()
+    public static function invalidSizeHeight()
     {
         return new static('The height of a size must be a numeric value.');
     }
@@ -113,7 +115,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID SIZE HEIGHT UNIT" exception.
      */
-    static public function invalidSizeHeightUnit()
+    public static function invalidSizeHeightUnit()
     {
         return new static('The height unit of a size must be a string value.');
     }
@@ -123,7 +125,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID SIZE WIDTH" exception.
      */
-    static public function invalidSizeWidth()
+    public static function invalidSizeWidth()
     {
         return new static('The width of a size must be a numeric value.');
     }
@@ -133,7 +135,7 @@ class BaseException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\BaseException The "INVALID SIZE WIDTH UNIT" exception.
      */
-    static public function invalidSizeWidthUnit()
+    public static function invalidSizeWidthUnit()
     {
         return new static('The width unit of a size must be a string value.');
     }

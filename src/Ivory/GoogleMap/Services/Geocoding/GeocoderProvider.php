@@ -11,16 +11,16 @@
 
 namespace Ivory\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface,
-    Geocoder\Provider\AbstractProvider,
-    Geocoder\Provider\ProviderInterface,
-    Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\GeocodingException,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResult;
+use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Geocoder\Provider\AbstractProvider;
+use Geocoder\Provider\ProviderInterface;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\GeocodingException;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResult;
 
 /**
  * Geocoder provider.
@@ -142,7 +142,7 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         if (is_string($request)) {
             $geocoderRequest = new GeocoderRequest();
             $geocoderRequest->setAddress($request);
-        } else if ($request instanceof GeocoderRequest) {
+        } elseif ($request instanceof GeocoderRequest) {
             $geocoderRequest = $request;
         } else {
             throw GeocodingException::invalidGeocoderProviderRequestArguments();
@@ -192,14 +192,16 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         if ($geocoderRequest->hasAddress()) {
             $httpQuery['address'] = $geocoderRequest->getAddress();
         } else {
-            $httpQuery['latlng'] = sprintf('%s,%s',
+            $httpQuery['latlng'] = sprintf(
+                '%s,%s',
                 $geocoderRequest->getCoordinate()->getLatitude(),
                 $geocoderRequest->getCoordinate()->getLongitude()
             );
         }
 
         if ($geocoderRequest->hasBound()) {
-            $httpQuery['bound'] = sprintf('%s,%s|%s,%s',
+            $httpQuery['bound'] = sprintf(
+                '%s,%s|%s,%s',
                 $geocoderRequest->getBound()->getSouthWest()->getLatitude(),
                 $geocoderRequest->getBound()->getSouthWest()->getLongitude(),
                 $geocoderRequest->getBound()->getNorthEast()->getLatitude(),
@@ -322,7 +324,8 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
      *
      * @param \stdClass $geocoderAddressComponent The normalized geocoder address component.
      *
-     * @return \Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent The builded geocoder address component.
+     * @return \Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent The builded geocoder address
+     *                                                                             component.
      */
     protected function buildGeocoderAddressComponent(\stdClass $geocoderAddressComponent)
     {

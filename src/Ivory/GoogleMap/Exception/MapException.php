@@ -23,7 +23,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID ASYNC" exception.
      */
-    static public function invalidAsync()
+    public static function invalidAsync()
     {
         return new static('The asynchronous load of a map must be a boolean value.');
     }
@@ -33,7 +33,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID AUTO ZOOM" exception.
      */
-    static public function invalidAutoZoom()
+    public static function invalidAutoZoom()
     {
         return new static('The auto zoom of a map must be a boolean value.');
     }
@@ -43,14 +43,25 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID BOUND" exception.
      */
-    static public function invalidBound()
+    public static function invalidBound()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The bound setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setBound(Ivory\GoogleMap\Base\Bound $bound)',
-            ' - function setBount(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)',
-            ' - function setBound(double $southWestLatitude, double $southWestLongitude, double $northEastLatitude, double $northEastLongitude, boolean southWestNoWrap = true, boolean $northEastNoWrap = true)'
+            ' - function setBount('.
+            'Ivory\GoogleMap\Base\Coordinate $southWest, '.
+            'Ivory\GoogleMap\Base\Coordinate $northEast'.
+            ')',
+            ' - function setBound('.
+            'double $southWestLatitude, '.
+            'double $southWestLongitude, '.
+            'double $northEastLatitude, '.
+            'double $northEastLongitude, '.
+            'boolean southWestNoWrap = true, '.
+            'boolean $northEastNoWrap = true'.
+            ')'
         ));
     }
 
@@ -59,9 +70,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID CENTER" exception.
      */
-    static public function invalidCenter()
+    public static function invalidCenter()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The center setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setCenter(Ivory\GoogleMap\Base\Coordinate $center)',
@@ -74,7 +86,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID HTML CONTAINER ID" exception.
      */
-    static public function invalidHtmlContainerId()
+    public static function invalidHtmlContainerId()
     {
         return new static('The html container id of a map must be a string value.');
     }
@@ -84,7 +96,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID MAP OPTION" exception.
      */
-    static public function invalidMapOption()
+    public static function invalidMapOption()
     {
         return new static('The map option property of a map must be a string value.');
     }
@@ -94,9 +106,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INAVLID MAP TYPE CONTROL" exception.
      */
-    static public function invalidMapTypeControl()
+    public static function invalidMapTypeControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The map type control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setMapTypeControl(Ivory\GoogleMap\Controls\MapTypeControl $mapTypeControl = null)',
@@ -109,9 +122,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID OVERVIEW MAP CONTROL" exception.
      */
-    static public function invalidOverviewMapControl()
+    public static function invalidOverviewMapControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The overview map control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setOverviewMapControl(Ivory\GoogleMap\Controls\OverviewMapControl $overviewMapControl = null)',
@@ -124,9 +138,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID PAN CONTROL" exception.
      */
-    static public function invalidPanControl()
+    public static function invalidPanControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The pan control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setPanControl(Ivory\GoogleMap\Controls\PanControl $panControl = null)',
@@ -139,9 +154,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID ROTATE CONTROL" exception.
      */
-    static public function invalidRotateControl()
+    public static function invalidRotateControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The rotate control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setRotateControl(Ivory\GoogleMap\Controls\RotateControl $rotateControl = null)',
@@ -154,9 +170,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID SCALE CONTROL" exception.
      */
-    static public function invalidScaleControl()
+    public static function invalidScaleControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The scale control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setScaleControl(Ivory\GoogleMap\Controls\ScaleControl $scaleControl = null)',
@@ -169,9 +186,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID STREET VIEW CONTROL" exception.
      */
-    static public function invalidStreetViewControl()
+    public static function invalidStreetViewControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The street view control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setStreetViewControl(Ivory\GoogleMap\Controls\StreetViewControl $streetViewControl = null)',
@@ -184,9 +202,10 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INVALID ZOOM CONTROL" exception.
      */
-    static public function invalidZoomControl()
+    public static function invalidZoomControl()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The zoom control setter arguments is invalid.',
             'The available prototypes are :',
             ' - function setZoomControl(Ivory\GoogleMap\Controls\ZoomControl $zoomControl = null)',
@@ -199,7 +218,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "INAVLID STYLESHEET OPTION" exception.
      */
-    static public function invalidStylesheetOption()
+    public static function invalidStylesheetOption()
     {
         return new static('The stylesheet option property of a map must be a string value.');
     }
@@ -211,7 +230,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "MAP OPTION DOES NOT EXIST" exception.
      */
-    static public function mapOptionDoesNotExist($mapOption)
+    public static function mapOptionDoesNotExist($mapOption)
     {
         return new static(sprintf('The map option "%s" does not exist.', $mapOption));
     }
@@ -223,7 +242,7 @@ class MapException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\MapException The "STYLESHEET OPTION DOES NOT EXIST" exception.
      */
-    static public function stylesheetOptionDoesNotExist($stylesheetOption)
+    public static function stylesheetOptionDoesNotExist($stylesheetOption)
     {
         return new static(sprintf('The stylesheet option "%s" does not exist.', $stylesheetOption));
     }

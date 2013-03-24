@@ -29,7 +29,8 @@ class CoordinateHelper
      */
     public function render(Coordinate $coordinate)
     {
-        return sprintf('new google.maps.LatLng(%s, %s, %s)',
+        return sprintf(
+            'new google.maps.LatLng(%s, %s, %s)',
             $coordinate->getLatitude(),
             $coordinate->getLongitude(),
             json_encode($coordinate->isNoWrap())

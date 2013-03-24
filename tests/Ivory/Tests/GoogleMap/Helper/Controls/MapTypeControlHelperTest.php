@@ -11,11 +11,11 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControl,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\MapTypeId,
-    Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper;
 
 /**
  * Map type control helper test.
@@ -86,9 +86,12 @@ class MapTypeControlHelperTest extends \PHPUnit_Framework_TestCase
             MapTypeControlStyle::DROPDOWN_MENU
         );
 
-        $this->assertSame(
-            '{"mapTypeIds":[google.maps.MapTypeId.ROADMAP],"position":google.maps.ControlPosition.BOTTOM_CENTER,"style":google.maps.MapTypeControlStyle.DROPDOWN_MENU}',
-            $this->mapTypeControlHelper->render($mapTypeControl)
-        );
+        $expected = '{'.
+            '"mapTypeIds":[google.maps.MapTypeId.ROADMAP],'.
+            '"position":google.maps.ControlPosition.BOTTOM_CENTER,'.
+            '"style":google.maps.MapTypeControlStyle.DROPDOWN_MENU'.
+            '}';
+
+        $this->assertSame($expected, $this->mapTypeControlHelper->render($mapTypeControl));
     }
 }

@@ -11,10 +11,10 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Base\Bound,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Ground overlay which describes a google map ground overlay.
@@ -108,27 +108,21 @@ class GroundOverlay extends AbstractOptionsAsset implements ExtendableInterface
     {
         $args = func_get_args();
 
-        if(isset($args[0]) && ($args[0] instanceof Bound)) {
+        if (isset($args[0]) && ($args[0] instanceof Bound)) {
             if ($args[0]->hasCoordinates()) {
                 $this->bound = $args[0];
             } else {
                 throw OverlayException::invalidGroundOverlayBoundCoordinates();
             }
-        } else if (
-            (isset($args[0]) && ($args[0] instanceof Coordinate))
-            &&
-            (isset($args[1]) && ($args[1] instanceof Coordinate))
+        } elseif ((isset($args[0]) && ($args[0] instanceof Coordinate))
+            && (isset($args[1]) && ($args[1] instanceof Coordinate))
         ) {
             $this->bound->setSouthWest($args[0]);
             $this->bound->setNorthEast($args[1]);
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-            &&
-            (isset($args[2]) && is_numeric($args[2]))
-            &&
-            (isset($args[3]) && is_numeric($args[3]))
+        } elseif ((isset($args[0]) && is_numeric($args[0]))
+            && (isset($args[1]) && is_numeric($args[1]))
+            && (isset($args[2]) && is_numeric($args[2]))
+            && (isset($args[3]) && is_numeric($args[3]))
         ) {
             $this->bound->setSouthWest(new Coordinate($args[0], $args[1]));
             $this->bound->setNorthEast(new Coordinate($args[2], $args[3]));

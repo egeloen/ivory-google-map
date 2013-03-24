@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Exception;
 
-use Ivory\GoogleMap\Services\Directions\DirectionsStatus,
-    Ivory\GoogleMap\Services\Directions\TravelMode,
-    Ivory\GoogleMap\Services\Directions\UnitSystem;
+use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
+use Ivory\GoogleMap\Services\Directions\TravelMode;
+use Ivory\GoogleMap\Services\Directions\UnitSystem;
 
 /**
  * Directions exception.
@@ -27,7 +27,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS LEG END ADDRESS" exception.
      */
-    static public function invalidDirectionsLegEndAddress()
+    public static function invalidDirectionsLegEndAddress()
     {
         return new static('The leg end address must be a string value.');
     }
@@ -37,7 +37,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS LEG START ADDRESS" exception.
      */
-    static public function invalidDirectionsLegStartAddress()
+    public static function invalidDirectionsLegStartAddress()
     {
         return new static('The leg start address must be a string value.');
     }
@@ -47,9 +47,10 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST" exception.
      */
-    static public function invalidDirectionsRequest()
+    public static function invalidDirectionsRequest()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s',
             'The directions request is not valid. It needs at least an origin and a destination.',
             'If you add waypoint to the directions request, it needs at least a location.'
         ));
@@ -60,9 +61,10 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST PARAMETERS" exception.
      */
-    static public function invalidDirectionsRequestParameters()
+    public static function invalidDirectionsRequestParameters()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The route arguments are invalid.',
             'The available prototypes are:',
             '- function route(string $origin, string $destination)',
@@ -75,7 +77,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST AVOID HIGHWAYS" exception.
      */
-    static public function invalidDirectionsRequestAvoidHighways()
+    public static function invalidDirectionsRequestAvoidHighways()
     {
         return new static('The directions request avoid hightways flag must be a boolean value.');
     }
@@ -85,7 +87,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST AVOID TOLLS" exception.
      */
-    static public function invalidDirectionsRequestAvoidTolls()
+    public static function invalidDirectionsRequestAvoidTolls()
     {
         return new static('The directions request avoid tolls flag must be a boolean value.');
     }
@@ -95,9 +97,10 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST DESTINATION" exception.
      */
-    static public function invalidDirectionsRequestDestination()
+    public static function invalidDirectionsRequestDestination()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The destination setter arguments are invalid.',
             'The available prototypes are :',
             ' - function setDestination(string $destination)',
@@ -109,9 +112,10 @@ class DirectionsException extends ServiceException
     /**
      * Gets the "INVALID DIRECTIONS REQUEST OPTIMIZE WAYPOINTS" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST OPTIMIZE WAYPOINTS" exception.
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST OPTIMIZE WAYPOINTS"
+     *                                                        exception.
      */
-    static public function invalidDirectionsRequestOptimizeWaypoints()
+    public static function invalidDirectionsRequestOptimizeWaypoints()
     {
         return new static('The directions request optimize waypoints flag must be a boolean value.');
     }
@@ -121,9 +125,10 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST ORIGIN" exception.
      */
-    static public function invalidDirectionsRequestOrigin()
+    public static function invalidDirectionsRequestOrigin()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The origin setter arguments are invalid.',
             'The available prototypes are :',
             ' - function setOrigin(string $destination)',
@@ -135,9 +140,10 @@ class DirectionsException extends ServiceException
     /**
      * Gets the "INVALID DIRECTIONS REQUEST PROVIDE ROUTE ALTERNATIVES" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST PROVIDE ROUTE ALTERNATIVES" exception.
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST PROVIDE ROUTE
+     *                                                        ALTERNATIVES" exception.
      */
-    static public function invalidDirectionsRequestProvideRouteAlternatives()
+    public static function invalidDirectionsRequestProvideRouteAlternatives()
     {
         return new static('The directions request provide route alternatives flag must be a boolean value.');
     }
@@ -147,7 +153,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST REGION" exception.
      */
-    static public function invalidDirectionsRequestRegion()
+    public static function invalidDirectionsRequestRegion()
     {
         return new static('The directions request region must be a string with two characters.');
     }
@@ -157,7 +163,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST LANGUAGE" exception.
      */
-    static public function invalidDirectionsRequestLanguage()
+    public static function invalidDirectionsRequestLanguage()
     {
         return new static('The directions request language must be a string with two characters.');
     }
@@ -167,7 +173,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST SENSOR" exception.
      */
-    static public function invalidDirectionsRequestSensor()
+    public static function invalidDirectionsRequestSensor()
     {
         return new static('The directions request sensor flag must be a boolean value.');
     }
@@ -177,9 +183,12 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST TRAVEL MODE" exception.
      */
-    static public function invalidDirectionsRequestTravelMode()
+    public static function invalidDirectionsRequestTravelMode()
     {
-        return new static(sprintf('The directions request travel mode can only be : %s.', implode(', ', TravelMode::getTravelModes())));
+        return new static(sprintf(
+            'The directions request travel mode can only be : %s.',
+            implode(', ', TravelMode::getTravelModes())
+        ));
     }
 
     /**
@@ -187,9 +196,12 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST UNIT SYSTEM" exception.
      */
-    static public function invalidDirectionsRequestUnitSystem()
+    public static function invalidDirectionsRequestUnitSystem()
     {
-        return new static(sprintf('The directions request unit system can only be : %s.', implode(', ', UnitSystem::getUnitSystems())));
+        return new static(sprintf(
+            'The directions request unit system can only be : %s.',
+            implode(', ', UnitSystem::getUnitSystems())
+        ));
     }
 
     /**
@@ -197,9 +209,10 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST WAYPOINT" exception.
      */
-    static public function invalidDirectionsRequestWaypoint()
+    public static function invalidDirectionsRequestWaypoint()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The waypoint adder arguments are invalid.',
             'The available prototypes are :',
             ' - function addWaypoint(Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint)',
@@ -214,9 +227,12 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS RESPONSE STATUS" exception.
      */
-    static public function invalidDirectionsResponseStatus()
+    public static function invalidDirectionsResponseStatus()
     {
-        return new static(sprintf('The directions response status can only be : %s.', implode(', ', DirectionsStatus::getDirectionsStatus())));
+        return new static(sprintf(
+            'The directions response status can only be : %s.',
+            implode(', ', DirectionsStatus::getDirectionsStatus())
+        ));
     }
 
     /**
@@ -224,7 +240,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS ROUTE COPYRIGHTS" exception.
      */
-    static  public function invalidDirectionsRouteCopyrights()
+    public static function invalidDirectionsRouteCopyrights()
     {
         return new static('The directions route copyrights must be a string value.');
     }
@@ -234,7 +250,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS ROUTE SUMMARY" exception.
      */
-    static public function invalidDirectionsRouteSummary()
+    public static function invalidDirectionsRouteSummary()
     {
         return new static('The directions route summary must be a string value.');
     }
@@ -244,7 +260,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS ROUTE WARNING" exception.
      */
-    static public function invalidDirectionsRouteWarning()
+    public static function invalidDirectionsRouteWarning()
     {
         return new static('The directions route warning must be a string value.');
     }
@@ -254,7 +270,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS ROUTE WAYPOINT ORDER" exception.
      */
-    static public function invalidDirectionsRouteWaypointOrder()
+    public static function invalidDirectionsRouteWaypointOrder()
     {
         return new static('The directions route waypoint order must be an integer value.');
     }
@@ -264,7 +280,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INALID DIRECTIONS STEP INSTRUCTIONS" exception.
      */
-    static public function invalidDirectionsStepInstructions()
+    public static function invalidDirectionsStepInstructions()
     {
         return new static('The step instructions must be a string value.');
     }
@@ -274,9 +290,12 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS STEP TRAVEL MODE" exception.
      */
-    static public function invalidDirectionsStepTravelMode()
+    public static function invalidDirectionsStepTravelMode()
     {
-        return new static(sprintf('The directions step travel mode can only be : %s.', implode(', ', TravelMode::getTravelModes())));
+        return new static(sprintf(
+            'The directions step travel mode can only be : %s.',
+            implode(', ', TravelMode::getTravelModes())
+        ));
     }
 
     /**
@@ -284,9 +303,10 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS WAYPOINT LOCATION" exception.
      */
-    static public function invalidDirectionsWaypointLocation()
+    public static function invalidDirectionsWaypointLocation()
     {
-        return new static(sprintf('%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The location setter arguments are invalid.',
             'The available prototypes are :',
             ' - function setLocation(string $destination)',
@@ -300,7 +320,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS WAYPOINT STOPOPVER" exception.
      */
-    static public function invalidDirectionsWaypointStopover()
+    public static function invalidDirectionsWaypointStopover()
     {
         return new static('The directions waypoint stopover flag must be a boolean value.');
     }
@@ -310,7 +330,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE TEXT" exception.
      */
-    static public function invalidDistanceText()
+    public static function invalidDistanceText()
     {
         return new static('The distance text must be a string value.');
     }
@@ -320,7 +340,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE VALUE" exception.
      */
-    static public function invalidDistanceValue()
+    public static function invalidDistanceValue()
     {
         return new static('The distance value must be a numeric value.');
     }
@@ -330,7 +350,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DURATION TEXT" exception.
      */
-    static public function invalidDurationText()
+    public static function invalidDurationText()
     {
         return new static('The duration text must be a string value.');
     }
@@ -340,7 +360,7 @@ class DirectionsException extends ServiceException
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DURATION VALUE" exception.
      */
-    static public function invalidDurationValue()
+    public static function invalidDurationValue()
     {
         return new static('The duration value must be a numeric value.');
     }

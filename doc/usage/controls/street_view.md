@@ -6,8 +6,8 @@ appears by default in the top left corner of the map.
 ## Build your street view control
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\StreetViewControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\StreetViewControl;
 
 $streetViewControl = new StreetViewControl();
 
@@ -22,8 +22,8 @@ For configurating the street view control position, the better way is to follow 
 position. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\StreetViewControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\StreetViewControl;
 
 $streetViewControl = new StreetViewControl();
 
@@ -68,8 +68,8 @@ $streetViewControl->setControlPosition('bottom_right');
 ## Add your street view control to the map
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\StreetViewControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\StreetViewControl;
 
 $streetViewControl = new StreetViewControl();
 

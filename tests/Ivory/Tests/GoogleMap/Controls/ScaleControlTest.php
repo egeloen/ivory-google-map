@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ScaleControl,
-    Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ScaleControl;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
 
 /**
  * Scale control test.

@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\Circle,
-    Ivory\GoogleMap\Helper\Overlays\CircleHelper;
+use Ivory\GoogleMap\Overlays\Circle;
+use Ivory\GoogleMap\Helper\Overlays\CircleHelper;
 
 /**
  * Circle helper test.
@@ -69,14 +69,16 @@ class CircleHelperTest extends \PHPUnit_Framework_TestCase
         $circle->setJavascriptVariable('circle');
         $circle->setCenter(1.1, 2.1, true);
         $circle->setRadius(2);
-        $circle->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $circle->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $this->assertSame(
-            'var circle = new google.maps.Circle({"map":map,"center":new google.maps.LatLng(1.1, 2.1, true),"radius":2,"option1":"value1","option2":"value2"});'.PHP_EOL,
-            $this->circleHelper->render($circle, $map)
-        );
+        $expected = 'var circle = new google.maps.Circle({'.
+            '"map":map,'.
+            '"center":new google.maps.LatLng(1.1, 2.1, true),'.
+            '"radius":2,'.
+            '"option1":"value1",'.
+            '"option2":"value2"'.
+            '});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->circleHelper->render($circle, $map));
     }
 }

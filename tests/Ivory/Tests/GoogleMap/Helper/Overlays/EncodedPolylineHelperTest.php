@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Overlays\EncodedPolyline,
-    Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper;
+use Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper;
 
 /**
  * Encoded polyline helper test.
@@ -69,7 +69,9 @@ class EncodedPolylineHelperTest extends \PHPUnit_Framework_TestCase
         $encodedPolyline->setJavascriptVariable('encodedPolyline');
 
         $this->assertSame(
-            'var encodedPolyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});'.PHP_EOL,
+            'var encodedPolyline = new google.maps.Polyline('.
+            '{"map":map,"path":google.maps.geometry.encoding.decodePath("foo")}'.
+            ');'.PHP_EOL,
             $this->encodedPolylineHelper->render($encodedPolyline, $map)
         );
     }
@@ -84,13 +86,12 @@ class EncodedPolylineHelperTest extends \PHPUnit_Framework_TestCase
 
         $encodedPolyline = new EncodedPolyline('foo');
         $encodedPolyline->setJavascriptVariable('encodedPolyline');
-        $encodedPolyline->setOptions(array(
-            'option1' => 'value1',
-            'option2' => 'value2'
-        ));
+        $encodedPolyline->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
         $this->assertSame(
-            'var encodedPolyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo"),"option1":"value1","option2":"value2"});'.PHP_EOL,
+            'var encodedPolyline = new google.maps.Polyline('.
+            '{"map":map,"path":google.maps.geometry.encoding.decodePath("foo"),"option1":"value1","option2":"value2"}'.
+            ');'.PHP_EOL,
             $this->encodedPolylineHelper->render($encodedPolyline, $map)
         );
     }

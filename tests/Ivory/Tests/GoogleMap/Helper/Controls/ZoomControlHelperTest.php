@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\ZoomControl,
-    Ivory\GoogleMap\Controls\ZoomControlStyle,
-    Ivory\GoogleMap\Helper\Controls\ZoomControlHelper;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\ZoomControl;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\Helper\Controls\ZoomControlHelper;
 
 /**
  * Zoom control helper test.

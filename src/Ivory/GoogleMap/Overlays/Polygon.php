@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Polygon which describes a google map polygon.
@@ -88,11 +88,7 @@ class Polygon extends AbstractOptionsAsset implements ExtendableInterface
 
         if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->coordinates[] = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             $coordinate = new Coordinate($args[0], $args[1]);
 
             if (isset($args[2]) && is_bool($args[2])) {

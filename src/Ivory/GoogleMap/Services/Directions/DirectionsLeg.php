@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\DirectionsException;
 
 /**
  * A directions leg which describes a google map directions leg.
@@ -67,8 +67,7 @@ class DirectionsLeg
         Coordinate $startLocation,
         array $steps,
         array $viaWaypoint
-    )
-    {
+    ) {
         $this->setDistance($distance);
         $this->setDuration($duration);
         $this->setEndAddress($endAddress);

@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Exception\DirectionsException;
 
 /**
  * A directions waypoint which describes the google map directions waypoint.
@@ -64,13 +64,9 @@ class DirectionsWaypoint
 
         if (isset($args[0]) && is_string($args[0])) {
             $this->location = $args[0];
-        } else if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
+        } elseif (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->location = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->location === null) {
                 $this->location = new Coordinate();
             }
@@ -93,7 +89,7 @@ class DirectionsWaypoint
      */
     public function hasStopover()
     {
-       return $this->stopover !== null;
+        return $this->stopover !== null;
     }
 
     /**

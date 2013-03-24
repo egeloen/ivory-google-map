@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Geocoding\Result;
 
-use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderLocationType,
-    Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderLocationType;
+use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
 
 /**
  * Geocoder geometry test.
@@ -88,7 +88,8 @@ class GeocoderGeometryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder geometry location type can only be : APPROXIMATE, GEOMETRIC_CENTER, RANGE_INTERPOLATED, ROOFTOP.
+     * @expectedExceptionMessage The geocoder geometry location type can only be : APPROXIMATE, GEOMETRIC_CENTER,
+     * RANGE_INTERPOLATED, ROOFTOP.
      */
     public function testLocationTypeWithInvalidValue()
     {

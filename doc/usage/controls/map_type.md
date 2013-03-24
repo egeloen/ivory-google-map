@@ -6,10 +6,10 @@ default in the top right corner of the map.
 ## Build your map type control
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControl,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\MapTypeId;
 
 $mapTypeControl = new MapTypeControl();
 
@@ -31,8 +31,8 @@ For configurating the map type ids, the better way is to follow the oriented obj
 want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\MapTypeId,
-    Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Controls\MapTypeControl;
 
 $mapTypeControl = new MapTypeControl();
 
@@ -57,8 +57,8 @@ For configurating the map type control position, the better way is to follow the
 position. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControl;
 
 $mapTypeControl = new MapTypeControl();
 
@@ -107,8 +107,8 @@ For configurating the map type control style, the better way is to follow the or
 control style. If you don't want to use this class, you can directly use the constant value.
 
 ``` php
-use Ivory\GoogleMap\Controls\MapTypeControl,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
 
 $mapTypeControl = new MapTypeControl();
 
@@ -126,10 +126,10 @@ $mapTypeControl->setMapTypeControlStyle('horizontal_bar');
 ## Add your map type control to the map
 
 ``` php
-use Ivory\GoogleMapBundle\Model\MapTypeId,
-    Ivory\GoogleMapBundle\Model\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControl,
-    Ivory\GoogleMapBundle\Model\Controls\MapTypeControlStyle;
+use Ivory\GoogleMapBundle\Model\MapTypeId;
+use Ivory\GoogleMapBundle\Model\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMapBundle\Model\Controls\MapTypeControlStyle;
 
 $mapTypeControl = new MapTypeControl();
 

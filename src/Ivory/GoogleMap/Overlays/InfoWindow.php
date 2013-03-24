@@ -11,11 +11,11 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractOptionsAsset,
-    Ivory\GoogleMap\Base\Coordinate,
-    Ivory\GoogleMap\Base\Size,
-    Ivory\GoogleMap\Events\MouseEvent,
-    Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Base\Size;
+use Ivory\GoogleMap\Events\MouseEvent;
+use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
  * Info window which describes a google map info window.
@@ -65,8 +65,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
         $openEvent = MouseEvent::CLICK,
         $autoOpen = true,
         $autoClose = false
-    )
-    {
+    ) {
         parent::__construct();
 
         $this->setPrefixJavascriptVariable('info_window_');
@@ -113,11 +112,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
 
         if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
             $this->position = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->position === null) {
                 $this->position = new Coordinate();
             }
@@ -128,7 +123,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
             if (isset($args[2]) && is_bool($args[2])) {
                 $this->position->setNoWrap($args[2]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->position = null;
         } else {
             throw OverlayException::invalidInfoWindowPosition();
@@ -170,11 +165,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
 
         if (isset($args[0]) && ($args[0] instanceof Size)) {
             $this->pixedOffset = $args[0];
-        } else if (
-            (isset($args[0]) && is_numeric($args[0]))
-            &&
-            (isset($args[1]) && is_numeric($args[1]))
-        ) {
+        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
             if ($this->pixedOffset === null) {
                 $this->pixedOffset = new Size();
             }
@@ -189,7 +180,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
             if (isset($args[3]) && is_string($args[3])) {
                 $this->pixedOffset->setHeightUnit($args[3]);
             }
-        } else if (!isset($args[0])) {
+        } elseif (!isset($args[0])) {
             $this->pixedOffset = null;
         } else {
             throw OverlayException::invalidInfoWindowPixelOffset();

@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper;
 
-use Ivory\GoogleMap\MapTypeId,
-    Ivory\GoogleMap\Helper\MapTypeIdHelper;
+use Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Helper\MapTypeIdHelper;
 
 /**
  * Map type ID helper test.

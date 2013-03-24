@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControl,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\MapTypeId;
 
 /**
  * Map type control test.
@@ -73,7 +73,8 @@ class MapTypeControlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The control position can only be : bottom_center, bottom_left, bottom_right, left_bottom, left_center, left_top, right_bottom, right_center, right_top, top_center, top_left, top_right.
+     * @expectedExceptionMessage The control position can only be : bottom_center, bottom_left, bottom_right,
+     * left_bottom, left_center, left_top, right_bottom, right_center, right_top, top_center, top_left, top_right.
      */
     public function testControlPositionWithInvalidValue()
     {

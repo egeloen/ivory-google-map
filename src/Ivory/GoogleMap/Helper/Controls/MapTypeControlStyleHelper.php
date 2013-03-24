@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Exception\TemplatingException;
 
 /**
  * Map type control style helper.
@@ -37,11 +37,8 @@ class MapTypeControlStyleHelper
             case MapTypeControlStyle::DROPDOWN_MENU:
             case MapTypeControlStyle::HORIZONTAL_BAR:
                 return sprintf('google.maps.MapTypeControlStyle.%s', strtoupper($mapTypeControlStyle));
-            break;
-
             default:
                 throw TemplatingException::invalidMapTypeControlStyle();
-            break;
         }
     }
 }

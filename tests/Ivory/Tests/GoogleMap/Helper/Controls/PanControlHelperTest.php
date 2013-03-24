@@ -11,9 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\PanControl,
-    Ivory\GoogleMap\Helper\Controls\PanControlHelper;
+use Ivory\GoogleMap\Controls\ControlPosition
+use Ivory\GoogleMap\Controls\PanControl;
+use Ivory\GoogleMap\Helper\Controls\PanControlHelper;
 
 /**
  * Overview map control helper test.

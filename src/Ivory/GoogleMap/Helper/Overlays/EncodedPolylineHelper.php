@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\EncodedPolyline,
-    Ivory\GoogleMap\Helper\Geometry\EncodingHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Helper\Geometry\EncodingHelper;
 
 /**
  * Encoded polyline helper.
@@ -71,7 +71,8 @@ class EncodedPolylineHelper
     {
         $polylineOptions = $encodedPolyline->getOptions();
 
-        $polylineJSONOptions = sprintf('{"map":%s,"path":%s',
+        $polylineJSONOptions = sprintf(
+            '{"map":%s,"path":%s',
             $map->getJavascriptVariable(),
             $this->encodingHelper->renderDecodePath($encodedPolyline->getValue())
         );
@@ -82,7 +83,8 @@ class EncodedPolylineHelper
             $polylineJSONOptions .= '}';
         }
 
-        return sprintf('var %s = new google.maps.Polyline(%s);'.PHP_EOL,
+        return sprintf(
+            'var %s = new google.maps.Polyline(%s);'.PHP_EOL,
             $encodedPolyline->getJavascriptVariable(),
             $polylineJSONOptions
         );

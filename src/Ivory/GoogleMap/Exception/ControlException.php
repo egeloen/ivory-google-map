@@ -11,11 +11,11 @@
 
 namespace Ivory\GoogleMap\Exception;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\Controls\ScaleControlStyle,
-    Ivory\GoogleMap\Controls\ZoomControlStyle,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\MapTypeId;
 
 /**
  * Control exception.
@@ -29,9 +29,12 @@ class ControlException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ControlException The "INVALID CONTROL POSITION" exception.
      */
-    static public function invalidControlPosition()
+    public static function invalidControlPosition()
     {
-        return new static(sprintf('The control position can only be : %s.', implode(', ', ControlPosition::getControlPositions())));
+        return new static(sprintf(
+            'The control position can only be : %s.',
+            implode(', ', ControlPosition::getControlPositions())
+        ));
     }
 
     /**
@@ -39,9 +42,12 @@ class ControlException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ControlException The "INVALID MAP TYPE CONTROL STYLE" exception.
      */
-    static public function invalidMapTypeControlStyle()
+    public static function invalidMapTypeControlStyle()
     {
-        return new static(sprintf('The map type control style can only be : %s.', implode(', ', MapTypeControlStyle::getMapTypeControlStyles())));
+        return new static(sprintf(
+            'The map type control style can only be : %s.',
+            implode(', ', MapTypeControlStyle::getMapTypeControlStyles())
+        ));
     }
 
     /**
@@ -49,7 +55,7 @@ class ControlException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ControlException The "INVALID MAP TYPE ID" exception.
      */
-    static public function invalidMapTypeId()
+    public static function invalidMapTypeId()
     {
         return new static(sprintf('The map type id can only be : %s.', implode(', ', MapTypeId::getMapTypeIds())));
     }
@@ -59,7 +65,7 @@ class ControlException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ControlException The "INVALID OVERVIEW MAP CONTROL OPENED" exception.
      */
-    static public function invalidOverviewMapControlOpened()
+    public static function invalidOverviewMapControlOpened()
     {
         return new static('The opened property of an overview map control must be a boolean value.');
     }
@@ -69,9 +75,12 @@ class ControlException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ControlException The "INVALID SCALE CONTROL STYLE" exception.
      */
-    static public function invalidScaleControlStyle()
+    public static function invalidScaleControlStyle()
     {
-        return new static(sprintf('The scale control style of a scale control can only be : %s.', implode(', ', ScaleControlStyle::getScaleControlStyles())));
+        return new static(sprintf(
+            'The scale control style of a scale control can only be : %s.',
+            implode(', ', ScaleControlStyle::getScaleControlStyles())
+        ));
     }
 
     /**
@@ -79,8 +88,11 @@ class ControlException extends Exception
      *
      * @return \Ivory\GoogleMap\Exception\ControlException The "INVALID ZOOM CONTROL STYLE" exception.
      */
-    static public function invalidZoomControlStyle()
+    public static function invalidZoomControlStyle()
     {
-        return new static(sprintf('The zoom control style of a zoom control can only be : %s.', implode(', ', ZoomControlStyle::getZoomControlStyles())));
+        return new static(sprintf(
+            'The zoom control style of a zoom control can only be : %s.',
+            implode(', ', ZoomControlStyle::getZoomControlStyles())
+        ));
     }
 }

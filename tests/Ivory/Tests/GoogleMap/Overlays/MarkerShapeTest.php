@@ -154,7 +154,8 @@ class MarkerShapeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The MarkerShape::addPolyCoordinate($x, $y) method can only be use with a marker shape which has type poly.
+     * @expectedExceptionMessage The MarkerShape::addPolyCoordinate($x, $y) method can only be use with a marker
+     * shape which has type poly.
      */
     public function testAddPolyCoordinateWithInvalidType()
     {

@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Rectangle,
-    Ivory\GoogleMap\Helper\Base\BoundHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Rectangle;
+use Ivory\GoogleMap\Helper\Base\BoundHelper;
 
 /**
  * Rectangle helper.
@@ -71,7 +71,8 @@ class RectangleHelper
     {
         $rectangleOptions = $rectangle->getOptions();
 
-        $rectangleJSONOptions = sprintf('{"map":%s,"bounds":%s',
+        $rectangleJSONOptions = sprintf(
+            '{"map":%s,"bounds":%s',
             $map->getJavascriptVariable(),
             $rectangle->getBound()->getJavascriptVariable()
         );
@@ -85,7 +86,8 @@ class RectangleHelper
         $html = array();
 
         $html[] = $this->boundHelper->render($rectangle->getBound());
-        $html[] = sprintf('var %s = new google.maps.Rectangle(%s);'.PHP_EOL,
+        $html[] = sprintf(
+            'var %s = new google.maps.Rectangle(%s);'.PHP_EOL,
             $rectangle->getJavascriptVariable(),
             $rectangleJSONOptions
         );

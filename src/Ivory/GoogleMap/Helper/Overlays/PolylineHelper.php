@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
-use Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\Overlays\Polyline,
-    Ivory\GoogleMap\Helper\Base\CoordinateHelper;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlays\Polyline;
+use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Polyline helper.
@@ -76,7 +76,8 @@ class PolylineHelper
             $polylineCoordinates[] = $this->coordinateHelper->render($coordinate);
         }
 
-        $polylineJSONOptions = sprintf('{"map":%s,"path":%s',
+        $polylineJSONOptions = sprintf(
+            '{"map":%s,"path":%s',
             $map->getJavascriptVariable(),
             '['.implode(',', $polylineCoordinates).']'
         );
@@ -87,7 +88,8 @@ class PolylineHelper
             $polylineJSONOptions .= '}';
         }
 
-        return sprintf('var %s = new google.maps.Polyline(%s);'.PHP_EOL,
+        return sprintf(
+            'var %s = new google.maps.Polyline(%s);'.PHP_EOL,
             $polyline->getJavascriptVariable(),
             $polylineJSONOptions
         );

@@ -11,12 +11,12 @@
 
 namespace Ivory\Tests\GoogleMap;
 
-use Ivory\GoogleMap\Controls\ControlPosition,
-    Ivory\GoogleMap\Controls\MapTypeControlStyle,
-    Ivory\GoogleMap\Controls\ScaleControlStyle,
-    Ivory\GoogleMap\Controls\ZoomControlStyle,
-    Ivory\GoogleMap\Map,
-    Ivory\GoogleMap\MapTypeId;
+use Ivory\GoogleMap\Controls\ControlPosition;
+use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Controls\ScaleControlStyle;
+use Ivory\GoogleMap\Controls\ZoomControlStyle;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\MapTypeId;
 
 /**
  * Map test.
@@ -223,7 +223,14 @@ class MapTest extends \PHPUnit_Framework_TestCase
      * The available prototypes are :
      * - function setBound(Ivory\GoogleMap\Base\Bound $bound)
      * - function setBount(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     * - function setBound(double $southWestLatitude, double $southWestLongitude, double $northEastLatitude, double $northEastLongitude, boolean southWestNoWrap = true, boolean $northEastNoWrap = true)
+     * - function setBound(
+     *     double $southWestLatitude,
+     *     double $southWestLongitude,
+     *     double $northEastLatitude,
+     *     double $northEastLongitude,
+     *     boolean southWestNoWrap = true,
+     *     boolean $northEastNoWrap = true
+     * )
      */
     public function testBoundWithInvalidValue()
     {
