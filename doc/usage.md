@@ -72,7 +72,7 @@ $mapHelper = new MapHelper();
 ### Render the HTML container
 
 ```
-echo $mapHelper->renderContainer($map);
+echo $mapHelper->renderHtmlContainer($map);
 ```
 
 This function renders an html div block with the HTML container ID, the width & the height configured:
@@ -95,6 +95,9 @@ This function renders an html javascript block with all code needed for displayi
 </script>
 ```
 
+The generated code is organized to be reusable in the client side. If you want to learn more, you can read this
+[dedicated documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/helper/container.md).
+
 ### Render the CSS (Optional)
 
 Additionally, you can configure some CSS directly on the map.
@@ -110,3 +113,21 @@ This function renders an html style block with the CSS configured.
     /* CSS configured */
 </style>
 ```
+
+If you want to render all of them, you can use:
+
+```
+echo $mapHelper->render($map);
+```
+
+``` html
+<style type="text/css">
+    /* CSS configured */
+</style>
+<div id="map_canvas" style="width:300px;height:300px"></div>
+<script type="text/javascript">
+    // Code needed for displaying your map
+</script>
+```
+
+There is many other methods you can use if you only render specific "parts" of the map. I let you read the class :)

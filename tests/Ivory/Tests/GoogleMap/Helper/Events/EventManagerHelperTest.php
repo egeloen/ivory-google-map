@@ -11,7 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Controls;
 
-use Ivory\GoogleMap\Events\EventManager;
+use Ivory\GoogleMap\Events\Event;
 use Ivory\GoogleMap\Helper\Events\EventManagerHelper;
 
 /**
@@ -21,7 +21,7 @@ use Ivory\GoogleMap\Helper\Events\EventManagerHelper;
  */
 class EventManagerHelperTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Helper\Events\EventManagerHelper */
+    /** @var \Ivory\GoogleMap\Helper\Events\EventHelper */
     protected $eventManagerHelper;
 
     /**
@@ -40,55 +40,47 @@ class EventManagerHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->eventManagerHelper);
     }
 
-    public function testDefaultState()
+    public function testRenderDomEvent()
     {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Events\EventHelper',
-            $this->eventManagerHelper->getEventHelper()
+        $domEvent = new Event('instance', 'event_name', 'handle', true);
+        $domEvent->setJavascriptVariable('foo');
+
+        $this->assertSame(
+            'foo = google.maps.event.addDomListener(instance, "event_name", handle, true);'.PHP_EOL,
+            $this->eventManagerHelper->renderDomEvent($domEvent)
         );
     }
 
-    public function testInitialState()
+    public function testRenderDomEventOnce()
     {
-        $eventHelper = $this->getMock('Ivory\GoogleMap\Helper\Events\EventHelper');
+        $domEventOnce = new Event('instance', 'event_name', 'handle', true);
+        $domEventOnce->setJavascriptVariable('foo');
 
-        $this->eventManagerHelper = new EventManagerHelper($eventHelper);
-
-        $this->assertSame($eventHelper, $this->eventManagerHelper->getEventHelper());
+        $this->assertSame(
+            'foo = google.maps.event.addDomListenerOnce(instance, "event_name", handle, true);'.PHP_EOL,
+            $this->eventManagerHelper->renderDomEventOnce($domEventOnce)
+        );
     }
 
-    public function testRender()
+    public function testRenderEvent()
     {
-        $domEvent = $this->getMock('Ivory\GoogleMap\Events\Event');
-        $domEventOnce = $this->getMock('Ivory\GoogleMap\Events\Event');
-        $event = $this->getMock('Ivory\GoogleMap\Events\Event');
-        $eventOnce = $this->getMock('Ivory\GoogleMap\Events\Event');
+        $event = new Event('instance', 'event_name', 'handle', true);
+        $event->setJavascriptVariable('foo');
 
-        $eventHelper = $this->getMock('Ivory\GoogleMap\Helper\Events\EventHelper');
-        $eventHelper
-            ->expects($this->once())
-            ->method('renderDomEvent')
-            ->with($this->equalTo($domEvent))
-            ->will($this->returnValue('domEvent;'));
-        $eventHelper
-            ->expects($this->once())
-            ->method('renderDomEventOnce')
-            ->with($this->equalTo($domEventOnce))
-            ->will($this->returnValue('domEventOnce;'));
-        $eventHelper
-            ->expects($this->once())
-            ->method('renderEvent')
-            ->with($this->equalTo($event))
-            ->will($this->returnValue('event;'));
-        $eventHelper
-            ->expects($this->once())
-            ->method('renderEventOnce')
-            ->with($this->equalTo($eventOnce))
-            ->will($this->returnValue('eventOnce;'));
+        $this->assertSame(
+            'foo = google.maps.event.addListener(instance, "event_name", handle);'.PHP_EOL,
+            $this->eventManagerHelper->renderEvent($event)
+        );
+    }
 
-        $eventManager = new EventManager(array($domEvent), array($domEventOnce), array($event), array($eventOnce));
+    public function testRenderEventOnce()
+    {
+        $eventOnce = new Event('instance', 'event_name', 'handle');
+        $eventOnce->setJavascriptVariable('foo');
 
-        $this->eventManagerHelper->setEventHelper($eventHelper);
-        $this->assertSame('domEvent;domEventOnce;event;eventOnce;', $this->eventManagerHelper->render($eventManager));
+        $this->assertSame(
+            'foo = google.maps.event.addListenerOnce(instance, "event_name", handle);'.PHP_EOL,
+            $this->eventManagerHelper->renderEventOnce($eventOnce)
+        );
     }
 }

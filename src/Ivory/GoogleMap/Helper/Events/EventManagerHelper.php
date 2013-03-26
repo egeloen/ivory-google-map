@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Events;
 
-use Ivory\GoogleMap\Events\EventManager;
+use Ivory\GoogleMap\Events\Event;
 
 /**
  * Event manager helper.
@@ -20,70 +20,77 @@ use Ivory\GoogleMap\Events\EventManager;
  */
 class EventManagerHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Events\EventHelper */
-    protected $eventHelper;
-
     /**
-     * Creates an event manager helper.
+     * Renders a dom event.
      *
-     * @param \Ivory\GoogleMap\Helper\Events\EventHelper $eventHelper The event helper.
-     */
-    public function __construct(EventHelper $eventHelper = null)
-    {
-        if ($eventHelper === null) {
-            $eventHelper = new EventHelper();
-        }
-
-        $this->setEventHelper($eventHelper);
-    }
-
-    /**
-     * Gets the event helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Events\EventHelper The event helper.
-     */
-    public function getEventHelper()
-    {
-        return $this->eventHelper;
-    }
-
-    /**
-     * Sets the event helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Events\EventHelper $eventHelper The event helper.
-     */
-    public function setEventHelper(EventHelper $eventHelper)
-    {
-        $this->eventHelper = $eventHelper;
-    }
-
-    /**
-     * Renders the events wraps into the event manager
-     *
-     * @param \Ivory\GoogleMap\Events\EventManager $eventManager The event manager.
+     * @param \Ivory\GoogleMap\Events\Event $domEvent The dom event.
      *
      * @return string The JS output.
      */
-    public function render(EventManager $eventManager)
+    public function renderDomEvent(Event $domEvent)
     {
-        $html = array();
+        return sprintf(
+            '%s = google.maps.event.addDomListener(%s, "%s", %s, %s);'.PHP_EOL,
+            $domEvent->getJavascriptVariable(),
+            $domEvent->getInstance(),
+            $domEvent->getEventName(),
+            $domEvent->getHandle(),
+            json_encode($domEvent->isCapture())
+        );
+    }
 
-        foreach ($eventManager->getDomEvents() as $domEvent) {
-            $html[] = $this->eventHelper->renderDomEvent($domEvent);
-        }
+    /**
+     * Renders a dom event once.
+     *
+     * @param \Ivory\GoogleMap\Events\Event $domEventOnce The dom event once.
+     *
+     * @return string The JS output.
+     */
+    public function renderDomEventOnce(Event $domEventOnce)
+    {
+        return sprintf(
+            '%s = google.maps.event.addDomListenerOnce(%s, "%s", %s, %s);'.PHP_EOL,
+            $domEventOnce->getJavascriptVariable(),
+            $domEventOnce->getInstance(),
+            $domEventOnce->getEventName(),
+            $domEventOnce->getHandle(),
+            json_encode($domEventOnce->isCapture())
+        );
+    }
 
-        foreach ($eventManager->getDomEventsOnce() as $domEventOnce) {
-            $html[] = $this->eventHelper->renderDomEventOnce($domEventOnce);
-        }
+    /**
+     * Renders an event.
+     *
+     * @param \Ivory\GoogleMap\Events\Event $event The event.
+     *
+     * @return string The JS output.
+     */
+    public function renderEvent(Event $event)
+    {
+        return sprintf(
+            '%s = google.maps.event.addListener(%s, "%s", %s);'.PHP_EOL,
+            $event->getJavascriptVariable(),
+            $event->getInstance(),
+            $event->getEventName(),
+            $event->getHandle()
+        );
+    }
 
-        foreach ($eventManager->getEvents() as $event) {
-            $html[] = $this->eventHelper->renderEvent($event);
-        }
-
-        foreach ($eventManager->getEventsOnce() as $eventOnce) {
-            $html[] = $this->eventHelper->renderEventOnce($eventOnce);
-        }
-
-        return implode('', $html);
+    /**
+     * Renders an event once.
+     *
+     * @param \Ivory\GoogleMap\Events\Event $eventOnce The event once.
+     *
+     * @return string The JS output.
+     */
+    public function renderEventOnce(Event $eventOnce)
+    {
+        return sprintf(
+            '%s = google.maps.event.addListenerOnce(%s, "%s", %s);'.PHP_EOL,
+            $eventOnce->getJavascriptVariable(),
+            $eventOnce->getInstance(),
+            $eventOnce->getEventName(),
+            $eventOnce->getHandle()
+        );
     }
 }

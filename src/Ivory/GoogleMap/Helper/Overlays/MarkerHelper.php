@@ -13,7 +13,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Marker;
-use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Marker helper.
@@ -22,82 +21,21 @@ use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
  */
 class MarkerHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
-    protected $coordinateHelper;
-
     /** @var \Ivory\GoogleMap\Helper\Overlays\AnimationHelper */
     protected $animationHelper;
-
-    /** @var \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper */
-    protected $infoWindowHelper;
-
-    /** @var \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper */
-    protected $markerImageHelper;
-
-    /** @var \Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper */
-    protected $markerShapeHelper;
 
     /**
      * Creates a marker helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper      $coordinateHelper  The coordinate helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\AnimationHelper   $animationHelper   The animation helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper  $infoWindowHelper  The info window helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper $markerImageHelper The marker image helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper $markerShapeHelper The marker shape helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\AnimationHelper $animationHelper The animation helper.
      */
-    public function __construct(
-        CoordinateHelper $coordinateHelper = null,
-        AnimationHelper $animationHelper = null,
-        InfoWindowHelper $infoWindowHelper = null,
-        MarkerImageHelper $markerImageHelper = null,
-        MarkerShapeHelper $markerShapeHelper = null
-    ) {
-        if ($coordinateHelper === null) {
-            $coordinateHelper = new CoordinateHelper();
-        }
-
+    public function __construct(AnimationHelper $animationHelper = null)
+    {
         if ($animationHelper === null) {
             $animationHelper = new AnimationHelper();
         }
 
-        if ($infoWindowHelper === null) {
-            $infoWindowHelper = new InfoWindowHelper();
-        }
-
-        if ($markerImageHelper === null) {
-            $markerImageHelper = new MarkerImageHelper();
-        }
-
-        if ($markerShapeHelper === null) {
-            $markerShapeHelper = new MarkerShapeHelper();
-        }
-
-        $this->setCoordinateHelper($coordinateHelper);
         $this->setAnimationHelper($animationHelper);
-        $this->setInfoWindowHelper($infoWindowHelper);
-        $this->setMarkerImageHelper($markerImageHelper);
-        $this->setMarkerShapeHelper($markerShapeHelper);
-    }
-
-    /**
-     * Gets the coordinate helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\CoordinateHelper The coordinate helper.
-     */
-    public function getCoordinateHelper()
-    {
-        return $this->coordinateHelper;
-    }
-
-    /**
-     * Sets the coordinate helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function setCoordinateHelper(CoordinateHelper $coordinateHelper)
-    {
-        $this->coordinateHelper = $coordinateHelper;
     }
 
     /**
@@ -121,66 +59,6 @@ class MarkerHelper
     }
 
     /**
-     * Gets the info window helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper The info window helper.
-     */
-    public function getInfoWindowHelper()
-    {
-        return $this->infoWindowHelper;
-    }
-
-    /**
-     * Sets the info window helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper $infoWindowHelper The info window helper.
-     */
-    public function setInfoWindowHelper(InfoWindowHelper $infoWindowHelper)
-    {
-        $this->infoWindowHelper = $infoWindowHelper;
-    }
-
-    /**
-     * Gets the marker image helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper The marker image helper.
-     */
-    public function getMarkerImageHelper()
-    {
-        return $this->markerImageHelper;
-    }
-
-    /**
-     * Sets the marker image helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper $markerImageHelper The marker image helper.
-     */
-    public function setMarkerImageHelper(MarkerImageHelper $markerImageHelper)
-    {
-        $this->markerImageHelper = $markerImageHelper;
-    }
-
-    /**
-     * Gets the marker shape helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper The marker shape helper.
-     */
-    public function getMarkerShapeHelper()
-    {
-        return $this->markerShapeHelper;
-    }
-
-    /**
-     * Sets the marker shape helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper $markerShapeHelper The marker shape helper.
-     */
-    public function setMarkerShapeHelper(MarkerShapeHelper $markerShapeHelper)
-    {
-        $this->markerShapeHelper = $markerShapeHelper;
-    }
-
-    /**
      * Renders a marker.
      *
      * @param Ivory\GoogleMap\Overlays\Marker $marker The marker.
@@ -190,12 +68,10 @@ class MarkerHelper
      */
     public function render(Marker $marker, Map $map)
     {
-        $html = array();
-
         $markerJSONOptions = sprintf(
             '{"map":%s,"position":%s',
             $map->getJavascriptVariable(),
-            $this->coordinateHelper->render($marker->getPosition())
+            $marker->getPosition()->getJavascriptVariable()
         );
 
         $markerOptions = $marker->getOptions();
@@ -205,17 +81,14 @@ class MarkerHelper
         }
 
         if ($marker->hasIcon()) {
-            $html[] = $this->markerImageHelper->render($marker->getIcon());
             $markerJSONOptions .= ', "icon":'.$marker->getIcon()->getJavascriptVariable();
         }
 
         if ($marker->hasShadow()) {
-            $html[] = $this->markerImageHelper->render($marker->getShadow());
             $markerJSONOptions .= ', "shadow":'.$marker->getShadow()->getJavascriptVariable();
         }
 
         if ($marker->hasShape()) {
-            $html[] = $this->markerShapeHelper->render($marker->getShape());
             $markerJSONOptions .= ', "shape":'.$marker->getShape()->getJavascriptVariable();
         }
 
@@ -225,20 +98,10 @@ class MarkerHelper
             $markerJSONOptions .= '}';
         }
 
-        $html[] = sprintf(
-            'var %s = new google.maps.Marker(%s);'.PHP_EOL,
+        return sprintf(
+            '%s = new google.maps.Marker(%s);'.PHP_EOL,
             $marker->getJavascriptVariable(),
             $markerJSONOptions
         );
-
-        if ($marker->hasInfoWindow()) {
-            $html[] = $this->infoWindowHelper->render($marker->getInfoWindow(), false);
-
-            if ($marker->getInfoWindow()->isOpen()) {
-                $html[] = $this->infoWindowHelper->renderOpen($marker->getInfoWindow(), $map, $marker);
-            }
-        }
-
-        return implode('', $html);
     }
 }

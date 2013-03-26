@@ -40,23 +40,6 @@ class PolylineHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->polylineHelper);
     }
 
-    public function testDefaultState()
-    {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
-            $this->polylineHelper->getCoordinateHelper()
-        );
-    }
-
-    public function testInitialState()
-    {
-        $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
-
-        $this->polylineHelper = new PolylineHelper($coordinateHelper);
-
-        $this->assertSame($coordinateHelper, $this->polylineHelper->getCoordinateHelper());
-    }
-
     public function testRenderWithoutOptions()
     {
         $map = $this->getMock('Ivory\GoogleMap\Map');
@@ -67,19 +50,19 @@ class PolylineHelperTest extends \PHPUnit_Framework_TestCase
 
         $polyline = new Polyline();
         $polyline->setJavascriptVariable('polyline');
+
         $polyline->addCoordinate(1.1, 2.1);
         $polyline->addCoordinate(3.1, 4.2);
         $polyline->addCoordinate(7.4, 12.6);
 
-        $expected = 'var polyline = new google.maps.Polyline({'.
-            '"map":map,'.
-            '"path":['.
-            'new google.maps.LatLng(1.1, 2.1, true),'.
-            'new google.maps.LatLng(3.1, 4.2, true),'.
-            'new google.maps.LatLng(7.4, 12.6, true)'.
-            ']});'.PHP_EOL;
+        foreach ($polyline->getCoordinates() as $index => $coordinate) {
+            $coordinate->setJavascriptVariable('coordinate'.$index);
+        }
 
-        $this->assertSame($expected, $this->polylineHelper->render($polyline, $map));
+        $this->assertSame(
+            'polyline = new google.maps.Polyline({"map":map,"path":[coordinate0,coordinate1,coordinate2]});'.PHP_EOL,
+            $this->polylineHelper->render($polyline, $map)
+        );
     }
 
     public function testRenderWithOptions()
@@ -92,17 +75,23 @@ class PolylineHelperTest extends \PHPUnit_Framework_TestCase
 
         $polyline = new Polyline();
         $polyline->setJavascriptVariable('polyline');
+
         $polyline->addCoordinate(1.1, 2.1);
         $polyline->addCoordinate(3.1, 4.2);
         $polyline->addCoordinate(7.4, 12.6);
+
+        foreach ($polyline->getCoordinates() as $index => $coordinate) {
+            $coordinate->setJavascriptVariable('coordinate'.$index);
+        }
+
         $polyline->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $expected = 'var polyline = new google.maps.Polyline({'.
+        $expected = 'polyline = new google.maps.Polyline({'.
             '"map":map,'.
             '"path":['.
-            'new google.maps.LatLng(1.1, 2.1, true),'.
-            'new google.maps.LatLng(3.1, 4.2, true),'.
-            'new google.maps.LatLng(7.4, 12.6, true)'.
+            'coordinate0,'.
+            'coordinate1,'.
+            'coordinate2'.
             '],'.
             '"option1":"value1",'.
             '"option2":"value2"'.

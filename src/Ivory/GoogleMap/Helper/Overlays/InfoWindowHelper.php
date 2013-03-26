@@ -14,8 +14,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMap\Overlays\InfoWindow;
-use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
-use Ivory\GoogleMap\Helper\Base\SizeHelper;
 
 /**
  * Info window helper.
@@ -24,33 +22,7 @@ use Ivory\GoogleMap\Helper\Base\SizeHelper;
  */
 class InfoWindowHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
-    protected $coordinateHelper;
-
-    /** @var \Ivory\GoogleMap\Helper\Base\SizeHelper */
-    protected $sizeHelper;
-
-    /**
-     * Creates an info window helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     * @param \Ivory\GoogleMap\Helper\Base\SizeHelper       $sizeHelper       The size helper.
-     */
-    public function __construct(CoordinateHelper $coordinateHelper = null, SizeHelper $sizeHelper = null)
-    {
-        if ($coordinateHelper === null) {
-            $coordinateHelper = new CoordinateHelper();
-        }
-
-        if ($sizeHelper === null) {
-            $sizeHelper = new SizeHelper();
-        }
-
-        $this->coordinateHelper = $coordinateHelper;
-        $this->sizeHelper = $sizeHelper;
-    }
-
-    /**
+   /**
      * Renders an info window.
      *
      * @param \Ivory\GoogleMap\Overlays\InfoWindow $infoWindow     The info window.
@@ -61,27 +33,24 @@ class InfoWindowHelper
     public function render(InfoWindow $infoWindow, $renderPosition = true)
     {
         if ($renderPosition) {
-            $infoWindowJSONOptions = sprintf(
-                '{"position":%s,',
-                $this->coordinateHelper->render($infoWindow->getPosition())
-            );
+            $infoWindowJSONOptions = sprintf('{"position":%s,', $infoWindow->getPosition()->getJavascriptVariable());
         } else {
             $infoWindowJSONOptions = '{';
         }
 
         if ($infoWindow->hasPixelOffset()) {
-            $infoWindowJSONOptions .= '"pixelOffset":'.$this->sizeHelper->render($infoWindow->getPixelOffset()).',';
+            $infoWindowJSONOptions .= '"pixelOffset":'.$infoWindow->getPixelOffset()->getJavascriptVariable().',';
         }
 
         $infoWindowOptions = array_merge(
-            array('content' => $infoWindow->getContent()),
+            array('content' => $infoWindow->getContent(), 'open' => $infoWindow->isOpen()),
             $infoWindow->getOptions()
         );
 
         $infoWindowJSONOptions .= substr(json_encode($infoWindowOptions), 1);
 
         return sprintf(
-            'var %s = new google.maps.InfoWindow(%s);'.PHP_EOL,
+            '%s = new google.maps.InfoWindow(%s);'.PHP_EOL,
             $infoWindow->getJavascriptVariable(),
             $infoWindowJSONOptions
         );

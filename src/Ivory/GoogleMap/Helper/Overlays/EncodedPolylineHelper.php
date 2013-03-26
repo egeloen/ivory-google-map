@@ -84,7 +84,7 @@ class EncodedPolylineHelper
         }
 
         return sprintf(
-            'var %s = new google.maps.Polyline(%s);'.PHP_EOL,
+            '%s = new google.maps.Polyline(%s);'.PHP_EOL,
             $encodedPolyline->getJavascriptVariable(),
             $polylineJSONOptions
         );

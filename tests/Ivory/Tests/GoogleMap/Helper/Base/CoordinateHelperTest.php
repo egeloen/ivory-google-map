@@ -43,7 +43,11 @@ class CoordinateHelperTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $coordinate = new Coordinate(1.1, 2.1, true);
+        $coordinate->setJavascriptVariable('foo');
 
-        $this->assertSame('new google.maps.LatLng(1.1, 2.1, true)', $this->coordinateHelper->render($coordinate));
+        $this->assertSame(
+            'foo = new google.maps.LatLng(1.1, 2.1, true);'.PHP_EOL,
+            $this->coordinateHelper->render($coordinate)
+        );
     }
 }

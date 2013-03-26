@@ -93,7 +93,7 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     /**
      * Gets the marker position.
      *
-     * @return Ivory\GoogleMap\Base\Coordinate The marker position.
+     * @return \Ivory\GoogleMap\Base\Coordinate The marker position.
      */
     public function getPosition()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Base;
 
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
 use Ivory\GoogleMap\Exception\BaseException;
 
 /**
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Exception\BaseException;
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Point
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Point
+class Point extends AbstractJavascriptVariableAsset
 {
     /** @var double */
     protected $x;
@@ -35,6 +36,8 @@ class Point
      */
     public function __construct($x = 0, $y = 0)
     {
+        $this->setPrefixJavascriptVariable('point_');
+
         $this->setX($x);
         $this->setY($y);
     }

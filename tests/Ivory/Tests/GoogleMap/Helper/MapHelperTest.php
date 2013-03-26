@@ -11,10 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Base\Bound;
-use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Controls\ControlPosition;
 use Ivory\GoogleMap\Controls\MapTypeControlStyle;
+use Ivory\GoogleMap\Events\Event;
 use Ivory\GoogleMap\Layers\KMLLayer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
@@ -67,6 +66,16 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
+            'Ivory\GoogleMap\Helper\Base\PointHelper',
+            $this->mapHelper->getPointHelper()
+        );
+
+        $this->assertInstanceOf(
+            'Ivory\GoogleMap\Helper\Base\SizeHelper',
+            $this->mapHelper->getSizeHelper()
+        );
+
+        $this->assertInstanceOf(
             'Ivory\GoogleMap\Helper\MapTypeIdHelper',
             $this->mapHelper->getMapTypeIdHelper()
         );
@@ -109,6 +118,16 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'Ivory\GoogleMap\Helper\Overlays\MarkerHelper',
             $this->mapHelper->getMarkerHelper()
+        );
+
+        $this->assertInstanceOf(
+            'Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper',
+            $this->mapHelper->getMarkerImageHelper()
+        );
+
+        $this->assertInstanceOf(
+            'Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper',
+            $this->mapHelper->getMarkerShapeHelper()
         );
 
         $this->assertInstanceOf(
@@ -161,6 +180,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
     {
         $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
         $boundHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\BoundHelper');
+        $pointHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\PointHelper');
+        $sizeHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\SizeHelper');
         $mapTypeIdHelper = $this->getMock('Ivory\GoogleMap\Helper\MapTypeIdHelper');
         $mapTypeControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper');
         $overviewMapControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper');
@@ -170,6 +191,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $streetViewControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper');
         $zoomControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\ZoomControlHelper');
         $markerHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerHelper');
+        $markerImageHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper');
+        $markerShapeHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper');
         $infoWindowHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper');
         $polylineHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\PolylineHelper');
         $encodedPolylineHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper');
@@ -183,6 +206,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $this->mapHelper = new MapHelper(
             $coordinateHelper,
             $boundHelper,
+            $pointHelper,
+            $sizeHelper,
             $mapTypeIdHelper,
             $mapTypeControlHelper,
             $overviewMapControlHelper,
@@ -192,6 +217,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
             $streetViewControlHelper,
             $zoomControlHelper,
             $markerHelper,
+            $markerImageHelper,
+            $markerShapeHelper,
             $infoWindowHelper,
             $polylineHelper,
             $encodedPolylineHelper,
@@ -205,6 +232,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($coordinateHelper, $this->mapHelper->getCoordinateHelper());
         $this->assertSame($boundHelper, $this->mapHelper->getBoundHelper());
+        $this->assertSame($pointHelper, $this->mapHelper->getPointHelper());
+        $this->assertSame($sizeHelper, $this->mapHelper->getSizeHelper());
         $this->assertSame($mapTypeIdHelper, $this->mapHelper->getMapTypeIdHelper());
         $this->assertSame($mapTypeControlHelper, $this->mapHelper->getMapTypeControlHelper());
         $this->assertSame($overviewMapControlHelper, $this->mapHelper->getOverviewMapControlHelper());
@@ -214,6 +243,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($streetViewControlHelper, $this->mapHelper->getStreetViewControlHelper());
         $this->assertSame($zoomControlHelper, $this->mapHelper->getZoomControlHelper());
         $this->assertSame($markerHelper, $this->mapHelper->getMarkerHelper());
+        $this->assertSame($markerImageHelper, $this->mapHelper->getMarkerImageHelper());
+        $this->assertSame($markerShapeHelper, $this->mapHelper->getMarkerShapeHelper());
         $this->assertSame($infoWindowHelper, $this->mapHelper->getInfoWindowHelper());
         $this->assertSame($polylineHelper, $this->mapHelper->getPolylineHelper());
         $this->assertSame($encodedPolylineHelper, $this->mapHelper->getEncodedPolylineHelper());
@@ -225,14 +256,14 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($eventManagerHelper, $this->mapHelper->getEventManagerHelper());
     }
 
-    public function testRenderContainer()
+    public function testRenderHtmlContainer()
     {
         $map = new Map();
         $map->setHtmlContainerId('html_container_id');
 
         $this->assertSame(
             '<div id="html_container_id" style="width:300px;height:300px;"></div>'.PHP_EOL,
-            $this->mapHelper->renderContainer($map)
+            $this->mapHelper->renderHtmlContainer($map)
         );
     }
 
@@ -256,144 +287,227 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderStylesheets($map));
     }
 
-    public function testRenderJavascriptsWithOneSimpleMap()
+    public function testRenderJsContainerInit()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
+        $expected = 'map_container = {'.
+            '"map":null,'.
+            '"coordinates":{},'.
+            '"bounds":{},'.
+            '"points":{},'.
+            '"sizes":{},'.
+            '"circles":{},'.
+            '"encoded_polylines":{},'.
+            '"ground_overlays":{},'.
+            '"polygons":{},'.
+            '"polylines":{},'.
+            '"rectangles":{},'.
+            '"info_windows":{},'.
+            '"marker_images":{},'.
+            '"marker_shapes":{},'.
+            '"markers":{},'.
+            '"kml_layers":{},'.
+            '"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},'.
+            '"closable_info_windows":{}'.
+            '};'.PHP_EOL;
 
-        $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerInit($map));
     }
 
-    public function testRenderJavascriptsWithMultipleSimpleMaps()
-    {
-        $map1 = new Map();
-        $map1->setJavascriptVariable('map1');
-        $map1->setHtmlContainerId('map_canvas_1');
-
-        $map2 = new Map();
-        $map2->setJavascriptVariable('map2');
-        $map2->setHtmlContainerId('map_canvas_2');
-
-        $expectedMap1 = 'var map1 = new google.maps.Map('.
-            'document.getElementById("map_canvas_1"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $map1Expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap1
-map1.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
-
-EOF;
-
-        $expectedMap2 = 'var map2 = new google.maps.Map('.
-            'document.getElementById("map_canvas_2"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $map2Expected = <<<EOF
-<script type="text/javascript">
-$expectedMap2
-map2.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
-
-EOF;
-
-        $this->assertSame($map1Expected, $this->mapHelper->renderJavascripts($map1));
-        $this->assertSame($map2Expected, $this->mapHelper->renderJavascripts($map2));
-    }
-
-    public function testRenderJavascriptsWithAsyncMap()
+    public function testRenderJsContainerBounds()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
-        $map->setAsync(true);
 
-        $expectedAsync = '<script '.
-            'type="text/javascript" '.
-            'src="//maps.google.com/maps/api/js?callback=load_ivory_google_map&amp;language=en&amp;sensor=false">'.
-            '</script>';
+        $map->getBound()->setJavascriptVariable('map_bound');
 
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
+        $map->addGroundOverlay($groundOverlay = new GroundOverlay());
+        $groundOverlay->getBound()->setJavascriptVariable('ground_overlay_bound');
+        $groundOverlay->getBound()->getSouthWest()->setJavascriptVariable('ground_overlay_coordinate_south_west');
+        $groundOverlay->getBound()->getNorthEast()->setJavascriptVariable('ground_overlay_coordinate_north_east');
 
-        $expected = <<<EOF
-$expectedAsync
-<script type="text/javascript">
-function load_ivory_google_map() {
-$expectedMap
-map.setCenter(new google.maps.LatLng(0, 0, true));
-}
-</script>
+        $map->addRectangle($rectangle = new Rectangle());
+        $rectangle->getBound()->setJavascriptVariable('rectangle_bound');
+        $rectangle->getBound()->getSouthWest()->setJavascriptVariable('rectangle_coordinate_south_west');
+        $rectangle->getBound()->getNorthEast()->setJavascriptVariable('rectangle_coordinate_north_east');
 
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
-    }
-
-    public function testRenderJavascriptsWithMapCenter()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
-        $map->setCenter(new Coordinate(1, 2, true));
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-map.setCenter(new google.maps.LatLng(1, 2, true));
-</script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
-    }
-
-    public function testRenderJavascriptsWithMapBound()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
         $map->setAutoZoom(true);
-        $map->setBound(new Bound(new Coordinate(-1, -2, true), new Coordinate(1, 2, true)));
-        $map->getBound()->setJavascriptVariable('mapBound');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-var map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP});
-var mapBound = new google.maps.LatLngBounds(new google.maps.LatLng(-1, -2, true), new google.maps.LatLng(1, 2, true));
-map.fitBounds(mapBound);
-</script>
+map_container.bounds.map_bound = map_bound = new google.maps.LatLngBounds();
+map_container.bounds.ground_overlay_bound = ground_overlay_bound = new google.maps.LatLngBounds(ground_overlay_coordinate_south_west, ground_overlay_coordinate_north_east);
+map_container.bounds.rectangle_bound = rectangle_bound = new google.maps.LatLngBounds(rectangle_coordinate_south_west, rectangle_coordinate_north_east);
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerBounds($map));
     }
 
-    public function testRenderJavascriptsWithEnabledMapControls()
+    public function testRenderJsContainerCoordinates()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->getCenter()->setJavascriptVariable('map_center');
+
+        $map->addRectangle($rectangle = new Rectangle());
+        $rectangle->getBound()->getSouthWest()->setJavascriptVariable('rectangle_south_west');
+        $rectangle->getBound()->getNorthEast()->setJavascriptVariable('rectangle_north_east');
+
+        $map->addCircle($circle = new Circle());
+        $circle->getCenter()->setJavascriptVariable('circle_center');
+
+        $map->addInfoWindow($infoWindow = new InfoWindow());
+        $infoWindow->setPosition(1, 2, true);
+        $infoWindow->getPosition()->setJavascriptVariable('info_window_position');
+
+        $map->addMarker($marker = new Marker());
+        $marker->getPosition()->setJavascriptVariable('marker_position');
+
+        $map->addPolygon($polygon = new Polygon());
+        $polygon->addCoordinate(1.1, 2.1);
+        $polygon->addCoordinate(3.1, 4.2);
+
+        foreach ($polygon->getCoordinates() as $index => $polygonCoordinate) {
+            $polygonCoordinate->setJavascriptVariable('polygon_coordinate_'.$index);
+        }
+
+        $map->addPolyline($polyline = new Polyline());
+        $polyline->addCoordinate(1.2, 2.6);
+        $polyline->addCoordinate(3.2, 4.9);
+
+        foreach ($polyline->getCoordinates() as $index => $polyline) {
+            $polyline->setJavascriptVariable('polyline_coordinate_'.$index);
+        }
+
+        $expected = <<<EOF
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.coordinates.rectangle_south_west = rectangle_south_west = new google.maps.LatLng(-1, -1, true);
+map_container.coordinates.rectangle_north_east = rectangle_north_east = new google.maps.LatLng(1, 1, true);
+map_container.coordinates.circle_center = circle_center = new google.maps.LatLng(0, 0, true);
+map_container.coordinates.info_window_position = info_window_position = new google.maps.LatLng(1, 2, true);
+map_container.coordinates.marker_position = marker_position = new google.maps.LatLng(0, 0, true);
+map_container.coordinates.polygon_coordinate_0 = polygon_coordinate_0 = new google.maps.LatLng(1.1, 2.1, true);
+map_container.coordinates.polygon_coordinate_1 = polygon_coordinate_1 = new google.maps.LatLng(3.1, 4.2, true);
+map_container.coordinates.polyline_coordinate_0 = polyline_coordinate_0 = new google.maps.LatLng(1.2, 2.6, true);
+map_container.coordinates.polyline_coordinate_1 = polyline_coordinate_1 = new google.maps.LatLng(3.2, 4.9, true);
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerCoordinates($map));
+    }
+
+    public function testRenderJsContainerPoints()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addMarker($marker = new Marker());
+
+        $marker->setIcon('url');
+
+        $marker->getIcon()->setAnchor(1, 2);
+        $marker->getIcon()->getAnchor()->setJavascriptVariable('marker_icon_anchor');
+
+        $marker->getIcon()->setOrigin(1, 2);
+        $marker->getIcon()->getOrigin()->setJavascriptVariable('marker_icon_origin');
+
+        $marker->setShadow('url');
+
+        $marker->getShadow()->setAnchor(1, 2);
+        $marker->getShadow()->getAnchor()->setJavascriptVariable('marker_shadow_anchor');
+
+        $marker->getShadow()->setOrigin(1, 2);
+        $marker->getShadow()->getOrigin()->setJavascriptVariable('marker_shadow_origin');
+
+        $expected = <<<EOF
+map_container.points.marker_icon_anchor = marker_icon_anchor = new google.maps.Point(1, 2);
+map_container.points.marker_icon_origin = marker_icon_origin = new google.maps.Point(1, 2);
+map_container.points.marker_shadow_anchor = marker_shadow_anchor = new google.maps.Point(1, 2);
+map_container.points.marker_shadow_origin = marker_shadow_origin = new google.maps.Point(1, 2);
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerPoints($map));
+    }
+
+    public function testRenderJsContainerSizes()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addInfoWindow($mapInfoWindow = new InfoWindow());
+        $mapInfoWindow->setPixelOffset(1, 2);
+        $mapInfoWindow->getPixelOffset()->setJavascriptVariable('map_info_winfow_pixel_offset');
+
+        $map->addMarker($marker = new Marker());
+
+        $marker->setInfoWindow($markerInfoWindow = new InfoWindow());
+        $markerInfoWindow->setPixelOffset(1, 2);
+        $markerInfoWindow->getPixelOffset()->setJavascriptVariable('marker_info_window_pixel_offset');
+
+        $marker->setIcon('url');
+
+        $marker->getIcon()->setSize(1, 2);
+        $marker->getIcon()->getSize()->setJavascriptVariable('marker_icon_size');
+
+        $marker->getIcon()->setScaledSize(1, 2);
+        $marker->getIcon()->getScaledSize()->setJavascriptVariable('marker_icon_scaled_size');
+
+        $marker->setShadow('url');
+
+        $marker->getShadow()->setSize(1, 2);
+        $marker->getShadow()->getSize()->setJavascriptVariable('marker_shadow_size');
+
+        $marker->getShadow()->setScaledSize(1, 2);
+        $marker->getShadow()->getScaledSize()->setJavascriptVariable('marker_shadow_scaled_size');
+
+        $expected = <<<EOF
+map_container.sizes.map_info_winfow_pixel_offset = map_info_winfow_pixel_offset = new google.maps.Size(1, 2);
+map_container.sizes.marker_info_window_pixel_offset = marker_info_window_pixel_offset = new google.maps.Size(1, 2);
+map_container.sizes.marker_icon_size = marker_icon_size = new google.maps.Size(1, 2);
+map_container.sizes.marker_icon_scaled_size = marker_icon_scaled_size = new google.maps.Size(1, 2);
+map_container.sizes.marker_shadow_size = marker_shadow_size = new google.maps.Size(1, 2);
+map_container.sizes.marker_shadow_scaled_size = marker_shadow_scaled_size = new google.maps.Size(1, 2);
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerSizes($map));
+    }
+
+    public function testRenderMapCenter()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->getCenter()->setJavascriptVariable('map_center');
+
+        $this->assertSame('map.setCenter(map_center);'.PHP_EOL, $this->mapHelper->renderMapCenter($map));
+    }
+
+    public function testRenderMapBound()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->getBound()->setJavascriptVariable('map_bound');
+
+        $this->assertSame('map.fitBounds(map_bound);'.PHP_EOL, $this->mapHelper->renderMapBound($map));
+    }
+
+    public function testRenderMap()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $expected = <<<EOF
+map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+
+EOF;
+        $this->assertSame($expected, $this->mapHelper->renderMap($map));
+    }
+
+    public function testRenderMapWithEnabledMapControls()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
@@ -406,7 +520,7 @@ EOF;
 
         // FIXME Add all map controls...
 
-        $expectedMap = 'var map = new google.maps.Map('.
+        $expected = 'map = new google.maps.Map('.
             'document.getElementById("map_canvas"), '.
             '{'.
             '"mapTypeId":google.maps.MapTypeId.ROADMAP,'.
@@ -418,385 +532,510 @@ EOF;
             '"style":google.maps.MapTypeControlStyle.HORIZONTAL_BAR'.
             '},'.
             '"zoom":3'.
-            '});';
+            '});'.PHP_EOL;
 
-        $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderMap($map));
     }
 
-    public function testRenderJavascriptsWithDisabledMapControls()
+    public function testRenderMapWithDisabledMapControls()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
         $map->setMapOption('mapTypeControl', false);
 
-        $expectedMap = 'var map = new google.maps.Map('.
+        $expected = 'map = new google.maps.Map('.
             'document.getElementById("map_canvas"), '.
             '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"mapTypeControl":false,"zoom":3}'.
-            ');';
+            ');'.PHP_EOL;
+
+        $this->assertSame($expected, $this->mapHelper->renderMap($map));
+    }
+
+    public function testRenderJsContainerMapWithoutAutoZoom()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->getCenter()->setJavascriptVariable('map_center');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerMap($map));
     }
 
-    public function testRenderJavascriptsWithMarker()
+    public function testRenderJsContainerMapWithAutoZoom()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->getBound()->setJavascriptVariable('map_bound');
+
+        $map->setAutoZoom(true);
+
+        $expected = <<<EOF
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP});
+map.fitBounds(map_bound);
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerMap($map));
+    }
+
+    public function testRenderJsContainerCircles()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $marker = new Marker();
-        $marker->setJavascriptVariable('marker');
-        $map->addMarker($marker);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
+        $map->addCircle($circle = new Circle());
+        $circle->setJavascriptVariable('circle');
+        $circle->getCenter()->setJavascriptVariable('circle_center');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(0, 0, true)});
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
+map_container.circles.circle = circle = new google.maps.Circle({"map":map,"center":circle_center,"radius":1});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerCircles($map));
     }
 
-    public function testRenderjavascriptsWithInfoWindow()
+    public function testRenderJsContainerEncodedPolylines()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $infoWindow = new InfoWindow();
-        $infoWindow->setJavascriptVariable('infoWindow');
-        $infoWindow->setPosition(1, 2, true);
-
-        $map->addInfoWindow($infoWindow);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedInfoWindow = 'var infoWindow = new google.maps.InfoWindow('.
-            '{"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"}'.
-            ');';
+        $map->addEncodedPolyline($encodedPolyline = new EncodedPolyline('foo'));
+        $encodedPolyline->setJavascriptVariable('encoded_polyline');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-$expectedInfoWindow
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
+map_container.encoded_polylines.encoded_polyline = encoded_polyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerEncodedPolylines($map));
     }
 
-    public function testRenderjavascriptsWithOpenInfoWindow()
+    public function testRenderJsContainerGroundOverlays()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $infoWindow = new InfoWindow();
-        $infoWindow->setJavascriptVariable('infoWindow');
-        $infoWindow->setPosition(1, 2, true);
-        $infoWindow->setOpen(true);
-
-        $map->addInfoWindow($infoWindow);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedInfoWindow = 'var infoWindow = new google.maps.InfoWindow('.
-            '{"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"}'.
-            ');';
+        $map->addGroundOverlay($groundOverlay = new GroundOverlay('url'));
+        $groundOverlay->setJavascriptVariable('ground_overlay');
+        $groundOverlay->getBound()->setJavascriptVariable('ground_overlay_bound');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-$expectedInfoWindow
-infoWindow.open(map);
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
+map_container.ground_overlays.ground_overlay = ground_overlay = new google.maps.GroundOverlay("url", ground_overlay_bound, {"map":map});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerGroundOverlays($map));
     }
 
-    public function testRenderJavascriptsWithMarkerAndInfoWindow()
+    public function testRenderJsContainerPolygons()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $marker = new Marker();
-        $marker->setJavascriptVariable('marker');
-        $map->addMarker($marker);
-
-        $infoWindow = new InfoWindow();
-        $infoWindow->setJavascriptVariable('infoWindow');
-        $marker->setInfoWindow($infoWindow);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedEvent = 'var marker_info_window_event = google.maps.event.addListener('.
-            'marker, '.
-            '"click", '.
-            'function () {infoWindow.open(map, marker);}'.
-            ');';
+        $map->addPolygon($polygon = new Polygon());
+        $polygon->setJavascriptVariable('polygon');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(0, 0, true)});
-var infoWindow = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
-map.setCenter(new google.maps.LatLng(0, 0, true));
-$expectedEvent
-</script>
+map_container.polygons.polygon = polygon = new google.maps.Polygon({"map":map,"paths":[]});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerPolygons($map));
     }
 
-    public function testRenderJavascriptsWithMarkerAndClosableInfoWindow()
+    public function testRenderJsContainerPolylines()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $marker = new Marker();
-        $marker->setJavascriptVariable('marker');
-        $map->addMarker($marker);
-
-        $markerInfoWindow = new InfoWindow();
-        $markerInfoWindow->setJavascriptVariable('markerInfoWindow');
-        $markerInfoWindow->setAutoClose(true);
-        $marker->setInfoWindow($markerInfoWindow);
-
-        $infoWindow = new InfoWindow();
-        $infoWindow->setJavascriptVariable('infoWindow');
-        $infoWindow->setPosition(1, 2, true);
-        $infoWindow->setAutoClose(true);
-        $map->addInfoWindow($infoWindow);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedInfoWindow = 'var infoWindow = new google.maps.InfoWindow('.
-            '{"position":new google.maps.LatLng(1, 2, true),"content":"<p>Default content<\/p>"}'.
-            ');';
-
-        $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-var marker = new google.maps.Marker({"map":map,"position":new google.maps.LatLng(0, 0, true)});
-var markerInfoWindow = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
-$expectedInfoWindow
-map.setCenter(new google.maps.LatLng(0, 0, true));
-var closable_info_windows = Array(infoWindow, markerInfoWindow);
-var marker_info_window_event = google.maps.event.addListener(marker, "click", function () {
-    for (var info_window in closable_info_windows) {
-        closable_info_windows[info_window].close();
-    }
-    markerInfoWindow.open(map, marker);
-});
-</script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
-    }
-
-    public function testRenderJavascriptsWithPolyline()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
-
-        $polyline = new Polyline();
-        $polyline->addCoordinate(1, 2);
-        $polyline->addCoordinate(3, 4);
+        $map->addPolyline($polyline = new Polyline());
         $polyline->setJavascriptVariable('polyline');
 
-        $map->addPolyline($polyline);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedPolyline = 'var polyline = new google.maps.Polyline('.
-            '{"map":map,"path":[new google.maps.LatLng(1, 2, true),new google.maps.LatLng(3, 4, true)]}'.
-            ');';
-
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-$expectedPolyline
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
+map_container.polylines.polyline = polyline = new google.maps.Polyline({"map":map,"path":[]});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerPolylines($map));
     }
 
-    public function testRenderJavascriptsWithEncodedPolyline()
+    public function testRenderJsContainerRectangles()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $encodedPolyline = new EncodedPolyline('foo');
-        $encodedPolyline->setJavascriptVariable('encodedPolyline');
-
-        $map->addEncodedPolyline($encodedPolyline);
-
-        $expectedLibrary = '<script '.
-            'type="text/javascript" '.
-            'src="//maps.google.com/maps/api/js?libraries=geometry&amp;language=en&amp;sensor=false">'.
-            '</script>';
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expected = <<<EOF
-$expectedLibrary
-<script type="text/javascript">
-$expectedMap
-var encodedPolyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
-    }
-
-    public function testRenderJavascriptsWithPolygon()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
-
-        $polygon = new Polygon();
-        $polygon->setJavascriptVariable('polygon');
-        $polygon->addCoordinate(1, 2);
-        $polygon->addCoordinate(3, 4);
-
-        $map->addPolygon($polygon);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedPolygon = 'var polygon = new google.maps.Polygon('.
-            '{"map":map,"paths":[new google.maps.LatLng(1, 2, true),new google.maps.LatLng(3, 4, true)]}'.
-            ');';
-
-        $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-$expectedPolygon
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
-    }
-
-    public function testRenderJavascriptsWithRectangle()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
-
-        $rectangle = new Rectangle();
+        $map->addRectangle($rectangle = new Rectangle());
         $rectangle->setJavascriptVariable('rectangle');
-        $rectangle->getBound()->setJavascriptVariable('rectangleBound');
-
-        $map->addRectangle($rectangle);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedRectangleBound = 'var rectangleBound = new google.maps.LatLngBounds('.
-            'new google.maps.LatLng(-1, -1, true), '.
-            'new google.maps.LatLng(1, 1, true)'.
-            ');';
+        $rectangle->getBound()->setJavascriptVariable('rectangle_bound');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
-<script type="text/javascript">
-$expectedMap
-$expectedRectangleBound
-var rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound});
-map.setCenter(new google.maps.LatLng(0, 0, true));
-</script>
+map_container.rectangles.rectangle = rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangle_bound});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerRectangles($map));
     }
 
-    public function testRenderJavascriptsWithCircle()
+    public function testRenderJsContainerInfoWindowsWithoutClosableOnes()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
 
-        $circle = new Circle();
+        $map->addInfoWindow($mapInfoWindow = new InfoWindow());
+        $mapInfoWindow->setJavascriptVariable('map_info_window');
+        $mapInfoWindow->setPosition(1, 2, true);
+        $mapInfoWindow->getPosition()->setJavascriptVariable('map_info_window_position');
+
+        $map->addMarker($marker = new Marker());
+        $marker->setInfoWindow($markerInfoWindow = new InfoWindow());
+        $markerInfoWindow->setJavascriptVariable('marker_info_window');
+        $markerInfoWindow->setPosition(1, 2, true);
+        $markerInfoWindow->getPosition()->setJavascriptVariable('marker_info_window_position');
+
+        $expected = <<<EOF
+map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>","open":false});
+map_container.info_windows.map_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>","open":false});
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerInfoWindows($map));
+    }
+
+    public function testRenderJsContainerInfoWindowsWithClosableOnes()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addInfoWindow($mapInfoWindow = new InfoWindow());
+        $mapInfoWindow->setJavascriptVariable('map_info_window');
+        $mapInfoWindow->setPosition(1, 2, true);
+        $mapInfoWindow->getPosition()->setJavascriptVariable('map_info_window_position');
+
+        $map->addMarker($marker = new Marker());
+        $marker->setInfoWindow($markerInfoWindow = new InfoWindow());
+        $markerInfoWindow->setJavascriptVariable('marker_info_window');
+        $markerInfoWindow->setPosition(1, 2, true);
+        $markerInfoWindow->getPosition()->setJavascriptVariable('marker_info_window_position');
+
+        $mapInfoWindow->setAutoClose(true);
+        $markerInfoWindow->setAutoClose(true);
+
+        $expected = <<<EOF
+map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>","open":false});
+map_container.info_windows.map_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>","open":false});
+map_container.closable_info_windows.map_info_window = map_info_window;
+map_container.closable_info_windows.marker_info_window = marker_info_window;
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerInfoWindows($map));
+    }
+
+    public function testRenderJsContainerMarkerImages()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addMarker($marker = new Marker());
+
+        $marker->setIcon('url_icon');
+        $marker->getIcon()->setJavascriptVariable('marker_icon');
+
+        $marker->setShadow('shadow_url');
+        $marker->getShadow()->setJavascriptVariable('marker_shadow');
+
+        $expected = <<<EOF
+map_container.marker_images.marker_icon = marker_icon = new google.maps.MarkerImage("url_icon", null, null, null, null);
+map_container.marker_images.marker_shadow = marker_shadow = new google.maps.MarkerImage("shadow_url", null, null, null, null);
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerMarkerImages($map));
+    }
+
+    public function testRenderJsContainerMarkerShapes()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addMarker($marker = new Marker());
+        $marker->setShape('poly', array(1, 1, 1, -1, -1, -1, -1, 1));
+        $marker->getShape()->setJavascriptVariable('marker_shape');
+
+        $expected = <<<EOF
+map_container.marker_shapes.marker_shape = marker_shape = new google.maps.MarkerShape({"type":"poly","coords":[1,1,1,-1,-1,-1,-1,1]});
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerMarkerShapes($map));
+    }
+
+    public function testRenderJsContainerMarkersWithoutAutoOpenInfoWindow()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addMarker($marker = new Marker());
+        $marker->setJavascriptVariable('marker');
+        $marker->getPosition()->setJavascriptVariable('marker_position');
+
+        $expected = <<<EOF
+map_container.markers.marker = marker = new google.maps.Marker({"map":map,"position":marker_position});
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerMarkers($map));
+    }
+
+    public function testRenderJsContainerMarkersWithAutoOpenInfoWindow()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addMarker($marker = new Marker());
+        $marker->setJavascriptVariable('marker');
+        $marker->getPosition()->setJavascriptVariable('marker_position');
+
+        $marker->setInfoWindow($infoWindow = new InfoWindow());
+        $infoWindow->setJavascriptVariable('marker_info_window');
+        $infoWindow->setAutoOpen(true);
+
+        $this->mapHelper->renderJsContainerMarkers($map);
+
+        $this->assertNotEmpty($map->getEventManager()->getEvents());
+    }
+
+    public function testRenderJsContainerKMLLayers()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->addKMLLayer($kmlLayer = new KMLLayer('url'));
+        $kmlLayer->setJavascriptVariable('kml_layer');
+
+        $expected = <<<EOF
+map_container.kml_layers.kml_layer = kml_layer = new google.maps.KmlLayer("url", {"map":map});
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerKMLLayers($map));
+    }
+
+    public function testRenderJsContainerEventManager()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $baseEvent = new Event('instance', 'click', 'function(){}', false);
+
+        $map->getEventManager()->addDomEvent($domEvent = clone $baseEvent);
+        $domEvent->setJavascriptVariable('dom_event');
+
+        $map->getEventManager()->addDomEventOnce($domEventOnce = clone $baseEvent);
+        $domEventOnce->setJavascriptVariable('dom_event_once');
+
+        $map->getEventManager()->addEvent($event = clone $baseEvent);
+        $event->setJavascriptVariable('event');
+
+        $map->getEventManager()->addEventOnce($eventOnce = clone $baseEvent);
+        $eventOnce->setJavascriptVariable('event_once');
+
+        $expected = <<<EOF
+map_container.event_manager.dom_events.dom_event = dom_event = google.maps.event.addDomListener(instance, "click", function(){}, false);
+map_container.event_manager.dom_events_once.dom_event_once = dom_event_once = google.maps.event.addDomListenerOnce(instance, "click", function(){}, false);
+map_container.event_manager.events.event = event = google.maps.event.addListener(instance, "click", function(){});
+map_container.event_manager.events_once.event_once = event_once = google.maps.event.addListenerOnce(instance, "click", function(){});
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerEventManager($map));
+    }
+
+    public function testRenderJsContainerWithDefaultMap()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->getCenter()->setJavascriptVariable('map_center');
+
+        $expected = <<<EOF
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainer($map));
+    }
+
+    public function testRenderJsContainerWithComplexMap()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->setAutoZoom(true);
+        $map->getBound()->setJavascriptVariable('map_bound');
+
+        $map->addCircle($circle = new Circle());
         $circle->setJavascriptVariable('circle');
+        $circle->getCenter()->setJavascriptVariable('circle_center');
 
-        $map->addCircle($circle);
+        $map->addEncodedPolyline($encodedPolyline = new EncodedPolyline('foo'));
+        $encodedPolyline->setJavascriptVariable('encoded_polyline');
 
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
+        $map->addGroundOverlay($groundOverlay = new GroundOverlay('url'));
+        $groundOverlay->setJavascriptVariable('ground_overlay');
+        $groundOverlay->getBound()->setJavascriptVariable('ground_overlay_bound');
+        $groundOverlay->getBound()->setSouthWest(1, 2, true);
+        $groundOverlay->getBound()->getSouthWest()->setJavascriptVariable('ground_overlay_bound_south_west');
+        $groundOverlay->getBound()->setNorthEast(3, 4, true);
+        $groundOverlay->getBound()->getNorthEast()->setJavascriptVariable('ground_overlay_bound_north_east');
+
+        $map->addPolygon($polygon = new Polygon());
+        $polygon->setJavascriptVariable('polygon');
+
+        $map->addPolyline($polyline = new Polyline());
+        $polyline->setJavascriptVariable('polyline');
+
+        $map->addRectangle($rectangle = new Rectangle());
+        $rectangle->setJavascriptVariable('rectangle');
+        $rectangle->getBound()->setJavascriptVariable('rectangle_bound');
+        $rectangle->getBound()->setSouthWest(1, 2, true);
+        $rectangle->getBound()->getSouthWest()->setJavascriptVariable('rectangle_bound_south_west');
+        $rectangle->getBound()->setNorthEast(3, 4, true);
+        $rectangle->getBound()->getNorthEast()->setJavascriptVariable('rectangle_bound_north_east');
+
+        $map->addInfoWindow($mapInfoWindow = new InfoWindow());
+        $mapInfoWindow->setJavascriptVariable('map_info_window');
+        $mapInfoWindow->setPosition(1, 2, true);
+        $mapInfoWindow->getPosition()->setJavascriptVariable('map_info_window_position');
+
+        $map->addMarker($marker = new Marker());
+        $marker->setJavascriptVariable('marker');
+        $marker->getPosition()->setJavascriptVariable('marker_position');
+
+        $marker->setInfoWindow($markerInfoWindow = new InfoWindow());
+        $markerInfoWindow->setJavascriptVariable('marker_info_window');
+
+        $marker->setIcon('url');
+        $marker->getIcon()->setJavascriptVariable('marker_icon');
+
+        $marker->setShadow('url');
+        $marker->getShadow()->setJavascriptVariable('marker_shadow');
+
+        $map->addKMLLayer($kmlLayer = new KMLLayer('url'));
+        $kmlLayer->setJavascriptVariable('kml_layer');
+
+        $map->getEventManager()->addEvent($event = new Event('instance', 'click', 'function(){}', false));
+        $event->setJavascriptVariable('event');
+
+        $expected = <<<EOF
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.ground_overlay_bound_south_west = ground_overlay_bound_south_west = new google.maps.LatLng(1, 2, true);
+map_container.coordinates.ground_overlay_bound_north_east = ground_overlay_bound_north_east = new google.maps.LatLng(3, 4, true);
+map_container.coordinates.rectangle_bound_south_west = rectangle_bound_south_west = new google.maps.LatLng(1, 2, true);
+map_container.coordinates.rectangle_bound_north_east = rectangle_bound_north_east = new google.maps.LatLng(3, 4, true);
+map_container.coordinates.circle_center = circle_center = new google.maps.LatLng(0, 0, true);
+map_container.coordinates.map_info_window_position = map_info_window_position = new google.maps.LatLng(1, 2, true);
+map_container.coordinates.marker_position = marker_position = new google.maps.LatLng(0, 0, true);
+map_container.bounds.map_bound = map_bound = new google.maps.LatLngBounds();
+map_container.bounds.ground_overlay_bound = ground_overlay_bound = new google.maps.LatLngBounds(ground_overlay_bound_south_west, ground_overlay_bound_north_east);
+map_container.bounds.rectangle_bound = rectangle_bound = new google.maps.LatLngBounds(rectangle_bound_south_west, rectangle_bound_north_east);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP});
+map.fitBounds(map_bound);
+map_container.circles.circle = circle = new google.maps.Circle({"map":map,"center":circle_center,"radius":1});
+map_container.encoded_polylines.encoded_polyline = encoded_polyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
+map_container.ground_overlays.ground_overlay = ground_overlay = new google.maps.GroundOverlay("url", ground_overlay_bound, {"map":map});
+map_container.polygons.polygon = polygon = new google.maps.Polygon({"map":map,"paths":[]});
+map_container.polylines.polyline = polyline = new google.maps.Polyline({"map":map,"path":[]});
+map_container.rectangles.rectangle = rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangle_bound});
+map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>","open":false});
+map_container.info_windows.map_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>","open":false});
+map_container.marker_images.marker_icon = marker_icon = new google.maps.MarkerImage("url", null, null, null, null);
+map_container.marker_images.marker_shadow = marker_shadow = new google.maps.MarkerImage("url", null, null, null, null);
+map_container.markers.marker = marker = new google.maps.Marker({"map":map,"position":marker_position, "icon":marker_icon, "shadow":marker_shadow});
+map_bound.union(circle.getBounds());
+encoded_polyline.getPath().forEach(function(element){map_bound.extend(element)});
+map_bound.union(ground_overlay_bound);
+polygon.getPath().forEach(function(element){map_bound.extend(element)});
+polyline.getPath().forEach(function(element){map_bound.extend(element)});
+map_bound.union(rectangle_bound);
+map_bound.extend(map_info_window.getPosition());
+map_bound.extend(marker.getPosition());
+map_container.kml_layers.kml_layer = kml_layer = new google.maps.KmlLayer("url", {"map":map});
+map_container.event_manager.events.event = event = google.maps.event.addListener(instance, "click", function(){});
+map_container.event_manager.events.marker_info_window_event = marker_info_window_event = google.maps.event.addListener(marker, "click", function () {
+    for (var info_window in map_container.closable_info_windows) {
+        map_container.closable_info_windows[info_window].close();
+    }
+    marker_info_window.open(map, marker);
+
+});
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsContainer($map));
+    }
+
+    public function testRenderJsAPI()
+    {
+        $map = new Map();
+
+        $expected = <<<EOF
+<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsAPI($map));
+    }
+
+    public function testRenderJsAPIWithEncodedPolylines()
+    {
+        $map = new Map();
+        $map->addEncodedPolyline(new EncodedPolyline());
+
+        $expected = <<<EOF
+<script type="text/javascript" src="//maps.google.com/maps/api/js?libraries=geometry&amp;language=en&amp;sensor=false"></script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsAPI($map));
+    }
+
+    public function testRenderJsAPIWithAsync()
+    {
+        $map = new Map();
+        $map->setAsync(true);
+
+        $expected = <<<EOF
+<script type="text/javascript" src="//maps.google.com/maps/api/js?callback=load_ivory_google_map&amp;language=en&amp;sensor=false"></script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJsAPI($map));
+    }
+
+    public function testRenderJavascripts()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->getCenter()->setJavascriptVariable('map_center');
 
         $expected = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-$expectedMap
-var circle = new google.maps.Circle({"map":map,"center":new google.maps.LatLng(0, 0, true),"radius":1});
-map.setCenter(new google.maps.LatLng(0, 0, true));
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
 </script>
 
 EOF;
@@ -804,34 +1043,23 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
     }
 
-    public function testRenderJavascriptsWithGroundOverlay()
+    public function testRenderJavascriptsWithAsync()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
+        $map->setAsync(true);
 
-        $groundOverlay = new GroundOverlay('url');
-        $groundOverlay->setJavascriptVariable('groundOverlay');
-        $groundOverlay->getBound()->setJavascriptVariable('groundOverlayBound');
-
-        $map->addGroundOverlay($groundOverlay);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expectedGroundOverlayBound = 'var groundOverlayBound = new google.maps.LatLngBounds('.
-            'new google.maps.LatLng(-1, -1, true), '.
-            'new google.maps.LatLng(1, 1, true)'.
-            ');';
+        $map->getCenter()->setJavascriptVariable('map_center');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?callback=load_ivory_google_map&amp;language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-$expectedMap
-$expectedGroundOverlayBound
-var groundOverlay = new google.maps.GroundOverlay("url", groundOverlayBound, {"map":map});
-map.setCenter(new google.maps.LatLng(0, 0, true));
+function load_ivory_google_map() {
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+}
 </script>
 
 EOF;
@@ -839,31 +1067,66 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
     }
 
-    public function testRenderJavascriptsWithKmlLayer()
+    public function testRenderJavascriptsWithMultipleMaps()
     {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
+        $map1 = new Map();
+        $map1->setJavascriptVariable('map1');
+        $map1->getCenter()->setJavascriptVariable('map1_center');
 
-        $kmlLayer = new KMLLayer('url');
-        $kmlLayer->setJavascriptVariable('kmlLayer');
-
-        $map->addKMLLayer($kmlLayer);
-
-        $expectedMap = 'var map = new google.maps.Map('.
-            'document.getElementById("map_canvas"), '.
-            '{"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3}'.
-            ');';
-
-        $expected = <<<EOF
+        $expected1 = <<<EOF
 <script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
 <script type="text/javascript">
-$expectedMap
-map.setCenter(new google.maps.LatLng(0, 0, true));
-var kmlLayer = new google.maps.KmlLayer("url", {"map":map});
+map1_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map1_container.coordinates.map1_center = map1_center = new google.maps.LatLng(0, 0, true);
+map1_container.map = map1 = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map1.setCenter(map1_center);
 </script>
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+        $map2 = new Map();
+        $map2->setJavascriptVariable('map2');
+        $map2->getCenter()->setJavascriptVariable('map2_center');
+
+        $expected2 = <<<EOF
+<script type="text/javascript">
+map2_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map2_container.coordinates.map2_center = map2_center = new google.maps.LatLng(0, 0, true);
+map2_container.map = map2 = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map2.setCenter(map2_center);
+</script>
+
+EOF;
+
+        $this->assertSame($expected1, $this->mapHelper->renderJavascripts($map1));
+        $this->assertSame($expected2, $this->mapHelper->renderJavascripts($map2));
+    }
+
+    public function testRender()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+
+        $map->getCenter()->setJavascriptVariable('map_center');
+
+        $expected = <<<EOF
+<div id="map_canvas" style="width:300px;height:300px;"></div>
+<style type="text/css">
+#map_canvas{
+width:300px;
+height:300px;
+}
+</style>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?language=en&amp;sensor=false"></script>
+<script type="text/javascript">
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+</script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->render($map));
     }
 }
