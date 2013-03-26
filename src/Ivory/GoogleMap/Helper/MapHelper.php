@@ -848,7 +848,7 @@ class MapHelper
      * Renders the map markers.
      *
      * @param \Ivory\GoogleMap\Map $map                    The map.
-     * @paral boolean              $hasClosableInfoWindows TRUE if the map has closable info windows else FALSE.
+     * @param boolean              $hasClosableInfoWindows TRUE if the map has closable info windows else FALSE.
      *
      * @return string Ths JS output.
      */
