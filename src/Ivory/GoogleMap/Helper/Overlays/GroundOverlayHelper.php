@@ -13,7 +13,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\GroundOverlay;
-use Ivory\GoogleMap\Helper\Base\BoundHelper;
 
 /**
  * Ground overlay helper.
@@ -22,43 +21,6 @@ use Ivory\GoogleMap\Helper\Base\BoundHelper;
  */
 class GroundOverlayHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\BoundHelper */
-    protected $boundHelper;
-
-    /**
-     * Create a ground overlay helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\BoundHelper $boundHelper The bound helper.
-     */
-    public function __construct(BoundHelper $boundHelper = null)
-    {
-        if ($boundHelper === null) {
-            $boundHelper = new BoundHelper();
-        }
-
-        $this->setBoundHelper($boundHelper);
-    }
-
-    /**
-     * Gets the bound helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\BoundHelper The bound helper.
-     */
-    public function getBoundHelper()
-    {
-        return $this->boundHelper;
-    }
-
-    /**
-     * Sets the bound helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\BoundHelper $boundHelper The bound helper.
-     */
-    public function setBoundHelper(BoundHelper $boundHelper)
-    {
-        $this->boundHelper = $boundHelper;
-    }
-
     /**
      * Renders a ground overlay.
      *
@@ -78,17 +40,12 @@ class GroundOverlayHelper
             $groundOverlayJSONOptions .= '}';
         }
 
-        $html = array();
-
-        $html[] = $this->boundHelper->render($groundOverlay->getBound());
-        $html[] = sprintf(
-            'var %s = new google.maps.GroundOverlay("%s", %s, %s);'.PHP_EOL,
+        return sprintf(
+            '%s = new google.maps.GroundOverlay("%s", %s, %s);'.PHP_EOL,
             $groundOverlay->getJavascriptVariable(),
             $groundOverlay->getUrl(),
             $groundOverlay->getBound()->getJavascriptVariable(),
             $groundOverlayJSONOptions
         );
-
-        return implode('', $html);
     }
 }

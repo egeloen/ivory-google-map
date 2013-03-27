@@ -40,46 +40,26 @@ class MarkerImageHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->markerImageHelper);
     }
 
-    public function testDefaultState()
-    {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\PointHelper',
-            $this->markerImageHelper->getPointHelper()
-        );
-
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\SizeHelper',
-            $this->markerImageHelper->getSizeHelper()
-        );
-    }
-
-    public function testInitialState()
-    {
-        $pointHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\PointHelper');
-        $sizeHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\SizeHelper');
-
-        $this->markerImageHelper = new MarkerImageHelper($pointHelper, $sizeHelper);
-
-        $this->assertSame($pointHelper, $this->markerImageHelper->getPointHelper());
-        $this->assertSame($sizeHelper, $this->markerImageHelper->getSizeHelper());
-    }
-
     public function testRender()
     {
         $markerImage = new MarkerImage();
         $markerImage->setJavascriptVariable('markerImage');
         $markerImage->setUrl('url');
+
         $markerImage->setSize(1, 2);
+        $markerImage->getSize()->setJavascriptVariable('size');
+
         $markerImage->setOrigin(3, 4);
+        $markerImage->getOrigin()->setJavascriptVariable('origin');
+
         $markerImage->setAnchor(5, 6);
+        $markerImage->getAnchor()->setJavascriptVariable('anchor');
+
         $markerImage->setScaledSize(7, 8);
+        $markerImage->getScaledSize()->setJavascriptVariable('scaled_size');
 
         $expected = <<<EOF
-var markerImage = new google.maps.MarkerImage("url");
-markerImage.size = new google.maps.Size(1, 2);
-markerImage.origin = new google.maps.Point(3, 4);
-markerImage.anchor = new google.maps.Point(5, 6);
-markerImage.scaledSize = new google.maps.Size(7, 8);
+markerImage = new google.maps.MarkerImage("url", size, origin, anchor, scaled_size);
 
 EOF;
 

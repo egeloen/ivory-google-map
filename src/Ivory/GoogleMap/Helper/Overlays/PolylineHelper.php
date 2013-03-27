@@ -13,7 +13,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Polyline;
-use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Polyline helper.
@@ -22,43 +21,6 @@ use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
  */
 class PolylineHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
-    protected $coordinateHelper;
-
-    /**
-     * Creates a polyline helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function __construct(CoordinateHelper $coordinateHelper = null)
-    {
-        if ($coordinateHelper === null) {
-            $coordinateHelper = new CoordinateHelper();
-        }
-
-        $this->setCoordinateHelper($coordinateHelper);
-    }
-
-    /**
-     * Gets the coordinate helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\CoordinateHelper The coordinate helper.
-     */
-    public function getCoordinateHelper()
-    {
-        return $this->coordinateHelper;
-    }
-
-    /**
-     * Sets the coordinate helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function setCoordinateHelper(CoordinateHelper $coordinateHelper)
-    {
-        $this->coordinateHelper = $coordinateHelper;
-    }
-
     /**
      * Renders a polyline.
      *
@@ -73,7 +35,7 @@ class PolylineHelper
 
         $polylineCoordinates = array();
         foreach ($polyline->getCoordinates() as $coordinate) {
-            $polylineCoordinates[] = $this->coordinateHelper->render($coordinate);
+            $polylineCoordinates[] = $coordinate->getJavascriptVariable();
         }
 
         $polylineJSONOptions = sprintf(
@@ -89,7 +51,7 @@ class PolylineHelper
         }
 
         return sprintf(
-            'var %s = new google.maps.Polyline(%s);'.PHP_EOL,
+            '%s = new google.maps.Polyline(%s);'.PHP_EOL,
             $polyline->getJavascriptVariable(),
             $polylineJSONOptions
         );

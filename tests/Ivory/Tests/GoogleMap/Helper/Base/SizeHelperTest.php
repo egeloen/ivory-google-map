@@ -35,14 +35,16 @@ class SizeHelperTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithoutUnits()
     {
         $size = new Size(1.1, 2.1);
+        $size->setJavascriptVariable('foo');
 
-        $this->assertSame('new google.maps.Size(1.1, 2.1)', $this->sizeHelper->render($size));
+        $this->assertSame('foo = new google.maps.Size(1.1, 2.1);'.PHP_EOL, $this->sizeHelper->render($size));
     }
 
     public function testRenderWithUnits()
     {
         $size = new Size(1.1, 2.1, 'px', '%');
+        $size->setJavascriptVariable('foo');
 
-        $this->assertSame('new google.maps.Size(1.1, 2.1, "px", "%")', $this->sizeHelper->render($size));
+        $this->assertSame('foo = new google.maps.Size(1.1, 2.1, "px", "%");'.PHP_EOL, $this->sizeHelper->render($size));
     }
 }

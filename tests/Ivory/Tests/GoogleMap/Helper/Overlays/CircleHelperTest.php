@@ -40,23 +40,6 @@ class CircleHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->circleHelper);
     }
 
-    public function testDefaultState()
-    {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
-            $this->circleHelper->getCoordinateHelper()
-        );
-    }
-
-    public function testInitialState()
-    {
-        $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
-
-        $this->circleHelper = new CircleHelper($coordinateHelper);
-
-        $this->assertSame($coordinateHelper, $this->circleHelper->getCoordinateHelper());
-    }
-
     public function testRender()
     {
         $map = $this->getMock('Ivory\GoogleMap\Map');
@@ -67,13 +50,16 @@ class CircleHelperTest extends \PHPUnit_Framework_TestCase
 
         $circle = new Circle();
         $circle->setJavascriptVariable('circle');
+
         $circle->setCenter(1.1, 2.1, true);
+        $circle->getCenter()->setJavascriptVariable('center');
+
         $circle->setRadius(2);
         $circle->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $expected = 'var circle = new google.maps.Circle({'.
+        $expected = 'circle = new google.maps.Circle({'.
             '"map":map,'.
-            '"center":new google.maps.LatLng(1.1, 2.1, true),'.
+            '"center":center,'.
             '"radius":2,'.
             '"option1":"value1",'.
             '"option2":"value2"'.

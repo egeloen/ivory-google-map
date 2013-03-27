@@ -13,7 +13,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Circle;
-use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Circle helper.
@@ -22,44 +21,7 @@ use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
  */
 class CircleHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
-    protected $coordinateHelper;
-
-    /**
-     * Create a circle helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function __construct(CoordinateHelper $coordinateHelper = null)
-    {
-        if ($coordinateHelper === null) {
-            $coordinateHelper = new CoordinateHelper();
-        }
-
-        $this->setCoordinateHelper($coordinateHelper);
-    }
-
-    /**
-     * Gets the coordinate helper
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\CoordinateHelper The coordinate helper
-     */
-    public function getCoordinateHelper()
-    {
-        return $this->coordinateHelper;
-    }
-
-    /**
-     * Sets the coordinate helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function setCoordinateHelper(CoordinateHelper $coordinateHelper)
-    {
-        $this->coordinateHelper = $coordinateHelper;
-    }
-
-    /**
+   /**
      * Renders a circle.
      *
      * @param \Ivory\GoogleMap\Overlays\Circle $circle The circle.
@@ -74,13 +36,13 @@ class CircleHelper
         $circleJSONOptions = sprintf(
             '{"map":%s,"center":%s,',
             $map->getJavascriptVariable(),
-            $this->coordinateHelper->render($circle->getCenter())
+            $circle->getCenter()->getJavascriptVariable()
         );
 
         $circleJSONOptions .= substr(json_encode($circleOptions), 1);
 
         return sprintf(
-            'var %s = new google.maps.Circle(%s);'.PHP_EOL,
+            '%s = new google.maps.Circle(%s);'.PHP_EOL,
             $circle->getJavascriptVariable(),
             $circleJSONOptions
         );

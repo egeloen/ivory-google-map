@@ -46,7 +46,7 @@ class MarkerShapeHelperTest extends \PHPUnit_Framework_TestCase
         $markerShape->setJavascriptVariable('markerShape');
 
         $this->assertSame(
-            'var markerShape = new google.maps.MarkerShape({"type":"poly","coords":[1,2,3,4,5,6]});'.PHP_EOL,
+            'markerShape = new google.maps.MarkerShape({"type":"poly","coords":[1,2,3,4,5,6]});'.PHP_EOL,
             $this->markerShapeHelper->render($markerShape)
         );
     }
@@ -57,7 +57,7 @@ class MarkerShapeHelperTest extends \PHPUnit_Framework_TestCase
         $markerShape->setJavascriptVariable('markerShape');
 
         $this->assertSame(
-            'var markerShape = new google.maps.MarkerShape({"type":"circle","coords":[1,2,3]});'.PHP_EOL,
+            'markerShape = new google.maps.MarkerShape({"type":"circle","coords":[1,2,3]});'.PHP_EOL,
             $this->markerShapeHelper->render($markerShape)
         );
     }
@@ -68,7 +68,7 @@ class MarkerShapeHelperTest extends \PHPUnit_Framework_TestCase
         $markerShape->setJavascriptVariable('markerShape');
 
         $this->assertSame(
-            'var markerShape = new google.maps.MarkerShape({"type":"rect","coords":[-1,-1,1,1]});'.PHP_EOL,
+            'markerShape = new google.maps.MarkerShape({"type":"rect","coords":[-1,-1,1,1]});'.PHP_EOL,
             $this->markerShapeHelper->render($markerShape)
         );
     }

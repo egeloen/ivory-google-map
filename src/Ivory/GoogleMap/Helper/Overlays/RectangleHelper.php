@@ -13,7 +13,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Rectangle;
-use Ivory\GoogleMap\Helper\Base\BoundHelper;
 
 /**
  * Rectangle helper.
@@ -22,43 +21,6 @@ use Ivory\GoogleMap\Helper\Base\BoundHelper;
  */
 class RectangleHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\BoundHelper */
-    protected $boundHelper;
-
-    /**
-     * Creates a rectangle helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\BoundHelper $boundHelper The bound helper.
-     */
-    public function __construct(BoundHelper $boundHelper = null)
-    {
-        if ($boundHelper === null) {
-            $boundHelper = new BoundHelper();
-        }
-
-        $this->setBoundHelper($boundHelper);
-    }
-
-    /**
-     * Gets the bound helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\BoundHelper The bound helper.
-     */
-    public function getBoundHelper()
-    {
-        return $this->boundHelper;
-    }
-
-    /**
-     * Sets the bound helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\BoundHelper $boundHelper The bound helper.
-     */
-    public function setBoundHelper(BoundHelper $boundHelper)
-    {
-        $this->boundHelper = $boundHelper;
-    }
-
     /**
      * Renders a rectangle.
      *
@@ -83,15 +45,10 @@ class RectangleHelper
             $rectangleJSONOptions .= '}';
         }
 
-        $html = array();
-
-        $html[] = $this->boundHelper->render($rectangle->getBound());
-        $html[] = sprintf(
-            'var %s = new google.maps.Rectangle(%s);'.PHP_EOL,
+        return sprintf(
+            '%s = new google.maps.Rectangle(%s);'.PHP_EOL,
             $rectangle->getJavascriptVariable(),
             $rectangleJSONOptions
         );
-
-        return implode('', $html);
     }
 }

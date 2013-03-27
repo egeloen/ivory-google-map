@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Base;
 
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
 use Ivory\GoogleMap\Exception\BaseException;
 
 /**
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Exception\BaseException;
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Size
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Size
+class Size extends AbstractJavascriptVariableAsset
 {
     /** @var double */
     protected $width;
@@ -43,6 +44,8 @@ class Size
      */
     public function __construct($width = 1, $height = 1, $widthUnit = null, $heightUnit = null)
     {
+        $this->setPrefixJavascriptVariable('size_');
+
         $this->setWidth($width);
         $this->setHeight($height);
 

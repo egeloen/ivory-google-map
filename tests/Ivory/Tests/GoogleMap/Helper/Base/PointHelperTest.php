@@ -35,7 +35,8 @@ class PointHelperTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $point = new Point(1.1, 2.1);
+        $point->setJavascriptVariable('foo');
 
-        $this->assertSame('new google.maps.Point(1.1, 2.1)', $this->pointHelper->render($point));
+        $this->assertSame('foo = new google.maps.Point(1.1, 2.1);'.PHP_EOL, $this->pointHelper->render($point));
     }
 }

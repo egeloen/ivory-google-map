@@ -157,7 +157,7 @@ class MarkerImage extends AbstractJavascriptVariableAsset
     /**
      * Gets the origin of the marker image.
      *
-     * @return Ivory\GoogleMap\Base\Point The marker image origin.
+     * @return \Ivory\GoogleMap\Base\Point The marker image origin.
      */
     public function getOrigin()
     {

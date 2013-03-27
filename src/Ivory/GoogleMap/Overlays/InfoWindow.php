@@ -90,7 +90,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
     /**
      * Gets the infow window position.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate. The info window position.
+     * @return \Ivory\GoogleMap\Base\Coordinate The info window position.
      */
     public function getPosition()
     {
@@ -143,7 +143,7 @@ class InfoWindow extends AbstractOptionsAsset implements ExtendableInterface
     /**
      * Gets the pixel offset.
      *
-     * @return \Ivory\GoogleMapBundle\Model\Base\Size The pixel offset.
+     * @return \Ivory\GoogleMap\Base\Size The pixel offset.
      */
     public function getPixelOffset()
     {

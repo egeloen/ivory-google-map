@@ -12,7 +12,6 @@
 namespace Ivory\Tests\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Overlays\Animation;
-use Ivory\GoogleMap\Overlays\InfoWindow;
 use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
 
@@ -45,52 +44,18 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
-            $this->markerHelper->getCoordinateHelper()
-        );
-
-        $this->assertInstanceOf(
             'Ivory\GoogleMap\Helper\Overlays\AnimationHelper',
             $this->markerHelper->getAnimationHelper()
-        );
-
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper',
-            $this->markerHelper->getInfoWindowHelper()
-        );
-
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper',
-            $this->markerHelper->getMarkerImageHelper()
-        );
-
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper',
-            $this->markerHelper->getMarkerShapeHelper()
         );
     }
 
     public function testInitialState()
     {
-        $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
         $animationHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\AnimationHelper');
-        $infoWindowHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper');
-        $markerImageHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper');
-        $markerShapeHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper');
 
-        $this->markerHelper = new MarkerHelper(
-            $coordinateHelper,
-            $animationHelper,
-            $infoWindowHelper,
-            $markerImageHelper,
-            $markerShapeHelper
-        );
+        $this->markerHelper = new MarkerHelper($animationHelper);
 
-        $this->assertSame($coordinateHelper, $this->markerHelper->getCoordinateHelper());
         $this->assertSame($animationHelper, $this->markerHelper->getAnimationHelper());
-        $this->assertSame($infoWindowHelper, $this->markerHelper->getInfoWindowHelper());
-        $this->assertSame($markerImageHelper, $this->markerHelper->getMarkerImageHelper());
-        $this->assertSame($markerShapeHelper, $this->markerHelper->getMarkerShapeHelper());
     }
 
     public function testRenderWithoutOptions()
@@ -103,8 +68,11 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
 
         $marker = new Marker();
         $marker->setJavascriptVariable('marker');
-        $marker->setPosition(1.1, 2.1, true);
+
         $marker->setAnimation(Animation::BOUNCE);
+
+        $marker->setPosition(1.1, 2.1, true);
+        $marker->getPosition()->setJavascriptVariable('position');
 
         $marker->setIcon('url');
         $marker->getIcon()->setJavascriptVariable('icon');
@@ -115,26 +83,14 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->setShape('poly', array(1, 2, 3, 4));
         $marker->getShape()->setJavascriptVariable('shape');
 
-        $marker->setInfoWindow(new InfoWindow('content'));
-        $marker->getInfoWindow()->setJavascriptVariable('infoWindow');
-
-        $expectedMarker = 'var marker = new google.maps.Marker({'.
+        $expected = 'marker = new google.maps.Marker({'.
             '"map":map,'.
-            '"position":new google.maps.LatLng(1.1, 2.1, true), '.
+            '"position":position, '.
             '"animation":google.maps.Animation.BOUNCE, '.
             '"icon":icon, '.
             '"shadow":shadow, '.
             '"shape":shape'.
-            '});';
-
-        $expected = <<<EOF
-var icon = new google.maps.MarkerImage("url");
-var shadow = new google.maps.MarkerImage("url");
-var shape = new google.maps.MarkerShape({"type":"poly","coords":[1,2,3,4]});
-$expectedMarker
-var infoWindow = new google.maps.InfoWindow({"content":"content"});
-
-EOF;
+            '});'.PHP_EOL;
 
         $this->assertSame($expected, $this->markerHelper->render($marker, $map));
     }
@@ -149,8 +105,11 @@ EOF;
 
         $marker = new Marker();
         $marker->setJavascriptVariable('marker');
-        $marker->setPosition(1.1, 2.1, true);
+
         $marker->setAnimation(Animation::BOUNCE);
+
+        $marker->setPosition(1.1, 2.1, true);
+        $marker->getPosition()->setJavascriptVariable('position');
 
         $marker->setIcon('url');
         $marker->getIcon()->setJavascriptVariable('icon');
@@ -161,32 +120,18 @@ EOF;
         $marker->setShape('poly', array(1, 2, 3, 4));
         $marker->getShape()->setJavascriptVariable('shape');
 
-        $marker->setInfoWindow(new InfoWindow('content'));
-        $marker->getInfoWindow()->setJavascriptVariable('infoWindow');
-        $marker->getInfoWindow()->setOpen(true);
-
         $marker->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $expectedMarker = 'var marker = new google.maps.Marker({'.
+        $expected = 'marker = new google.maps.Marker({'.
             '"map":map,'.
-            '"position":new google.maps.LatLng(1.1, 2.1, true), '.
+            '"position":position, '.
             '"animation":google.maps.Animation.BOUNCE, '.
             '"icon":icon, '.
             '"shadow":shadow, '.
             '"shape":shape,'.
             '"option1":"value1",'.
             '"option2":"value2"'.
-            '});';
-
-        $expected = <<<EOF
-var icon = new google.maps.MarkerImage("url");
-var shadow = new google.maps.MarkerImage("url");
-var shape = new google.maps.MarkerShape({"type":"poly","coords":[1,2,3,4]});
-$expectedMarker
-var infoWindow = new google.maps.InfoWindow({"content":"content"});
-infoWindow.open(map, marker);
-
-EOF;
+            '});'.PHP_EOL;
 
         $this->assertSame($expected, $this->markerHelper->render($marker, $map));
     }
