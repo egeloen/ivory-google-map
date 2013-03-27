@@ -40,23 +40,6 @@ class PolygonHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->polygonHelper);
     }
 
-    public function testDefaultState()
-    {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
-            $this->polygonHelper->getCoordinateHelper()
-        );
-    }
-
-    public function testInitialState()
-    {
-        $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
-
-        $this->polygonHelper = new PolygonHelper($coordinateHelper);
-
-        $this->assertSame($coordinateHelper, $this->polygonHelper->getCoordinateHelper());
-    }
-
     public function testRenderWithoutOptions()
     {
         $map = $this->getMock('Ivory\GoogleMap\Map');
@@ -67,19 +50,19 @@ class PolygonHelperTest extends \PHPUnit_Framework_TestCase
 
         $polygon = new Polygon();
         $polygon->setJavascriptVariable('polygon');
+
         $polygon->addCoordinate(1.1, 2.1);
         $polygon->addCoordinate(3.1, 4.2);
         $polygon->addCoordinate(7.4, 12.6);
 
-        $expected = 'var polygon = new google.maps.Polygon({'.
-            '"map":map,'.
-            '"paths":['.
-            'new google.maps.LatLng(1.1, 2.1, true),'.
-            'new google.maps.LatLng(3.1, 4.2, true),'.
-            'new google.maps.LatLng(7.4, 12.6, true)'.
-            ']});'.PHP_EOL;
+        foreach ($polygon->getCoordinates() as $index => $coordinate) {
+            $coordinate->setJavascriptVariable('coordinate'.$index);
+        }
 
-        $this->assertSame($expected, $this->polygonHelper->render($polygon, $map));
+        $this->assertSame(
+            'polygon = new google.maps.Polygon({"map":map,"paths":[coordinate0,coordinate1,coordinate2]});'.PHP_EOL,
+            $this->polygonHelper->render($polygon, $map)
+        );
     }
 
     public function testRenderWithOptions()
@@ -92,17 +75,23 @@ class PolygonHelperTest extends \PHPUnit_Framework_TestCase
 
         $polygon = new Polygon();
         $polygon->setJavascriptVariable('polygon');
+
         $polygon->addCoordinate(1.1, 2.1);
         $polygon->addCoordinate(3.1, 4.2);
         $polygon->addCoordinate(7.4, 12.6);
+
+        foreach ($polygon->getCoordinates() as $index => $coordinate) {
+            $coordinate->setJavascriptVariable('coordinate'.$index);
+        }
+
         $polygon->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $expected = 'var polygon = new google.maps.Polygon({'.
+        $expected = 'polygon = new google.maps.Polygon({'.
             '"map":map,'.
             '"paths":['.
-            'new google.maps.LatLng(1.1, 2.1, true),'.
-            'new google.maps.LatLng(3.1, 4.2, true),'.
-            'new google.maps.LatLng(7.4, 12.6, true)'.
+            'coordinate0,'.
+            'coordinate1,'.
+            'coordinate2'.
             '],'.
             '"option1":"value1",'.
             '"option2":"value2"'.

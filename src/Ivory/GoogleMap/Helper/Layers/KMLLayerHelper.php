@@ -41,7 +41,7 @@ class KMLLayerHelper
         }
 
         return sprintf(
-            'var %s = new google.maps.KmlLayer("%s", %s);'.PHP_EOL,
+            '%s = new google.maps.KmlLayer("%s", %s);'.PHP_EOL,
             $kmlLayer->getJavascriptVariable(),
             $kmlLayer->getUrl(),
             $kmlLayerJSONOptions

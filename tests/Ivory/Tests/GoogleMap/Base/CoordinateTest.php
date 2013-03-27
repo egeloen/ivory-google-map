@@ -41,6 +41,7 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
+        $this->assertSame('coordinate_', substr($this->coordinate->getJavascriptVariable(), 0, 11));
         $this->assertSame(0, $this->coordinate->getLatitude());
         $this->assertSame(0, $this->coordinate->getLongitude());
         $this->assertTrue($this->coordinate->isNoWrap());

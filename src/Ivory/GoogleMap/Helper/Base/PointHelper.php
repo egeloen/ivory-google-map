@@ -29,6 +29,11 @@ class PointHelper
      */
     public function render(Point $point)
     {
-        return sprintf('new google.maps.Point(%s, %s)', $point->getX(), $point->getY());
+        return sprintf(
+            '%s = new google.maps.Point(%s, %s);'.PHP_EOL,
+            $point->getJavascriptVariable(),
+            $point->getX(),
+            $point->getY()
+        );
     }
 }

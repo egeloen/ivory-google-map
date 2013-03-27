@@ -12,8 +12,6 @@
 namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Overlays\MarkerImage;
-use Ivory\GoogleMap\Helper\Base\PointHelper;
-use Ivory\GoogleMap\Helper\Base\SizeHelper;
 
 /**
  * Marker image helper.
@@ -22,72 +20,6 @@ use Ivory\GoogleMap\Helper\Base\SizeHelper;
  */
 class MarkerImageHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\PointHelper */
-    protected $pointHelper;
-
-    /** @var \Ivory\GoogleMap\Helper\Base\SizeHelper */
-    protected $sizeHelper;
-
-    /**
-     * Create a marker image helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\PointHelper $pointHelper The point helper.
-     * @param \Ivory\GoogleMap\Helper\Base\SizeHelper  $sizeHelper  The size helper.
-     */
-    public function __construct(PointHelper $pointHelper = null, SizeHelper $sizeHelper = null)
-    {
-        if ($pointHelper === null) {
-            $pointHelper = new PointHelper();
-        }
-
-        if ($sizeHelper === null) {
-            $sizeHelper = new SizeHelper();
-        }
-
-        $this->setPointHelper($pointHelper);
-        $this->setSizeHelper($sizeHelper);
-    }
-
-    /**
-     * Gets the point helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\PointHelper The point helper.
-     */
-    public function getPointHelper()
-    {
-        return $this->pointHelper;
-    }
-
-    /**
-     * Sets the point helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\PointHelper $pointHelper The point helper.
-     */
-    public function setPointHelper(PointHelper $pointHelper)
-    {
-        $this->pointHelper = $pointHelper;
-    }
-
-    /**
-     * Gets the size helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\SizeHelper The size helper.
-     */
-    public function getSizeHelper()
-    {
-        return $this->sizeHelper;
-    }
-
-    /**
-     * Sets the size helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\SizeHelper $sizeHelper The size helper.
-     */
-    public function setSizeHelper(SizeHelper $sizeHelper)
-    {
-        $this->sizeHelper = $sizeHelper;
-    }
-
     /**
      * Renders a marker image.
      *
@@ -97,46 +29,14 @@ class MarkerImageHelper
      */
     public function render(MarkerImage $markerImage)
     {
-        $html = array();
-
-        $html[] = sprintf(
-            'var %s = new google.maps.MarkerImage("%s");'.PHP_EOL,
+        return sprintf(
+            '%s = new google.maps.MarkerImage("%s", %s, %s, %s, %s);'.PHP_EOL,
             $markerImage->getJavascriptVariable(),
-            $markerImage->getUrl()
+            $markerImage->getUrl(),
+            $markerImage->hasSize() ? $markerImage->getSize()->getJavascriptVariable() : 'null',
+            $markerImage->hasOrigin() ? $markerImage->getOrigin()->getJavascriptVariable() : 'null',
+            $markerImage->hasAnchor() ? $markerImage->getAnchor()->getJavascriptVariable() : 'null',
+            $markerImage->hasScaledSize() ? $markerImage->getScaledSize()->getJavascriptVariable() : 'null'
         );
-
-        if ($markerImage->hasSize()) {
-            $html[] = sprintf(
-                '%s.size = %s;'.PHP_EOL,
-                $markerImage->getJavascriptVariable(),
-                $this->sizeHelper->render($markerImage->getSize())
-            );
-        }
-
-        if ($markerImage->hasOrigin()) {
-            $html[] = sprintf(
-                '%s.origin = %s;'.PHP_EOL,
-                $markerImage->getJavascriptVariable(),
-                $this->pointHelper->render($markerImage->getOrigin())
-            );
-        }
-
-        if ($markerImage->hasAnchor()) {
-            $html[] = sprintf(
-                '%s.anchor = %s;'.PHP_EOL,
-                $markerImage->getJavascriptVariable(),
-                $this->pointHelper->render($markerImage->getAnchor())
-            );
-        }
-
-        if ($markerImage->hasScaledSize()) {
-            $html[] = sprintf(
-                '%s.scaledSize = %s;'.PHP_EOL,
-                $markerImage->getJavascriptVariable(),
-                $this->sizeHelper->render($markerImage->getScaledSize())
-            );
-        }
-
-        return implode('', $html);
     }
 }

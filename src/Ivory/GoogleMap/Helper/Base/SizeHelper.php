@@ -31,7 +31,8 @@ class SizeHelper
     {
         if ($size->hasUnits()) {
             return sprintf(
-                'new google.maps.Size(%s, %s, "%s", "%s")',
+                '%s = new google.maps.Size(%s, %s, "%s", "%s");'.PHP_EOL,
+                $size->getJavascriptVariable(),
                 $size->getWidth(),
                 $size->getHeight(),
                 $size->getWidthUnit(),
@@ -39,6 +40,10 @@ class SizeHelper
             );
         }
 
-        return sprintf('new google.maps.Size(%s, %s)', $size->getWidth(), $size->getHeight());
+        return sprintf(
+            '%s = new google.maps.Size(%s, %s);'.PHP_EOL,
+            $size->getJavascriptVariable(),
+            $size->getWidth(), $size->getHeight()
+        );
     }
 }

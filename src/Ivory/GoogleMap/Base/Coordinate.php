@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Base;
 
+use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
 use Ivory\GoogleMap\Exception\BaseException;
 
 /**
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Exception\BaseException;
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLng
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Coordinate
+class Coordinate extends AbstractJavascriptVariableAsset
 {
     /** @var double */
     protected $latitude;
@@ -39,6 +40,8 @@ class Coordinate
      */
     public function __construct($latitude = 0, $longitude = 0, $noWrap = true)
     {
+        $this->setPrefixJavascriptVariable('coordinate_');
+
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
         $this->setNoWrap($noWrap);

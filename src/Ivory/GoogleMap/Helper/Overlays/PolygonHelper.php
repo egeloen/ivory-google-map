@@ -13,7 +13,6 @@ namespace Ivory\GoogleMap\Helper\Overlays;
 
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Polygon;
-use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 
 /**
  * Polygon helper.
@@ -22,43 +21,6 @@ use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
  */
 class PolygonHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
-    protected $coordinateHelper;
-
-    /**
-     * Creates a polygon helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function __construct(CoordinateHelper $coordinateHelper = null)
-    {
-        if ($coordinateHelper === null) {
-            $coordinateHelper = new CoordinateHelper();
-        }
-
-        $this->setCoordinateHelper($coordinateHelper);
-    }
-
-    /**
-     * Gets the coordinate helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\CoordinateHelper The coordinate helper.
-     */
-    public function getCoordinateHelper()
-    {
-        return $this->coordinateHelper;
-    }
-
-    /**
-     * Sets the coordinate helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function setCoordinateHelper(CoordinateHelper $coordinateHelper)
-    {
-        $this->coordinateHelper = $coordinateHelper;
-    }
-
     /**
      * Renders a polygon.
      *
@@ -73,7 +35,7 @@ class PolygonHelper
 
         $polygonCoordinates = array();
         foreach ($polygon->getCoordinates() as $coordinate) {
-            $polygonCoordinates[] = $this->coordinateHelper->render($coordinate);
+            $polygonCoordinates[] = $coordinate->getJavascriptVariable();
         }
 
         $polygonJSONOptions = sprintf(
@@ -89,7 +51,7 @@ class PolygonHelper
         }
 
         return sprintf(
-            'var %s = new google.maps.Polygon(%s);'.PHP_EOL,
+            '%s = new google.maps.Polygon(%s);'.PHP_EOL,
             $polygon->getJavascriptVariable(),
             $polygonJSONOptions
         );

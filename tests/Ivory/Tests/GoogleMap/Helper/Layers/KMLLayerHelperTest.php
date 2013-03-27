@@ -52,7 +52,7 @@ class KMLLayerHelperTest extends \PHPUnit_Framework_TestCase
         $kmlLayer->setJavascriptVariable('kmlLayer');
 
         $this->assertSame(
-            'var kmlLayer = new google.maps.KmlLayer("url", {"map":map});'.PHP_EOL,
+            'kmlLayer = new google.maps.KmlLayer("url", {"map":map});'.PHP_EOL,
             $this->kmlLayerHelper->render($kmlLayer, $map)
         );
     }
@@ -69,7 +69,7 @@ class KMLLayerHelperTest extends \PHPUnit_Framework_TestCase
         $kmlLayer->setJavascriptVariable('kmlLayer');
         $kmlLayer->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $expected = 'var kmlLayer = new google.maps.KmlLayer('.
+        $expected = 'kmlLayer = new google.maps.KmlLayer('.
             '"url", '.
             '{"map":map,"option1":"value1","option2":"value2"}'.
             ');'.PHP_EOL;

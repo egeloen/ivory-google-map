@@ -41,6 +41,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
+        $this->assertSame('size_', substr($this->size->getJavascriptVariable(), 0, 5));
+
         $this->assertSame(1, $this->size->getWidth());
         $this->assertSame(1, $this->size->getHeight());
 

@@ -41,6 +41,7 @@ class PointTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
+        $this->assertSame('point_', substr($this->point->getJavascriptVariable(), 0, 6));
         $this->assertSame(0, $this->point->getX());
         $this->assertSame(0, $this->point->getY());
     }

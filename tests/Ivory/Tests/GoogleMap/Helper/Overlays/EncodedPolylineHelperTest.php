@@ -69,7 +69,7 @@ class EncodedPolylineHelperTest extends \PHPUnit_Framework_TestCase
         $encodedPolyline->setJavascriptVariable('encodedPolyline');
 
         $this->assertSame(
-            'var encodedPolyline = new google.maps.Polyline('.
+            'encodedPolyline = new google.maps.Polyline('.
             '{"map":map,"path":google.maps.geometry.encoding.decodePath("foo")}'.
             ');'.PHP_EOL,
             $this->encodedPolylineHelper->render($encodedPolyline, $map)
@@ -89,7 +89,7 @@ class EncodedPolylineHelperTest extends \PHPUnit_Framework_TestCase
         $encodedPolyline->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
         $this->assertSame(
-            'var encodedPolyline = new google.maps.Polyline('.
+            'encodedPolyline = new google.maps.Polyline('.
             '{"map":map,"path":google.maps.geometry.encoding.decodePath("foo"),"option1":"value1","option2":"value2"}'.
             ');'.PHP_EOL,
             $this->encodedPolylineHelper->render($encodedPolyline, $map)

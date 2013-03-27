@@ -41,44 +41,29 @@ class BoundHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->boundHelper);
     }
 
-    public function testDefaultState()
-    {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
-            $this->boundHelper->getCoordinateHelper()
-        );
-    }
-
-    public function testInitialState()
-    {
-        $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
-        $this->boundHelper = new BoundHelper($coordinateHelper);
-
-        $this->assertSame($coordinateHelper, $this->boundHelper->getCoordinateHelper());
-    }
-
     public function testRenderWithEmptyBound()
     {
         $bound = new Bound();
         $bound->setJavascriptVariable('foo');
 
-        $this->assertSame('var foo = new google.maps.LatLngBounds();'.PHP_EOL, $this->boundHelper->render($bound));
+        $this->assertSame('foo = new google.maps.LatLngBounds();'.PHP_EOL, $this->boundHelper->render($bound));
     }
 
     public function testRenderWithBound()
     {
-        $bound = new Bound(new Coordinate(-1.1, -2.1, false), new Coordinate(1.1, 2.1, true));
-        $bound->setJavascriptVariable('foo');
+        $coordinate1 = new Coordinate(-1.1, -2.1, false);
+        $coordinate1->setJavascriptVariable('foo');
 
-        $expected = 'var foo = new google.maps.LatLngBounds('.
-            'new google.maps.LatLng(-1.1, -2.1, false), '.
-            'new google.maps.LatLng(1.1, 2.1, true)'.
-            ');'.PHP_EOL;
+        $coordinate2 = new Coordinate(1.1, 2.1, true);
+        $coordinate2->setJavascriptVariable('bar');
 
-        $this->assertSame($expected, $this->boundHelper->render($bound));
+        $bound = new Bound($coordinate1, $coordinate2);
+        $bound->setJavascriptVariable('baz');
+
+        $this->assertSame('baz = new google.maps.LatLngBounds(foo, bar);'.PHP_EOL, $this->boundHelper->render($bound));
     }
 
-    public function testRenderWithExtends()
+    public function testRenderExtends()
     {
         $bound = new Bound();
         $bound->setJavascriptVariable('bound');
@@ -146,7 +131,6 @@ class BoundHelperTest extends \PHPUnit_Framework_TestCase
         $bound->extend($rectangle);
 
         $expected = <<<EOF
-var bound = new google.maps.LatLngBounds();
 bound.union(circle.getBounds());
 bound.union(groundOverlayBound);
 bound.extend(infoWindow.getPosition());
@@ -157,6 +141,6 @@ bound.union(rectangleBound);
 
 EOF;
 
-        $this->assertSame($expected, $this->boundHelper->render($bound));
+        $this->assertSame($expected, $this->boundHelper->renderExtends($bound));
     }
 }

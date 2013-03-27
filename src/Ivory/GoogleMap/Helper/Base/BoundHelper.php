@@ -28,43 +28,6 @@ use Ivory\GoogleMap\Overlays\Rectangle;
  */
 class BoundHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
-    protected $coordinateHelper;
-
-    /**
-     * Creates a bound helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function __construct(CoordinateHelper $coordinateHelper = null)
-    {
-        if ($coordinateHelper === null) {
-            $coordinateHelper = new CoordinateHelper();
-        }
-
-        $this->setCoordinateHelper($coordinateHelper);
-    }
-
-    /**
-     * Gets the coordinate helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\Base\CoordinateHelper
-     */
-    public function getCoordinateHelper()
-    {
-        return $this->coordinateHelper;
-    }
-
-    /**
-     * Sets the coordinate helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper $coordinateHelper The coordinate helper.
-     */
-    public function setCoordinateHelper(CoordinateHelper $coordinateHelper)
-    {
-        $this->coordinateHelper = $coordinateHelper;
-    }
-
     /**
      * Renders the bound.
      *
@@ -74,24 +37,16 @@ class BoundHelper
      */
     public function render(Bound $bound)
     {
-        $html = array();
-
         if ($bound->hasExtends() || !$bound->hasCoordinates()) {
-            $html[] = sprintf('var %s = new google.maps.LatLngBounds();'.PHP_EOL, $bound->getJavascriptVariable());
-
-            if ($bound->hasExtends()) {
-                $html[] = $this->renderExtends($bound);
-            }
-        } else {
-            $html[] = sprintf(
-                'var %s = new google.maps.LatLngBounds(%s, %s);'.PHP_EOL,
-                $bound->getJavascriptVariable(),
-                $this->coordinateHelper->render($bound->getSouthWest()),
-                $this->coordinateHelper->render($bound->getNorthEast())
-            );
+            return sprintf('%s = new google.maps.LatLngBounds();'.PHP_EOL, $bound->getJavascriptVariable());
         }
 
-        return implode('', $html);
+        return sprintf(
+            '%s = new google.maps.LatLngBounds(%s, %s);'.PHP_EOL,
+            $bound->getJavascriptVariable(),
+            $bound->getSouthWest()->getJavascriptVariable(),
+            $bound->getNorthEast()->getJavascriptVariable()
+        );
     }
 
     /**
@@ -103,11 +58,11 @@ class BoundHelper
      */
     public function renderExtends(Bound $bound)
     {
-        $html = array();
+        $output = array();
 
         foreach ($bound->getExtends() as $extend) {
             if (($extend instanceof Marker) || ($extend instanceof InfoWindow)) {
-                $html[] = sprintf(
+                $output[] = sprintf(
                     '%s.extend(%s.getPosition());'.PHP_EOL,
                     $bound->getJavascriptVariable(),
                     $extend->getJavascriptVariable()
@@ -116,19 +71,19 @@ class BoundHelper
                 || ($extend instanceof EncodedPolyline)
                 || ($extend instanceof Polygon)
             ) {
-                $html[] = sprintf(
+                $output[] = sprintf(
                     '%s.getPath().forEach(function(element){%s.extend(element)});'.PHP_EOL,
                     $extend->getJavascriptVariable(),
                     $bound->getJavascriptVariable()
                 );
             } elseif (($extend instanceof Rectangle) || ($extend instanceof GroundOverlay)) {
-                $html[] = sprintf(
+                $output[] = sprintf(
                     '%s.union(%s);'.PHP_EOL,
                     $bound->getJavascriptVariable(),
                     $extend->getBound()->getJavascriptVariable()
                 );
             } elseif ($extend instanceof Circle) {
-                $html[] = sprintf(
+                $output[] = sprintf(
                     '%s.union(%s.getBounds());'.PHP_EOL,
                     $bound->getJavascriptVariable(),
                     $extend->getJavascriptVariable()
@@ -136,6 +91,6 @@ class BoundHelper
             }
         }
 
-        return implode('', $html);
+        return implode('', $output);
     }
 }

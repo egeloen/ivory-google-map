@@ -41,23 +41,6 @@ class RectangleHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->rectangleHelper);
     }
 
-    public function testDefaultState()
-    {
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Base\BoundHelper',
-            $this->rectangleHelper->getBoundHelper()
-        );
-    }
-
-    public function testInitialState()
-    {
-        $boundHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\BoundHelper');
-
-        $this->rectangleHelper = new RectangleHelper($boundHelper);
-
-        $this->assertSame($boundHelper, $this->rectangleHelper->getBoundHelper());
-    }
-
     public function testRenderWithoutOptions()
     {
         $map = $this->getMock('Ivory\GoogleMap\Map');
@@ -74,17 +57,10 @@ class RectangleHelperTest extends \PHPUnit_Framework_TestCase
         $rectangle = new Rectangle($bound);
         $rectangle->setJavascriptVariable('rectangle');
 
-        $expectedRectangle = 'var rectangleBound = new google.maps.LatLngBounds('.
-            'new google.maps.LatLng(-1.1, -2.1, true), '.
-            'new google.maps.LatLng(1.1, 2.1, true)'.
-            ');';
-
-        $expected = <<<EOF
-$expectedRectangle
-var rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound});
-
-EOF;
-        $this->assertSame($expected, $this->rectangleHelper->render($rectangle, $map));
+        $this->assertSame(
+            'rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound});'.PHP_EOL,
+            $this->rectangleHelper->render($rectangle, $map)
+        );
     }
 
     public function testRenderWithOptions()
@@ -104,14 +80,8 @@ EOF;
         $rectangle->setJavascriptVariable('rectangle');
         $rectangle->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
-        $expectedRectangle = 'var rectangleBound = new google.maps.LatLngBounds('.
-            'new google.maps.LatLng(-1.1, -2.1, true), '.
-            'new google.maps.LatLng(1.1, 2.1, true)'.
-            ');';
-
         $expected = <<<EOF
-$expectedRectangle
-var rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound,"option1":"value1","option2":"value2"});
+rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangleBound,"option1":"value1","option2":"value2"});
 
 EOF;
 
