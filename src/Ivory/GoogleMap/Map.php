@@ -169,6 +169,7 @@ class Map extends AbstractJavascriptVariableAsset
      * @param string $htmlContainerId The map HTML container ID.
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the HTML container ID is not a string.
+     * @return $this
      */
     public function setHtmlContainerId($htmlContainerId)
     {
@@ -177,6 +178,7 @@ class Map extends AbstractJavascriptVariableAsset
         }
 
         $this->htmlContainerId = $htmlContainerId;
+        return $this;
     }
 
     /**
@@ -195,6 +197,7 @@ class Map extends AbstractJavascriptVariableAsset
      * @param boolean $async TRUE if the map loading is asynchronous else FALSE.
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the async flag is not a boolean.
+     * @return $this
      */
     public function setAsync($async)
     {
@@ -203,6 +206,7 @@ class Map extends AbstractJavascriptVariableAsset
         }
 
         $this->async = $async;
+        return $this;
     }
 
     /**
@@ -221,6 +225,7 @@ class Map extends AbstractJavascriptVariableAsset
      * @param boolean $autoZoom TRUE if the map autozooms else FALSE.
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the auto zoom flag is not a boolean.
+     * @return $this
      */
     public function setAutoZoom($autoZoom)
     {
@@ -229,6 +234,7 @@ class Map extends AbstractJavascriptVariableAsset
         }
 
         $this->autoZoom = $autoZoom;
+        return $this;
     }
 
     /**
@@ -249,6 +255,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setCenter(double $latitude, double $longitude, boolean $noWrap = true)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the center is not valid (prototypes).
+     * @return $this
      */
     public function setCenter()
     {
@@ -266,6 +273,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidCenter();
         }
+        return $this;
     }
 
     /**
@@ -294,6 +302,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  )
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the bound is not valid (prototypes).
+     * @return $this
      */
     public function setBound()
     {
@@ -327,6 +336,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidBound();
         }
+        return $this;
     }
 
     /**
@@ -361,12 +371,14 @@ class Map extends AbstractJavascriptVariableAsset
      * Sets the map options.
      *
      * @param array $mapOptions The map options.
+     * @return $this
      */
     public function setMapOptions(array $mapOptions)
     {
         foreach ($mapOptions as $mapOption => $value) {
             $this->setMapOption($mapOption, $value);
         }
+        return $this;
     }
 
     /**
@@ -394,6 +406,7 @@ class Map extends AbstractJavascriptVariableAsset
      * @param mixed  $value     The map option value.
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the map option is not valid.
+     * @return $this
      */
     public function setMapOption($mapOption, $value)
     {
@@ -402,6 +415,7 @@ class Map extends AbstractJavascriptVariableAsset
         }
 
         $this->mapOptions[$mapOption] = $value;
+        return $this;
     }
 
     /**
@@ -452,12 +466,14 @@ class Map extends AbstractJavascriptVariableAsset
      * Sets the stylesheet options.
      *
      * @param array $stylesheetOptions The stylesheet options.
+     * @return $this
      */
     public function setStylesheetOptions(array $stylesheetOptions)
     {
         foreach ($stylesheetOptions as $stylesheetOption => $value) {
             $this->setStylesheetOption($stylesheetOption, $value);
         }
+        return $this;
     }
 
     /**
@@ -485,6 +501,7 @@ class Map extends AbstractJavascriptVariableAsset
      * @param mixed  $value            The stylesheet option value.
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the stylesheet option is not valid.
+     * @return $this
      */
     public function setStylesheetOption($stylesheetOption, $value)
     {
@@ -493,6 +510,7 @@ class Map extends AbstractJavascriptVariableAsset
         }
 
         $this->stylesheetOptions[$stylesheetOption] = $value;
+        return $this;
     }
 
     /**
@@ -539,6 +557,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setMaptypeControl(array $mapTypeIds, string $controlPosition, string $mapTypeControlStyle)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the map type control is not valid (prototypes).
+     * @return $this
      */
     public function setMapTypeControl()
     {
@@ -569,6 +588,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidMapTypeControl();
         }
+        return $this;
     }
 
     /**
@@ -599,6 +619,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setOverviewMapControl(boolean $opened)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the overview map control is not valid (prototypes).
+     * @return $this
      */
     public function setOverviewMapControl()
     {
@@ -623,6 +644,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidOverviewMapControl();
         }
+        return $this;
     }
 
     /**
@@ -653,6 +675,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setPanControl(string $controlPosition)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the pan control is not valid (prototypes).
+     * @return $this
      */
     public function setPanControl()
     {
@@ -677,6 +700,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidPanControl();
         }
+        return $this;
     }
 
     /**
@@ -707,6 +731,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setRotateControl(string $controlPosition)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the rotate control is not valid (prototypes).
+     * @return $this
      */
     public function setRotateControl()
     {
@@ -731,6 +756,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidRotateControl();
         }
+        return $this;
     }
 
     /**
@@ -761,6 +787,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setScaleControl(string $controlPosition, string $scaleControlStyle)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the scale control is not valid (prototypes).
+     * @return $this
      */
     public function setScaleControl()
     {
@@ -787,6 +814,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidScaleControl();
         }
+        return $this;
     }
 
     /**
@@ -817,6 +845,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setStreetViewControl(string $controlPosition)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the street view control is not valid (prototypes).
+     * @return $this
      */
     public function setStreetViewControl()
     {
@@ -841,6 +870,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidStreetViewControl();
         }
+        return $this;
     }
 
     /**
@@ -871,6 +901,7 @@ class Map extends AbstractJavascriptVariableAsset
      *  - function setZoomControl(string $controlPosition, string $zoomControlStyle)
      *
      * @throws \Ivory\GoogleMap\Exception\MapException If the zoom control is not valid (prototypes).
+     * @return $this
      */
     public function setZoomControl()
     {
@@ -897,6 +928,7 @@ class Map extends AbstractJavascriptVariableAsset
         } else {
             throw MapException::invalidZoomControl();
         }
+        return $this;
     }
 
     /**
@@ -913,10 +945,12 @@ class Map extends AbstractJavascriptVariableAsset
      * Sets the map event manager.
      *
      * @param Ivory\GoogleMap\Events\EventManager $eventManager The map event manager.
+     * @return $this
      */
     public function setEventManager(EventManager $eventManager)
     {
         $this->eventManager = $eventManager;
+        return $this;
     }
 
     /**
@@ -933,6 +967,7 @@ class Map extends AbstractJavascriptVariableAsset
      * Add a map marker.
      *
      * @param Ivory\GoogleMap\Overlays\Marker $marker The marker to add.
+     * @return $this
      */
     public function addMarker(Marker $marker)
     {
@@ -941,6 +976,7 @@ class Map extends AbstractJavascriptVariableAsset
         if ($this->autoZoom) {
             $this->bound->extend($marker);
         }
+        return $this;
     }
 
     /**
@@ -957,6 +993,7 @@ class Map extends AbstractJavascriptVariableAsset
      * Add a map info window.
      *
      * @param Ivory\GoogleMap\Overlays\InfoWindow $infoWindow The info window to add.
+     * @return $this
      */
     public function addInfoWindow(InfoWindow $infoWindow)
     {
@@ -965,6 +1002,7 @@ class Map extends AbstractJavascriptVariableAsset
         if ($this->autoZoom) {
             $this->bound->extend($infoWindow);
         }
+        return $this;
     }
 
     /**
@@ -1053,6 +1091,7 @@ class Map extends AbstractJavascriptVariableAsset
      * Add a map rectangle to the map.
      *
      * @param Ivory\GoogleMap\Overlays\Rectangle $rectangle The rectangle to add.
+     * @return $this
      */
     public function addRectangle(Rectangle $rectangle)
     {
@@ -1061,6 +1100,7 @@ class Map extends AbstractJavascriptVariableAsset
         if ($this->autoZoom) {
             $this->bound->extend($rectangle);
         }
+        return $this;
     }
 
     /**
@@ -1077,6 +1117,7 @@ class Map extends AbstractJavascriptVariableAsset
      * Add a circle to the map.
      *
      * @param Ivory\GoogleMap\Overlays\Circle $circle The circle to add.
+     * @return $this
      */
     public function addCircle(Circle $circle)
     {
@@ -1085,6 +1126,7 @@ class Map extends AbstractJavascriptVariableAsset
         if ($this->autoZoom) {
             $this->bound->extend($circle);
         }
+        return $this;
     }
 
     /**
@@ -1101,6 +1143,7 @@ class Map extends AbstractJavascriptVariableAsset
      * Add a ground overlay to the map.
      *
      * @param Ivory\GoogleMapBundle\Model\Overlays\GroupOverlay $groundOverlay The ground overlay to add.
+     * @return $this
      */
     public function addGroundOverlay(GroundOverlay $groundOverlay)
     {
@@ -1109,6 +1152,7 @@ class Map extends AbstractJavascriptVariableAsset
         if ($this->autoZoom) {
             $this->bound->extend($groundOverlay);
         }
+        return $this;
     }
 
     /**
@@ -1125,10 +1169,12 @@ class Map extends AbstractJavascriptVariableAsset
      * Adds a KML Layer to the map.
      *
      * @param Ivory\GoogleMap\Layers\KMLLayer $kmlLayer The KML Layer to add.
+     * @return $this
      */
     public function addKMLLayer(KMLLayer $kmlLayer)
     {
         $this->kmlLayers[] = $kmlLayer;
+        return $this;
     }
 
     /**
@@ -1145,9 +1191,11 @@ class Map extends AbstractJavascriptVariableAsset
      * Sets the map langauge.
      *
      * @param string $language The map langauge.
+     * @return $this
      */
     public function setLanguage($language)
     {
         $this->language = $language;
+        return $this;
     }
 }
