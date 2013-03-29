@@ -240,7 +240,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map center.
      *
-     * @return Ivroy\GoogleMap\Base\Coordinate The map center.
+     * @return \Ivory\GoogleMap\Base\Coordinate The map center.
      */
     public function getCenter()
     {
@@ -279,7 +279,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map bound.
      *
-     * @return Ivory\GoogleMap\Base\Bound The map bound.
+     * @return \Ivory\GoogleMap\Base\Bound The map bound.
      */
     public function getBound()
     {
@@ -934,7 +934,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map event manager.
      *
-     * @return Ivory\GoogleMap\Events\EventManager The map event manager.
+     * @return \Ivory\GoogleMap\Events\EventManager The map event manager.
      */
     public function getEventManager()
     {
