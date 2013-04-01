@@ -1304,7 +1304,7 @@ class MapHelper
             $output[] = sprintf(
                 '%s.info_windows.%s = %s',
                 $this->getJsContainerName($map),
-                $mapInfoWindow->getJavascriptVariable(),
+                $markerInfoWindow->getJavascriptVariable(),
                 $this->infoWindowHelper->render($markerInfoWindow, false)
             );
         }
