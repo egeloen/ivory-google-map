@@ -2,6 +2,7 @@
 
 ### 1.0.0 (????-??-??)
 
+ * 4e340c3 - [Helper] Use Google Loader for loading Google Map API v3
  * ff6b973 - [Helper] Add JS container
  * 31d7346 - Fix annotation typo
  * 28ffe07 - PSR2 compatibility
