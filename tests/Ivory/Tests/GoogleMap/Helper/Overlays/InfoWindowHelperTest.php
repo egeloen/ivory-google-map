@@ -56,8 +56,7 @@ class InfoWindowHelperTest extends \PHPUnit_Framework_TestCase
         $expected = $infoWindow->getJavascriptVariable().' = new google.maps.InfoWindow({'.
             '"position":position,'.
             '"pixelOffset":pixel_offset,'.
-            '"content":"content",'.
-            '"open":true'.
+            '"content":"content"'.
             '});'.PHP_EOL;
 
         $this->assertSame($expected, $this->infoWindowHelper->render($infoWindow, true));
@@ -81,7 +80,6 @@ class InfoWindowHelperTest extends \PHPUnit_Framework_TestCase
         $expected = $infoWindow->getJavascriptVariable().' = new google.maps.InfoWindow({'.
             '"pixelOffset":pixel_offset,'.
             '"content":"content",'.
-            '"open":true,'.
             '"option1":"value1",'.
             '"option2":"value2"'.
             '});'.PHP_EOL;

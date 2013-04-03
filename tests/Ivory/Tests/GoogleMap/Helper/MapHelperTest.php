@@ -699,8 +699,8 @@ EOF;
         $markerInfoWindow->getPosition()->setJavascriptVariable('marker_info_window_position');
 
         $expected = <<<EOF
-map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>","open":false});
-map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>","open":false});
+map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>"});
+map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
 
 EOF;
 
@@ -727,8 +727,8 @@ EOF;
         $markerInfoWindow->setAutoClose(true);
 
         $expected = <<<EOF
-map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>","open":false});
-map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>","open":false});
+map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>"});
+map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
 map_container.closable_info_windows.map_info_window = map_info_window;
 map_container.closable_info_windows.marker_info_window = marker_info_window;
 
@@ -956,8 +956,8 @@ map_container.ground_overlays.ground_overlay = ground_overlay = new google.maps.
 map_container.polygons.polygon = polygon = new google.maps.Polygon({"map":map,"paths":[]});
 map_container.polylines.polyline = polyline = new google.maps.Polyline({"map":map,"path":[]});
 map_container.rectangles.rectangle = rectangle = new google.maps.Rectangle({"map":map,"bounds":rectangle_bound});
-map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>","open":false});
-map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>","open":false});
+map_container.info_windows.map_info_window = map_info_window = new google.maps.InfoWindow({"position":map_info_window_position,"content":"<p>Default content<\/p>"});
+map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
 map_container.marker_images.marker_icon = marker_icon = new google.maps.MarkerImage("url", null, null, null, null);
 map_container.marker_images.marker_shadow = marker_shadow = new google.maps.MarkerImage("url", null, null, null, null);
 map_container.markers.marker = marker = new google.maps.Marker({"map":map,"position":marker_position, "icon":marker_icon, "shadow":marker_shadow});

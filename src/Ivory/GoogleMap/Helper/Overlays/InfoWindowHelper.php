@@ -43,7 +43,7 @@ class InfoWindowHelper
         }
 
         $infoWindowOptions = array_merge(
-            array('content' => $infoWindow->getContent(), 'open' => $infoWindow->isOpen()),
+            array('content' => $infoWindow->getContent()),
             $infoWindow->getOptions()
         );
 
