@@ -870,7 +870,7 @@ class MapHelper
     {
         $output = array();
 
-        if (!$this->loaded) {
+        if (!$this->loaded && !$map->isAsync()) {
             $output[] = $this->renderJsAPI($map);
         }
 
@@ -888,6 +888,10 @@ class MapHelper
 
         $output[] = '</script>'.PHP_EOL;
 
+        if (!$this->loaded && $map->isAsync()) {
+            $output[] = $this->renderJsAPI($map);
+        }
+
         return implode('', $output);
     }
 
@@ -902,20 +906,38 @@ class MapHelper
     {
         $this->loaded = true;
 
-        $url = '//maps.google.com/maps/api/js?';
+        $output = array();
+        $output[] = sprintf(
+            '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
+            '//www.google.com/jsapi?callback=load_ivory_google_map_api'
+        );
 
-        $encodedPolylines = $map->getEncodedPolylines();
-        if (!empty($encodedPolylines)) {
-            $url .= 'libraries=geometry&amp;';
+        $options = array(
+            'language'     => $map->getLanguage(),
+            'other_params' => http_build_query(array(
+                'libraries' => 'geometry',
+                'sensor'    => 'false',
+            )),
+        );
+
+        $jsonOptions = substr(json_encode($options), 0, -1);
+
+        if ($map->isAsync()) {
+            $jsonOptions .= ', "callback": load_ivory_google_map}';
+        } else {
+            $jsonOptions .= '}';
         }
 
         if ($map->isAsync()) {
-            $url .= 'callback=load_ivory_google_map&amp;';
+            $options['callback'] = 'load_ivory_google_map';
         }
 
-        $url .= sprintf('language=%s&amp;sensor=false', $map->getLanguage());
+        $output[] = sprintf(
+            '<script type="text/javascript">function load_ivory_google_map_api () {%s};</script>'.PHP_EOL,
+            sprintf('google.load("maps", "3", %s);', $jsonOptions)
+        );
 
-        return sprintf('<script type="text/javascript" src="%s"></script>'.PHP_EOL, $url);
+        return implode('', $output);
     }
 
     /**
