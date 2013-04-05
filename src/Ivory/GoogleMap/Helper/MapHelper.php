@@ -907,10 +907,6 @@ class MapHelper
         $this->loaded = true;
 
         $output = array();
-        $output[] = sprintf(
-            '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
-            '//www.google.com/jsapi?callback=load_ivory_google_map_api'
-        );
 
         $options = array(
             'language'     => $map->getLanguage(),
@@ -935,6 +931,11 @@ class MapHelper
         $output[] = sprintf(
             '<script type="text/javascript">function load_ivory_google_map_api () {%s};</script>'.PHP_EOL,
             sprintf('google.load("maps", "3", %s);', $jsonOptions)
+        );
+        
+        $output[] = sprintf(
+            '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
+            '//www.google.com/jsapi?callback=load_ivory_google_map_api'
         );
 
         return implode('', $output);
