@@ -924,15 +924,11 @@ class MapHelper
             $jsonOptions .= '}';
         }
 
-        if ($map->isAsync()) {
-            $options['callback'] = 'load_ivory_google_map';
-        }
-
         $output[] = sprintf(
             '<script type="text/javascript">function load_ivory_google_map_api () {%s};</script>'.PHP_EOL,
             sprintf('google.load("maps", "3", %s);', $jsonOptions)
         );
-        
+
         $output[] = sprintf(
             '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
             '//www.google.com/jsapi?callback=load_ivory_google_map_api'
