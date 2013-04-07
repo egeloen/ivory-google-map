@@ -30,6 +30,8 @@ controls, overlays, events & services through the Google Map API v3.
       - [Layers](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/layers/index.md)
          - [KML Layer](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/layers/kml_layer.md)
       - [Events](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/events.md)
+      - [Places](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/places/index.md)
+         - [Autocomplete](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/places/autocomplete.md)
       - [Services](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/index.md)
          - [Geocoding API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/geocoding/geocoder.md)
          - [Directions API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/directions/directions.md)
