@@ -47,7 +47,7 @@ class AnimationHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\TemplatingException
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
      * @expectedExceptionMessage The animation can only be : bounce, drop.
      */
     public function testRenderWithInvalidValue()

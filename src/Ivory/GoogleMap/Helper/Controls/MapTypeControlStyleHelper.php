@@ -12,7 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\MapTypeControlStyle;
-use Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Exception\HelperException;
 
 /**
  * Map type control style helper.
@@ -38,7 +38,7 @@ class MapTypeControlStyleHelper
             case MapTypeControlStyle::HORIZONTAL_BAR:
                 return sprintf('google.maps.MapTypeControlStyle.%s', strtoupper($mapTypeControlStyle));
             default:
-                throw TemplatingException::invalidMapTypeControlStyle();
+                throw HelperException::invalidMapTypeControlStyle();
         }
     }
 }

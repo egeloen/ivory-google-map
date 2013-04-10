@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Geometry;
 
-use Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Exception\HelperException;
 
 /**
  * Encoding helper.
@@ -26,14 +26,14 @@ class EncodingHelper
      *
      * @param string $encodedPath The encoded path.
      *
-     * @throws \Ivory\GoogleMap\Exception\TemplatingException If the encoded path is not valid.
+     * @throws \Ivory\GoogleMap\Exception\HelperException If the encoded path is not valid.
      *
      * @return string The JS output.
      */
     public function renderDecodePath($encodedPath)
     {
         if (!is_string($encodedPath)) {
-            throw TemplatingException::invalidEncodedPath();
+            throw HelperException::invalidEncodedPath();
         }
 
         return sprintf('google.maps.geometry.encoding.decodePath("%s")', addslashes($encodedPath));

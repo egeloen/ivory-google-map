@@ -19,16 +19,16 @@ use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\MapTypeId;
 
 /**
- * Templating exception.
+ * Helper exception.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TemplatingException extends Exception
+class HelperException extends Exception
 {
     /**
      * Gets the "INVALID ANIMATION" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID ANIMATION" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID ANIMATION" exception.
      */
     public static function invalidAnimation()
     {
@@ -38,7 +38,7 @@ class TemplatingException extends Exception
     /**
      * Gets the "INVALID CONTROL POSITION" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID CONTROL POSITION" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID CONTROL POSITION" exception.
      */
     public static function invalidControlPosition()
     {
@@ -51,7 +51,7 @@ class TemplatingException extends Exception
     /**
      * Gets the "INVALID ENCODED PATH" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID ENCODED PATH" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID ENCODED PATH" exception.
      */
     public static function invalidEncodedPath()
     {
@@ -61,7 +61,7 @@ class TemplatingException extends Exception
     /**
      * Gets the "INVALID MAP TYPE CONTROL STYLE" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID MAP TYPE CONTROL STYLE" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID MAP TYPE CONTROL STYLE" exception.
      */
     public static function invalidMapTypeControlStyle()
     {
@@ -74,7 +74,7 @@ class TemplatingException extends Exception
     /**
      * Gets the "INVALID MAP TYPE ID" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID MAP TYPE ID" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID MAP TYPE ID" exception.
      */
     public static function invalidMapTypeId()
     {
@@ -84,7 +84,7 @@ class TemplatingException extends Exception
     /**
      * Gets the "INVALID SCALE CONTROL STYLE" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID SCALE CONTROL STYLE" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID SCALE CONTROL STYLE" exception.
      */
     public static function invalidScaleControlStyle()
     {
@@ -97,7 +97,7 @@ class TemplatingException extends Exception
     /**
      * Gets the "INVALID ZOOM CONTROL STYLE" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID ZOOM CONTROL STYLE" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID ZOOM CONTROL STYLE" exception.
      */
     public static function invalidZoomControlStyle()
     {

@@ -59,7 +59,7 @@ class MapTypeControlStyleHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\TemplatingException
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
      * @expectedExceptionMessage The map type control style can only be : default, dropdown_menu, horizontal_bar.
      */
     public function testRenderWithInvalidValue()

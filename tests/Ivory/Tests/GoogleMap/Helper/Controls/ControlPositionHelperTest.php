@@ -104,7 +104,7 @@ class ControlPositionHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\TemplatingException
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
      * @expectedExceptionMessage The control position can only be : bottom_center, bottom_left, bottom_right,
      * left_bottom, left_center, left_top, right_bottom, right_center, right_top, top_center, top_left, top_right.
      */

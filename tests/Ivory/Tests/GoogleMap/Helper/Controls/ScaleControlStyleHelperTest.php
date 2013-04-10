@@ -49,7 +49,7 @@ class ScaleControlStyleHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\TemplatingException
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
      * @expectedExceptionMessage The scale control style can only be : default.
      */
     public function testRenderWithInvalidValue()

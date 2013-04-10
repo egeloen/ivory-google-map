@@ -12,7 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\ZoomControlStyle;
-use Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Exception\HelperException;
 
 /**
  * Zoom control style helper.
@@ -26,7 +26,7 @@ class ZoomControlStyleHelper
      *
      * @param string $zoomControlStyle The zoom control style.
      *
-     * @throws \Ivory\GoogleMap\Exception\TemplatingException If thhe zoom control style is not valid.
+     * @throws \Ivory\GoogleMap\Exception\HelperException If thhe zoom control style is not valid.
      *
      * @return string The JS output.
      */
@@ -38,7 +38,7 @@ class ZoomControlStyleHelper
             case ZoomControlStyle::SMALL:
                 return sprintf('google.maps.ZoomControlStyle.%s', strtoupper($zoomControlStyle));
             default:
-                throw TemplatingException::invalidZoomControlStyle();
+                throw HelperException::invalidZoomControlStyle();
         }
     }
 }

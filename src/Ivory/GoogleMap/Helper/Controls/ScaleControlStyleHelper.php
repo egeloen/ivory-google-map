@@ -12,7 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\ScaleControlStyle;
-use Ivory\GoogleMap\Exception\TemplatingException;
+use Ivory\GoogleMap\Exception\HelperException;
 
 /**
  * Scale control style helper.
@@ -26,7 +26,7 @@ class ScaleControlStyleHelper
      *
      * @param string $scaleControlStyle The scale control style.
      *
-     * @throws \Ivory\GoogleMap\Exception\TemplatingException If the scale control style is not valid.
+     * @throws \Ivory\GoogleMap\Exception\HelperException If the scale control style is not valid.
      *
      * @return string The JS output.
      */
@@ -36,7 +36,7 @@ class ScaleControlStyleHelper
             case ScaleControlStyle::DEFAULT_:
                 return sprintf('google.maps.ScaleControlStyle.%s', strtoupper($scaleControlStyle));
             default:
-                throw TemplatingException::invalidScaleControlStyle();
+                throw HelperException::invalidScaleControlStyle();
         }
     }
 }

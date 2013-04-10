@@ -56,7 +56,7 @@ class EncodingHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\TemplatingException
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
      * @expectedExceptionMessage The encoded path must be a string value.
      */
     public function testRenderDecodePathWithInvalidValue()
