@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.0.0 (????-??-??)
+### 0.9.1 (2013-04-10)
 
  * 13f108a - [Exception] Rename TemplatingException to HelperException
  * 4e340c3 - [Helper] Use Google Loader for loading Google Map API v3
