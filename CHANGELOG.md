@@ -2,6 +2,7 @@
 
 ### 1.0.0 (????-??-??)
 
+ * 13f108a - [Exception] Rename TemplatingException to HelperException
  * 4e340c3 - [Helper] Use Google Loader for loading Google Map API v3
  * ff6b973 - [Helper] Add JS container
  * 31d7346 - Fix annotation typo
