@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Services\Directions;
+namespace Ivory\GoogleMap\Services\Base;
 
 /**
  * A travel mode which describes the google map travel mode.

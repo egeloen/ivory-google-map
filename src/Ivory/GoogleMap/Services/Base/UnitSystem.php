@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Services\Directions;
+namespace Ivory\GoogleMap\Services\Base;
 
 /**
  * A unit system which describes the google map unit system.
