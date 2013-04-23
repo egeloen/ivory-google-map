@@ -11,7 +11,8 @@
 
 namespace Ivory\GoogleMap\Exception;
 
-use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
+use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixStatus;
+use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixElementStatus;
 use Ivory\GoogleMap\Services\Directions\TravelMode;
 use Ivory\GoogleMap\Services\Directions\UnitSystem;
 
@@ -23,6 +24,32 @@ use Ivory\GoogleMap\Services\Directions\UnitSystem;
  */
 class DistanceMatrixException extends ServiceException
 {
+    /**
+     * Gets the "INVALID DISTANCE MATRIX REQUEST" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST" exception.
+     */
+    public static function invalidDistanceMatrixRequest()
+    {
+        return new static('The directions request is not valid. It needs at least one origin and one destination.');
+    }
+
+    /**
+     * Gets the "INVALID DISTANCE MATRIX REQUEST PARAMETERS" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST PARAMETERS" exception.
+     */
+    public static function invalidDistanceMatrixRequestParameters()
+    {
+        return new static(sprintf(
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
+            'The process arguments are invalid.',
+            'The available prototypes are:',
+            '- function route(array $origins, array $destinations)',
+            '- function route(Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest $request)'
+        ));
+    }
+
     /**
      * Gets the "INVALID DISTANCE MATRIX REQUEST DESTINATION" exception.
      *
@@ -60,7 +87,7 @@ class DistanceMatrixException extends ServiceException
     /**
      * Gets the "INVALID DISTANCE MATRIX REQUEST REGION" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE MATRIX REQUEST REGION" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST REGION" exception.
      */
     public static function invalidDistanceMatrixRequestRegion()
     {
@@ -70,7 +97,7 @@ class DistanceMatrixException extends ServiceException
     /**
      * Gets the "INVALID DISTANCE MATRIX REQUEST LANGUAGE" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE MATRIX REQUEST LANGUAGE" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST LANGUAGE" exception.
      */
     public static function invalidDistanceMatrixRequestLanguage()
     {
@@ -80,7 +107,7 @@ class DistanceMatrixException extends ServiceException
     /**
      * Gets the "INVALID DISTANCE MATRIX REQUEST SENSOR" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE MATRIX REQUEST SENSOR" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST SENSOR" exception.
      */
     public static function invalidDistanceMatrixRequestSensor()
     {
@@ -90,7 +117,7 @@ class DistanceMatrixException extends ServiceException
     /**
      * Gets the "INVALID DISTANCE MATRIX REQUEST TRAVEL MODE" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE MATRIX REQUEST TRAVEL MODE" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST TRAVEL MODE" exception.
      */
     public static function invalidDistanceMatrixRequestTravelMode()
     {
@@ -103,7 +130,7 @@ class DistanceMatrixException extends ServiceException
     /**
      * Gets the "INVALID DISTANCE MATRIX REQUEST UNIT SYSTEM" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE MATRIX REQUEST UNIT SYSTEM" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST UNIT SYSTEM" exception.
      */
     public static function invalidDistanceMatrixRequestUnitSystem()
     {
@@ -114,9 +141,9 @@ class DistanceMatrixException extends ServiceException
     }
 
     /**
-     * Gets the "INVALID DIRECTIONS REQUEST AVOID HIGHWAYS" exception.
+     * Gets the "INVALID DISTANCE MATRIX REQUEST AVOID HIGHWAYS" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST AVOID HIGHWAYS" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST AVOID HIGHWAYS" exception.
      */
     public static function invalidDistanceMatrixRequestAvoidHighways()
     {
@@ -124,12 +151,38 @@ class DistanceMatrixException extends ServiceException
     }
 
     /**
-     * Gets the "INVALID DIRECTIONS REQUEST AVOID TOLLS" exception.
+     * Gets the "INVALID DISTANCE MATRIX REQUEST AVOID TOLLS" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST AVOID TOLLS" exception.
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST AVOID TOLLS" exception.
      */
     public static function invalidDistanceMatrixRequestAvoidTolls()
     {
         return new static('The distance matrix request avoid tolls flag must be a boolean value.');
+    }
+
+    /**
+     * Gets the "INVALID DISTANCE MATRIX RESPONSE STATUS" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX RESPONSE STATUS" exception.
+     */
+    public static function invalidDistanceMatrixResponseStatus()
+    {
+        return new static(sprintf(
+            'The distance matrix response status can only be : %s.',
+            implode(', ', DistanceMatrixStatus::getDistanceMatrixStatuses())
+        ));
+    }
+
+    /**
+     * Gets the "INVALID DISTANCE MATRIX RESPONSE ELEMENT STATUS" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX RESPONSE ELEMENT STATUS" exception.
+     */
+    public static function invalidDistanceMatrixResponseElementStatus()
+    {
+        return new static(sprintf(
+            'The distance matrix response element status can only be : %s.',
+            implode(', ', DistanceMatrixElementStatus::getDistanceMatrixElementStatuses())
+        ));
     }
 }
