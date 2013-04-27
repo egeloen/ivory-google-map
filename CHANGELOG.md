@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.0.0 (????-??-??)
+
+ * 1aa0083 - [Travis] Use --prefer-source to avoid random build fail
+
 ### 0.9.1 (2013-04-10)
 
  * 13f108a - [Exception] Rename TemplatingException to HelperException
