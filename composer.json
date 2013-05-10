@@ -1,12 +1,16 @@
 {
-    "name": "egeloen/google-map",
-    "description": "Google Map API v3 integration for PHP 5.3+",
-    "keywords": [ "google map" ],
+    "name": "radutopala/google-map",
+    "description": "Google Map API v3 integration for PHP 5.3+, with InfoBox inside",
+    "keywords": [ "google map", "infobox" ],
     "license": "MIT",
     "authors": [
         {
             "name": "Eric GELOEN",
             "email": "geloen.eric@gmail.com"
+        },
+        {
+            "name": "Radu Topala",
+            "email": "radu.topala@trisoft.ro"
         }
     ],
     "require": {
