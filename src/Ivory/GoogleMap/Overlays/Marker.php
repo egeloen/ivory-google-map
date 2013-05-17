@@ -41,6 +41,9 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     /** @var \Ivory\GoogleMap\Overlays\InfoWindow */
     protected $infoWindow;
 
+    /** @var \Ivory\GoogleMap\Overlays\InfoBox */
+    protected $infoBox;
+
     /**
      * Creates a marker.
      *
@@ -50,6 +53,7 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
      * @param \Ivory\GoogleMap\Overlays\MarkerImage $shadow     The marker shadow.
      * @param \Ivory\GoogleMap\Overlays\MarkerShape $shape      The marker shape.
      * @param \Ivory\GoogleMap\Overlays\InfoWindow  $infoWindow The marker info window.
+     * @param \Ivory\GoogleMap\Overlays\InfoBox  $infoBox The marker info window.
      */
     public function __construct(
         Coordinate $position = null,
@@ -57,7 +61,8 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
         MarkerImage $icon = null,
         MarkerImage $shadow = null,
         MarkerShape $shape = null,
-        InfoWindow $infoWindow = null
+        InfoWindow $infoWindow = null,
+        InfoBox $infoBox = null
     ) {
         parent::__construct();
 
@@ -87,6 +92,10 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
 
         if ($infoWindow !== null) {
             $this->setInfoWindow($infoWindow);
+        }
+
+        if ($infoBox !== null) {
+            $this->setInfoBox($infoBox);
         }
     }
 
@@ -350,5 +359,35 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     public function setInfoWindow(InfoWindow $infoWindow)
     {
         $this->infoWindow = $infoWindow;
+    }
+
+    /**
+     * Check if the marker has an info box.
+     *
+     * @return boolean TRUE if the marker has an info box else FALSE.
+     */
+    public function hasInfoBox()
+    {
+        return $this->infoBox !== null;
+    }
+
+    /**
+     * Gets the info box.
+     *
+     * @return \Ivory\GoogleMap\Overlays\InfoBox The info window.
+     */
+    public function getInfoBox()
+    {
+        return $this->infoBox;
+    }
+
+    /**
+     * Sets the info window.
+     *
+     * @param \Ivory\GoogleMap\Overlays\InfoBox $infoBox The info box.
+     */
+    public function setInfoBox(InfoBox $infoBox)
+    {
+        $this->infoBox = $infoBox;
     }
 }

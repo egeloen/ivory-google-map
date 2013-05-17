@@ -29,6 +29,7 @@ use Ivory\GoogleMap\Helper\MapTypeIdHelper;
 use Ivory\GoogleMap\Helper\Overlays\CircleHelper;
 use Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper;
 use Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper;
+use Ivory\GoogleMap\Helper\Overlays\InfoBoxHelper;
 use Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper;
 use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
 use Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper;
@@ -97,6 +98,9 @@ class MapHelper
     /** @var \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper */
     protected $infoWindowHelper;
 
+    /** @var \Ivory\GoogleMap\Helper\Overlays\InfoBoxHelper */
+    protected $infoBoxHelper;
+
     /** @var \Ivory\GoogleMap\Helper\Overlays\PolylineHelper */
     protected $polylineHelper;
 
@@ -151,6 +155,8 @@ class MapHelper
      *                                                                                            helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper         $infoWindowHelper         The info window
      *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\InfoBoxHelper            $infoBoxHelper         The info box
+     *                                                                                            helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\PolylineHelper           $polylineHelper           The polyline helper.
      * @param \Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper    $encodedPolylineHelper    The encoded polyline
      *                                                                                            helper.
@@ -180,6 +186,7 @@ class MapHelper
         MarkerImageHelper $markerImageHelper = null,
         MarkerShapeHelper $markerShapeHelper = null,
         InfoWindowHelper $infoWindowHelper = null,
+        InfoBoxHelper $infoBoxHelper = null,
         PolylineHelper $polylineHelper = null,
         EncodedPolylineHelper $encodedPolylineHelper = null,
         PolygonHelper $polygonHelper = null,
@@ -305,6 +312,7 @@ class MapHelper
         $this->setMarkerImageHelper($markerImageHelper);
         $this->setMarkerShapeHelper($markerShapeHelper);
         $this->setInfoWindowHelper($infoWindowHelper);
+        $this->setInfoBoxHelper($infoBoxHelper);
         $this->setPolylineHelper($polylineHelper);
         $this->setEncodedPolylineHelper($encodedPolylineHelper);
         $this->setPolygonHelper($polygonHelper);
@@ -640,6 +648,26 @@ class MapHelper
     }
 
     /**
+     * Gets the info box helper.
+     *
+     * @return \Ivory\GoogleMap\Helper\Overlays\InfoBoxHelper The info box helper.
+     */
+    public function getInfoBoxHelper()
+    {
+        return $this->infoBoxHelper;
+    }
+
+    /**
+     * Sets the info box helper.
+     *
+     * @param \Ivory\GoogleMap\Helper\Overlays\InfoBoxHelper $infoBoxHelper The info box helper.
+     */
+    public function setInfoBoxHelper(InfoBoxHelper $infoBoxHelper)
+    {
+        $this->infoBoxHelper = $infoBoxHelper;
+    }
+
+    /**
      * Gets the polyline helper.
      *
      * @return \Ivory\GoogleMap\Helper\Overlays\PolylineHelper The polyline helper.
@@ -866,12 +894,12 @@ class MapHelper
      *
      * @return string The HTML output.
      */
-    public function renderJavascripts(Map $map)
+    public function renderJavascripts(Map $map, $plugins = array())
     {
         $output = array();
 
         if (!$this->loaded && !$map->isAsync()) {
-            $output[] = $this->renderJsAPI($map);
+            $output[] = $this->renderJsAPI($map, $plugins);
         }
 
         $output[] = '<script type="text/javascript">'.PHP_EOL;
@@ -880,7 +908,7 @@ class MapHelper
             $output[] = 'function load_ivory_google_map() {'.PHP_EOL;
         }
 
-        $output[] = $this->renderJsContainer($map);
+        $output[] = $this->renderJsContainer($map, $plugins);
 
         if ($map->isAsync()) {
             $output[] = '}'.PHP_EOL;
@@ -889,7 +917,7 @@ class MapHelper
         $output[] = '</script>'.PHP_EOL;
 
         if (!$this->loaded && $map->isAsync()) {
-            $output[] = $this->renderJsAPI($map);
+            $output[] = $this->renderJsAPI($map, $plugins);
         }
 
         return implode('', $output);
@@ -902,7 +930,7 @@ class MapHelper
      *
      * @return string The HTML output.
      */
-    public function renderJsAPI(Map $map)
+    public function renderJsAPI(Map $map, $plugins = array())
     {
         $this->loaded = true;
 
@@ -934,6 +962,13 @@ class MapHelper
             '//www.google.com/jsapi?callback=load_ivory_google_map_api'
         );
 
+        foreach($plugins as $plugin => $path) {
+            $output[] = sprintf(
+                '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
+                $path
+            );
+        }
+
         return implode('', $output);
     }
 
@@ -944,7 +979,7 @@ class MapHelper
      *
      * @return string The JS output.
      */
-    public function renderJsContainer(Map $map)
+    public function renderJsContainer(Map $map, $plugins)
     {
         $output = array();
 
@@ -964,6 +999,11 @@ class MapHelper
         $output[] = $this->renderJsContainerPolylines($map);
         $output[] = $this->renderJsContainerRectangles($map);
         $output[] = $this->renderJsContainerInfoWindows($map);
+
+        if(in_array('infobox', array_keys($plugins))) {
+            $output[] = $this->renderJsContainerInfoBoxes($map);
+        }
+
         $output[] = $this->renderJsContainerMarkerImages($map);
         $output[] = $this->renderJsContainerMarkerShapes($map);
         $output[] = $this->renderJsContainerMarkers($map);
@@ -1004,6 +1044,7 @@ class MapHelper
             'polylines'         => array(),
             'rectangles'        => array(),
             'info_windows'      => array(),
+            'info_boxes'        => array(),
             'marker_images'     => array(),
             'marker_shapes'     => array(),
             'markers'           => array(),
@@ -1021,6 +1062,7 @@ class MapHelper
 
             // Internal
             'closable_info_windows' => array(),
+            'closable_info_boxes' => array(),
         );
 
         return sprintf('%s = %s;'.PHP_EOL, $this->getJsContainerName($map), json_encode($container, JSON_FORCE_OBJECT));
@@ -1343,6 +1385,52 @@ class MapHelper
     }
 
     /**
+     * Renders the javascript container info boxes.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The JS output.
+     */
+    public function renderJsContainerInfoBoxes(Map $map)
+    {
+        $output = array();
+
+        $mapInfoBoxes = $map->getInfoBoxes();
+        $markerInfoBoxes = $this->computeMarkerInfoBoxes($map);
+
+        foreach ($mapInfoBoxes as $mapInfoBox) {
+            $output[] = sprintf(
+                '%s.info_boxes.%s = %s',
+                $this->getJsContainerName($map),
+                $mapInfoBox->getJavascriptVariable(),
+                $this->infoBoxHelper->render($mapInfoBox)
+            );
+        }
+
+        foreach ($markerInfoBoxes as $markerInfoBox) {
+            $output[] = sprintf(
+                '%s.info_boxes.%s = %s',
+                $this->getJsContainerName($map),
+                $markerInfoBox->getJavascriptVariable(),
+                $this->infoBoxHelper->render($markerInfoBox, false)
+            );
+        }
+
+        foreach (array_merge($mapInfoBoxes, $markerInfoBoxes) as $infoBox) {
+            if ($infoBox->isAutoClose()) {
+                $output[] = sprintf(
+                    '%s.closable_info_boxes.%s = %s;'.PHP_EOL,
+                    $this->getJsContainerName($map),
+                    $infoBox->getJavascriptVariable(),
+                    $infoBox->getJavascriptVariable()
+                );
+            }
+        }
+
+        return implode('', $output);
+    }
+
+    /**
      * Renders the javascript container maker images.
      *
      * @param \Ivory\GoogleMap\Map $map The map.
@@ -1409,6 +1497,10 @@ class MapHelper
 
             if ($marker->hasInfoWindow() && $marker->getInfoWindow()->isAutoOpen()) {
                 $this->registerMarkerInfoWindowEvent($map, $marker);
+            }
+
+            if ($marker->hasInfoBox() && $marker->getInfoBox()->isAutoOpen()) {
+                $this->registerMarkerInfoBoxEvent($map, $marker);
             }
         }
 
@@ -1716,6 +1808,12 @@ class MapHelper
             }
         }
 
+        foreach (array_merge($map->getInfoBoxes(), $this->computeMarkerInfoBoxes($map)) as $infoBox) {
+            if ($infoBox->hasPixelOffset() && !in_array($infoBox->getPixelOffset(), $sizes)) {
+                $sizes[] = $infoBox->getPixelOffset();
+            }
+        }
+
         foreach ($map->getMarkers() as $marker) {
             if ($marker->hasIcon()) {
                 if ($marker->getIcon()->hasSize() && !in_array($marker->getIcon()->getSize(), $sizes)) {
@@ -1803,6 +1901,26 @@ class MapHelper
         }
 
         return $infoWinfows;
+    }
+
+    /**
+     * Computes the marker info boxes of a map.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return array The computed marker info boxes.
+     */
+    protected function computeMarkerInfoBoxes(Map $map)
+    {
+        $infoBoxes = array();
+
+        foreach ($map->getMarkers() as $marker) {
+            if ($marker->hasInfoBox() && !in_array($marker->getInfoBox(), $infoBoxes)) {
+                $infoBoxes[] = $marker->getInfoBox();
+            }
+        }
+
+        return $infoBoxes;
     }
 
     /**
@@ -1898,6 +2016,34 @@ EOF;
         $event->setJavascriptVariable(sprintf($marker->getJavascriptVariable().'_%s', 'info_window_event'));
         $event->setInstance($marker->getJavascriptVariable());
         $event->setEventName($marker->getInfoWindow()->getOpenEvent());
+        $event->setHandle($handle);
+
+        $map->getEventManager()->addEvent($event);
+    }
+
+    /**
+     * Registers the marker info window event (auto open).
+     *
+     * @param \Ivory\GoogleMap\Map             $map    The map.
+     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
+     */
+    protected function registerMarkerInfoBoxEvent(Map $map, Marker $marker)
+    {
+        $closableInfoBoxes = sprintf('%s.closable_info_boxes', $this->getJsContainerName($map));
+
+        $handle = <<<EOF
+function () {
+    for (var info_box in {$closableInfoBoxes}) {
+        {$closableInfoBoxes}[info_box].close();
+    }
+    {$this->infoBoxHelper->renderOpen($marker->getInfoBox(), $map, $marker)}
+}
+EOF;
+
+        $event = new Event();
+        $event->setJavascriptVariable(sprintf($marker->getJavascriptVariable().'_%s', 'info_box_event'));
+        $event->setInstance($marker->getJavascriptVariable());
+        $event->setEventName($marker->getInfoBox()->getOpenEvent());
         $event->setHandle($handle);
 
         $map->getEventManager()->addEvent($event);
