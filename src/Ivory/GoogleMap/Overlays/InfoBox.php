@@ -39,6 +39,9 @@ class InfoBox extends AbstractOptionsAsset implements ExtendableInterface
     /** @var string */
     protected $openEvent;
 
+    /** @var string */
+    protected $closeEvent;
+
     /** @var boolean */
     protected $autoOpen;
 
@@ -84,6 +87,21 @@ class InfoBox extends AbstractOptionsAsset implements ExtendableInterface
 
         $this->setAutoOpen($autoOpen);
         $this->setAutoClose($autoClose);
+
+        $this->setPixelOffset(-140, 0, 'px', 'px');
+
+        $this->setOptions(array(
+            'disableAutoPan' => false,
+            'zIndex' => 10,
+            'maxWidth' => 150,
+            'closeBoxMargin' => "16px 4px 2px 2px",
+            'closeBoxURL' => "",
+            'boxStyle' => array(
+                'background'=> "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+                'opacity' => 0.75,
+                'width' => "280px"
+            )
+        ));
     }
 
     /**
@@ -314,5 +332,31 @@ class InfoBox extends AbstractOptionsAsset implements ExtendableInterface
         }
 
         $this->autoClose = $autoClose;
+    }
+
+    /**
+     * Gets the info box close event.
+     *
+     * @return string The info box close event.
+     */
+    public function getCloseEvent()
+    {
+        return $this->closeEvent;
+    }
+
+    /**
+     * Sets the info box close event.
+     *
+     * @param string $closeEvent The info box close event.
+     *
+     * @throws \Ivory\GoogleMap\Exception\OverlayException If the open event is not valid.
+     */
+    public function setCloseEvent($closeEvent)
+    {
+        if (!in_array($closeEvent, MouseEvent::getMouseEvents())) {
+            throw OverlayException::invalidInfoWindowOpenEvent();
+        }
+
+        $this->closeEvent = $closeEvent;
     }
 }

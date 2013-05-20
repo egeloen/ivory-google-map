@@ -1500,7 +1500,11 @@ class MapHelper
             }
 
             if ($marker->hasInfoBox() && $marker->getInfoBox()->isAutoOpen()) {
-                $this->registerMarkerInfoBoxEvent($map, $marker);
+                $this->registerMarkerInfoBoxOpenEvent($map, $marker);
+            }
+
+            if ($marker->hasInfoBox() && $marker->getInfoBox()->isAutoClose()) {
+                $this->registerMarkerInfoBoxCloseEvent($map, $marker);
             }
         }
 
@@ -2022,12 +2026,12 @@ EOF;
     }
 
     /**
-     * Registers the marker info window event (auto open).
+     * Registers the marker info box event (auto open).
      *
      * @param \Ivory\GoogleMap\Map             $map    The map.
      * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
      */
-    protected function registerMarkerInfoBoxEvent(Map $map, Marker $marker)
+    protected function registerMarkerInfoBoxOpenEvent(Map $map, Marker $marker)
     {
         $closableInfoBoxes = sprintf('%s.closable_info_boxes', $this->getJsContainerName($map));
 
@@ -2044,6 +2048,29 @@ EOF;
         $event->setJavascriptVariable(sprintf($marker->getJavascriptVariable().'_%s', 'info_box_event'));
         $event->setInstance($marker->getJavascriptVariable());
         $event->setEventName($marker->getInfoBox()->getOpenEvent());
+        $event->setHandle($handle);
+
+        $map->getEventManager()->addEvent($event);
+    }
+
+    /**
+     * Registers the marker info box event (auto close).
+     *
+     * @param \Ivory\GoogleMap\Map             $map    The map.
+     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
+     */
+    protected function registerMarkerInfoBoxCloseEvent(Map $map, Marker $marker)
+    {
+        $handle = <<<EOF
+function () {
+    {$this->infoBoxHelper->renderClose($marker->getInfoBox())}
+}
+EOF;
+
+        $event = new Event();
+        $event->setJavascriptVariable(sprintf($marker->getJavascriptVariable().'_%s', 'info_box_event'));
+        $event->setInstance($marker->getJavascriptVariable());
+        $event->setEventName($marker->getInfoBox()->getCloseEvent());
         $event->setHandle($handle);
 
         $map->getEventManager()->addEvent($event);

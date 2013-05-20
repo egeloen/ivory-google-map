@@ -57,7 +57,7 @@ class InfoBoxHelper
     }
 
     /**
-     * Renders the info window open flag.
+     * Renders the info box open flag.
      *
      * @param \Ivory\GoogleMap\Overlays\InfoBox $infoBox The box window.
      * @param \Ivory\GoogleMap\Map                 $map        The map.
@@ -77,5 +77,17 @@ class InfoBoxHelper
         }
 
         return sprintf('%s.open(%s);'.PHP_EOL, $infoBox->getJavascriptVariable(), $map->getJavascriptVariable());
+    }
+
+    /**
+     * Renders the info box close flag.
+     *
+     * @param \Ivory\GoogleMap\Overlays\InfoBox $infoBox The box window.
+     *
+     * @return string The JS output.
+     */
+    public function renderClose(InfoBox $infoBox)
+    {
+        return sprintf('%s.close();'.PHP_EOL, $infoBox->getJavascriptVariable());
     }
 }
