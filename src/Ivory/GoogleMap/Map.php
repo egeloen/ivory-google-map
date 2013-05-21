@@ -27,6 +27,7 @@ use Ivory\GoogleMap\Layers\KMLLayer;
 use Ivory\GoogleMap\Overlays\Circle;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Overlays\GroundOverlay;
+use Ivory\GoogleMap\Overlays\InfoBox;
 use Ivory\GoogleMap\Overlays\InfoWindow;
 use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMap\Overlays\Polygon;
@@ -93,6 +94,9 @@ class Map extends AbstractJavascriptVariableAsset
     protected $infoWindows;
 
     /** @var array */
+    protected $infoBoxes;
+
+    /** @var array */
     protected $polylines;
 
     /** @var array */
@@ -144,6 +148,7 @@ class Map extends AbstractJavascriptVariableAsset
 
         $this->markers = array();
         $this->infoWindows = array();
+        $this->infoBoxes = array();
         $this->polylines = array();
         $this->encodedPolylines = array();
         $this->polygons = array();
@@ -964,6 +969,30 @@ class Map extends AbstractJavascriptVariableAsset
 
         if ($this->autoZoom) {
             $this->bound->extend($infoWindow);
+        }
+    }
+
+    /**
+     * Gets the map info windows.
+     *
+     * @return array The map info windows.
+     */
+    public function getInfoBoxes()
+    {
+        return $this->infoBoxes;
+    }
+
+    /**
+     * Add a map info window.
+     *
+     * @param Ivory\GoogleMap\Overlays\InfoBox $infoBox The info window to add.
+     */
+    public function addInfoBox(InfoBox $infoBox)
+    {
+        $this->infoBoxes[] = $infoBox;
+
+        if ($this->autoZoom) {
+            $this->bound->extend($infoBox);
         }
     }
 
