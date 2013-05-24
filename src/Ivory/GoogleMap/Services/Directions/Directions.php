@@ -146,6 +146,14 @@ class Directions extends AbstractService
             $httpQuery['language'] = $directionsRequest->getLanguage();
         }
 
+        if ($directionsRequest->hasDepartureTime()) {
+            $httpQuery['departure_time'] = $directionsRequest->getDepartureTime();
+        }
+
+        if ($directionsRequest->hasArrivalTime()) {
+            $httpQuery['arrival_time'] = $directionsRequest->getArrivalTime();
+        }
+
         $httpQuery['sensor'] = $directionsRequest->hasSensor() ? 'true' : 'false';
 
         return sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));

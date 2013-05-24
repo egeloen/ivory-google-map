@@ -276,6 +276,26 @@ class DirectionsException extends ServiceException
     }
 
     /**
+     * Gets the "INVALID DIRECTIONS REQUEST DEPARTURE TIME" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST DEPARTURE TIME" exception.
+     */
+    public static function invalidDirectionsRequestDepartureTime()
+    {
+        return new static('The directions request departure time must be an integer value.');
+    }
+
+    /**
+     * Gets the "INVALID DIRECTIONS REQUEST ARRIVAL TIME" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DIRECTIONS REQUEST ARRIVAL TIME" exception.
+     */
+    public static function invalidDirectionsRequestArrivalTime()
+    {
+        return new static('The directions request arrival time must be an integer value.');
+    }
+
+    /**
      * Gets the "INALID DIRECTIONS STEP INSTRUCTIONS" exception.
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INALID DIRECTIONS STEP INSTRUCTIONS" exception.

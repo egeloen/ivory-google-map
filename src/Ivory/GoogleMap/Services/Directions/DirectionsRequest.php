@@ -58,6 +58,12 @@ class DirectionsRequest
     /** @var boolean */
     protected $sensor;
 
+    /** @var integer */
+    protected $departureTime;
+
+    /** @var  integer */
+    protected $arrivalTime;
+
     /**
      * Creates a directions request.
      */
@@ -466,7 +472,7 @@ class DirectionsRequest
     /**
      * Checks if the directions request has waypoints.
      *
-     * @return boolean TRUE if the directions requesthas waypoints else FALSE.
+     * @return boolean TRUE if the directions request has waypoints else FALSE.
      */
     public function hasWaypoints()
     {
@@ -560,6 +566,78 @@ class DirectionsRequest
     }
 
     /**
+     * Sets the departure time
+     *
+     * @param integer $time time as seconds since midnight, January 1, 1970 UTC
+     *
+     * @throws \Ivory\GoogleMap\Exception\DirectionsException
+     */
+    public function setDepartureTime($time)
+    {
+        if (!is_int($time) && ($time !== null)) {
+            throw DirectionsException::invalidDirectionsRequestDepartureTime();
+        }
+
+        $this->departureTime = $time;
+    }
+
+    /**
+     * Gets the directions request departure time.
+     *
+     * @return integer The directions request departure time.
+     */
+    public function getDepartureTime()
+    {
+        return $this->departureTime;
+    }
+
+    /**
+     * Checks if the directions request has departure time.
+     *
+     * @return boolean TRUE if the directions request has departure time else FALSE.
+     */
+    public function hasDepartureTime()
+    {
+        return !empty($this->departureTime);
+    }
+
+    /**
+     * Sets the arrival time
+     *
+     * @param integer $time time as seconds since midnight, January 1, 1970 UTC
+     *
+     * @throws \Ivory\GoogleMap\Exception\DirectionsException
+     */
+    public function  setArrivalTime($time)
+    {
+        if (!is_int($time) && ($time !== null)) {
+            throw DirectionsException::invalidDirectionsRequestArrivalTime();
+        }
+
+        $this->arrivalTime = $time;
+    }
+
+    /**
+     * Gets the directions request arrival time.
+     *
+     * @return integer The directions request arrival time.
+     */
+    public function getArrivalTime()
+    {
+        return $this->arrivalTime;
+    }
+
+    /**
+     * Checks if the directions request has arrival time.
+     *
+     * @return boolean TRUE if the directions request has arrival time else FALSE.
+     */
+    public function hasArrivalTime()
+    {
+        return !empty($this->arrivalTime);
+    }
+
+    /**
      * Checks if the directions request is valid.
      *
      * @return boolean TRUE if the directions request is valid else FALSE.
@@ -570,6 +648,10 @@ class DirectionsRequest
 
         for ($i = 0; $isValid && ($i < count($this->waypoints)); $i++) {
             $isValid = $this->waypoints[$i]->isValid();
+        }
+
+        if ($this->getTravelMode() == TravelMode::TRANSIT) {
+            $isValid = $this->hasArrivalTime() || $this->hasDepartureTime();
         }
 
         return $isValid;
