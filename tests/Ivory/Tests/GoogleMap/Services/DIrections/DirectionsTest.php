@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
+use \DateTime;
 use Ivory\GoogleMap\Services\Directions\Directions;
 use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
@@ -32,6 +33,8 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        sleep(2);
+
         $this->directions = new Directions();
     }
 
@@ -129,6 +132,52 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
         $request->setOrigin('Lille');
         $request->setDestination('Paris');
         $request->setLanguage('fr');
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
+    }
+
+    public function testRouteWithDirectionsRequestAndTransitModeAndDepartureTime()
+    {
+        $request = new DirectionsRequest();
+        $request->setOrigin('601-625 Ashbury Street, San Francisco');
+        $request->setDestination('Bike Route 95, San Francisco');
+
+        $request->setTravelMode(TravelMode::TRANSIT);
+        $request->setDepartureTime(new DateTime());
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
+    }
+
+    public function testRouteWithDirectionsRequestAndTransitModeAndArrivalTime()
+    {
+        $request = new DirectionsRequest();
+        $request->setOrigin('601-625 Ashbury Street, San Francisco');
+        $request->setDestination('Bike Route 95, San Francisco');
+
+        $request->setTravelMode(TravelMode::TRANSIT);
+        $request->setArrivalTime(new DateTime('+2 hours'));
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
+    }
+
+    public function testRouteWithDirectionsRequestAndTransitModeAndDepartureTimeAndArrivalTime()
+    {
+        $request = new DirectionsRequest();
+        $request->setOrigin('601-625 Ashbury Street, San Francisco');
+        $request->setDestination('Bike Route 95, San Francisco');
+
+        $request->setTravelMode(TravelMode::TRANSIT);
+        $request->setArrivalTime(new DateTime());
+        $request->setArrivalTime(new DateTime('+2 hours'));
 
         $response = $this->directions->route($request);
 
