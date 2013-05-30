@@ -58,10 +58,10 @@ class DirectionsRequest
     /** @var boolean */
     protected $sensor;
 
-    /** @var integer */
+    /** @var \DateTime */
     protected $departureTime;
 
-    /** @var  integer */
+    /** @var  \DateTime */
     protected $arrivalTime;
 
     /**
@@ -568,23 +568,19 @@ class DirectionsRequest
     /**
      * Sets the departure time
      *
-     * @param integer $time time as seconds since midnight, January 1, 1970 UTC
+     * @param \DateTime $time
      *
      * @throws \Ivory\GoogleMap\Exception\DirectionsException
      */
-    public function setDepartureTime($time)
+    public function setDepartureTime(\DateTime $time = null)
     {
-        if (!is_int($time) && ($time !== null)) {
-            throw DirectionsException::invalidDirectionsRequestDepartureTime();
-        }
-
         $this->departureTime = $time;
     }
 
     /**
      * Gets the directions request departure time.
      *
-     * @return integer The directions request departure time.
+     * @return \DateTime The directions request departure time.
      */
     public function getDepartureTime()
     {
@@ -604,23 +600,19 @@ class DirectionsRequest
     /**
      * Sets the arrival time
      *
-     * @param integer $time time as seconds since midnight, January 1, 1970 UTC
+     * @param \DateTime $time
      *
      * @throws \Ivory\GoogleMap\Exception\DirectionsException
      */
-    public function  setArrivalTime($time)
+    public function  setArrivalTime(\DateTime $time = null)
     {
-        if (!is_int($time) && ($time !== null)) {
-            throw DirectionsException::invalidDirectionsRequestArrivalTime();
-        }
-
         $this->arrivalTime = $time;
     }
 
     /**
      * Gets the directions request arrival time.
      *
-     * @return integer The directions request arrival time.
+     * @return \DateTime The directions request arrival time.
      */
     public function getArrivalTime()
     {

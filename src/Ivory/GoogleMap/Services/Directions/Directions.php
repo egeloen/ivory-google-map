@@ -147,11 +147,11 @@ class Directions extends AbstractService
         }
 
         if ($directionsRequest->hasDepartureTime()) {
-            $httpQuery['departure_time'] = $directionsRequest->getDepartureTime();
+            $httpQuery['departure_time'] = $directionsRequest->getDepartureTime()->getTimestamp();
         }
 
         if ($directionsRequest->hasArrivalTime()) {
-            $httpQuery['arrival_time'] = $directionsRequest->getArrivalTime();
+            $httpQuery['arrival_time'] = $directionsRequest->getArrivalTime()->getTimestamp();
         }
 
         $httpQuery['sensor'] = $directionsRequest->hasSensor() ? 'true' : 'false';
