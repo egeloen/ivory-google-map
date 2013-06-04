@@ -239,6 +239,11 @@ class Directions extends AbstractService
             new Coordinate($directionsRoute->bounds->northeast->lat, $directionsRoute->bounds->northeast->lng)
         );
 
+        // Google does not always send copyrights.
+        if (!isset($directionsRoute->copyrights)) {
+            $directionsRoute->copyrights = '';
+        }
+
         $copyrights = $directionsRoute->copyrights;
         $directionsLegs = $this->buildDirectionsLegs($directionsRoute->legs);
         $overviewPolyline = new EncodedPolyline($directionsRoute->overview_polyline->points);
