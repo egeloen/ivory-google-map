@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
+use \DateTime;
 use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Services\Directions\TravelMode;
 use Ivory\GoogleMap\Services\Directions\UnitSystem;
@@ -48,6 +49,8 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->directionsRequest->hasDestination());
         $this->assertFalse($this->directionsRequest->hasOptimizeWaypoints());
         $this->assertFalse($this->directionsRequest->hasOrigin());
+        $this->assertFalse($this->directionsRequest->hasDepartureTime());
+        $this->assertFalse($this->directionsRequest->hasArrivalTime());
         $this->assertFalse($this->directionsRequest->hasProvideRouteAlternatives());
         $this->assertFalse($this->directionsRequest->hasRegion());
         $this->assertFalse($this->directionsRequest->hasLanguage());
@@ -208,6 +211,40 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->directionsRequest->setOrigin(true);
     }
 
+    public function testDepartureTimeWithValidValue()
+    {
+        $now = new DateTime();
+        $this->directionsRequest->setDepartureTime($now);
+
+        $this->assertTrue($this->directionsRequest->hasDepartureTime());
+        $this->assertSame($now, $this->directionsRequest->getDepartureTime());
+    }
+
+    public function testDepartureTimeWithNullValue()
+    {
+        $this->directionsRequest->setDepartureTime(new DateTime());
+        $this->directionsRequest->setDepartureTime(null);
+
+        $this->assertNull($this->directionsRequest->getDepartureTime());
+    }
+
+    public function testArrivalTimeWithValidValue()
+    {
+        $now = new DateTime();
+        $this->directionsRequest->setArrivalTime($now);
+
+        $this->assertTrue($this->directionsRequest->hasArrivalTime());
+        $this->assertSame($now, $this->directionsRequest->getArrivalTime());
+    }
+
+    public function testArrivalTimeWithNullValue()
+    {
+        $this->directionsRequest->setArrivalTime(new DateTime());
+        $this->directionsRequest->setArrivalTime(null);
+
+        $this->assertNull($this->directionsRequest->getArrivalTime());
+    }
+
     public function testProvideRouteAlternativesWithValidValue()
     {
         $this->directionsRequest->setProvideRouteAlternatives(true);
@@ -301,7 +338,7 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request travel mode can only be : BICYCLING, DRIVING, WALKING.
+     * @expectedExceptionMessage The directions request travel mode can only be : BICYCLING, DRIVING, WALKING, TRANSIT.
      */
     public function testTravelModeWithInvalidValue()
     {
@@ -450,5 +487,49 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->directionsRequest->addWaypoint($waypoint);
 
         $this->assertFalse($this->directionsRequest->isValid());
+    }
+
+    public function testIsValidWithInvalidTransit()
+    {
+        $this->directionsRequest->setDestination('foo');
+        $this->directionsRequest->setOrigin('bar');
+
+        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
+
+        $this->assertFalse($this->directionsRequest->isValid());
+    }
+
+    public function testIsValidWithValidTransitDepartureTime()
+    {
+        $this->directionsRequest->setDestination('foo');
+        $this->directionsRequest->setOrigin('bar');
+
+        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
+        $this->directionsRequest->setDepartureTime(new DateTime());
+
+        $this->assertTrue($this->directionsRequest->isValid());
+    }
+
+    public function testIsValidWithTransitArrivalTime()
+    {
+        $this->directionsRequest->setDestination('foo');
+        $this->directionsRequest->setOrigin('bar');
+
+        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
+        $this->directionsRequest->setArrivalTime(new DateTime());
+
+        $this->assertTrue($this->directionsRequest->isValid());
+    }
+
+    public function testIsValidWithValidTransitDepartureTimeAndArrivalTime()
+    {
+        $this->directionsRequest->setDestination('foo');
+        $this->directionsRequest->setOrigin('bar');
+
+        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
+        $this->directionsRequest->setArrivalTime(new DateTime());
+        $this->directionsRequest->setDepartureTime(new DateTime());
+
+        $this->assertTrue($this->directionsRequest->isValid());
     }
 }
