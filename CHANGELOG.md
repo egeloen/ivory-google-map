@@ -2,6 +2,7 @@
 
 ### 1.0.0 (????-??-??)
 
+ * ebe2210 - Add Places Autocomplete support
  * b5bcd66 - [Directions] Make route copyrights optional
  * 1aa0083 - [Travis] Use --prefer-source to avoid random build fail
 
