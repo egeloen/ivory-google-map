@@ -50,9 +50,10 @@ class DirectionsException extends ServiceException
     public static function invalidDirectionsRequest()
     {
         return new static(sprintf(
-            '%s'.PHP_EOL.'%s',
+            '%s'.PHP_EOL.'%s'.PHP_EOL.'%s',
             'The directions request is not valid. It needs at least an origin and a destination.',
-            'If you add waypoint to the directions request, it needs at least a location.'
+            'If you add waypoint to the directions request, it needs at least a location.',
+            'If travel mode is "TRANSIT", it needs departure time or arrival time'
         ));
     }
 
