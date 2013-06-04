@@ -1045,6 +1045,31 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
     }
 
+    public function testRenderJavascriptsWithLibraries()
+    {
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->setLibraries(array('places'));
+
+        $map->getCenter()->setJavascriptVariable('map_center');
+
+        $expected = <<<EOF
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"libraries=places&sensor=false"}); };
+</script>
+<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
+<script type="text/javascript">
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+</script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+    }
+
     public function testRenderJavascriptsWithAsync()
     {
         $map = new Map();

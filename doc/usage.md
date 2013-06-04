@@ -57,6 +57,17 @@ can do nothing and let the Google Maps API handle all control behavior.
 The complete events configuration is available
 [here](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/events.md).
 
+### Configure additional libraries
+
+Sometimes, you want to use the map & other Google Map related libraries. The bundle provides many integrations but not
+all of them. If you need a custom libraries, you can use the following API on your map:
+
+```
+$map->setLibraries(array('places', 'geometry'));
+$libraries = $map->getLibraries();
+$hasLibraries = $map->hasLibraries();
+```
+
 ## Render your map
 
 Now, you have builded & configured your map, you can render it. For this purpose, you will need the
