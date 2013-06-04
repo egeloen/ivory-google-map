@@ -1553,14 +1553,14 @@ class MapHelper
      */
     protected function getLibraries(Map $map)
     {
-        $libraries = array();
+        $libraries = $map->getLibraries();
 
         $encodedPolylines = $map->getEncodedPolylines();
         if (!empty($encodedPolylines)) {
             $libraries[] = 'geometry';
         }
 
-        return $libraries;
+        return array_unique($libraries);
     }
 
     /**

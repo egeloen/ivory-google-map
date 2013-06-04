@@ -96,6 +96,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEmpty($this->map->getKMLLayers());
 
+        $this->assertFalse($this->map->hasLibraries());
         $this->assertSame('en', $this->map->getLanguage());
     }
 
@@ -881,6 +882,14 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->map->addKMLLayer($kmlLayer);
 
         $this->assertSame(array($kmlLayer), $this->map->getKMLLayers());
+    }
+
+    public function testLibraries()
+    {
+        $this->map->setLibraries(array('foo'));
+
+        $this->assertTrue($this->map->hasLibraries());
+        $this->assertSame(array('foo'), $this->map->getLibraries());
     }
 
     public function testLanguage()

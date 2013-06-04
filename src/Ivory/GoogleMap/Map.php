@@ -113,6 +113,9 @@ class Map extends AbstractJavascriptVariableAsset
     /** @var array */
     protected $kmlLayers;
 
+    /** @var array */
+    protected $libraries;
+
     /** @var string */
     protected $language;
 
@@ -126,7 +129,6 @@ class Map extends AbstractJavascriptVariableAsset
         $this->htmlContainerId = 'map_canvas';
         $this->async = false;
         $this->autoZoom = false;
-        $this->language = 'en';
 
         $this->center = new Coordinate();
         $this->bound = new Bound();
@@ -151,6 +153,9 @@ class Map extends AbstractJavascriptVariableAsset
         $this->circles = array();
         $this->groundOverlays = array();
         $this->kmlLayers = array();
+
+        $this->libraries = array();
+        $this->language = 'en';
     }
 
     /**
@@ -1129,6 +1134,36 @@ class Map extends AbstractJavascriptVariableAsset
     public function addKMLLayer(KMLLayer $kmlLayer)
     {
         $this->kmlLayers[] = $kmlLayer;
+    }
+
+    /**
+     * Checks if the map has libraries.
+     *
+     * @return boolean TRUE if the map has libraries else FALSE.
+     */
+    public function hasLibraries()
+    {
+        return !empty($this->libraries);
+    }
+
+    /**
+     * Gets the map libraries.
+     *
+     * @return array The map libraries.
+     */
+    public function getLibraries()
+    {
+        return $this->libraries;
+    }
+
+    /**
+     * Sets the map libraries.
+     *
+     * @param array $libraries The map libraries.
+     */
+    public function setLibraries(array $libraries)
+    {
+        $this->libraries = $libraries;
     }
 
     /**
