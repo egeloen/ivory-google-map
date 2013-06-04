@@ -2,6 +2,7 @@
 
 ### 1.0.0 (????-??-??)
 
+ * b5bcd66 - [Directions] Make route copyrights optional
  * 1aa0083 - [Travis] Use --prefer-source to avoid random build fail
 
 ### 0.9.1 (2013-04-10)
