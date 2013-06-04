@@ -146,6 +146,14 @@ class Directions extends AbstractService
             $httpQuery['language'] = $directionsRequest->getLanguage();
         }
 
+        if ($directionsRequest->hasDepartureTime()) {
+            $httpQuery['departure_time'] = $directionsRequest->getDepartureTime()->getTimestamp();
+        }
+
+        if ($directionsRequest->hasArrivalTime()) {
+            $httpQuery['arrival_time'] = $directionsRequest->getArrivalTime()->getTimestamp();
+        }
+
         $httpQuery['sensor'] = $directionsRequest->hasSensor() ? 'true' : 'false';
 
         return sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
@@ -239,15 +247,22 @@ class Directions extends AbstractService
             new Coordinate($directionsRoute->bounds->northeast->lat, $directionsRoute->bounds->northeast->lng)
         );
 
-        // Google does not always send copyrights.
+        // @see https://github.com/egeloen/IvoryGoogleMapBundle/issues/72
+        // @codeCoverageIgnoreStart
         if (!isset($directionsRoute->copyrights)) {
             $directionsRoute->copyrights = '';
         }
+        // @codeCoverageIgnoreEnd
 
+        if (!isset($directionsRoute->summary)) {
+            $directionsRoute->summary = '';
+        }
+
+        $summary = $directionsRoute->summary;
         $copyrights = $directionsRoute->copyrights;
+
         $directionsLegs = $this->buildDirectionsLegs($directionsRoute->legs);
         $overviewPolyline = new EncodedPolyline($directionsRoute->overview_polyline->points);
-        $summary = $directionsRoute->summary;
         $warnings = $directionsRoute->warnings;
         $waypointOrder = $directionsRoute->waypoint_order;
 

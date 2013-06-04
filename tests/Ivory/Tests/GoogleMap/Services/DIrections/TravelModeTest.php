@@ -26,6 +26,7 @@ class TravelModeTest extends \PHPUnit_Framework_TestCase
             TravelMode::BICYCLING,
             TravelMode::DRIVING,
             TravelMode::WALKING,
+            TravelMode::TRANSIT,
         );
 
         $this->assertSame($expected, TravelMode::getTravelModes());

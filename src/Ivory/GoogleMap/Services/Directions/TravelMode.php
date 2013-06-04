@@ -22,6 +22,7 @@ class TravelMode
     const BICYCLING = 'BICYCLING';
     const DRIVING = 'DRIVING';
     const WALKING = 'WALKING';
+    const TRANSIT = 'TRANSIT';
 
     /**
      * Disabled constructor.
@@ -44,6 +45,7 @@ class TravelMode
             self::BICYCLING,
             self::DRIVING,
             self::WALKING,
+            self::TRANSIT,
         );
     }
 }

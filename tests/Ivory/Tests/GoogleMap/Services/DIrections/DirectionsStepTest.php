@@ -112,7 +112,7 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions step travel mode can only be : BICYCLING, DRIVING, WALKING.
+     * @expectedExceptionMessage The directions step travel mode can only be : BICYCLING, DRIVING, WALKING, TRANSIT.
      */
     public function testTravelModeWithInvalidValue()
     {
