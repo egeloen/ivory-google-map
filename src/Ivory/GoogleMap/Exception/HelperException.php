@@ -82,6 +82,16 @@ class HelperException extends Exception
     }
 
     /**
+     * Gets the "INVALID AUTOCOMPLETE BOUND" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID AUTOCOMPLETE BOUND" exception.
+     */
+    public static function invalidAutocompleteBound()
+    {
+        return new static('The place autocomplete bound must have coordinates.');
+    }
+
+    /**
      * Gets the "INVALID SCALE CONTROL STYLE" exception.
      *
      * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID SCALE CONTROL STYLE" exception.
