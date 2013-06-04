@@ -46,8 +46,8 @@ use Ivory\GoogleMap\Overlays\Marker;
  */
 class MapHelper
 {
-    /** @var boolean */
-    protected $loaded;
+    /** @var \Ivory\GoogleMap\Helper\ApiHelper */
+    protected $apiHelper;
 
     /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
     protected $coordinateHelper;
@@ -164,6 +164,7 @@ class MapHelper
      *                                                                                            helper.
      */
     public function __construct(
+        ApiHelper $apiHelper = null,
         CoordinateHelper $coordinateHelper = null,
         BoundHelper $boundHelper = null,
         PointHelper $pointHelper = null,
@@ -189,7 +190,9 @@ class MapHelper
         KMLLayerHelper $kmlLayerHelper = null,
         EventManagerHelper $eventManagerHelper = null
     ) {
-        $this->loaded = false;
+        if ($apiHelper === null) {
+            $apiHelper = new ApiHelper();
+        }
 
         if ($coordinateHelper === null) {
             $coordinateHelper = new CoordinateHelper();
@@ -287,6 +290,8 @@ class MapHelper
             $eventManagerHelper = new EventManagerHelper();
         }
 
+        $this->setApiHelper($apiHelper);
+
         $this->setCoordinateHelper($coordinateHelper);
         $this->setBoundHelper($boundHelper);
         $this->setPointHelper($pointHelper);
@@ -315,6 +320,26 @@ class MapHelper
         $this->setKmlLayerHelper($kmlLayerHelper);
 
         $this->setEventManagerHelper($eventManagerHelper);
+    }
+
+    /**
+     * Gets the API helper.
+     *
+     * @return \Ivory\GoogleMap\Helper\ApiHelper The API helper.
+     */
+    public function getApiHelper()
+    {
+        return $this->apiHelper;
+    }
+
+    /**
+     * Sets the API helper.
+     *
+     * @param \Ivory\GoogleMap\Helper\ApiHelper $apiHelper The API helper.
+     */
+    public function setApiHelper(ApiHelper $apiHelper)
+    {
+        $this->apiHelper = $apiHelper;
     }
 
     /**
@@ -870,8 +895,8 @@ class MapHelper
     {
         $output = array();
 
-        if (!$this->loaded && !$map->isAsync()) {
-            $output[] = $this->renderJsAPI($map);
+        if (!$this->apiHelper->isLoaded() && !$map->isAsync()) {
+            $output[] = $this->apiHelper->render($map->getLanguage(), $this->getLibraries($map));
         }
 
         $output[] = '<script type="text/javascript">'.PHP_EOL;
@@ -888,51 +913,13 @@ class MapHelper
 
         $output[] = '</script>'.PHP_EOL;
 
-        if (!$this->loaded && $map->isAsync()) {
-            $output[] = $this->renderJsAPI($map);
+        if (!$this->apiHelper->isLoaded() && $map->isAsync()) {
+            $output[] = $this->apiHelper->render(
+                $map->getLanguage(),
+                $this->getLibraries($map),
+                'load_ivory_google_map'
+            );
         }
-
-        return implode('', $output);
-    }
-
-    /**
-     * Renders the javascripts API.
-     *
-     * @param \Ivory\GoogleMap\Map $map The map
-     *
-     * @return string The HTML output.
-     */
-    public function renderJsAPI(Map $map)
-    {
-        $this->loaded = true;
-
-        $output = array();
-
-        $options = array(
-            'language'     => $map->getLanguage(),
-            'other_params' => http_build_query(array(
-                'libraries' => 'geometry',
-                'sensor'    => 'false',
-            )),
-        );
-
-        $jsonOptions = substr(json_encode($options), 0, -1);
-
-        if ($map->isAsync()) {
-            $jsonOptions .= ', "callback": load_ivory_google_map}';
-        } else {
-            $jsonOptions .= '}';
-        }
-
-        $output[] = sprintf(
-            '<script type="text/javascript">function load_ivory_google_map_api () {%s};</script>'.PHP_EOL,
-            sprintf('google.load("maps", "3", %s);', $jsonOptions)
-        );
-
-        $output[] = sprintf(
-            '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
-            '//www.google.com/jsapi?callback=load_ivory_google_map_api'
-        );
 
         return implode('', $output);
     }
@@ -1555,6 +1542,25 @@ class MapHelper
             $map->getJavascriptVariable(),
             $map->getBound()->getJavascriptVariable()
         );
+    }
+
+    /**
+     * Gets the libraries needed for the map.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return array The map libraries.
+     */
+    protected function getLibraries(Map $map)
+    {
+        $libraries = array();
+
+        $encodedPolylines = $map->getEncodedPolylines();
+        if (!empty($encodedPolylines)) {
+            $libraries[] = 'geometry';
+        }
+
+        return $libraries;
     }
 
     /**

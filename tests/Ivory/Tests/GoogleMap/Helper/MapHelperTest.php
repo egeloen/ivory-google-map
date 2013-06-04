@@ -56,6 +56,11 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertInstanceOf(
+            'Ivory\GoogleMap\Helper\ApiHelper',
+            $this->mapHelper->getApiHelper()
+        );
+
+        $this->assertInstanceOf(
             'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
             $this->mapHelper->getCoordinateHelper()
         );
@@ -178,6 +183,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
+        $apiHelper = $this->getMock('Ivory\GoogleMap\Helper\ApiHelper');
         $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
         $boundHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\BoundHelper');
         $pointHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\PointHelper');
@@ -204,6 +210,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $eventManagerHelper = $this->getMock('Ivory\GoogleMap\Helper\Events\EventManagerHelper');
 
         $this->mapHelper = new MapHelper(
+            $apiHelper,
             $coordinateHelper,
             $boundHelper,
             $pointHelper,
@@ -230,6 +237,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
             $eventManagerHelper
         );
 
+        $this->assertSame($apiHelper, $this->mapHelper->getApiHelper());
         $this->assertSame($coordinateHelper, $this->mapHelper->getCoordinateHelper());
         $this->assertSame($boundHelper, $this->mapHelper->getBoundHelper());
         $this->assertSame($pointHelper, $this->mapHelper->getPointHelper());
@@ -984,47 +992,6 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderJsContainer($map));
     }
 
-    public function testRenderJsAPI()
-    {
-        $map = new Map();
-
-        $expected = <<<EOF
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false"});};</script>
-<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJsAPI($map));
-    }
-
-    public function testRenderJsAPIWithEncodedPolylines()
-    {
-        $map = new Map();
-        $map->addEncodedPolyline(new EncodedPolyline());
-
-        $expected = <<<EOF
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false"});};</script>
-<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJsAPI($map));
-    }
-
-    public function testRenderJsAPIWithAsync()
-    {
-        $map = new Map();
-        $map->setAsync(true);
-
-        $expected = <<<EOF
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false", "callback": load_ivory_google_map});};</script>
-<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJsAPI($map));
-    }
-
     public function testRenderJavascripts()
     {
         $map = new Map();
@@ -1033,13 +1000,44 @@ EOF;
         $map->getCenter()->setJavascriptVariable('map_center');
 
         $expected = <<<EOF
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false"});};</script>
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"sensor=false"}); };
+</script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
+</script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+    }
+
+    public function testRenderJavascriptsWithEncodedPolyline()
+    {
+        $encodedPolyline = new EncodedPolyline('foo');
+        $encodedPolyline->setJavascriptVariable('encoded_polyline');
+
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->addEncodedPolyline($encodedPolyline);
+
+        $map->getCenter()->setJavascriptVariable('map_center');
+
+        $expected = <<<EOF
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false"}); };
+</script>
+<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
+<script type="text/javascript">
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+map_container.encoded_polylines.encoded_polyline = encoded_polyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
 </script>
 
 EOF;
@@ -1064,7 +1062,9 @@ map_container.map = map = new google.maps.Map(document.getElementById("map_canva
 map.setCenter(map_center);
 }
 </script>
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false", "callback": load_ivory_google_map});};</script>
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"sensor=false", "callback": load_ivory_google_map}); };
+</script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 
 EOF;
@@ -1079,7 +1079,9 @@ EOF;
         $map1->getCenter()->setJavascriptVariable('map1_center');
 
         $expected1 = <<<EOF
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false"});};</script>
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"sensor=false"}); };
+</script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
 map1_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
@@ -1123,7 +1125,9 @@ width:300px;
 height:300px;
 }
 </style>
-<script type="text/javascript">function load_ivory_google_map_api () {google.load("maps", "3", {"language":"en","other_params":"libraries=geometry&sensor=false"});};</script>
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"sensor=false"}); };
+</script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
