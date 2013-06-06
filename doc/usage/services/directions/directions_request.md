@@ -4,8 +4,8 @@
 
 ``` php
 use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
-use Ivory\GoogleMap\Services\Directions\TravelMode;
-use Ivory\GoogleMap\Services\Directions\UnitSystem;
+use Ivory\GoogleMap\Services\Base\TravelMode;
+use Ivory\GoogleMap\Services\Base\UnitSystem;
 
 $request = new DirectionsRequest();
 

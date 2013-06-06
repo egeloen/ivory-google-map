@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Services\Directions;
+namespace Ivory\Tests\GoogleMap\Services\Service;
 
-use Ivory\GoogleMap\Services\Directions\Distance;
+use Ivory\GoogleMap\Services\Base\Distance;
 
 /**
  * Distance test.
@@ -20,7 +20,7 @@ use Ivory\GoogleMap\Services\Directions\Distance;
  */
 class DistanceTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Services\Directions\Distance */
+    /** @var \Ivory\GoogleMap\Services\Base\Distance */
     protected $distance;
 
     /**
@@ -46,7 +46,7 @@ class DistanceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
      * @expectedExceptionMessage The distance text must be a string value.
      */
     public function testTextWithInvalidValue()
@@ -55,7 +55,7 @@ class DistanceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
      * @expectedExceptionMessage The distance value must be a numeric value.
      */
     public function testValueWithInvalidValue()

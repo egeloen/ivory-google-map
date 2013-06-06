@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Services\Directions;
+namespace Ivory\Tests\GoogleMap\Services\Base;
 
-use Ivory\GoogleMap\Services\Directions\Duration;
+use Ivory\GoogleMap\Services\Base\Duration;
 
 /**
  * Duration test.
@@ -20,7 +20,7 @@ use Ivory\GoogleMap\Services\Directions\Duration;
  */
 class DurationTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Services\Directions\Duration */
+    /** @var \Ivory\GoogleMap\Services\Base\Duration */
     protected $duration;
 
     /**
@@ -46,7 +46,7 @@ class DurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
      * @expectedExceptionMessage The duration text must be a string value.
      */
     public function testTextWithInvalidValue()
@@ -55,7 +55,7 @@ class DurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
      * @expectedExceptionMessage The duration value must be a numeric value.
      */
     public function testValueWithInvalidValue()

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Services\Directions;
+namespace Ivory\Tests\GoogleMap\Services\Base;
 
-use Ivory\GoogleMap\Services\Directions\UnitSystem;
+use Ivory\GoogleMap\Services\Base\UnitSystem;
 
 /**
  * Unit system test.

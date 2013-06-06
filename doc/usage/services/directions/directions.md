@@ -151,7 +151,7 @@ foreach ($legs as $leg) {
 ### Distance
 
 It indicates the total distance covered by this leg. It represented by the
-`Ivory\GoogleMap\Services\Directions\Distance`.
+`Ivory\GoogleMap\Services\Base\Distance`.
 
 ``` php
 // Gets the distance
@@ -161,7 +161,7 @@ $duration = $leg->getDistance();
 ### Duration
 
 It indicates the total duration of this leg. It is represented by the
-`Ivory\GoogleMap\Services\Directions\Duration`.
+`Ivory\GoogleMap\Services\Base\Duration`.
 
 ``` php
 // Gets the duration
@@ -296,7 +296,7 @@ $encodedPolyline = $step->getEncodedPolyline();
 
 ### Travel Mode
 
-It contains the travel mode of this step. it is represented by the `Ivory\GoogleMap\Services\Directions\TravelMode`
+It contains the travel mode of this step. it is represented by the `Ivory\GoogleMap\Services\Base\TravelMode`
 constants.
 
 ``` php

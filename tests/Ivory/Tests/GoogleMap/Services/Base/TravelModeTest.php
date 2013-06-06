@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Services\Directions;
+namespace Ivory\Tests\GoogleMap\Services\Base;
 
-use Ivory\GoogleMap\Services\Directions\TravelMode;
+use Ivory\GoogleMap\Services\Base\TravelMode;
 
 /**
  * Travel mode test.

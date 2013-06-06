@@ -13,6 +13,8 @@ namespace Ivory\GoogleMap\Services\Directions;
 
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Services\Base\Distance;
+use Ivory\GoogleMap\Services\Base\Duration;
 
 /**
  * A directions leg which describes a google map directions leg.
@@ -22,10 +24,10 @@ use Ivory\GoogleMap\Exception\DirectionsException;
  */
 class DirectionsLeg
 {
-    /** @var \Ivory\GoogleMap\Services\Directions\Distance */
+    /** @var \Ivory\GoogleMap\Services\Base\Distance */
     protected $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Directions\Duration */
+    /** @var \Ivory\GoogleMap\Services\Base\Duration */
     protected $duration;
 
     /** @var string */
@@ -49,14 +51,14 @@ class DirectionsLeg
     /**
      * Creates a directions leg.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\Distance $distance      The distance.
-     * @param \Ivory\GoogleMap\Services\Directions\Duration $duration      The duration.
-     * @param string                                        $endAddress    The end address.
-     * @param \Ivory\GoogleMap\Base\Coordinate              $endLocation   The end location.
-     * @param string                                        $startAddress  The start address.
-     * @param \Ivory\GoogleMap\Base\Coordinate              $startLocation The start location.
-     * @param array                                         $steps         The steps.
-     * @param array                                         $viaWaypoint   The via waypoint.
+     * @param \Ivory\GoogleMap\Services\Base\Distance $distance      The distance.
+     * @param \Ivory\GoogleMap\Services\Base\Duration $duration      The duration.
+     * @param string                                  $endAddress    The end address.
+     * @param \Ivory\GoogleMap\Base\Coordinate        $endLocation   The end location.
+     * @param string                                  $startAddress  The start address.
+     * @param \Ivory\GoogleMap\Base\Coordinate        $startLocation The start location.
+     * @param array                                   $steps         The steps.
+     * @param array                                   $viaWaypoint   The via waypoint.
      */
     public function __construct(
         Distance $distance,
@@ -81,7 +83,7 @@ class DirectionsLeg
     /**
      * Gets the leg distance.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\Distance The leg distance.
+     * @return \Ivory\GoogleMap\Services\Base\Distance The leg distance.
      */
     public function getDistance()
     {
@@ -91,7 +93,7 @@ class DirectionsLeg
     /**
      * Sets the leg distance.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\Distance $distance The leg distance.
+     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The leg distance.
      */
     public function setDistance(Distance $distance)
     {
@@ -101,7 +103,7 @@ class DirectionsLeg
     /**
      * Gets the leg duration.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\Duration The leg duration.
+     * @return \Ivory\GoogleMap\Services\Base\Duration The leg duration.
      */
     public function getDuration()
     {
@@ -111,7 +113,7 @@ class DirectionsLeg
     /**
      * Sets the leg duration
      *
-     * @param \Ivory\GoogleMap\Services\Directions\Duration $duration The leg duration.
+     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The leg duration.
      */
     public function setDuration(Duration $duration)
     {

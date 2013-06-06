@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Services\Directions;
+namespace Ivory\GoogleMap\Services\Base;
 
-use Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Exception\ServiceException;
 
 /**
  * A duration which describes a google map duration.
@@ -54,12 +54,12 @@ class Duration
      *
      * @param string $text The duration as text.
      *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the text is not valid.
+     * @throws \Ivory\GoogleMap\Exception\ServiceException If the text is not valid.
      */
     public function setText($text)
     {
         if (!is_string($text)) {
-            throw DirectionsException::invalidDurationText();
+            throw ServiceException::invalidDurationText();
         }
 
         $this->text = $text;
@@ -80,12 +80,12 @@ class Duration
      *
      * @param double $value The duration in minutes.
      *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the value is not valid.
+     * @throws \Ivory\GoogleMap\Exception\ServiceException If the value is not valid.
      */
     public function setValue($value)
     {
         if (!is_numeric($value)) {
-            throw DirectionsException::invalidDurationValue();
+            throw ServiceException::invalidDurationValue();
         }
 
         $this->value = $value;
