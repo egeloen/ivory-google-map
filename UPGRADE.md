@@ -2,6 +2,8 @@
 
 ### 0.9.1 to 1.0.0
 
+ * The  `Distance`, `Duration`, `TravelMode` & `UnitSystem` which lived in the `Ivory\GoogleMap\Services\Directions`
+   namespace have been moved in the `Ivory\GoogleMap\Services\Base` one in order to be shared across services.
  * The `MapHelper` constructor now takes an `ApiHelper` as first argument (all the other parameters have been moved
    forward).
 

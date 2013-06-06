@@ -12,7 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
 use Ivory\GoogleMap\Services\Directions\DirectionsStep;
-use Ivory\GoogleMap\Services\Directions\TravelMode;
+use Ivory\GoogleMap\Services\Base\TravelMode;
 
 /**
  * Directions step test.
@@ -24,10 +24,10 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\GoogleMap\Services\Directions\DirectionsStep */
     protected $directionsStep;
 
-    /** @var \Ivory\GoogleMap\Services\Directions\Distance */
+    /** @var \Ivory\GoogleMap\Services\Base\Distance */
     protected $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Directions\Duration */
+    /** @var \Ivory\GoogleMap\Services\Base\Duration */
     protected $duration;
 
     /** @var \Ivory\GoogleMap\Base\Coordinate */
@@ -50,11 +50,11 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Directions\Distance')
+        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Distance')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Directions\Duration')
+        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Duration')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -16,6 +16,8 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\DirectionsException;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Services\AbstractService;
+use Ivory\GoogleMap\Services\Base\Distance;
+use Ivory\GoogleMap\Services\Base\Duration;
 
 /**
  * Directions service.

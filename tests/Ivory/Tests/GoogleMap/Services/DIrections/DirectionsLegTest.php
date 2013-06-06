@@ -23,10 +23,10 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\GoogleMap\Services\Directions\DirectionsLeg */
     protected $directionsLeg;
 
-    /** @var \Ivory\GoogleMap\Services\Directions\Distance */
+    /** @var \Ivory\GoogleMap\Services\Base\Distance */
     protected $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Directions\Duration */
+    /** @var \Ivory\GoogleMap\Services\Base\Duration */
     protected $duration;
 
     /** @var string */
@@ -52,11 +52,11 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Directions\Distance')
+        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Distance')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Directions\Duration')
+        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Duration')
             ->disableOriginalConstructor()
             ->getMock();
 

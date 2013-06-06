@@ -47,4 +47,44 @@ class ServiceException extends Exception
     {
         return new static('The service url must be a string value.');
     }
+
+    /**
+     * Gets the "INVALID DISTANCE TEXT" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE TEXT" exception.
+     */
+    public static function invalidDistanceText()
+    {
+        return new static('The distance text must be a string value.');
+    }
+
+    /**
+     * Gets the "INVALID DISTANCE VALUE" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE VALUE" exception.
+     */
+    public static function invalidDistanceValue()
+    {
+        return new static('The distance value must be a numeric value.');
+    }
+
+    /**
+     * Gets the "INVALID DURATION TEXT" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DURATION TEXT" exception.
+     */
+    public static function invalidDurationText()
+    {
+        return new static('The duration text must be a string value.');
+    }
+
+    /**
+     * Gets the "INVALID DURATION VALUE" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DURATION VALUE" exception.
+     */
+    public static function invalidDurationValue()
+    {
+        return new static('The duration value must be a numeric value.');
+    }
 }

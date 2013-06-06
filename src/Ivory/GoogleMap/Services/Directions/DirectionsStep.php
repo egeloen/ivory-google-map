@@ -14,6 +14,9 @@ namespace Ivory\GoogleMap\Services\Directions;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\DirectionsException;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
+use Ivory\GoogleMap\Services\Base\Distance;
+use Ivory\GoogleMap\Services\Base\Duration;
+use Ivory\GoogleMap\Services\Base\TravelMode;
 
 /**
  * A directions step which describes a google map directions step.
@@ -23,10 +26,10 @@ use Ivory\GoogleMap\Overlays\EncodedPolyline;
  */
 class DirectionsStep
 {
-    /** @var \Ivory\GoogleMap\Services\Directions\Distance */
+    /** @var \Ivory\GoogleMap\Services\Base\Distance */
     protected $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Directions\Duration */
+    /** @var \Ivory\GoogleMap\Services\Base\Duration */
     protected $duration;
 
     /** @var \Ivory\GoogleMap\Base\Coordinate */
@@ -47,13 +50,13 @@ class DirectionsStep
     /**
      * Creates a directions step.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\Distance $distance        The distance.
-     * @param \Ivory\GoogleMap\Services\Directions\Duration $duration        The duration.
-     * @param \Ivory\GoogleMap\Base\Coordinate              $endLocation     The end location.
-     * @param string                                        $instructions    The instructions.
-     * @param \Ivory\GoogleMap\Overlays\EncodedPolyline     $encodedPolyline The encoded polyline.
-     * @param \Ivory\GoogleMap\Base\Coordinate              $startLocation   The start location.
-     * @param string                                        $travelMode      The travel mode.
+     * @param \Ivory\GoogleMap\Services\Base\Distance   $distance        The distance.
+     * @param \Ivory\GoogleMap\Services\Base\Duration   $duration        The duration.
+     * @param \Ivory\GoogleMap\Base\Coordinate          $endLocation     The end location.
+     * @param string                                    $instructions    The instructions.
+     * @param \Ivory\GoogleMap\Overlays\EncodedPolyline $encodedPolyline The encoded polyline.
+     * @param \Ivory\GoogleMap\Base\Coordinate          $startLocation   The start location.
+     * @param string                                    $travelMode      The travel mode.
      */
     public function __construct(
         Distance $distance,
@@ -76,7 +79,7 @@ class DirectionsStep
     /**
      * Gets the step distance.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\Distance The step distance.
+     * @return \Ivory\GoogleMap\Services\Base\Distance The step distance.
      */
     public function getDistance()
     {
@@ -86,7 +89,7 @@ class DirectionsStep
     /**
      * Sets the step distance.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\Distance $distance The step distance.
+     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The step distance.
      */
     public function setDistance(Distance $distance)
     {
@@ -96,7 +99,7 @@ class DirectionsStep
     /**
      * Gets the step duration.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\Duration The step duration.
+     * @return \Ivory\GoogleMap\Services\Base\Duration The step duration.
      */
     public function getDuration()
     {
@@ -106,7 +109,7 @@ class DirectionsStep
     /**
      * Sets the step duration
      *
-     * @param \Ivory\GoogleMap\Services\Directions\Duration $duration The step duration.
+     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The step duration.
      */
     public function setDuration(Duration $duration)
     {

@@ -14,6 +14,8 @@ namespace Ivory\GoogleMap\Services\Directions;
 use \DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\DirectionsException;
+use Ivory\GoogleMap\Services\Base\TravelMode;
+use Ivory\GoogleMap\Services\Base\UnitSystem;
 
 /**
  * Directions request represents a google map directions request.
