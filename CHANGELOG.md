@@ -2,6 +2,7 @@
 
 ### 1.0.0 (????-??-??)
 
+ * 0845763 - Add Distance Matrix support
  * d0f2282 - [DirectionsRequest] Add transit travel mode support
  * 2444de8 - [Map] Allow to specify additional libraries
  * ebe2210 - Add Places Autocomplete support
