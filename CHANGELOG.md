@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.0.0 (????-??-??)
+### 1.0.0 (2013-06-07)
 
  * 0845763 - Add Distance Matrix support
  * d0f2282 - [DirectionsRequest] Add transit travel mode support
