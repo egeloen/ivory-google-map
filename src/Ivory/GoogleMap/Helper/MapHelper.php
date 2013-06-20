@@ -1660,7 +1660,7 @@ class MapHelper
      *
      * @return string The javascript container name.
      */
-    protected function getJsContainerName(Map $map)
+    public function getJsContainerName(Map $map)
     {
         return $map->getJavascriptVariable().'_container';
     }
