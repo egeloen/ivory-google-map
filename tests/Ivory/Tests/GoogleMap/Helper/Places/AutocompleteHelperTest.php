@@ -166,7 +166,7 @@ EOF;
 
         $expected = <<<EOF
 <script type="text/javascript">
-function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"libraries=places&sensor=false"}); };
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"libraries=places&language=en&sensor=false"}); };
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
@@ -188,7 +188,7 @@ EOF;
 
         $expected1 = <<<EOF
 <script type="text/javascript">
-function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"libraries=places&sensor=false"}); };
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"libraries=places&language=en&sensor=false"}); };
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
@@ -220,7 +220,7 @@ EOF;
 
         $expected = <<<EOF
 <script type="text/javascript">
-function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"libraries=places&sensor=false"}); };
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"libraries=places&language=en&sensor=false"}); };
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
@@ -248,7 +248,7 @@ autocomplete = new google.maps.places.Autocomplete(document.getElementById('plac
 }
 </script>
 <script type="text/javascript">
-function load_ivory_google_map_api () { google.load("maps", "3", {"language":"en","other_params":"libraries=places&sensor=false", "callback": load_ivory_google_place}); };
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"libraries=places&language=en&sensor=false", "callback": load_ivory_google_place}); };
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 
