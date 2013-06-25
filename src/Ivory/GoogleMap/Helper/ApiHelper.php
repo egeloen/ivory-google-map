@@ -59,20 +59,16 @@ class ApiHelper
         $this->loaded = true;
 
         $otherParameters = !empty($libraries) ? sprintf('libraries=%s&', implode(',', $libraries)) : null;
+        $otherParameters .= sprintf('language=%s&', $language);
         $otherParameters .= sprintf('sensor=%s', $sensor ? 'true' : 'false');
 
-        $options = array(
-            'language'     => $language,
-            'other_params' => $otherParameters,
-        );
-
-        $jsonOptions = substr(json_encode($options), 0, -1);
+        $jsonOptions = substr(json_encode(array('other_params' => $otherParameters)), 0, -1);
 
         if ($callback !== null) {
-            $jsonOptions .= sprintf(', "callback": %s}', $callback);
-        } else {
-            $jsonOptions .= '}';
+            $jsonOptions .= sprintf(', "callback": %s', $callback);
         }
+
+        $jsonOptions .= '}';
 
         $loader = sprintf('google.load("maps", "3", %s);', $jsonOptions);
 
