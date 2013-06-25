@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.0.1 (????-??-??)
+
+ * 2578a5d - [Helper] Fix map language with google loader
+
 ### 1.0.0 (2013-06-07)
 
  * 0845763 - Add Distance Matrix support
