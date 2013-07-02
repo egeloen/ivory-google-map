@@ -7,7 +7,7 @@ left corner on touch devices.
 ## Build your zoom control
 
 ``` php
-use Ivory\GoogleMap\Controls\ControlPosition
+use Ivory\GoogleMap\Controls\ControlPosition;
 use Ivory\GoogleMap\Controls\ZoomControl;
 use Ivory\GoogleMap\Controls\ZoomControlStyle;
 
