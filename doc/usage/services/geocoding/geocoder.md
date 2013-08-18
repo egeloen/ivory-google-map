@@ -35,6 +35,19 @@ Available adapters:
    - ``Geocoder\HttpAdapter\GuzzleHttpAdapter``
    - ``Geocoder\HttpAdapter\ZendHttpAdapter``
 
+To use these providers/adapters, simply register them:
+
+``` php
+use Ivory\GoogleMap\Services\Geocoding\Geocoder;
+use Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
+use Geocoder\HttpAdapter\CurlHttpAdapter;
+
+$geocoder = new Geocoder();
+$geocoder->registerProviders(array(
+    new GeocoderProvider(new CurlHttpAdapter()),
+));
+```
+
 ## The standard Geocoder
 
 If you use the standard Geocoder components, I recommand you to directly read this own documentation available
