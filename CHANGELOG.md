@@ -2,6 +2,7 @@
 
 ### 1.1.0 (????-??-??)
 
+ * 7c485c3 - [Overlays] Add marker cluster support
  * 2578a5d - [Helper] Fix map language with google loader
 
 ### 1.0.0 (2013-06-07)
