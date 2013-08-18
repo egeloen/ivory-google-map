@@ -19,6 +19,7 @@ controls, overlays, events & services through the Google Map API v3.
          - [Rectangle](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/rectangle.md)
          - [Circle](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/circle.md)
          - [Ground overlay](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/ground_overlay.md)
+         - [Marker cluster](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/marker_cluster.md)
       - [Controls](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/controls/index.md)
          - [Map type](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/controls/map_type.md)
          - [Overview](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/controls/overview.md)

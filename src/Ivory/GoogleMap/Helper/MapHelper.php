@@ -11,7 +11,6 @@
 
 namespace Ivory\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Events\Event;
 use Ivory\GoogleMap\Helper\Base\BoundHelper;
 use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 use Ivory\GoogleMap\Helper\Base\PointHelper;
@@ -30,21 +29,21 @@ use Ivory\GoogleMap\Helper\Overlays\CircleHelper;
 use Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper;
 use Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper;
 use Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper;
-use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
+use Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelper;
+use Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelperInterface;
 use Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper;
 use Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper;
 use Ivory\GoogleMap\Helper\Overlays\PolygonHelper;
 use Ivory\GoogleMap\Helper\Overlays\PolylineHelper;
 use Ivory\GoogleMap\Helper\Overlays\RectangleHelper;
 use Ivory\GoogleMap\Map;
-use Ivory\GoogleMap\Overlays\Marker;
 
 /**
  * Map helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapHelper
+class MapHelper extends AbstractMapHelper
 {
     /** @var \Ivory\GoogleMap\Helper\ApiHelper */
     protected $apiHelper;
@@ -85,8 +84,8 @@ class MapHelper
     /** @var \Ivory\GoogleMap\Helper\Controls\ZoomControlHelper */
     protected $zoomControlHelper;
 
-    /** @var \Ivory\GoogleMap\Helper\Overlays\MarkerHelper */
-    protected $markerHelper;
+    /** @var \Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelperInterface */
+    protected $markerClusterHelper;
 
     /** @var \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper */
     protected $markerImageHelper;
@@ -124,44 +123,30 @@ class MapHelper
     /**
      * Creates a map helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper             $coordinateHelper         The coordinate helper.
-     * @param \Ivory\GoogleMap\Helper\Base\BoundHelper                  $boundHelper              The bound helper.
-     * @param \Ivory\GoogleMap\Helper\Base\PointHelper                  $pointHelper              The point helper.
-     * @param \Ivory\GoogleMap\Helper\Base\SizeHelper                   $sizeHelper               The size helper.
-     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                   $mapTypeIdHelper          The map type id
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper     $mapTypeControlHelper     The map type control
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper $overviewMapControlHelper The overview map
-     *                                                                                            control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\PanControlHelper         $panControlHelper         The pan control
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\RotateControlHelper      $rotateControlHelper      The rotate control
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControlHelper       $scaleControlHelper       The scale control
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper  $streetViewControlHelper  The street view
-     *                                                                                            control helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlHelper        $zoomControlHelper        The zoom control
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerHelper             $markerHelper             The marker helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper        $markerImageHelper        The marker image
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper        $markerShapeHelper        The marker shape
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper         $infoWindowHelper         The info window
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\PolylineHelper           $polylineHelper           The polyline helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper    $encodedPolylineHelper    The encoded polyline
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\PolygonHelper            $polygonHelper            The polygon helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\RectangleHelper          $rectangleHelper          The rectangle helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\CircleHelper             $circleHelper             The circle helper.
-     * @param \Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper      $groundOverlayHelper      The ground overlay
-     *                                                                                            helper.
-     * @param \Ivory\GoogleMap\Helper\Layers\KMLLayerHelper             $kmlLayerHelper           The KML layer helper.
-     * @param \Ivory\GoogleMap\Helper\Events\EventManagerHelper         $eventManagerHelper       The event manager
-     *                                                                                            helper.
+     * @param \Ivory\GoogleMap\Helper\Base\CoordinateHelper                 $coordinateHelper         The coordinate helper.
+     * @param \Ivory\GoogleMap\Helper\Base\BoundHelper                      $boundHelper              The bound helper.
+     * @param \Ivory\GoogleMap\Helper\Base\PointHelper                      $pointHelper              The point helper.
+     * @param \Ivory\GoogleMap\Helper\Base\SizeHelper                       $sizeHelper               The size helper.
+     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                       $mapTypeIdHelper          The map type id helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControlHelper         $mapTypeControlHelper     The map type control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\OverviewMapControlHelper     $overviewMapControlHelper The overview map control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\PanControlHelper             $panControlHelper         The pan control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\RotateControlHelper          $rotateControlHelper      The rotate control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ScaleControlHelper           $scaleControlHelper       The scale control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper      $streetViewControlHelper  The street view control helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ZoomControlHelper            $zoomControlHelper        The zoom control helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerClusterHelperInterface $markerClusterHelper      The marker cluster helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper            $markerImageHelper        The marker image helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper            $markerShapeHelper        The marker shape helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper             $infoWindowHelper         The info window helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\PolylineHelper               $polylineHelper           The polyline helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\EncodedPolylineHelper        $encodedPolylineHelper    The encoded polyline helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\PolygonHelper                $polygonHelper            The polygon helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\RectangleHelper              $rectangleHelper          The rectangle helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\CircleHelper                 $circleHelper             The circle helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper          $groundOverlayHelper      The ground overlay helper.
+     * @param \Ivory\GoogleMap\Helper\Layers\KMLLayerHelper                 $kmlLayerHelper           The KML layer helper.
+     * @param \Ivory\GoogleMap\Helper\Events\EventManagerHelper             $eventManagerHelper       The event manager helper.
      */
     public function __construct(
         ApiHelper $apiHelper = null,
@@ -177,7 +162,7 @@ class MapHelper
         ScaleControlHelper $scaleControlHelper = null,
         StreetViewControlHelper $streetViewControlHelper = null,
         ZoomControlHelper $zoomControlHelper = null,
-        MarkerHelper $markerHelper = null,
+        MarkerClusterHelperInterface $markerClusterHelper = null,
         MarkerImageHelper $markerImageHelper = null,
         MarkerShapeHelper $markerShapeHelper = null,
         InfoWindowHelper $infoWindowHelper = null,
@@ -242,8 +227,8 @@ class MapHelper
             $zoomControlHelper = new ZoomControlHelper();
         }
 
-        if ($markerHelper === null) {
-            $markerHelper = new MarkerHelper();
+        if ($markerClusterHelper === null) {
+            $markerClusterHelper = new MarkerClusterHelper();
         }
 
         if ($markerImageHelper === null) {
@@ -306,7 +291,7 @@ class MapHelper
         $this->setStreetViewControlHelper($streetViewControlHelper);
         $this->setZoomControlHelper($zoomControlHelper);
 
-        $this->setMarkerHelper($markerHelper);
+        $this->setMarkerClusterHelper($markerClusterHelper);
         $this->setMarkerImageHelper($markerImageHelper);
         $this->setMarkerShapeHelper($markerShapeHelper);
         $this->setInfoWindowHelper($infoWindowHelper);
@@ -585,23 +570,23 @@ class MapHelper
     }
 
     /**
-     * Gets the marker helper.
+     * Gets the marker cluster helper.
      *
-     * @return \Ivory\GoogleMap\Helper\Overlays\MarkerHelper The marker helper.
+     * @return \Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelperInterface The marker cluster helper.
      */
-    public function getMarkerHelper()
+    public function getMarkerClusterHelper()
     {
-        return $this->markerHelper;
+        return $this->markerClusterHelper;
     }
 
     /**
-     * Sets the marker helper.
+     * Sets the marker cluster helper.
      *
-     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerHelper $markerHelper The marker helper.
+     * @param \Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelperInterface $markerClusterHelper The marker cluster helper.
      */
-    public function setMarkerHelper(MarkerHelper $markerHelper)
+    public function setMarkerClusterHelper(MarkerClusterHelperInterface $markerClusterHelper)
     {
-        $this->markerHelper = $markerHelper;
+        $this->markerClusterHelper = $markerClusterHelper;
     }
 
     /**
@@ -899,6 +884,7 @@ class MapHelper
             $output[] = $this->apiHelper->render($map->getLanguage(), $this->getLibraries($map));
         }
 
+        $output[] = $this->markerClusterHelper->renderLibraries($map->getMarkerCluster(), $map);
         $output[] = '<script type="text/javascript">'.PHP_EOL;
 
         if ($map->isAsync()) {
@@ -953,7 +939,7 @@ class MapHelper
         $output[] = $this->renderJsContainerInfoWindows($map);
         $output[] = $this->renderJsContainerMarkerImages($map);
         $output[] = $this->renderJsContainerMarkerShapes($map);
-        $output[] = $this->renderJsContainerMarkers($map);
+        $output[] = $this->renderJsContainerMarkerCluster($map);
 
         $output[] = $this->renderJsContainerBoundsExtends($map);
 
@@ -994,6 +980,7 @@ class MapHelper
             'marker_images'     => array(),
             'marker_shapes'     => array(),
             'markers'           => array(),
+            'marker_cluster'    => null,
 
             // Layers
             'kml_layers' => array(),
@@ -1010,7 +997,10 @@ class MapHelper
             'closable_info_windows' => array(),
         );
 
-        return sprintf('%s = %s;'.PHP_EOL, $this->getJsContainerName($map), json_encode($container, JSON_FORCE_OBJECT));
+        $jsContainer = substr(json_encode($container, JSON_FORCE_OBJECT), 0, -1);
+        $jsContainer .= ',"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}}';
+
+        return sprintf('%s = %s;'.PHP_EOL, $this->getJsContainerName($map), $jsContainer);
     }
 
     /**
@@ -1376,28 +1366,18 @@ class MapHelper
     }
 
     /**
-     * Renders the javascript container markers.
+     * Renders the javascript container marker cluster.
      *
      * @param \Ivory\GoogleMap\Map $map The map.
      *
      * @return string The JS output.
      */
-    public function renderJsContainerMarkers(Map $map)
+    public function renderJsContainerMarkerCluster(Map $map)
     {
-        $output = array();
-
-        foreach ($map->getMarkers() as $marker) {
-            $output[] = sprintf(
-                '%s.markers.%s = %s',
-                $this->getJsContainerName($map),
-                $marker->getJavascriptVariable(),
-                $this->markerHelper->render($marker, $map)
-            );
-
-            if ($marker->hasInfoWindow() && $marker->getInfoWindow()->isAutoOpen()) {
-                $this->registerMarkerInfoWindowEvent($map, $marker);
-            }
-        }
+        $output = array(
+            $this->markerClusterHelper->renderMarkers($map->getMarkerCluster(), $map),
+            $this->markerClusterHelper->render($map->getMarkerCluster(), $map),
+        );
 
         return implode('', $output);
     }
@@ -1561,18 +1541,6 @@ class MapHelper
         }
 
         return array_unique($libraries);
-    }
-
-    /**
-     * Gets the javascript container name according to the map.
-     *
-     * @param \Ivory\GoogleMap\Map $map The map.
-     *
-     * @return string The javascript container name.
-     */
-    protected function getJsContainerName(Map $map)
-    {
-        return $map->getJavascriptVariable().'_container';
     }
 
     /**
@@ -1879,33 +1847,5 @@ class MapHelper
         }
 
         return implode(',', $mapControl);
-    }
-
-    /**
-     * Registers the marker info window event (auto open).
-     *
-     * @param \Ivory\GoogleMap\Map             $map    The map.
-     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
-     */
-    protected function registerMarkerInfoWindowEvent(Map $map, Marker $marker)
-    {
-        $closableInfoWindows = sprintf('%s.closable_info_windows', $this->getJsContainerName($map));
-
-        $handle = <<<EOF
-function () {
-    for (var info_window in {$closableInfoWindows}) {
-        {$closableInfoWindows}[info_window].close();
-    }
-    {$this->infoWindowHelper->renderOpen($marker->getInfoWindow(), $map, $marker)}
-}
-EOF;
-
-        $event = new Event();
-        $event->setJavascriptVariable(sprintf($marker->getJavascriptVariable().'_%s', 'info_window_event'));
-        $event->setInstance($marker->getJavascriptVariable());
-        $event->setEventName($marker->getInfoWindow()->getOpenEvent());
-        $event->setHandle($handle);
-
-        $map->getEventManager()->addEvent($event);
     }
 }

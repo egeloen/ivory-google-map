@@ -29,6 +29,7 @@ use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Overlays\GroundOverlay;
 use Ivory\GoogleMap\Overlays\InfoWindow;
 use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMap\Overlays\MarkerCluster;
 use Ivory\GoogleMap\Overlays\Polygon;
 use Ivory\GoogleMap\Overlays\Polyline;
 use Ivory\GoogleMap\Overlays\Rectangle;
@@ -86,8 +87,8 @@ class Map extends AbstractJavascriptVariableAsset
     /** @var \Ivory\GoogleMap\Events\EventManager */
     protected $eventManager;
 
-    /** @var array */
-    protected $markers;
+    /** @var \Ivory\GoogleMap\Overlays\MarkerCluster */
+    protected $markerCluster;
 
     /** @var array */
     protected $infoWindows;
@@ -144,7 +145,8 @@ class Map extends AbstractJavascriptVariableAsset
             'height' => '300px',
         );
 
-        $this->markers = array();
+        $this->markerCluster = new MarkerCluster();
+
         $this->infoWindows = array();
         $this->polylines = array();
         $this->encodedPolylines = array();
@@ -529,7 +531,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map type control.
      *
-     * @return Ivory\GoogleMap\Controls\MapTypeControl The map type control.
+     * @return \Ivory\GoogleMap\Controls\MapTypeControl The map type control.
      */
     public function getMapTypeControl()
     {
@@ -589,7 +591,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the overview map control.
      *
-     * @return Ivory\GoogleMap\Controls\OverviewMapControl The overview map control.
+     * @return \Ivory\GoogleMap\Controls\OverviewMapControl The overview map control.
      */
     public function getOverviewMapControl()
     {
@@ -643,7 +645,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map pan control.
      *
-     * @return Ivory\GoogleMap\Controls\PanControl The map pan control.
+     * @return \Ivory\GoogleMap\Controls\PanControl The map pan control.
      */
     public function getPanControl()
     {
@@ -697,7 +699,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map rotate control.
      *
-     * @return Ivory\GoogleMap\Controls\RotateControl The map rotate control.
+     * @return \Ivory\GoogleMap\Controls\RotateControl The map rotate control.
      */
     public function getRotateControl()
     {
@@ -751,7 +753,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map scale control.
      *
-     * @return Ivory\GoogleMap\Controls\ScaleControl The map scale control.
+     * @return \Ivory\GoogleMap\Controls\ScaleControl The map scale control.
      */
     public function getScaleControl()
     {
@@ -807,7 +809,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map street view control.
      *
-     * @return Ivory\GoogleMap\Controls\StreetViewControl The map street view control.
+     * @return \Ivory\GoogleMap\Controls\StreetViewControl The map street view control.
      */
     public function getStreetViewControl()
     {
@@ -861,7 +863,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map zoom control.
      *
-     * @return Ivory\GoogleMap\Controls\ZoomControl The map zoom control.
+     * @return \Ivory\GoogleMap\Controls\ZoomControl The map zoom control.
      */
     public function getZoomControl()
     {
@@ -917,11 +919,31 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Sets the map event manager.
      *
-     * @param Ivory\GoogleMap\Events\EventManager $eventManager The map event manager.
+     * @param \Ivory\GoogleMap\Events\EventManager $eventManager The map event manager.
      */
     public function setEventManager(EventManager $eventManager)
     {
         $this->eventManager = $eventManager;
+    }
+
+    /**
+     * Gets the marker cluster.
+     *
+     * @return \Ivory\GoogleMap\Overlays\MarkerCluster The marker cluster.
+     */
+    public function getMarkerCluster()
+    {
+        return $this->markerCluster;
+    }
+
+    /**
+     * Sets the marker cluster.
+     *
+     * @param \Ivory\GoogleMap\Overlays\MarkerCluster $markerCluster The marker cluster.
+     */
+    public function setMarkerCluster(MarkerCluster $markerCluster)
+    {
+        $this->markerCluster = $markerCluster;
     }
 
     /**
@@ -931,17 +953,17 @@ class Map extends AbstractJavascriptVariableAsset
      */
     public function getMarkers()
     {
-        return $this->markers;
+        return $this->markerCluster->getMarkers();
     }
 
     /**
      * Add a map marker.
      *
-     * @param Ivory\GoogleMap\Overlays\Marker $marker The marker to add.
+     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker to add.
      */
     public function addMarker(Marker $marker)
     {
-        $this->markers[] = $marker;
+        $this->markerCluster->addMarker($marker);
 
         if ($this->autoZoom) {
             $this->bound->extend($marker);
@@ -961,7 +983,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Add a map info window.
      *
-     * @param Ivory\GoogleMap\Overlays\InfoWindow $infoWindow The info window to add.
+     * @param \Ivory\GoogleMap\Overlays\InfoWindow $infoWindow The info window to add.
      */
     public function addInfoWindow(InfoWindow $infoWindow)
     {
@@ -975,7 +997,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Gets the map polylines.
      *
-     * @return Ivory\GoogleMap\Overlays\Polyline The map polylines.
+     * @return array The map polylines.
      */
     public function getPolylines()
     {
@@ -985,7 +1007,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Add a map polyline.
      *
-     * @param Ivory\GoogleMap\Overlays\Polyline The polyline to add.
+     * @param \Ivory\GoogleMap\Overlays\Polyline The polyline to add.
      */
     public function addPolyline(Polyline $polyline)
     {
@@ -1009,7 +1031,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Adds an encoded polyline to the map.
      *
-     * @param Ivory\GoogleMap\Overlays\EncodedPolyline $encodedPolyline The encoded polyline to add.
+     * @param \Ivory\GoogleMap\Overlays\EncodedPolyline $encodedPolyline The encoded polyline to add.
      */
     public function addEncodedPolyline(EncodedPolyline $encodedPolyline)
     {
@@ -1033,7 +1055,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Add a map polygon.
      *
-     * @param Ivory\GoogleMap\Overlays\Polygon $polygon The polygon to add.
+     * @param \Ivory\GoogleMap\Overlays\Polygon $polygon The polygon to add.
      */
     public function addPolygon(Polygon $polygon)
     {
@@ -1057,7 +1079,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Add a map rectangle to the map.
      *
-     * @param Ivory\GoogleMap\Overlays\Rectangle $rectangle The rectangle to add.
+     * @param \Ivory\GoogleMap\Overlays\Rectangle $rectangle The rectangle to add.
      */
     public function addRectangle(Rectangle $rectangle)
     {
@@ -1081,7 +1103,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Add a circle to the map.
      *
-     * @param Ivory\GoogleMap\Overlays\Circle $circle The circle to add.
+     * @param \Ivory\GoogleMap\Overlays\Circle $circle The circle to add.
      */
     public function addCircle(Circle $circle)
     {
@@ -1105,7 +1127,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Add a ground overlay to the map.
      *
-     * @param Ivory\GoogleMapBundle\Model\Overlays\GroupOverlay $groundOverlay The ground overlay to add.
+     * @param \Ivory\GoogleMapBundle\Model\Overlays\GroupOverlay $groundOverlay The ground overlay to add.
      */
     public function addGroundOverlay(GroundOverlay $groundOverlay)
     {
@@ -1129,7 +1151,7 @@ class Map extends AbstractJavascriptVariableAsset
     /**
      * Adds a KML Layer to the map.
      *
-     * @param Ivory\GoogleMap\Layers\KMLLayer $kmlLayer The KML Layer to add.
+     * @param \Ivory\GoogleMap\Layers\KMLLayer $kmlLayer The KML Layer to add.
      */
     public function addKMLLayer(KMLLayer $kmlLayer)
     {

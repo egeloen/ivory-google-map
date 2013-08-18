@@ -39,6 +39,7 @@ my_map_container = {
     "marker_images": {},
     "marker_shapes": {},
     "markers": {},
+    "marker_cluster": null,
 
     // Layers
     "kml_layers": {},
@@ -53,6 +54,9 @@ my_map_container = {
 
     // Internal
     "closable_info_windows": {}
+    "functions": {
+        "to_array": function { /* ... */ }
+    }
 }
 ```
 

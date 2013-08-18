@@ -36,6 +36,16 @@ class HelperException extends Exception
     }
 
     /**
+     * Gets the "INVALID AUTOCOMPLETE BOUND" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID AUTOCOMPLETE BOUND" exception.
+     */
+    public static function invalidAutocompleteBound()
+    {
+        return new static('The place autocomplete bound must have coordinates.');
+    }
+
+    /**
      * Gets the "INVALID CONTROL POSITION" exception.
      *
      * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID CONTROL POSITION" exception.
@@ -82,13 +92,13 @@ class HelperException extends Exception
     }
 
     /**
-     * Gets the "INVALID AUTOCOMPLETE BOUND" exception.
+     * Gets the "INVALID MARKER CLUSTER HELPER" exception.
      *
-     * @return \Ivory\GoogleMap\Exception\TemplatingException The "INVALID AUTOCOMPLETE BOUND" exception.
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID MARKER CLUSTER HELPER" exception.
      */
-    public static function invalidAutocompleteBound()
+    public static function invalidMarkerClusterHelper()
     {
-        return new static('The place autocomplete bound must have coordinates.');
+        return new static('The marker cluster helper can not be resolved.');
     }
 
     /**
