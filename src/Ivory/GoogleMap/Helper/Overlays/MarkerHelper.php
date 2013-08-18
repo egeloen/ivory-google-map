@@ -66,15 +66,13 @@ class MarkerHelper
      *
      * @return string The JS output.
      */
-    public function render(Marker $marker, Map $map)
+    public function render(Marker $marker, Map $map = null)
     {
-        $markerJSONOptions = sprintf(
-            '{"map":%s,"position":%s',
-            $map->getJavascriptVariable(),
-            $marker->getPosition()->getJavascriptVariable()
-        );
+        $markerJSONOptions = sprintf('{"position":%s', $marker->getPosition()->getJavascriptVariable());
 
-        $markerOptions = $marker->getOptions();
+        if ($map !== null) {
+            $markerJSONOptions .= ', "map":'.$map->getJavascriptVariable();
+        }
 
         if ($marker->hasAnimation()) {
             $markerJSONOptions .= ', "animation":'.$this->animationHelper->render($marker->getAnimation());
@@ -91,6 +89,8 @@ class MarkerHelper
         if ($marker->hasShape()) {
             $markerJSONOptions .= ', "shape":'.$marker->getShape()->getJavascriptVariable();
         }
+
+        $markerOptions = $marker->getOptions();
 
         if (!empty($markerOptions)) {
             $markerJSONOptions .= ','.substr(json_encode($markerOptions), 1);

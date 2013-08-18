@@ -84,8 +84,8 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->getShape()->setJavascriptVariable('shape');
 
         $expected = 'marker = new google.maps.Marker({'.
-            '"map":map,'.
             '"position":position, '.
+            '"map":map, '.
             '"animation":google.maps.Animation.BOUNCE, '.
             '"icon":icon, '.
             '"shadow":shadow, '.
@@ -123,8 +123,8 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
         $expected = 'marker = new google.maps.Marker({'.
-            '"map":map,'.
             '"position":position, '.
+            '"map":map, '.
             '"animation":google.maps.Animation.BOUNCE, '.
             '"icon":icon, '.
             '"shadow":shadow, '.
@@ -134,5 +134,35 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
             '});'.PHP_EOL;
 
         $this->assertSame($expected, $this->markerHelper->render($marker, $map));
+    }
+
+    public function testRenderWitoutMap()
+    {
+        $marker = new Marker();
+        $marker->setJavascriptVariable('marker');
+
+        $marker->setAnimation(Animation::BOUNCE);
+
+        $marker->setPosition(1.1, 2.1, true);
+        $marker->getPosition()->setJavascriptVariable('position');
+
+        $marker->setIcon('url');
+        $marker->getIcon()->setJavascriptVariable('icon');
+
+        $marker->setShadow('url');
+        $marker->getShadow()->setJavascriptVariable('shadow');
+
+        $marker->setShape('poly', array(1, 2, 3, 4));
+        $marker->getShape()->setJavascriptVariable('shape');
+
+        $expected = 'marker = new google.maps.Marker({'.
+            '"position":position, '.
+            '"animation":google.maps.Animation.BOUNCE, '.
+            '"icon":icon, '.
+            '"shadow":shadow, '.
+            '"shape":shape'.
+            '});'.PHP_EOL;
+
+        $this->assertSame($expected, $this->markerHelper->render($marker));
     }
 }

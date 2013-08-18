@@ -25,6 +25,9 @@ abstract class AbstractOptionsAsset extends AbstractJavascriptVariableAsset
 
     /**
      * Creates an options asset.
+     *
+     * @param string $javascriptVariable The javascript variable.
+     * @param array  $options            The options.
      */
     public function __construct($javascriptVariable = null, array $options = array())
     {

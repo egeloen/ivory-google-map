@@ -121,8 +121,8 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\Overlays\MarkerHelper',
-            $this->mapHelper->getMarkerHelper()
+            'Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelper',
+            $this->mapHelper->getMarkerClusterHelper()
         );
 
         $this->assertInstanceOf(
@@ -196,7 +196,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $scaleControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\ScaleControlHelper');
         $streetViewControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper');
         $zoomControlHelper = $this->getMock('Ivory\GoogleMap\Helper\Controls\ZoomControlHelper');
-        $markerHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerHelper');
+        $markerClusterHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerCluster\MarkerClusterHelperInterface');
         $markerImageHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerImageHelper');
         $markerShapeHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\MarkerShapeHelper');
         $infoWindowHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\InfoWindowHelper');
@@ -223,7 +223,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
             $scaleControlHelper,
             $streetViewControlHelper,
             $zoomControlHelper,
-            $markerHelper,
+            $markerClusterHelper,
             $markerImageHelper,
             $markerShapeHelper,
             $infoWindowHelper,
@@ -250,7 +250,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($scaleControlHelper, $this->mapHelper->getScaleControlHelper());
         $this->assertSame($streetViewControlHelper, $this->mapHelper->getStreetViewControlHelper());
         $this->assertSame($zoomControlHelper, $this->mapHelper->getZoomControlHelper());
-        $this->assertSame($markerHelper, $this->mapHelper->getMarkerHelper());
+        $this->assertSame($markerClusterHelper, $this->mapHelper->getMarkerClusterHelper());
         $this->assertSame($markerImageHelper, $this->mapHelper->getMarkerImageHelper());
         $this->assertSame($markerShapeHelper, $this->mapHelper->getMarkerShapeHelper());
         $this->assertSame($infoWindowHelper, $this->mapHelper->getInfoWindowHelper());
@@ -316,10 +316,13 @@ EOF;
             '"marker_images":{},'.
             '"marker_shapes":{},'.
             '"markers":{},'.
+            '"marker_cluster":null,'.
             '"kml_layers":{},'.
             '"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},'.
-            '"closable_info_windows":{}'.
-            '};'.PHP_EOL;
+            '"closable_info_windows":{},'.
+            '"functions":{'.
+                '"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }'.
+            '}};'.PHP_EOL;
 
         $this->assertSame($expected, $this->mapHelper->renderJsContainerInit($map));
     }
@@ -784,7 +787,7 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderJsContainerMarkerShapes($map));
     }
 
-    public function testRenderJsContainerMarkersWithoutAutoOpenInfoWindow()
+    public function testRenderJsContainerMarkerCluster()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
@@ -794,29 +797,11 @@ EOF;
         $marker->getPosition()->setJavascriptVariable('marker_position');
 
         $expected = <<<EOF
-map_container.markers.marker = marker = new google.maps.Marker({"map":map,"position":marker_position});
+map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position, "map":map});
 
 EOF;
 
-        $this->assertSame($expected, $this->mapHelper->renderJsContainerMarkers($map));
-    }
-
-    public function testRenderJsContainerMarkersWithAutoOpenInfoWindow()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
-
-        $map->addMarker($marker = new Marker());
-        $marker->setJavascriptVariable('marker');
-        $marker->getPosition()->setJavascriptVariable('marker_position');
-
-        $marker->setInfoWindow($infoWindow = new InfoWindow());
-        $infoWindow->setJavascriptVariable('marker_info_window');
-        $infoWindow->setAutoOpen(true);
-
-        $this->mapHelper->renderJsContainerMarkers($map);
-
-        $this->assertNotEmpty($map->getEventManager()->getEvents());
+        $this->assertSame($expected, $this->mapHelper->renderJsContainerMarkerCluster($map));
     }
 
     public function testRenderJsContainerKMLLayers()
@@ -873,7 +858,7 @@ EOF;
         $map->getCenter()->setJavascriptVariable('map_center');
 
         $expected = <<<EOF
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
@@ -945,7 +930,7 @@ EOF;
         $event->setJavascriptVariable('event');
 
         $expected = <<<EOF
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.ground_overlay_bound_south_west = ground_overlay_bound_south_west = new google.maps.LatLng(1, 2, true);
 map_container.coordinates.ground_overlay_bound_north_east = ground_overlay_bound_north_east = new google.maps.LatLng(3, 4, true);
 map_container.coordinates.rectangle_bound_south_west = rectangle_bound_south_west = new google.maps.LatLng(1, 2, true);
@@ -968,7 +953,7 @@ map_container.info_windows.map_info_window = map_info_window = new google.maps.I
 map_container.info_windows.marker_info_window = marker_info_window = new google.maps.InfoWindow({"content":"<p>Default content<\/p>"});
 map_container.marker_images.marker_icon = marker_icon = new google.maps.MarkerImage("url", null, null, null, null);
 map_container.marker_images.marker_shadow = marker_shadow = new google.maps.MarkerImage("url", null, null, null, null);
-map_container.markers.marker = marker = new google.maps.Marker({"map":map,"position":marker_position, "icon":marker_icon, "shadow":marker_shadow});
+map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position, "map":map, "icon":marker_icon, "shadow":marker_shadow});
 map_bound.union(circle.getBounds());
 encoded_polyline.getPath().forEach(function(element){map_bound.extend(element)});
 map_bound.union(ground_overlay_bound);
@@ -1005,7 +990,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
@@ -1033,7 +1018,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
@@ -1059,7 +1044,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
@@ -1081,7 +1066,7 @@ EOF;
         $expected = <<<EOF
 <script type="text/javascript">
 function load_ivory_google_map() {
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
@@ -1109,7 +1094,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-map1_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map1_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map1_container.coordinates.map1_center = map1_center = new google.maps.LatLng(0, 0, true);
 map1_container.map = map1 = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map1.setCenter(map1_center);
@@ -1123,7 +1108,7 @@ EOF;
 
         $expected2 = <<<EOF
 <script type="text/javascript">
-map2_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map2_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map2_container.coordinates.map2_center = map2_center = new google.maps.LatLng(0, 0, true);
 map2_container.map = map2 = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map2.setCenter(map2_center);
@@ -1155,7 +1140,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{}};
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map.setCenter(map_center);
