@@ -11,3 +11,4 @@ map. Overlays reflect objects that you "add" to the map to designate points, lin
  6. [Rectangle](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/rectangle.md)
  7. [Circle](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/circle.md)
  8. [Ground overlay](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/ground_overlay.md)
+ 9. [Marker cluster](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/marker_cluster.md)

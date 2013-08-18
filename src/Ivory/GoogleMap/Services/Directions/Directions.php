@@ -254,11 +254,11 @@ class Directions extends AbstractService
         if (!isset($directionsRoute->copyrights)) {
             $directionsRoute->copyrights = '';
         }
-        // @codeCoverageIgnoreEnd
 
         if (!isset($directionsRoute->summary)) {
             $directionsRoute->summary = '';
         }
+        // @codeCoverageIgnoreEnd
 
         $summary = $directionsRoute->summary;
         $copyrights = $directionsRoute->copyrights;

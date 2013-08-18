@@ -84,6 +84,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->map->hasZoomControl());
 
         $this->assertInstanceOf('Ivory\GoogleMap\Events\EventManager', $this->map->getEventManager());
+        $this->assertInstanceOf('Ivory\GoogleMap\Overlays\MarkerCluster', $this->map->getMarkerCluster());
 
         $this->assertEmpty($this->map->getMarkers());
         $this->assertEmpty($this->map->getInfoWindows());
@@ -634,6 +635,14 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->map->setEventManager($eventManager);
 
         $this->assertSame($eventManager, $this->map->getEventManager());
+    }
+
+    public function testMarkerCluster()
+    {
+        $markerCluster = $this->getMock('Ivory\GoogleMap\Overlays\MarkerCluster');
+        $this->map->setMarkerCluster($markerCluster);
+
+        $this->assertSame($markerCluster, $this->map->getMarkerCluster());
     }
 
     public function testMarkerWithAutoZoom()
