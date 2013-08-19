@@ -12,13 +12,14 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\ZoomControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 
 /**
  * Zoom control helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlHelper
+class ZoomControlHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper */
     protected $controlPositionHelper;
@@ -38,6 +39,8 @@ class ZoomControlHelper
         ControlPositionHelper $controlPositionHelper = null,
         ZoomControlStyleHelper $zoomControlStyleHelper = null
     ) {
+        parent::__construct();
+
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -100,10 +103,10 @@ class ZoomControlHelper
      */
     public function render(ZoomControl $zoomControl)
     {
-        return sprintf(
-            '{"position":%s,"style":%s}',
-            $this->controlPositionHelper->render($zoomControl->getControlPosition()),
-            $this->zoomControlStyleHelper->render($zoomControl->getZoomControlStyle())
-        );
+        return $this->jsonBuilder
+            ->reset()
+            ->setValue('[position]', $this->controlPositionHelper->render($zoomControl->getControlPosition()), false)
+            ->setValue('[style]', $this->zoomControlStyleHelper->render($zoomControl->getZoomControlStyle()), false)
+            ->build();
     }
 }

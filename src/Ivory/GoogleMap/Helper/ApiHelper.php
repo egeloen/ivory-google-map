@@ -16,7 +16,7 @@ namespace Ivory\GoogleMap\Helper;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ApiHelper
+class ApiHelper extends AbstractHelper
 {
     /** @var boolean */
     protected $loaded;
@@ -26,6 +26,8 @@ class ApiHelper
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->loaded = false;
     }
 
@@ -56,31 +58,33 @@ class ApiHelper
         $sensor = false
     )
     {
-        $this->loaded = true;
+        $otherParameters = array();
 
-        $otherParameters = !empty($libraries) ? sprintf('libraries=%s&', implode(',', $libraries)) : null;
-        $otherParameters .= sprintf('language=%s&', $language);
-        $otherParameters .= sprintf('sensor=%s', $sensor ? 'true' : 'false');
-
-        $jsonOptions = substr(json_encode(array('other_params' => $otherParameters)), 0, -1);
-
-        if ($callback !== null) {
-            $jsonOptions .= sprintf(', "callback": %s', $callback);
+        if (!empty($libraries)) {
+            $otherParameters['libraries'] = implode(',', $libraries);
         }
 
-        $jsonOptions .= '}';
+        $otherParameters['language'] = $language;
+        $otherParameters['sensor'] = json_encode((bool) $sensor);
 
-        $loader = sprintf('google.load("maps", "3", %s);', $jsonOptions);
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[other_params]', urldecode(http_build_query($otherParameters)));
+
+        if ($callback !== null) {
+            $this->jsonBuilder->setValue('[callback]', $callback, false);
+        }
+
+        $loader = sprintf('google.load("maps", "3", %s);', $this->jsonBuilder->build());
+        $url = '//www.google.com/jsapi?callback=load_ivory_google_map_api';
 
         $output = array();
         $output[] = '<script type="text/javascript">'.PHP_EOL;
         $output[] = sprintf('function load_ivory_google_map_api () { %s };'.PHP_EOL, $loader);
         $output[] = '</script>'.PHP_EOL;
+        $output[] = sprintf('<script type="text/javascript" src="%s"></script>'.PHP_EOL, $url);
 
-        $output[] = sprintf(
-            '<script type="text/javascript" src="%s"></script>'.PHP_EOL,
-            '//www.google.com/jsapi?callback=load_ivory_google_map_api'
-        );
+        $this->loaded = true;
 
         return implode('', $output);
     }

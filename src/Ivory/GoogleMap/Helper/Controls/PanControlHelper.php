@@ -12,13 +12,14 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\PanControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 
 /**
  * Pan control helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PanControlHelper
+class PanControlHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper */
     protected $controlPositionHelper;
@@ -30,6 +31,8 @@ class PanControlHelper
      */
     public function __construct(ControlPositionHelper $controlPositionHelper = null)
     {
+        parent::__construct();
+
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -66,6 +69,9 @@ class PanControlHelper
      */
     public function render(PanControl $panControl)
     {
-        return sprintf('{"position":%s}', $this->controlPositionHelper->render($panControl->getControlPosition()));
+        return $this->jsonBuilder
+            ->reset()
+            ->setValue('[position]', $this->controlPositionHelper->render($panControl->getControlPosition()), false)
+            ->build();
     }
 }

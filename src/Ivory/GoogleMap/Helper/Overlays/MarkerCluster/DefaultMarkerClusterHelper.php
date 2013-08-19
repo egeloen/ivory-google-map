@@ -137,7 +137,7 @@ function () {
 EOF;
 
         $event = new Event();
-        $event->setJavascriptVariable(sprintf($marker->getJavascriptVariable().'_%s', 'info_window_event'));
+        $event->setJavascriptVariable(sprintf('%s_%s', $marker->getJavascriptVariable(), 'info_window_event'));
         $event->setInstance($marker->getJavascriptVariable());
         $event->setEventName($marker->getInfoWindow()->getOpenEvent());
         $event->setHandle($handle);
