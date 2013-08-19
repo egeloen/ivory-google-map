@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Layers;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Layers\KMLLayer;
 use Ivory\GoogleMap\Map;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Map;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class KMLLayerHelper
+class KMLLayerHelper extends AbstractHelper
 {
     /**
      * Renders a kml layer.
@@ -31,20 +32,16 @@ class KMLLayerHelper
      */
     public function render(KMLLayer $kmlLayer, Map $map)
     {
-        $kmlLayerOptions = $kmlLayer->getOptions();
-        $kmlLayerJSONOptions = sprintf('{"map":%s', $map->getJavascriptVariable());
-
-        if (!empty($kmlLayerOptions)) {
-            $kmlLayerJSONOptions .= ','.substr(json_encode($kmlLayerOptions), 1);
-        } else {
-            $kmlLayerJSONOptions .= '}';
-        }
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValues($kmlLayer->getOptions());
 
         return sprintf(
             '%s = new google.maps.KmlLayer("%s", %s);'.PHP_EOL,
             $kmlLayer->getJavascriptVariable(),
             $kmlLayer->getUrl(),
-            $kmlLayerJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

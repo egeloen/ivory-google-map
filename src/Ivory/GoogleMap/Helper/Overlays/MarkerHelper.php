@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Marker;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Overlays\Marker;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerHelper
+class MarkerHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Overlays\AnimationHelper */
     protected $animationHelper;
@@ -31,6 +32,8 @@ class MarkerHelper
      */
     public function __construct(AnimationHelper $animationHelper = null)
     {
+        parent::__construct();
+
         if ($animationHelper === null) {
             $animationHelper = new AnimationHelper();
         }
@@ -68,40 +71,36 @@ class MarkerHelper
      */
     public function render(Marker $marker, Map $map = null)
     {
-        $markerJSONOptions = sprintf('{"position":%s', $marker->getPosition()->getJavascriptVariable());
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[position]', $marker->getPosition()->getJavascriptVariable(), false);
 
         if ($map !== null) {
-            $markerJSONOptions .= ', "map":'.$map->getJavascriptVariable();
+            $this->jsonBuilder->setValue('[map]', $map->getJavascriptVariable(), false);
         }
 
         if ($marker->hasAnimation()) {
-            $markerJSONOptions .= ', "animation":'.$this->animationHelper->render($marker->getAnimation());
+            $this->jsonBuilder->setValue('[animation]', $this->animationHelper->render($marker->getAnimation()), false);
         }
 
         if ($marker->hasIcon()) {
-            $markerJSONOptions .= ', "icon":'.$marker->getIcon()->getJavascriptVariable();
+            $this->jsonBuilder->setValue('[icon]', $marker->getIcon()->getJavascriptVariable(), false);
         }
 
         if ($marker->hasShadow()) {
-            $markerJSONOptions .= ', "shadow":'.$marker->getShadow()->getJavascriptVariable();
+            $this->jsonBuilder->setValue('[shadow]', $marker->getShadow()->getJavascriptVariable(), false);
         }
 
         if ($marker->hasShape()) {
-            $markerJSONOptions .= ', "shape":'.$marker->getShape()->getJavascriptVariable();
+            $this->jsonBuilder->setValue('[shape]', $marker->getShape()->getJavascriptVariable(), false);
         }
 
-        $markerOptions = $marker->getOptions();
-
-        if (!empty($markerOptions)) {
-            $markerJSONOptions .= ','.substr(json_encode($markerOptions), 1);
-        } else {
-            $markerJSONOptions .= '}';
-        }
+        $this->jsonBuilder->setValues($marker->getOptions());
 
         return sprintf(
             '%s = new google.maps.Marker(%s);'.PHP_EOL,
             $marker->getJavascriptVariable(),
-            $markerJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

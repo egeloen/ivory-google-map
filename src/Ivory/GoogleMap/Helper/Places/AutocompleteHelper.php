@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Places;
 
 use Ivory\GoogleMap\Exception\HelperException;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Helper\ApiHelper;
 use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 use Ivory\GoogleMap\Helper\Base\BoundHelper;
@@ -22,7 +23,7 @@ use Ivory\GoogleMap\Places\Autocomplete;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteHelper
+class AutocompleteHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\ApiHelper */
     protected $apiHelper;
@@ -46,6 +47,8 @@ class AutocompleteHelper
         BoundHelper $boundHelper = null
     )
     {
+        parent::__construct();
+
         if ($apiHelper === null) {
             $apiHelper = new ApiHelper();
         }
@@ -209,29 +212,25 @@ class AutocompleteHelper
      */
     public function renderAutocomplete(Autocomplete $autocomplete)
     {
-        $types = $autocomplete->getTypes();
+        $this->jsonBuilder->reset();
 
-        if (!empty($types)) {
-            $jsonOptions = substr(json_encode(array('types' => $types)), 0, -1);
-        } else {
-            $jsonOptions = '{';
+        if ($autocomplete->hasTypes()) {
+            $this->jsonBuilder->setValue('[types]', $autocomplete->getTypes());
         }
 
         if ($autocomplete->hasBound()) {
-            if (!empty($types)) {
-                $jsonOptions .= ', ';
-            }
+            $this->jsonBuilder->setValue('[bounds]', $autocomplete->getBound()->getJavascriptVariable(), false);
+        }
 
-            $jsonOptions .= sprintf('"bounds": %s}', $autocomplete->getBound()->getJavascriptVariable());
-        } else {
-            $jsonOptions .= '}';
+        if (!$this->jsonBuilder->hasValues()) {
+            $this->jsonBuilder->setJsonEncodeOptions(JSON_FORCE_OBJECT);
         }
 
         return sprintf(
             '%s = new google.maps.places.Autocomplete(document.getElementById(\'%s\', %s));'.PHP_EOL,
             $autocomplete->getJavascriptVariable(),
             $autocomplete->getInputId(),
-            $jsonOptions
+            $this->jsonBuilder->build()
         );
     }
 }

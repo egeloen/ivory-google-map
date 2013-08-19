@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Circle;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Overlays\Circle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CircleHelper
+class CircleHelper extends AbstractHelper
 {
    /**
      * Renders a circle.
@@ -31,20 +32,17 @@ class CircleHelper
      */
     public function render(Circle $circle, Map $map)
     {
-        $circleOptions = array_merge(array('radius' => $circle->getRadius()), $circle->getOptions());
-
-        $circleJSONOptions = sprintf(
-            '{"map":%s,"center":%s,',
-            $map->getJavascriptVariable(),
-            $circle->getCenter()->getJavascriptVariable()
-        );
-
-        $circleJSONOptions .= substr(json_encode($circleOptions), 1);
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValue('[center]', $circle->getCenter()->getJavascriptVariable(), false)
+            ->setValue('[radius]', $circle->getRadius())
+            ->setValues($circle->getOptions());
 
         return sprintf(
             '%s = new google.maps.Circle(%s);'.PHP_EOL,
             $circle->getJavascriptVariable(),
-            $circleJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

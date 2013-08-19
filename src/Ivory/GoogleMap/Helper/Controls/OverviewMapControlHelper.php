@@ -12,13 +12,14 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\OverviewMapControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 
 /**
  * Overview map control helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class OverviewMapControlHelper
+class OverviewMapControlHelper extends AbstractHelper
 {
     /**
      * Renders an overview map control.
@@ -29,6 +30,9 @@ class OverviewMapControlHelper
      */
     public function render(OverviewMapControl $overviewMapControl)
     {
-        return sprintf('{"opened":%s}', json_encode($overviewMapControl->isOpened()));
+        return $this->jsonBuilder
+            ->reset()
+            ->setValue('[opened]', $overviewMapControl->isOpened())
+            ->build();
     }
 }

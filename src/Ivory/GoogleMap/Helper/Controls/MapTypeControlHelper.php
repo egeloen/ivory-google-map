@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\MapTypeControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Helper\MapTypeIdHelper;
 
 /**
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Helper\MapTypeIdHelper;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeControlHelper
+class MapTypeControlHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\MapTypeIdHelper */
     protected $mapTypeIdHelper;
@@ -33,19 +34,17 @@ class MapTypeControlHelper
     /**
      * Construct a map type control helper.
      *
-     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                     $mapTypeIdHelper           The map type ID
-     *                                                                                               helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper      $controlPositionHelper     The control
-     *                                                                                               position helper.
-     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControleStyleHelper $mapTypeControlStyleHelper The map type
-     *                                                                                               control style
-     *                                                                                               helper.
+     * @param \Ivory\GoogleMap\Helper\MapTypeIdHelper                     $mapTypeIdHelper           The map type ID helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper      $controlPositionHelper     The control position helper.
+     * @param \Ivory\GoogleMap\Helper\Controls\MapTypeControleStyleHelper $mapTypeControlStyleHelper The map type control style helper.
      */
     public function __construct(
         MapTypeIdHelper $mapTypeIdHelper = null,
         ControlPositionHelper $controlPositionHelper = null,
         MapTypeControlStyleHelper $mapTypeControlStyleHelper = null
     ) {
+        parent::__construct();
+
         if ($mapTypeIdHelper === null) {
             $mapTypeIdHelper = new MapTypeIdHelper();
         }
@@ -134,17 +133,27 @@ class MapTypeControlHelper
      */
     public function render(MapTypeControl $mapTypeControl)
     {
-        $mapTypeIds = array();
+        $this->jsonBuilder->reset();
 
-        foreach ($mapTypeControl->getMapTypeIds() as $mapTypeId) {
-            $mapTypeIds[] = $this->mapTypeIdHelper->render($mapTypeId);
+        foreach ($mapTypeControl->getMapTypeIds() as $index => $mapTypeId) {
+            $this->jsonBuilder->setValue(
+                sprintf('[mapTypeIds][%d]', $index),
+                $this->mapTypeIdHelper->render($mapTypeId),
+                false
+            );
         }
 
-        return sprintf(
-            '{"mapTypeIds":[%s],"position":%s,"style":%s}',
-            implode(', ', $mapTypeIds),
-            $this->controlPositionHelper->render($mapTypeControl->getControlPosition()),
-            $this->mapTypeControlStyleHelper->render($mapTypeControl->getMapTypeControlStyle())
-        );
+        return $this->jsonBuilder
+            ->setValue(
+                '[position]',
+                $this->controlPositionHelper->render($mapTypeControl->getControlPosition()),
+                false
+            )
+            ->setValue(
+                '[style]',
+                $this->mapTypeControlStyleHelper->render($mapTypeControl->getMapTypeControlStyle()),
+                false
+            )
+            ->build();
     }
 }

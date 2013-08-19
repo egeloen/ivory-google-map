@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Rectangle;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Overlays\Rectangle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RectangleHelper
+class RectangleHelper extends AbstractHelper
 {
     /**
      * Renders a rectangle.
@@ -31,24 +32,16 @@ class RectangleHelper
      */
     public function render(Rectangle $rectangle, Map $map)
     {
-        $rectangleOptions = $rectangle->getOptions();
-
-        $rectangleJSONOptions = sprintf(
-            '{"map":%s,"bounds":%s',
-            $map->getJavascriptVariable(),
-            $rectangle->getBound()->getJavascriptVariable()
-        );
-
-        if (!empty($rectangleOptions)) {
-            $rectangleJSONOptions .= ','.substr(json_encode($rectangleOptions), 1);
-        } else {
-            $rectangleJSONOptions .= '}';
-        }
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValue('[bounds]', $rectangle->getBound()->getJavascriptVariable(), false)
+            ->setValues($rectangle->getOptions());
 
         return sprintf(
             '%s = new google.maps.Rectangle(%s);'.PHP_EOL,
             $rectangle->getJavascriptVariable(),
-            $rectangleJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

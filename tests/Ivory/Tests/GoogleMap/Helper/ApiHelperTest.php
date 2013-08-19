@@ -100,7 +100,7 @@ EOF;
     {
         $expected = <<<EOF
 <script type="text/javascript">
-function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"language=en&sensor=false", "callback": callback}); };
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"language=en&sensor=false","callback":callback}); };
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 

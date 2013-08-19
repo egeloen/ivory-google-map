@@ -43,7 +43,7 @@ use Ivory\GoogleMap\Map;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapHelper extends AbstractMapHelper
+class MapHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\ApiHelper */
     protected $apiHelper;
@@ -175,6 +175,8 @@ class MapHelper extends AbstractMapHelper
         KMLLayerHelper $kmlLayerHelper = null,
         EventManagerHelper $eventManagerHelper = null
     ) {
+        parent::__construct();
+
         if ($apiHelper === null) {
             $apiHelper = new ApiHelper();
         }
@@ -818,14 +820,11 @@ class MapHelper extends AbstractMapHelper
      */
     public function render(Map $map)
     {
-        return implode(
-            '',
-            array(
-                $this->renderHtmlContainer($map),
-                $this->renderStylesheets($map),
-                $this->renderJavascripts($map)
-            )
-        );
+        return implode('', array(
+            $this->renderHtmlContainer($map),
+            $this->renderStylesheets($map),
+            $this->renderJavascripts($map)
+        ));
     }
 
     /**
@@ -959,48 +958,44 @@ class MapHelper extends AbstractMapHelper
      */
     public function renderJsContainerInit(Map $map)
     {
-        $container = array(
+        $this->jsonBuilder
+            ->reset()
+            ->setJsonEncodeOptions(JSON_FORCE_OBJECT)
             // Map
-            'map' => null,
-
+            ->setValue('[map]', null)
             // Base
-            'coordinates' => array(),
-            'bounds'      => array(),
-            'points'      => array(),
-            'sizes'       => array(),
-
+            ->setValue('[coordinates]', array())
+            ->setValue('[bounds]', array())
+            ->setValue('[points]', array())
+            ->setValue('[sizes]', array())
             // Overlays
-            'circles'           => array(),
-            'encoded_polylines' => array(),
-            'ground_overlays'   => array(),
-            'polygons'          => array(),
-            'polylines'         => array(),
-            'rectangles'        => array(),
-            'info_windows'      => array(),
-            'marker_images'     => array(),
-            'marker_shapes'     => array(),
-            'markers'           => array(),
-            'marker_cluster'    => null,
-
+            ->setValue('[circles]', array())
+            ->setValue('[encoded_polylines]', array())
+            ->setValue('[ground_overlays]', array())
+            ->setValue('[polygons]', array())
+            ->setValue('[polylines]', array())
+            ->setValue('[rectangles]', array())
+            ->setValue('[info_windows]', array())
+            ->setValue('[marker_images]', array())
+            ->setValue('[marker_shapes]', array())
+            ->setValue('[markers]', array())
+            ->setValue('[marker_cluster]', null)
             // Layers
-            'kml_layers' => array(),
-
+            ->setValue('[kml_layers]', array())
             // Event Manager
-            'event_manager' => array(
-                'dom_events'      => array(),
-                'dom_events_once' => array(),
-                'events'          => array(),
-                'events_once'     => array(),
-            ),
-
+            ->setValue('[event_manager][dom_events]', array())
+            ->setValue('[event_manager][dom_events_once]', array())
+            ->setValue('[event_manager][events]', array())
+            ->setValue('[event_manager][events_once]', array())
             // Internal
-            'closable_info_windows' => array(),
-        );
+            ->setValue('[closable_info_windows]', array())
+            ->setValue(
+                '[functions][to_array]',
+                'function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }',
+                false
+            );
 
-        $jsContainer = substr(json_encode($container, JSON_FORCE_OBJECT), 0, -1);
-        $jsContainer .= ',"functions":{"to_array": function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}}';
-
-        return sprintf('%s = %s;'.PHP_EOL, $this->getJsContainerName($map), $jsContainer);
+        return sprintf('%s = %s;'.PHP_EOL, $this->getJsContainerName($map), $this->jsonBuilder->build());
     }
 
     /**
@@ -1136,7 +1131,7 @@ class MapHelper extends AbstractMapHelper
     }
 
     /**
-     * Renders the javascrupt container circles.
+     * Renders the javascript container circles.
      *
      * @param \Ivory\GoogleMap\Map $map The map.
      *
@@ -1464,31 +1459,26 @@ class MapHelper extends AbstractMapHelper
      */
     public function renderMap(Map $map)
     {
-        $mapControlJSONOptions = $this->renderMapControls($map);
+        $mapTypeId = $map->getMapOption('mapTypeId');
+        $map->removeMapOption('mapTypeId');
 
-        $mapOptions = $map->getMapOptions();
-        $mapJSONOptions = '{"mapTypeId":'.$this->mapTypeIdHelper->render($mapOptions['mapTypeId']);
-        unset($mapOptions['mapTypeId']);
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[mapTypeId]', $this->mapTypeIdHelper->render($mapTypeId), false);
 
-        if (!empty($mapControlJSONOptions)) {
-            $mapJSONOptions .= ','.$mapControlJSONOptions;
+        $this->renderMapControls($map);
+
+        if ($map->isAutoZoom()) {
+            $map->removeMapOption('zoom');
         }
 
-        if ($map->isAutoZoom() && isset($mapOptions['zoom'])) {
-            unset($mapOptions['zoom']);
-        }
-
-        if (!empty($mapOptions)) {
-            $mapJSONOptions .= ','.substr(json_encode($mapOptions), 1);
-        } else {
-            $mapJSONOptions .= '}';
-        }
+        $this->jsonBuilder->setValues($map->getMapOptions());
 
         return sprintf(
             '%s = new google.maps.Map(document.getElementById("%s"), %s);'.PHP_EOL,
             $map->getJavascriptVariable(),
             $map->getHtmlContainerId(),
-            $mapJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 
@@ -1780,15 +1770,12 @@ class MapHelper extends AbstractMapHelper
     }
 
     /**
-     * Renders the map controls.
+     * Renders the map controls in the json builder.
      *
      * @param \Ivory\GoogleMap\Map $map The map.
-     *
-     * @return string The JS output.
      */
     protected function renderMapControls(Map $map)
     {
-        $mapControls = array();
         $controlNames = array(
             'MapTypeControl',
             'OverviewMapControl',
@@ -1801,51 +1788,43 @@ class MapHelper extends AbstractMapHelper
 
         foreach ($controlNames as $controlName) {
             $controlHelper = lcfirst($controlName).'Helper';
-
-            $mapControlJSONOption = $this->renderMapControl($map, $controlName, $this->$controlHelper);
-            if (!empty($mapControlJSONOption)) {
-                $mapControls[] = $mapControlJSONOption;
-            }
+            $this->renderMapControl($map, $controlName, $this->$controlHelper);
         }
-
-        return implode(',', $mapControls);
     }
 
     /**
-     * Renders a map control.
+     * Renders a map control in the json builder.
      *
      * @param \Ivory\GoogleMap\Map $map           The map.
      * @param string               $controlName   The control name.
      * @param mixed                $controlHelper The control helper.
-     *
-     * @return string Ths JS output.
      */
     protected function renderMapControl(Map $map, $controlName, $controlHelper)
     {
-        $mapControl = array();
         $lcFirstControlName = lcfirst($controlName);
 
-        if ($map->hasMapOption($lcFirstControlName)) {
-            if ($map->getMapOption($lcFirstControlName)) {
-                $mapControl[] = sprintf('"%s":true', $lcFirstControlName);
-
-                $hasControlMethod = 'has'.$controlName;
-                if ($map->$hasControlMethod()) {
-                    $getControlMethod = 'get'.$controlName;
-
-                    $mapControl[] = sprintf(
-                        '"%sOptions":%s',
-                        $lcFirstControlName,
-                        $controlHelper->render($map->$getControlMethod())
-                    );
-                }
-            } else {
-                $mapControl[] = sprintf('"%s":false', $lcFirstControlName);
-            }
-
-            $map->removeMapOption($lcFirstControlName);
+        if (!$map->hasMapOption($lcFirstControlName)) {
+            return;
         }
 
-        return implode(',', $mapControl);
+        $this->jsonBuilder->setValue(
+            sprintf('[%s]', $lcFirstControlName),
+            (bool) $map->getMapOption($lcFirstControlName)
+        );
+
+        if ($map->getMapOption($lcFirstControlName)) {
+            $hasControlMethod = 'has'.$controlName;
+            if ($map->$hasControlMethod()) {
+                $getControlMethod = 'get'.$controlName;
+
+                $this->jsonBuilder->setValue(
+                    sprintf('[%sOptions]', $lcFirstControlName),
+                    $controlHelper->render($map->$getControlMethod()),
+                    false
+                );
+            }
+        }
+
+        $map->removeMapOption($lcFirstControlName);
     }
 }

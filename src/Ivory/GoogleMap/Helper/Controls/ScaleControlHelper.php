@@ -12,13 +12,14 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\ScaleControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 
 /**
  * Scale control helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ScaleControlHelper
+class ScaleControlHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper */
     protected $controlPositionHelper;
@@ -38,6 +39,8 @@ class ScaleControlHelper
         ControlPositionHelper $controlPositionHelper = null,
         ScaleControlStyleHelper $scaleControlStyleHelper = null
     ) {
+        parent::__construct();
+
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -100,10 +103,10 @@ class ScaleControlHelper
      */
     public function render(ScaleControl $scaleControl)
     {
-        return sprintf(
-            '{"position":%s,"style":%s}',
-            $this->controlPositionHelper->render($scaleControl->getControlPosition()),
-            $this->scaleControlStyleHelper->render($scaleControl->getScaleControlStyle())
-        );
+        return $this->jsonBuilder
+            ->reset()
+            ->setValue('[position]', $this->controlPositionHelper->render($scaleControl->getControlPosition()), false)
+            ->setValue('[style]', $this->scaleControlStyleHelper->render($scaleControl->getScaleControlStyle()), false)
+            ->build();
     }
 }

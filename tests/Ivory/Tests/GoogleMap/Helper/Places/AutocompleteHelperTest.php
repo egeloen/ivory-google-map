@@ -134,7 +134,7 @@ EOF;
         $autocomplete->getBound()->setJavascriptVariable('bound');
 
         $expected = <<<EOF
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"bounds": bound}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"bounds":bound}));
 
 EOF;
 
@@ -152,7 +152,7 @@ EOF;
         $autocomplete->getBound()->setJavascriptVariable('bound');
 
         $expected = <<<EOF
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"types":["establishment","(cities)"], "bounds": bound}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"types":["establishment","(cities)"],"bounds":bound}));
 
 EOF;
 
@@ -227,7 +227,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 bound_south_west = new google.maps.LatLng(1, 2, true);
 bound_north_east = new google.maps.LatLng(3, 4, false);
 bound = new google.maps.LatLngBounds(bound_south_west, bound_north_east);
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"bounds": bound}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"bounds":bound}));
 </script>
 
 EOF;
@@ -248,7 +248,7 @@ autocomplete = new google.maps.places.Autocomplete(document.getElementById('plac
 }
 </script>
 <script type="text/javascript">
-function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"libraries=places&language=en&sensor=false", "callback": load_ivory_google_place}); };
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"libraries=places&language=en&sensor=false","callback":load_ivory_google_place}); };
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 

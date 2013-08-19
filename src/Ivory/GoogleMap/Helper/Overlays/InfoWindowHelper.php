@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMap\Overlays\InfoWindow;
@@ -20,7 +21,7 @@ use Ivory\GoogleMap\Overlays\InfoWindow;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class InfoWindowHelper
+class InfoWindowHelper extends AbstractHelper
 {
    /**
      * Renders an info window.
@@ -32,27 +33,28 @@ class InfoWindowHelper
      */
     public function render(InfoWindow $infoWindow, $renderPosition = true)
     {
+        $this->jsonBuilder->reset();
+
         if ($renderPosition) {
-            $infoWindowJSONOptions = sprintf('{"position":%s,', $infoWindow->getPosition()->getJavascriptVariable());
-        } else {
-            $infoWindowJSONOptions = '{';
+            $this->jsonBuilder->setValue('[position]', $infoWindow->getPosition()->getJavascriptVariable(), false);
         }
 
         if ($infoWindow->hasPixelOffset()) {
-            $infoWindowJSONOptions .= '"pixelOffset":'.$infoWindow->getPixelOffset()->getJavascriptVariable().',';
+            $this->jsonBuilder->setValue(
+                '[pixelOffset]',
+                $infoWindow->getPixelOffset()->getJavascriptVariable(),
+                false
+            );
         }
 
-        $infoWindowOptions = array_merge(
-            array('content' => $infoWindow->getContent()),
-            $infoWindow->getOptions()
-        );
-
-        $infoWindowJSONOptions .= substr(json_encode($infoWindowOptions), 1);
+        $this->jsonBuilder
+            ->setValue('[content]', $infoWindow->getContent())
+            ->setValues($infoWindow->getOptions());
 
         return sprintf(
             '%s = new google.maps.InfoWindow(%s);'.PHP_EOL,
             $infoWindow->getJavascriptVariable(),
-            $infoWindowJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 
