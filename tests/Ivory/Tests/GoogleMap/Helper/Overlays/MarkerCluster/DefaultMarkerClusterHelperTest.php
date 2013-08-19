@@ -85,7 +85,7 @@ class DefaultMarkerClusterHelperTest extends \PHPUnit_Framework_TestCase
         $marker->getPosition()->setJavascriptVariable('marker_position');
 
         $expected = <<<EOF
-map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position, "map":map});
+map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position,"map":map});
 
 EOF;
 

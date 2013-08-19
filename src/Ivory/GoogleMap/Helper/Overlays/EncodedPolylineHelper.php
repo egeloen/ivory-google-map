@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Helper\Geometry\EncodingHelper;
@@ -20,7 +21,7 @@ use Ivory\GoogleMap\Helper\Geometry\EncodingHelper;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EncodedPolylineHelper
+class EncodedPolylineHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Geometry\EncodingHelper */
     protected $encodingHelper;
@@ -32,6 +33,8 @@ class EncodedPolylineHelper
      */
     public function __construct(EncodingHelper $encodingHelper = null)
     {
+        parent::__construct();
+
         if ($encodingHelper === null) {
             $encodingHelper = new EncodingHelper();
         }
@@ -69,24 +72,16 @@ class EncodedPolylineHelper
      */
     public function render(EncodedPolyline $encodedPolyline, Map $map)
     {
-        $polylineOptions = $encodedPolyline->getOptions();
-
-        $polylineJSONOptions = sprintf(
-            '{"map":%s,"path":%s',
-            $map->getJavascriptVariable(),
-            $this->encodingHelper->renderDecodePath($encodedPolyline->getValue())
-        );
-
-        if (!empty($polylineOptions)) {
-            $polylineJSONOptions .= ','.substr(json_encode($polylineOptions), 1);
-        } else {
-            $polylineJSONOptions .= '}';
-        }
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValue('[path]', $this->encodingHelper->renderDecodePath($encodedPolyline->getValue()), false)
+            ->setValues($encodedPolyline->getOptions());
 
         return sprintf(
             '%s = new google.maps.Polyline(%s);'.PHP_EOL,
             $encodedPolyline->getJavascriptVariable(),
-            $polylineJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

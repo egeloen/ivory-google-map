@@ -12,21 +12,21 @@
 namespace Ivory\Tests\GoogleMap\Helper;
 
 /**
- * Abstract map helper test.
+ * Abstract helper test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AbstractMapHelperTest extends \PHPUnit_Framework_TestCase
+class AbstractHelperTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Helper\AbstractMapHelper */
-    protected $mapHelper;
+    /** @var \Ivory\GoogleMap\Helper\AbstractHelper */
+    protected $helper;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->mapHelper = $this->getMockForAbstractClass('Ivory\GoogleMap\Helper\AbstractMapHelper');
+        $this->helper = $this->getMockForAbstractClass('Ivory\GoogleMap\Helper\AbstractHelper');
     }
 
     /**
@@ -34,7 +34,12 @@ class AbstractMapHelperTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        unset($this->mapHelper);
+        unset($this->helper);
+    }
+
+    public function testInitialState()
+    {
+        $this->assertInstanceOf('Ivory\GoogleMap\Helper\Utils\JsonBuilder', $this->helper->getJsonBuilder());
     }
 
     public function testJsContainerName()
@@ -45,9 +50,9 @@ class AbstractMapHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getJavascriptVariable')
             ->will($this->returnValue('foo'));
 
-        $method = new \ReflectionMethod($this->mapHelper, 'getJsContainerName');
+        $method = new \ReflectionMethod($this->helper, 'getJsContainerName');
         $method->setAccessible(true);
 
-        $this->assertSame('foo_container', $method->invoke($this->mapHelper, $map));
+        $this->assertSame('foo_container', $method->invoke($this->helper, $map));
     }
 }

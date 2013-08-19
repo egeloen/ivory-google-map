@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays\MarkerCluster;
 
-use Ivory\GoogleMap\Helper\AbstractMapHelper;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
 
 /**
@@ -19,7 +19,7 @@ use Ivory\GoogleMap\Helper\Overlays\MarkerHelper;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractMarkerClusterHelper extends AbstractMapHelper implements MarkerClusterHelperInterface
+abstract class AbstractMarkerClusterHelper extends AbstractHelper implements MarkerClusterHelperInterface
 {
     /** @var \Ivory\GoogleMap\Helper\Overlays\MarkerHelper */
     protected $markerHelper;
@@ -31,6 +31,8 @@ abstract class AbstractMarkerClusterHelper extends AbstractMapHelper implements 
      */
     public function __construct(MarkerHelper $markerHelper = null)
     {
+        parent::__construct();
+
         if ($markerHelper === null) {
             $markerHelper = new MarkerHelper();
         }

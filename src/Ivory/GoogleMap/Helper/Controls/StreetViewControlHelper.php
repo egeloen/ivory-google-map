@@ -12,13 +12,14 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\StreetViewControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 
 /**
  * Street view control helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StreetViewControlHelper
+class StreetViewControlHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper */
     protected $controlPositionHelper;
@@ -30,6 +31,8 @@ class StreetViewControlHelper
      */
     public function __construct(ControlPositionHelper $controlPositionHelper = null)
     {
+        parent::__construct();
+
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -65,9 +68,13 @@ class StreetViewControlHelper
      */
     public function render(StreetViewControl $streetViewControl)
     {
-        return sprintf(
-            '{"position":%s}',
-            $this->controlPositionHelper->render($streetViewControl->getControlPosition())
-        );
+        return $this->jsonBuilder
+            ->reset()
+            ->setValue(
+                '[position]',
+                $this->controlPositionHelper->render($streetViewControl->getControlPosition()),
+                false
+            )
+            ->build();
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Polyline;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Overlays\Polyline;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolylineHelper
+class PolylineHelper extends AbstractHelper
 {
     /**
      * Renders a polyline.
@@ -31,29 +32,21 @@ class PolylineHelper
      */
     public function render(Polyline $polyline, Map $map)
     {
-        $polylineOptions = $polyline->getOptions();
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValue('[path]', array());
 
-        $polylineCoordinates = array();
-        foreach ($polyline->getCoordinates() as $coordinate) {
-            $polylineCoordinates[] = $coordinate->getJavascriptVariable();
+        foreach ($polyline->getCoordinates() as $index => $coordinate) {
+            $this->jsonBuilder->setValue(sprintf('[path][%d]', $index), $coordinate->getJavascriptVariable(), false);
         }
 
-        $polylineJSONOptions = sprintf(
-            '{"map":%s,"path":%s',
-            $map->getJavascriptVariable(),
-            '['.implode(',', $polylineCoordinates).']'
-        );
-
-        if (!empty($polylineOptions)) {
-            $polylineJSONOptions .= ','.substr(json_encode($polylineOptions), 1);
-        } else {
-            $polylineJSONOptions .= '}';
-        }
+        $this->jsonBuilder->setValues($polyline->getOptions());
 
         return sprintf(
             '%s = new google.maps.Polyline(%s);'.PHP_EOL,
             $polyline->getJavascriptVariable(),
-            $polylineJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\GroundOverlay;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Overlays\GroundOverlay;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GroundOverlayHelper
+class GroundOverlayHelper extends AbstractHelper
 {
     /**
      * Renders a ground overlay.
@@ -31,21 +32,17 @@ class GroundOverlayHelper
      */
     public function render(GroundOverlay $groundOverlay, Map $map)
     {
-        $groundOverlayOptions = $groundOverlay->getOptions();
-        $groundOverlayJSONOptions = sprintf('{"map":%s', $map->getJavascriptVariable());
-
-        if (!empty($groundOverlayOptions)) {
-            $groundOverlayJSONOptions .= ','.substr(json_encode($groundOverlayOptions), 1);
-        } else {
-            $groundOverlayJSONOptions .= '}';
-        }
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValues($groundOverlay->getOptions());
 
         return sprintf(
             '%s = new google.maps.GroundOverlay("%s", %s, %s);'.PHP_EOL,
             $groundOverlay->getJavascriptVariable(),
             $groundOverlay->getUrl(),
             $groundOverlay->getBound()->getJavascriptVariable(),
-            $groundOverlayJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

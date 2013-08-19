@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Overlays;
 
+use Ivory\GoogleMap\Helper\AbstractHelper;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlays\Polygon;
 
@@ -19,7 +20,7 @@ use Ivory\GoogleMap\Overlays\Polygon;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolygonHelper
+class PolygonHelper extends AbstractHelper
 {
     /**
      * Renders a polygon.
@@ -31,29 +32,21 @@ class PolygonHelper
      */
     public function render(Polygon $polygon, Map $map)
     {
-        $polygonOptions = $polygon->getOptions();
+        $this->jsonBuilder
+            ->reset()
+            ->setValue('[map]', $map->getJavascriptVariable(), false)
+            ->setValue('[paths]', array());
 
-        $polygonCoordinates = array();
-        foreach ($polygon->getCoordinates() as $coordinate) {
-            $polygonCoordinates[] = $coordinate->getJavascriptVariable();
+        foreach ($polygon->getCoordinates() as $index => $coordinate) {
+            $this->jsonBuilder->setValue(sprintf('[paths][%d]', $index), $coordinate->getJavascriptVariable(), false);
         }
 
-        $polygonJSONOptions = sprintf(
-            '{"map":%s,"paths":%s',
-            $map->getJavascriptVariable(),
-            '['.implode(',', $polygonCoordinates).']'
-        );
-
-        if (!empty($polygonOptions)) {
-            $polygonJSONOptions .= ','.substr(json_encode($polygonOptions), 1);
-        } else {
-            $polygonJSONOptions .= '}';
-        }
+        $this->jsonBuilder->setValues($polygon->getOptions());
 
         return sprintf(
             '%s = new google.maps.Polygon(%s);'.PHP_EOL,
             $polygon->getJavascriptVariable(),
-            $polygonJSONOptions
+            $this->jsonBuilder->build()
         );
     }
 }

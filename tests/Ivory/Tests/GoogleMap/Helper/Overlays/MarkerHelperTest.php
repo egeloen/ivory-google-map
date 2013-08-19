@@ -84,11 +84,11 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->getShape()->setJavascriptVariable('shape');
 
         $expected = 'marker = new google.maps.Marker({'.
-            '"position":position, '.
-            '"map":map, '.
-            '"animation":google.maps.Animation.BOUNCE, '.
-            '"icon":icon, '.
-            '"shadow":shadow, '.
+            '"position":position,'.
+            '"map":map,'.
+            '"animation":google.maps.Animation.BOUNCE,'.
+            '"icon":icon,'.
+            '"shadow":shadow,'.
             '"shape":shape'.
             '});'.PHP_EOL;
 
@@ -123,11 +123,11 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->setOptions(array('option1' => 'value1', 'option2' => 'value2'));
 
         $expected = 'marker = new google.maps.Marker({'.
-            '"position":position, '.
-            '"map":map, '.
-            '"animation":google.maps.Animation.BOUNCE, '.
-            '"icon":icon, '.
-            '"shadow":shadow, '.
+            '"position":position,'.
+            '"map":map,'.
+            '"animation":google.maps.Animation.BOUNCE,'.
+            '"icon":icon,'.
+            '"shadow":shadow,'.
             '"shape":shape,'.
             '"option1":"value1",'.
             '"option2":"value2"'.
@@ -156,10 +156,10 @@ class MarkerHelperTest extends \PHPUnit_Framework_TestCase
         $marker->getShape()->setJavascriptVariable('shape');
 
         $expected = 'marker = new google.maps.Marker({'.
-            '"position":position, '.
-            '"animation":google.maps.Animation.BOUNCE, '.
-            '"icon":icon, '.
-            '"shadow":shadow, '.
+            '"position":position,'.
+            '"animation":google.maps.Animation.BOUNCE,'.
+            '"icon":icon,'.
+            '"shadow":shadow,'.
             '"shape":shape'.
             '});'.PHP_EOL;
 

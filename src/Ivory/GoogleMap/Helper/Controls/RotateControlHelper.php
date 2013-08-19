@@ -12,13 +12,14 @@
 namespace Ivory\GoogleMap\Helper\Controls;
 
 use Ivory\GoogleMap\Controls\RotateControl;
+use Ivory\GoogleMap\Helper\AbstractHelper;
 
 /**
  * Rotate control helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RotateControlHelper
+class RotateControlHelper extends AbstractHelper
 {
     /** @var \Ivory\GoogleMap\Helper\Controls\ControlPositionHelper */
     protected $controlPositionHelper;
@@ -30,6 +31,8 @@ class RotateControlHelper
      */
     public function __construct(ControlPositionHelper $controlPositionHelper = null)
     {
+        parent::__construct();
+
         if ($controlPositionHelper === null) {
             $controlPositionHelper = new ControlPositionHelper();
         }
@@ -66,6 +69,9 @@ class RotateControlHelper
      */
     public function render(RotateControl $rotateControl)
     {
-        return sprintf('{"position":%s}', $this->controlPositionHelper->render($rotateControl->getControlPosition()));
+        return $this->jsonBuilder
+            ->reset()
+            ->setValue('[position]', $this->controlPositionHelper->render($rotateControl->getControlPosition()), false)
+            ->build();
     }
 }
