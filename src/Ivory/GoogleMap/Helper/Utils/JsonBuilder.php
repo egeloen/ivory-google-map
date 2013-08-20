@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Utils;
 
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Json builder.
@@ -37,7 +37,7 @@ class JsonBuilder
      */
     public function __construct()
     {
-        $this->accessor = PropertyAccess::createPropertyAccessor();
+        $this->accessor = new PropertyAccessor();
 
         $this->reset();
     }
