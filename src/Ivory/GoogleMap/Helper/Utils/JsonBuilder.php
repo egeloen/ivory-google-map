@@ -97,7 +97,7 @@ class JsonBuilder
     {
         foreach ($values as $key => $value) {
             if (is_array($value) && !empty($value)) {
-                $this->setValues($value, sprintf('[%s]', $key));
+                $this->setValues($value, sprintf('%s[%s]', $pathPrefix, $key));
             } else {
                 $this->setValue(sprintf('%s[%s]', $pathPrefix, $key), $value);
             }
