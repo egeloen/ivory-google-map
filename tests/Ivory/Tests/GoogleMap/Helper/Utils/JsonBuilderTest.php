@@ -60,8 +60,8 @@ class JsonBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->jsonBuilder->hasValues());
         $this->assertSame(array('[foo]' => 'bar', '[baz][bat]' => 'foo'), $this->jsonBuilder->getValues());
     }
-	
-	public function testValuesWithIndexArrays()
+
+    public function testValuesWithIndexArrays()
     {
         $this->jsonBuilder->setValues(array('foo' => array(array('bar' => array('bat' => 'one', 'bau' => 'two')), array('bas' => array('bav' => 'three', 'baw' => 'four')))));
 
