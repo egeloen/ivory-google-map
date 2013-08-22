@@ -89,17 +89,20 @@ class JsonBuilder
     /**
      * Sets values without control on the escaping.
      *
-     * @param array $values The values.
+     * @param array  $values     The values.
+     * @param string $pathPrefix The property path prefix.
      *
      * @return \Ivory\GoogleMap\Helper\Utils\JsonBuilder The json builder.
      */
     public function setValues(array $values, $pathPrefix = null)
     {
         foreach ($values as $key => $value) {
+            $path = sprintf('%s[%s]', $pathPrefix, $key);
+
             if (is_array($value) && !empty($value)) {
-                $this->setValues($value, sprintf('%s[%s]', $pathPrefix, $key));
+                $this->setValues($value, $path);
             } else {
-                $this->setValue(sprintf('%s[%s]', $pathPrefix, $key), $value);
+                $this->setValue($path, $value);
             }
         }
 
