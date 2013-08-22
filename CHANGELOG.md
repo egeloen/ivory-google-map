@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.1 (????-??-??)
+
+ * 472461d - [Helper][Utils] Make JsonBuilder::setValues more readable
+
 ### 1.1.0 (2013-08-22)
 
  * bdc9014 - [Helper] Add json builder utility class
