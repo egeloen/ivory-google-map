@@ -44,6 +44,17 @@ class ApiHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->apiHelper->isLoaded());
     }
 
+    public function testLoaded()
+    {
+        $this->apiHelper->render();
+
+        $this->assertTrue($this->apiHelper->isLoaded());
+
+        $this->apiHelper->isLoaded(false);
+
+        $this->assertFalse($this->apiHelper->isLoaded());
+    }
+
     public function testRenderWithDefaultValues()
     {
         $expected = <<<EOF

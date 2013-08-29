@@ -69,6 +69,18 @@ class HelperException extends Exception
     }
 
     /**
+     * Gets the "INVALID EXTENSION" exception.
+     *
+     * @param string $name The "INVALID EXTENSION" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID EXTENSION" exception.
+     */
+    public static function invalidExtension($name)
+    {
+        return new static(sprintf('The extension helper "%s" does not exist.', $name));
+    }
+
+    /**
      * Gets the "INVALID MAP TYPE CONTROL STYLE" exception.
      *
      * @return \Ivory\GoogleMap\Exception\HelperException The "INVALID MAP TYPE CONTROL STYLE" exception.

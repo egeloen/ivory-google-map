@@ -1,5 +1,11 @@
 # UPGRADE
 
+### 1.1.0 to 1.2.0
+
+ * The `apiHelper` property/getter/setter of the `MapHelper` has been removed and the constuctor has been updated
+   accordingly.
+ * The `MapHelper::getLibraries` method has been moved to the `CoreExtensionHelper` class.
+
 ### 1.0.0 to 1.1.0
 
  * The `markers` property of the `Map` have been removed in favor of the `markerCluster` property.
