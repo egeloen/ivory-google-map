@@ -32,12 +32,18 @@ class ApiHelper extends AbstractHelper
     }
 
     /**
-     * Checks if the API is already loaded.
+     * Checks/Sets if the API is already loaded.
+     *
+     * @param boolean $loaded TRUE if the API is already loaded else FALSE.
      *
      * @return boolean TRUE if the API is already loaded else FALSE.
      */
-    public function isLoaded()
+    public function isLoaded($loaded = null)
     {
+        if ($loaded !== null) {
+            $this->loaded = (bool) $loaded;
+        }
+
         return $this->loaded;
     }
 
@@ -75,12 +81,13 @@ class ApiHelper extends AbstractHelper
             $this->jsonBuilder->setValue('[callback]', $callback, false);
         }
 
+        $callbackFunction = 'load_ivory_google_map_api';
+        $url = sprintf('//www.google.com/jsapi?callback=%s', $callbackFunction);
         $loader = sprintf('google.load("maps", "3", %s);', $this->jsonBuilder->build());
-        $url = '//www.google.com/jsapi?callback=load_ivory_google_map_api';
 
         $output = array();
         $output[] = '<script type="text/javascript">'.PHP_EOL;
-        $output[] = sprintf('function load_ivory_google_map_api () { %s };'.PHP_EOL, $loader);
+        $output[] = sprintf('function %s () { %s };'.PHP_EOL, $callbackFunction, $loader);
         $output[] = '</script>'.PHP_EOL;
         $output[] = sprintf('<script type="text/javascript" src="%s"></script>'.PHP_EOL, $url);
 

@@ -108,7 +108,11 @@ This function renders an html javascript block with all code needed for displayi
 ```
 
 The generated code is organized to be reusable in the client side. If you want to learn more, you can read this
-[dedicated documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/helper/container.md).
+[documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/helper/container.md).
+
+Additionally, the library allows you to add/render your own javascript libraires and append some code just before or
+after the generated code through extensions. If you want to learn more about that, you can read this
+[documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/helper/extension.md).
 
 ### Render the CSS (Optional)
 
