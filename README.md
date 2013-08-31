@@ -13,6 +13,7 @@ controls, overlays, events & services through the Google Map API v3.
       - [Overlays](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/index.md)
          - [Marker](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/marker.md)
          - [Info window](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/info_window.md)
+         - [Info box](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/info_box.md)
          - [Polyline](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/polyline.md)
          - [Encoded Polyline](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/encoded_polyline.md)
          - [Polygon](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/polygon.md)

@@ -33,23 +33,7 @@ class InfoWindowHelper extends AbstractHelper
      */
     public function render(InfoWindow $infoWindow, $renderPosition = true)
     {
-        $this->jsonBuilder->reset();
-
-        if ($renderPosition) {
-            $this->jsonBuilder->setValue('[position]', $infoWindow->getPosition()->getJavascriptVariable(), false);
-        }
-
-        if ($infoWindow->hasPixelOffset()) {
-            $this->jsonBuilder->setValue(
-                '[pixelOffset]',
-                $infoWindow->getPixelOffset()->getJavascriptVariable(),
-                false
-            );
-        }
-
-        $this->jsonBuilder
-            ->setValue('[content]', $infoWindow->getContent())
-            ->setValues($infoWindow->getOptions());
+        $this->doRender($infoWindow, $renderPosition);
 
         return sprintf(
             '%s = new google.maps.InfoWindow(%s);'.PHP_EOL,
@@ -79,5 +63,32 @@ class InfoWindowHelper extends AbstractHelper
         }
 
         return sprintf('%s.open(%s);'.PHP_EOL, $infoWindow->getJavascriptVariable(), $map->getJavascriptVariable());
+    }
+
+    /**
+     * Configures the json builder in order to render an info window.
+     *
+     * @param \Ivory\GoogleMap\Helper\Overlays\InfoWinfow $infoWindow     The info window.
+     * @param boolean                                     $renderPosition TRUE if the position is rendered else FALSE.
+     */
+    protected function doRender(InfoWindow $infoWindow, $renderPosition)
+    {
+        $this->jsonBuilder->reset();
+
+        if ($renderPosition) {
+            $this->jsonBuilder->setValue('[position]', $infoWindow->getPosition()->getJavascriptVariable(), false);
+        }
+
+        if ($infoWindow->hasPixelOffset()) {
+            $this->jsonBuilder->setValue(
+                '[pixelOffset]',
+                $infoWindow->getPixelOffset()->getJavascriptVariable(),
+                false
+            );
+        }
+
+        $this->jsonBuilder
+            ->setValue('[content]', $infoWindow->getContent())
+            ->setValues($infoWindow->getOptions());
     }
 }
