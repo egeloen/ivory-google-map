@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper;
 
+use Ivory\GoogleMap\Exception\HelperException;
 use Ivory\GoogleMap\Helper\Base\BoundHelper;
 use Ivory\GoogleMap\Helper\Base\CoordinateHelper;
 use Ivory\GoogleMap\Helper\Base\PointHelper;
@@ -23,6 +24,8 @@ use Ivory\GoogleMap\Helper\Controls\ScaleControlHelper;
 use Ivory\GoogleMap\Helper\Controls\StreetViewControlHelper;
 use Ivory\GoogleMap\Helper\Controls\ZoomControlHelper;
 use Ivory\GoogleMap\Helper\Events\EventManagerHelper;
+use Ivory\GoogleMap\Helper\Extension\CoreExtensionHelper;
+use Ivory\GoogleMap\Helper\Extension\ExtensionHelperInterface;
 use Ivory\GoogleMap\Helper\Layers\KMLLayerHelper;
 use Ivory\GoogleMap\Helper\MapTypeIdHelper;
 use Ivory\GoogleMap\Helper\Overlays\CircleHelper;
@@ -45,9 +48,6 @@ use Ivory\GoogleMap\Map;
  */
 class MapHelper extends AbstractHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\ApiHelper */
-    protected $apiHelper;
-
     /** @var \Ivory\GoogleMap\Helper\Base\CoordinateHelper */
     protected $coordinateHelper;
 
@@ -120,6 +120,9 @@ class MapHelper extends AbstractHelper
     /** @var \Ivory\GoogleMap\Helper\Events\EventManagerHelper */
     protected $eventManagerHelper;
 
+    /** @var array */
+    protected $extensionHelpers;
+
     /**
      * Creates a map helper.
      *
@@ -147,9 +150,9 @@ class MapHelper extends AbstractHelper
      * @param \Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper          $groundOverlayHelper      The ground overlay helper.
      * @param \Ivory\GoogleMap\Helper\Layers\KMLLayerHelper                 $kmlLayerHelper           The KML layer helper.
      * @param \Ivory\GoogleMap\Helper\Events\EventManagerHelper             $eventManagerHelper       The event manager helper.
+     * @param array                                                         $extensionHelpers         The extension helpers.
      */
     public function __construct(
-        ApiHelper $apiHelper = null,
         CoordinateHelper $coordinateHelper = null,
         BoundHelper $boundHelper = null,
         PointHelper $pointHelper = null,
@@ -173,13 +176,10 @@ class MapHelper extends AbstractHelper
         CircleHelper $circleHelper = null,
         GroundOverlayHelper $groundOverlayHelper = null,
         KMLLayerHelper $kmlLayerHelper = null,
-        EventManagerHelper $eventManagerHelper = null
+        EventManagerHelper $eventManagerHelper = null,
+        array $extensionHelpers = array()
     ) {
         parent::__construct();
-
-        if ($apiHelper === null) {
-            $apiHelper = new ApiHelper();
-        }
 
         if ($coordinateHelper === null) {
             $coordinateHelper = new CoordinateHelper();
@@ -277,7 +277,9 @@ class MapHelper extends AbstractHelper
             $eventManagerHelper = new EventManagerHelper();
         }
 
-        $this->setApiHelper($apiHelper);
+        if (empty($extensionHelpers)) {
+            $extensionHelpers['core'] = new CoreExtensionHelper();
+        }
 
         $this->setCoordinateHelper($coordinateHelper);
         $this->setBoundHelper($boundHelper);
@@ -307,26 +309,8 @@ class MapHelper extends AbstractHelper
         $this->setKmlLayerHelper($kmlLayerHelper);
 
         $this->setEventManagerHelper($eventManagerHelper);
-    }
 
-    /**
-     * Gets the API helper.
-     *
-     * @return \Ivory\GoogleMap\Helper\ApiHelper The API helper.
-     */
-    public function getApiHelper()
-    {
-        return $this->apiHelper;
-    }
-
-    /**
-     * Sets the API helper.
-     *
-     * @param \Ivory\GoogleMap\Helper\ApiHelper $apiHelper The API helper.
-     */
-    public function setApiHelper(ApiHelper $apiHelper)
-    {
-        $this->apiHelper = $apiHelper;
+        $this->setExtensionHelpers($extensionHelpers);
     }
 
     /**
@@ -812,6 +796,97 @@ class MapHelper extends AbstractHelper
     }
 
     /**
+     * Checks if the map helper has extensions.
+     *
+     * @return boolean TRUE if the map helper has extensions else FALSE.
+     */
+    public function hasExtensionHelpers()
+    {
+        return !empty($this->extensionHelpers);
+    }
+
+    /**
+     * Gets the map extension helpers.
+     *
+     * @return array The map extension helpers.
+     */
+    public function getExtensionHelpers()
+    {
+        return $this->extensionHelpers;
+    }
+
+    /**
+     * Sets the map extension helpers.
+     *
+     * @param array $extensionHelpers The map extension helpers.
+     */
+    public function setExtensionHelpers(array $extensionHelpers)
+    {
+        $this->extensionHelpers = array();
+
+        foreach ($extensionHelpers as $name => $extensionHelper) {
+            $this->setExtensionHelper($name, $extensionHelper);
+        }
+    }
+
+    /**
+     * Checks if the map helper has a specific extension helper.
+     *
+     * @param string $name The extension helper name.
+     *
+     * @return boolean TRUE if the map helper has a specific extension helper else FALSE.
+     */
+    public function hasExtensionHelper($name)
+    {
+        return isset($this->extensionHelpers[$name]);
+    }
+
+    /**
+     * Gets a specific extension helper.
+     *
+     * @param string $name The extension helper name.
+     *
+     * @throws \Ivory\GoogleMap\Exception\HelperException If the extension helper does not exist.
+     *
+     * @return \Ivory\GoogleMap\Helper\Extension\ExtensionHelperInterface The extension helper.
+     */
+    public function getExtensionHelper($name)
+    {
+        if (!$this->hasExtensionHelper($name)) {
+            throw HelperException::invalidExtension($name);
+        }
+
+        return $this->extensionHelpers[$name];
+    }
+
+    /**
+     * Sets an extension helper.
+     *
+     * @param string                                                     $name            The extension helper name.
+     * @param \Ivory\GoogleMap\Helper\Extension\ExtensionHelperInterface $extensionHelper The extension helper.
+     */
+    public function setExtensionHelper($name, ExtensionHelperInterface $extensionHelper)
+    {
+        $this->extensionHelpers[$name] = $extensionHelper;
+    }
+
+    /**
+     * Removes an extension helper.
+     *
+     * @param string $name The extension helper name.
+     *
+     * @throws \Ivory\GoogleMap\Exception\HelperException If the extension helper does not exist.
+     */
+    public function removeExtensionHelper($name)
+    {
+        if (!$this->hasExtensionHelper($name)) {
+            throw HelperException::invalidExtension($name);
+        }
+
+        unset($this->extensionHelpers[$name]);
+    }
+
+    /**
      * Renders the html (container & stylesheets).
      *
      * @param \Ivory\GoogleMap\Map $map The map.
@@ -879,31 +954,72 @@ class MapHelper extends AbstractHelper
     {
         $output = array();
 
-        if (!$this->apiHelper->isLoaded() && !$map->isAsync()) {
-            $output[] = $this->apiHelper->render($map->getLanguage(), $this->getLibraries($map));
+        if (!$map->isAsync()) {
+            $output[] = $this->renderJsLibraries($map);
         }
 
-        $output[] = $this->markerClusterHelper->renderLibraries($map->getMarkerCluster(), $map);
         $output[] = '<script type="text/javascript">'.PHP_EOL;
-
-        if ($map->isAsync()) {
-            $output[] = 'function load_ivory_google_map() {'.PHP_EOL;
-        }
-
+        $output[] = $this->renderJsBefore($map);
         $output[] = $this->renderJsContainer($map);
-
-        if ($map->isAsync()) {
-            $output[] = '}'.PHP_EOL;
-        }
-
+        $output[] = $this->renderJsAfter($map);
         $output[] = '</script>'.PHP_EOL;
 
-        if (!$this->apiHelper->isLoaded() && $map->isAsync()) {
-            $output[] = $this->apiHelper->render(
-                $map->getLanguage(),
-                $this->getLibraries($map),
-                'load_ivory_google_map'
-            );
+        if ($map->isAsync()) {
+            $output[] = $this->renderJsLibraries($map);
+        }
+
+        return implode('', $output);
+    }
+
+    /**
+     * Renders the javascript libraries.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The HTML output.
+     */
+    public function renderJsLibraries(Map $map)
+    {
+        $output = array();
+
+        foreach ($this->getExtensionHelpers() as $extension) {
+            $output[] = $extension->renderLibraries($map);
+        }
+
+        return implode('', $output);
+    }
+
+    /**
+     * Renders JS code just before the generated one.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The JS output.
+     */
+    public function renderJsBefore(Map $map)
+    {
+        $output = array();
+
+        foreach ($this->getExtensionHelpers() as $extension) {
+            $output[] = $extension->renderBefore($map);
+        }
+
+        return implode('', $output);
+    }
+
+    /**
+     * Renders JS code just after the generated one.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The JS output.
+     */
+    public function renderJsAfter(Map $map)
+    {
+        $output = array();
+
+        foreach (array_reverse($this->getExtensionHelpers()) as $extension) {
+            $output[] = $extension->renderAfter($map);
         }
 
         return implode('', $output);
@@ -1512,25 +1628,6 @@ class MapHelper extends AbstractHelper
             $map->getJavascriptVariable(),
             $map->getBound()->getJavascriptVariable()
         );
-    }
-
-    /**
-     * Gets the libraries needed for the map.
-     *
-     * @param \Ivory\GoogleMap\Map $map The map.
-     *
-     * @return array The map libraries.
-     */
-    protected function getLibraries(Map $map)
-    {
-        $libraries = $map->getLibraries();
-
-        $encodedPolylines = $map->getEncodedPolylines();
-        if (!empty($encodedPolylines)) {
-            $libraries[] = 'geometry';
-        }
-
-        return array_unique($libraries);
     }
 
     /**

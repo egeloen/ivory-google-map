@@ -56,11 +56,6 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertInstanceOf(
-            'Ivory\GoogleMap\Helper\ApiHelper',
-            $this->mapHelper->getApiHelper()
-        );
-
-        $this->assertInstanceOf(
             'Ivory\GoogleMap\Helper\Base\CoordinateHelper',
             $this->mapHelper->getCoordinateHelper()
         );
@@ -179,11 +174,19 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
             'Ivory\GoogleMap\Helper\Events\EventManagerHelper',
             $this->mapHelper->getEventManagerHelper()
         );
+
+        $this->assertTrue($this->mapHelper->hasExtensionHelpers());
+        $this->assertCount(1, $this->mapHelper->getExtensionHelpers());
+
+        $this->assertTrue($this->mapHelper->hasExtensionHelper('core'));
+        $this->assertInstanceOf(
+            'Ivory\GoogleMap\Helper\Extension\CoreExtensionHelper',
+            $this->mapHelper->getExtensionHelper('core')
+        );
     }
 
     public function testInitialState()
     {
-        $apiHelper = $this->getMock('Ivory\GoogleMap\Helper\ApiHelper');
         $coordinateHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\CoordinateHelper');
         $boundHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\BoundHelper');
         $pointHelper = $this->getMock('Ivory\GoogleMap\Helper\Base\PointHelper');
@@ -208,9 +211,9 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $groundOverlayHelper = $this->getMock('Ivory\GoogleMap\Helper\Overlays\GroundOverlayHelper');
         $kmlLayerHelper = $this->getMock('Ivory\GoogleMap\Helper\Layers\KMLLayerHelper');
         $eventManagerHelper = $this->getMock('Ivory\GoogleMap\Helper\Events\EventManagerHelper');
+        $extensionHelpers = array('foo' => $this->getMock('Ivory\GoogleMap\Helper\Extension\ExtensionHelperInterface'));
 
         $this->mapHelper = new MapHelper(
-            $apiHelper,
             $coordinateHelper,
             $boundHelper,
             $pointHelper,
@@ -234,10 +237,10 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
             $circleHelper,
             $groundOverlayHelper,
             $kmlLayerHelper,
-            $eventManagerHelper
+            $eventManagerHelper,
+            $extensionHelpers
         );
 
-        $this->assertSame($apiHelper, $this->mapHelper->getApiHelper());
         $this->assertSame($coordinateHelper, $this->mapHelper->getCoordinateHelper());
         $this->assertSame($boundHelper, $this->mapHelper->getBoundHelper());
         $this->assertSame($pointHelper, $this->mapHelper->getPointHelper());
@@ -262,6 +265,37 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($groundOverlayHelper, $this->mapHelper->getGroundOverlayHelper());
         $this->assertSame($kmlLayerHelper, $this->mapHelper->getKmlLayerHelper());
         $this->assertSame($eventManagerHelper, $this->mapHelper->getEventManagerHelper());
+        $this->assertSame($extensionHelpers, $this->mapHelper->getExtensionHelpers());
+    }
+
+    public function testRemoveExtensionHelperWithValidValue()
+    {
+        $extensionHelper = $this->getMock('Ivory\GoogleMap\Helper\Extension\ExtensionHelperInterface');
+        $this->mapHelper->setExtensionHelper('foo', $extensionHelper);
+
+        $this->assertTrue($this->mapHelper->hasExtensionHelper('foo'));
+
+        $this->mapHelper->removeExtensionHelper('foo');
+
+        $this->assertFalse($this->mapHelper->hasExtensionHelper('foo'));
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
+     * @expectedExceptionMessage The extension helper "foo" does not exist.
+     */
+    public function testRemoveExtensionHelperWithInvalidValue()
+    {
+        $this->mapHelper->removeExtensionHelper('foo');
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\HelperException
+     * @expectedExceptionMessage The extension helper "foo" does not exist.
+     */
+    public function testGetExtensionHelperWithInvalidValue()
+    {
+        $this->mapHelper->getExtensionHelper('foo');
     }
 
     public function testRenderHtmlContainer()
