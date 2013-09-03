@@ -13,6 +13,7 @@ namespace Ivory\GoogleMap\Services;
 
 use Buzz\Browser;
 use Ivory\GoogleMap\Exception\ServiceException;
+use Ivory\GoogleMap\Services\Utils\XmlParser;
 
 /**
  * Abstract class for accesing google API.
@@ -33,25 +34,38 @@ abstract class AbstractService
     /** @var string */
     protected $format;
 
+    /** @var \Ivory\GoogleMap\Services\Utils\XmlParser */
+    protected $xmlParser;
+
     /**
      * Creates a service.
      *
-     * @param string        $url     The service url.
-     * @param boolean       $https   TRUE if the service uses HTTPS else FALSE.
-     * @param string        $format  Format used by the service.
-     * @param \Buzz\Browser $browser Buzz browser used by the service.
+     * @param string                                    $url       The service url.
+     * @param boolean                                   $https     TRUE if the service uses HTTPS else FALSE.
+     * @param string                                    $format    Format used by the service.
+     * @param \Buzz\Browser                             $browser   Buzz browser used by the service.
+     * @param \Ivory\GoogleMap\Services\Utils\XmlParser $xmlParser The xml parser.
      */
-    public function __construct($url, $https = false, $format = 'json', Browser $browser = null)
-    {
-        $this->setUrl($url);
-        $this->setHttps($https);
-        $this->setFormat($format);
-
+    public function __construct(
+        $url,
+        $https = false,
+        $format = 'json',
+        Browser $browser = null,
+        XmlParser $xmlParser = null
+    ) {
         if ($browser === null) {
             $browser = new Browser();
         }
 
+        if ($xmlParser === null) {
+            $xmlParser = new XmlParser();
+        }
+
+        $this->setUrl($url);
+        $this->setHttps($https);
+        $this->setFormat($format);
         $this->setBrowser($browser);
+        $this->setXmlParser($xmlParser);
     }
 
     /**
@@ -154,5 +168,25 @@ abstract class AbstractService
         }
 
         $this->format = $format;
+    }
+
+    /**
+     * Gets the xml parser.
+     *
+     * @return \Ivory\GoogleMap\Services\Utils\XmlParser The xml parser.
+     */
+    public function getXmlParser()
+    {
+        return $this->xmlParser;
+    }
+
+    /**
+     * Sets the xml parser.
+     *
+     * @param \Ivory\GoogleMap\Services\Geocoding\XmlParser $xmlParser The xml parser.
+     */
+    public function setXmlParser(XmlParser $xmlParser)
+    {
+        $this->xmlParser = $xmlParser;
     }
 }
