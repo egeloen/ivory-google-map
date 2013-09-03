@@ -45,20 +45,23 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('http://foo', $this->service->getUrl());
         $this->assertFalse($this->service->isHttps());
         $this->assertSame('json', $this->service->getFormat());
+        $this->assertInstanceOf('Ivory\GoogleMap\Services\Utils\XmlParser', $this->service->getXmlParser());
     }
 
     public function testInitialState()
     {
         $browser = $this->getMock('Buzz\Browser');
+        $xmlParser = $this->getMock('Ivory\GoogleMap\Services\Utils\XmlParser');
 
         $this->service = $this->getMockBuilder('Ivory\GoogleMap\Services\AbstractService')
-            ->setConstructorArgs(array('http://bar', true, 'xml', $browser))
+            ->setConstructorArgs(array('http://bar', true, 'xml', $browser, $xmlParser))
             ->getMockForAbstractClass();
 
         $this->assertSame($browser, $this->service->getBrowser());
         $this->assertSame('https://bar', $this->service->getUrl());
         $this->assertTrue($this->service->isHttps());
         $this->assertSame('xml', $this->service->getFormat());
+        $this->assertSame($xmlParser, $this->service->getXmlParser());
     }
 
     public function testHttps()
@@ -108,5 +111,13 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     public function testFormatWithInvalidValue()
     {
         $this->service->setFormat('foo');
+    }
+
+    public function testXmlParser()
+    {
+        $xmlParser = $this->getMock('Ivory\GoogleMap\Services\Utils\XmlParser');
+        $this->service->setXmlParser($xmlParser);
+
+        $this->assertSame($xmlParser, $this->service->getXmlParser());
     }
 }

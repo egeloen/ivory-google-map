@@ -194,13 +194,17 @@ class Directions extends AbstractService
      *
      * @param string $response The directions API XML response.
      *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException Currently, the XML format is not supported...
-     *
      * @return \stdClass The parsed & normalized directions response.
      */
     protected function parseXML($response)
     {
-        throw DirectionsException::methodNotSupported(__METHOD__);
+        $rules = array(
+            'leg'   => 'legs',
+            'route' => 'routes',
+            'step'  => 'steps',
+        );
+
+        return $this->xmlParser->parse($response, $rules);
     }
 
     /**
@@ -265,6 +269,16 @@ class Directions extends AbstractService
 
         $directionsLegs = $this->buildDirectionsLegs($directionsRoute->legs);
         $overviewPolyline = new EncodedPolyline($directionsRoute->overview_polyline->points);
+
+        // The warnings & waypoint_order properties can not be defined in the xml format.
+        if (!isset($directionsRoute->warnings)) {
+            $directionsRoute->warnings = array();
+        }
+
+        if (!isset($directionsRoute->waypoint_order)) {
+            $directionsRoute->waypoint_order = array();
+        }
+
         $warnings = $directionsRoute->warnings;
         $waypointOrder = $directionsRoute->waypoint_order;
 
@@ -312,6 +326,12 @@ class Directions extends AbstractService
         $startAddress = $directionsLeg->start_address;
         $startLocation = new Coordinate($directionsLeg->start_location->lat, $directionsLeg->start_location->lng);
         $steps = $this->buildDirectionsSteps($directionsLeg->steps);
+
+        // The via_waypoint property can not be defined in the xml format.
+        if (!isset($directionsLeg->via_waypoint)) {
+            $directionsLeg->via_waypoint = array();
+        }
+
         $viaWaypoint = $directionsLeg->via_waypoint;
 
         return new DirectionsLeg(

@@ -185,13 +185,13 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($response->getRoutes());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     */
     public function testRouteWithXmlFormat()
     {
         $this->directions->setFormat('xml');
-        $this->directions->route('Lille', 'Paris');
+        $response = $this->directions->route('Lille', 'Paris');
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
     }
 
     /**

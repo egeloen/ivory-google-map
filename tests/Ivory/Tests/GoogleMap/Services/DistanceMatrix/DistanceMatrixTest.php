@@ -158,13 +158,21 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     */
     public function testProcessWithXmlFormat()
     {
         $this->service->setFormat('xml');
-        $this->service->process(array('Vancouver BC'), array('San Francisco'));
+        $response = $this->service->process(array('Vancouver BC'), array('San Francisco'));
+
+        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertCount(1, $response->getOrigins());
+        $this->assertCount(1, $response->getDestinations());
+
+        $rows = $response->getRows();
+        $this->assertCount(1, $rows);
+
+        $elements = $rows[0]->getElements();
+        $this->assertCount(1, $elements);
+        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
     }
 
     /**
