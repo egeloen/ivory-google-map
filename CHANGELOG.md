@@ -2,6 +2,7 @@
 
 ### 1.2.0 (????-??-??)
 
+ * edcea0a - [Services] Add xml support
  * 0305bbc - [Helper] Add InfoBox support
  * 3089dce - [Helper] Add extension support
  * 472461d - [Helper][Utils] Make JsonBuilder::setValues more readable
