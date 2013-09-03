@@ -21,6 +21,7 @@ use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResult;
+use Ivory\GoogleMap\Services\Utils\XmlParser;
 
 /**
  * Geocoder provider.
@@ -38,6 +39,9 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
     /** @var string */
     protected $format;
 
+    /** @var \Ivory\GoogleMap\Services\Utils\XmlParser */
+    protected $xmlParser;
+
     /**
      * {@inheritdoc}
      */
@@ -45,9 +49,10 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
     {
         parent::__construct($adapter, $locale);
 
-        $this->url = 'http://maps.googleapis.com/maps/api/geocode';
-        $this->https = false;
-        $this->format = 'json';
+        $this->setUrl('http://maps.googleapis.com/maps/api/geocode');
+        $this->setHttps(false);
+        $this->setFormat('json');
+        $this->setXmlParser(new XmlParser());
     }
 
     /**
@@ -130,6 +135,26 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         }
 
         $this->format = $format;
+    }
+
+    /**
+     * Gets the xml parser.
+     *
+     * @return \Ivory\GoogleMap\Services\Utils\XmlParser The xml parser.
+     */
+    public function getXmlParser()
+    {
+        return $this->xmlParser;
+    }
+
+    /**
+     * Sets the xml parser.
+     *
+     * @param \Ivory\GoogleMap\Services\Geocoding\XmlParser $xmlParser The xml parser.
+     */
+    public function setXmlParser(XmlParser $xmlParser)
+    {
+        $this->xmlParser = $xmlParser;
     }
 
     /**
@@ -255,13 +280,17 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
      *
      * @param string $response The response.
      *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingException Currently, the method is not supported...
-     *
      * @return \stdClass The parsed & normalized response.
      */
     protected function parseXML($response)
     {
-        throw GeocodingException::methodNotSupported(__METHOD__);
+        $rules = array(
+            'address_component' => 'address_components',
+            'type'              => 'types',
+            'result'            => 'results',
+        );
+
+        return $this->xmlParser->parse($response, $rules);
     }
 
     /**

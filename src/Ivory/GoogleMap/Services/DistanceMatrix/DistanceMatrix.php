@@ -170,13 +170,18 @@ class DistanceMatrix extends AbstractService
      *
      * @param string $response The distance matrix API XML response.
      *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException Currently, the XML format is not supported...
-     *
      * @return \stdClass The parsed & normalized distance matrix response.
      */
     protected function parseXML($response)
     {
-        throw DistanceMatrixException::methodNotSupported(__METHOD__);
+        $rules = array(
+            'destination_address' => 'destination_addresses',
+            'element'             => 'elements',
+            'origin_address'      => 'origin_addresses',
+            'row'                 => 'rows',
+        );
+
+        return $this->xmlParser->parse($response, $rules);
     }
 
     /**

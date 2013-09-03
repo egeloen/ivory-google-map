@@ -20,15 +20,4 @@ use Exception as BaseException;
  */
 class Exception extends BaseException
 {
-    /**
-     * Gets the "METHOD NOT SUPPORTED" exception.
-     *
-     * @param string $method The method name.
-     *
-     * @return \Ivory\GoogleMap\Exception\Exception The "METHOD NOT SUPPORTED" exception.
-     */
-    public static function methodNotSupported($method)
-    {
-        return new static(sprintf('The method "%s" is not supported.', $method));
-    }
 }

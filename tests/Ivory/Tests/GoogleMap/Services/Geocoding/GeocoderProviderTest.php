@@ -47,6 +47,7 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('http://maps.googleapis.com/maps/api/geocode', $this->geocoderProvider->getUrl());
         $this->assertFalse($this->geocoderProvider->isHttps());
         $this->assertSame('json', $this->geocoderProvider->getFormat());
+        $this->assertInstanceOf('Ivory\GoogleMap\Services\Utils\XmlParser', $this->geocoderProvider->getXmlParser());
     }
 
     public function testUrlWithValieValue()
@@ -112,6 +113,14 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $this->geocoderProvider->setFormat('foo');
     }
 
+    public function testXmlParser()
+    {
+        $xmlParser = $this->getMock('Ivory\GoogleMap\Services\Utils\XmlParser');
+        $this->geocoderProvider->setXmlParser($xmlParser);
+
+        $this->assertSame($xmlParser, $this->geocoderProvider->getXmlParser());
+    }
+
     public function testGeocodedDataWithAddress()
     {
         $response = $this->geocoderProvider->getGeocodedData('Paris');
@@ -148,15 +157,15 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The method "Ivory\GoogleMap\Services\Geocoding\GeocoderProvider::parseXML" is not
-     * supported.
-     */
     public function testGeocodedDataWithXmlFormat()
     {
         $this->geocoderProvider->setFormat('xml');
-        $this->geocoderProvider->getGeocodedData('Paris');
+        $response = $this->geocoderProvider->getGeocodedData('Paris');
+
+        $this->assertInstanceOf('Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse', $response);
+
+        $this->assertNotEmpty($response->getResults());
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
     }
 
     /**
