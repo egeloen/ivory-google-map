@@ -2,6 +2,7 @@
 
 ### 1.2.0 (????-??-??)
 
+ * 3fd9afb - [Asset] Enforce javascript variable unicity (Fixes #48)
  * edcea0a - [Services] Add xml support
  * 0305bbc - [Helper] Add InfoBox support
  * 3089dce - [Helper] Add extension support
