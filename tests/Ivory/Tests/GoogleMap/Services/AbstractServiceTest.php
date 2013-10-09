@@ -21,13 +21,18 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\GoogleMap\Services\AbstractService */
     protected $service;
 
+    /** @var \Widop\HttpAdapter\HttpAdapterInterface */
+    protected $httpAdapter;
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
+        $this->httpAdapter = $this->getMock('Widop\HttpAdapter\HttpAdapterInterface');
+
         $this->service = $this->getMockBuilder('Ivory\GoogleMap\Services\AbstractService')
-            ->setConstructorArgs(array('http://foo'))
+            ->setConstructorArgs(array($this->httpAdapter, 'http://foo'))
             ->getMockForAbstractClass();
     }
 
@@ -36,12 +41,13 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->httpAdapter);
         unset($this->service);
     }
 
     public function testDefaultState()
     {
-        $this->assertInstanceOf('Buzz\Browser', $this->service->getBrowser());
+        $this->assertSame($this->httpAdapter, $this->service->getHttpAdapter());
         $this->assertSame('http://foo', $this->service->getUrl());
         $this->assertFalse($this->service->isHttps());
         $this->assertSame('json', $this->service->getFormat());
@@ -50,18 +56,25 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
-        $browser = $this->getMock('Buzz\Browser');
         $xmlParser = $this->getMock('Ivory\GoogleMap\Services\Utils\XmlParser');
 
         $this->service = $this->getMockBuilder('Ivory\GoogleMap\Services\AbstractService')
-            ->setConstructorArgs(array('http://bar', true, 'xml', $browser, $xmlParser))
+            ->setConstructorArgs(array($this->httpAdapter, 'http://bar', true, 'xml', $xmlParser))
             ->getMockForAbstractClass();
 
-        $this->assertSame($browser, $this->service->getBrowser());
+        $this->assertSame($this->httpAdapter, $this->service->getHttpAdapter());
         $this->assertSame('https://bar', $this->service->getUrl());
         $this->assertTrue($this->service->isHttps());
         $this->assertSame('xml', $this->service->getFormat());
         $this->assertSame($xmlParser, $this->service->getXmlParser());
+    }
+
+    public function testHttpAdapter()
+    {
+        $httpAdapter = $this->getMock('Widop\HttpAdapter\HttpAdapterInterface');
+        $this->service->setHttpAdapter($httpAdapter);
+
+        $this->assertSame($httpAdapter, $this->service->getHttpAdapter());
     }
 
     public function testHttps()

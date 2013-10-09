@@ -12,8 +12,9 @@ or as latitude/longitude coordinates. The Directions API can return multi-part d
 
 ``` php
 use Ivory\GoogleMap\Services\Directions\Directions;
+use Widop\HttpAdapter\CurlHttpAdapter;
 
-$directions = new Directions();
+$directions = new Directions(new CurlHttpAdapter());
 ```
 
 ## Request a direction

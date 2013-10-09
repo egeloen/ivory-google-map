@@ -12,8 +12,9 @@ single origin and destination to the
 
 ``` php
 use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrix;
+use Widop\HttpAdapter\CurlHttpAdapter;
 
-$distanceMatrix = new DistanceMatrix();
+$distanceMatrix = new DistanceMatrix(new CurlHttpAdapter());
 ```
 
 ## Processes a request
