@@ -61,7 +61,7 @@ class JsMarkerClusterHelperTest extends \PHPUnit_Framework_TestCase
         $marker->getPosition()->setJavascriptVariable('marker_position');
 
         $expected = <<<EOF
-marker_cluster = new MarkerClusterer(map, map_container.functions.to_array(map_container.markers), {});
+marker_cluster = new MarkerClusterer(map, map_container.functions.to_array(map_container.markers), []);
 
 EOF;
 

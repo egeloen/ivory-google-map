@@ -27,6 +27,10 @@ class JsMarkerClusterHelper extends DefaultMarkerClusterHelper
      */
     public function render(MarkerCluster $markerCluster, Map $map)
     {
+        $this->jsonBuilder
+            ->reset()
+            ->setValues($markerCluster->getOptions());
+
         return sprintf('%s = new MarkerClusterer(%s, %s, %s);'.PHP_EOL,
             $markerCluster->getJavascriptVariable(),
             $map->getJavascriptVariable(),
@@ -35,7 +39,7 @@ class JsMarkerClusterHelper extends DefaultMarkerClusterHelper
                 $this->getJsContainerName($map),
                 $this->getJsContainerName($map)
             ),
-            json_encode($markerCluster->getOptions(), JSON_FORCE_OBJECT)
+            $this->jsonBuilder->build()
         );
     }
 
