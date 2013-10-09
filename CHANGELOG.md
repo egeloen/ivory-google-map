@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.3.0 (????-??-??)
+
+ * 0520430 - [Service] Replace kriswallsmith/buzz by widop/http-adapter
+
 ### 1.2.0 (2013-10-09)
 
  * 94a73a1 - [Helper] Remove FORCE_JSON_ENCODE for js marker cluster + rely on json builder
