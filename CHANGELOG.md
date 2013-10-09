@@ -2,7 +2,8 @@
 
 ### 1.2.0 (????-??-??)
 
- * 3fd9afb - [Asset] Enforce javascript variable unicity (Fixes #48)
+ * 94a73a1 - [Helper] Remove FORCE_JSON_ENCODE for js marker cluster + rely on json builder
+ * 3fd9afb - [Asset] Enforce javascript variable unicity
  * edcea0a - [Services] Add xml support
  * 0305bbc - [Helper] Add InfoBox support
  * 3089dce - [Helper] Add extension support
