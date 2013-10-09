@@ -11,9 +11,9 @@
 
 namespace Ivory\GoogleMap\Services;
 
-use Buzz\Browser;
 use Ivory\GoogleMap\Exception\ServiceException;
 use Ivory\GoogleMap\Services\Utils\XmlParser;
+use Widop\HttpAdapter\HttpAdapterInterface;
 
 /**
  * Abstract class for accesing google API.
@@ -22,8 +22,8 @@ use Ivory\GoogleMap\Services\Utils\XmlParser;
  */
 abstract class AbstractService
 {
-    /** @var \Buzz\Browser */
-    protected $browser;
+    /** @var \Widop\HttpAdapter\HttpAdapterInterface */
+    protected $httpAdapter;
 
     /** @var string */
     protected $url;
@@ -40,52 +40,48 @@ abstract class AbstractService
     /**
      * Creates a service.
      *
-     * @param string                                    $url       The service url.
-     * @param boolean                                   $https     TRUE if the service uses HTTPS else FALSE.
-     * @param string                                    $format    Format used by the service.
-     * @param \Buzz\Browser                             $browser   Buzz browser used by the service.
-     * @param \Ivory\GoogleMap\Services\Utils\XmlParser $xmlParser The xml parser.
+     * @param \Widop\HttpAdapter\HttpAdapterInterface   $httpAdapter The http adapter.
+     * @param string                                    $url         The service url.
+     * @param boolean                                   $https       TRUE if the service uses HTTPS else FALSE.
+     * @param string                                    $format      Format used by the service.
+     * @param \Ivory\GoogleMap\Services\Utils\XmlParser $xmlParser   The xml parser.
      */
     public function __construct(
+        HttpAdapterInterface $httpAdapter,
         $url,
         $https = false,
         $format = 'json',
-        Browser $browser = null,
         XmlParser $xmlParser = null
     ) {
-        if ($browser === null) {
-            $browser = new Browser();
-        }
-
         if ($xmlParser === null) {
             $xmlParser = new XmlParser();
         }
 
+        $this->setHttpAdapter($httpAdapter);
         $this->setUrl($url);
         $this->setHttps($https);
         $this->setFormat($format);
-        $this->setBrowser($browser);
         $this->setXmlParser($xmlParser);
     }
 
     /**
-     * Gets the buzz browser.
+     * Gets the http adapter.
      *
-     * @return \Buzz\Browser The buzz browser.
+     * @return \Widop\HttpAdapter\HttpAdapterInterface The http adapter.
      */
-    public function getBrowser()
+    public function getHttpAdapter()
     {
-        return $this->browser;
+        return $this->httpAdapter;
     }
 
     /**
-     * Sets the buzz browser.
+     * Sets the http adapter.
      *
-     * @param \Buzz\Browser $browser The buzz browser.
+     * @param \Widop\HttpAdapter\HttpAdapterInterface $httpAdapter The http adapter.
      */
-    public function setBrowser(Browser $browser)
+    public function setHttpAdapter(HttpAdapterInterface $httpAdapter)
     {
-        $this->browser = $browser;
+        $this->httpAdapter = $httpAdapter;
     }
 
     /**

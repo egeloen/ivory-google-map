@@ -1,5 +1,12 @@
 # UPGRADE
 
+### 1.2.0 to 1.3.0
+
+ * The `buzz` property/getter/setter of the `AbstractService` has been removed in favor of the http adapter which
+   allows to use buzz, curl, guzzle, stream, ...
+ * The `AbstractService` constructor has been updated in order to replace the buzz argument by the http adapter one
+   which is now first and mandatory.
+
 ### 1.1.0 to 1.2.0
 
  * The `apiHelper` property/getter/setter of the `MapHelper` has been removed and the constuctor has been updated
