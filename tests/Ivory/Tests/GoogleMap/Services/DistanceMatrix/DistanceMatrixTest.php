@@ -18,6 +18,7 @@ use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixStatus;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
 use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrix;
+use Widop\HttpAdapter\CurlHttpAdapter;
 
 /**
  * Distance matrix test.
@@ -34,7 +35,7 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->service = new DistanceMatrix();
+        $this->service = new DistanceMatrix(new CurlHttpAdapter());
     }
 
     /**

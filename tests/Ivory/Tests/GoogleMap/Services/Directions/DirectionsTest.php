@@ -17,6 +17,7 @@ use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
+use Widop\HttpAdapter\CurlHttpAdapter;
 
 /**
  * Directions test.
@@ -35,7 +36,7 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
     {
         sleep(2);
 
-        $this->directions = new Directions();
+        $this->directions = new Directions(new CurlHttpAdapter());
     }
 
     /**
