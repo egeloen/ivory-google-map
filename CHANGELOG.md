@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.2.0 (????-??-??)
+### 1.2.0 (2013-10-09)
 
  * 94a73a1 - [Helper] Remove FORCE_JSON_ENCODE for js marker cluster + rely on json builder
  * 3fd9afb - [Asset] Enforce javascript variable unicity
