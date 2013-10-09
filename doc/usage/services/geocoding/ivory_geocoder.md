@@ -1,18 +1,26 @@
 # Ivory Geocoder
 
-Warning, if you want to use the Ivory Geocoder, you need to use the Ivory Provider otherwise there is not benefit.
+Warning, if you want to use the Ivory Geocoder, you need to use the Ivory Provider otherwise there is no benefit.
 
 ## Geocode a position
 
 The library allows you to request the google map geocoding API by two different ways. You have the choice between a
 simple address (IP or street) or an advanced geocoder request.
 
+If you want to use it with a business account, you can read this
+[documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/business_account.md).
+
 ### Simple address
 
 ``` php
 use Ivory\GoogleMap\Services\Geocoding\Geocoder;
+use Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
+use Geocoder\HttpAdapter\CurlHttpAdapter;
 
-use $geocoder = new Geocoder();
+$geocoder = new Geocoder();
+$geocoder->registerProviders(array(
+    new GeocoderProvider(new CurlHttpAdapter()),
+));
 
 // Geocode an address
 $response = $geocoder->geocode('1600 Amphitheatre Parkway, Mountain View, CA');

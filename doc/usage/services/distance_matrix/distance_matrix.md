@@ -1,5 +1,8 @@
 # Distance Matrix API
 
+The Distance Matrix API uses [widop/http-adapter](http://github.com/widop/http-adapter) which is a PHP 5.3 library for
+issuing http requests.
+
 The Google Distance Matrix API is a service that provides travel distance and time for a matrix of origins and
 destinations. The information returned is based on the recommended route between start and end points, as calculated
 by the Google Maps API, and consists of rows containing duration and distance values for each pair.
@@ -16,6 +19,9 @@ use Widop\HttpAdapter\CurlHttpAdapter;
 
 $distanceMatrix = new DistanceMatrix(new CurlHttpAdapter());
 ```
+
+If you want to use it with a business account, you can read this
+[documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/business_account.md).
 
 ## Processes a request
 

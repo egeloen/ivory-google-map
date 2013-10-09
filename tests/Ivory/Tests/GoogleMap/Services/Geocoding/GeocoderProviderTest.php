@@ -48,6 +48,8 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->geocoderProvider->isHttps());
         $this->assertSame('json', $this->geocoderProvider->getFormat());
         $this->assertInstanceOf('Ivory\GoogleMap\Services\Utils\XmlParser', $this->geocoderProvider->getXmlParser());
+        $this->assertFalse($this->geocoderProvider->hasBusinessAccount());
+        $this->assertNull($this->geocoderProvider->getBusinessAccount());
     }
 
     public function testUrlWithValieValue()
@@ -119,6 +121,23 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $this->geocoderProvider->setXmlParser($xmlParser);
 
         $this->assertSame($xmlParser, $this->geocoderProvider->getXmlParser());
+    }
+
+    public function testBusinessAccount()
+    {
+        $businessAccount = $this->getMockBuilder('Ivory\GoogleMap\Services\BusinessAccount')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->geocoderProvider->setBusinessAccount($businessAccount);
+
+        $this->assertTrue($this->geocoderProvider->hasBusinessAccount());
+        $this->assertSame($businessAccount, $this->geocoderProvider->getBusinessAccount());
+
+        $this->geocoderProvider->setBusinessAccount();
+
+        $this->assertFalse($this->geocoderProvider->hasBusinessAccount());
+        $this->assertNull($this->geocoderProvider->getBusinessAccount());
     }
 
     public function testGeocodedDataWithAddress()
@@ -199,6 +218,38 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($response->getResults());
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+    }
+
+    public function testSignUrlWithoutBusinessAccount()
+    {
+        $method = new \ReflectionMethod($this->geocoderProvider, 'signUrl');
+        $method->setAccessible(true);
+
+        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
+
+        $this->assertSame($url, $method->invoke($this->geocoderProvider, $url));
+    }
+
+    public function testSignUrlWithBusinessAccount()
+    {
+        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
+
+        $businessAccount = $this->getMockBuilder('Ivory\GoogleMap\Services\BusinessAccount')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $businessAccount
+            ->expects($this->once())
+            ->method('signUrl')
+            ->with($this->equalTo($url))
+            ->will($this->returnValue('url'));
+
+        $this->geocoderProvider->setBusinessAccount($businessAccount);
+
+        $method = new \ReflectionMethod($this->geocoderProvider, 'signUrl');
+        $method->setAccessible(true);
+
+        $this->assertSame('url', $method->invoke($this->geocoderProvider, $url));
     }
 
     public function testName()

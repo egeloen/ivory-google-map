@@ -176,6 +176,38 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
     }
 
+    public function testSignUrlWithoutBusinessAccount()
+    {
+        $method = new \ReflectionMethod($this->service, 'signUrl');
+        $method->setAccessible(true);
+
+        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
+
+        $this->assertSame($url, $method->invoke($this->service, $url));
+    }
+
+    public function testSignUrlWithBusinessAccount()
+    {
+        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
+
+        $businessAccount = $this->getMockBuilder('Ivory\GoogleMap\Services\BusinessAccount')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $businessAccount
+            ->expects($this->once())
+            ->method('signUrl')
+            ->with($this->equalTo($url))
+            ->will($this->returnValue('url'));
+
+        $this->service->setBusinessAccount($businessAccount);
+
+        $method = new \ReflectionMethod($this->service, 'signUrl');
+        $method->setAccessible(true);
+
+        $this->assertSame('url', $method->invoke($this->service, $url));
+    }
+
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
      * @expectedExceptionMessage The process arguments are invalid.

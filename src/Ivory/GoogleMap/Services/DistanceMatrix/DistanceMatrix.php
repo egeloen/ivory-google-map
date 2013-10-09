@@ -137,7 +137,9 @@ class DistanceMatrix extends AbstractService
 
         $httpQuery['sensor'] = $distanceMatrixRequest->hasSensor() ? 'true' : 'false';
 
-        return sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
+        $url = sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
+
+        return $this->signUrl($url);
     }
 
     /**
