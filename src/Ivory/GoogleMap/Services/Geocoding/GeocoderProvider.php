@@ -17,6 +17,7 @@ use Geocoder\Provider\ProviderInterface;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\GeocodingException;
+use Ivory\GoogleMap\Services\BusinessAccount;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderAddressComponent;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
@@ -41,6 +42,9 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
 
     /** @var \Ivory\GoogleMap\Services\Utils\XmlParser */
     protected $xmlParser;
+
+    /** @var \Ivory\GoogleMap\Services\BusinessAccount */
+    protected $businessAccount;
 
     /**
      * {@inheritdoc}
@@ -158,6 +162,36 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
+     * Checks if the geocoder provider has a business account.
+     *
+     * @return boolean TRUE if the geocoder provider has a business account else FALSE.
+     */
+    public function hasBusinessAccount()
+    {
+        return $this->businessAccount !== null;
+    }
+
+    /**
+     * Gets the business account.
+     *
+     * @return \Ivory\GoogleMap\Services\BusinessAccount The business account.
+     */
+    public function getBusinessAccount()
+    {
+        return $this->businessAccount;
+    }
+
+    /**
+     * Sets the business account.
+     *
+     * @param \Ivory\GoogleMap\Services\BusinessAccount $businessAccount The business account.
+     */
+    public function setBusinessAccount(BusinessAccount $businessAccount = null)
+    {
+        $this->businessAccount = $businessAccount;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @throws \Ivory\GoogleMap\Exception\GeocodingException If the request is not valid.
@@ -244,7 +278,25 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
 
         $httpQuery['sensor'] = $geocoderRequest->hasSensor() ? 'true' : 'false';
 
-        return sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
+        $url = sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
+
+        return $this->signUrl($url);
+    }
+
+    /**
+     * Sign an url for business account.
+     *
+     * @param string $url The url.
+     *
+     * @return string The signed url.
+     */
+    protected function signUrl($url)
+    {
+        if (!$this->hasBusinessAccount()) {
+            return $url;
+        }
+
+        return $this->businessAccount->signUrl($url);
     }
 
     /**

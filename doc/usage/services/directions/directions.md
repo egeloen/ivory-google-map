@@ -1,7 +1,7 @@
 # Directions API
 
-The Directions API uses [Buzz](http://github.com/kriswallsmith/Buzz) which is a PHP 5.3 library for issuing http
-request.
+The Directions API uses [widop/http-adapter](http://github.com/widop/http-adapter) which is a PHP 5.3 library for
+issuing http requests.
 
 The Google Directions API is a service that calculates directions between locations using an HTTP request. You can
 search for directions for several modes of transportation, include transit, driving, walking or cycling. Directions
@@ -16,6 +16,9 @@ use Widop\HttpAdapter\CurlHttpAdapter;
 
 $directions = new Directions(new CurlHttpAdapter());
 ```
+
+If you want to use it with a business account, you can read this
+[documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/business_account.md).
 
 ## Request a direction
 

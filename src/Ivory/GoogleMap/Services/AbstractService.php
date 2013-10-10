@@ -37,21 +37,26 @@ abstract class AbstractService
     /** @var \Ivory\GoogleMap\Services\Utils\XmlParser */
     protected $xmlParser;
 
+    /** @var \Ivory\GoogleMap\Services\BusinessAccount */
+    protected $businessAccount;
+
     /**
      * Creates a service.
      *
-     * @param \Widop\HttpAdapter\HttpAdapterInterface   $httpAdapter The http adapter.
-     * @param string                                    $url         The service url.
-     * @param boolean                                   $https       TRUE if the service uses HTTPS else FALSE.
-     * @param string                                    $format      Format used by the service.
-     * @param \Ivory\GoogleMap\Services\Utils\XmlParser $xmlParser   The xml parser.
+     * @param \Widop\HttpAdapter\HttpAdapterInterface   $httpAdapter     The http adapter.
+     * @param string                                    $url             The service url.
+     * @param boolean                                   $https           TRUE if the service uses HTTPS else FALSE.
+     * @param string                                    $format          Format used by the service.
+     * @param \Ivory\GoogleMap\Services\Utils\XmlParser $xmlParser       The xml parser.
+     * @param \Ivory\GoogleMap\Services\BusinessAccount $businessAccount The business account.
      */
     public function __construct(
         HttpAdapterInterface $httpAdapter,
         $url,
         $https = false,
         $format = 'json',
-        XmlParser $xmlParser = null
+        XmlParser $xmlParser = null,
+        BusinessAccount $businessAccount = null
     ) {
         if ($xmlParser === null) {
             $xmlParser = new XmlParser();
@@ -62,6 +67,7 @@ abstract class AbstractService
         $this->setHttps($https);
         $this->setFormat($format);
         $this->setXmlParser($xmlParser);
+        $this->setBusinessAccount($businessAccount);
     }
 
     /**
@@ -184,5 +190,51 @@ abstract class AbstractService
     public function setXmlParser(XmlParser $xmlParser)
     {
         $this->xmlParser = $xmlParser;
+    }
+
+    /**
+     * Checks if the service has a business account.
+     *
+     * @return boolean TRUE if the service has a business account else FALSE.
+     */
+    public function hasBusinessAccount()
+    {
+        return $this->businessAccount !== null;
+    }
+
+    /**
+     * Gets the business account.
+     *
+     * @return \Ivory\GoogleMap\Services\BusinessAccount The business account.
+     */
+    public function getBusinessAccount()
+    {
+        return $this->businessAccount;
+    }
+
+    /**
+     * Sets the business account.
+     *
+     * @param \Ivory\GoogleMap\Services\BusinessAccount $businessAccount The business account.
+     */
+    public function setBusinessAccount(BusinessAccount $businessAccount = null)
+    {
+        $this->businessAccount = $businessAccount;
+    }
+
+    /**
+     * Sign an url for business account.
+     *
+     * @param string $url The url.
+     *
+     * @return string The signed url.
+     */
+    protected function signUrl($url)
+    {
+        if (!$this->hasBusinessAccount()) {
+            return $url;
+        }
+
+        return $this->businessAccount->signUrl($url);
     }
 }
