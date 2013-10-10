@@ -38,6 +38,7 @@ controls, overlays, events & services through the Google Map API v3.
          - [Geocoding API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/geocoding/geocoder.md)
          - [Directions API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/directions/directions.md)
          - [Distance Matrix API](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/distance_matrix/distance_matrix.md)
+         - [Business Account](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/services/business_account.md)
 
 ## Testing
 
