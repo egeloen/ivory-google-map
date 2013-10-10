@@ -2,6 +2,7 @@
 
 ### 1.3.0 (????-??-??)
 
+ * 9234b44 - [Service] Add business account support
  * 0520430 - [Service] Replace kriswallsmith/buzz by widop/http-adapter
 
 ### 1.2.0 (2013-10-09)
