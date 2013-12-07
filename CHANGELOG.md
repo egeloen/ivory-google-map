@@ -2,6 +2,7 @@
 
 ### 1.3.0 (????-??-??)
 
+ * 234ad66 - [Travis] Only build the master branch
  * 9234b44 - [Service] Add business account support
  * 0520430 - [Service] Replace kriswallsmith/buzz by widop/http-adapter
 
