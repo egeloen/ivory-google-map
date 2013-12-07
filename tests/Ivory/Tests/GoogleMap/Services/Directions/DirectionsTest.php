@@ -34,7 +34,7 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        sleep(2);
+        sleep(5);
 
         $this->directions = new Directions(new CurlHttpAdapter());
     }
@@ -194,7 +194,7 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(DirectionsStatus::OK, $response->getStatus());
         $this->assertNotEmpty($response->getRoutes());
     }
-    
+
     public function testSignUrlWithoutBusinessAccount()
     {
         $method = new \ReflectionMethod($this->directions, 'signUrl');
