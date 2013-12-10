@@ -166,7 +166,7 @@ class DirectionsException extends ServiceException
      */
     public static function invalidDirectionsRequestLanguage()
     {
-        return new static('The directions request language must be a string with two characters.');
+        return new static('The directions request language must be a string with two or five characters.');
     }
 
     /**

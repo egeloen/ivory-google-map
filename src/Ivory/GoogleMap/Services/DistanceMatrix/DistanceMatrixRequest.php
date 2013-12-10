@@ -333,7 +333,7 @@ class DistanceMatrixRequest
      */
     public function setLanguage($language = null)
     {
-        if ((!is_string($language) || (strlen($language) !== 2)) && ($language !== null)) {
+        if ((!is_string($language) || ((strlen($language) !== 2) && (strlen($language) !== 5))) && ($language !== null)) {
             throw DistanceMatrixException::invalidDistanceMatrixRequestLanguage();
         }
 

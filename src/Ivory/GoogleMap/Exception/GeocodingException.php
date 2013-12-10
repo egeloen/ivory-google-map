@@ -196,7 +196,7 @@ class GeocodingException extends ServiceException
      */
     public static function invalidGeocoderRequestLanguage()
     {
-        return new static('The geocoder request language must be a string with two characters.');
+        return new static('The geocoder request language must be a string with two or five characters.');
     }
 
     /**

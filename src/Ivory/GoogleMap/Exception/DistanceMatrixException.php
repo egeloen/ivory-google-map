@@ -101,7 +101,7 @@ class DistanceMatrixException extends ServiceException
      */
     public static function invalidDistanceMatrixRequestLanguage()
     {
-        return new static('The distance matrix request language must be a string with two characters.');
+        return new static('The distance matrix request language must be a string with two or five characters.');
     }
 
     /**

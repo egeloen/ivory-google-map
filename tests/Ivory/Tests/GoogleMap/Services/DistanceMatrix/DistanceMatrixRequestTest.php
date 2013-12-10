@@ -240,7 +240,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request language must be a string with two characters.
+     * @expectedExceptionMessage The distance matrix request language must be a string with two or five characters.
      */
     public function testLanguageWithInvalidValue()
     {
