@@ -313,7 +313,7 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request language must be a string with two characters.
+     * @expectedExceptionMessage The directions request language must be a string with two or five characters.
      */
     public function testLanguageWithInvalidValue()
     {

@@ -217,7 +217,7 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder request language must be a string with two characters.
+     * @expectedExceptionMessage The geocoder request language must be a string with two or five characters.
      */
     public function testLanguageWithInvalidValue()
     {
