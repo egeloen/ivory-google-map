@@ -1018,6 +1018,18 @@ class MapHelper extends AbstractHelper
     {
         $output = array();
 
+        foreach ($map->getInfoWindows() as $infoWindow) {
+            if ($infoWindow->isOpen()) {
+                $output[] = $this->infoWindowHelper->renderOpen($infoWindow, $map);
+            }
+        }
+
+        foreach ($map->getMarkers() as $marker) {
+            if ($marker->hasInfoWindow() && $marker->getInfoWindow()->isOpen()) {
+                $output[] = $this->infoWindowHelper->renderOpen($marker->getInfoWindow(), $map, $marker);
+            }
+        }
+
         foreach (array_reverse($this->getExtensionHelpers()) as $extension) {
             $output[] = $extension->renderAfter($map);
         }
