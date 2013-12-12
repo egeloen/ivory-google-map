@@ -1118,6 +1118,81 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
     }
 
+    public function testRenderJavascriptsWithMapInfoWindowOpened()
+    {
+        $infoWindow = new InfoWindow();
+        $infoWindow->setJavascriptVariable('info_window');
+        $infoWindow->setPosition(1.1, 2.2, true);
+        $infoWindow->getPosition()->setJavascriptVariable('info_window_position');
+        $infoWindow->setContent('foo');
+        $infoWindow->setAutoOpen(false);
+        $infoWindow->setOpen(true);
+
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->getCenter()->setJavascriptVariable('map_center');
+        $map->addInfoWindow($infoWindow);
+
+        $expected = <<<EOF
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"language=en&sensor=false"}); };
+</script>
+<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
+<script type="text/javascript">
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.coordinates.info_window_position = info_window_position = new google.maps.LatLng(1.1, 2.2, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+map_container.info_windows.info_window = info_window = new google.maps.InfoWindow({"position":info_window_position,"content":"foo"});
+info_window.open(map);
+</script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+    }
+
+    public function testRenderJavascriptsWithMarkerInfoWindowOpened()
+    {
+        $infoWindow = new InfoWindow();
+        $infoWindow->setJavascriptVariable('info_window');
+        $infoWindow->setContent('foo');
+        $infoWindow->setAutoOpen(false);
+        $infoWindow->setOpen(true);
+
+        $marker = new Marker();
+        $marker->setJavascriptVariable('marker');
+        $marker->setPosition(1.2, 2.1, true);
+        $marker->getPosition()->setJavascriptVariable('marker_position');
+        $marker->setInfoWindow($infoWindow);
+
+        $map = new Map();
+        $map->setJavascriptVariable('map');
+        $map->getCenter()->setJavascriptVariable('map_center');
+        $map->addMarker($marker);
+
+        $expected = <<<EOF
+<script type="text/javascript">
+function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"language=en&sensor=false"}); };
+</script>
+<script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
+<script type="text/javascript">
+map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
+map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
+map_container.coordinates.marker_position = marker_position = new google.maps.LatLng(1.2, 2.1, true);
+map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+map.setCenter(map_center);
+map_container.info_windows.info_window = info_window = new google.maps.InfoWindow({"content":"foo"});
+map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position,"map":map});
+info_window.open(map, marker);
+</script>
+
+EOF;
+
+        $this->assertSame($expected, $this->mapHelper->renderJavascripts($map));
+    }
+
     public function testRenderJavascriptsWithMultipleMaps()
     {
         $map1 = new Map();
