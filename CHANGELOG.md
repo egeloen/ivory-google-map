@@ -2,6 +2,7 @@
 
 ### 1.3.0 (????-??-??)
 
+ * a308662 - [MapHelper] Fix default info window open support
  * b6a4372 - Service request language can now have 2 or 5 characteres
  * 074cd0a - Increase time between each directions tests
  * 234ad66 - [Travis] Only build the master branch
