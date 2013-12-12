@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.3.0 (????-??-??)
+### 1.3.0 (2013-12-12)
 
  * a308662 - [MapHelper] Fix default info window open support
  * b6a4372 - Service request language can now have 2 or 5 characteres
