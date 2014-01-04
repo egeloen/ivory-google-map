@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.3.1 (????-??-??)
+
+ * ece9738 - Update new year
+
 ### 1.3.0 (2013-12-12)
 
  * a308662 - [MapHelper] Fix default info window open support
