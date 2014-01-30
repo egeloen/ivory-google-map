@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Exception;
 
 use Ivory\GoogleMap\Places\AutocompleteType;
+use Ivory\GoogleMap\Places\AutocompleteComponentRestrictions;
 
 /**
  * Place exception.
@@ -20,6 +21,30 @@ use Ivory\GoogleMap\Places\AutocompleteType;
  */
 class PlaceException extends Exception
 {
+    /**
+     * Gets the "AUTOCOMPLETE COMPONENT RESTRICTION TYPE ALREADY EXISTS" exception.
+     *
+     * @param string $type The type.
+     *
+     * @return \Ivory\GoogleMap\Exception\PlaceException The "AUTOCOMPLETE RESTRICTION TYPE ALREADY EXISTS" exception.
+     */
+    public static function autocompleteComponentRestrictionAlreadyExists($type)
+    {
+        return new static(sprintf('The place autocomplete component restriction type "%s" already exists.', $type));
+    }
+
+    /**s
+     * Gets the "AUTOCOMPLETE COMPONENT RESTRICTION TYPE DOES NOT EXIST" exception.
+     *
+     * @param string $type The type.
+     *
+     * @return \Ivory\GoogleMap\Exception\PlaceException The "AUTOCOMPLETE RESTRICTION TYPE DOES DOES NOT EXIST" exception.
+     */
+    public static function autocompleteComponentRestrictionDoesNotExist($type)
+    {
+        return new static(sprintf('The place autocomplete component restriction type "%s" does not exist.', $type));
+    }
+
     /**
      * Gets the "AUTOCOMPLETE TYPE ALREADY EXISTS" exception.
      *
@@ -79,6 +104,21 @@ class PlaceException extends Exception
             'boolean $northEastNoWrap = true'.
             ')'
         ));
+    }
+
+    /**
+     * Gets the "INVALID AUTOCOMPLETE COMPONENT RESTRICTION" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\PlaceException The "INVALID AUTOCOMPLETE COMPONENT RESTRICTION" exception.
+     */
+    public static function invalidAutocompleteComponentRestriction()
+    {
+        return new static(
+            sprintf(
+                'The place autocomplete component restriction can only be: %s.',
+                implode(', ', AutocompleteComponentRestrictions::getAvailableAutocompleteComponentRestrictions())
+            )
+        );
     }
 
     /**

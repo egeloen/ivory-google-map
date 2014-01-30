@@ -222,12 +222,16 @@ class AutocompleteHelper extends AbstractHelper
             $this->jsonBuilder->setValue('[bounds]', $autocomplete->getBound()->getJavascriptVariable(), false);
         }
 
+        if ($autocomplete->hasComponentRestrictions()) {
+            $this->jsonBuilder->setValue('[componentRestrictions]', $autocomplete->getComponentRestrictions());
+        }
+
         if (!$this->jsonBuilder->hasValues()) {
             $this->jsonBuilder->setJsonEncodeOptions(JSON_FORCE_OBJECT);
         }
 
         return sprintf(
-            '%s = new google.maps.places.Autocomplete(document.getElementById(\'%s\', %s));'.PHP_EOL,
+            '%s = new google.maps.places.Autocomplete(document.getElementById(\'%s\'), %s);'.PHP_EOL,
             $autocomplete->getJavascriptVariable(),
             $autocomplete->getInputId(),
             $this->jsonBuilder->build()

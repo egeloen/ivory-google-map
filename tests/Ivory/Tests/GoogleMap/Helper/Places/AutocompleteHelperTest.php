@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Helper\Places;
 
 use Ivory\GoogleMap\Helper\Places\AutocompleteHelper;
 use Ivory\GoogleMap\Places\Autocomplete;
+use Ivory\GoogleMap\Places\AutocompleteComponentRestriction;
 use Ivory\GoogleMap\Places\AutocompleteType;
 
 /**
@@ -104,7 +105,7 @@ class AutocompleteHelperTest extends \PHPUnit_Framework_TestCase
         $autocomplete->setJavascriptVariable('autocomplete');
 
         $expected = <<<EOF
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {});
 
 EOF;
 
@@ -118,7 +119,21 @@ EOF;
         $autocomplete->setTypes(array(AutocompleteType::ESTABLISHMENT, AutocompleteType::CITIES));
 
         $expected = <<<EOF
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"types":["establishment","(cities)"]}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {"types":["establishment","(cities)"]});
+
+EOF;
+
+        $this->assertSame($expected, $this->autocompleteHelper->renderAutocomplete($autocomplete));
+    }
+
+    public function testRenderAutocompleteWithComponentRestrictions()
+    {
+        $autocomplete = new Autocomplete();
+        $autocomplete->setJavascriptVariable('autocomplete');
+        $autocomplete->setComponentRestrictions(array(AutocompleteComponentRestriction::COUNTRY => 'fr'));
+
+        $expected = <<<EOF
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {"componentRestrictions":{"country":"fr"}});
 
 EOF;
 
@@ -134,25 +149,26 @@ EOF;
         $autocomplete->getBound()->setJavascriptVariable('bound');
 
         $expected = <<<EOF
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"bounds":bound}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {"bounds":bound});
 
 EOF;
 
         $this->assertSame($expected, $this->autocompleteHelper->renderAutocomplete($autocomplete));
     }
 
-    public function testRenderAutocompleteWithTypesAndBound()
+    public function testRenderAutocompleteWithTypesAndComponentRestrictionsAndBound()
     {
         $autocomplete = new Autocomplete();
         $autocomplete->setJavascriptVariable('autocomplete');
 
         $autocomplete->setTypes(array(AutocompleteType::ESTABLISHMENT, AutocompleteType::CITIES));
+        $autocomplete->setComponentRestrictions(array(AutocompleteComponentRestriction::COUNTRY => 'fr'));
 
         $autocomplete->setBound(1, 2, 3, 4);
         $autocomplete->getBound()->setJavascriptVariable('bound');
 
         $expected = <<<EOF
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"types":["establishment","(cities)"],"bounds":bound}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {"types":["establishment","(cities)"],"bounds":bound,"componentRestrictions":{"country":"fr"}});
 
 EOF;
 
@@ -170,7 +186,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {});
 </script>
 
 EOF;
@@ -192,14 +208,14 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 </script>
 <script type="text/javascript" src="//www.google.com/jsapi?callback=load_ivory_google_map_api"></script>
 <script type="text/javascript">
-autocomplete1 = new google.maps.places.Autocomplete(document.getElementById('place_input', {}));
+autocomplete1 = new google.maps.places.Autocomplete(document.getElementById('place_input'), {});
 </script>
 
 EOF;
 
         $expected2 = <<<EOF
 <script type="text/javascript">
-autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('place_input', {}));
+autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('place_input'), {});
 </script>
 
 EOF;
@@ -227,7 +243,7 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 bound_south_west = new google.maps.LatLng(1, 2, true);
 bound_north_east = new google.maps.LatLng(3, 4, false);
 bound = new google.maps.LatLngBounds(bound_south_west, bound_north_east);
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {"bounds":bound}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {"bounds":bound});
 </script>
 
 EOF;
@@ -244,7 +260,7 @@ EOF;
         $expected = <<<EOF
 <script type="text/javascript">
 function load_ivory_google_place () {
-autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input', {}));
+autocomplete = new google.maps.places.Autocomplete(document.getElementById('place_input'), {});
 }
 </script>
 <script type="text/javascript">

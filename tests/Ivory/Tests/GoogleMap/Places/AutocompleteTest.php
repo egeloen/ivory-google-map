@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Places;
 
 use Ivory\GoogleMap\Places\Autocomplete;
+use Ivory\GoogleMap\Places\AutocompleteComponentRestriction;
 use Ivory\GoogleMap\Places\AutocompleteType;
 
 /**
@@ -45,6 +46,7 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('place_input', $this->autocomplete->getInputId());
         $this->assertFalse($this->autocomplete->hasBound());
         $this->assertFalse($this->autocomplete->hasTypes());
+        $this->assertFalse($this->autocomplete->hasComponentRestrictions());
         $this->assertFalse($this->autocomplete->hasValue());
         $this->assertSame(array('type' => 'text', 'placeholder' => 'off'), $this->autocomplete->getInputAttributes());
         $this->assertFalse($this->autocomplete->isAsync());
@@ -172,6 +174,59 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
     public function testRemoveTypeWithNonExistingType()
     {
         $this->autocomplete->removeType(AutocompleteType::ESTABLISHMENT);
+    }
+
+    public function testComponentRestrictionsWithValidComponentRestrictions()
+    {
+        $componentRestrictions = array(AutocompleteComponentRestriction::COUNTRY => 'fr');
+        $this->autocomplete->setComponentRestrictions($componentRestrictions);
+
+        $this->assertSame($componentRestrictions, $this->autocomplete->getComponentRestrictions());
+
+        $this->assertTrue($this->autocomplete->hasComponentRestrictions());
+        $this->assertSame($componentRestrictions, $this->autocomplete->getComponentRestrictions());
+
+        $this->assertTrue($this->autocomplete->hasComponentRestriction(AutocompleteComponentRestriction::COUNTRY));
+        $this->assertSame(
+            $componentRestrictions[AutocompleteComponentRestriction::COUNTRY],
+            $this->autocomplete->getComponentRestriction(AutocompleteComponentRestriction::COUNTRY)
+        );
+    }
+
+    /**
+     * @expectedException Ivory\GoogleMap\Exception\PlaceException
+     * @expectedExceptionMessage The place autocomplete type can only be: establishment, geocode, (regions), (cities).
+     */
+    public function testAddComponentRestrictionWithInvalidType()
+    {
+        $this->autocomplete->addComponentRestriction('foo', 'bar');
+    }
+
+    /**
+     * @expectedException Ivory\GoogleMap\Exception\PlaceException
+     * @expectedExceptionMessage The place autocomplete component restriction type "country" already exists.
+     */
+    public function testAddComponentRestrictionWithExistingComponentRestriction()
+    {
+        $this->autocomplete->addComponentRestriction(AutocompleteComponentRestriction::COUNTRY, 'foo');
+        $this->autocomplete->addComponentRestriction(AutocompleteComponentRestriction::COUNTRY, 'bar');
+    }
+
+    public function testRemoveComponentRestrictionWithValidComponentRestriction()
+    {
+        $this->autocomplete->addComponentRestriction(AutocompleteComponentRestriction::COUNTRY, 'foo');
+        $this->autocomplete->removeComponentRestriction(AutocompleteComponentRestriction::COUNTRY);
+
+        $this->assertFalse($this->autocomplete->hasComponentRestriction(AutocompleteComponentRestriction::COUNTRY));
+    }
+
+    /**
+     * @expectedException Ivory\GoogleMap\Exception\PlaceException
+     * @expectedExceptionMessage The place autocomplete type "country" does not exist.
+     */
+    public function testRemoveComponentRestrictionWithNonExistingComponentRestriction()
+    {
+        $this->autocomplete->removeType(AutocompleteComponentRestriction::COUNTRY);
     }
 
     public function testInputAttributesWithValidValue()

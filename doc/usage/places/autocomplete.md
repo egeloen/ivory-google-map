@@ -11,6 +11,7 @@ In order to use the Google Autocomplete feature, you need to build & configure i
 
 ``` php
 use Ivory\GoogleMap\Places\Autocomplete;
+use Ivory\GoogleMap\Places\AutocompleteComponentRestriction;
 use Ivory\GoogleMap\Places\AutocompleteType;
 
 $autocomplete = new Autocomplete();
@@ -24,6 +25,7 @@ $autocomplete->setInputAttribute('class', 'my-class');
 $autocomplete->setValue('foo');
 
 $autocomplete->setTypes(array(AutocompleteType::ESTABLISHMENT));
+$autocomplete->setComponentRestrictions(array(AutocompleteComponentRestriction::COUNTRY => 'fr'));
 $autocomplete->setBound(-2.1, -3.9, 2.6, 1.4, true, true);
 
 $autocomplete->setAsync(false);
