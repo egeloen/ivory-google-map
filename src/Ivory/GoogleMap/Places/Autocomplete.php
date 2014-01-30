@@ -44,6 +44,9 @@ class Autocomplete extends AbstractJavascriptVariableAsset
     /** @var string */
     protected $language;
 
+    /** @var null|array */
+    protected $componentRestrictions;
+
     /**
      * Creates a place autocomplete.
      */
@@ -60,6 +63,7 @@ class Autocomplete extends AbstractJavascriptVariableAsset
         $this->types = array();
         $this->async = false;
         $this->language = 'en';
+        $this->componentRestrictions = null;
     }
 
     /**
@@ -366,4 +370,50 @@ class Autocomplete extends AbstractJavascriptVariableAsset
     {
         $this->language = $language;
     }
+
+    /**
+     * @param array $componentRestrictions
+     */
+    public function setComponentRestrictions($componentRestrictions)
+    {
+        $this->componentRestrictions = $componentRestrictions;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getComponentRestrictions()
+    {
+        return $this->componentRestrictions;
+    }
+
+    /**
+     * Defines the component restrictions that can be used with the autocomplete service.
+     *
+     * @param $type
+     * @param $value
+     * @throws \Ivory\GoogleMap\Exception\PlaceException
+     */
+    public function addComponentRestrictions($type, $value)
+    {
+        if(!in_array($type, AutocompleteComponentRestrictions::getAvailableAutocompleteComponentRestrictions()))
+        {
+            throw PlaceException::autocompleteComponentRestrictionDoesNotExist($type);
+        }
+
+        if(!is_array($this->componentRestrictions))
+            $this->componentRestrictions = array();
+
+        $this->componentRestrictions[$type] = $value;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function hasComponentRestrictions()
+    {
+        return $this->componentRestrictions !== null;
+    }
+
 }

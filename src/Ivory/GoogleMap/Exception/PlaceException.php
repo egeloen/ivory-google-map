@@ -45,6 +45,18 @@ class PlaceException extends Exception
     }
 
     /**
+     * Gets the "AUTOCOMPLETE COMPONENT RESTRICTION TYPE DOES NOT EXIST" exception.
+     *
+     * @param string $type The type.
+     *
+     * @return \Ivory\GoogleMap\Exception\PlaceException The "AUTOCOMPLETE RESTRICTION TYPE DOES DOES NOT EXIST" exception.
+     */
+    public static function autocompleteComponentRestrictionDoesNotExist($type)
+    {
+        return new static(sprintf('The place autocomplete component restriction type "%s" does not exist.', $type));
+    }
+
+    /**
      * Gets the "INVALID AUTOCOMPLETE ASYNC" exception.
      *
      * @return \Ivory\GoogleMap\Exception\PlaceException The "INVALID AUTOCOMPLETE ASYNC" exception.
