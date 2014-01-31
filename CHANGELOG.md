@@ -2,6 +2,7 @@
 
 ### 1.3.1 (????-??-??)
 
+ * 533a5b0 - [Places] Fix helper rendering bug + Add component restrictions support
  * ece9738 - Update new year
 
 ### 1.3.0 (2013-12-12)
