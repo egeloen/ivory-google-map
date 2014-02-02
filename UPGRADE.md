@@ -1,5 +1,9 @@
 # UPGRADE
 
+### 1.3 to 1.4
+
+ * The `Ivory\GoogleMap\Helper\Utils\JsonBuilder` have been extracted to a dedicated library for reusability purpose.
+
 ### 1.2.0 to 1.3.0
 
  * The `buzz` property/getter/setter of the `AbstractService` has been removed in favor of the http adapter which
