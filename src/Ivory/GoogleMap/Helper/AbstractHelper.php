@@ -11,8 +11,8 @@
 
 namespace Ivory\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Helper\Utils\JsonBuilder;
 use Ivory\GoogleMap\Map;
+use Ivory\JsonBuilder\JsonBuilder;
 
 /**
  * Abstract helper.
@@ -27,7 +27,7 @@ abstract class AbstractHelper
     /**
      * Creates an helper.
      *
-     * @param \Ivory\GoogleMap\Helper\JsonBuilder $jsonBuilder The json builder.
+     * @param \Ivory\JsonBuilder\JsonBuilder $jsonBuilder The json builder.
      */
     public function __construct(JsonBuilder $jsonBuilder = null)
     {
@@ -41,7 +41,7 @@ abstract class AbstractHelper
     /**
      * Gets the json builder.
      *
-     * @return \Ivory\GoogleMap\Helper\Utils\JsonBuilder The json builder.
+     * @return \Ivory\JsonBuilder\JsonBuilder The json builder.
      */
     public function getJsonBuilder()
     {
@@ -51,7 +51,7 @@ abstract class AbstractHelper
     /**
      * Sets the json builder.
      *
-     * @param \Ivory\GoogleMap\Helper\Utils\JsonBuilder $jsonBuilder The json builder.
+     * @param \Ivory\JsonBuilder\JsonBuilder $jsonBuilder The json builder.
      */
     public function setJsonBuilder(JsonBuilder $jsonBuilder)
     {

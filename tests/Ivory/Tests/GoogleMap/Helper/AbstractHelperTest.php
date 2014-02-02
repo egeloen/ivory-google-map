@@ -39,7 +39,7 @@ class AbstractHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
-        $this->assertInstanceOf('Ivory\GoogleMap\Helper\Utils\JsonBuilder', $this->helper->getJsonBuilder());
+        $this->assertInstanceOf('Ivory\JsonBuilder\JsonBuilder', $this->helper->getJsonBuilder());
     }
 
     public function testJsContainerName()
