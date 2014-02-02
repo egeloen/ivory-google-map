@@ -331,7 +331,7 @@ class Autocomplete extends AbstractJavascriptVariableAsset
     public function addComponentRestriction($type, $value)
     {
         if (!in_array($type, AutocompleteComponentRestriction::getAvailableAutocompleteComponentRestrictions())) {
-            throw PlaceException::invalidAutocompleteType();
+            throw PlaceException::invalidAutocompleteComponentRestriction();
         }
 
         if ($this->hasComponentRestriction($type)) {

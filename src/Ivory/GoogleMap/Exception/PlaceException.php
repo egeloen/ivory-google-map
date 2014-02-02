@@ -12,7 +12,7 @@
 namespace Ivory\GoogleMap\Exception;
 
 use Ivory\GoogleMap\Places\AutocompleteType;
-use Ivory\GoogleMap\Places\AutocompleteComponentRestrictions;
+use Ivory\GoogleMap\Places\AutocompleteComponentRestriction;
 
 /**
  * Place exception.
@@ -116,7 +116,7 @@ class PlaceException extends Exception
         return new static(
             sprintf(
                 'The place autocomplete component restriction can only be: %s.',
-                implode(', ', AutocompleteComponentRestrictions::getAvailableAutocompleteComponentRestrictions())
+                implode(', ', AutocompleteComponentRestriction::getAvailableAutocompleteComponentRestrictions())
             )
         );
     }
