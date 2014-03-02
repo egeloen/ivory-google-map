@@ -51,7 +51,7 @@ A request can return many results. The geocoder response wraps an array of ``Ivo
 
 ``` php
 // Get the geocoder results
-$results = $reponse->getResults();
+$results = $response->getResults();
 ```
 
 ### Geocoder result
