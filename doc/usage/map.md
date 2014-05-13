@@ -92,7 +92,7 @@ the map bound will automatically extends your overlay. So, at the end, all your 
 
 ``` php
 use Ivory\GoogleMap\Map,
-    Ivory\GogoleMap\Overlays\Marker;
+    Ivory\GoogleMap\Overlays\Marker;
 
 $map = new Map();
 
