@@ -248,4 +248,20 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->directions->route(new DirectionsRequest());
     }
+    
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedExceptionMessage The service result is not valid.
+     */
+    public function testRouteWithInvalidResult()
+    {
+        $httpAdapterMock = $this->getMock('Widop\HttpAdapter\HttpAdapterInterface');
+        $httpAdapterMock
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(null));
+
+        $this->directions = new Directions($httpAdapterMock);
+        $this->directions->route('Lille', 'Paris');
+    }
 }

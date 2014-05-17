@@ -213,6 +213,11 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
 
         $url = $this->generateUrl($geocoderRequest);
         $response = $this->getAdapter()->getContent($url);
+
+        if ($response === null) {
+            throw GeocodingException::invalidServiceResult();
+        }
+
         $normalizedResponse = $this->parse($response);
 
         return $this->buildGeocoderResponse($normalizedResponse);

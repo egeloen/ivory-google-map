@@ -228,4 +228,20 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
     {
         $this->service->process(new DistanceMatrixRequest());
     }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
+     * @expectedExceptionMessage The service result is not valid.
+     */
+    public function testProcessWithInvalidResult()
+    {
+        $httpAdapterMock = $this->getMock('Widop\HttpAdapter\HttpAdapterInterface');
+        $httpAdapterMock
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(null));
+
+        $this->service = new DistanceMatrix($httpAdapterMock);
+        $this->service->process(array('Vancouver BC'), array('San Francisco'));
+    }
 }

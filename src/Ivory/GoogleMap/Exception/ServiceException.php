@@ -39,6 +39,16 @@ class ServiceException extends Exception
     }
 
     /**
+     * Gets the "INVALID SERVICE RESULT" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID SERVICE RESULT" exception.
+     */
+    public static function invalidServiceResult()
+    {
+        return new static('The service result is not valid.');
+    }
+
+    /**
      * Gets the "INVALID SERVICE URL" exception.
      *
      * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID SERVICE URL" exception.

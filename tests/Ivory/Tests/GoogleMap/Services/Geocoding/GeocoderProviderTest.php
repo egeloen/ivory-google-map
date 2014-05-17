@@ -210,6 +210,22 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $this->geocoderProvider->getGeocodedData($request);
     }
 
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
+     * @expectedExceptionMessage The service result is not valid.
+     */
+    public function testGeocodedDataWithInvalidResult()
+    {
+        $httpAdapterMock = $this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface');
+        $httpAdapterMock
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(null));
+
+        $this->geocoderProvider = new GeocoderProvider($httpAdapterMock);
+        $this->geocoderProvider->getGeocodedData('Paris');
+    }
+
     public function testReversedData()
     {
         $response = $this->geocoderProvider->getReversedData(array(48.856633, 2.352254));
