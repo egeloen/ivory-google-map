@@ -70,7 +70,7 @@ class DistanceMatrix extends AbstractService
             throw DistanceMatrixException::invalidServiceResult();
         }
 
-        $distanceMatrixResponse = $this->buildDistanceMatrixResponse($this->parse($response));
+        $distanceMatrixResponse = $this->buildDistanceMatrixResponse($this->parse($response->getBody()));
 
         return $distanceMatrixResponse;
     }

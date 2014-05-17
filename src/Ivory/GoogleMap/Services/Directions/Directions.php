@@ -72,7 +72,7 @@ class Directions extends AbstractService
             throw DirectionsException::invalidServiceResult();
         }
 
-        $directionsResponse = $this->buildDirectionsResponse($this->parse($response));
+        $directionsResponse = $this->buildDirectionsResponse($this->parse($response->getBody()));
 
         return $directionsResponse;
     }
