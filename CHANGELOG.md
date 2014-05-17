@@ -2,6 +2,7 @@
 
 ### 1.4.0 (????-??-??)
 
+ * a1608ae - [Services] Check if the http adapter returns a valid response
  * ca767aa - [Places][Autocomplete] Fix exception + tests
  * 654744c - [Helper] Rely on egeloen/json-builder
  * 533a5b0 - [Places] Fix helper rendering bug + Add component restrictions support
