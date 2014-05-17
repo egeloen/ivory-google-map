@@ -2,6 +2,7 @@
 
 ### 1.4.0 (????-??-??)
 
+ * b10a1a2 - Add coveralls support
  * a1608ae - [Services] Check if the http adapter returns a valid response
  * ca767aa - [Places][Autocomplete] Fix exception + tests
  * 654744c - [Helper] Rely on egeloen/json-builder
