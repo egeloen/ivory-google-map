@@ -18,6 +18,8 @@ use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Services\AbstractService;
 use Ivory\GoogleMap\Services\Base\Distance;
 use Ivory\GoogleMap\Services\Base\Duration;
+use Ivory\GoogleMap\Services\Base\TransitDetails;
+use Ivory\GoogleMap\Services\Base\TravelMode;
 use Widop\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -392,6 +394,19 @@ class Directions extends AbstractService
         $encodedPolyline = new EncodedPolyline($directionsStep->polyline->points);
         $startLocation = new Coordinate($directionsStep->start_location->lat, $directionsStep->start_location->lng);
         $travelMode = $directionsStep->travel_mode;
+        if ($travelMode == TravelMode::TRANSIT) {
+            $transitDetails = new TransitDetails($directionsStep->transit_details);
+            return new DirectionsStepTransit(
+                $distance,
+                $duration,
+                $endLocation,
+                $instructions,
+                $encodedPolyline,
+                $startLocation,
+                $travelMode,
+                $transitDetails
+            );
+        }
 
         return new DirectionsStep(
             $distance,
