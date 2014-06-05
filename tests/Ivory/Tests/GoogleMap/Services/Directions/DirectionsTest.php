@@ -13,10 +13,14 @@ namespace Ivory\Tests\GoogleMap\Services\Directions;
 
 use \DateTime;
 use Ivory\GoogleMap\Services\Directions\Directions;
+use Ivory\GoogleMap\Services\Directions\DirectionsLeg;
 use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
+use Ivory\GoogleMap\Services\Directions\DirectionsRoute;
 use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
+use Ivory\GoogleMap\Services\Directions\DirectionsStep;
+use Ivory\GoogleMap\Services\Directions\DirectionsStepTransit;
 use Widop\HttpAdapter\CurlHttpAdapter;
 
 /**
@@ -184,6 +188,17 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(DirectionsStatus::OK, $response->getStatus());
         $this->assertNotEmpty($response->getRoutes());
+        /** @var DirectionsRoute[] $routes */
+        $routes = $response->getRoutes();
+        $this->assertNotEmpty($routes[0]->getLegs());
+        /** @var DirectionsLeg[] $legs */
+        $legs = $routes[0]->getLegs();
+        $this->assertGreaterThanOrEqual(2, count($legs[0]->getSteps()));
+        /** @var DirectionsStepTransit[] $steps */
+        $steps = $legs[0]->getSteps();
+        $this->assertInstanceOf('Ivory\GoogleMap\Services\Directions\DirectionsStepTransit', $steps[1]);
+        $this->assertEquals(TravelMode::TRANSIT, $steps[1]->getTravelMode());
+        $this->assertNotEmpty($steps[1]->getTransitDetails());
     }
 
     public function testRouteWithXmlFormat()
