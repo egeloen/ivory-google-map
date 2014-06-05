@@ -116,11 +116,14 @@ class Directions extends AbstractService
             }
 
             foreach ($directionsRequest->getWaypoints() as $waypoint) {
+                $stopover = $waypoint->getStopover() ? 'via:' : '';
+
                 if (is_string($waypoint->getLocation())) {
-                    $waypoints[] = $waypoint->getLocation();
+                    $waypoints[] = $stopover.$waypoint->getLocation();
                 } else {
                     $waypoints[] = sprintf(
-                        '%s,%s',
+                        '%s%s,%s',
+                        $stopover,
                         $waypoint->getLocation()->getLatitude(),
                         $waypoint->getLocation()->getLongitude()
                     );

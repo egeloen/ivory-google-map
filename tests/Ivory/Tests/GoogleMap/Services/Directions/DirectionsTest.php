@@ -15,6 +15,7 @@ use \DateTime;
 use Ivory\GoogleMap\Services\Directions\Directions;
 use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
+use Ivory\GoogleMap\Services\Directions\DirectionsWaypoint;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
 use Widop\HttpAdapter\CurlHttpAdapter;
@@ -94,6 +95,23 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
         $request->setDestination('Paris');
 
         $request->setOptimizeWaypoints(true);
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
+    }
+
+    public function testRouteWithDirectionsRequestAndStopoverWaypoint()
+    {
+        $waypoint = new DirectionsWaypoint();
+        $waypoint->setLocation('Compiègne');
+        $waypoint->setStopover(true);
+
+        $request = new DirectionsRequest();
+        $request->setOrigin('Lille');
+        $request->addWaypoint($waypoint);
+        $request->setDestination('Paris');
 
         $response = $this->directions->route($request);
 
@@ -248,7 +266,7 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->directions->route(new DirectionsRequest());
     }
-    
+
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
      * @expectedExceptionMessage The service result is not valid.
