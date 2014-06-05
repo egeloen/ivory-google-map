@@ -2,6 +2,7 @@
 
 ### 1.4.0 (????-??-??)
 
+ * c5a19df - [Services][Directions] Fix waypoint stopover
  * b5173e9 - [Helper][Extension] Fix InfoBox loading with async map
  * b10a1a2 - Add coveralls support
  * a1608ae - [Services] Check if the http adapter returns a valid response
