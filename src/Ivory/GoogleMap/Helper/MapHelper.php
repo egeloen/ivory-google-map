@@ -1018,18 +1018,6 @@ class MapHelper extends AbstractHelper
     {
         $output = array();
 
-        foreach ($map->getInfoWindows() as $infoWindow) {
-            if ($infoWindow->isOpen()) {
-                $output[] = $this->infoWindowHelper->renderOpen($infoWindow, $map);
-            }
-        }
-
-        foreach ($map->getMarkers() as $marker) {
-            if ($marker->hasInfoWindow() && $marker->getInfoWindow()->isOpen()) {
-                $output[] = $this->infoWindowHelper->renderOpen($marker->getInfoWindow(), $map, $marker);
-            }
-        }
-
         foreach (array_reverse($this->getExtensionHelpers()) as $extension) {
             $output[] = $extension->renderAfter($map);
         }
@@ -1068,11 +1056,11 @@ class MapHelper extends AbstractHelper
         $output[] = $this->renderJsContainerMarkerShapes($map);
         $output[] = $this->renderJsContainerMarkerCluster($map);
 
-        $output[] = $this->renderJsContainerBoundsExtends($map);
-
         $output[] = $this->renderJsContainerKMLLayers($map);
 
         $output[] = $this->renderJsContainerEventManager($map);
+
+        $output[] = $this->renderJsContainerExtra($map);
 
         return implode('', $output);
     }
@@ -1173,26 +1161,6 @@ class MapHelper extends AbstractHelper
     }
 
     /**
-     * Renders the javascript container bounds extends.
-     *
-     * @param \Ivory\GoogleMap\Map $map The map.
-     *
-     * @return string The JS output.
-     */
-    public function renderJsContainerBoundsExtends(Map $map)
-    {
-        $output = array();
-
-        foreach ($this->computeBounds($map) as $bound) {
-            if ($bound->hasExtends()) {
-                $output[] = $this->boundHelper->renderExtends($bound);
-            }
-        }
-
-        return implode('', $output);
-    }
-
-    /**
      * Renders the javascript container points.
      *
      * @param \Ivory\GoogleMap\Map $map The map.
@@ -1247,15 +1215,7 @@ class MapHelper extends AbstractHelper
      */
     public function renderJsContainerMap(Map $map)
     {
-        $output = array(sprintf('%s.map = %s', $this->getJsContainerName($map), $this->renderMap($map)));
-
-        if ($map->isAutoZoom()) {
-            $output[] = $this->renderMapBound($map);
-        } else {
-            $output[] = $this->renderMapCenter($map);
-        }
-
-        return implode('', $output);
+        return sprintf('%s.map = %s', $this->getJsContainerName($map), $this->renderMap($map));
     }
 
     /**
@@ -1573,6 +1533,44 @@ class MapHelper extends AbstractHelper
                 $eventOnce->getJavascriptVariable(),
                 $this->eventManagerHelper->renderEventOnce($eventOnce)
             );
+        }
+
+        return implode('', $output);
+    }
+
+    /**
+     * Renders the js container extra.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The JS output.
+     */
+    public function renderJsContainerExtra(Map $map)
+    {
+        $output = array();
+
+        foreach ($map->getInfoWindows() as $infoWindow) {
+            if ($infoWindow->isOpen()) {
+                $output[] = $this->infoWindowHelper->renderOpen($infoWindow, $map);
+            }
+        }
+
+        foreach ($map->getMarkers() as $marker) {
+            if ($marker->hasInfoWindow() && $marker->getInfoWindow()->isOpen()) {
+                $output[] = $this->infoWindowHelper->renderOpen($marker->getInfoWindow(), $map, $marker);
+            }
+        }
+
+        foreach ($this->computeBounds($map) as $bound) {
+            if ($bound->hasExtends()) {
+                $output[] = $this->boundHelper->renderExtends($bound);
+            }
+        }
+
+        if ($map->isAutoZoom()) {
+            $output[] = $this->renderMapBound($map);
+        } else {
+            $output[] = $this->renderMapCenter($map);
         }
 
         return implode('', $output);
