@@ -598,7 +598,7 @@ EOF;
         $this->assertSame($expected, $this->mapHelper->renderMap($map));
     }
 
-    public function testRenderJsContainerMapWithoutAutoZoom()
+    public function testRenderJsContainerMap()
     {
         $map = new Map();
         $map->setJavascriptVariable('map');
@@ -606,24 +606,6 @@ EOF;
 
         $expected = <<<EOF
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-map.setCenter(map_center);
-
-EOF;
-
-        $this->assertSame($expected, $this->mapHelper->renderJsContainerMap($map));
-    }
-
-    public function testRenderJsContainerMapWithAutoZoom()
-    {
-        $map = new Map();
-        $map->setJavascriptVariable('map');
-        $map->getBound()->setJavascriptVariable('map_bound');
-
-        $map->setAutoZoom(true);
-
-        $expected = <<<EOF
-map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP});
-map.fitBounds(map_bound);
 
 EOF;
 
@@ -978,7 +960,6 @@ map_container.bounds.map_bound = map_bound = new google.maps.LatLngBounds();
 map_container.bounds.ground_overlay_bound = ground_overlay_bound = new google.maps.LatLngBounds(ground_overlay_bound_south_west, ground_overlay_bound_north_east);
 map_container.bounds.rectangle_bound = rectangle_bound = new google.maps.LatLngBounds(rectangle_bound_south_west, rectangle_bound_north_east);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP});
-map.fitBounds(map_bound);
 map_container.circles.circle = circle = new google.maps.Circle({"map":map,"center":circle_center,"radius":1});
 map_container.encoded_polylines.encoded_polyline = encoded_polyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
 map_container.ground_overlays.ground_overlay = ground_overlay = new google.maps.GroundOverlay("url", ground_overlay_bound, {"map":map});
@@ -990,14 +971,6 @@ map_container.info_windows.marker_info_window = marker_info_window = new google.
 map_container.marker_images.marker_icon = marker_icon = new google.maps.MarkerImage("url", null, null, null, null);
 map_container.marker_images.marker_shadow = marker_shadow = new google.maps.MarkerImage("url", null, null, null, null);
 map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position,"map":map,"icon":marker_icon,"shadow":marker_shadow});
-map_bound.union(circle.getBounds());
-encoded_polyline.getPath().forEach(function(element){map_bound.extend(element)});
-map_bound.union(ground_overlay_bound);
-polygon.getPath().forEach(function(element){map_bound.extend(element)});
-polyline.getPath().forEach(function(element){map_bound.extend(element)});
-map_bound.union(rectangle_bound);
-map_bound.extend(map_info_window.getPosition());
-map_bound.extend(marker.getPosition());
 map_container.kml_layers.kml_layer = kml_layer = new google.maps.KmlLayer("url", {"map":map});
 map_container.event_manager.events.event = event = google.maps.event.addListener(instance, "click", function(){});
 map_container.event_manager.events.marker_info_window_event = marker_info_window_event = google.maps.event.addListener(marker, "click", function () {
@@ -1007,6 +980,15 @@ map_container.event_manager.events.marker_info_window_event = marker_info_window
     marker_info_window.open(map, marker);
 
 });
+map_bound.union(circle.getBounds());
+encoded_polyline.getPath().forEach(function(element){map_bound.extend(element)});
+map_bound.union(ground_overlay_bound);
+polygon.getPath().forEach(function(element){map_bound.extend(element)});
+polyline.getPath().forEach(function(element){map_bound.extend(element)});
+map_bound.union(rectangle_bound);
+map_bound.extend(map_info_window.getPosition());
+map_bound.extend(marker.getPosition());
+map.fitBounds(map_bound);
 
 EOF;
 
@@ -1057,8 +1039,8 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-map.setCenter(map_center);
 map_container.encoded_polylines.encoded_polyline = encoded_polyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
+map.setCenter(map_center);
 </script>
 
 EOF;
@@ -1143,9 +1125,9 @@ map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.coordinates.info_window_position = info_window_position = new google.maps.LatLng(1.1, 2.2, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-map.setCenter(map_center);
 map_container.info_windows.info_window = info_window = new google.maps.InfoWindow({"position":info_window_position,"content":"foo"});
 info_window.open(map);
+map.setCenter(map_center);
 </script>
 
 EOF;
@@ -1182,10 +1164,10 @@ map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.coordinates.marker_position = marker_position = new google.maps.LatLng(1.2, 2.1, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-map.setCenter(map_center);
 map_container.info_windows.info_window = info_window = new google.maps.InfoWindow({"content":"foo"});
 map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position,"map":map});
 info_window.open(map, marker);
+map.setCenter(map_center);
 </script>
 
 EOF;
@@ -1256,8 +1238,8 @@ map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.coordinates.map_info_box_position = map_info_box_position = new google.maps.LatLng(1, 2, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
-map.setCenter(map_center);
 map_container.info_windows.map_info_box = map_info_box = new InfoBox({"position":map_info_box_position,"content":"<p>Default content<\/p>"});
+map.setCenter(map_center);
 </script>
 
 EOF;
