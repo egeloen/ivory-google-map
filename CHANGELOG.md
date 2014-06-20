@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 1.4.1 (????-??-??)
+
+ * dbc3965 - [Travis][Composer] Remove --dev
+ * 6203fee - [Composer] Upgrade to PSR-4
+ * fba0016 - [Autoload] Remove dist file
+
 ### 1.4.0 (2014-06-17)
 
  * c622643 - [Helper][Map] Introduce renderJsContainerExtra
