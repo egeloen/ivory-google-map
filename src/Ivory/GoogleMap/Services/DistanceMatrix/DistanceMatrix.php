@@ -64,7 +64,7 @@ class DistanceMatrix extends AbstractService
         }
 
         $url = $this->generateUrl($distanceMatrixRequest);
-        $response = $this->httpAdapter->getContent($url);
+        $response = $this->httpAdapter->getContent($url)->getBody();
 
         if ($response === null) {
             throw DistanceMatrixException::invalidServiceResult();
