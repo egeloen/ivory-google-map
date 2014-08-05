@@ -66,7 +66,7 @@ class Directions extends AbstractService
         }
 
         $url = $this->generateUrl($directionsRequest);
-        $response = $this->httpAdapter->getContent($url);
+        $response = $this->httpAdapter->getContent($url)->getBody();
 
         if ($response === null) {
             throw DirectionsException::invalidServiceResult();
