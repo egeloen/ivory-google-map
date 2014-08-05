@@ -19,7 +19,6 @@ use Ivory\GoogleMap\Services\Directions\DirectionsWaypoint;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
 use Widop\HttpAdapter\CurlHttpAdapter;
-use Widop\HttpAdapter\Response;
 
 /**
  * Directions test.
