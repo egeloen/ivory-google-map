@@ -19,6 +19,7 @@ use Ivory\GoogleMap\Services\Directions\DirectionsWaypoint;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
 use Widop\HttpAdapter\CurlHttpAdapter;
+use Widop\HttpAdapter\Response;
 
 /**
  * Directions test.
@@ -50,7 +51,10 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testRouteWithOriginAndDestination()
     {
-        $response = $this->directions->route('Lille', 'Paris');
+        $response = new HttpResponse(200,
+				     'http://dummy.url.com', /* Unused */
+				     array(),		   /* Unused, headers */
+				     $this->directions->route('Lille', 'Paris');
 
         $this->assertSame(DirectionsStatus::OK, $response->getStatus());
         $this->assertNotEmpty($response->getRoutes());
