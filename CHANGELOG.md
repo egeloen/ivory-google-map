@@ -1,7 +1,20 @@
 # CHANGELOG
 
-### 1.4.0 (????-??-??)
+### 1.4.1 (????-??-??)
 
+<<<<<<< HEAD
+=======
+ * dbc3965 - [Travis][Composer] Remove --dev
+ * 6203fee - [Composer] Upgrade to PSR-4
+ * fba0016 - [Autoload] Remove dist file
+
+### 1.4.0 (2014-06-17)
+
+ * c622643 - [Helper][Map] Introduce renderJsContainerExtra
+ * c5a19df - [Services][Directions] Fix waypoint stopover
+ * b5173e9 - [Helper][Extension] Fix InfoBox loading with async map
+ * b10a1a2 - Add coveralls support
+>>>>>>> 734c42e2c42b3576aaf66caae262841665c4f56b
  * a1608ae - [Services] Check if the http adapter returns a valid response
  * ca767aa - [Places][Autocomplete] Fix exception + tests
  * 654744c - [Helper] Rely on egeloen/json-builder
