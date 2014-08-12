@@ -2,6 +2,7 @@
 
 ### 1.4.1 (????-??-??)
 
+ * e107ab4 - [Travis] Add hhvm-nightly + Allow hhvm/hhvm-nightly to fail
  * e152093 - Updated to use widop/http-adapter version 1.1+
  * afc822c - Added PHP 5.6 and HHVM to travis.yml
  * dbc3965 - [Travis][Composer] Remove --dev
