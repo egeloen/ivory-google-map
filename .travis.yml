@@ -7,6 +7,7 @@ php:
     - 5.5
     - 5.6
     - hhvm
+    - hhvm-nightly
 
 before_script: composer install --prefer-source
 
@@ -14,8 +15,10 @@ script: bin/phpunit --coverage-clover clover.xml
 
 after_script: bin/coveralls
 
-branches:
-    only: master
+matrix:
+    allow_failures:
+        - php: hhvm
+        - php: hhvm-nightly
 
 notifications:
     email: geloen.eric@gmail.com
