@@ -2,6 +2,8 @@
 
 ### 1.4.1 (????-??-??)
 
+ * e152093 - Updated to use widop/http-adapter version 1.1+
+ * afc822c - Added PHP 5.6 and HHVM to travis.yml
  * dbc3965 - [Travis][Composer] Remove --dev
  * 6203fee - [Composer] Upgrade to PSR-4
  * fba0016 - [Autoload] Remove dist file
