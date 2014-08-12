@@ -14,10 +14,16 @@
         "egeloen/json-builder": "~1.0"
     },
     "require-dev": {
+<<<<<<< HEAD
+        "phpunit/phpunit": "3.7.*",
+        "widop/http-adapter": "~1.1",
+        "willdurand/geocoder": "*"
+=======
         "phpunit/phpunit": "~4.0",
         "widop/http-adapter": "~1.1",
         "willdurand/geocoder": "~2.0",
         "satooshi/php-coveralls": "~0.6"
+>>>>>>> 734c42e2c42b3576aaf66caae262841665c4f56b
     },
     "suggest": {
         "widop/http-adapter": "Allows to use services",
