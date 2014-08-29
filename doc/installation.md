@@ -75,5 +75,5 @@ use Ivory\GoogleMap;
 // ...
 ```
 
-The Ivory Google Map library follows the [PSR-0 Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md).
-If you prefer install it manually, it can be autoload by any convenient autoloader.
+The Ivory Google Map library follows the [PSR-4 Standard](http://www.php-fig.org/psr/psr-4/). If you prefer install it
+manually, it can be autoload by any convenient autoloader.
