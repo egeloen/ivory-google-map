@@ -2,6 +2,7 @@
 
 ### 1.4.1 (????-??-??)
 
+ * 188dc68 - [Gitignore] Remove Composer installer and phar
  * 5606a85 - Migrate to PSR-4
  * ddcf4ae - [Composer] Refine deps
  * e107ab4 - [Travis] Add hhvm-nightly + Allow hhvm/hhvm-nightly to fail
