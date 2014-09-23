@@ -63,6 +63,8 @@ use Ivory\GoogleMap\Overlays\Legend;
 
 $legend = new Legend();
 
-// Add your marker to the map
+//Configure your legend and markers ...
+
+// Add your legend to the map
 $map->setLegend($legend);
 ```
