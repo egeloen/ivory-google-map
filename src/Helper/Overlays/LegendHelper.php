@@ -33,7 +33,7 @@ class LegendHelper extends AbstractHelper
      */
     public function render(Map $map)
     {
-        return sprintf('%s.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById(\'%s\'));'.PHP_EOL, $map->getJavascriptVariable(), $map->getLegend()->getName());
+        return sprintf('google.maps.event.addListenerOnce(%s, \'idle\', function(){document.getElementById(\'%s\').style.display = "block";});' . PHP_EOL . '%s.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById(\'%s\'));'.PHP_EOL, $map->getJavascriptVariable(), $map->getLegend()->getName(), $map->getJavascriptVariable(), $map->getLegend()->getName());
     }
 
     /**
@@ -58,7 +58,7 @@ class LegendHelper extends AbstractHelper
             $legendContent .= '<div><img style="vertical-align:middle" src="' . $marker->getIcon()->getUrl() . '" alt="' . $marker->getIcon()->getName() . '" /><span>' . $marker->getIcon()->getName() . '</span></div>';
         }
 
-        return sprintf('<div id="%s" style="%s">%s</div>', $map->getLegend()->getName(), $legendStyles, $legendContent);
+        return sprintf('<div id="%s" style="display:none; %s">%s</div>', $map->getLegend()->getName(), $legendStyles, $legendContent);
     }
 
 }
