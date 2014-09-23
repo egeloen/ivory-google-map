@@ -51,7 +51,7 @@ class LegendHelper extends AbstractHelper
             $legendStyles .= $styleName . ': ' . $styleValue . ';';
         }
 
-        $legendContents = [];
+        $legendContents = array();
         /* @var $marker Ivory\GoogleMap\Overlays\Marker */
         $markerImagesList = array();
         foreach ($map->getMarkerCluster()->getMarkers() as $marker)
