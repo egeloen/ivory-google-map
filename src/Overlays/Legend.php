@@ -39,14 +39,18 @@ class Legend extends AbstractOptionsAsset implements ExtendableInterface
      */
     public function __construct(
         $name = "map_legend",
-        $styles = array()
+        $styles = null
     ) {
         parent::__construct();
 
         $this->setPrefixJavascriptVariable('legend_');
 
         $this->setName($name);
-        $this->setStyles($styles);
+
+        if ($styles !== null)
+        {
+            $this->setStyles($styles);
+        }
     }
 
     /**
@@ -91,6 +95,11 @@ class Legend extends AbstractOptionsAsset implements ExtendableInterface
      */
     public function setStyles($styles)
     {
+        if (!is_array($styles))
+        {
+            throw OverlayException::invalidLegendStyles();
+        }
+
         $this->styles = $styles;
         return $this;
     }

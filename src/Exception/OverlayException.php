@@ -533,4 +533,14 @@ class OverlayException extends Exception
     {
         return new static('A rectangle bound must have a south west & a north east coordinate.');
     }
+
+    /**
+     * Gets the "INVALID LEGEND STYLES" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\OverlayException The "INVALID LEGEND STYLES" exception.
+     */
+    public static function invalidLegendStyles()
+    {
+        return new static('Legend styles must be an array of styles. ex : array("color" => "red").');
+    }
 }

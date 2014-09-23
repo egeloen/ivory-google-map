@@ -50,10 +50,12 @@ class MarkerImage extends AbstractJavascriptVariableAsset
         Point $anchor = null,
         Point $origin = null,
         Size $scaledSize = null,
-        Size $size = null
+        Size $size = null,
+        $name = null
     ) {
         $this->setPrefixJavascriptVariable('marker_image_');
         $this->setUrl($url);
+        $this->setName($name);
 
         if ($anchor !== null) {
             $this->setAnchor($anchor);
