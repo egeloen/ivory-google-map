@@ -40,6 +40,8 @@ use Ivory\GoogleMap\Helper\Overlays\PolygonHelper;
 use Ivory\GoogleMap\Helper\Overlays\PolylineHelper;
 use Ivory\GoogleMap\Helper\Overlays\RectangleHelper;
 use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Helper\Overlays\LegendHelper;
+use Ivory\GoogleMap\Overlays\Legend;
 
 /**
  * Map helper.
@@ -120,6 +122,9 @@ class MapHelper extends AbstractHelper
     /** @var \Ivory\GoogleMap\Helper\Events\EventManagerHelper */
     protected $eventManagerHelper;
 
+    /** @var \Ivory\GoogleMap\Helper\Overlays\LegendHelper */
+    protected $legendHelper;
+
     /** @var array */
     protected $extensionHelpers;
 
@@ -151,6 +156,7 @@ class MapHelper extends AbstractHelper
      * @param \Ivory\GoogleMap\Helper\Layers\KMLLayerHelper                 $kmlLayerHelper           The KML layer helper.
      * @param \Ivory\GoogleMap\Helper\Events\EventManagerHelper             $eventManagerHelper       The event manager helper.
      * @param array                                                         $extensionHelpers         The extension helpers.
+     * @param \Ivory\GoogleMap\Helper\Overlays\LegendHelper                 $legendHelper             The legend overlay helper.
      */
     public function __construct(
         CoordinateHelper $coordinateHelper = null,
@@ -177,7 +183,8 @@ class MapHelper extends AbstractHelper
         GroundOverlayHelper $groundOverlayHelper = null,
         KMLLayerHelper $kmlLayerHelper = null,
         EventManagerHelper $eventManagerHelper = null,
-        array $extensionHelpers = array()
+        array $extensionHelpers = array(),
+        LegendHelper $legendHelper = null
     ) {
         parent::__construct();
 
@@ -281,6 +288,10 @@ class MapHelper extends AbstractHelper
             $extensionHelpers['core'] = new CoreExtensionHelper();
         }
 
+        if ($legendHelper === null) {
+            $legendHelper = new LegendHelper();
+        }
+
         $this->setCoordinateHelper($coordinateHelper);
         $this->setBoundHelper($boundHelper);
         $this->setPointHelper($pointHelper);
@@ -311,6 +322,9 @@ class MapHelper extends AbstractHelper
         $this->setEventManagerHelper($eventManagerHelper);
 
         $this->setExtensionHelpers($extensionHelpers);
+
+        $this->setLegendHelper($legendHelper);
+
     }
 
     /**
@@ -887,6 +901,26 @@ class MapHelper extends AbstractHelper
     }
 
     /**
+     * Gets the Legend helper.
+     *
+     * @return \Ivory\GoogleMap\Helper\Overlays\LegendHelper The Legend helper.
+     */
+    public function getLegendHelper()
+    {
+        return $this->legendHelper;
+    }
+
+    /**
+     * Sets the Legend helper.
+     *
+     * @param \Ivory\GoogleMap\Helper\Overlays\LegendHelper $kmlLayerHelper The Legend helper.
+     */
+    public function setLegendHelper(LegendHelper $legendHelper)
+    {
+        $this->legendHelper = $legendHelper;
+    }
+
+    /**
      * Renders the html (container & stylesheets).
      *
      * @param \Ivory\GoogleMap\Map $map The map.
@@ -897,6 +931,7 @@ class MapHelper extends AbstractHelper
     {
         return implode('', array(
             $this->renderHtmlContainer($map),
+            $this->renderHTMLContainerLegend($map),
             $this->renderStylesheets($map),
             $this->renderJavascripts($map)
         ));
@@ -1057,6 +1092,7 @@ class MapHelper extends AbstractHelper
         $output[] = $this->renderJsContainerMarkerCluster($map);
 
         $output[] = $this->renderJsContainerKMLLayers($map);
+        $output[] = $this->renderJsContainerLegend($map);
 
         $output[] = $this->renderJsContainerEventManager($map);
 
@@ -1486,6 +1522,30 @@ class MapHelper extends AbstractHelper
         }
 
         return implode('', $output);
+    }
+
+    /**
+     * Renders the javascript container legend.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The JS output.
+     */
+    public function renderJsContainerLegend(Map $map)
+    {
+       return $this->legendHelper->render($map);
+    }
+
+    /**
+     * Renders the HTML container legend.
+     *
+     * @param \Ivory\GoogleMap\Map $map The map.
+     *
+     * @return string The HTML output.
+     */
+    public function renderHTMLContainerLegend(Map $map)
+    {
+        return $this->getLegendHelper()->renderHtmlContainer($map);
     }
 
     /**
