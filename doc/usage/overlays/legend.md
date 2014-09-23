@@ -2,6 +2,8 @@
 
 Add a legend on your map based on markers present on map.
 
+![Image of legend](http://i.imgur.com/L6xu56f.png)
+
 ## Build your legend
 
 ``` php
