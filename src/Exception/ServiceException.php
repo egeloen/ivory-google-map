@@ -59,6 +59,18 @@ class ServiceException extends Exception
     }
 
     /**
+     * Gets the "INVALID SERVICE URL LENGTH" exception.
+     *
+     * @param int $maxUrlLength Maximum url length.
+     *
+     * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID SERVICE URL LENGTH" exception.
+     */
+    public static function invalidServiceUrlLength($maxUrlLength)
+    {
+        return new static(sprintf('The service url cannot exceed %d characters.', $maxUrlLength));
+    }
+
+    /**
      * Gets the "INVALID DISTANCE TEXT" exception.
      *
      * @return \Ivory\GoogleMap\Exception\DirectionsException The "INVALID DISTANCE TEXT" exception.
