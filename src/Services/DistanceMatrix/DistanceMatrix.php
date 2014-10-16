@@ -25,6 +25,8 @@ use Widop\HttpAdapter\HttpAdapterInterface;
  */
 class DistanceMatrix extends AbstractService
 {
+    const MAX_SERVICE_URL_LENGTH = 2000;
+
     /**
      * Creates a distance matrix service.
      *
@@ -64,6 +66,11 @@ class DistanceMatrix extends AbstractService
         }
 
         $url = $this->generateUrl($distanceMatrixRequest);
+
+        if (strlen($url) > self::MAX_SERVICE_URL_LENGTH) {
+            throw DistanceMatrixException::invalidServiceUrlLength(self::MAX_SERVICE_URL_LENGTH);
+        }
+
         $response = $this->httpAdapter->getContent($url);
 
         if ($response === null) {
