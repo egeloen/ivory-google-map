@@ -97,4 +97,17 @@ class ServiceException extends Exception
     {
         return new static('The duration value must be a numeric value.');
     }
+
+    /**
+     * Gets the "INVALID RESPONSE" exception.
+     *
+     * @param string  $url        The url fetched.
+     * @param integer $statusCode The status code.
+     *
+     * @return \Ivory\GoogleMap\Exception\ServiceException The "INVALID RESPONSE" exception.
+     */
+    public static function invalidResponse($url, $statusCode)
+    {
+        return new static(sprintf('An error occured while fetching %s (status code: %s).', $url, $statusCode));
+    }
 }

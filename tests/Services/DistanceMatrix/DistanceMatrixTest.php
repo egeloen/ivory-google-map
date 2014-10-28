@@ -230,7 +230,7 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
      * @expectedExceptionMessage The service result is not valid.
      */
     public function testProcessWithInvalidResult()
@@ -243,5 +243,14 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
 
         $this->service = new DistanceMatrix($httpAdapterMock);
         $this->service->process(array('Vancouver BC'), array('San Francisco'));
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
+     * @expectedExceptionMessage An error occured while fetching
+     */
+    public function testProcessThrowsInvalidResponse()
+    {
+        $this->service->process(array('Vancouver BC'.str_repeat('a', 2000)), array('San Francisco'));
     }
 }
