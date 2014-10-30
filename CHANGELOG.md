@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.4.1 (????-??-??)
+### 1.4.1 (2014-10-30)
 
  * 882cb65 - [Services] Fix origins/destinations switch for distance matrix construction
  * 197fcf1 - [Services] Handle http errors (4XX/5XX)
