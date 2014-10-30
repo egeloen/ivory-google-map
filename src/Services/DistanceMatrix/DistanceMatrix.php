@@ -202,7 +202,7 @@ class DistanceMatrix extends AbstractService
         $origins = $distanceMatrixResponse->origin_addresses;
         $rows = $this->buildDistanceMatrixRows($distanceMatrixResponse->rows);
 
-        return new DistanceMatrixResponse($status, $destinations, $origins, $rows);
+        return new DistanceMatrixResponse($status, $origins, $destinations, $rows);
     }
 
     /**
