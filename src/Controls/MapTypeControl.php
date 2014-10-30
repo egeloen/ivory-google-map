@@ -11,30 +11,29 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException;
 use Ivory\GoogleMap\MapTypeId;
 
 /**
- * Map type control options describes a google map type control options.
+ * Map type control.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MapTypeControlOptions
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#MapTypeControlOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
 class MapTypeControl
 {
     /** @var array */
-    protected $mapTypeIds;
+    private $mapTypeIds = array();
 
     /** @var string */
-    protected $controlPosition;
+    private $controlPosition;
 
     /** @var string */
-    protected $mapTypeControlStyle;
+    private $mapTypeControlStyle;
 
     /**
-     * Create a map type control.
+     * Creates a map type control.
      *
-     * @param array  $mapTypeIds          The map type IDs.
+     * @param array  $mapTypeIds          The map type ids.
      * @param string $controlPosition     The control position.
      * @param string $mapTypeControlStyle The map type control style.
      */
@@ -43,15 +42,33 @@ class MapTypeControl
         $controlPosition = ControlPosition::TOP_RIGHT,
         $mapTypeControlStyle = MapTypeControlStyle::DEFAULT_
     ) {
-        $this->setMapTypeIds($mapTypeIds);
+        $this->addMapTypeIds($mapTypeIds);
         $this->setControlPosition($controlPosition);
         $this->setMapTypeControlStyle($mapTypeControlStyle);
     }
 
     /**
-     * Gets the map type IDs.
+     * Resets the map types ids.
+     */
+    public function resetMapTypeIds()
+    {
+        $this->mapTypeIds = array();
+    }
+
+    /**
+     * Checks if there are map types ids.
      *
-     * @return array The map type IDs.
+     * @return boolean TRUE if there are map type ids else FALSE.
+     */
+    public function hasMapTypeIds()
+    {
+        return !empty($this->mapTypeIds);
+    }
+
+    /**
+     * Gets the map type ids.
+     *
+     * @return array The map type ids.
      */
     public function getMapTypeIds()
     {
@@ -59,35 +76,72 @@ class MapTypeControl
     }
 
     /**
-     * Sets the map type IDs.
+     * Sets the map type ids.
      *
-     * @param array $mapTypeIds The map type IDs.
+     * @param array $mapTypeIds The map type ids.
      */
-    public function setMapTypeIds($mapTypeIds)
+    public function setMapTypeIds(array $mapTypeIds)
     {
-        $this->mapTypeIds = array();
+        $this->resetMapTypeIds();
+        $this->addMapTypeIds($mapTypeIds);
+    }
 
+    /**
+     * Adds the map type ids.
+     *
+     * @param array $mapTypeIds The map type ids.
+     */
+    public function addMapTypeIds(array $mapTypeIds)
+    {
         foreach ($mapTypeIds as $mapTypeId) {
             $this->addMapTypeId($mapTypeId);
         }
     }
 
     /**
-     * Add a map type ID.
+     * Removes the map type ids.
      *
-     * @param string $mapTypeId The map type ID to add.
+     * @param array $mapTypeIds The map type ids.
+     */
+    public function removeMapTypeIds(array $mapTypeIds)
+    {
+        foreach ($mapTypeIds as $mapTypeId) {
+            $this->removeMapTypeId($mapTypeId);
+        }
+    }
+
+    /**
+     * Checks if there is a map type id.
      *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the map type ID is not valid.
+     * @param string $mapTypeId The map type id.
+     *
+     * @return boolean TRUE if there is the map type id else FALSE.
+     */
+    public function hasMapTypeId($mapTypeId)
+    {
+        return in_array($mapTypeId, $this->mapTypeIds, true);
+    }
+
+    /**
+     * Adds a map type id.
+     *
+     * @param string $mapTypeId The map type id.
      */
     public function addMapTypeId($mapTypeId)
     {
-        if (!in_array($mapTypeId, MapTypeId::getMapTypeIds())) {
-            throw ControlException::invalidMapTypeId();
-        }
-
-        if (!in_array($mapTypeId, $this->mapTypeIds)) {
+        if (!$this->hasMapTypeId($mapTypeId)) {
             $this->mapTypeIds[] = $mapTypeId;
         }
+    }
+
+    /**
+     * Removes a map type id.
+     *
+     * @param string $mapTypeId The map type id.
+     */
+    public function removeMapTypeId($mapTypeId)
+    {
+        unset($this->mapTypeIds[array_search($mapTypeId, $this->mapTypeIds, true)]);
     }
 
     /**
@@ -104,15 +158,9 @@ class MapTypeControl
      * Sets the control position.
      *
      * @param string $controlPosition The control position.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the control position is not valid.
      */
     public function setControlPosition($controlPosition)
     {
-        if (!in_array($controlPosition, ControlPosition::getControlPositions())) {
-            throw ControlException::invalidControlPosition();
-        }
-
         $this->controlPosition = $controlPosition;
     }
 
@@ -129,16 +177,10 @@ class MapTypeControl
     /**
      * Sets the map type control style.
      *
-     * @param type $mapTypeControlStyle The map type control style.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the map type control style is not valid.
+     * @param string $mapTypeControlStyle The map type control style.
      */
     public function setMapTypeControlStyle($mapTypeControlStyle)
     {
-        if (!in_array($mapTypeControlStyle, MapTypeControlStyle::getMapTypeControlStyles())) {
-            throw ControlException::invalidMapTypeControlStyle();
-        }
-
         $this->mapTypeControlStyle = $mapTypeControlStyle;
     }
 }

@@ -11,52 +11,44 @@
 
 namespace Ivory\GoogleMap\Services\DistanceMatrix;
 
-use Ivory\GoogleMap\Exception\DistanceMatrixException;
 use Ivory\GoogleMap\Services\Base\Distance;
 use Ivory\GoogleMap\Services\Base\Duration;
-use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixElementStatus;
 
 /**
- * A distance matrix response wraps the distance results & the response status.
+ * Distance matrix response element.
  *
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DistanceMatrixResponseElement
  * @author GeLo <geloen.eric@gmail.com>
- * @author Tyler Sommer <sommertm@gmail.com>
  */
 class DistanceMatrixResponseElement
 {
     /** @var string */
-    protected $status;
+    private $status;
 
-    /** @var null|\Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    /** @var \Ivory\GoogleMap\Services\Base\Distance|null */
+    private $distance;
 
-    /** @var null|\Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
+    /** @var \Ivory\GoogleMap\Services\Base\Duration|null */
+    private $duration;
 
     /**
      * Create a distance matrix response element.
      *
-     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The element distance.
-     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The element duration.
-     * @param string                                  $status   The element status.
+     * @param string                                  $status   The status.
+     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The distance.
+     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The duration.
      */
     public function __construct($status, Distance $distance = null, Duration $duration = null)
     {
         $this->setStatus($status);
-
-        if ($distance !== null) {
-            $this->setDistance($distance);
-        }
-
-        if ($duration !== null) {
-            $this->setDuration($duration);
-        }
+        $this->setDistance($distance);
+        $this->setDuration($duration);
     }
 
     /**
-     * Gets the distance matrix response status.
+     * Gets the status.
      *
-     * @return string The distance matrix response status.
+     * @return string The status.
      */
     public function getStatus()
     {
@@ -64,25 +56,29 @@ class DistanceMatrixResponseElement
     }
 
     /**
-     * Sets the distance matrix response status.
+     * Sets the status.
      *
-     * @param string $status The distance matrix status.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the status is not valid.
+     * @param string $status The status.
      */
     public function setStatus($status)
     {
-        if (!in_array($status, DistanceMatrixElementStatus::getDistanceMatrixElementStatus())) {
-            throw DistanceMatrixException::invalidDistanceMatrixResponseElementStatus();
-        }
-
         $this->status = $status;
     }
 
     /**
-     * Gets the step distance.
+     * Checks if there is a distance.
      *
-     * @return \Ivory\GoogleMap\Services\Base\Distance The step distance.
+     * @return boolean TRUe if there is a distance else FALSE.
+     */
+    public function hasDistance()
+    {
+        return $this->distance !== null;
+    }
+
+    /**
+     * Gets the distance.
+     *
+     * @return \Ivory\GoogleMap\Services\Base\Distance|null The distance.
      */
     public function getDistance()
     {
@@ -90,19 +86,29 @@ class DistanceMatrixResponseElement
     }
 
     /**
-     * Sets the step distance.
+     * Sets the distance.
      *
-     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The step distance.
+     * @param \Ivory\GoogleMap\Services\Base\Distance|null $distance The distance.
      */
-    public function setDistance(Distance $distance)
+    public function setDistance(Distance $distance = null)
     {
         $this->distance = $distance;
     }
 
     /**
-     * Gets the step duration.
+     * Checks if there is a duration.
      *
-     * @return \Ivory\GoogleMap\Services\Base\Duration The step duration.
+     * @return boolean TRUE if there is a duration else FALSE.
+     */
+    public function hasDuration()
+    {
+        return $this->duration !== null;
+    }
+
+    /**
+     * Gets the duration.
+     *
+     * @return \Ivory\GoogleMap\Services\Base\Duration|null The duration.
      */
     public function getDuration()
     {
@@ -110,11 +116,11 @@ class DistanceMatrixResponseElement
     }
 
     /**
-     * Sets the step duration
+     * Sets the duration.
      *
-     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The step duration.
+     * @param \Ivory\GoogleMap\Services\Base\Duration|null $duration The duration.
      */
-    public function setDuration(Duration $duration)
+    public function setDuration(Duration $duration = null)
     {
         $this->duration = $duration;
     }

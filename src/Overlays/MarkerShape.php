@@ -11,40 +11,40 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Assets\AbstractVariableAsset;
 
 /**
- * Marker shape which describes a google map marker shape.
+ * Marker shape.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerShape
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerShape
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerShape extends AbstractJavascriptVariableAsset
+class MarkerShape extends AbstractVariableAsset
 {
     /** @var string */
-    protected $type;
+    private $type;
 
     /** @var array */
-    protected $coordinates;
+    private $coordinates = array();
 
     /**
      * Creates a marker shape.
      *
-     * @param string $type        The marker shape type.
-     * @param array  $coordinates The marker shape coordinates.
+     * @param string $type        The type.
+     * @param array  $coordinates The coordinates.
      */
-    public function __construct($type = 'poly', array $coordinates = array(1, 1, 1, -1, -1, -1, -1, 1))
+    public function __construct($type, array $coordinates)
     {
-        $this->setPrefixJavascriptVariable('marker_shape_');
+        parent::__construct('marker_shape_');
+
         $this->setType($type);
         $this->setCoordinates($coordinates);
     }
 
     /**
-     * Gets the marker shape type.
+     * Gets the type.
      *
-     * @return string The marker sape type.
+     * @return string The type.
      */
     public function getType()
     {
@@ -52,29 +52,17 @@ class MarkerShape extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the marker shape type.
+     * Sets the type.
      *
-     * The allowing marker shape type are : circle, poly & rect.
-     *
-     * @param string $type The marker schape type.
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the type is not valid.
+     * @param string $type The type.
      */
     public function setType($type)
     {
-        switch (strtolower($type)) {
-            case 'circle':
-            case 'poly':
-            case 'rect':
-                $this->type = $type;
-                break;
-            default:
-                throw OverlayException::invalidMarkerShapeType();
-        }
+        $this->type = $type;
     }
 
     /**
-     * Resets the marker shape coordinates.
+     * Resets the coordinates.
      */
     public function resetCoordinates()
     {
@@ -82,9 +70,9 @@ class MarkerShape extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Cheks if the marker shape has coordinates
+     * Checks if there are coordinates.
      *
-     * @return boolean TRUE if the marker shape has coordinates else FALSE.
+     * @return boolean TRUE if there are coordinates else FALSE.
      */
     public function hasCoordinates()
     {
@@ -92,9 +80,9 @@ class MarkerShape extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Gets the marker shape coordinates.
+     * Gets the coordinates.
      *
-     * @return array The marker shape coordinates.
+     * @return array The coordinates.
      */
     public function getCoordinates()
     {
@@ -102,73 +90,58 @@ class MarkerShape extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the marker shape coordinates.
+     * Sets the coordinates.
      *
-     * @param array $coordinates The marker shape coordinates.
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the coordinates are not valid according to the type.
+     * @param array $coordinates The coordinates.
      */
     public function setCoordinates(array $coordinates)
     {
-        switch (strtolower($this->type)) {
-            case 'circle':
-                if ((count($coordinates) === 3)
-                    && is_numeric($coordinates[0])
-                    && is_numeric($coordinates[1])
-                    && is_numeric($coordinates[2])
-                ) {
-                    $this->coordinates = $coordinates;
-                } else {
-                    throw OverlayException::invalidMarkerShapeCircleCoordinates();
-                }
-                break;
-            case 'poly':
-                if ((count($coordinates) <= 0) || ((count($coordinates) % 2) !== 0)) {
-                    throw OverlayException::invalidMarkerShapePolyCoordinates();
-                }
-
-                foreach ($coordinates as $coordinate) {
-                    if (!is_numeric($coordinate)) {
-                        throw OverlayException::invalidMarkerShapePolyCoordinates();
-                    }
-                }
-
-                $this->coordinates = $coordinates;
-                break;
-            case 'rect':
-                if ((count($coordinates) === 4)
-                    && is_numeric($coordinates[0])
-                    && is_numeric($coordinates[1])
-                    && is_numeric($coordinates[2])
-                    && is_numeric($coordinates[3])
-                ) {
-                    $this->coordinates = $coordinates;
-                } else {
-                    throw OverlayException::invalidMarkerShapeRectCoordinates();
-                }
-                break;
-        }
+        $this->coordinates = $coordinates;
     }
 
     /**
-     * Adds a coordinate to the marker shape if the type is poly.
+     * Sets the circle coordinates.
      *
-     * @param integer $x The X coordinate.
-     * @param integer $y The Y coordinate.
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the type is not poly or if the poly coordinate is not
-     *                                                     valid.
+     * @param float $x      The X.
+     * @param float $y      The Y.
+     * @param float $radius The radius.
      */
-    public function addPolyCoordinate($x, $y)
+    public function setCircleCoordinates($x, $y, $radius)
     {
-        if ($this->type !== 'poly') {
-            throw OverlayException::invalidMarkerShapeAddPolyCoordinateCall();
-        }
+        $this->coordinates = array($x, $y, $radius);
+    }
 
-        if (!is_numeric($x) || !is_numeric($y)) {
-            throw OverlayException::invalidMarkerShapePolyCoordinate();
-        }
+    /**
+     * Sets the rectangle coordinates.
+     *
+     * @param float $x1 The X1.
+     * @param float $y1 The Y1.
+     * @param float $x2 The X2.
+     * @param float $y2 The Y2.
+     */
+    public function setRectangleCoordinates($x1, $y1, $x2, $y2)
+    {
+        $this->coordinates = array($x1, $y1, $x2, $y2);
+    }
 
+    /**
+     * Sets the polygon coordinates.
+     *
+     * @param array $polygonCoordinates The polygon coordinates.
+     */
+    public function setPolygonCoordinates(array $polygonCoordinates)
+    {
+        $this->setCoordinates($polygonCoordinates);
+    }
+
+    /**
+     * Adds a polygon coordinate.
+     *
+     * @param float $x The X.
+     * @param float $y The Y.
+     */
+    public function addPolygonCoordinate($x, $y)
+    {
         $this->coordinates[] = $x;
         $this->coordinates[] = $y;
     }

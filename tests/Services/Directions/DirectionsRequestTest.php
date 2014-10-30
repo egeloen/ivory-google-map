@@ -11,7 +11,6 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Directions;
 
-use \DateTime;
 use Ivory\GoogleMap\Services\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
@@ -21,17 +20,23 @@ use Ivory\GoogleMap\Services\Base\UnitSystem;
  *
  * @author GeLo <gelon.eric@gmail.com>
  */
-class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
+class DirectionsRequestTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Directions\DirectionsRequest */
-    protected $directionsRequest;
+    private $directionsRequest;
+
+    /** @var string */
+    private $origin;
+
+    /** @var string */
+    private $destination;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->directionsRequest = new DirectionsRequest();
+        $this->directionsRequest = new DirectionsRequest($this->origin = 'origin', $this->destination = 'destination');
     }
 
     /**
@@ -39,16 +44,22 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->destination);
+        unset($this->origin);
         unset($this->directionsRequest);
     }
 
     public function testDefaultState()
     {
+        $this->assertTrue($this->directionsRequest->hasOrigin());
+        $this->assertSame($this->origin, $this->directionsRequest->getOrigin());
+
+        $this->assertTrue($this->directionsRequest->hasDestination());
+        $this->assertSame($this->destination, $this->directionsRequest->getDestination());
+
         $this->assertFalse($this->directionsRequest->hasAvoidHighways());
         $this->assertFalse($this->directionsRequest->hasAvoidTolls());
-        $this->assertFalse($this->directionsRequest->hasDestination());
         $this->assertFalse($this->directionsRequest->hasOptimizeWaypoints());
-        $this->assertFalse($this->directionsRequest->hasOrigin());
         $this->assertFalse($this->directionsRequest->hasDepartureTime());
         $this->assertFalse($this->directionsRequest->hasArrivalTime());
         $this->assertFalse($this->directionsRequest->hasProvideRouteAlternatives());
@@ -59,7 +70,7 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->directionsRequest->hasWaypoints());
     }
 
-    public function testAvoidHightwaysWithValidValue()
+    public function testSetAvoidHightways()
     {
         $this->directionsRequest->setAvoidHighways(true);
 
@@ -67,24 +78,16 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->directionsRequest->getAvoidHighways());
     }
 
-    public function testAvoidHighwaysWithNullValue()
+    public function testResetAvoidHighways()
     {
         $this->directionsRequest->setAvoidHighways(true);
         $this->directionsRequest->setAvoidHighways(null);
 
+        $this->assertFalse($this->directionsRequest->hasAvoidHighways());
         $this->assertNull($this->directionsRequest->getAvoidHighways());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request avoid hightways flag must be a boolean value.
-     */
-    public function testAvoidHighwaysWithInvalidValue()
-    {
-        $this->directionsRequest->setAvoidHighways('foo');
-    }
-
-    public function testAvoidTollsWithValidValue()
+    public function testSetAvoidTolls()
     {
         $this->directionsRequest->setAvoidTolls(true);
 
@@ -92,63 +95,27 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->directionsRequest->getAvoidTolls());
     }
 
-    public function testAvoidTollsWithNullValue()
+    public function testResetAvoidTolls()
     {
         $this->directionsRequest->setAvoidTolls(true);
         $this->directionsRequest->setAvoidTolls(null);
 
+        $this->assertFalse($this->directionsRequest->hasAvoidTolls());
         $this->assertNull($this->directionsRequest->getAvoidTolls());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request avoid tolls flag must be a boolean value.
+     * @dataProvider locationProvider
      */
-    public function testAvoidTollsWithInvalidValue()
+    public function testSetDestination($destination)
     {
-        $this->directionsRequest->setAvoidTolls('foo');
-    }
-
-    public function testDestinationWithString()
-    {
-        $this->directionsRequest->setDestination('foo');
+        $this->directionsRequest->setDestination($destination);
 
         $this->assertTrue($this->directionsRequest->hasDestination());
-        $this->assertEquals($this->directionsRequest->getDestination(), 'foo');
+        $this->assertSame($destination, $this->directionsRequest->getDestination());
     }
 
-    public function testDestinationWithCoordinate()
-    {
-        $location = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-
-        $this->directionsRequest->setDestination($location);
-
-        $this->assertSame($location, $this->directionsRequest->getDestination());
-    }
-
-    public function testDestinationWithLatitudeAndLongitude()
-    {
-        $this->directionsRequest->setDestination(1.1, 2.1, false);
-
-        $this->assertSame(1.1, $this->directionsRequest->getDestination()->getLatitude());
-        $this->assertSame(2.1, $this->directionsRequest->getDestination()->getLongitude());
-        $this->assertFalse($this->directionsRequest->getDestination()->isNoWrap());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The destination setter arguments are invalid.
-     * The available prototypes are :
-     * - function setDestination(string $destination)
-     * - function setDestination(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setDestination(double $latitude, double $longitude, boolean $noWrap)
-     */
-    public function testDestinationWithInvalidValue()
-    {
-        $this->directionsRequest->setDestination(true);
-    }
-
-    public function testOptimizeWaypointsWithValidValue()
+    public function testSetOptimizeWaypoints()
     {
         $this->directionsRequest->setOptimizeWaypoints(true);
 
@@ -156,96 +123,61 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->directionsRequest->getOptimizeWaypoints());
     }
 
-    public function testOptimizeWaypointsWithNullValue()
+    public function testResetOptimizeWaypoints()
     {
         $this->directionsRequest->setOptimizeWaypoints(true);
         $this->directionsRequest->setOptimizeWaypoints(null);
 
+        $this->assertFalse($this->directionsRequest->hasOptimizeWaypoints());
         $this->assertNull($this->directionsRequest->getOptimizeWaypoints());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request optimize waypoints flag must be a boolean value.
+     * @dataProvider locationProvider
      */
-    public function testOptimizeWaypointsWithInvalidValue()
+    public function testSetOrigin($origin)
     {
-        $this->directionsRequest->setOptimizeWaypoints('foo');
-    }
-
-    public function testOriginWithString()
-    {
-        $this->directionsRequest->setOrigin('foo');
-
-        $this->assertTrue($this->directionsRequest->hasOrigin());
-        $this->assertSame('foo', $this->directionsRequest->getOrigin());
-    }
-
-    public function testOriginWithCoordinate()
-    {
-        $origin = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
         $this->directionsRequest->setOrigin($origin);
 
+        $this->assertTrue($this->directionsRequest->hasOrigin());
         $this->assertSame($origin, $this->directionsRequest->getOrigin());
     }
 
-    public function testOriginWithLatitudeAndLongitude()
+    public function testSetDepartureTime()
     {
-        $this->directionsRequest->setOrigin(1.1, 2.1, false);
-
-        $this->assertSame(1.1, $this->directionsRequest->getOrigin()->getLatitude());
-        $this->assertSame(2.1, $this->directionsRequest->getOrigin()->getLongitude());
-        $this->assertFalse($this->directionsRequest->getOrigin()->isNoWrap());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The origin setter arguments are invalid.
-     * The available prototypes are :
-     * - function setOrigin(string $destination)
-     * - function setOrigin(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setOrigin(double $latitude, double $longitude, boolean $noWrap)
-     */
-    public function testOriginWithInvalidValue()
-    {
-        $this->directionsRequest->setOrigin(true);
-    }
-
-    public function testDepartureTimeWithValidValue()
-    {
-        $now = new DateTime();
-        $this->directionsRequest->setDepartureTime($now);
+        $this->directionsRequest->setDepartureTime($departureTime = new \DateTime());
 
         $this->assertTrue($this->directionsRequest->hasDepartureTime());
-        $this->assertSame($now, $this->directionsRequest->getDepartureTime());
+        $this->assertSame($departureTime, $this->directionsRequest->getDepartureTime());
     }
 
-    public function testDepartureTimeWithNullValue()
+    public function testResetDepartureTime()
     {
-        $this->directionsRequest->setDepartureTime(new DateTime());
+        $this->directionsRequest->setDepartureTime(new \DateTime());
         $this->directionsRequest->setDepartureTime(null);
 
+        $this->assertFalse($this->directionsRequest->hasDepartureTime());
         $this->assertNull($this->directionsRequest->getDepartureTime());
     }
 
-    public function testArrivalTimeWithValidValue()
+    public function testSetArrivalTime()
     {
-        $now = new DateTime();
-        $this->directionsRequest->setArrivalTime($now);
+        $this->directionsRequest->setArrivalTime($arrivalTime = new \DateTime());
 
         $this->assertTrue($this->directionsRequest->hasArrivalTime());
-        $this->assertSame($now, $this->directionsRequest->getArrivalTime());
+        $this->assertSame($arrivalTime, $this->directionsRequest->getArrivalTime());
     }
 
-    public function testArrivalTimeWithNullValue()
+    public function testResetArrivalTime()
     {
-        $this->directionsRequest->setArrivalTime(new DateTime());
+        $this->directionsRequest->setArrivalTime(new \DateTime());
         $this->directionsRequest->setArrivalTime(null);
 
+        $this->assertFalse($this->directionsRequest->hasArrivalTime());
         $this->assertNull($this->directionsRequest->getArrivalTime());
     }
 
-    public function testProvideRouteAlternativesWithValidValue()
+    public function testSetProvideRouteAlternatives()
     {
         $this->directionsRequest->setProvideRouteAlternatives(true);
 
@@ -253,170 +185,139 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->directionsRequest->getProvideRouteAlternatives());
     }
 
-    public function testProvideRouteAlternativesWithNullValue()
+    public function testResetProvideRouteAlternatives()
     {
         $this->directionsRequest->setProvideRouteAlternatives(true);
         $this->directionsRequest->setProvideRouteAlternatives(null);
 
+        $this->assertFalse($this->directionsRequest->hasProvideRouteAlternatives());
         $this->assertNull($this->directionsRequest->getProvideRouteAlternatives());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request provide route alternatives flag must be a boolean value.
-     */
-    public function testProvideRouteAlternativesWithInvalidValue()
+    public function testSetRegion()
     {
-        $this->directionsRequest->setProvideRouteAlternatives('foo');
-    }
-
-    public function testRegionWithValidValue()
-    {
-        $this->directionsRequest->setRegion('fr');
+        $this->directionsRequest->setRegion($region = 'fr');
 
         $this->assertTrue($this->directionsRequest->hasRegion());
-        $this->assertSame('fr', $this->directionsRequest->getRegion());
+        $this->assertSame($region, $this->directionsRequest->getRegion());
     }
 
-    public function testRegionWithNullValue()
+    public function testResetRegion()
     {
         $this->directionsRequest->setRegion('fr');
         $this->directionsRequest->setRegion(null);
 
+        $this->assertFalse($this->directionsRequest->hasRegion());
         $this->assertNull($this->directionsRequest->getRegion());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request region must be a string with two characters.
-     */
-    public function testRegionWithInvalidValue()
+    public function testSetLanguage()
     {
-        $this->directionsRequest->setRegion('foo');
-    }
-
-    public function testLanguageWithValidValue()
-    {
-        $this->directionsRequest->setLanguage('fr');
+        $this->directionsRequest->setLanguage($language = 'fr');
 
         $this->assertTrue($this->directionsRequest->hasLanguage());
-        $this->assertSame('fr', $this->directionsRequest->getLanguage());
+        $this->assertSame($language, $this->directionsRequest->getLanguage());
     }
 
-    public function testLanguageWithNullValue()
+    public function testResetLanguage()
     {
         $this->directionsRequest->setLanguage('fr');
         $this->directionsRequest->setLanguage(null);
 
+        $this->assertFalse($this->directionsRequest->hasLanguage());
         $this->assertNull($this->directionsRequest->getLanguage());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request language must be a string with two or five characters.
-     */
-    public function testLanguageWithInvalidValue()
+    public function testSetTravelMode()
     {
-        $this->directionsRequest->setLanguage('foo');
-    }
-
-    public function testTravelModeWithValidValue()
-    {
-        $this->directionsRequest->setTravelMode(TravelMode::WALKING);
+        $this->directionsRequest->setTravelMode($travelMode = TravelMode::WALKING);
 
         $this->assertTrue($this->directionsRequest->hasTravelMode());
-        $this->assertSame(TravelMode::WALKING, $this->directionsRequest->getTravelMode());
+        $this->assertSame($travelMode, $this->directionsRequest->getTravelMode());
     }
 
-    public function testTravelModeWithNullValue()
+    public function testResetTravelMode()
     {
         $this->directionsRequest->setTravelMode(TravelMode::WALKING);
         $this->directionsRequest->setTravelMode(null);
 
+        $this->assertFalse($this->directionsRequest->hasTravelMode());
         $this->assertNull($this->directionsRequest->getTravelMode());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request travel mode can only be : BICYCLING, DRIVING, WALKING, TRANSIT.
-     */
-    public function testTravelModeWithInvalidValue()
+    public function testSetUnitSystem()
     {
-        $this->directionsRequest->setTravelMode('foo');
-    }
-
-    public function testUnitSystemWithValidValue()
-    {
-        $this->directionsRequest->setUnitSystem(UnitSystem::IMPERIAL);
+        $this->directionsRequest->setUnitSystem($unitSystem = UnitSystem::IMPERIAL);
 
         $this->assertTrue($this->directionsRequest->hasUnitSystem());
-        $this->assertSame(UnitSystem::IMPERIAL, $this->directionsRequest->getUnitSystem());
+        $this->assertSame($unitSystem, $this->directionsRequest->getUnitSystem());
     }
 
-    public function testUnitSystemWithNullValue()
+    public function testResetUnitSystem()
     {
         $this->directionsRequest->setUnitSystem(UnitSystem::IMPERIAL);
         $this->directionsRequest->setUnitSystem(null);
 
+        $this->assertFalse($this->directionsRequest->hasUnitSystem());
         $this->assertNull($this->directionsRequest->getUnitSystem());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request unit system can only be : IMPERIAL, METRIC.
-     */
-    public function testUnitSystemWithInvalidValue()
+    public function testSetWaypoints()
     {
-        $this->directionsRequest->setUnitSystem('foo');
+        $this->directionsRequest->setWaypoints($waypoints = array($this->createDirectionsWaypointMock()));
+
+        $this->assertWaypoints($waypoints);
     }
 
-    public function testWaypointWithWaypoint()
+    public function testAddWaypoints()
     {
-        $waypoint = $this->getMock('Ivory\GoogleMap\Services\Directions\DirectionsWaypoint');
-        $this->directionsRequest->setWaypoints(array($waypoint));
+        $this->directionsRequest->setWaypoints($waypoints = array($this->createDirectionsWaypointMock()));
+        $this->directionsRequest->addWaypoints($newWaypoints = array($this->createDirectionsWaypointMock()));
 
-        $this->assertTrue($this->directionsRequest->hasWaypoints());
-        $this->assertSame(array($waypoint), $this->directionsRequest->getWaypoints());
+        $this->assertWaypoints(array_merge($waypoints, $newWaypoints));
     }
 
-    public function testWaypointWithCoordinate()
+    public function testRemoveWaypoints()
     {
-        $coordinate = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->directionsRequest->setWaypoints(array($coordinate));
+        $this->directionsRequest->setWaypoints($waypoints = array($this->createDirectionsWaypointMock()));
+        $this->directionsRequest->removeWaypoints($waypoints);
 
-        $waypoints = $this->directionsRequest->getWaypoints();
-
-        $this->assertArrayHasKey(0, $waypoints);
-        $this->assertSame($coordinate, $waypoints[0]->getLocation());
+        $this->assertNoWaypoints();
     }
 
-    public function testWaypointWithLatitudeAndLongitude()
+    public function testResetWaypoints()
     {
-        $this->directionsRequest->addWaypoint(1.1, 2.2, false);
+        $this->directionsRequest->setWaypoints(array($this->createDirectionsWaypointMock()));
+        $this->directionsRequest->resetWaypoints();
 
-        $waypoints = $this->directionsRequest->getWaypoints();
-
-        $this->assertArrayHasKey(0, $waypoints);
-        $this->assertSame(1.1, $waypoints[0]->getLocation()->getLatitude());
-        $this->assertSame(2.2, $waypoints[0]->getLocation()->getLongitude());
-        $this->assertFalse($waypoints[0]->getLocation()->isNoWrap());
+        $this->assertNoWaypoints();
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The waypoint adder arguments are invalid.
-     * The available prototypes are :
-     * - function addWaypoint(Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint)
-     * - function addWaypoint(string $location)
-     * - function addWaypoint(Ivory\GoogleMap\Base\Coordinate $location)
-     * - function addWaypoint(double $latitude, double $longitude, boolean $noWrap)
-     */
-    public function testWaypointWithInvalidValue()
+    public function testAddWaypoint()
     {
-        $this->directionsRequest->addWaypoint(true);
+        $this->directionsRequest->addWaypoint($waypoint = $this->createDirectionsWaypointMock());
+
+        $this->assertWaypoint($waypoint);
     }
 
-    public function testSensorWithValidValue()
+    public function testAddWaypointUnicity()
+    {
+        $this->directionsRequest->resetWaypoints();
+        $this->directionsRequest->addWaypoint($waypoint = $this->createDirectionsWaypointMock());
+        $this->directionsRequest->addWaypoint($waypoint);
+
+        $this->assertWaypoints(array($waypoint));
+    }
+
+    public function testRemoveWaypoint()
+    {
+        $this->directionsRequest->addWaypoint($waypoint = $this->createDirectionsWaypointMock());
+        $this->directionsRequest->removeWaypoint($waypoint);
+
+        $this->assertNoWaypoint($waypoint);
+    }
+
+    public function testSetSensor()
     {
         $this->directionsRequest->setSensor(true);
 
@@ -424,112 +325,63 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions request sensor flag must be a boolean value.
+     * Gets the location provider.
+     *
+     * @return array The location provider.
      */
-    public function testSensorWithInvalidValue()
+    public function locationProvider()
     {
-        $this->directionsRequest->setSensor('foo');
+        return array(
+            array('foo'),
+            array($this->createCoordinateMock()),
+        );
     }
 
-    public function testIsValid()
+    /**
+     * Asserts there are waypoints.
+     *
+     * @param array $waypoints The waypoints.
+     */
+    private function assertWaypoints($waypoints)
     {
-        $this->assertFalse($this->directionsRequest->isValid());
+        $this->assertInternalType('array', $waypoints);
+
+        $this->assertTrue($this->directionsRequest->hasWaypoints());
+        $this->assertSame($waypoints, $this->directionsRequest->getWaypoints());
+
+        foreach ($waypoints as $waypoint) {
+            $this->assertWaypoint($waypoint);
+        }
     }
 
-    public function testIsValidWithOrigin()
+    /**
+     * Asserts there is a waypoint.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint The waypoint.
+     */
+    private function assertWaypoint($waypoint)
     {
-        $this->directionsRequest->setOrigin('foo');
-
-        $this->assertFalse($this->directionsRequest->isValid());
+        $this->assertDirectionsWaypointInstance($waypoint);
+        $this->assertTrue($this->directionsRequest->hasWaypoint($waypoint));
     }
 
-    public function testIsValidWithDestination()
+    /**
+     * Asserts there are no waypoints.
+     */
+    private function assertNoWaypoints()
     {
-        $this->directionsRequest->setDestination('foo');
-
-        $this->assertFalse($this->directionsRequest->isValid());
+        $this->assertFalse($this->directionsRequest->hasWaypoints());
+        $this->assertEmpty($this->directionsRequest->getWaypoints());
     }
 
-    public function testIsValidWithOriginAndDestination()
+    /**
+     * Asserts there is no waypoint.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint The waypoint.
+     */
+    private function assertNoWaypoint($waypoint)
     {
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-
-        $this->assertTrue($this->directionsRequest->isValid());
-    }
-
-    public function testIsValidWithValidWaypoint()
-    {
-        $waypoint = $this->getMock('Ivory\GoogleMap\Services\Directions\DirectionsWaypoint');
-        $waypoint
-            ->expects($this->once())
-            ->method('isValid')
-            ->will($this->returnValue(true));
-
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-        $this->directionsRequest->addWaypoint($waypoint);
-
-        $this->assertTrue($this->directionsRequest->isValid());
-    }
-
-    public function testIsValidWithInvalidWaypoint()
-    {
-        $waypoint = $this->getMock('Ivory\GoogleMap\Services\Directions\DirectionsWaypoint');
-        $waypoint
-            ->expects($this->once())
-            ->method('isValid')
-            ->will($this->returnValue(false));
-
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-        $this->directionsRequest->addWaypoint($waypoint);
-
-        $this->assertFalse($this->directionsRequest->isValid());
-    }
-
-    public function testIsValidWithInvalidTransit()
-    {
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-
-        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
-
-        $this->assertFalse($this->directionsRequest->isValid());
-    }
-
-    public function testIsValidWithValidTransitDepartureTime()
-    {
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-
-        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
-        $this->directionsRequest->setDepartureTime(new DateTime());
-
-        $this->assertTrue($this->directionsRequest->isValid());
-    }
-
-    public function testIsValidWithTransitArrivalTime()
-    {
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-
-        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
-        $this->directionsRequest->setArrivalTime(new DateTime());
-
-        $this->assertTrue($this->directionsRequest->isValid());
-    }
-
-    public function testIsValidWithValidTransitDepartureTimeAndArrivalTime()
-    {
-        $this->directionsRequest->setDestination('foo');
-        $this->directionsRequest->setOrigin('bar');
-
-        $this->directionsRequest->setTravelMode(TravelMode::TRANSIT);
-        $this->directionsRequest->setArrivalTime(new DateTime());
-        $this->directionsRequest->setDepartureTime(new DateTime());
-
-        $this->assertTrue($this->directionsRequest->isValid());
+        $this->assertDirectionsWaypointInstance($waypoint);
+        $this->assertFalse($this->directionsRequest->hasWaypoint($waypoint));
     }
 }

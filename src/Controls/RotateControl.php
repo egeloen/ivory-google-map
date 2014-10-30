@@ -11,23 +11,21 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException;
-
 /**
- * A rotate control describes a google map rotate control.
+ * Rotate control.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#RotateControlOptions
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#RotateControlOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
 class RotateControl
 {
     /** @var string */
-    protected $controlPosition;
+    private $controlPosition;
 
     /**
-     * Create a rotate control.
+     * Creates a rotate control.
      *
-     * @param string $controlPosition The rotate control position.
+     * @param string $controlPosition The control position.
      */
     public function __construct($controlPosition = ControlPosition::TOP_LEFT)
     {
@@ -48,15 +46,9 @@ class RotateControl
      * Sets the control position.
      *
      * @param string $controlPosition The control position.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the control position is not valid.
      */
     public function setControlPosition($controlPosition)
     {
-        if (!in_array($controlPosition, ControlPosition::getControlPositions())) {
-            throw ControlException::invalidControlPosition();
-        }
-
         $this->controlPosition = $controlPosition;
     }
 }

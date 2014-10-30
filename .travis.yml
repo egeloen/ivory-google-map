@@ -9,15 +9,21 @@ php:
     - hhvm
     - hhvm-nightly
 
-before_script: composer install --prefer-source
+cache:
+    directories:
+        - vendor
+        - $HOME/.composer/cache
+
+install:
+    - composer self-update
+    - composer install --prefer-source
 
 script: bin/phpunit --coverage-clover clover.xml
 
-after_script: bin/coveralls
+after_script: bin/coveralls -v
 
 matrix:
     allow_failures:
-        - php: hhvm
         - php: hhvm-nightly
 
 notifications:

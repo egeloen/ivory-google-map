@@ -18,16 +18,17 @@ use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixElementStatus;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsMatrixElementStatusTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixElementStatusTest extends AbstractTestCase
 {
-    public function testDistanceMatrixElementStatus()
+    public function testInheritance()
     {
-        $expected = array(
-            DistanceMatrixElementStatus::NOT_FOUND,
-            DistanceMatrixElementStatus::OK,
-            DistanceMatrixElementStatus::ZERO_RESULTS,
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixElementStatus');
+    }
 
-        $this->assertSame($expected, DistanceMatrixElementStatus::getDistanceMatrixElementStatus());
+    public function testConstants()
+    {
+        $this->assertSame('NOT_FOUND', DistanceMatrixElementStatus::NOT_FOUND);
+        $this->assertSame('OK', DistanceMatrixElementStatus::OK);
+        $this->assertSame('ZERO_RESULTS', DistanceMatrixElementStatus::ZERO_RESULTS);
     }
 }

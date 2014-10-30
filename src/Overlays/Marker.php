@@ -12,88 +12,51 @@
 namespace Ivory\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
- * Marker which describes a google map marker.
+ * Marker.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Marker extends AbstractOptionsAsset implements ExtendableInterface
 {
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $position;
+    private $position;
 
-    /** @var string */
-    protected $animation;
+    /** @var string|null */
+    private $animation;
 
-    /** @var \Ivory\GoogleMap\Overlays\MarkerImage */
-    protected $icon;
+    /** @var \Ivory\GoogleMap\Overlays\Icon|null */
+    private $icon;
 
-    /** @var \Ivory\GoogleMap\Overlays\MarkerImage */
-    protected $shadow;
+    /** @var \Ivory\GoogleMap\Overlays\Icon|null */
+    private $shadow;
 
-    /** @var \Ivory\GoogleMap\Overlays\MarkerShape */
-    protected $shape;
+    /** @var \Ivory\GoogleMap\Overlays\MarkerShape|null */
+    private $shape;
 
-    /** @var \Ivory\GoogleMap\Overlays\InfoWindow */
-    protected $infoWindow;
+    /** @var \Ivory\GoogleMap\Overlays\InfoWindow|null */
+    private $infoWindow;
 
     /**
      * Creates a marker.
      *
-     * @param \Ivory\GoogleMap\Base\Coordinate      $position   The marker position.
-     * @param string                                $animation  The marker animation.
-     * @param \Ivory\GoogleMap\Overlays\MarkerImage $icon       The marker icon.
-     * @param \Ivory\GoogleMap\Overlays\MarkerImage $shadow     The marker shadow.
-     * @param \Ivory\GoogleMap\Overlays\MarkerShape $shape      The marker shape.
-     * @param \Ivory\GoogleMap\Overlays\InfoWindow  $infoWindow The marker info window.
+     * @param \Ivory\GoogleMap\Base\Coordinate $position The position.
      */
-    public function __construct(
-        Coordinate $position = null,
-        $animation = null,
-        MarkerImage $icon = null,
-        MarkerImage $shadow = null,
-        MarkerShape $shape = null,
-        InfoWindow $infoWindow = null
-    ) {
-        parent::__construct();
-
-        $this->setPrefixJavascriptVariable('marker_');
-
-        if ($position === null) {
-            $position = new Coordinate();
-        }
+    public function __construct(Coordinate $position)
+    {
+        parent::__construct('marker_');
 
         $this->setPosition($position);
-
-        if ($animation !== null) {
-            $this->setAnimation($animation);
-        }
-
-        if ($icon !== null) {
-            $this->setIcon($icon);
-        }
-
-        if ($shadow !== null) {
-            $this->setShadow($shadow);
-        }
-
-        if ($shape !== null) {
-            $this->setShape($shape);
-        }
-
-        if ($infoWindow !== null) {
-            $this->setInfoWindow($infoWindow);
-        }
     }
 
     /**
-     * Gets the marker position.
+     * Gets the position.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The marker position.
+     * @return \Ivory\GoogleMap\Base\Coordinate The position.
      */
     public function getPosition()
     {
@@ -101,38 +64,19 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the marker position.
+     * Sets the position.
      *
-     * Available prototypes:
-     * - function setPosition(Ivory\GoogleMap\Base\Coordinate $position = null)
-     * - function setPosition(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the position is not valid.
+     * @param \Ivory\GoogleMap\Base\Coordinate $position The position.
      */
-    public function setPosition()
+    public function setPosition(Coordinate $position)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->position = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            $this->position->setLatitude($args[0]);
-            $this->position->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->position->setNoWrap($args[2]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->position = null;
-        } else {
-            throw OverlayException::invalidMarkerPosition();
-        }
+        $this->position = $position;
     }
 
     /**
-     * Checks if the marker has an animation.
+     * Checks if there is an animation.
      *
-     * @return boolean TRUE if the marker has an animation else FALSE.
+     * @return boolean TRUE if there is an animation else FALSE.
      */
     public function hasAnimation()
     {
@@ -140,9 +84,9 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Gets the marker animation.
+     * Gets the animation.
      *
-     * @return string The marker animation.
+     * @return string|null The animation.
      */
     public function getAnimation()
     {
@@ -150,25 +94,19 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the marker animation.
+     * Sets the animation.
      *
-     * @param string $animation The marker animation.
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the animation is not valid.
+     * @param string|null $animation The animation.
      */
     public function setAnimation($animation = null)
     {
-        if (!in_array($animation, Animation::getAnimations()) && ($animation !== null)) {
-            throw OverlayException::invalidMarkerAnimation();
-        }
-
         $this->animation = $animation;
     }
 
     /**
-     * Checks if the marker has an icon.
+     * Checks if there is an icon.
      *
-     * @return boolean TRUE if the marker has an icon else FALSE.
+     * @return boolean TRUE if there is an icon else FALSE.
      */
     public function hasIcon()
     {
@@ -176,9 +114,9 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Gets the marker icon.
+     * Gets the icon.
      *
-     * @return \Ivory\GoogleMap\Overlays\MarkerImage The marker image.
+     * @return \Ivory\GoogleMap\Overlays\Icon|null The icon.
      */
     public function getIcon()
     {
@@ -186,41 +124,19 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the marker icon.
+     * Sets the icon.
      *
-     * Available prototypes:
-     *  - function setIcon(Ivory\GoogleMap\Overlays\MarkerImage $markerImage = null)
-     *  - function setIcon(string $url = null)
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the icon is not valid.
+     * @param \Ivory\GoogleMap\Overlays\Icon|null $icon The icon.
      */
-    public function setIcon()
+    public function setIcon(Icon $icon = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof MarkerImage)) {
-            if ($args[0]->getUrl() === null) {
-                throw OverlayException::invalidMarkerIconUrl();
-            }
-
-            $this->icon = $args[0];
-        } elseif (isset($args[0]) && is_string($args[0])) {
-            if ($this->icon === null) {
-                $this->icon = new MarkerImage();
-            }
-
-            $this->icon->setUrl($args[0]);
-        } elseif (!isset($args[0])) {
-            $this->icon = null;
-        } else {
-            throw OverlayException::invalidMarkerIcon();
-        }
+        $this->icon = $icon;
     }
 
     /**
-     * Checks if the marker has a shadow.
+     * Checks if there is a shadow.
      *
-     * @return boolean TRUE if the marker has a shadow else FALSE.
+     * @return boolean TRUE if there is a shadow else FALSE.
      */
     public function hasShadow()
     {
@@ -228,9 +144,9 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Gets the marker shadow.
+     * Gets the shadow.
      *
-     * @return \Ivory\GoogleMap\Overlays\MarkerImage The marker shadow.
+     * @return \Ivory\GoogleMap\Overlays\Icon|null The shadow.
      */
     public function getShadow()
     {
@@ -238,41 +154,19 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the marker shadow.
+     * Sets the shadow.
      *
-     * Available prototypes:
-     *  - function setShadow(Ivory\GoogleMap\Overlays\MarkerImage $markerImage = null)
-     *  - function setShadow(string $url = null)
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the marker shadow is not valid.
+     * @param \Ivory\GoogleMap\Overlays\Icon|null $shadow The shadow.
      */
-    public function setShadow()
+    public function setShadow(Icon $shadow = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof MarkerImage)) {
-            if ($args[0]->getUrl() === null) {
-                throw OverlayException::invalidMarkerShadowUrl();
-            }
-
-            $this->shadow = $args[0];
-        } elseif (isset($args[0]) && is_string($args[0])) {
-            if ($this->shadow === null) {
-                $this->shadow = new MarkerImage();
-            }
-
-            $this->shadow->setUrl($args[0]);
-        } elseif (!isset($args[0])) {
-            $this->shadow = null;
-        } else {
-            throw OverlayException::invalidMarkerShadow();
-        }
+        $this->shadow = $shadow;
     }
 
     /**
-     * Checks if the marker has a shape.
+     * Checks if there is a shape.
      *
-     * @return boolean TRUE if the marker has a shape else FALSE.
+     * @return boolean TRUE if there is a shape else FALSE.
      */
     public function hasShape()
     {
@@ -280,9 +174,9 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Gets the marker shape.
+     * Gets the shape.
      *
-     * @return \Ivory\GoogleMap\Overlays\MarkerShape The marker shape.
+     * @return \Ivory\GoogleMap\Overlays\MarkerShape|null The shape.
      */
     public function getShape()
     {
@@ -290,42 +184,19 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the marker shape.
+     * Sets the shape.
      *
-     * Available prototypes:
-     *  - function setShape(Ivory\GoogleMap\Overlays\MarkerShape $shape = null)
-     *  - function setShape(string $type, array $coordinates)
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the shape is not valid.
+     * @param \Ivory\GoogleMap\Overlays\MarkerShape|null $shape The shape.
      */
-    public function setShape()
+    public function setShape(MarkerShape $shape = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof MarkerShape)) {
-            if (!$args[0]->hasCoordinates()) {
-                throw OverlayException::invalidMarkerShapeCoordinates();
-            }
-
-            $this->shape = $args[0];
-        } elseif ((isset($args[0]) && is_string($args[0])) && (isset($args[1]) && is_array($args[1]))) {
-            if ($this->shape === null) {
-                $this->shape = new MarkerShape();
-            }
-
-            $this->shape->setType($args[0]);
-            $this->shape->setCoordinates($args[1]);
-        } elseif (!isset($args[0])) {
-            $this->shape = null;
-        } else {
-            throw OverlayException::invalidMarkerShape();
-        }
+        $this->shape = $shape;
     }
 
     /**
-     * Check if the marker has an info window.
+     * Check if there is an info window.
      *
-     * @return boolean TRUE if the marker has an info window else FALSE.
+     * @return boolean TRUE if there is an info window else FALSE.
      */
     public function hasInfoWindow()
     {
@@ -335,7 +206,7 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     /**
      * Gets the info window.
      *
-     * @return \Ivory\GoogleMap\Overlays\InfoWindow The info window.
+     * @return \Ivory\GoogleMap\Overlays\InfoWindow|null The info window.
      */
     public function getInfoWindow()
     {
@@ -345,10 +216,18 @@ class Marker extends AbstractOptionsAsset implements ExtendableInterface
     /**
      * Sets the info window.
      *
-     * @param \Ivory\GoogleMap\Overlays\InfoWindow $infoWindow The info window.
+     * @param \Ivory\GoogleMap\Overlays\InfoWindow|null $infoWindow The info window.
      */
-    public function setInfoWindow(InfoWindow $infoWindow)
+    public function setInfoWindow(InfoWindow $infoWindow = null)
     {
         $this->infoWindow = $infoWindow;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function renderExtend(Bound $bound)
+    {
+        return sprintf('%s.extend(%s.getPosition())', $bound->getVariable(), $this->getVariable());
     }
 }

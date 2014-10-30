@@ -18,69 +18,49 @@ use Ivory\GoogleMap\Services\Directions\DirectionsLeg;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsLegTest extends \PHPUnit_Framework_TestCase
+class DirectionsLegTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Directions\DirectionsLeg */
-    protected $directionsLeg;
+    private $directionsLeg;
 
-    /** @var \Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    /** @var \Ivory\GoogleMap\Services\Base\Distance|\PHPUnit_Framework_MockObject_MockObject */
+    private $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
-
-    /** @var string */
-    protected $endAddress;
-
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $endLocation;
+    /** @var \Ivory\GoogleMap\Services\Base\Duration|\PHPUnit_Framework_MockObject_MockObject */
+    private $duration;
 
     /** @var string */
-    protected $startAddress;
+    private $endAddress;
 
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $startLocation;
+    /** @var \Ivory\GoogleMap\Base\Coordinate|\PHPUnit_Framework_MockObject_MockObject */
+    private $endLocation;
+
+    /** @var string */
+    private $startAddress;
+
+    /** @var \Ivory\GoogleMap\Base\Coordinate|\PHPUnit_Framework_MockObject_MockObject */
+    private $startLocation;
 
     /** @var array */
-    protected $steps;
+    private $steps;
 
     /** @var array */
-    protected $viaWaypoint;
+    private $viaWaypoint;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Distance')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Duration')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->endAddress = 'foo';
-        $this->endLocation = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->startAddress = 'bar';
-        $this->startLocation = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-
-        $step = $this->getMockBuilder('Ivory\GoogleMap\Services\Directions\DirectionsStep')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->steps = array($step);
-        $this->viaWaypoint = array('foo');
-
         $this->directionsLeg = new DirectionsLeg(
-            $this->distance,
-            $this->duration,
-            $this->endAddress,
-            $this->endLocation,
-            $this->startAddress,
-            $this->startLocation,
-            $this->steps,
-            $this->viaWaypoint
+            $this->distance = $this->createDistanceMock(),
+            $this->duration = $this->createDurationMock(),
+            $this->endAddress = 'end_address',
+            $this->endLocation = $this->createCoordinateMock(),
+            $this->startAddress = 'start_address',
+            $this->startLocation = $this->createCoordinateMock(),
+            $this->steps = array($this->createDirectionsStepMock()),
+            $this->viaWaypoint = array('waypoint')
         );
     }
 
@@ -112,21 +92,251 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->viaWaypoint, $this->directionsLeg->getViaWaypoints());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The leg end address must be a string value.
-     */
-    public function testEndAddressWithInvalidValue()
+    public function testSetDistance()
     {
-        $this->directionsLeg->setEndAddress(true);
+        $this->directionsLeg->setDistance($distance = $this->createDistanceMock());
+
+        $this->assertSame($distance, $this->directionsLeg->getDistance());
+    }
+
+    public function testSetDuration()
+    {
+        $this->directionsLeg->setDuration($duration = $this->createDurationMock());
+
+        $this->assertSame($duration, $this->directionsLeg->getDuration());
+    }
+
+    public function testSetEndAddress()
+    {
+        $this->directionsLeg->setEndAddress($endAddress = 'foo');
+
+        $this->assertSame($endAddress, $this->directionsLeg->getEndAddress());
+    }
+
+    public function testSetEndLocation()
+    {
+        $this->directionsLeg->setEndLocation($endLocation = $this->createCoordinateMock());
+
+        $this->assertSame($endLocation, $this->directionsLeg->getEndLocation());
+    }
+
+    public function testSetStartAddress()
+    {
+        $this->directionsLeg->setStartAddress($startAddress = 'foo');
+
+        $this->assertSame($startAddress, $this->directionsLeg->getStartAddress());
+    }
+
+    public function testSetStartLocation()
+    {
+        $this->directionsLeg->setStartLocation($startLocation = $this->createCoordinateMock());
+
+        $this->assertSame($startLocation, $this->directionsLeg->getStartLocation());
+    }
+
+    public function testSetSteps()
+    {
+        $this->directionsLeg->setSteps($steps = array($this->createDirectionsStepMock()));
+
+        $this->assertSteps($steps);
+    }
+
+    public function testAddSteps()
+    {
+        $this->directionsLeg->setSteps($steps = array($this->createDirectionsStepMock()));
+        $this->directionsLeg->addSteps($newSteps = array($this->createDirectionsStepMock()));
+
+        $this->assertSteps(array_merge($steps, $newSteps));
+    }
+
+    public function testRemoveSteps()
+    {
+        $this->directionsLeg->setSteps($steps = array($this->createDirectionsStepMock()));
+        $this->directionsLeg->removeSteps($steps);
+
+        $this->assertNoSteps();
+    }
+
+    public function testResetSteps()
+    {
+        $this->directionsLeg->setSteps(array($this->createDirectionsStepMock()));
+        $this->directionsLeg->resetSteps();
+
+        $this->assertNoSteps();
+    }
+
+    public function testAddStep()
+    {
+        $this->directionsLeg->addStep($step = $this->createDirectionsStepMock());
+
+        $this->assertStep($step);
+    }
+
+    public function testAddStepUnicity()
+    {
+        $this->directionsLeg->resetSteps();
+        $this->directionsLeg->addStep($step = $this->createDirectionsStepMock());
+        $this->directionsLeg->addStep($step);
+
+        $this->assertSteps(array($step));
+    }
+
+    public function testRemoveStep()
+    {
+        $this->directionsLeg->addStep($step = $this->createDirectionsStepMock());
+        $this->directionsLeg->removeStep($step);
+
+        $this->assertNoStep($step);
+    }
+
+    public function testSetViaWaypoints()
+    {
+        $this->directionsLeg->setViaWaypoints($viaWaypoints = array($this->createCoordinateMock()));
+
+        $this->assertViaWaypoints($viaWaypoints);
+    }
+
+    public function testAddViaWaypoints()
+    {
+        $this->directionsLeg->setViaWaypoints($viaWaypoints = array($this->createCoordinateMock()));
+        $this->directionsLeg->addViaWaypoints($newViaWaypoints = array($this->createCoordinateMock()));
+
+        $this->assertViaWaypoints(array_merge($viaWaypoints, $newViaWaypoints));
+    }
+
+    public function testRemoveViaWaypoints()
+    {
+        $this->directionsLeg->setViaWaypoints($viaWaypoints = array($this->createCoordinateMock()));
+        $this->directionsLeg->removeViaWaypoints($viaWaypoints);
+
+        $this->assertNoViaWaypoints();
+    }
+
+    public function testResetViaWaypoints()
+    {
+        $this->directionsLeg->setViaWaypoints(array($this->createCoordinateMock()));
+        $this->directionsLeg->resetViaWaypoints();
+
+        $this->assertNoViaWaypoints();
+    }
+
+    public function testAddViaWaypoint()
+    {
+        $this->directionsLeg->addViaWaypoint($viaWaypoint = $this->createCoordinateMock());
+
+        $this->assertViaWaypoint($viaWaypoint);
+    }
+
+    public function testAddViaWaypointUnicity()
+    {
+        $this->directionsLeg->resetViaWaypoints();
+        $this->directionsLeg->addViaWaypoint($viaWaypoint = $this->createCoordinateMock());
+        $this->directionsLeg->addViaWaypoint($viaWaypoint);
+
+        $this->assertViaWaypoints(array($viaWaypoint));
+    }
+
+    public function testRemoveViaWaypoint()
+    {
+        $this->directionsLeg->addViaWaypoint($viaWaypoint = $this->createCoordinateMock());
+        $this->directionsLeg->removeViaWaypoint($viaWaypoint);
+
+        $this->assertNoViaWaypoint($viaWaypoint);
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The leg start address must be a string value.
+     * Asserts there are steps.
+     *
+     * @param array $steps The steps.
      */
-    public function testStartAddressWithInvalidValue()
+    private function assertSteps($steps)
     {
-        $this->directionsLeg->setStartAddress(true);
+        $this->assertInternalType('array', $steps);
+
+        $this->assertTrue($this->directionsLeg->hasSteps());
+        $this->assertSame($steps, $this->directionsLeg->getSteps());
+
+        foreach ($steps as $step) {
+            $this->assertStep($step);
+        }
+    }
+
+    /**
+     * Asserts there is a step.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsStep $step The step.
+     */
+    private function assertStep($step)
+    {
+        $this->assertDirectionsStepInstance($step);
+        $this->assertTrue($this->directionsLeg->hasStep($step));
+    }
+
+    /**
+     * Asserts there are no steps.
+     */
+    private function assertNoSteps()
+    {
+        $this->assertFalse($this->directionsLeg->hasSteps());
+        $this->assertEmpty($this->directionsLeg->getSteps());
+    }
+
+    /**
+     * Asserts there is no step.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsStep $step The step.
+     */
+    private function assertNoStep($step)
+    {
+        $this->assertDirectionsStepInstance($step);
+        $this->assertFalse($this->directionsLeg->hasStep($step));
+    }
+
+    /**
+     * Asserts there are via waypoints.
+     *
+     * @param array $viaWaypoints The via waypoints.
+     */
+    private function assertViaWaypoints($viaWaypoints)
+    {
+        $this->assertInternalType('array', $viaWaypoints);
+
+        $this->assertTrue($this->directionsLeg->hasViaWaypoints());
+        $this->assertSame($viaWaypoints, $this->directionsLeg->getViaWaypoints());
+
+        foreach ($viaWaypoints as $viaWaypoint) {
+            $this->assertViaWaypoint($viaWaypoint);
+        }
+    }
+
+    /**
+     * Asserts there is a via waypoint.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $viaWaypoint The via waypoint.
+     */
+    private function assertViaWaypoint($viaWaypoint)
+    {
+        $this->assertCoordinateInstance($viaWaypoint);
+        $this->assertTrue($this->directionsLeg->hasViaWaypoint($viaWaypoint));
+    }
+
+    /**
+     * Asserts there are no via waypoints.
+     */
+    private function assertNoViaWaypoints()
+    {
+        $this->assertFalse($this->directionsLeg->hasViaWaypoints());
+        $this->assertEmpty($this->directionsLeg->getViaWaypoints());
+    }
+
+    /**
+     * Asserts there is no via waypoint.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $viaWaypoint The via waypoint.
+     */
+    private function assertNoViaWaypoint($viaWaypoint)
+    {
+        $this->assertCoordinateInstance($viaWaypoint);
+        $this->assertFalse($this->directionsLeg->hasViaWaypoint($viaWaypoint));
     }
 }

@@ -19,10 +19,10 @@ use Ivory\GoogleMap\Controls\PanControl;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PanControlTest extends \PHPUnit_Framework_TestCase
+class PanControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\PanControl */
-    protected $panControl;
+    private $panControl;
 
     /**
      * {@inheritdoc}
@@ -47,16 +47,15 @@ class PanControlTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
-        $this->panControl = new PanControl(ControlPosition::LEFT_CENTER);
+        $this->panControl = new PanControl($controlPosition = ControlPosition::LEFT_CENTER);
 
-        $this->assertSame(ControlPosition::LEFT_CENTER, $this->panControl->getControlPosition());
+        $this->assertSame($controlPosition, $this->panControl->getControlPosition());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     */
-    public function testControlPositionWithInvalidValue()
+    public function testSetControlPosition()
     {
-        $this->panControl->setControlPosition('foo');
+        $this->panControl->setControlPosition($controlPosition = ControlPosition::BOTTOM_CENTER);
+
+        $this->assertSame($controlPosition, $this->panControl->getControlPosition());
     }
 }

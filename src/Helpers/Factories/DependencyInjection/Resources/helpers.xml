@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <service
+            id="ivory.google_map.helpers.abstract"
+            class="Ivory\GoogleMap\Helpers\AbstractHelper"
+            abstract="true"
+        >
+            <argument type="service" id="ivory.google_map.helpers.event_dispatcher" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.api"
+            class="Ivory\GoogleMap\Helpers\ApiHelper"
+            parent="ivory.google_map.helpers.abstract"
+            scope="prototype"
+        />
+
+        <service
+            id="ivory.google_map.helpers.map"
+            class="Ivory\GoogleMap\Helpers\MapHelper"
+            parent="ivory.google_map.helpers.abstract"
+            scope="prototype"
+        />
+
+        <service
+            id="ivory.google_map.helpers.places.autocomplete"
+            class="Ivory\GoogleMap\Helpers\PlacesAutocompleteHelper"
+            parent="ivory.google_map.helpers.abstract"
+            scope="prototype"
+        />
+    </services>
+</container>

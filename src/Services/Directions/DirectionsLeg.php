@@ -12,41 +12,40 @@
 namespace Ivory\GoogleMap\Services\Directions;
 
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\DirectionsException;
 use Ivory\GoogleMap\Services\Base\Distance;
 use Ivory\GoogleMap\Services\Base\Duration;
 
 /**
- * A directions leg which describes a google map directions leg.
+ * Directions leg.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsLeg
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsLeg
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DirectionsLeg
 {
     /** @var \Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    private $distance;
 
     /** @var \Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
+    private $duration;
 
     /** @var string */
-    protected $endAddress;
+    private $endAddress;
 
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $endLocation;
+    private $endLocation;
 
     /** @var string */
-    protected $startAddress;
+    private $startAddress;
 
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $startLocation;
+    private $startLocation;
 
     /** @var array */
-    protected $steps;
+    private $steps;
 
     /** @var array */
-    protected $viaWaypoints;
+    private $viaWaypoints;
 
     /**
      * Creates a directions leg.
@@ -81,9 +80,9 @@ class DirectionsLeg
     }
 
     /**
-     * Gets the leg distance.
+     * Gets the distance.
      *
-     * @return \Ivory\GoogleMap\Services\Base\Distance The leg distance.
+     * @return \Ivory\GoogleMap\Services\Base\Distance The distance.
      */
     public function getDistance()
     {
@@ -91,9 +90,9 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg distance.
+     * Sets the distance.
      *
-     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The leg distance.
+     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The distance.
      */
     public function setDistance(Distance $distance)
     {
@@ -101,9 +100,9 @@ class DirectionsLeg
     }
 
     /**
-     * Gets the leg duration.
+     * Gets the duration.
      *
-     * @return \Ivory\GoogleMap\Services\Base\Duration The leg duration.
+     * @return \Ivory\GoogleMap\Services\Base\Duration The duration.
      */
     public function getDuration()
     {
@@ -111,9 +110,9 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg duration
+     * Sets the duration.
      *
-     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The leg duration.
+     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The duration.
      */
     public function setDuration(Duration $duration)
     {
@@ -121,9 +120,9 @@ class DirectionsLeg
     }
 
     /**
-     * Gets the leg end address.
+     * Gets the end address.
      *
-     * @return string The leg end address.
+     * @return string The end address.
      */
     public function getEndAddress()
     {
@@ -131,25 +130,19 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg end address.
+     * Sets the end address.
      *
-     * @param string The leg end address.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the and address is not valid.
+     * @param string The end address.
      */
     public function setEndAddress($endAddress)
     {
-        if (!is_string($endAddress)) {
-            throw DirectionsException::invalidDirectionsLegEndAddress();
-        }
-
         $this->endAddress = $endAddress;
     }
 
     /**
-     * Gets the leg end location.
+     * Gets the end location.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The leg end location.
+     * @return \Ivory\GoogleMap\Base\Coordinate The end location.
      */
     public function getEndLocation()
     {
@@ -157,9 +150,9 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg end location.
+     * Sets the end location.
      *
-     * @param \Ivory\GoogleMap\Base\Coordinate $endLocation The leg end location.
+     * @param \Ivory\GoogleMap\Base\Coordinate $endLocation The end location.
      */
     public function setEndLocation(Coordinate $endLocation)
     {
@@ -167,9 +160,9 @@ class DirectionsLeg
     }
 
     /**
-     * Gets the leg start address.
+     * Gets the start address.
      *
-     * @return string The leg start address.
+     * @return string The start address.
      */
     public function getStartAddress()
     {
@@ -177,25 +170,19 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg start address.
+     * Sets the start address.
      *
-     * @param string $startAddress The leg start address.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the start address is not valid.
+     * @param string $startAddress The start address.
      */
     public function setStartAddress($startAddress)
     {
-        if (!is_string($startAddress)) {
-            throw DirectionsException::invalidDirectionsLegStartAddress();
-        }
-
         $this->startAddress = $startAddress;
     }
 
     /**
-     * Gets the leg start location.
+     * Gets the start location.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The leg start location.
+     * @return \Ivory\GoogleMap\Base\Coordinate The start location.
      */
     public function getStartLocation()
     {
@@ -203,9 +190,9 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg start location.
+     * Sets the start location.
      *
-     * @param \Ivory\GoogleMap\Base\Coordinate $startLocation The leg start location.
+     * @param \Ivory\GoogleMap\Base\Coordinate $startLocation The start location.
      */
     public function setStartLocation(Coordinate $startLocation)
     {
@@ -213,9 +200,27 @@ class DirectionsLeg
     }
 
     /**
-     * Gets the leg steps.
+     * Resets the steps.
+     */
+    public function resetSteps()
+    {
+        $this->steps = array();
+    }
+
+    /**
+     * Checks if there are steps.
      *
-     * @return array The leg steps.
+     * @return boolean TRUE if there are steps else FALSE.
+     */
+    public function hasSteps()
+    {
+        return !empty($this->steps);
+    }
+
+    /**
+     * Gets the steps.
+     *
+     * @return array The steps.
      */
     public function getSteps()
     {
@@ -223,33 +228,96 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the leg steps.
+     * Sets the steps.
      *
-     * @param array $steps The leg steps.
+     * @param array $steps The steps.
      */
     public function setSteps(array $steps)
     {
-        $this->steps = array();
+        $this->resetSteps();
+        $this->addSteps($steps);
+    }
 
+    /**
+     * Adds the steps.
+     *
+     * @param array $steps The steps.
+     */
+    public function addSteps(array $steps)
+    {
         foreach ($steps as $step) {
             $this->addStep($step);
         }
     }
 
     /**
-     * Add a step to the leg.
+     * Removes the staps.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\DirectionsStep The step to add.
+     * @param array $steps The steps.
      */
-    public function addStep(DirectionsStep $step)
+    public function removeSteps(array $steps)
     {
-        $this->steps[] = $step;
+        foreach ($steps as $step) {
+            $this->removeStep($step);
+        }
     }
 
     /**
-     * Gets the via waypoint.
+     * Checks if there is a step.
      *
-     * @return array The via waypoint.
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsStep $step The step.
+     *
+     * @return boolean TRUE if there is the step else FALSE.
+     */
+    public function hasStep(DirectionsStep $step)
+    {
+        return in_array($step, $this->steps, true);
+    }
+
+    /**
+     * Adds a step.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsStep The step.
+     */
+    public function addStep(DirectionsStep $step)
+    {
+        if (!$this->hasStep($step)) {
+            $this->steps[] = $step;
+        }
+    }
+
+    /**
+     * Removes a step.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsStep $step The step.
+     */
+    public function removeStep(DirectionsStep $step)
+    {
+        unset($this->steps[array_search($step, $this->steps, true)]);
+    }
+
+    /**
+     * Resets the via waypoints.
+     */
+    public function resetViaWaypoints()
+    {
+        $this->viaWaypoints = array();
+    }
+
+    /**
+     * Checks if there are via waypoints.
+     *
+     * @return boolean TRUE if there are via waypoints else FALSE.
+     */
+    public function hasViaWaypoints()
+    {
+        return !empty($this->viaWaypoints);
+    }
+
+    /**
+     * Gets the via waypoints.
+     *
+     * @return array The via waypoints.
      */
     public function getViaWaypoints()
     {
@@ -257,12 +325,70 @@ class DirectionsLeg
     }
 
     /**
-     * Sets the via waypoint.
+     * Sets the via waypoints.
      *
-     * @param array $viaWaypoints The via waypoint.
+     * @param array $viaWaypoints The via waypoints.
      */
     public function setViaWaypoints(array $viaWaypoints)
     {
         $this->viaWaypoints = $viaWaypoints;
+    }
+
+    /**
+     * Adds the via waypoints.
+     *
+     * @param array $viaWaypoints The via waypoints.
+     */
+    public function addViaWaypoints(array $viaWaypoints)
+    {
+        foreach ($viaWaypoints as $viaWaypoint) {
+            $this->addViaWaypoint($viaWaypoint);
+        }
+    }
+
+    /**
+     * Removes the via waypoints.
+     *
+     * @param array $viaWaypoints The via waypoints.
+     */
+    public function removeViaWaypoints(array $viaWaypoints)
+    {
+        foreach ($viaWaypoints as $viaWaypoint) {
+            $this->removeViaWaypoint($viaWaypoint);
+        }
+    }
+
+    /**
+     * Checks if there is a via waypoint.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $viaWaypoint The via waypoint.
+     *
+     * @return boolean TRUE if there is the via waypoint else FALSE.
+     */
+    public function hasViaWaypoint(Coordinate $viaWaypoint)
+    {
+        return in_array($viaWaypoint, $this->viaWaypoints, true);
+    }
+
+    /**
+     * Adds a via waypoint.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $viaWaypoint The via waypoint.
+     */
+    public function addViaWaypoint(Coordinate $viaWaypoint)
+    {
+        if (!$this->hasViaWaypoint($viaWaypoint)) {
+            $this->viaWaypoints[] = $viaWaypoint;
+        }
+    }
+
+    /**
+     * Removes a via waypoint.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $viaWaypoint The via waypoint.
+     */
+    public function removeViaWaypoint(Coordinate $viaWaypoint)
+    {
+        unset($this->viaWaypoints[array_search($viaWaypoint, $this->viaWaypoints, true)]);
     }
 }

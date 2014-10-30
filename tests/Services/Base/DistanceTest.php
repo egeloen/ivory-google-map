@@ -12,23 +12,30 @@
 namespace Ivory\Tests\GoogleMap\Services\Service;
 
 use Ivory\GoogleMap\Services\Base\Distance;
+use Ivory\Tests\GoogleMap\Services\AbstractTestCase;
 
 /**
  * Distance test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceTest extends \PHPUnit_Framework_TestCase
+class DistanceTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    private $distance;
+
+    /** @var string */
+    private $text;
+
+    /** @var float */
+    private $value;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->distance = new Distance('foo', 2.2);
+        $this->distance = new Distance($this->text = 'foo', $this->value = 2.2);
     }
 
     /**
@@ -36,30 +43,28 @@ class DistanceTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->value);
+        unset($this->text);
         unset($this->distance);
     }
 
     public function testInitialState()
     {
-        $this->assertSame('foo', $this->distance->getText());
-        $this->assertSame(2.2, $this->distance->getValue());
+        $this->assertSame($this->text, $this->distance->getText());
+        $this->assertSame($this->value, $this->distance->getValue());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
-     * @expectedExceptionMessage The distance text must be a string value.
-     */
-    public function testTextWithInvalidValue()
+    public function testSetText()
     {
-        $this->distance->setText(true);
+        $this->distance->setText($text = 'bar');
+
+        $this->assertSame($text, $this->distance->getText());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
-     * @expectedExceptionMessage The distance value must be a numeric value.
-     */
-    public function testValueWithInvalidValue()
+    public function testSetValue()
     {
-        $this->distance->setValue('foo');
+        $this->distance->setValue($value = 1.1);
+
+        $this->assertSame($value, $this->distance->getValue());
     }
 }

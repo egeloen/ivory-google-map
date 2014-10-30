@@ -18,24 +18,24 @@ use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixStatus;
 use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
 use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrix;
-use Widop\HttpAdapter\CurlHttpAdapter;
+use Ivory\HttpAdapter\SocketHttpAdapter;
 
 /**
  * Distance matrix test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrix */
-    protected $service;
+    private $distanceMatrix;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->service = new DistanceMatrix(new CurlHttpAdapter());
+        $this->distanceMatrix = new DistanceMatrix(new SocketHttpAdapter());
     }
 
     /**
@@ -43,214 +43,107 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        unset($this->service);
+        unset($this->distanceMatrix);
     }
 
-    public function testProcessWithOriginAndDestinationStrings()
+    public function testInheritance()
     {
-        $response = $this->service->process(array('Vancouver BC'), array('San Francisco'));
-
-        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testProcessWithOriginAndDestinationCoordinates()
-    {
-        $vancouver = new Coordinate(49.262428, -123.113136);
-        $sanFrancisco = new Coordinate(37.775328, -122.418938);
-
-        $response = $this->service->process(array($vancouver), array($sanFrancisco));
-
-        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testProcessWithMinimalDistanceMatrixRequest()
-    {
-        $request = new DistanceMatrixRequest();
-        $request->addOrigin('Vancouver BC');
-        $request->addDestination('San Francisco');
-
-        $response = $this->service->process($request);
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testProcessWithDistanceMatrixRequest()
-    {
-        $request = new DistanceMatrixRequest();
-        $request->addOrigin('Vancouver BC');
-        $request->addDestination('San Francisco');
-        $request->setTravelMode(TravelMode::BICYCLING);
-        $request->setUnitSystem(UnitSystem::METRIC);
-        $request->setRegion('en');
-        $request->setLanguage('fr');
-
-        $response = $this->service->process($request);
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testProcessWithDistanceMatrixRequestAndAvoidTolls()
-    {
-        $request = new DistanceMatrixRequest();
-        $request->addOrigin('Vancouver BC');
-        $request->addDestination('San Francisco');
-        $request->setAvoidTolls(true);
-
-        $response = $this->service->process($request);
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testProcessWithDistanceMatrixRequestAndAvoidHighways()
-    {
-        $request = new DistanceMatrixRequest();
-        $request->addOrigin('Vancouver BC');
-        $request->addDestination('San Francisco');
-        $request->setAvoidHighways(true);
-
-        $response = $this->service->process($request);
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testProcessWithXmlFormat()
-    {
-        $this->service->setFormat('xml');
-        $response = $this->service->process(array('Vancouver BC'), array('San Francisco'));
-
-        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
-        $this->assertCount(1, $response->getOrigins());
-        $this->assertCount(1, $response->getDestinations());
-
-        $rows = $response->getRows();
-        $this->assertCount(1, $rows);
-
-        $elements = $rows[0]->getElements();
-        $this->assertCount(1, $elements);
-        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
-    }
-
-    public function testSignUrlWithoutBusinessAccount()
-    {
-        $method = new \ReflectionMethod($this->service, 'signUrl');
-        $method->setAccessible(true);
-
-        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
-
-        $this->assertSame($url, $method->invoke($this->service, $url));
-    }
-
-    public function testSignUrlWithBusinessAccount()
-    {
-        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
-
-        $businessAccount = $this->getMockBuilder('Ivory\GoogleMap\Services\BusinessAccount')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $businessAccount
-            ->expects($this->once())
-            ->method('signUrl')
-            ->with($this->equalTo($url))
-            ->will($this->returnValue('url'));
-
-        $this->service->setBusinessAccount($businessAccount);
-
-        $method = new \ReflectionMethod($this->service, 'signUrl');
-        $method->setAccessible(true);
-
-        $this->assertSame('url', $method->invoke($this->service, $url));
+        $this->assertServiceInstance($this->distanceMatrix);
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The process arguments are invalid.
-     * The available prototypes are:
-     * - function route(array $origins, array $destinations)
-     * - function route(Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest $request)
+     * @dataProvider requestProvider
      */
-    public function testProcessWithInvalidRequestParameters()
+    public function testProcessWithJsonFormat(DistanceMatrixRequest $request)
     {
-        $this->service->process(true);
+        $response = $this->distanceMatrix->process($request);
+
+        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+
+        $this->assertCount(1, $response->getOrigins());
+        $this->assertCount(1, $response->getDestinations());
+        $this->assertCount(1, $rows = $response->getRows());
+
+        $this->assertArrayHasKey(0, $rows);
+        $this->assertCount(1, $elements = $rows[0]->getElements());
+
+        $this->assertArrayHasKey(0, $elements);
+        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The directions request is not valid. It needs at least one origin and one destination.
+     * @dataProvider requestProvider
      */
+    public function testProcessWithXmlFormat(DistanceMatrixRequest $request)
+    {
+        $this->distanceMatrix->setFormat(DistanceMatrix::FORMAT_XML);
+        $response = $this->distanceMatrix->process($request);
+
+        $this->assertCount(1, $response->getOrigins());
+        $this->assertCount(1, $response->getDestinations());
+        $this->assertCount(1, $rows = $response->getRows());
+
+        $this->assertArrayHasKey(0, $rows);
+        $this->assertCount(1, $elements = $rows[0]->getElements());
+
+        $this->assertArrayHasKey(0, $elements);
+        $this->assertSame(DistanceMatrixElementStatus::OK, $elements[0]->getStatus());
+    }
+
     public function testProcessWithInvalidRequest()
     {
-        $this->service->process(new DistanceMatrixRequest());
+        $response = $this->distanceMatrix->process(new DistanceMatrixRequest(array(), array()));
+
+        $this->assertSame(DistanceMatrixStatus::INVALID_REQUEST, $response->getStatus());
+        $this->assertEmpty($response->getOrigins());
+        $this->assertEmpty($response->getDestinations());
+        $this->assertEmpty($response->getRows());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
-     * @expectedExceptionMessage The service result is not valid.
+     * @expectedException \Ivory\HttpAdapter\HttpAdapterException
+     * @expectedExceptionMessage An error occurred when fetching the URL
      */
-    public function testProcessWithInvalidResult()
+    public function testProcessWithQueryStringTooLong()
     {
-        $httpAdapterMock = $this->getMock('Widop\HttpAdapter\HttpAdapterInterface');
-        $httpAdapterMock
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue(null));
-
-        $this->service = new DistanceMatrix($httpAdapterMock);
-        $this->service->process(array('Vancouver BC'), array('San Francisco'));
+        $this->distanceMatrix->process(new DistanceMatrixRequest(
+            array('Vancouver BC'.str_repeat('a', 2000)),
+            array('San Francisco')
+        ));
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
-     * @expectedExceptionMessage An error occured while fetching
+     * Gets the request provider.
+     *
+     * @return array The request provider.
      */
-    public function testProcessThrowsInvalidResponse()
+    public function requestProvider()
     {
-        $this->service->process(array('Vancouver BC'.str_repeat('a', 2000)), array('San Francisco'));
+        $stringRequest = new DistanceMatrixRequest(array('Vancouver BC'), array('San Francisco'));
+
+        $coordinateRequest = new DistanceMatrixRequest(
+            array(new Coordinate(49.262428, -123.113136)),
+            array(new Coordinate(37.775328, -122.418938))
+        );
+
+        $fullRequest = new DistanceMatrixRequest(array('Vancouver BC'), array('San Francisco'));
+        $fullRequest->setTravelMode(TravelMode::BICYCLING);
+        $fullRequest->setUnitSystem(UnitSystem::METRIC);
+        $fullRequest->setRegion('en');
+        $fullRequest->setLanguage('fr');
+
+        $avoidTollsRequest = new DistanceMatrixRequest(array('Vancouver BC'), array('San Francisco'));
+        $avoidTollsRequest->setAvoidTolls(true);
+
+        $avoidHighwaysRequest = new DistanceMatrixRequest(array('Vancouver BC'), array('San Francisco'));
+        $avoidHighwaysRequest->setAvoidHighways(true);
+
+        return array(
+            array($stringRequest),
+            array($coordinateRequest),
+            array($fullRequest),
+            array($avoidTollsRequest),
+            array($avoidHighwaysRequest),
+        );
     }
 }

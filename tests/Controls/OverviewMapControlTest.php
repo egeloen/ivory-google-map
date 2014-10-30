@@ -18,10 +18,10 @@ use Ivory\GoogleMap\Controls\OverviewMapControl;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class OverviewMapControlTest extends \PHPUnit_Framework_TestCase
+class OverviewMapControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\OverviewMapControl */
-    protected $overviewMapControl;
+    private $overviewMapControl;
 
     /**
      * {@inheritdoc}
@@ -51,12 +51,10 @@ class OverviewMapControlTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->overviewMapControl->isOpened());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The opened property of an overview map control must be a boolean value.
-     */
-    public function testOpenedWithInvalidValue()
+    public function testSetOpened()
     {
-        $this->overviewMapControl->setOpened('foo');
+        $this->overviewMapControl->setOpened(true);
+
+        $this->assertTrue($this->overviewMapControl->isOpened());
     }
 }

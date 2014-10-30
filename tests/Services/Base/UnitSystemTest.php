@@ -12,21 +12,26 @@
 namespace Ivory\Tests\GoogleMap\Services\Base;
 
 use Ivory\GoogleMap\Services\Base\UnitSystem;
+use Ivory\Tests\GoogleMap\Services\AbstractTestCase;
 
 /**
  * Unit system test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class UnitSystemTest extends \PHPUnit_Framework_TestCase
+class UnitSystemTest extends AbstractTestCase
 {
-    public function testUnitSystems()
+    public function testInheritance()
     {
-        $expected = array(
-            UnitSystem::IMPERIAL,
-            UnitSystem::METRIC,
-        );
+        $this->assertTrue(is_subclass_of(
+            'Ivory\GoogleMap\Services\Base\UnitSystem',
+            'Ivory\GoogleMap\Assets\AbstractUninstantiableAsset'
+        ));
+    }
 
-        $this->assertSame($expected, UnitSystem::getUnitSystems());
+    public function testConstants()
+    {
+        $this->assertSame('IMPERIAL', UnitSystem::IMPERIAL);
+        $this->assertSame('METRIC', UnitSystem::METRIC);
     }
 }

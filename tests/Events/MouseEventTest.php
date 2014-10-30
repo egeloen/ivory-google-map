@@ -18,19 +18,20 @@ use Ivory\GoogleMap\Events\MouseEvent;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MouseEventTest extends \PHPUnit_Framework_TestCase
+class MouseEventTest extends AbstractTestCase
 {
-    public function testMouseEvents()
+    public function testInheritance()
     {
-        $expected = array(
-            MouseEvent::CLICK,
-            MouseEvent::DBLCLICK,
-            MouseEvent::MOUSEUP,
-            MouseEvent::MOUSEDOWN,
-            MouseEvent::MOUSEOVER,
-            MouseEvent::MOUSEOUT,
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Events\MouseEvent');
+    }
 
-        $this->assertSame($expected, MouseEvent::getMouseEvents());
+    public function testConstants()
+    {
+        $this->assertSame('click', MouseEvent::CLICK);
+        $this->assertSame('dblclick', MouseEvent::DBLCLICK);
+        $this->assertSame('mouseup', MouseEvent::MOUSEUP);
+        $this->assertSame('mousedown', MouseEvent::MOUSEDOWN);
+        $this->assertSame('mouseover', MouseEvent::MOUSEOVER);
+        $this->assertSame('mouseout', MouseEvent::MOUSEOUT);
     }
 }

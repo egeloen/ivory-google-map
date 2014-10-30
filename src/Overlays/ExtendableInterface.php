@@ -11,11 +11,21 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
+use Ivory\GoogleMap\Base\Bound;
+
 /**
- * Each class implements this interface can be extend by a bound.
+ * Extend.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
 interface ExtendableInterface
 {
+    /**
+     * Renders an extend.
+     *
+     * @param \Ivory\GoogleMap\Base\Bound $bound The bound.
+     *
+     * @return string The rendered extend.
+     */
+    public function renderExtend(Bound $bound);
 }

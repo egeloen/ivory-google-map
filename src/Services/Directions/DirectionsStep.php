@@ -12,40 +12,38 @@
 namespace Ivory\GoogleMap\Services\Directions;
 
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\DirectionsException;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Services\Base\Distance;
 use Ivory\GoogleMap\Services\Base\Duration;
-use Ivory\GoogleMap\Services\Base\TravelMode;
 
 /**
- * A directions step which describes a google map directions step.
+ * Directions step.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsStep
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsStep
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DirectionsStep
 {
     /** @var \Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    private $distance;
 
     /** @var \Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
+    private $duration;
 
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $endLocation;
+    private $endLocation;
 
     /** @var string */
-    protected $instructions;
+    private $instructions;
 
     /** @var \Ivory\GoogleMap\Overlays\EncodedPolyline */
-    protected $encodedPolyline;
+    private $encodedPolyline;
 
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $startLocation;
+    private $startLocation;
 
     /** @var string */
-    protected $travelMode;
+    private $travelMode;
 
     /**
      * Creates a directions step.
@@ -77,9 +75,9 @@ class DirectionsStep
     }
 
     /**
-     * Gets the step distance.
+     * Gets the distance.
      *
-     * @return \Ivory\GoogleMap\Services\Base\Distance The step distance.
+     * @return \Ivory\GoogleMap\Services\Base\Distance The distance.
      */
     public function getDistance()
     {
@@ -87,9 +85,9 @@ class DirectionsStep
     }
 
     /**
-     * Sets the step distance.
+     * Sets the distance.
      *
-     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The step distance.
+     * @param \Ivory\GoogleMap\Services\Base\Distance $distance The distance.
      */
     public function setDistance(Distance $distance)
     {
@@ -97,9 +95,9 @@ class DirectionsStep
     }
 
     /**
-     * Gets the step duration.
+     * Gets the duration.
      *
-     * @return \Ivory\GoogleMap\Services\Base\Duration The step duration.
+     * @return \Ivory\GoogleMap\Services\Base\Duration The duration.
      */
     public function getDuration()
     {
@@ -107,9 +105,9 @@ class DirectionsStep
     }
 
     /**
-     * Sets the step duration
+     * Sets the duration
      *
-     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The step duration.
+     * @param \Ivory\GoogleMap\Services\Base\Duration $duration The duration.
      */
     public function setDuration(Duration $duration)
     {
@@ -117,9 +115,9 @@ class DirectionsStep
     }
 
     /**
-     * Gets the step end location.
+     * Gets the end location.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The step end location.
+     * @return \Ivory\GoogleMap\Base\Coordinate The end location.
      */
     public function getEndLocation()
     {
@@ -127,9 +125,9 @@ class DirectionsStep
     }
 
     /**
-     * Sets the step end location.
+     * Sets the end location.
      *
-     * @param \Ivory\GoogleMap\Base\Coordinate $endLocation The step end location.
+     * @param \Ivory\GoogleMap\Base\Coordinate $endLocation The end location.
      */
     public function setEndLocation(Coordinate $endLocation)
     {
@@ -137,9 +135,9 @@ class DirectionsStep
     }
 
     /**
-     * Gets the step instructions.
+     * Gets the instructions.
      *
-     * @return string The step instructions.
+     * @return string The instructions.
      */
     public function getInstructions()
     {
@@ -147,23 +145,17 @@ class DirectionsStep
     }
 
     /**
-     * Sets the step instructions.
+     * Sets the instructions.
      *
-     * @param string $instructions The step instructions.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the instructions is not valid.
+     * @param string $instructions The instructions.
      */
     public function setInstructions($instructions)
     {
-        if (!is_string($instructions)) {
-            throw DirectionsException::invalidDirectionsStepInstructions();
-        }
-
         $this->instructions = $instructions;
     }
 
     /**
-     * Gets the encoded polyline which describes the step.
+     * Gets the encoded polyline.
      *
      * @return \Ivory\GoogleMap\Overlays\EncodedPolyline The encoded polyline.
      */
@@ -173,7 +165,7 @@ class DirectionsStep
     }
 
     /**
-     * Sets the encoded polyline which describes the step.
+     * Sets the encoded polyline.
      *
      * @param \Ivory\GoogleMap\Overlays\EncodedPolyline $encodedPolyline The encoded polyline.
      */
@@ -183,9 +175,9 @@ class DirectionsStep
     }
 
     /**
-     * Gets the step start location.
+     * Gets the start location.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The step start location.
+     * @return \Ivory\GoogleMap\Base\Coordinate The start location.
      */
     public function getStartLocation()
     {
@@ -193,9 +185,9 @@ class DirectionsStep
     }
 
     /**
-     * Sets the step start location.
+     * Sets the start location.
      *
-     * @param \Ivory\GoogleMap\Base\Coordinate $startLocation The step start position.
+     * @param \Ivory\GoogleMap\Base\Coordinate $startLocation The start position.
      */
     public function setStartLocation(Coordinate $startLocation)
     {
@@ -203,9 +195,9 @@ class DirectionsStep
     }
 
     /**
-     * Gets the step travel mode.
+     * Gets the travel mode.
      *
-     * @return string The step travel mode.
+     * @return string The travel mode.
      */
     public function getTravelMode()
     {
@@ -213,18 +205,12 @@ class DirectionsStep
     }
 
     /**
-     * Sets the step travel mode.
+     * Sets the travel mode.
      *
-     * @param string $travelMode The step travel mode.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the travel mode is not valid.
+     * @param string $travelMode The travel mode.
      */
     public function setTravelMode($travelMode)
     {
-        if (!in_array($travelMode, TravelMode::getTravelModes())) {
-            throw DirectionsException::invalidDirectionsStepTravelMode();
-        }
-
         $this->travelMode = $travelMode;
     }
 }

@@ -11,39 +11,17 @@
 
 namespace Ivory\GoogleMap\Controls;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Zoom control style which describes a google map zoom control style.
+ * Zoom control style.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#ZoomControlStyle
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#ZoomControlStyle
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlStyle
+class ZoomControlStyle extends AbstractUninstantiableAsset
 {
     const DEFAULT_ = 'default';
     const LARGE = 'large';
     const SMALL = 'small';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available map zoom control styles.
-     *
-     * @return array The map zoom control styles.
-     */
-    public static function getZoomControlStyles()
-    {
-        return array(
-            self::DEFAULT_,
-            self::LARGE,
-            self::SMALL,
-        );
-    }
 }

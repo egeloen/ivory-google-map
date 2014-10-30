@@ -19,10 +19,10 @@ use Ivory\GoogleMap\Controls\RotateControl;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RotateControlTest extends \PHPUnit_Framework_TestCase
+class RotateControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\RotateControl */
-    protected $rotateControl;
+    private $rotateControl;
 
     /**
      * {@inheritdoc}
@@ -47,16 +47,15 @@ class RotateControlTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
-        $this->rotateControl = new RotateControl(ControlPosition::LEFT_CENTER);
+        $this->rotateControl = new RotateControl($controlPosition = ControlPosition::LEFT_CENTER);
 
-        $this->assertSame(ControlPosition::LEFT_CENTER, $this->rotateControl->getControlPosition());
+        $this->assertSame($controlPosition, $this->rotateControl->getControlPosition());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     */
-    public function testControlPositionWithInvalidValue()
+    public function testSetControlPosition()
     {
-        $this->rotateControl->setControlPosition('foo');
+        $this->rotateControl->setControlPosition($controlPosition = ControlPosition::BOTTOM_CENTER);
+
+        $this->assertSame($controlPosition, $this->rotateControl->getControlPosition());
     }
 }

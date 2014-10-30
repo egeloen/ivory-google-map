@@ -13,23 +13,27 @@ namespace Ivory\Tests\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Events\MouseEvent;
 use Ivory\GoogleMap\Overlays\InfoWindow;
+use Ivory\GoogleMap\Overlays\InfoWindowType;
 
 /**
  * Info window test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class InfoWindowTest extends \PHPUnit_Framework_TestCase
+class InfoWindowTest extends AbstractExtendableTest
 {
     /** @var \Ivory\GoogleMap\Overlays\InfoWindow */
-    protected $infoWindow;
+    private $infoWindow;
+
+    /** @var string */
+    private $content;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->infoWindow = new InfoWindow();
+        $this->infoWindow = new InfoWindow($this->content = 'content');
     }
 
     /**
@@ -37,199 +41,153 @@ class InfoWindowTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->content);
         unset($this->infoWindow);
+    }
+
+    public function testInheritance()
+    {
+        $this->assertOptionsAssetInstance($this->infoWindow);
+        $this->assertExtendableInstance($this->infoWindow);
     }
 
     public function testDefaultState()
     {
-        $this->assertSame('<p>Default content</p>', $this->infoWindow->getContent());
-        $this->assertNull($this->infoWindow->getPosition());
-        $this->assertFalse($this->infoWindow->hasPixelOffset());
+        $this->assertStringStartsWith('info_window_', $this->infoWindow->getVariable());
+        $this->assertSame($this->content, $this->infoWindow->getContent());
+        $this->assertNoPosition();
+        $this->assertNoPixelOffset();
         $this->assertFalse($this->infoWindow->isOpen());
-        $this->assertTrue($this->infoWindow->isAutoOpen());
         $this->assertSame(MouseEvent::CLICK, $this->infoWindow->getOpenEvent());
-        $this->assertFalse($this->infoWindow->isAutoClose());
+        $this->assertTrue($this->infoWindow->isAutoOpen());
+        $this->assertTrue($this->infoWindow->isAutoClose());
+        $this->assertSame(InfoWindowType::DEFAULT_, $this->infoWindow->getType());
+        $this->assertFalse($this->infoWindow->hasOptions());
     }
 
-    public function testInitialState()
+    public function testSetContent()
     {
-        $content = 'foo';
-        $position = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $pixelOffset = $this->getMock('Ivory\GoogleMap\Base\Size');
-        $opentEvent = MouseEvent::DBLCLICK;
-
-        $this->infoWindow = new InfoWindow($content, $position, $pixelOffset, true, $opentEvent, false, true);
+        $this->infoWindow->setContent($content = 'foo');
 
         $this->assertSame($content, $this->infoWindow->getContent());
-        $this->assertSame($position, $this->infoWindow->getPosition());
-        $this->assertSame($pixelOffset, $this->infoWindow->getPixelOffset());
-        $this->assertTrue($this->infoWindow->isOpen());
-        $this->assertFalse($this->infoWindow->isAutoOpen());
-        $this->assertSame($opentEvent, $this->infoWindow->getOpenEvent());
-        $this->assertTrue($this->infoWindow->isAutoClose());
     }
 
-    public function testPositionWithCoordinate()
+    public function testSetPosition()
     {
-        $position = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->infoWindow->setPosition($position);
+        $this->infoWindow->setPosition($position = $this->createCoordinateMock());
 
-        $this->assertSame($position, $this->infoWindow->getPosition());
+        $this->assertPosition($position);
     }
 
-    public function testPositionWithLatitudeAndLongitude()
+    public function testResetPosition()
     {
-        $latitude = 2;
-        $longitude = 3;
-
-        $this->infoWindow->setPosition($latitude, $longitude, true);
-
-        $this->assertSame($latitude, $this->infoWindow->getPosition()->getLatitude());
-        $this->assertSame($longitude, $this->infoWindow->getPosition()->getLongitude());
-        $this->assertTrue($this->infoWindow->getPosition()->isNoWrap());
-    }
-
-    public function testPositionWithNullValue()
-    {
-        $this->infoWindow->setPosition($this->getMock('Ivory\GoogleMap\Base\Coordinate'));
+        $this->infoWindow->setPosition($this->createCoordinateMock());
         $this->infoWindow->setPosition(null);
 
-        $this->assertNull($this->infoWindow->getPosition());
+        $this->assertNoPosition();
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The position setter arguments is invalid.
-     * The available prototypes are :
-     * - function setPosition(Ivory\GoogleMap\Base\Coordinate $position)
-     * - function setPosition(double $latitude, double $longitude, boolean $noWrap = true)
-     */
-    public function testPositionWithInvalidValue()
+    public function testSetPixedOffset()
     {
-        $this->infoWindow->setPosition('foo');
+        $this->infoWindow->setPixelOffset($pixelOffset = $this->createSizeMock());
+
+        $this->assertPixelOffset($pixelOffset);
     }
 
-    public function testPixedOffsetWithSize()
+    public function testResetPixelOffset()
     {
-        $size = $this->getMock('Ivory\GoogleMap\Base\Size');
-        $this->infoWindow->setPixelOffset($size);
-
-        $this->assertSame($size, $this->infoWindow->getPixelOffset());
-    }
-
-    public function testPixedOffsetWithWidthAndHeight()
-    {
-        $width = 2;
-        $widthUnit = 'px';
-        $height = 3;
-        $heightUnit = '%';
-
-        $this->infoWindow->setPixelOffset($width, $height, $widthUnit, $heightUnit);
-
-        $this->assertSame($width, $this->infoWindow->getPixelOffset()->getWidth());
-        $this->assertSame($widthUnit, $this->infoWindow->getPixelOffset()->getWidthUnit());
-        $this->assertSame($height, $this->infoWindow->getPixelOffset()->getHeight());
-        $this->assertSame($heightUnit, $this->infoWindow->getPixelOffset()->getHeightUnit());
-    }
-
-    public function testPixelOffsetWithNullValue()
-    {
-        $this->infoWindow->setPixelOffset($this->getMock('Ivory\GoogleMap\Base\Size'));
+        $this->infoWindow->setPixelOffset($this->createSizeMock());
         $this->infoWindow->setPixelOffset(null);
 
-        $this->assertNull($this->infoWindow->getPixelOffset());
+        $this->assertNoPixelOffset();
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The pixel offset setter arguments is invalid.
-     * The available prototypes are :
-     * - function setPixelOffset(Ivory\GoogleMap\Base\Size $scaledSize)
-     * - function setPixelOffset(double $width, double $height, string $widthUnit = null, string $heightUnit = null)
-     */
-    public function testPixedOffsetWithInvalidValue()
-    {
-        $this->infoWindow->setPixelOffset('foo');
-    }
-
-    public function testContentWithValidValue()
-    {
-        $this->infoWindow->setContent('foo');
-
-        $this->assertSame('foo', $this->infoWindow->getContent());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The content of an info window must be a string value.
-     */
-    public function testContentWithInvalidValue()
-    {
-        $this->infoWindow->setContent(true);
-    }
-
-    public function testOpenWithValidValue()
+    public function testSetOpen()
     {
         $this->infoWindow->setOpen(true);
 
         $this->assertTrue($this->infoWindow->isOpen());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The open property of an info window must be a boolean value.
-     */
-    public function testOpenWithInvalidValue()
+    public function testSetOpenEvent()
     {
-        $this->infoWindow->setOpen('foo');
+        $this->infoWindow->setOpenEvent($openEvent = MouseEvent::DBLCLICK);
+
+        $this->assertSame($openEvent, $this->infoWindow->getOpenEvent());
     }
 
-    public function testAutoOpenWithValidValue()
+    public function testSetAutoOpen()
     {
         $this->infoWindow->setAutoOpen(true);
 
         $this->assertTrue($this->infoWindow->isAutoOpen());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The auto open property of an info window must be a boolean value.
-     */
-    public function testAutoOpenWithInvalidValue()
-    {
-        $this->infoWindow->setAutoOpen('foo');
-    }
-
-    public function testOpenEventWithValidValue()
-    {
-        $this->infoWindow->setOpenEvent(MouseEvent::MOUSEDOWN);
-
-        $this->assertSame(MouseEvent::MOUSEDOWN, $this->infoWindow->getOpenEvent());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The only available open event are : click, dblclick, mouseup, mousedown, mouseover,
-     * mouseout.
-     */
-    public function testOpenEventWithInvalidValue()
-    {
-        $this->infoWindow->setOpenEvent('foo');
-    }
-
-    public function testAutoCloseWithValidValue()
+    public function testSetAutoClose()
     {
         $this->infoWindow->setAutoClose(true);
 
         $this->assertTrue($this->infoWindow->isAutoClose());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The info window auto close flag must be a boolean value.
-     */
-    public function testAutoCloseWithInvalidValue()
+    public function testSetType()
     {
-        $this->infoWindow->setAutoClose('foo');
+        $this->infoWindow->setType($type = InfoWindowType::INFOBOX);
+
+        $this->assertSame($type, $this->infoWindow->getType());
+    }
+
+    public function testRenderExtend()
+    {
+        $this->infoWindow->setVariable('info_window');
+
+        $this->assertSame(
+            'bound.extend(info_window.getPosition())',
+            $this->infoWindow->renderExtend($this->createBoundMock())
+        );
+    }
+
+    /**
+     * Asserts there is a position.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $position The position.
+     */
+    private function assertPosition($position)
+    {
+        $this->assertCoordinateInstance($position);
+
+        $this->assertTrue($this->infoWindow->hasPosition());
+        $this->assertSame($position, $this->infoWindow->getPosition());
+    }
+
+    /**
+     * Asserts there is a pixel offset.
+     *
+     * @param \Ivory\GoogleMap\Base\Size $pixelOffset The pixel offset.
+     */
+    private function assertPixelOffset($pixelOffset)
+    {
+        $this->assertSizeInstance($pixelOffset);
+
+        $this->assertTrue($this->infoWindow->hasPixelOffset());
+        $this->assertSame($pixelOffset, $this->infoWindow->getPixelOffset());
+    }
+
+    /**
+     * Asserts there is no position.
+     */
+    private function assertNoPosition()
+    {
+        $this->assertFalse($this->infoWindow->hasPosition());
+        $this->assertNull($this->infoWindow->getPosition());
+    }
+
+    /**
+     * Asserts there is no pixel offset.
+     */
+    private function assertNoPixelOffset()
+    {
+        $this->assertFalse($this->infoWindow->hasPixelOffset());
+        $this->assertNull($this->infoWindow->getPixelOffset());
     }
 }

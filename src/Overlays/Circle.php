@@ -12,47 +12,41 @@
 namespace Ivory\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
- * Circle which describes a google map circle.
+ * Circle.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Circle
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#Circle
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Circle extends AbstractOptionsAsset implements ExtendableInterface
 {
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $center;
+    private $center;
 
-    /** @var double */
-    protected $radius;
+    /** @var float */
+    private $radius;
 
     /**
-     * Create a circle.
+     * Creates a circle.
      *
-     * @param \Ivory\GoogleMap\Base\Coordinate $center The circle center.
-     * @param double                           $radius The circle radius.
+     * @param \Ivory\GoogleMap\Base\Coordinate $center The center.
+     * @param float                            $radius The radius.
      */
-    public function __construct(Coordinate $center = null, $radius = 1)
+    public function __construct(Coordinate $center, $radius)
     {
-        parent::__construct();
-
-        $this->setPrefixJavascriptVariable('circle_');
-
-        if ($center === null) {
-            $center = new Coordinate();
-        }
+        parent::__construct('circle_');
 
         $this->setCenter($center);
         $this->setRadius($radius);
     }
 
     /**
-     * Gets the circle center.
+     * Gets the center.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The circle center.
+     * @return \Ivory\GoogleMap\Base\Coordinate The center.
      */
     public function getCenter()
     {
@@ -60,36 +54,19 @@ class Circle extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the circle center.
+     * Sets the center.
      *
-     * Available prototypes:
-     *  - function setCenter(Ivory\GoogleMap\Base\Coordinate $center)
-     *  - function setCenter(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the center is not valid (prototypes).
+     * @param \Ivory\GoogleMap\Base\Coordinate $center The center.
      */
-    public function setCenter()
+    public function setCenter(Coordinate $center)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->center = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            $this->center->setLatitude($args[0]);
-            $this->center->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->center->setNoWrap($args[2]);
-            }
-        } else {
-            throw OverlayException::invalidCircleCenter();
-        }
+        $this->center = $center;
     }
 
     /**
-     * Gets the circle radius.
+     * Gets the radius.
      *
-     * @return double The circle radius.
+     * @return float The radius.
      */
     public function getRadius()
     {
@@ -97,18 +74,20 @@ class Circle extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the circle radius.
+     * Sets the radius.
      *
-     * @param double $radius The circle radius.
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the radius is not valid.
+     * @param float $radius The radius.
      */
     public function setRadius($radius)
     {
-        if (!is_numeric($radius)) {
-            throw OverlayException::invalidCircleRadius();
-        }
-
         $this->radius = $radius;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function renderExtend(Bound $bound)
+    {
+        return sprintf('%s.union(%s.getBounds())', $bound->getVariable(), $this->getVariable());
     }
 }

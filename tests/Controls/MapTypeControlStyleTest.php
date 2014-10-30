@@ -18,16 +18,17 @@ use Ivory\GoogleMap\Controls\MapTypeControlStyle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeControlStyleTest extends \PHPUnit_Framework_TestCase
+class MapTypeControlStyleTest extends AbstractTestCase
 {
-    public function testMapTypeControlStyles()
+    public function testInheritance()
     {
-        $expected = array(
-            MapTypeControlStyle::DEFAULT_,
-            MapTypeControlStyle::DROPDOWN_MENU,
-            MapTypeControlStyle::HORIZONTAL_BAR
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Controls\MapTypeControlStyle');
+    }
 
-        $this->assertSame($expected, MapTypeControlStyle::getMapTypeControlStyles());
+    public function testConstants()
+    {
+        $this->assertSame('default', MapTypeControlStyle::DEFAULT_);
+        $this->assertSame('dropdown_menu', MapTypeControlStyle::DROPDOWN_MENU);
+        $this->assertSame('horizontal_bar', MapTypeControlStyle::HORIZONTAL_BAR);
     }
 }

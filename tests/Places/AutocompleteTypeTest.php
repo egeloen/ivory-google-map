@@ -12,24 +12,25 @@
 namespace Ivory\Tests\GoogleMap\Places;
 
 use Ivory\GoogleMap\Places\AutocompleteType;
+use Ivory\Tests\GoogleMap\AbstractTestCase;
 
 /**
  * Autocomplete type test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteTypeTest extends \PHPUnit_Framework_TestCase
+class AutocompleteTypeTest extends AbstractTestCase
 {
-    public function testAutocompleteTypes()
+    public function testInheritance()
     {
-        $this->assertSame(
-            array(
-                AutocompleteType::ESTABLISHMENT,
-                AutocompleteType::GEOCODE,
-                AutocompleteType::REGIONS,
-                AutocompleteType::CITIES,
-            ),
-            AutocompleteType::getAvailableAutocompleteTypes()
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Places\AutocompleteType');
+    }
+
+    public function testConstants()
+    {
+        $this->assertSame('(cities)', AutocompleteType::CITIES);
+        $this->assertSame('establishment', AutocompleteType::ESTABLISHMENT);
+        $this->assertSame('geocode', AutocompleteType::GEOCODE);
+        $this->assertSame('(regions)', AutocompleteType::REGIONS);
     }
 }

@@ -11,12 +11,14 @@
 
 namespace Ivory\GoogleMap\Events;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Mouse event describes the google map mouse event.
+ * Mouse event.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MouseEvent
+class MouseEvent extends AbstractUninstantiableAsset
 {
     const CLICK = 'click';
     const DBLCLICK = 'dblclick';
@@ -24,31 +26,4 @@ class MouseEvent
     const MOUSEDOWN = 'mousedown';
     const MOUSEOVER = 'mouseover';
     const MOUSEOUT = 'mouseout';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available mouse events.
-     *
-     * @return array The mouse events.
-     */
-    public static function getMouseEvents()
-    {
-        return array(
-            self::CLICK,
-            self::DBLCLICK,
-            self::MOUSEUP,
-            self::MOUSEDOWN,
-            self::MOUSEOVER,
-            self::MOUSEOUT,
-        );
-    }
 }

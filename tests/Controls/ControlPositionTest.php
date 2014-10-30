@@ -18,25 +18,26 @@ use Ivory\GoogleMap\Controls\ControlPosition;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ControlPositionTest extends \PHPUnit_Framework_TestCase
+class ControlPositionTest extends AbstractTestCase
 {
-    public function testControlPositions()
+    public function testInheritance()
     {
-        $expected = array(
-            ControlPosition::BOTTOM_CENTER,
-            ControlPosition::BOTTOM_LEFT,
-            ControlPosition::BOTTOM_RIGHT,
-            ControlPosition::LEFT_BOTTOM,
-            ControlPosition::LEFT_CENTER,
-            ControlPosition::LEFT_TOP,
-            ControlPosition::RIGHT_BOTTOM,
-            ControlPosition::RIGHT_CENTER,
-            ControlPosition::RIGHT_TOP,
-            ControlPosition::TOP_CENTER,
-            ControlPosition::TOP_LEFT,
-            ControlPosition::TOP_RIGHT
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Controls\ControlPosition');
+    }
 
-        $this->assertSame($expected, ControlPosition::getControlPositions());
+    public function testConstants()
+    {
+        $this->assertSame('bottom_center', ControlPosition::BOTTOM_CENTER);
+        $this->assertSame('bottom_left', ControlPosition::BOTTOM_LEFT);
+        $this->assertSame('bottom_right', ControlPosition::BOTTOM_RIGHT);
+        $this->assertSame('left_bottom', ControlPosition::LEFT_BOTTOM);
+        $this->assertSame('left_center', ControlPosition::LEFT_CENTER);
+        $this->assertSame('left_top', ControlPosition::LEFT_TOP);
+        $this->assertSame('right_bottom', ControlPosition::RIGHT_BOTTOM);
+        $this->assertSame('right_center', ControlPosition::RIGHT_CENTER);
+        $this->assertSame('right_top', ControlPosition::RIGHT_TOP);
+        $this->assertSame('top_center', ControlPosition::TOP_CENTER);
+        $this->assertSame('top_left', ControlPosition::TOP_LEFT);
+        $this->assertSame('top_right', ControlPosition::TOP_RIGHT);
     }
 }

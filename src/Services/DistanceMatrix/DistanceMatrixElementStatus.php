@@ -11,40 +11,17 @@
 
 namespace Ivory\GoogleMap\Services\DistanceMatrix;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * A distance matrix status which describes the google map distance matrix status.
+ * Distance matrix element status.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DistanceMatrixElementStatus
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DistanceMatrixElementStatus
  * @author GeLo <geloen.eric@gmail.com>
- * @author Tyler Sommer <sommertm@gmail.com>
  */
-class DistanceMatrixElementStatus
+class DistanceMatrixElementStatus extends AbstractUninstantiableAsset
 {
     const NOT_FOUND = 'NOT_FOUND';
     const OK = 'OK';
     const ZERO_RESULTS = 'ZERO_RESULTS';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available distance matrix status.
-     *
-     * @return array The available distance matrix status.
-     */
-    public static function getDistanceMatrixElementStatus()
-    {
-        return array(
-            self::NOT_FOUND,
-            self::OK,
-            self::ZERO_RESULTS,
-        );
-    }
 }

@@ -13,12 +13,13 @@ namespace Ivory\GoogleMap\Services\Directions;
 
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\DirectionsException;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
 use Ivory\GoogleMap\Services\AbstractService;
 use Ivory\GoogleMap\Services\Base\Distance;
 use Ivory\GoogleMap\Services\Base\Duration;
-use Widop\HttpAdapter\HttpAdapterInterface;
+use Ivory\GoogleMap\Services\BusinessAccount;
+use Ivory\GoogleMap\Services\Utils\XmlParser;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * Directions service.
@@ -28,373 +29,278 @@ use Widop\HttpAdapter\HttpAdapterInterface;
 class Directions extends AbstractService
 {
     /**
-     * Creates a directions service.
-     *
-     * @param \Widop\HttpAdapter\HttpAdapterInterface $httpAdapter The http adapter.
+     * {@inheritdoc}
      */
-    public function __construct(HttpAdapterInterface $httpAdapter)
-    {
-        parent::__construct($httpAdapter, 'http://maps.googleapis.com/maps/api/directions');
+    public function __construct(
+        HttpAdapterInterface $httpAdapter,
+        $url = 'http://maps.googleapis.com/maps/api/directions',
+        $https = false,
+        $format = self::FORMAT_JSON,
+        XmlParser $xmlParser = null,
+        BusinessAccount $businessAccount = null
+    ) {
+        parent::__construct($httpAdapter, $url, $https, $format, $xmlParser, $businessAccount);
     }
 
     /**
-     * Routes the given request.
+     * Routes a request.
      *
-     * Available prototypes:
-     * - function route(string $origin, string $destination)
-     * - function route(Ivory\GoogleMap\Services\Directions\DirectionsRequest $request)
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsRequest $request The request.
      *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the request is not valid (prototypes).
+     * @return \Ivory\GoogleMap\Services\Directions\DirectionsResponse The response.
      */
-    public function route()
+    public function route(DirectionsRequest $request)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof DirectionsRequest)) {
-            $directionsRequest = $args[0];
-        } elseif ((isset($args[0]) && is_string($args[0])) && (isset($args[1]) && is_string($args[1]))) {
-            $directionsRequest = new DirectionsRequest();
-
-            $directionsRequest->setOrigin($args[0]);
-            $directionsRequest->setDestination($args[1]);
-        } else {
-            throw DirectionsException::invalidDirectionsRequestParameters();
-        }
-
-        if (!$directionsRequest->isValid()) {
-            throw DirectionsException::invalidDirectionsRequest();
-        }
-
-        $response = $this->send($this->generateUrl($directionsRequest));
-        $directionsResponse = $this->buildDirectionsResponse($this->parse($response->getBody()));
-
-        return $directionsResponse;
+        return $this->buildResponse($this->parse(
+            (string) $this->getHttpAdapter()->get($this->generateUrl($request))->getBody()
+        ));
     }
 
     /**
-     * Generates directions URL API according to the request.
+     * Generates the url.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\DirectionsRequest $directionsRequest The direction request.
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsRequest $request The request.
      *
-     * @return string The generated URL.
+     * @return string The generated url.
      */
-    protected function generateUrl(DirectionsRequest $directionsRequest)
+    private function generateUrl(DirectionsRequest $request)
     {
         $httpQuery = array();
 
-        if (is_string($directionsRequest->getOrigin())) {
-            $httpQuery['origin'] = $directionsRequest->getOrigin();
-        } else {
-            $httpQuery['origin'] = sprintf(
-                '%s,%s',
-                $directionsRequest->getOrigin()->getLatitude(),
-                $directionsRequest->getOrigin()->getLongitude()
-            );
-        }
+        $httpQuery['origin'] = $request->getOrigin() instanceof Coordinate
+            ? $request->getOrigin()->getLatitude().','.$request->getOrigin()->getLongitude()
+            : $request->getOrigin();
 
-        if (is_string($directionsRequest->getDestination())) {
-            $httpQuery['destination'] = $directionsRequest->getDestination();
-        } else {
-            $httpQuery['destination'] = sprintf(
-                '%s,%s',
-                $directionsRequest->getDestination()->getLatitude(),
-                $directionsRequest->getDestination()->getLongitude()
-            );
-        }
+        $httpQuery['destination'] = $request->getDestination() instanceof Coordinate
+            ? $request->getDestination()->getLatitude().','.$request->getDestination()->getLongitude()
+            : $request->getDestination();
 
-        if ($directionsRequest->hasWaypoints()) {
+        if ($request->hasWaypoints()) {
             $waypoints = array();
 
-            if ($directionsRequest->hasOptimizeWaypoints() && $directionsRequest->getOptimizeWaypoints()) {
+            if ($request->hasOptimizeWaypoints() && $request->getOptimizeWaypoints()) {
                 $waypoints[] = 'optimize:true';
             }
 
-            foreach ($directionsRequest->getWaypoints() as $waypoint) {
+            foreach ($request->getWaypoints() as $waypoint) {
                 $stopover = $waypoint->getStopover() ? 'via:' : '';
 
-                if (is_string($waypoint->getLocation())) {
-                    $waypoints[] = $stopover.$waypoint->getLocation();
-                } else {
-                    $waypoints[] = sprintf(
-                        '%s%s,%s',
-                        $stopover,
-                        $waypoint->getLocation()->getLatitude(),
-                        $waypoint->getLocation()->getLongitude()
-                    );
-                }
+                $waypoints[] = $waypoint->getLocation() instanceof Coordinate
+                    ? $stopover.$waypoint->getLocation()->getLatitude().','.$waypoint->getLocation()->getLongitude()
+                    : $stopover.$waypoint->getLocation();
             }
 
             $httpQuery['waypoints'] = implode('|', $waypoints);
         }
 
-        if ($directionsRequest->hasTravelMode()) {
-            $httpQuery['mode'] = strtolower($directionsRequest->getTravelMode());
+        if ($request->hasTravelMode()) {
+            $httpQuery['mode'] = strtolower($request->getTravelMode());
         }
 
-        if ($directionsRequest->hasProvideRouteAlternatives()) {
-            $httpQuery['alternatives'] = $directionsRequest->getProvideRouteAlternatives() ? 'true' : 'false';
+        if ($request->hasProvideRouteAlternatives()) {
+            $httpQuery['alternatives'] = $request->getProvideRouteAlternatives() ? 'true' : 'false';
         }
 
-        if ($directionsRequest->hasAvoidTolls() && $directionsRequest->getAvoidTolls()) {
-            $httpQuery['avoid'] = 'tolls';
-        } elseif ($directionsRequest->hasAvoidHighways() && $directionsRequest->getAvoidHighways()) {
-            $httpQuery['avoid'] = 'highways';
+        $httpQuery['avoid'] = $request->hasAvoidTolls() && $request->getAvoidTolls() ? 'tolls' : 'highways';
+
+        if ($request->hasUnitSystem()) {
+            $httpQuery['units'] = strtolower($request->getUnitSystem());
         }
 
-        if ($directionsRequest->hasUnitSystem()) {
-            $httpQuery['units'] = strtolower($directionsRequest->getUnitSystem());
+        if ($request->hasRegion()) {
+            $httpQuery['region'] = $request->getRegion();
         }
 
-        if ($directionsRequest->hasRegion()) {
-            $httpQuery['region'] = $directionsRequest->getRegion();
+        if ($request->hasLanguage()) {
+            $httpQuery['language'] = $request->getLanguage();
         }
 
-        if ($directionsRequest->hasLanguage()) {
-            $httpQuery['language'] = $directionsRequest->getLanguage();
+        if ($request->hasDepartureTime()) {
+            $httpQuery['departure_time'] = $request->getDepartureTime()->getTimestamp();
         }
 
-        if ($directionsRequest->hasDepartureTime()) {
-            $httpQuery['departure_time'] = $directionsRequest->getDepartureTime()->getTimestamp();
+        if ($request->hasArrivalTime()) {
+            $httpQuery['arrival_time'] = $request->getArrivalTime()->getTimestamp();
         }
 
-        if ($directionsRequest->hasArrivalTime()) {
-            $httpQuery['arrival_time'] = $directionsRequest->getArrivalTime()->getTimestamp();
-        }
+        $httpQuery['sensor'] = $request->hasSensor() ? 'true' : 'false';
 
-        $httpQuery['sensor'] = $directionsRequest->hasSensor() ? 'true' : 'false';
-
-        $url = sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
-
-        return $this->signUrl($url);
+        return $this->signUrl($this->getUrl().'/'.$this->getFormat().'?'.http_build_query($httpQuery));
     }
 
     /**
-     * Parses & normalizes the directions API result response.
+     * Parses a body.
      *
-     * @param string $response The directions API response.
+     * @param string $body The body.
      *
-     * @return \stdClass The parsed & normalized directions response.
+     * @return array The parsed body.
      */
-    protected function parse($response)
+    private function parse($body)
     {
-        if ($this->format === 'json') {
-            return $this->parseJSON($response);
-        }
-
-        return $this->parseXML($response);
+        return $this->getFormat() === self::FORMAT_JSON ? $this->parseJson($body) : $this->parseXml($body);
     }
 
     /**
-     * Parses & normalizes a JSON directions API result response.
+     * Parses a json body.
      *
-     * @param string $response The directions API JSON response.
+     * @param string $body The json body.
      *
-     * @return \stdClass The parsed & normalized directions response.
+     * @return array The parsed json body.
      */
-    protected function parseJSON($response)
+    private function parseJson($body)
     {
-        return json_decode($response);
+        return json_decode($body, true);
     }
 
     /**
-     * Parses & normalizes an XML directions API result response.
+     * Parses an xml body.
      *
-     * @param string $response The directions API XML response.
+     * @param string $body The xml body.
      *
-     * @return \stdClass The parsed & normalized directions response.
+     * @return array The parsed xml body.
      */
-    protected function parseXML($response)
+    private function parseXml($body)
     {
-        $rules = array(
-            'leg'   => 'legs',
-            'route' => 'routes',
-            'step'  => 'steps',
+        return $this->getXmlParser()->parse(
+            $body,
+            array(
+                'leg'   => 'legs',
+                'route' => 'routes',
+                'step'  => 'steps',
+            )
         );
-
-        return $this->xmlParser->parse($response, $rules);
     }
 
     /**
-     * Builds the directions response according to the normalized directions API results.
+     * Builds a response.
      *
-     * @param \stdClass $directionsResponse The normalied directions response.
+     * @param array $response The response.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\DirectionsResponse The builded directions response.
+     * @return \Ivory\GoogleMap\Services\Directions\DirectionsResponse The built response.
      */
-    protected function buildDirectionsResponse(\stdClass $directionsResponse)
+    private function buildResponse(array $response)
     {
-        $routes = $this->buildDirectionsRoutes($directionsResponse->routes);
-        $status = $directionsResponse->status;
-
-        return new DirectionsResponse($routes, $status);
+        return new DirectionsResponse($this->buildRoutes($response['routes']), $response['status']);
     }
 
     /**
-     * Builds the directions routes according to the normalized directions API routes.
+     * Builds the routes.
      *
-     * @param \stdClass $directionsRoutes The normalized directions routes.
+     * @param array $routes The routes.
      *
-     * @return array The builded directions routes.
+     * @return array The built routes.
      */
-    protected function buildDirectionsRoutes(array $directionsRoutes)
+    private function buildRoutes(array $routes)
     {
-        $results =  array();
-        foreach ($directionsRoutes as $directionsRoute) {
-            $results[] = $this->buildDirectionsRoute($directionsRoute);
+        $build = array();
+        foreach ($routes as $route) {
+            $build[] = $this->buildRoute($route);
         }
 
-        return $results;
+        return $build;
     }
 
     /**
-     * Builds the directions route according to the normalized directions API route.
+     * Builds a route.
      *
-     * @param \stdClass $directionsRoute The normalized directions route.
+     * @param array $route The route.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\DirectionsRoute The builded directions route.
+     * @return \Ivory\GoogleMap\Services\Directions\DirectionsRoute The built route.
      */
-    protected function buildDirectionsRoute(\stdClass $directionsRoute)
+    private function buildRoute(array $route)
     {
-        $bound = new Bound(
-            new Coordinate($directionsRoute->bounds->southwest->lat, $directionsRoute->bounds->southwest->lng),
-            new Coordinate($directionsRoute->bounds->northeast->lat, $directionsRoute->bounds->northeast->lng)
-        );
-
-        // @see https://github.com/egeloen/IvoryGoogleMapBundle/issues/72
-        // @codeCoverageIgnoreStart
-        if (!isset($directionsRoute->copyrights)) {
-            $directionsRoute->copyrights = '';
-        }
-
-        if (!isset($directionsRoute->summary)) {
-            $directionsRoute->summary = '';
-        }
-        // @codeCoverageIgnoreEnd
-
-        $summary = $directionsRoute->summary;
-        $copyrights = $directionsRoute->copyrights;
-
-        $directionsLegs = $this->buildDirectionsLegs($directionsRoute->legs);
-        $overviewPolyline = new EncodedPolyline($directionsRoute->overview_polyline->points);
-
-        // The warnings & waypoint_order properties can not be defined in the xml format.
-        if (!isset($directionsRoute->warnings)) {
-            $directionsRoute->warnings = array();
-        }
-
-        if (!isset($directionsRoute->waypoint_order)) {
-            $directionsRoute->waypoint_order = array();
-        }
-
-        $warnings = $directionsRoute->warnings;
-        $waypointOrder = $directionsRoute->waypoint_order;
-
         return new DirectionsRoute(
-            $bound,
-            $copyrights,
-            $directionsLegs,
-            $overviewPolyline,
-            $summary,
-            $warnings,
-            $waypointOrder
+            new Bound(
+                new Coordinate(
+                    $route['bounds']['southwest']['lat'],
+                    $route['bounds']['southwest']['lng']
+                ),
+                new Coordinate(
+                    $route['bounds']['northeast']['lat'],
+                    $route['bounds']['northeast']['lng']
+                )
+            ),
+            isset($route['copyrights']) ? $route['copyrights'] : '',
+            $this->buildLegs($route['legs']),
+            new EncodedPolyline($route['overview_polyline']['points']),
+            isset($route['summary']) ? $route['summary'] : '',
+            isset($route['warnings']) ? $route['warnings'] : array(),
+            isset($route['waypoint_order']) ? $route['waypoint_order'] : array()
         );
     }
 
     /**
-     * Builds the directions legs according to the normalized directions API legs.
+     * Builds the legs.
      *
-     * @param array $directionsLegs The normalized directions legs.
+     * @param array $legs The legs.
      *
-     * @return array The builded directions legs.
+     * @return array The built legs.
      */
-    protected function buildDirectionsLegs(array $directionsLegs)
+    private function buildLegs(array $legs)
     {
-        $results =  array();
-        foreach ($directionsLegs as $directionsLeg) {
-            $results[] = $this->buildDirectionsLeg($directionsLeg);
+        $build =  array();
+        foreach ($legs as $leg) {
+            $build[] = $this->buildLeg($leg);
         }
 
-        return $results;
+        return $build;
     }
 
     /**
-     * Buildd the directions leg according to the normalized directions API leg.
+     * Buildd a leg.
      *
-     * @param \stdClass $directionsLeg The normalized directions leg.
+     * @param array $leg The leg.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\DirectionsLeg The builded directions leg.
+     * @return \Ivory\GoogleMap\Services\Directions\DirectionsLeg The leg.
      */
-    protected function buildDirectionsLeg(\stdClass $directionsLeg)
+    private function buildLeg(array $leg)
     {
-        $distance = new Distance($directionsLeg->distance->text, $directionsLeg->distance->value);
-        $duration = new Duration($directionsLeg->duration->text, $directionsLeg->duration->value);
-        $endAddress = $directionsLeg->end_address;
-        $endLocation = new Coordinate($directionsLeg->end_location->lat, $directionsLeg->end_location->lng);
-        $startAddress = $directionsLeg->start_address;
-        $startLocation = new Coordinate($directionsLeg->start_location->lat, $directionsLeg->start_location->lng);
-        $steps = $this->buildDirectionsSteps($directionsLeg->steps);
-
-        // The via_waypoint property can not be defined in the xml format.
-        if (!isset($directionsLeg->via_waypoint)) {
-            $directionsLeg->via_waypoint = array();
-        }
-
-        $viaWaypoint = $directionsLeg->via_waypoint;
-
         return new DirectionsLeg(
-            $distance,
-            $duration,
-            $endAddress,
-            $endLocation,
-            $startAddress,
-            $startLocation,
-            $steps,
-            $viaWaypoint
+            new Distance($leg['distance']['text'], $leg['distance']['value']),
+            new Duration($leg['duration']['text'], $leg['duration']['value']),
+            $leg['end_address'],
+            new Coordinate($leg['end_location']['lat'], $leg['end_location']['lng']),
+            $leg['start_address'],
+            new Coordinate($leg['start_location']['lat'], $leg['start_location']['lng']),
+            $this->buildSteps($leg['steps']),
+            isset($leg['via_waypoint']) ? $leg['via_waypoint'] : array()
         );
     }
 
     /**
-     * Builds the directions steps according to the normalized directions API steps.
+     * Builds the steps.
      *
-     * @param array $directionsSteps The normalized directions steps.
+     * @param array $steps The steps.
      *
-     * @return array The builded directions steps.
+     * @return array The built steps.
      */
-    protected function buildDirectionsSteps(array $directionsSteps)
+    private function buildSteps(array $steps)
     {
-        $results =  array();
-        foreach ($directionsSteps as $directionsStep) {
-            $results[] = $this->buildDirectionsStep($directionsStep);
+        $build =  array();
+        foreach ($steps as $step) {
+            $build[] = $this->buildStep($step);
         }
 
-        return $results;
+        return $build;
     }
 
     /**
-     * Builds the directions step according to the normalized directions API step.
+     * Builds a step.
      *
-     * @param \stdClass $directionsStep The normalized directions step.
+     * @param array $step The step.
      *
-     * @return \Ivory\GoogleMap\Services\Directions\DirectionsStep The builded directions step.
+     * @return \Ivory\GoogleMap\Services\Directions\DirectionsStep The built step.
      */
-    protected function buildDirectionsStep(\stdClass $directionsStep)
+    private function buildStep(array $step)
     {
-        $distance = new Distance($directionsStep->distance->text, $directionsStep->distance->value);
-        $duration = new Duration($directionsStep->duration->text, $directionsStep->duration->value);
-        $endLocation = new Coordinate($directionsStep->end_location->lat, $directionsStep->end_location->lng);
-        $instructions = $directionsStep->html_instructions;
-        $encodedPolyline = new EncodedPolyline($directionsStep->polyline->points);
-        $startLocation = new Coordinate($directionsStep->start_location->lat, $directionsStep->start_location->lng);
-        $travelMode = $directionsStep->travel_mode;
-
         return new DirectionsStep(
-            $distance,
-            $duration,
-            $endLocation,
-            $instructions,
-            $encodedPolyline,
-            $startLocation,
-            $travelMode
+            new Distance($step['distance']['text'], $step['distance']['value']),
+            new Duration($step['duration']['text'], $step['duration']['value']),
+            new Coordinate($step['end_location']['lat'], $step['end_location']['lng']),
+            $step['html_instructions'],
+            new EncodedPolyline($step['polyline']['points']),
+            new Coordinate($step['start_location']['lat'], $step['start_location']['lng']),
+            $step['travel_mode']
         );
     }
 }

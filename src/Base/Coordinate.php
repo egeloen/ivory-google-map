@@ -11,46 +11,40 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\BaseException;
+use Ivory\GoogleMap\Assets\AbstractVariableAsset;
 
 /**
- * Coordinate which describes a google map coordinate.
+ * Coordinate.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLng
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLng
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Coordinate extends AbstractJavascriptVariableAsset
+class Coordinate extends AbstractVariableAsset
 {
-    /** @var double */
-    protected $latitude;
+    /** @var float */
+    private $latitude;
 
-    /** @var double */
-    protected $longitude;
-
-    /** @var boolean */
-    protected $noWrap;
+    /** @var float */
+    private $longitude;
 
     /**
-     * Create a coordinate
+     * Creates a coordinate.
      *
-     * @param double  $latitude  The latitude.
-     * @param double  $longitude The longitude.
-     * @param boolean $noWrap    The no wrap flag.
+     * @param float $latitude  The latitude.
+     * @param float $longitude The longitude.
      */
-    public function __construct($latitude = 0, $longitude = 0, $noWrap = true)
+    public function __construct($latitude, $longitude)
     {
-        $this->setPrefixJavascriptVariable('coordinate_');
+        parent::__construct('coordinate_');
 
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
-        $this->setNoWrap($noWrap);
     }
 
     /**
      * Gets the latitude.
      *
-     * @return double The latitude.
+     * @return float The latitude.
      */
     public function getLatitude()
     {
@@ -60,17 +54,21 @@ class Coordinate extends AbstractJavascriptVariableAsset
     /**
      * Sets the latitude
      *
-     * @param double $latitude The latitude.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the latitude is not valid.
+     * @param float $latitude The latitude.
      */
     public function setLatitude($latitude)
     {
-        if (!is_numeric($latitude) && ($latitude !== null)) {
-            throw BaseException::invalidCoordinateLatitude();
-        }
-
         $this->latitude = $latitude;
+    }
+
+    /**
+     * Checks if the latitude is not wrapped.
+     *
+     * @return boolean TRUE if the latitude is not wrapped else FALSE.
+     */
+    public function isLatitudeNoWrap()
+    {
+        return $this->latitude < -90 || $this->latitude > 90;
     }
 
     /**
@@ -86,42 +84,30 @@ class Coordinate extends AbstractJavascriptVariableAsset
     /**
      * Sets the longitude.
      *
-     * @param double $longitude The longitude.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the longitude is not valid.
+     * @param float $longitude The longitude.
      */
     public function setLongitude($longitude)
     {
-        if (!is_numeric($longitude) && ($longitude !== null)) {
-            throw BaseException::invalidCoordinateLongitude();
-        }
-
         $this->longitude = $longitude;
     }
 
     /**
-     * Check if the coordinate is not wrap.
+     * Checks if the longitude is not wrapped.
      *
-     * @return boolean TRUE if the coordinate is not wrap else FALSE.
+     * @return boolean TRUE if the longitude is not wrapped else FALSE.
      */
-    public function isNoWrap()
+    public function isLongitudeNoWrap()
     {
-        return $this->noWrap;
+        return $this->longitude < -180 || $this->longitude > 180;
     }
 
     /**
-     * Sets if the coordinate is wrap.
+     * Checks if the latitude or the longitude are not wrapped.
      *
-     * @param boolean $noWrap TRUE if the coordinate is not wrap else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the no wrap flag is not valid.
+     * @return boolean TRUE if the latitude or the longitude are not wrapped else FALSE.
      */
-    public function setNoWrap($noWrap)
+    public function isNoWrap()
     {
-        if (!is_bool($noWrap) && ($noWrap !== null)) {
-            throw BaseException::invalidCoordinateNoWrap();
-        }
-
-        $this->noWrap = $noWrap;
+        return $this->isLatitudeNoWrap() || $this->isLongitudeNoWrap();
     }
 }

@@ -11,53 +11,60 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\BaseException;
-use Ivory\GoogleMap\Overlays\ExtendableInterface;
+use Ivory\GoogleMap\Assets\AbstractVariableAsset;
 
 /**
- * Bound wich describes a google map bound.
+ * Bound.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLngBounds
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLngBounds
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Bound extends AbstractJavascriptVariableAsset
+class Bound extends AbstractVariableAsset
 {
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $southWest;
+    /** @var \Ivory\GoogleMap\Base\Coordinate|null */
+    private $southWest;
 
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $northEast;
-
-    /** @var array */
-    protected $extends;
+    /** @var \Ivory\GoogleMap\Base\Coordinate|null */
+    private $northEast;
 
     /**
      * Creates a bound.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate|null $southWest The south west coordinate.
+     * @param \Ivory\GoogleMap\Base\Coordinate|null $northEast The north east coordinate.
      */
-    public function __construct(Coordinate $southWest = null, Coordinate $northEast = null, array $extends = array())
+    public function __construct(Coordinate $southWest = null, Coordinate $northEast = null)
     {
-        $this->setPrefixJavascriptVariable('bound_');
+        parent::__construct('bound_');
 
         $this->setSouthWest($southWest);
         $this->setNorthEast($northEast);
-        $this->setExtends($extends);
     }
 
     /**
-     * Checks if the bound has coordinates.
+     * Checks if there are coordinates (south west and north east).
      *
-     * @return boolean TRUE if the bound has coordinates else FALSE.
+     * @return boolean TRUE if there are coordinates else FALSE.
      */
     public function hasCoordinates()
     {
-        return ($this->southWest !== null) && ($this->northEast !== null);
+        return $this->hasSouthWest() && $this->hasNorthEast();
     }
 
     /**
-     * Gets the south west coordinate.
+     * Checks if there is a south west.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The south west coordinate.
+     * @return boolean TRUE if there is a south west else FALSE.
+     */
+    public function hasSouthWest()
+    {
+        return $this->southWest !== null;
+    }
+
+    /**
+     * Gets the south west.
+     *
+     * @return \Ivory\GoogleMap\Base\Coordinate|null The south west.
      */
     public function getSouthWest()
     {
@@ -65,42 +72,29 @@ class Bound extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the south west coordinate.
+     * Sets the south west.
      *
-     * Available prototypes:
-     *  - function setSouthWest(Ivory\GoogleMap\Base\Coordinate $southWest = null)
-     *  - function setSouthWest(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the south west coordinate is not valid (prototypes).
+     * @param \Ivory\GoogleMap\Base\Coordinate|null $southWest The south west.
      */
-    public function setSouthWest()
+    public function setSouthWest(Coordinate $southWest = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->southWest = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->southWest === null) {
-                $this->southWest = new Coordinate();
-            }
-
-            $this->southWest->setLatitude($args[0]);
-            $this->southWest->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->southWest->setNoWrap($args[2]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->southWest = null;
-        } else {
-            throw BaseException::invalidBoundSouthWest();
-        }
+        $this->southWest = $southWest;
     }
 
     /**
-     * Gets the north east coordinate.
+     * Checks if there is a north east.
      *
-     * @return \Ivory\GoogleMap\Base\Coordinate The northh east coordinate.
+     * @return boolean TRUE if there is a north east.
+     */
+    public function hasNorthEast()
+    {
+        return $this->northEast !== null;
+    }
+
+    /**
+     * Gets the north east.
+     *
+     * @return \Ivory\GoogleMap\Base\Coordinate|null The northh east.
      */
     public function getNorthEast()
     {
@@ -108,92 +102,12 @@ class Bound extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the north east coordinate.
+     * Sets the north east.
      *
-     * Available prototypes:
-     *  - function setNorthEast(Ivory\GoogleMap\Base\Coordinate $northEast = null)
-     *  - function setNorthEast(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the north east coordinate is not valid (prototypes).
+     * @param \Ivory\GoogleMap\Base\Coordinate|null $northEast The north east.
      */
-    public function setNorthEast()
+    public function setNorthEast(Coordinate $northEast = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->northEast = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->northEast === null) {
-                $this->northEast = new Coordinate();
-            }
-
-            $this->northEast->setLatitude($args[0]);
-            $this->northEast->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->northEast->setNoWrap($args[2]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->northEast = null;
-        } else {
-            throw BaseException::invalidBoundNorthEast();
-        }
-    }
-
-    /**
-     * Checks if the bound extends something.
-     *
-     * @return boolean TRUE if the bound extends somethind else FALSE.
-     */
-    public function hasExtends()
-    {
-        return !empty($this->extends);
-    }
-
-    /**
-     * Gets the google map objects that the bound extends.
-     *
-     * @return array The objects that the bound extends.
-     */
-    public function getExtends()
-    {
-        return $this->extends;
-    }
-
-    /**
-     * Sets the google map objects that the bound extends.
-     *
-     * @param array $extends The objects that the bound extends.
-     */
-    public function setExtends($extends)
-    {
-        $this->extends = array();
-
-        foreach ($extends as $extend) {
-            $this->extend($extend);
-        }
-    }
-
-    /**
-     * Adds an object that the bound extends.
-     *
-     * @param \Ivory\GoogleMap\Overlays\ExtendableInterface $extend The object that the bound extends.
-     */
-    public function extend(ExtendableInterface $extend)
-    {
-        $this->extends[] = $extend;
-    }
-
-    /**
-     * Gets the center of the bound.
-     *
-     * @return \Ivory\GoogleMap\Base\Coordinate The bound center.
-     */
-    public function getCenter()
-    {
-        $centerLatitude = ($this->getSouthWest()->getLatitude() + $this->getNorthEast()->getLatitude()) / 2;
-        $centerLongitude = ($this->getSouthWest()->getLongitude() + $this->getNorthEast()->getLongitude()) / 2;
-
-        return new Coordinate($centerLatitude, $centerLongitude);
+        $this->northEast = $northEast;
     }
 }

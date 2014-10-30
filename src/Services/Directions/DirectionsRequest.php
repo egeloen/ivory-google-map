@@ -11,75 +11,72 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use \DateTime;
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\DirectionsException;
-use Ivory\GoogleMap\Services\Base\TravelMode;
-use Ivory\GoogleMap\Services\Base\UnitSystem;
-
 /**
- * Directions request represents a google map directions request.
+ * Directions request.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsRequest
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsRequest
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DirectionsRequest
 {
     /** @var boolean */
-    protected $avoidHighways;
+    private $avoidHighways;
 
     /** @var boolean */
-    protected $avoidTolls;
+    private $avoidTolls;
 
-    /** @var string | \Ivory\GoogleMap\Base\Coordinate */
-    protected $destination;
+    /** @var string|\Ivory\GoogleMap\Base\Coordinate */
+    private $destination;
 
     /** @var boolean */
-    protected $optimizeWaypoints;
+    private $optimizeWaypoints;
 
-    /** @var string | \Ivory\GoogleMap\Base\Coordinate */
-    protected $origin;
+    /** @var string|\Ivory\GoogleMap\Base\Coordinate */
+    private $origin;
 
     /** @var \DateTime */
-    protected $departureTime;
+    private $departureTime;
 
-    /** @var  \DateTime */
-    protected $arrivalTime;
+    /** @var \DateTime */
+    private $arrivalTime;
 
     /** @var boolean */
-    protected $provideRouteAlternatives;
+    private $provideRouteAlternatives;
 
     /** @var string */
-    protected $region;
+    private $region;
 
     /** @var string */
-    protected $language;
+    private $language;
 
     /** @var string */
-    protected $travelMode;
+    private $travelMode;
 
     /** @var string */
-    protected $unitSystem;
+    private $unitSystem;
 
     /** @var array */
-    protected $waypoints;
+    private $waypoints = array();
 
     /** @var boolean */
-    protected $sensor;
+    private $sensor = false;
 
     /**
      * Creates a directions request.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin      The origin.
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $destination The destination.
      */
-    public function __construct()
+    public function __construct($origin, $destination)
     {
-        $this->waypoints = array();
-        $this->sensor = false;
+        $this->setOrigin($origin);
+        $this->setDestination($destination);
     }
 
     /**
-     * Checks if the directions request has an avoid hightways flag.
+     * Checks if it has an avoid hightways.
      *
-     * @return boolean TRUE if the directions request has an avoid hightways flag else FALSE.
+     * @return boolean TRUE if it has an avoid hightways else FALSE.
      */
     public function hasAvoidHighways()
     {
@@ -87,9 +84,9 @@ class DirectionsRequest
     }
 
     /**
-     * Checks if the directions request avoid hightways.
+     * Checks if it avoids hightways.
      *
-     * @return boolean TRUE if the directions request avoids hightways else FALSE.
+     * @return boolean TRUE if it avoids hightways else FALSE.
      */
     public function getAvoidHighways()
     {
@@ -97,25 +94,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets if the the directions request avoids hightways.
+     * Sets if it avoids hightways.
      *
-     * @param boolean $avoidHighways TRUE if the directions request avoids hightways else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the avoid highways flag is not valid.
+     * @param boolean $avoidHighways TRUE if it avoids hightways else FALSE.
      */
     public function setAvoidHighways($avoidHighways = null)
     {
-        if (!is_bool($avoidHighways) && ($avoidHighways !== null)) {
-            throw DirectionsException::invalidDirectionsRequestAvoidHighways();
-        }
-
         $this->avoidHighways = $avoidHighways;
     }
 
     /**
-     * Checks if the directions request has an avoid tolls flag.
+     * Checks if it has an avoid tolls.
      *
-     * @return boolean TRUE if the directions request has an avoid tolls flag else FALSE.
+     * @return boolean TRUE if it has an avoid tolls else FALSE.
      */
     public function hasAvoidTolls()
     {
@@ -123,9 +114,9 @@ class DirectionsRequest
     }
 
     /**
-     * Checks if the directions request avoid tolls.
+     * Checks if it avoid tolls.
      *
-     * @return boolean TRUE if the directions request avoids tolls else FALSE.
+     * @return boolean TRUE if it avoids tolls else FALSE.
      */
     public function getAvoidTolls()
     {
@@ -133,35 +124,29 @@ class DirectionsRequest
     }
 
     /**
-     * Sets if the the directions request avoids tolls.
+     * Sets if it avoids tolls.
      *
-     * @param boolean $avoidTolls TRUE if the directions request avoids tolls else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the avoid tolls flag is not valid.
+     * @param boolean $avoidTolls TRUE if it avoids tolls else FALSE.
      */
     public function setAvoidTolls($avoidTolls = null)
     {
-        if (!is_bool($avoidTolls) && ($avoidTolls !== null)) {
-            throw DirectionsException::invalidDirectionsRequestAvoidTolls();
-        }
-
         $this->avoidTolls = $avoidTolls;
     }
 
     /**
-     * Checks if the directions request has a destination.
+     * Checks if it has a destination.
      *
-     * @return boolean TRUE if the directions request has a destination else FALSE.
+     * @return boolean TRUE if it has a destination else FALSE.
      */
     public function hasDestination()
     {
-        return $this->destination !== null;
+        return !empty($this->destination);
     }
 
     /**
-     * Gets the directions request destination.
+     * Gets the destination.
      *
-     * @return string | \Ivory\GoogleMap\Base\Coordinate The directions request destination.
+     * @return string|\Ivory\GoogleMap\Base\Coordinate The destination.
      */
     public function getDestination()
     {
@@ -169,43 +154,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request destination.
+     * Sets the destination.
      *
-     * Available prototypes:
-     * - function setDestination(string $destination)
-     * - function setDestination(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setDestination(double $latitude, double $longitude, boolean $noWrap)
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the destination is not valid (prototypes).
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $destination The destination.
      */
-    public function setDestination()
+    public function setDestination($destination)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && is_string($args[0])) {
-            $this->destination = $args[0];
-        } elseif (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->destination = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->destination === null) {
-                $this->destination = new Coordinate();
-            }
-
-            $this->destination->setLatitude($args[0]);
-            $this->destination->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->destination->setNoWrap($args[2]);
-            }
-        } else {
-            throw DirectionsException::invalidDirectionsRequestDestination();
-        }
+        $this->destination = $destination;
     }
 
     /**
-     * Checks if the directions request has the optimize waypoints flag.
+     * Checks if it has the optimize waypoints.
      *
-     * @return boolean TRUE if the directions request has the optimize waypoints flag else FALSE.
+     * @return boolean TRUE if it has the optimize waypoints else FALSE.
      */
     public function hasOptimizeWaypoints()
     {
@@ -213,9 +174,9 @@ class DirectionsRequest
     }
 
     /**
-     * Checks if the directions request optimizes waypoints.
+     * Checks if it optimizes waypoints.
      *
-     * @return boolean TRUE if the directions request optmizes waypoints else FALSE.
+     * @return boolean TRUE if it optmizes waypoints else FALSE.
      */
     public function getOptimizeWaypoints()
     {
@@ -223,35 +184,29 @@ class DirectionsRequest
     }
 
     /**
-     * Sets if the directions request optimizes waypoints.
+     * Sets if it optimizes waypoints.
      *
-     * @param boolean $optimizeWaypoints TRUE if the directions request optimizes waypoints else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the optimize waypoints flag is not valid.
+     * @param boolean $optimizeWaypoints TRUE if it optimizes waypoints else FALSE.
      */
     public function setOptimizeWaypoints($optimizeWaypoints = null)
     {
-        if (!is_bool($optimizeWaypoints) && ($optimizeWaypoints !== null)) {
-            throw DirectionsException::invalidDirectionsRequestOptimizeWaypoints();
-        }
-
         $this->optimizeWaypoints = $optimizeWaypoints;
     }
 
     /**
-     * Checks if the directions request has an origin.
+     * Checks if it has an origin.
      *
-     * @return boolean TRUE if the directions request has an origin else FALSE.
+     * @return boolean TRUE if the it has an origin else FALSE.
      */
     public function hasOrigin()
     {
-        return $this->origin !== null;
+        return !empty($this->origin);
     }
 
     /**
-     * Gets the directions request origin.
+     * Gets the origin.
      *
-     * @return string | \Ivory\GoogleMap\Base\Coordinate The directions request origin.
+     * @return string|\Ivory\GoogleMap\Base\Coordinate The origin.
      */
     public function getOrigin()
     {
@@ -259,43 +214,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request origin.
+     * Sets the origin.
      *
-     * Available prototypes:
-     * - function setOrigin(string $destination)
-     * - function setOrigin(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setOrigin(double $latitude, double $longitude, boolean $noWrap)
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the origin is not valid (prototypes).
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin The origin.
      */
-    public function setOrigin()
+    public function setOrigin($origin)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && is_string($args[0])) {
-            $this->origin = $args[0];
-        } elseif (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->origin = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->origin === null) {
-                $this->origin = new Coordinate();
-            }
-
-            $this->origin->setLatitude($args[0]);
-            $this->origin->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->origin->setNoWrap($args[2]);
-            }
-        } else {
-            throw DirectionsException::invalidDirectionsRequestOrigin();
-        }
+        $this->origin = $origin;
     }
 
     /**
-     * Checks if the directions request has a departure time.
+     * Checks if it has a departure time.
      *
-     * @return boolean TRUE if the directions request has a departure time else FALSE.
+     * @return boolean TRUE if it has a departure time else FALSE.
      */
     public function hasDepartureTime()
     {
@@ -303,9 +234,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request departure time.
+     * Gets the departure time.
      *
-     * @return \DateTime The directions request departure time.
+     * @return \DateTime The departure time.
      */
     public function getDepartureTime()
     {
@@ -313,19 +244,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions departure time
+     * Sets the departure time
      *
-     * @param \DateTime $departureTime The directions departure time.
+     * @param \DateTime $departureTime The departure time.
      */
-    public function setDepartureTime(DateTime $departureTime = null)
+    public function setDepartureTime(\DateTime $departureTime = null)
     {
         $this->departureTime = $departureTime;
     }
 
     /**
-     * Checks if the directions request has an arrival time.
+     * Checks if it has an arrival time.
      *
-     * @return boolean TRUE if the directions request has an arrival time else FALSE.
+     * @return boolean TRUE if it has an arrival time else FALSE.
      */
     public function hasArrivalTime()
     {
@@ -333,9 +264,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request arrival time.
+     * Gets the arrival time.
      *
-     * @return \DateTime The directions request arrival time.
+     * @return \DateTime The arrival time.
      */
     public function getArrivalTime()
     {
@@ -343,19 +274,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions arrival time
+     * Sets the arrival time
      *
-     * @param \DateTime $arrivalTime The directions arrival time.
+     * @param \DateTime $arrivalTime The arrival time.
      */
-    public function  setArrivalTime(DateTime $arrivalTime = null)
+    public function setArrivalTime(\DateTime $arrivalTime = null)
     {
         $this->arrivalTime = $arrivalTime;
     }
 
     /**
-     * Checks if the directions request has a provide route alternatives flag.
+     * Checks if it has a provide route alternatives.
      *
-     * @return boolean TRUE if the directions request has a provide route alternative flag else FALSE.
+     * @return boolean TRUE if the it has a provide route alternative else FALSE.
      */
     public function hasProvideRouteAlternatives()
     {
@@ -363,9 +294,9 @@ class DirectionsRequest
     }
 
     /**
-     * Checks if the directions request provides route alternatives.
+     * Checks if it provides route alternatives.
      *
-     * @return boolean TRUE if the directions request provides route alternatives else FALSE.
+     * @return boolean TRUE if it provides route alternatives else FALSE.
      */
     public function getProvideRouteAlternatives()
     {
@@ -373,25 +304,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets if the directions request provides route alternatives.
+     * Sets if it provides route alternatives.
      *
-     * @param boolean $provideRouteAlternatives TRUE if the directions request provides route alternatives else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the provide route alternatives flag is not valid.
+     * @param boolean $provideRouteAlternatives TRUE if it provides route alternatives else FALSE.
      */
     public function setProvideRouteAlternatives($provideRouteAlternatives = null)
     {
-        if (!is_bool($provideRouteAlternatives) && ($provideRouteAlternatives !== null)) {
-            throw DirectionsException::invalidDirectionsRequestProvideRouteAlternatives();
-        }
-
         $this->provideRouteAlternatives = $provideRouteAlternatives;
     }
 
     /**
-     * Checks if the directions request has a region.
+     * Checks if it has a region.
      *
-     * @return boolean TRUE if the directions request has a region else FALSE.
+     * @return boolean TRUE if it has a region else FALSE.
      */
     public function hasRegion()
     {
@@ -399,9 +324,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request region.
+     * Gets the region.
      *
-     * @return string The direction request region.
+     * @return string The region.
      */
     public function getRegion()
     {
@@ -409,25 +334,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request region.
+     * Sets the region.
      *
-     * @param string $region The directions request region.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the region is not valid.
+     * @param string $region The region.
      */
     public function setRegion($region = null)
     {
-        if ((!is_string($region) || (strlen($region) !== 2)) && ($region !== null)) {
-            throw DirectionsException::invalidDirectionsRequestRegion();
-        }
-
         $this->region = $region;
     }
 
     /**
-     * Checks if the directions request has a language.
+     * Checks if it has a language.
      *
-     * @return boolean TRUE if the directions request has a language else FALSE.
+     * @return boolean TRUE if it has a language else FALSE.
      */
     public function hasLanguage()
     {
@@ -435,9 +354,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request language.
+     * Gets the language.
      *
-     * @return string The direction request language.
+     * @return string The language.
      */
     public function getLanguage()
     {
@@ -445,25 +364,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request language.
+     * Sets the language.
      *
-     * @param string $language The directions request language.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the language is not valid.
+     * @param string $language The language.
      */
     public function setLanguage($language = null)
     {
-        if ((!is_string($language) || ((strlen($language) !== 2) && (strlen($language) !== 5))) && ($language !== null)) {
-            throw DirectionsException::invalidDirectionsRequestLanguage();
-        }
-
         $this->language = $language;
     }
 
     /**
-     * Checks if the directions request has a travel mode.
+     * Checks if it has a travel mode.
      *
-     * @return boolean TRUE if the directions request has a travel mode else FALSE.
+     * @return boolean TRUE if it has a travel mode else FALSE.
      */
     public function hasTravelMode()
     {
@@ -471,9 +384,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request travel mode.
+     * Gets the travel mode.
      *
-     * @return string The directions request travel mode.
+     * @return string The travel mode.
      */
     public function getTravelMode()
     {
@@ -481,25 +394,19 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request travel mode.
+     * Sets the travel mode.
      *
-     * @param string $travelMode The directions request travel mode.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the travel mode is not valid.
+     * @param string $travelMode The travel mode.
      */
     public function setTravelMode($travelMode = null)
     {
-        if (!in_array($travelMode, TravelMode::getTravelModes()) && ($travelMode !== null)) {
-            throw DirectionsException::invalidDirectionsRequestTravelMode();
-        }
-
         $this->travelMode = $travelMode;
     }
 
     /**
-     * Checks if the directions request has a unit system.
+     * Checks if it has a unit system.
      *
-     * @return boolean TRUE if the directions request has a unit system else FALSE.
+     * @return boolean TRUE if it has a unit system else FALSE.
      */
     public function hasUnitSystem()
     {
@@ -507,9 +414,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request unit system.
+     * Gets the unit system.
      *
-     * @return string The directions request unit system.
+     * @return string The unit system.
      */
     public function getUnitSystem()
     {
@@ -517,25 +424,27 @@ class DirectionsRequest
     }
 
     /**
-     * Sets  the directions request unit system.
+     * Sets the unit system.
      *
-     * @param string $unitSystem The directions request unit system.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the unit system is not valid.
+     * @param string $unitSystem The unit system.
      */
     public function setUnitSystem($unitSystem = null)
     {
-        if (!in_array($unitSystem, UnitSystem::getUnitSystems()) && ($unitSystem !== null)) {
-            throw DirectionsException::invalidDirectionsRequestUnitSystem();
-        }
-
         $this->unitSystem = $unitSystem;
     }
 
     /**
-     * Checks if the directions request has waypoints.
+     * Resets the waypoints.
+     */
+    public function resetWaypoints()
+    {
+        $this->waypoints = array();
+    }
+
+    /**
+     * Checks if it have waypoints.
      *
-     * @return boolean TRUE if the directions request has waypoints else FALSE.
+     * @return boolean TRUE if it have waypoints else FALSE.
      */
     public function hasWaypoints()
     {
@@ -543,9 +452,9 @@ class DirectionsRequest
     }
 
     /**
-     * Gets the directions request waypoints.
+     * Gets the waypoints.
      *
-     * @return array The directions request waypoints.
+     * @return array The waypoints.
      */
     public function getWaypoints()
     {
@@ -553,59 +462,78 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request waypoints.
+     * Sets the waypoints.
      *
-     * @param array $waypoints The directions request waypoints.
+     * @param array $waypoints The waypoints.
      */
-    public function setWaypoints(array $waypoints = array())
+    public function setWaypoints(array $waypoints)
     {
-        $this->waypoints = array();
+        $this->resetWaypoints();
+        $this->addWaypoints($waypoints);
+    }
 
+    /**
+     * Adds the waypoints.
+     *
+     * @param array $waypoints The waypoints.
+     */
+    public function addWaypoints(array $waypoints)
+    {
         foreach ($waypoints as $waypoint) {
             $this->addWaypoint($waypoint);
         }
     }
 
     /**
-     * Adds a waypoint to the directions request.
+     * Removes the waypoints.
      *
-     * Available prototypes:
-     * - function addWaypoint(Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint)
-     * - function addWaypoint(string $location)
-     * - function addWaypoint(double $latitude, double $longitude, boolean $noWrap)
-     * - function addWaypoint(Ivory\GoogleMap\Base\Coordinate $location)
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the waypoint is not valid (prototypes).
+     * @param array $waypoints The waypoints.
      */
-    public function addWaypoint()
+    public function removeWaypoints(array $waypoints)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof DirectionsWaypoint)) {
-            $this->waypoints[] = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            $waypoint = new DirectionsWaypoint();
-            $waypoint->setLocation($args[0], $args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $waypoint->getLocation()->setNoWrap($args[2]);
-            }
-
-            $this->waypoints[] = $waypoint;
-        } elseif (isset($args[0]) && (is_string($args[0]) || ($args[0] instanceof Coordinate))) {
-            $waypoint = new DirectionsWaypoint();
-            $waypoint->setLocation($args[0]);
-
-            $this->waypoints[] = $waypoint;
-        } else {
-            throw DirectionsException::invalidDirectionsRequestWaypoint();
+        foreach ($waypoints as $waypoint) {
+            $this->removeWaypoint($waypoint);
         }
     }
 
     /**
-     * Checks if the directions request has a sensor.
+     * Checks if there is a waypoint.
      *
-     * @return boolean TRUE if the directions request has a sensor else FALSE.
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint The waypoint.
+     *
+     * @return boolean TRUE if there is the waypoint else FALSE.
+     */
+    public function hasWaypoint(DirectionsWaypoint $waypoint)
+    {
+        return in_array($waypoint, $this->waypoints, true);
+    }
+
+    /**
+     * Adds a waypoint.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint The waypoint.
+     */
+    public function addWaypoint(DirectionsWaypoint $waypoint)
+    {
+        if (!$this->hasWaypoint($waypoint)) {
+            $this->waypoints[] = $waypoint;
+        }
+    }
+
+    /**
+     * Removes a waypoint.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsWaypoint $waypoint The waypoint.
+     */
+    public function removeWaypoint(DirectionsWaypoint $waypoint)
+    {
+        unset($this->waypoints[array_search($waypoint, $this->waypoints, true)]);
+    }
+
+    /**
+     * Checks if it has a sensor.
+     *
+     * @return boolean TRUE if it has a sensor else FALSE.
      */
     public function hasSensor()
     {
@@ -613,38 +541,12 @@ class DirectionsRequest
     }
 
     /**
-     * Sets the directions request sensor.
+     * Sets the sensor.
      *
-     * @param boolean $sensor TRUE if the directions request has a sensor else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the sensor flag is not valid.
+     * @param boolean $sensor TRUE if it has a sensor else FALSE.
      */
     public function setSensor($sensor)
     {
-        if (!is_bool($sensor)) {
-            throw DirectionsException::invalidDirectionsRequestSensor();
-        }
-
         $this->sensor = $sensor;
-    }
-
-    /**
-     * Checks if the directions request is valid.
-     *
-     * @return boolean TRUE if the directions request is valid else FALSE.
-     */
-    public function isValid()
-    {
-        $isValid = $this->hasDestination() && $this->hasOrigin();
-
-        for ($i = 0; $isValid && ($i < count($this->waypoints)); $i++) {
-            $isValid = $this->waypoints[$i]->isValid();
-        }
-
-        if ($this->getTravelMode() === TravelMode::TRANSIT) {
-            $isValid = $this->hasArrivalTime() || $this->hasDepartureTime();
-        }
-
-        return $isValid;
     }
 }

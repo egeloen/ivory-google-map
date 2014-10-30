@@ -11,24 +11,25 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException;
-
 /**
- * A zoom control describes a google map zoom control.
+ * Zoom control.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#ZoomControlOptions
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#ZoomControlOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ZoomControl
 {
     /** @var string */
-    protected $controlPosition;
+    private $controlPosition;
 
     /** @var string */
-    protected $zoomControlStyle;
+    private $zoomControlStyle;
 
     /**
-     * Create a zoom control
+     * Creates a zoom control.
+     *
+     * @param string $controlPosition  The control position.
+     * @param string $zoomControlStyle The zoom control style.
      */
     public function __construct(
         $controlPosition = ControlPosition::TOP_LEFT,
@@ -52,15 +53,9 @@ class ZoomControl
      * Sets the control position.
      *
      * @param string $controlPosition The control position.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the control position is not valid.
      */
     public function setControlPosition($controlPosition)
     {
-        if (!in_array($controlPosition, ControlPosition::getControlPositions())) {
-            throw ControlException::invalidControlPosition();
-        }
-
         $this->controlPosition = $controlPosition;
     }
 
@@ -78,15 +73,9 @@ class ZoomControl
      * Sets the zoom control style.
      *
      * @param string $zoomControlStyle The zoom control style.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the zoom control style is not valid.
      */
     public function setZoomControlStyle($zoomControlStyle)
     {
-        if (!in_array($zoomControlStyle, ZoomControlStyle::getZoomControlStyles())) {
-            throw ControlException::invalidZoomControlStyle();
-        }
-
         $this->zoomControlStyle = $zoomControlStyle;
     }
 }

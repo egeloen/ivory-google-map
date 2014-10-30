@@ -11,27 +11,25 @@
 
 namespace Ivory\GoogleMap\Services\Base;
 
-use Ivory\GoogleMap\Exception\ServiceException;
-
 /**
- * A duration which describes a google map duration.
+ * Duration.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Duration
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#Duration
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Duration
 {
     /** @var string */
-    protected $text;
+    private $text;
 
-    /** @var double */
-    protected $value;
+    /** @var float */
+    private $value;
 
     /**
      * Creates a duration.
      *
-     * @param string $text  The duration as text.
-     * @param double $value The duration in minutes.
+     * @param string $text  The text.
+     * @param float  $value The value.
      */
     public function __construct($text, $value)
     {
@@ -40,9 +38,9 @@ class Duration
     }
 
     /**
-     * Gets the string representation of the duration value.
+     * Gets the text.
      *
-     * @return string The duration as text.
+     * @return string The text.
      */
     public function getText()
     {
@@ -50,25 +48,19 @@ class Duration
     }
 
     /**
-     * Sets the string representation of the duration value
+     * Sets the text.
      *
-     * @param string $text The duration as text.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ServiceException If the text is not valid.
+     * @param string $text The text.
      */
     public function setText($text)
     {
-        if (!is_string($text)) {
-            throw ServiceException::invalidDurationText();
-        }
-
         $this->text = $text;
     }
 
     /**
-     * Gets the duration in minutes
+     * Gets the value.
      *
-     * @return double The duration in minutes.
+     * @return float The value.
      */
     public function getValue()
     {
@@ -76,18 +68,12 @@ class Duration
     }
 
     /**
-     * Sets the duration in minutes
+     * Sets the value.
      *
-     * @param double $value The duration in minutes.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ServiceException If the value is not valid.
+     * @param float $value The value.
      */
     public function setValue($value)
     {
-        if (!is_numeric($value)) {
-            throw ServiceException::invalidDurationValue();
-        }
-
         $this->value = $value;
     }
 }

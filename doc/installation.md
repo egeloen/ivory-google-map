@@ -8,7 +8,7 @@ you.
 
 Composer comes with a simple phar file. To easily access it from anywhere on your system, you can execute:
 
-```
+``` bash
 $ curl -s https://getcomposer.org/installer | php
 $ sudo mv composer.phar /usr/local/bin/composer
 ```
@@ -17,13 +17,13 @@ $ sudo mv composer.phar /usr/local/bin/composer
 
 ### Mandatories dependencies
 
-Create a ``composer.json`` file at the root directory of your project and simply require the
-``egeloen/google-map`` package:
+Create a `composer.json` file at the root directory of your project and simply require the
+`egeloen/google-map` package:
 
-```
+``` json
 {
     "require": {
-        "egeloen/google-map": "dev-master"
+        "egeloen/google-map": "*"
     }
 }
 ```
@@ -32,7 +32,7 @@ Create a ``composer.json`` file at the root directory of your project and simply
 
 If you want to use Geocoding stuff, you will need [Geocoder](http://github.com/willdurand/Geocoder):
 
-```
+``` json
 {
     "require": {
         "willdurand/geocoder": "*"
@@ -41,12 +41,23 @@ If you want to use Geocoding stuff, you will need [Geocoder](http://github.com/w
 ```
 
 If you want to use Directions or Distance Matrix stuff, you will need an
-[http adapter](http://github.com/widop/http-adapter):
+[http adapter](http://github.com/egeloen/ivory-http-adapter):
 
-```
+``` json
 {
     "require": {
-        "widop/http-adapter": "1.0.*"
+        "egeloen/http-adapter": "*"
+    }
+}
+```
+
+If you want to use the container helper factory, you will need the
+[Symfony2 Dependency Injection component](http://symfony.com/doc/current/components/dependency_injection/index.html):
+
+``` json
+{
+    "require": {
+        "symfony/dependency-injection": "*"
     }
 }
 ```
@@ -55,11 +66,11 @@ If you want to use Directions or Distance Matrix stuff, you will need an
 
 Now, you have define your dependencies, you can install them:
 
-```
+``` bash
 $ composer install
 ```
 
-Composer will automatically download your dependencies & create an autoload file in the ``vendor`` directory.
+Composer will automatically download your dependencies & create an autoload file in the `vendor` directory.
 
 ## Autoload
 

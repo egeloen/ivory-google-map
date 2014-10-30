@@ -11,57 +11,45 @@
 
 namespace Ivory\GoogleMap\Assets;
 
-use Ivory\GoogleMap\Exception\AssetException;
-
 /**
- * Allow easy add of options for any class model that requires it.
+ * Abstract options asset.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractOptionsAsset extends AbstractJavascriptVariableAsset
+abstract class AbstractOptionsAsset extends AbstractVariableAsset
 {
     /** @var array */
-    protected $options;
+    private $options = array();
 
     /**
      * Creates an options asset.
      *
-     * @param string $javascriptVariable The javascript variable.
-     * @param array  $options            The options.
+     * @param string|null $prefix  The variable prefix.
+     * @param array       $options The options.
      */
-    public function __construct($javascriptVariable = null, array $options = array())
+    public function __construct($prefix = null, array $options = array())
     {
-        parent::__construct($javascriptVariable);
+        parent::__construct($prefix);
 
-        $this->setOptions($options);
+        $this->addOptions($options);
     }
 
     /**
-     * Checks if there is option.
+     * Resets the options.
+     */
+    public function resetOptions()
+    {
+        $this->options = array();
+    }
+
+    /**
+     * Checks if there are options.
      *
-     * @return boolean TRUE if there is option else FALSE.
+     * @return boolean TRUE if there are options else FALSE.
      */
     public function hasOptions()
     {
         return !empty($this->options);
-    }
-
-    /**
-     * Checks if the option exists.
-     *
-     * @param string $option The option.
-     *
-     * @throws \Ivory\GoogleMap\Exception\AssetException If the option is not valid.
-     *
-     * @return boolean TRUE if the option exists else FALSE.
-     */
-    public function hasOption($option)
-    {
-        if (!is_string($option)) {
-            throw AssetException::invalidOption();
-        }
-
-        return isset($this->options[$option]);
     }
 
     /**
@@ -81,61 +69,76 @@ abstract class AbstractOptionsAsset extends AbstractJavascriptVariableAsset
      */
     public function setOptions(array $options)
     {
-        $this->options = array();
+        $this->resetOptions();
+        $this->addOptions($options);
+    }
 
-        foreach ($options as $option => $value) {
-            $this->setOption($option, $value);
+    /**
+     * Adds the options.
+     *
+     * @param array $options The options.
+     */
+    public function addOptions(array $options)
+    {
+        foreach ($options as $name => $value) {
+            $this->setOption($name, $value);
         }
     }
 
     /**
-     * Gets a specific option.
+     * Removes the options.
      *
-     * @param string $option The option.
+     * @param array $names The option names.
+     */
+    public function removeOptions(array $names)
+    {
+        foreach ($names as $name) {
+            $this->removeOption($name);
+        }
+    }
+
+    /**
+     * Checks if there is an option.
      *
-     * @throws \Ivory\GoogleMap\Exception\AssetException If the option does not exist.
+     * @param string $name The option name.
+     *
+     * @return boolean TRUE if there is the option else FALSE.
+     */
+    public function hasOption($name)
+    {
+        return array_key_exists($name, $this->options);
+    }
+
+    /**
+     * Gets an option.
+     *
+     * @param string $name The option name.
      *
      * @return mixed The option value.
      */
-    public function getOption($option)
+    public function getOption($name)
     {
-        if (!$this->hasOption($option)) {
-            throw AssetException::optionDoesNotExist($option);
-        }
-
-        return $this->options[$option];
+        return $this->hasOption($name) ? $this->options[$name] : null;
     }
 
     /**
-     * Sets a specific option.
+     * Sets an option.
      *
-     * @param string $option The option
-     * @param mixed  $value  The option value.
-     *
-     * @throws \Ivory\GoogleMap\Exception\AssetException If the option is not valid.
+     * @param string $name  The option name.
+     * @param mixed  $value The option value.
      */
-    public function setOption($option, $value)
+    public function setOption($name, $value)
     {
-        if (!is_string($option)) {
-            throw AssetException::invalidOption();
-        }
-
-        $this->options[$option] = $value;
+        $this->options[$name] = $value;
     }
 
     /**
      * Removes an option.
      *
-     * @param string $option The option.
-     *
-     * @throws \Ivory\GoogleMap\Exception\AssetException If the option does not exist.
+     * @param string $name The option name.
      */
-    public function removeOption($option)
+    public function removeOption($name)
     {
-        if (!$this->hasOption($option)) {
-            throw AssetException::optionDoesNotExist($option);
-        }
-
-        unset($this->options[$option]);
+        unset($this->options[$name]);
     }
 }

@@ -11,20 +11,17 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\CurlHttpAdapter;
-use Geocoder\Provider\GoogleMapsProvider;
 use Ivory\GoogleMap\Services\Geocoding\Geocoder;
-use Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
 
 /**
  * Geocoder test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderTest extends \PHPUnit_Framework_TestCase
+class GeocoderTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Geocoding\Geocoder */
-    protected $geocoder;
+    private $geocoder;
 
     /**
      * {@inheritdoc}
@@ -32,22 +29,6 @@ class GeocoderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->geocoder = new Geocoder();
-    }
-
-    /**
-     * Set up a geocoder provider.
-     */
-    protected function setUpGeocoderProvider()
-    {
-        $this->geocoder->registerProvider(new GoogleMapsProvider(new CurlHttpAdapter()));
-    }
-
-    /**
-     * Set up the Ivory provider.
-     */
-    protected function setUpIvoryProvider()
-    {
-        $this->geocoder->registerProvider(new GeocoderProvider(new CurlHttpAdapter()));
     }
 
     /**
@@ -60,35 +41,108 @@ class GeocoderTest extends \PHPUnit_Framework_TestCase
 
     public function testGeocodeWithGeocoderProvider()
     {
-        $this->setUpGeocoderProvider();
+        $this->geocoder->registerProvider($provider = $this->createGoogleMapsProviderMock());
 
-        $this->assertInstanceOf('Geocoder\Result\Geocoded', $this->geocoder->geocode('Paris'));
+        $provider
+            ->expects($this->any())
+            ->method('getGeocodedData')
+            ->with($this->identicalTo($request = 'foo'))
+            ->will($this->returnValue(array(array('bar'))));
+
+        $this->assertGeocodedInstance($this->geocoder->geocode($request));
     }
 
     public function testGeocodeWithIvoryProvider()
     {
-        $this->setUpIvoryProvider();
+        $this->geocoder->registerProvider($provider = $this->createGeocoderProviderMock());
 
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse',
-            $this->geocoder->geocode('Paris')
-        );
+        $provider
+            ->expects($this->any())
+            ->method('getGeocodedData')
+            ->with($this->identicalTo($request = $this->createGeocoderRequestMock()))
+            ->will($this->returnValue($response = 'foo'));
+
+        $this->assertSame($response, $this->geocoder->geocode($request));
     }
 
     public function testReverseWithGeocoderProvider()
     {
-        $this->setUpGeocoderProvider();
+        $this->geocoder->registerProvider($provider = $this->createGoogleMapsProviderMock());
 
-        $this->assertInstanceOf('Geocoder\Result\Geocoded', $this->geocoder->reverse(48.856633, 2.352254));
+        $provider
+            ->expects($this->any())
+            ->method('getReversedData')
+            ->with($this->identicalTo(array($longitude = 48.856633, $latitude = 2.352254)))
+            ->will($this->returnValue(array(array('foo'))));
+
+        $this->assertGeocodedInstance($this->geocoder->reverse($longitude, $latitude));
     }
 
     public function testReverseWithIvoryProvider()
     {
-        $this->setUpIvoryProvider();
+        $this->geocoder->registerProvider($provider = $this->createGeocoderProviderMock());
 
-        $this->assertInstanceOf(
-            'Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse',
-            $this->geocoder->reverse(48.856633, 2.352254)
-        );
+        $provider
+            ->expects($this->any())
+            ->method('getReversedData')
+            ->with($this->identicalTo(array($longitude = 48.856633, $latitude = 2.352254)))
+            ->will($this->returnValue($response = 'foo'));
+
+        $this->assertSame($response, $this->geocoder->reverse($longitude, $latitude));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function createGeocoderProviderMock()
+    {
+        $provider = parent::createGeocoderProviderMock();
+        $provider
+            ->expects($this->any())
+            ->method('setMaxResults')
+            ->with($this->anything())
+            ->will($this->returnSelf());
+
+        $provider
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('ivory'));
+
+        return $provider;
+    }
+
+    /**
+     * Asserts a geocoder geocoded instance.
+     *
+     * @param \Geocoder\Result\Geocoded $geocoded The geocoded.
+     */
+    private function assertGeocodedInstance($geocoded)
+    {
+        $this->assertInstanceOf('Geocoder\Result\Geocoded', $geocoded);
+    }
+
+    /**
+     * Creates a geocoder google maps provider mock.
+     *
+     * @return \Geocoder\Provider\GoogleMapsProvider|\PHPUnit_Framework_MockObject_MockObject The google maps provider mock.
+     */
+    private function createGoogleMapsProviderMock()
+    {
+        $provider = $this->getMockBuilder('Geocoder\Provider\GoogleMapsProvider')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $provider
+            ->expects($this->any())
+            ->method('setMaxResults')
+            ->with($this->anything())
+            ->will($this->returnSelf());
+
+        $provider
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('geocoder'));
+
+        return $provider;
     }
 }

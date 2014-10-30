@@ -18,17 +18,23 @@ use Ivory\GoogleMap\Overlays\Circle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CircleTest extends \PHPUnit_Framework_TestCase
+class CircleTest extends AbstractExtendableTest
 {
     /** @var \Ivory\GoogleMap\Overlays\Circle */
-    protected $circle;
+    private $circle;
+
+    /** @var \Ivory\GoogleMap\Base\Coordinate|\PHPUnit_Framework_MockObject_MockObject */
+    private $center;
+
+    /** @var float */
+    private $radius;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->circle = new Circle();
+        $this->circle = new Circle($this->center = $this->createCoordinateMock(), $this->radius = 1);
     }
 
     /**
@@ -36,72 +42,43 @@ class CircleTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->radius);
+        unset($this->center);
         unset($this->circle);
+    }
+
+    public function testInheritance()
+    {
+        $this->assertOptionsAssetInstance($this->circle);
+        $this->assertExtendableInstance($this->circle);
     }
 
     public function testDefaultState()
     {
-        $this->assertInstanceOf('Ivory\GoogleMap\Base\Coordinate', $this->circle->getCenter());
-        $this->assertSame(1, $this->circle->getRadius());
+        $this->assertStringStartsWith('circle_', $this->circle->getVariable());
+        $this->assertSame($this->center, $this->circle->getCenter());
+        $this->assertSame($this->radius, $this->circle->getRadius());
+        $this->assertFalse($this->circle->hasOptions());
     }
 
-    public function testInitialState()
+    public function testSetCenter()
     {
-        $center = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $radius = 2;
-
-        $this->circle = new Circle($center, $radius);
+        $this->circle->setCenter($center = $this->createCoordinateMock());
 
         $this->assertSame($center, $this->circle->getCenter());
+    }
+
+    public function testSetRadius()
+    {
+        $this->circle->setRadius($radius = 10);
+
         $this->assertSame($radius, $this->circle->getRadius());
     }
 
-    public function testCenterWithCoordinate()
+    public function testRenderExtend()
     {
-        $center = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->circle->setCenter($center);
+        $this->circle->setVariable('circle');
 
-        $this->assertSame($center, $this->circle->getCenter());
-    }
-
-    public function testCenterWithLatitudeAndLongitude()
-    {
-        $latitude = 1;
-        $longitude = 2;
-
-        $this->circle->setCenter($latitude, $longitude, true);
-
-        $this->assertSame($latitude, $this->circle->getCenter()->getLatitude());
-        $this->assertSame($longitude, $this->circle->getCenter()->getLongitude());
-        $this->assertTrue($this->circle->getCenter()->isNoWrap());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage
-     * The center setter arguments is invalid.
-     * The available prototypes are :
-     * - function setCenter(Ivory\GoogleMap\Base\Coordinate $center)
-     * - function setCenter(double $latitude, double $longitude, boolean $noWrap = true)
-     */
-    public function testCenterWithInvalidValue()
-    {
-        $this->circle->setCenter('foo');
-    }
-
-    public function testRadiusWithValidValue()
-    {
-        $this->circle->setRadius(3);
-
-        $this->assertSame(3, $this->circle->getRadius());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The radius of a circle must be a numeric value.
-     */
-    public function testRadiusWithInvalidValue()
-    {
-        $this->circle->setRadius(true);
+        $this->assertSame('bound.union(circle.getBounds())', $this->circle->renderExtend($this->createBoundMock()));
     }
 }

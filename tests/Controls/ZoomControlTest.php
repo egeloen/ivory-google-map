@@ -20,10 +20,10 @@ use Ivory\GoogleMap\Controls\ZoomControlStyle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlTest extends \PHPUnit_Framework_TestCase
+class ZoomControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\ZoomControl */
-    protected $zoomControl;
+    private $zoomControl;
 
     /**
      * {@inheritdoc}
@@ -49,26 +49,26 @@ class ZoomControlTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
-        $this->zoomControl = new ZoomControl(ControlPosition::BOTTOM_CENTER, ZoomControlStyle::LARGE);
+        $this->zoomControl = new ZoomControl(
+            $controlPosition = ControlPosition::BOTTOM_CENTER,
+            $zoomControlStyle = ZoomControlStyle::LARGE
+        );
 
-        $this->assertSame(ControlPosition::BOTTOM_CENTER, $this->zoomControl->getControlPosition());
-        $this->assertSame(ZoomControlStyle::LARGE, $this->zoomControl->getZoomControlStyle());
+        $this->assertSame($controlPosition, $this->zoomControl->getControlPosition());
+        $this->assertSame($zoomControlStyle, $this->zoomControl->getZoomControlStyle());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     */
-    public function testControlPositionWithInvalidValue()
+    public function testSetControlPosition()
     {
-        $this->zoomControl->setControlPosition('foo');
+        $this->zoomControl->setControlPosition($controlPosition = ControlPosition::BOTTOM_CENTER);
+
+        $this->assertSame($controlPosition, $this->zoomControl->getControlPosition());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The zoom control style of a zoom control can only be : default, large, small.
-     */
-    public function testZoomControlStyleWithInvalidValue()
+    public function testSetZoomControlStyle()
     {
-        $this->zoomControl->setZoomControlStyle('foo');
+        $this->zoomControl->setZoomControlStyle($zoomControlStyle = ZoomControlStyle::LARGE);
+
+        $this->assertSame($zoomControlStyle, $this->zoomControl->getZoomControlStyle());
     }
 }

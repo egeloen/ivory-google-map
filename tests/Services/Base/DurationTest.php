@@ -12,23 +12,30 @@
 namespace Ivory\Tests\GoogleMap\Services\Base;
 
 use Ivory\GoogleMap\Services\Base\Duration;
+use Ivory\Tests\GoogleMap\Services\AbstractTestCase;
 
 /**
  * Duration test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DurationTest extends \PHPUnit_Framework_TestCase
+class DurationTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
+    private $duration;
+
+    /** @var string */
+    private $text;
+
+    /** @var float */
+    private $value;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->duration = new Duration('foo', 2.2);
+        $this->duration = new Duration($this->text = 'foo', $this->value = 2.2);
     }
 
     /**
@@ -36,30 +43,28 @@ class DurationTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->value);
+        unset($this->text);
         unset($this->duration);
     }
 
     public function testInitialState()
     {
-        $this->assertSame('foo', $this->duration->getText());
-        $this->assertSame(2.2, $this->duration->getValue());
+        $this->assertSame($this->text, $this->duration->getText());
+        $this->assertSame($this->value, $this->duration->getValue());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
-     * @expectedExceptionMessage The duration text must be a string value.
-     */
-    public function testTextWithInvalidValue()
+    public function testSetText()
     {
-        $this->duration->setText(true);
+        $this->duration->setText($text = 'bar');
+
+        $this->assertSame($text, $this->duration->getText());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
-     * @expectedExceptionMessage The duration value must be a numeric value.
-     */
-    public function testValueWithInvalidValue()
+    public function testSetValue()
     {
-        $this->duration->setValue('foo');
+        $this->duration->setValue($value = 1.1);
+
+        $this->assertSame($value, $this->duration->getValue());
     }
 }

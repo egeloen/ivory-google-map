@@ -11,23 +11,21 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException;
-
 /**
- * An overview map control describes a google map overview control.
+ * Overview map control.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#OverviewMapControlOptions
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#OverviewMapControlOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
 class OverviewMapControl
 {
     /** @var boolean */
-    protected $opened;
+    private $opened;
 
     /**
-     * Create an overview map control.
+     * Creates an overview map control.
      *
-     * @param boolean $opened TRUE if the overview map control is opened else FALSE.
+     * @param boolean $opened TRUE if it is opened else FALSE.
      */
     public function __construct($opened = false)
     {
@@ -35,9 +33,9 @@ class OverviewMapControl
     }
 
     /**
-     * Checks if the overview map control is opened.
+     * Checks if it is opened.
      *
-     * @return boolean TRUE if the overview map control is opened else FALSE.
+     * @return boolean TRUE if it is opened else FALSE.
      */
     public function isOpened()
     {
@@ -45,18 +43,12 @@ class OverviewMapControl
     }
 
     /**
-     * Sets if the overview map control is opened.
+     * Sets if it is opened.
      *
-     * @param boolean $opened TRUE if the overview map control is opened else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the opened flag is not valid.
+     * @param boolean $opened TRUE if it is opened else FALSE.
      */
     public function setOpened($opened)
     {
-        if (!is_bool($opened)) {
-            throw ControlException::invalidOverviewMapControlOpened();
-        }
-
         $this->opened = $opened;
     }
 }

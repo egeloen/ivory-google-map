@@ -14,60 +14,39 @@ namespace Ivory\GoogleMap\Overlays;
 use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
 
 /**
- * Marker Cluster.
+ * Marker cluster.
  *
+ * @link http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/reference.html
  * @author GeLo <geloen.eric@gmail.com>
  */
 class MarkerCluster extends AbstractOptionsAsset
 {
-    /** @const string The default marker cluster type */
-    const _DEFAULT = 'default';
-
-    /** @const string The javascript marker cluster type */
-    const MARKER_CLUSTER = 'marker_cluster';
+    /** @var array */
+    private $markers = array();
 
     /** @var string */
-    protected $type;
-
-    /** @var array */
-    protected $markers;
+    private $type = MarkerClusterType::DEFAULT_;
 
     /**
      * Creates a marker cluster.
      */
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct('marker_cluster_');
+    }
 
-        $this->setPrefixJavascriptVariable('marker_cluster_');
-        $this->setType(self::_DEFAULT);
+    /**
+     * Resets the markers.
+     */
+    public function resetMarkers()
+    {
         $this->markers = array();
     }
 
     /**
-     * Gets the marker cluster type.
+     * Checks if there are markers.
      *
-     * @return string The marker cluster type.
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Sets the marker cluster type.
-     *
-     * @param string $type The marker cluster type.
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * Checks if the cluster has marker.
-     *
-     * @return boolean TRUE if the cluster has marker else FALSE.
+     * @return boolean TRUE if there are markers else FALSE.
      */
     public function hasMarkers()
     {
@@ -75,9 +54,9 @@ class MarkerCluster extends AbstractOptionsAsset
     }
 
     /**
-     * Gets the cluster markers.
+     * Gets the markers.
      *
-     * @return array The cluster markers.
+     * @return array The markers.
      */
     public function getMarkers()
     {
@@ -85,26 +64,91 @@ class MarkerCluster extends AbstractOptionsAsset
     }
 
     /**
-     * Sets the cluster markers.
+     * Sets the markers.
      *
-     * @param array $markers The cluster markers.
+     * @param array $markers The markers.
      */
-    public function setMarkers($markers)
+    public function setMarkers(array $markers)
     {
-        $this->markers = array();
+        $this->resetMarkers();
+        $this->addMarkers($markers);
+    }
 
+    /**
+     * Adds the markers.
+     *
+     * @param array $markers The markers.
+     */
+    public function addMarkers(array $markers)
+    {
         foreach ($markers as $marker) {
             $this->addMarker($marker);
         }
     }
 
     /**
-     * Adds a marker to the cluster.
+     * Removes the markers.
      *
-     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker to add.
+     * @param array $markers The markers.
+     */
+    public function removeMarkers(array $markers)
+    {
+        foreach ($markers as $marker) {
+            $this->removeMarker($marker);
+        }
+    }
+
+    /**
+     * Checks if there is a marker.
+     *
+     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
+     *
+     * @return boolean TRUE if there is the marker else FALSE.
+     */
+    public function hasMarker(Marker $marker)
+    {
+        return in_array($marker, $this->markers, true);
+    }
+
+    /**
+     * Adds a marker.
+     *
+     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
      */
     public function addMarker(Marker $marker)
     {
-        $this->markers[] = $marker;
+        if (!$this->hasMarker($marker)) {
+            $this->markers[] = $marker;
+        }
+    }
+
+    /**
+     * Removes a marker.
+     *
+     * @param \Ivory\GoogleMap\Overlays\Marker $marker The marker.
+     */
+    public function removeMarker(Marker $marker)
+    {
+        unset($this->markers[array_search($marker, $this->markers, true)]);
+    }
+
+    /**
+     * Gets the type.
+     *
+     * @return string The type.
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Sets the type.
+     *
+     * @param string $type The type.
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

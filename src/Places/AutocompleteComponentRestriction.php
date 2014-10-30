@@ -11,34 +11,16 @@
 
 namespace Ivory\GoogleMap\Places;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Places autocomplete component restriction.
+ * Autocomplete component restriction.
  *
+ * @link http://developers.google.com/maps/documentation/javascript/reference#ComponentRestrictions
  * @author GeLo <geloen.eric@gmail.com>
  * @author Semyon Velichko <semyon@velichko.net>
  */
-class AutocompleteComponentRestriction
+class AutocompleteComponentRestriction extends AbstractUninstantiableAsset
 {
     const COUNTRY = 'country';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-    }
-
-    /**
-     * Gets the available component restrictions.
-     *
-     * @return array The available component restrictions.
-     */
-    public static function getAvailableAutocompleteComponentRestrictions()
-    {
-        return array(
-            self::COUNTRY,
-        );
-    }
 }

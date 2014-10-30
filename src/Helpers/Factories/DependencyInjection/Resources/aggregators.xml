@@ -1,0 +1,147 @@
+<?xml version="1.0" ?>
+
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <!-- Base -->
+        <service
+            id="ivory.google_map.helpers.aggregators.base.bound"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Base\BoundAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.ground_overlay" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.rectangle" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.aggregators.base.coordinate"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Base\CoordinateAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.base.bound" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.circle" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.info_window" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.marker" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.polygon" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.polyline" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.aggregators.base.point"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Base\PointAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.marker" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.aggregators.base.size"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Base\SizeAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.info_window" />
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.icon" />
+        </service>
+
+        <!-- Events -->
+        <service
+            id="ivory.google_map.helpers.aggregators.events.dom_event"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Events\DomEventAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.events.dom_event_once"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Events\DomEventOnceAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.events.event"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Events\EventAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.events.event_once"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Events\EventOnceAggregator"
+        />
+
+        <!-- Layers -->
+        <service
+            id="ivory.google_map.helpers.aggregators.layers.kml_layer"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Layers\KmlLayerAggregator"
+        />
+
+        <!-- Overlays -->
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.circle"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\CircleAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.encoded_polyline"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\EncodedPolylineAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.extendable"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\ExtendableAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.ground_overlay"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\GroundOverlayAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.icon"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\IconAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.marker" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.info_window"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\InfoWindowAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.marker" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.marker"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\MarkerAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.marker_shape"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\MarkerShapeAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.overlays.marker" />
+        </service>
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.polygon"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\PolygonAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.polyline"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\PolylineAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.overlays.rectangle"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Overlays\RectangleAggregator"
+        />
+
+        <!-- Places -->
+        <service
+            id="ivory.google_map.helpers.aggregators.places.autocomplete.bound"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Places\AutocompleteBoundAggregator"
+        />
+
+        <service
+            id="ivory.google_map.helpers.aggregators.places.autocomplete.coordinate"
+            class="Ivory\GoogleMap\Helpers\Aggregators\Places\AutocompleteCoordinateAggregator"
+        >
+            <argument type="service" id="ivory.google_map.helpers.aggregators.places.autocomplete.bound" />
+        </service>
+    </services>
+</container>

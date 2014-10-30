@@ -14,21 +14,22 @@ namespace Ivory\Tests\GoogleMap;
 use Ivory\GoogleMap\MapTypeId;
 
 /**
- * Map type ID test.
+ * Map type id test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeIdTest extends \PHPUnit_Framework_TestCase
+class MapTypeIdTest extends AbstractTestCase
 {
-    public function testMapTypeIds()
+    public function testInheritance()
     {
-        $expected = array(
-            MapTypeId::HYBRID,
-            MapTypeId::ROADMAP,
-            MapTypeId::SATELLITE,
-            MapTypeId::TERRAIN
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\MapTypeId');
+    }
 
-        $this->assertSame($expected, MapTypeId::getMapTypeIds());
+    public function testConstants()
+    {
+        $this->assertSame('hybrid', MapTypeId::HYBRID);
+        $this->assertSame('roadmap', MapTypeId::ROADMAP);
+        $this->assertSame('satellite', MapTypeId::SATELLITE);
+        $this->assertSame('terrain', MapTypeId::TERRAIN);
     }
 }

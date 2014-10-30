@@ -19,39 +19,29 @@ use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsResponseElementTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixResponseElementTest extends AbstractTestCase
 {
-    /** @var \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponse */
-    protected $distanceMatrixResponseElement;
+    /** @var \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement */
+    private $distanceMatrixResponseElement;
 
     /** @var string */
-    protected $status;
+    private $status;
 
-    /** @var \Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    /** @var \Ivory\GoogleMap\Services\Base\Distance|\PHPUnit_Framework_MockObject_MockObject */
+    private $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
+    /** @var \Ivory\GoogleMap\Services\Base\Duration|\PHPUnit_Framework_MockObject_MockObject */
+    private $duration;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->status = DistanceMatrixElementStatus::ZERO_RESULTS;
-
-        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Distance')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Duration')
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->distanceMatrixResponseElement = new DistanceMatrixResponseElement(
-            $this->status,
-            $this->distance,
-            $this->duration
+            $this->status = DistanceMatrixElementStatus::ZERO_RESULTS,
+            $this->distance = $this->createDistanceMock(),
+            $this->duration = $this->createDurationMock()
         );
     }
 
@@ -69,16 +59,50 @@ class DirectionsResponseElementTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertSame($this->status, $this->distanceMatrixResponseElement->getStatus());
+
+        $this->assertTrue($this->distanceMatrixResponseElement->hasDistance());
         $this->assertSame($this->distance, $this->distanceMatrixResponseElement->getDistance());
+
+        $this->assertTrue($this->distanceMatrixResponseElement->hasDuration());
         $this->assertSame($this->duration, $this->distanceMatrixResponseElement->getDuration());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix response element status can only be : NOT_FOUND, OK, ZERO_RESULTS.
-     */
-    public function testStatusWithInvalidValue()
+    public function testSetStatus()
     {
-        $this->distanceMatrixResponseElement->setStatus('foo');
+        $this->distanceMatrixResponseElement->setStatus($status = DistanceMatrixElementStatus::OK);
+
+        $this->assertSame($status, $this->distanceMatrixResponseElement->getStatus());
+    }
+
+    public function testSetDistance()
+    {
+        $this->distanceMatrixResponseElement->setDistance($distance = $this->createDistanceMock());
+
+        $this->assertTrue($this->distanceMatrixResponseElement->hasDistance());
+        $this->assertSame($distance, $this->distanceMatrixResponseElement->getDistance());
+    }
+
+    public function testResetDistance()
+    {
+        $this->distanceMatrixResponseElement->setDistance(null);
+
+        $this->assertFalse($this->distanceMatrixResponseElement->hasDistance());
+        $this->assertNull($this->distanceMatrixResponseElement->getDistance());
+    }
+
+    public function testSetDuration()
+    {
+        $this->distanceMatrixResponseElement->setDuration($duration = $this->createDurationMock());
+
+        $this->assertTrue($this->distanceMatrixResponseElement->hasDuration());
+        $this->assertSame($duration, $this->distanceMatrixResponseElement->getDuration());
+    }
+
+    public function testResetDuration()
+    {
+        $this->distanceMatrixResponseElement->setDuration(null);
+
+        $this->assertFalse($this->distanceMatrixResponseElement->hasDuration());
+        $this->assertNull($this->distanceMatrixResponseElement->getDuration());
     }
 }

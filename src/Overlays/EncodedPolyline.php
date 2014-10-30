@@ -12,39 +12,35 @@
 namespace Ivory\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
-use Ivory\GoogleMap\Exception\OverlayException;
+use Ivory\GoogleMap\Base\Bound;
 
 /**
  * Encoded polyline.
  *
- * @see http://code.google.com/apis/maps/documentation/utilities/polylinealgorithm.html
+ * @link http://code.google.com/apis/maps/documentation/utilities/polylinealgorithm.html
  * @author GeLo <geloen.eric@gmail.com>
  */
 class EncodedPolyline extends AbstractOptionsAsset implements ExtendableInterface
 {
     /** @var string */
-    protected $value;
+    private $value;
 
     /**
      * Creates an encoded polyline.
      *
-     * @param string $value The encoded polyline value.
+     * @param string $value The value.
      */
-    public function __construct($value = null)
+    public function __construct($value)
     {
-        parent::__construct();
+        parent::__construct('encoded_polyline_');
 
-        $this->setPrefixJavascriptVariable('encoded_polyline_');
-
-        if ($value !== null) {
-            $this->setValue($value);
-        }
+        $this->setValue($value);
     }
 
     /**
-     * Gets the encoded polyline value.
+     * Gets the value.
      *
-     * @return string The encoded polyline value.
+     * @return string The value.
      */
     public function getValue()
     {
@@ -52,18 +48,20 @@ class EncodedPolyline extends AbstractOptionsAsset implements ExtendableInterfac
     }
 
     /**
-     * Sets the encoded polyline value.
+     * Sets the value.
      *
-     * @param string $value The encoded polyline value.
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the encoded polyline value is not valid.
+     * @param string $value The value.
      */
     public function setValue($value)
     {
-        if (!is_string($value)) {
-            throw OverlayException::invalidEncodedPolylineValue();
-        }
-
         $this->value = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function renderExtend(Bound $bound)
+    {
+        return sprintf('%s.getPath().forEach(function(e){%s.extend(e);})', $this->getVariable(), $bound->getVariable());
     }
 }
