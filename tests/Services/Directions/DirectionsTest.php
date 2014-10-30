@@ -25,7 +25,7 @@ use Widop\HttpAdapter\CurlHttpAdapter;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
+class DirectionsTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Ivory\GoogleMap\Services\Directions\Directions */
     protected $directions;
@@ -268,7 +268,7 @@ class DirectionsServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
+     * @expectedException \Ivory\GoogleMap\Exception\ServiceException
      * @expectedExceptionMessage The service result is not valid.
      */
     public function testRouteWithInvalidResult()

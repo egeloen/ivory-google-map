@@ -237,4 +237,31 @@ abstract class AbstractService
 
         return $this->businessAccount->signUrl($url);
     }
+
+    /**
+     * Sends a service request.
+     *
+     * @param string $url The service url.
+     *
+     * @return \Widop\HttpAdapter\HttpResponse The response.
+     *
+     * @throws \Ivory\GoogleMap\Exception\ServiceException If the response is null.
+     * @throws \Ivory\GoogleMap\Exception\ServiceException If the response has an error 4XX or 5XX.
+     */
+    protected function send($url)
+    {
+        $response = $this->httpAdapter->getContent($url);
+
+        if ($response === null) {
+            throw ServiceException::invalidServiceResult();
+        }
+
+        $statusCode = (string) $response->getStatusCode();
+
+        if ($statusCode[0] === '4' || $statusCode[0] === '5') {
+            throw ServiceException::invalidResponse($url, $statusCode);
+        }
+
+        return $response;
+    }
 }
