@@ -27,6 +27,9 @@ class MarkerImage extends AbstractJavascriptVariableAsset
     /** @var string */
     protected $url;
 
+    /** @var string */
+    protected $name;
+
     /** @var \Ivory\GoogleMap\Base\Point */
     protected $anchor;
 
@@ -47,10 +50,12 @@ class MarkerImage extends AbstractJavascriptVariableAsset
         Point $anchor = null,
         Point $origin = null,
         Size $scaledSize = null,
-        Size $size = null
+        Size $size = null,
+        $name = null
     ) {
         $this->setPrefixJavascriptVariable('marker_image_');
         $this->setUrl($url);
+        $this->setName($name);
 
         if ($anchor !== null) {
             $this->setAnchor($anchor);
@@ -93,6 +98,26 @@ class MarkerImage extends AbstractJavascriptVariableAsset
         }
 
         $this->url = $url;
+    }
+
+    /**
+     * Gets the name of the marker image.
+     *
+     * @return string The name of the marker image.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the name of the marker image.
+     *
+     * @param string $name The name of the marker image.
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**

@@ -33,6 +33,7 @@ use Ivory\GoogleMap\Overlays\MarkerCluster;
 use Ivory\GoogleMap\Overlays\Polygon;
 use Ivory\GoogleMap\Overlays\Polyline;
 use Ivory\GoogleMap\Overlays\Rectangle;
+use Ivory\GoogleMap\Overlays\Legend;
 
 /**
  * Map wich describes a google map.
@@ -120,6 +121,9 @@ class Map extends AbstractJavascriptVariableAsset
     /** @var string */
     protected $language;
 
+    /** @var \Ivory\GoogleMap\Overlays\Legend */
+    protected $legend;
+
     /**
      * Creates a map.
      */
@@ -158,6 +162,8 @@ class Map extends AbstractJavascriptVariableAsset
 
         $this->libraries = array();
         $this->language = 'en';
+
+        $this->legend = new Legend();
     }
 
     /**
@@ -1206,5 +1212,25 @@ class Map extends AbstractJavascriptVariableAsset
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * Gets the map legend.
+     *
+     * @return \Ivory\GoogleMap\Overlays\Legend The map legend.
+     */
+    public function getLegend()
+    {
+        return $this->legend;
+    }
+
+    /**
+     * Sets the map legend.
+     *
+     * @param \Ivory\GoogleMap\Overlays\Legend $legend The map legend.
+     */
+    public function setLegend(Legend $legend)
+    {
+        $this->legend = $legend;
     }
 }

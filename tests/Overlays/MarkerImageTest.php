@@ -51,14 +51,16 @@ class MarkerImageTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $url = 'foo';
+        $name = 'bar';
         $anchor = $this->getMock('Ivory\GoogleMap\Base\Point');
         $origin = $this->getMock('Ivory\GoogleMap\Base\Point');
         $scaledSize = $this->getMock('Ivory\GoogleMap\Base\Size');
         $size = $this->getMock('Ivory\GoogleMap\Base\Size');
 
-        $this->markerImage = new MarkerImage($url, $anchor, $origin, $scaledSize, $size);
+        $this->markerImage = new MarkerImage($url, $anchor, $origin, $scaledSize, $size, $name);
 
         $this->assertSame($url, $this->markerImage->getUrl());
+        $this->assertSame($name, $this->markerImage->getName());
         $this->assertSame($anchor, $this->markerImage->getAnchor());
         $this->assertSame($origin, $this->markerImage->getOrigin());
         $this->assertSame($scaledSize, $this->markerImage->getScaledSize());
@@ -87,6 +89,13 @@ class MarkerImageTest extends \PHPUnit_Framework_TestCase
         $this->markerImage->setAnchor($point);
 
         $this->assertSame($point, $this->markerImage->getAnchor());
+    }
+
+    public function testNameWithValidValue()
+    {
+        $this->markerImage->setName('foo');
+
+        $this->assertSame('foo', $this->markerImage->getName());
     }
 
     public function testAnchorWithXAndY()

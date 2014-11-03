@@ -879,6 +879,8 @@ EOF;
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 
 EOF;
@@ -972,6 +974,8 @@ map_container.marker_images.marker_icon = marker_icon = new google.maps.MarkerIm
 map_container.marker_images.marker_shadow = marker_shadow = new google.maps.MarkerImage("url", null, null, null, null);
 map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position,"map":map,"icon":marker_icon,"shadow":marker_shadow});
 map_container.kml_layers.kml_layer = kml_layer = new google.maps.KmlLayer("url", {"map":map});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map_container.event_manager.events.event = event = google.maps.event.addListener(instance, "click", function(){});
 map_container.event_manager.events.marker_info_window_event = marker_info_window_event = google.maps.event.addListener(marker, "click", function () {
     for (var info_window in map_container.closable_info_windows) {
@@ -1011,6 +1015,8 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 </script>
 
@@ -1040,6 +1046,8 @@ map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map_container.encoded_polylines.encoded_polyline = encoded_polyline = new google.maps.Polyline({"map":map,"path":google.maps.geometry.encoding.decodePath("foo")});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 </script>
 
@@ -1065,6 +1073,8 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 </script>
 
@@ -1087,6 +1097,8 @@ function load_ivory_google_map() {
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 }
 </script>
@@ -1126,6 +1138,8 @@ map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0,
 map_container.coordinates.info_window_position = info_window_position = new google.maps.LatLng(1.1, 2.2, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map_container.info_windows.info_window = info_window = new google.maps.InfoWindow({"position":info_window_position,"content":"foo"});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 info_window.open(map);
 map.setCenter(map_center);
 </script>
@@ -1166,6 +1180,8 @@ map_container.coordinates.marker_position = marker_position = new google.maps.La
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map_container.info_windows.info_window = info_window = new google.maps.InfoWindow({"content":"foo"});
 map_container.markers.marker = marker = new google.maps.Marker({"position":marker_position,"map":map});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 info_window.open(map, marker);
 map.setCenter(map_center);
 </script>
@@ -1190,6 +1206,8 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 map1_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map1_container.coordinates.map1_center = map1_center = new google.maps.LatLng(0, 0, true);
 map1_container.map = map1 = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map1, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map1.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map1.setCenter(map1_center);
 </script>
 
@@ -1204,6 +1222,8 @@ EOF;
 map2_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map2_container.coordinates.map2_center = map2_center = new google.maps.LatLng(0, 0, true);
 map2_container.map = map2 = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map2, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map2.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map2.setCenter(map2_center);
 </script>
 
@@ -1239,6 +1259,8 @@ map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0,
 map_container.coordinates.map_info_box_position = map_info_box_position = new google.maps.LatLng(1, 2, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
 map_container.info_windows.map_info_box = map_info_box = new InfoBox({"position":map_info_box_position,"content":"<p>Default content<\/p>"});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 </script>
 
@@ -1256,7 +1278,7 @@ EOF;
 
         $expected = <<<EOF
 <div id="map_canvas" style="width:300px;height:300px;"></div>
-<style type="text/css">
+<div id="map_legend" style="display:none; "></div><style type="text/css">
 #map_canvas{
 width:300px;
 height:300px;
@@ -1270,6 +1292,8 @@ function load_ivory_google_map_api () { google.load("maps", "3", {"other_params"
 map_container = {"map":null,"coordinates":{},"bounds":{},"points":{},"sizes":{},"circles":{},"encoded_polylines":{},"ground_overlays":{},"polygons":{},"polylines":{},"rectangles":{},"info_windows":{},"marker_images":{},"marker_shapes":{},"markers":{},"marker_cluster":null,"kml_layers":{},"event_manager":{"dom_events":{},"dom_events_once":{},"events":{},"events_once":{}},"closable_info_windows":{},"functions":{"to_array":function (object) { var array = []; for (var key in object) { array.push(object[key]); } return array; }}};
 map_container.coordinates.map_center = map_center = new google.maps.LatLng(0, 0, true);
 map_container.map = map = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":3});
+google.maps.event.addListenerOnce(map, 'idle', function(){document.getElementById('map_legend').style.display = "block";});
+map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('map_legend'));
 map.setCenter(map_center);
 </script>
 
