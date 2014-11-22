@@ -18,17 +18,20 @@ use Ivory\GoogleMap\Services\Geocoding\GeocoderRequest;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
+class GeocoderRequestTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Geocoding\GeocoderRequest */
-    protected $geocoderRequest;
+    private $geocoderRequest;
+
+    /** @var string|\Ivory\GoogleMap\Base\Coordinate|\PHPUnit_Framework_MockObject_MockObject */
+    private $location;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->geocoderRequest = new GeocoderRequest();
+        $this->geocoderRequest = new GeocoderRequest($this->location = 'foo');
     }
 
     /**
@@ -36,226 +39,81 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->location);
         unset($this->geocoderRequest);
     }
 
     public function testDefaultState()
     {
-        $this->assertFalse($this->geocoderRequest->hasAddress());
-        $this->assertFalse($this->geocoderRequest->hasCoordinate());
+        $this->assertSame($this->location, $this->geocoderRequest->getLocation());
         $this->assertFalse($this->geocoderRequest->hasBound());
         $this->assertFalse($this->geocoderRequest->hasRegion());
         $this->assertFalse($this->geocoderRequest->hasLanguage());
         $this->assertFalse($this->geocoderRequest->hasSensor());
     }
 
-    public function testAddressWithValidValue()
+    public function testSetLocation()
     {
-        $this->geocoderRequest->setAddress('foo');
+        $this->geocoderRequest->setLocation($location = $this->createCoordinateMock());
 
-        $this->assertTrue($this->geocoderRequest->hasAddress());
-        $this->assertSame('foo', $this->geocoderRequest->getAddress());
+        $this->assertSame($location, $this->geocoderRequest->getLocation());
     }
 
-    public function testAddressWithNullValue()
+    public function testSetBound()
     {
-        $this->geocoderRequest->setAddress('foo');
-        $this->geocoderRequest->setAddress(null);
-
-        $this->assertNull($this->geocoderRequest->getAddress());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder request address must be a string value.
-     */
-    public function testAddressWithInvalidValue()
-    {
-        $this->geocoderRequest->setAddress(true);
-    }
-
-    public function testCoordinateWithCoordinate()
-    {
-        $coordinate = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-
-        $this->geocoderRequest->setCoordinate($coordinate);
-
-        $this->assertTrue($this->geocoderRequest->hasCoordinate());
-        $this->assertSame($coordinate, $this->geocoderRequest->getCoordinate());
-    }
-
-    public function testCoordinateWithLatitudeAndLongitude()
-    {
-        $this->geocoderRequest->setCoordinate(1.1, -2.1, false);
-
-        $this->assertSame(1.1, $this->geocoderRequest->getCoordinate()->getLatitude());
-        $this->assertSame(-2.1, $this->geocoderRequest->getCoordinate()->getLongitude());
-        $this->assertFalse($this->geocoderRequest->getCoordinate()->isNoWrap());
-    }
-
-    public function testCoordinateWithNullValue()
-    {
-        $this->geocoderRequest->setCoordinate(1.1, -2.1);
-        $this->geocoderRequest->setCoordinate(null);
-
-        $this->assertNull($this->geocoderRequest->getCoordinate());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The coordinate setter arguments is invalid.
-     * The available prototypes are :
-     * - function setCoordinate(Ivory\GoogleMap\Base\Coordinate $coordinate = null)
-     * - function setCoordinate(double $latitude, double $longitude, boolean $noWrap = true)
-     */
-    public function testCoordinateWithInvalidValue()
-    {
-        $this->geocoderRequest->setCoordinate('foo');
-    }
-
-    public function testBoundWithBound()
-    {
-        $bound = $this->getMock('Ivory\GoogleMap\Base\Bound');
-        $this->geocoderRequest->setBound($bound);
+        $this->geocoderRequest->setBound($bound = $this->createBoundMock());
 
         $this->assertTrue($this->geocoderRequest->hasBound());
         $this->assertSame($bound, $this->geocoderRequest->getBound());
     }
 
-    public function testBoundWithCoordinates()
+    public function testResetBound()
     {
-        $southWest = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $northEast = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-
-        $this->geocoderRequest->setBound($southWest, $northEast);
-
-        $this->assertSame($southWest, $this->geocoderRequest->getBound()->getSouthWest());
-        $this->assertSame($northEast, $this->geocoderRequest->getBound()->getNorthEast());
-    }
-
-    public function testBoundWithLatitudesAndLongitudes()
-    {
-        $this->geocoderRequest->setBound(-2, -2, 2, 2, true, false);
-
-        $this->assertSame(-2, $this->geocoderRequest->getBound()->getSouthWest()->getLatitude());
-        $this->assertSame(-2, $this->geocoderRequest->getBound()->getSouthWest()->getLongitude());
-        $this->assertTrue($this->geocoderRequest->getBound()->getSouthWest()->isNoWrap());
-
-        $this->assertSame(2, $this->geocoderRequest->getBound()->getNorthEast()->getLatitude());
-        $this->assertSame(2, $this->geocoderRequest->getBound()->getNorthEast()->getLongitude());
-        $this->assertFalse($this->geocoderRequest->getBound()->getNorthEast()->isNoWrap());
-    }
-
-    public function testBoundWithNullValue()
-    {
-        $this->geocoderRequest->setBound(-2, -2, 2, 2);
+        $this->geocoderRequest->setBound($this->createBoundMock());
         $this->geocoderRequest->setBound(null);
 
+        $this->assertFalse($this->geocoderRequest->hasBound());
         $this->assertNull($this->geocoderRequest->getBound());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The bound setter arguments are invalid.
-     * The available prototypes are :
-     * - function setBound(Ivory\GoogleMap\Base\Bound $bound = null)
-     * - function setBound(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     * - function setBound(
-     *     double $southWestLatitude,
-     *     double $southWestLongitude,
-     *     double $northEastLatitude,
-     *     double $northEastLongitude,
-     *     boolean southWestNoWrap = true,
-     *     boolean $northEastNoWrap = true
-     * )
-     */
-    public function testBoundWithInvalidValue()
+    public function testSetRegion()
     {
-        $this->geocoderRequest->setBound('foo');
-    }
-
-    public function testRegionWithValidValue()
-    {
-        $this->geocoderRequest->setRegion('fr');
+        $this->geocoderRequest->setRegion($region = 'fr');
 
         $this->assertTrue($this->geocoderRequest->hasRegion());
-        $this->assertSame('fr', $this->geocoderRequest->getRegion());
+        $this->assertSame($region, $this->geocoderRequest->getRegion());
     }
 
-    public function testRegionWithNullValue()
+    public function testResetRegion()
     {
         $this->geocoderRequest->setRegion('fr');
         $this->geocoderRequest->setRegion(null);
 
+        $this->assertFalse($this->geocoderRequest->hasRegion());
         $this->assertNull($this->geocoderRequest->getRegion());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder request region must be a string with two characters.
-     */
-    public function testRegionWithInvalidValue()
+    public function testSetLanguage()
     {
-        $this->geocoderRequest->setRegion('foo');
-    }
-
-    public function testLanguageWithValidValue()
-    {
-        $this->geocoderRequest->setLanguage('pl');
+        $this->geocoderRequest->setLanguage($language = 'pl');
 
         $this->assertTrue($this->geocoderRequest->hasLanguage());
-        $this->assertSame('pl', $this->geocoderRequest->getLanguage());
+        $this->assertSame($language, $this->geocoderRequest->getLanguage());
     }
 
-    public function testLanguageWithNullValue()
+    public function testResetLanguage()
     {
         $this->geocoderRequest->setLanguage('pl');
         $this->geocoderRequest->setLanguage(null);
 
+        $this->assertFalse($this->geocoderRequest->hasLanguage());
         $this->assertNull($this->geocoderRequest->getLanguage());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder request language must be a string with two or five characters.
-     */
-    public function testLanguageWithInvalidValue()
-    {
-        $this->geocoderRequest->setLanguage('foo');
-    }
-
-    public function testSensorWithValidValue()
+    public function testSetSensor()
     {
         $this->geocoderRequest->setSensor(true);
 
         $this->assertTrue($this->geocoderRequest->hasSensor());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\GeocodingException
-     * @expectedExceptionMessage The geocoder request sensor flag must be a boolean value.
-     */
-    public function testSensorWithInvalidValue()
-    {
-        $this->geocoderRequest->setSensor('foo');
-    }
-
-    public function testIsValidWithoutAddressAndCoordinate()
-    {
-        $this->assertFalse($this->geocoderRequest->isValid());
-    }
-
-    public function testIsValidWithAddress()
-    {
-        $this->geocoderRequest->setAddress('address');
-
-        $this->assertTrue($this->geocoderRequest->isValid());
-    }
-
-    public function testIsValidWithCoordinate()
-    {
-        $this->geocoderRequest->setCoordinate(1, 1);
-
-        $this->assertTrue($this->geocoderRequest->isValid());
     }
 }

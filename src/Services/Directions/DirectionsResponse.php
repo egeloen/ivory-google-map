@@ -11,26 +11,24 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Exception\DirectionsException;
-
 /**
- * A directions response wraps the directions results (routes) & the response status.
+ * Directions response.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DirectionsResponse
 {
     /** @var array */
-    protected $routes;
+    private $routes;
 
     /** @var string */
-    protected $status;
+    private $status;
 
     /**
      * Create a directions response.
      *
-     * @param array  $routes The response routes.
-     * @param string $status The response status.
+     * @param array  $routes The routes.
+     * @param string $status The status.
      */
     public function __construct(array $routes, $status)
     {
@@ -39,9 +37,27 @@ class DirectionsResponse
     }
 
     /**
-     * Gets the directions routes.
+     * Resets the routes.
+     */
+    public function resetRoutes()
+    {
+        $this->routes = array();
+    }
+
+    /**
+     * Checks if there are routes.
      *
-     * @return array The directions routes.
+     * @return boolean TRUE if there are routes else FALSE.
+     */
+    public function hasRoutes()
+    {
+        return !empty($this->routes);
+    }
+
+    /**
+     * Gets the routes.
+     *
+     * @return array The routes.
      */
     public function getRoutes()
     {
@@ -49,33 +65,78 @@ class DirectionsResponse
     }
 
     /**
-     * Sets the directions routes.
+     * Sets the routes.
      *
-     * @param array $routes The directions routes.
+     * @param array $routes The routes.
      */
     public function setRoutes(array $routes)
     {
-        $this->routes = array();
+        $this->resetRoutes();
+        $this->addRoutes($routes);
+    }
 
+    /**
+     * Adds the routes.
+     *
+     * @param array $routes The routes.
+     */
+    public function addRoutes(array $routes)
+    {
         foreach ($routes as $route) {
             $this->addRoute($route);
         }
     }
 
     /**
-     * Add a directions route.
+     * Removes the routes.
      *
-     * @param Ivory\GoogleMapBundle\Model\Services\Directions\DirectionsRoute $route The route to add.
+     * @param array $routes The routes.
      */
-    public function addRoute(DirectionsRoute $route)
+    public function removeRoutes(array $routes)
     {
-        $this->routes[] = $route;
+        foreach ($routes as $route) {
+            $this->removeRoute($route);
+        }
     }
 
     /**
-     * Gets the directions response status.
+     * Checks if there is a route.
      *
-     * @return string The directions response status.
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsRoute $route The route.
+     *
+     * @return boolean TRUE if there is a route else FALSE.
+     */
+    public function hasRoute(DirectionsRoute $route)
+    {
+        return in_array($route, $this->routes, true);
+    }
+
+    /**
+     * Adds a route.
+     *
+     * @param Ivory\GoogleMapBundle\Model\Services\Directions\DirectionsRoute $route The route.
+     */
+    public function addRoute(DirectionsRoute $route)
+    {
+        if (!$this->hasRoute($route)) {
+            $this->routes[] = $route;
+        }
+    }
+
+    /**
+     * Removes a route.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsRoute $route The route.
+     */
+    public function removeRoute(DirectionsRoute $route)
+    {
+        unset($this->routes[array_search($route, $this->routes, true)]);
+    }
+
+    /**
+     * Gets the status.
+     *
+     * @return string The status.
      */
     public function getStatus()
     {
@@ -83,18 +144,12 @@ class DirectionsResponse
     }
 
     /**
-     * Sets the directions response status.
+     * Sets the status.
      *
-     * @param string $status The directions response status.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the status is not valid.
+     * @param string $status The status.
      */
     public function setStatus($status)
     {
-        if (!in_array($status, DirectionsStatus::getDirectionsStatus())) {
-            throw DirectionsException::invalidDirectionsResponseStatus();
-        }
-
         $this->status = $status;
     }
 }

@@ -19,10 +19,10 @@ use Ivory\GoogleMap\Controls\StreetViewControl;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StreetViewControlTest extends \PHPUnit_Framework_TestCase
+class StreetViewControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\StreetViewControl */
-    protected $streetViewControl;
+    private $streetViewControl;
 
     /**
      * {@inheritdoc}
@@ -47,16 +47,15 @@ class StreetViewControlTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
-        $this->streetViewControl = new StreetViewControl(ControlPosition::BOTTOM_CENTER);
+        $this->streetViewControl = new StreetViewControl($controlPosition = ControlPosition::BOTTOM_CENTER);
 
-        $this->assertSame(ControlPosition::BOTTOM_CENTER, $this->streetViewControl->getControlPosition());
+        $this->assertSame($controlPosition, $this->streetViewControl->getControlPosition());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     */
-    public function testControlPositionWithInvalidValue()
+    public function testSetControlPosition()
     {
-        $this->streetViewControl->setControlPosition('foo');
+        $this->streetViewControl->setControlPosition($controlPosition = ControlPosition::BOTTOM_CENTER);
+
+        $this->assertSame($controlPosition, $this->streetViewControl->getControlPosition());
     }
 }

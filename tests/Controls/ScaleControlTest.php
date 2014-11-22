@@ -11,7 +11,6 @@
 
 namespace Ivory\Tests\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Controls\ControlPosition;
 use Ivory\GoogleMap\Controls\ScaleControl;
 use Ivory\GoogleMap\Controls\ScaleControlStyle;
 
@@ -20,10 +19,10 @@ use Ivory\GoogleMap\Controls\ScaleControlStyle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ScaleControlTest extends \PHPUnit_Framework_TestCase
+class ScaleControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\ScaleControl */
-    protected $scaleControl;
+    private $scaleControl;
 
     /**
      * {@inheritdoc}
@@ -43,32 +42,20 @@ class ScaleControlTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertSame(ControlPosition::BOTTOM_LEFT, $this->scaleControl->getControlPosition());
         $this->assertSame(ScaleControlStyle::DEFAULT_, $this->scaleControl->getScaleControlStyle());
     }
 
     public function testInitialState()
     {
-        $this->scaleControl = new ScaleControl(ControlPosition::BOTTOM_CENTER, ScaleControlStyle::DEFAULT_);
+        $this->scaleControl = new ScaleControl($scaleControlStyle = ScaleControlStyle::DEFAULT_);
 
-        $this->assertSame(ControlPosition::BOTTOM_CENTER, $this->scaleControl->getControlPosition());
-        $this->assertSame(ScaleControlStyle::DEFAULT_, $this->scaleControl->getScaleControlStyle());
+        $this->assertSame($scaleControlStyle, $this->scaleControl->getScaleControlStyle());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     */
-    public function testControlPositionWithInvalidValue()
+    public function testSetScaleControlStyle()
     {
-        $this->scaleControl->setControlPosition('foo');
-    }
+        $this->scaleControl->setScaleControlStyle($scaleControlStyle = ScaleControlStyle::DEFAULT_);
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The scale control style of a scale control can only be : default.
-     */
-    public function testScaleControlStyleWithInvalidValue()
-    {
-        $this->scaleControl->setScaleControlStyle('foo');
+        $this->assertSame($scaleControlStyle, $this->scaleControl->getScaleControlStyle());
     }
 }

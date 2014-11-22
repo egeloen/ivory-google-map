@@ -12,20 +12,20 @@
 namespace Ivory\GoogleMap\Services;
 
 /**
- * Google Map business account.
+ * Business account.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class BusinessAccount
 {
     /** @var string */
-    protected $clientId;
+    private $clientId;
 
     /** @var string */
-    protected $secret;
+    private $secret;
 
     /** @var string */
-    protected $channel;
+    private $channel;
 
     /**
      * Creates a business account.
@@ -82,9 +82,9 @@ class BusinessAccount
     }
 
     /**
-     * Checks if the business account has a channel.
+     * Checks if it has a channel.
      *
-     * @return boolean TRUE if the business account has a channel else FALSE.
+     * @return boolean TRUE if it has a channel else FALSE.
      */
     public function hasChannel()
     {
@@ -112,7 +112,7 @@ class BusinessAccount
     }
 
     /**
-     * Sign an url for business purpose.
+     * Sign the url.
      *
      * @param string $url The url.
      *
@@ -120,19 +120,17 @@ class BusinessAccount
      */
     public function signUrl($url)
     {
-        $url .= sprintf('&client=gme-%s', $this->clientId);
+        $url .= '&client=gme-'.$this->clientId;
 
         if ($this->hasChannel()) {
-            $url .= sprintf('&channel=%s', $this->channel);
+            $url .= '&channel='.$this->channel;
         }
 
         $urlParts = parse_url($url);
-        $data = sprintf('%s?%s', $urlParts['path'], $urlParts['query']);
+        $data = $urlParts['path'].'?'.$urlParts['query'];
         $key = base64_decode(str_replace(array('-', '_'), array('+', '/'), $this->secret));
         $signature = base64_encode(hash_hmac('sha1', $data, $key, true));
 
-        $url .= sprintf('&signature=%s', str_replace(array('+', '/'), array('-', '_'), $signature));
-
-        return $url;
+        return $url.'&signature='.str_replace(array('+', '/'), array('-', '_'), $signature);
     }
 }

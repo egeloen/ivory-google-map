@@ -18,26 +18,22 @@ use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseRow;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsResponseRowTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixResponseRowTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponse */
-    protected $distanceMatrixResponseRow;
+    private $distanceMatrixResponseRow;
 
     /** @var array */
-    protected $elements;
+    private $elements;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $element = $this->getMockBuilder('Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->elements = array($element);
-
-        $this->distanceMatrixResponseRow = new DistanceMatrixResponseRow($this->elements);
+        $this->distanceMatrixResponseRow = new DistanceMatrixResponseRow(
+            $this->elements = array($this->createDistanceMatrixResponseElementMock())
+        );
     }
 
     /**
@@ -52,5 +48,108 @@ class DirectionsResponseRowTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertSame($this->elements, $this->distanceMatrixResponseRow->getElements());
+    }
+
+    public function testSetElements()
+    {
+        $this->distanceMatrixResponseRow->setElements($elements = array($this->createDistanceMatrixResponseElementMock()));
+
+        $this->assertElements($elements);
+    }
+
+    public function testAddElements()
+    {
+        $this->distanceMatrixResponseRow->setElements($elements = array($this->createDistanceMatrixResponseElementMock()));
+        $this->distanceMatrixResponseRow->addElements($newElements = array($this->createDistanceMatrixResponseElementMock()));
+
+        $this->assertElements(array_merge($elements, $newElements));
+    }
+
+    public function testRemoveElements()
+    {
+        $this->distanceMatrixResponseRow->setElements($elements = array($this->createDistanceMatrixResponseElementMock()));
+        $this->distanceMatrixResponseRow->removeElements($elements);
+
+        $this->assertNoElements();
+    }
+
+    public function testResetElements()
+    {
+        $this->distanceMatrixResponseRow->setElements(array($this->createDistanceMatrixResponseElementMock()));
+        $this->distanceMatrixResponseRow->resetElements();
+
+        $this->assertNoElements();
+    }
+
+    public function testAddElement()
+    {
+        $this->distanceMatrixResponseRow->addElement($element = $this->createDistanceMatrixResponseElementMock());
+
+        $this->assertElement($element);
+    }
+
+    public function testAddElementUnicity()
+    {
+        $this->distanceMatrixResponseRow->resetElements();
+        $this->distanceMatrixResponseRow->addElement($element = $this->createDistanceMatrixResponseElementMock());
+        $this->distanceMatrixResponseRow->addElement($element);
+
+        $this->assertElements(array($element));
+    }
+
+    public function testRemoveElement()
+    {
+        $this->distanceMatrixResponseRow->addElement($element = $this->createDistanceMatrixResponseElementMock());
+        $this->distanceMatrixResponseRow->removeElement($element);
+
+        $this->assertNoElement($element);
+    }
+
+    /**
+     * Asserts there are elements.
+     *
+     * @param array $elements The elements.
+     */
+    private function assertElements($elements)
+    {
+        $this->assertInternalType('array', $elements);
+
+        $this->assertTrue($this->distanceMatrixResponseRow->hasElements());
+        $this->assertSame($elements, $this->distanceMatrixResponseRow->getElements());
+
+        foreach ($elements as $element) {
+            $this->assertElement($element);
+        }
+    }
+
+    /**
+     * Asserts there is an element;
+     *
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement $element The element.
+     */
+    private function assertElement($element)
+    {
+        $this->assertDistanceMatrixResponseElementInstance($element);
+        $this->assertTrue($this->distanceMatrixResponseRow->hasElement($element));
+    }
+
+    /**
+     * Asserts there are no elements.
+     */
+    private function assertNoElements()
+    {
+        $this->assertFalse($this->distanceMatrixResponseRow->hasElements());
+        $this->assertEmpty($this->distanceMatrixResponseRow->getElements());
+    }
+
+    /**
+     * Asserts there is no element.
+     *
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement $element The element.
+     */
+    private function assertNoElement($element)
+    {
+        $this->assertDistanceMatrixResponseElementInstance($element);
+        $this->assertFalse($this->distanceMatrixResponseRow->hasElement($element));
     }
 }

@@ -18,17 +18,23 @@ use Ivory\GoogleMap\Services\BusinessAccount;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class BusinessAccountTest extends \PHPUnit_Framework_TestCase
+class BusinessAccountTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\BusinessAccount */
-    protected $businessAccount;
+    private $businessAccount;
+
+    /** @var string */
+    private $clientId;
+
+    /** @var string */
+    private $secret;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->businessAccount = new BusinessAccount('client_id', 'secret');
+        $this->businessAccount = new BusinessAccount($this->clientId = 'client_id', $this->secret = 'secret');
     }
 
     /**
@@ -36,61 +42,76 @@ class BusinessAccountTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->secret);
+        unset($this->clientId);
         unset($this->businessAccount);
     }
 
     public function testDefaultState()
     {
-        $this->assertSame('client_id', $this->businessAccount->getClientId());
-        $this->assertSame('secret', $this->businessAccount->getSecret());
+        $this->assertSame($this->clientId, $this->businessAccount->getClientId());
+        $this->assertSame($this->secret, $this->businessAccount->getSecret());
         $this->assertFalse($this->businessAccount->hasChannel());
         $this->assertNull($this->businessAccount->getChannel());
     }
 
     public function testInitialState()
     {
-        $this->businessAccount = new BusinessAccount('client_id', 'secret', 'channel');
+        $this->businessAccount = new BusinessAccount($this->clientId, $this->secret, $channel = 'channel');
 
         $this->assertTrue($this->businessAccount->hasChannel());
-        $this->assertSame('channel', $this->businessAccount->getChannel());
+        $this->assertSame($channel, $this->businessAccount->getChannel());
     }
 
-    public function testClientId()
+    public function testSetClientId()
     {
-        $this->businessAccount->setClientId('foo');
+        $this->businessAccount->setClientId($clientId = 'foo');
 
-        $this->assertSame('foo', $this->businessAccount->getClientId());
+        $this->assertSame($clientId, $this->businessAccount->getClientId());
     }
 
-    public function testSecret()
+    public function testSetSecret()
     {
-        $this->businessAccount->setSecret('foo');
+        $this->businessAccount->setSecret($secret = 'foo');
 
-        $this->assertSame('foo', $this->businessAccount->getSecret());
+        $this->assertSame($secret, $this->businessAccount->getSecret());
     }
 
-    public function testChannel()
+    public function testSetChannel()
     {
-        $this->businessAccount->setChannel('foo');
+        $this->businessAccount->setChannel($channel = 'foo');
 
-        $this->assertSame('foo', $this->businessAccount->getChannel());
+        $this->assertSame($channel, $this->businessAccount->getChannel());
     }
 
-    public function testSignUrlWithoutChannel()
+    /**
+     * @dataProvider signUrlProvider
+     */
+    public function testSignUrl($url, $channel, $signature)
     {
-        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
-        $expected = $url.'&client=gme-client_id&signature=EO4W2ipM4YzwEIOM1pRZ5xbrl8k=';
+        $this->businessAccount->setChannel($channel);
 
-        $this->assertSame($expected, $this->businessAccount->signUrl($url));
+        $this->assertSame($url.$signature, $this->businessAccount->signUrl($url));
     }
 
-    public function testSignUrlWithChannel()
+    /**
+     * Gets the sign url provider.
+     *
+     * @return array The sign url provider.
+     */
+    public function signUrlProvider()
     {
-        $this->businessAccount->setChannel('channel');
-
-        $url = 'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false';
-        $expected = $url.'&client=gme-client_id&channel=channel&signature=e9BFlnQaKg-t3NIxKbilkQeTU1Y=';
-
-        $this->assertSame($expected, $this->businessAccount->signUrl($url));
+        return array(
+            array(
+                'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false',
+                null,
+                '&client=gme-client_id&signature=EO4W2ipM4YzwEIOM1pRZ5xbrl8k=',
+            ),
+            array(
+                'http://maps.googleapis.com/maps/api/staticmap?center=%E4%B8%8A%E6%B5%B7+%E4%B8%AD%E5%9C%8B&size=640x640&zoom=10&sensor=false',
+                'channel',
+                '&client=gme-client_id&channel=channel&signature=e9BFlnQaKg-t3NIxKbilkQeTU1Y=',
+            ),
+        );
     }
 }

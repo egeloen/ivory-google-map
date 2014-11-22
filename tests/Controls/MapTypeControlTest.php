@@ -21,10 +21,10 @@ use Ivory\GoogleMap\MapTypeId;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeControlTest extends \PHPUnit_Framework_TestCase
+class MapTypeControlTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Controls\MapTypeControl */
-    protected $mapTypeControl;
+    private $mapTypeControl;
 
     /**
      * {@inheritdoc}
@@ -44,49 +44,135 @@ class MapTypeControlTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertSame(array(MapTypeId::ROADMAP, MapTypeId::SATELLITE), $this->mapTypeControl->getMapTypeIds());
+        $this->assertMapTypeIds(array(MapTypeId::ROADMAP, MapTypeId::SATELLITE));
         $this->assertSame(ControlPosition::TOP_RIGHT, $this->mapTypeControl->getControlPosition());
         $this->assertSame(MapTypeControlStyle::DEFAULT_, $this->mapTypeControl->getMapTypeControlStyle());
     }
 
     public function testInitialState()
     {
-        $mapTypeIds = array(MapTypeId::HYBRID);
-        $controlPosition = ControlPosition::LEFT_TOP;
-        $mapTypeControlStyle = MapTypeControlStyle::HORIZONTAL_BAR;
+        $this->mapTypeControl = new MapTypeControl(
+            $mapTypeIds = array(MapTypeId::TERRAIN, MapTypeId::HYBRID),
+            $controlPosition = ControlPosition::LEFT_TOP,
+            $mapTypeControlStyle = MapTypeControlStyle::HORIZONTAL_BAR
+        );
 
-        $this->mapTypeControl = new MapTypeControl($mapTypeIds, $controlPosition, $mapTypeControlStyle);
-
-        $this->assertSame($mapTypeIds, $this->mapTypeControl->getMapTypeIds());
+        $this->assertMapTypeIds($mapTypeIds);
         $this->assertSame($controlPosition, $this->mapTypeControl->getControlPosition());
         $this->assertSame($mapTypeControlStyle, $this->mapTypeControl->getMapTypeControlStyle());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The map type id can only be : hybrid, roadmap, satellite, terrain.
-     */
-    public function testMapTypeIdWithInvalidValue()
+    public function testSetMapTypeIds()
     {
-        $this->mapTypeControl->addMapTypeId('foo');
+        $this->mapTypeControl->setMapTypeIds($mapTypeIds = array(MapTypeId::TERRAIN, MapTypeId::HYBRID));
+
+        $this->assertMapTypeIds($mapTypeIds);
+    }
+
+    public function testAddMapTypeIds()
+    {
+        $this->mapTypeControl->setMapTypeIds($mapTypeIds = array(MapTypeId::TERRAIN, MapTypeId::HYBRID));
+        $this->mapTypeControl->addMapTypeIds($newMapTypeIds = array(MapTypeId::ROADMAP, MapTypeId::SATELLITE));
+
+        $this->assertMapTypeIds(array_merge($mapTypeIds, $newMapTypeIds));
+    }
+
+    public function testRemoveMapTypeIds()
+    {
+        $this->mapTypeControl->setMapTypeIds($mapTypeIds = array(MapTypeId::TERRAIN, MapTypeId::HYBRID));
+        $this->mapTypeControl->removeMapTypeIds($mapTypeIds);
+
+        $this->assertNoMapTypeIds();
+    }
+
+    public function testResetMapTypeIds()
+    {
+        $this->mapTypeControl->resetMapTypeIds();
+
+        $this->assertNoMapTypeIds();
+    }
+
+    public function testAddMapTypeId()
+    {
+        $this->mapTypeControl->addMapTypeId($mapTypeId = MapTypeId::HYBRID);
+
+        $this->assertMapTypeId($mapTypeId);
+    }
+
+    public function testAddMapTypeIdUnicity()
+    {
+        $this->mapTypeControl->resetMapTypeIds();
+        $this->mapTypeControl->addMapTypeId($mapTypeId = MapTypeId::HYBRID);
+        $this->mapTypeControl->addMapTypeId($mapTypeId);
+
+        $this->assertMapTypeIds(array($mapTypeId));
+    }
+
+    public function removeMapTypeId()
+    {
+        $this->mapTypeControl->addMapTypeId($mapTypeId = MapTypeId::HYBRID);
+        $this->mapTypeControl->removeMapTypeId($mapTypeId);
+
+        $this->assertNoMapTypeId($mapTypeId);
+    }
+
+    public function testSetControlPosition()
+    {
+        $this->mapTypeControl->setControlPosition($controlPosition = ControlPosition::LEFT_TOP);
+
+        $this->assertSame($controlPosition, $this->mapTypeControl->getControlPosition());
+    }
+
+    public function testSetMapTypeControlStyle()
+    {
+        $this->mapTypeControl->setMapTypeControlStyle($mapTypeControlStyle = MapTypeControlStyle::HORIZONTAL_BAR);
+
+        $this->assertSame($mapTypeControlStyle, $this->mapTypeControl->getMapTypeControlStyle());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The control position can only be : bottom_center, bottom_left, bottom_right,
-     * left_bottom, left_center, left_top, right_bottom, right_center, right_top, top_center, top_left, top_right.
+     * Asserts the map type ids.
+     *
+     * @param array $mapTypeIds The map types ids.
      */
-    public function testControlPositionWithInvalidValue()
+    private function assertMapTypeIds($mapTypeIds)
     {
-        $this->mapTypeControl->setControlPosition('foo');
+        $this->assertInternalType('array', $mapTypeIds);
+
+        $this->assertTrue($this->mapTypeControl->hasMapTypeIds());
+        $this->assertSame($mapTypeIds, $this->mapTypeControl->getMapTypeIds());
+
+        foreach ($mapTypeIds as $mapTypeId) {
+            $this->assertMapTypeId($mapTypeId);
+        }
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\ControlException
-     * @expectedExceptionMessage The map type control style can only be : default, dropdown_menu, horizontal_bar.
+     * Asserts a map type id.
+     *
+     * @param integer $mapTypeId The map type id.
      */
-    public function testMapTypeControlStyleWithInvalidValue()
+    private function assertMapTypeId($mapTypeId)
     {
-        $this->mapTypeControl->setMapTypeControlStyle('foo');
+        $this->assertTrue($this->mapTypeControl->hasMapTypeId($mapTypeId));
+    }
+
+    /**
+     * Asserts no map type ids.
+     */
+    private function assertNoMapTypeIds()
+    {
+        $this->assertFalse($this->mapTypeControl->hasMapTypeIds());
+        $this->assertEmpty($this->mapTypeControl->getMapTypeIds());
+    }
+
+    /**
+     * Asserts no map type id.
+     *
+     * @param integer $mapTypeId The map type id.
+     */
+    private function assertNoMapTypeId($mapTypeId)
+    {
+        $this->assertFalse($this->mapTypeControl->hasMapTypeId($mapTypeId));
     }
 }

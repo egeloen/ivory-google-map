@@ -11,37 +11,16 @@
 
 namespace Ivory\GoogleMap\Overlays;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Animation which describes a google map animation.
+ * Animation.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Animation
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#Animation
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Animation
+class Animation extends AbstractUninstantiableAsset
 {
     const BOUNCE = 'bounce';
     const DROP = 'drop';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available animations.
-     *
-     * @return array The animations.
-     */
-    public static function getAnimations()
-    {
-        return array(
-            self::BOUNCE,
-            self::DROP,
-        );
-    }
 }

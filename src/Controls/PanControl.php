@@ -11,23 +11,21 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException;
-
 /**
- * A pan control describes a google map pan control.
+ * Pan control.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#PanControlOptions
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#PanControlOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PanControl
 {
     /** @var string */
-    protected $controlPosition;
+    private $controlPosition;
 
     /**
-     * Create a pan control.
+     * Creates a pan control.
      *
-     * @param string $controlPosition The pan control position.
+     * @param string $controlPosition The control position.
      */
     public function __construct($controlPosition = ControlPosition::TOP_LEFT)
     {
@@ -48,15 +46,9 @@ class PanControl
      * Sets the control position.
      *
      * @param string $controlPosition The control position.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the control position is not valid.
      */
     public function setControlPosition($controlPosition)
     {
-        if (!in_array($controlPosition, ControlPosition::getControlPositions())) {
-            throw ControlException::invalidControlPosition();
-        }
-
         $this->controlPosition = $controlPosition;
     }
 }

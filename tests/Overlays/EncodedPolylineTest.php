@@ -18,17 +18,20 @@ use Ivory\GoogleMap\Overlays\EncodedPolyline;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EncodedPolylineTest extends \PHPUnit_Framework_TestCase
+class EncodedPolylineTest extends AbstractExtendableTest
 {
     /** @var \Ivory\GoogleMap\Overlays\EncodedPolyline */
-    protected $encodedPolyline;
+    private $encodedPolyline;
+
+    /** @var string */
+    private $value;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->encodedPolyline = new EncodedPolyline();
+        $this->encodedPolyline = new EncodedPolyline($this->value = 'value');
     }
 
     /**
@@ -36,27 +39,37 @@ class EncodedPolylineTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->value);
         unset($this->encodedPolyline);
+    }
+
+    public function testInheritance()
+    {
+        $this->assertOptionsAssetInstance($this->encodedPolyline);
+        $this->assertExtendableInstance($this->encodedPolyline);
     }
 
     public function testDefaultState()
     {
-        $this->assertNull($this->encodedPolyline->getValue());
+        $this->assertStringStartsWith('encoded_polyline_', $this->encodedPolyline->getVariable());
+        $this->assertSame($this->value, $this->encodedPolyline->getValue());
+        $this->assertFalse($this->encodedPolyline->hasOptions());
     }
 
-    public function testInitialState()
+    public function testSetValue()
     {
-        $this->encodedPolyline = new EncodedPolyline('foo');
+        $this->encodedPolyline->setValue($value = 'foo');
 
-        $this->assertSame('foo', $this->encodedPolyline->getValue());
+        $this->assertSame($value, $this->encodedPolyline->getValue());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The encoded polyline value must be a string value.
-     */
-    public function testValueWithInvalidValue()
+    public function testRenderExtend()
     {
-        $this->encodedPolyline->setValue(true);
+        $this->encodedPolyline->setVariable('encoded_polyline');
+
+        $this->assertSame(
+            'encoded_polyline.getPath().forEach(function(e){bound.extend(e);})',
+            $this->encodedPolyline->renderExtend($this->createBoundMock())
+        );
     }
 }

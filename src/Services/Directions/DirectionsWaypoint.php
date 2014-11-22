@@ -11,37 +11,46 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\DirectionsException;
-
 /**
- * A directions waypoint which describes the google map directions waypoint.
+ * Directions waypoint.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsWaypoint
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsWaypoint
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DirectionsWaypoint
 {
-    /** @var string | \Ivory\GoogleMap\Base\Coordinate */
-    protected $location;
+    /** @var string|\Ivory\GoogleMap\Base\Coordinate */
+    private $location;
 
     /** @var boolean */
-    protected $stopover;
+    private $stopover;
 
     /**
-     * Checks if the directions waypoint has a location.
+     * Creates a directions waypoint.
      *
-     * @return boolean TRUE if the directions waypoint has a location else FALSE.
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $location The coordinate.
+     * @param boolean|null                            $stopover TRUE if it stopover else FALSE.
      */
-    public function hasLocation()
+    public function __construct($location, $stopover = null)
     {
-        return $this->location !== null;
+        $this->setLocation($location);
+        $this->setStopover($stopover);
     }
 
     /**
-     * Gets the directions waypoint location.
+     * Checks if it has a location.
      *
-     * @return string | \Ivory\GoogleMap\Base\Coordinate The directions waypoint location.
+     * @return boolean TRUE if it has a location else FALSE.
+     */
+    public function hasLocation()
+    {
+        return !empty($this->location);
+    }
+
+    /**
+     * Gets the location.
+     *
+     * @return string|\Ivory\GoogleMap\Base\Coordinate The location.
      */
     public function getLocation()
     {
@@ -49,43 +58,19 @@ class DirectionsWaypoint
     }
 
     /**
-     * Sets the directions waypoint location.
+     * Sets the location.
      *
-     * Available prototypes:
-     * - function setLocation(string $destination)
-     * - function setLocation(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setLocation(double $latitude, double $longitude, boolean $noWrap)
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the location is not valid (prototypes).
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $location The location.
      */
-    public function setLocation()
+    public function setLocation($location)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && is_string($args[0])) {
-            $this->location = $args[0];
-        } elseif (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->location = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->location === null) {
-                $this->location = new Coordinate();
-            }
-
-            $this->location->setLatitude($args[0]);
-            $this->location->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->location->setNoWrap($args[2]);
-            }
-        } else {
-            throw DirectionsException::invalidDirectionsWaypointLocation();
-        }
+        $this->location = $location;
     }
 
     /**
-     * Checks if the directions waypoint has a stopover flag.
+     * Checks if it has a stopover.
      *
-     * @return boolean TRUE if the directions waypoint has a stopover flag else FALSE.
+     * @return boolean TRUE if it has a stopover else FALSE.
      */
     public function hasStopover()
     {
@@ -93,9 +78,9 @@ class DirectionsWaypoint
     }
 
     /**
-     * Gets the directions waypoint stopover flag.
+     * Gets the stopover.
      *
-     * @return boolean The directions waypoint stopover flag.
+     * @return boolean|null The stopover.
      */
     public function getStopover()
     {
@@ -103,26 +88,12 @@ class DirectionsWaypoint
     }
 
     /**
-     * Sets the directions waypoint stopover flag.
+     * Sets the stopover.
      *
-     * @param boolean $stopover The directions waypoint stopover flag.
+     * @param boolean|null $stopover The stopover.
      */
     public function setStopover($stopover = null)
     {
-        if (!is_bool($stopover) && ($stopover !== null)) {
-            throw DirectionsException::invalidDirectionsWaypointStopover();
-        }
-
         $this->stopover = $stopover;
-    }
-
-    /**
-     * Checks if the directions waypoint is valid.
-     *
-     * @return boolean TRUE if the directions waypoint is valid else FALSE.
-     */
-    public function isValid()
-    {
-        return $this->hasLocation();
     }
 }

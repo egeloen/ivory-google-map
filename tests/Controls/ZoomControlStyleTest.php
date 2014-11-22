@@ -18,16 +18,17 @@ use Ivory\GoogleMap\Controls\ZoomControlStyle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlStyleTest extends \PHPUnit_Framework_TestCase
+class ZoomControlStyleTest extends AbstractTestCase
 {
-    public function testZoomControlStyles()
+    public function testInheritance()
     {
-        $expected = array(
-            ZoomControlStyle::DEFAULT_,
-            ZoomControlStyle::LARGE,
-            ZoomControlStyle::SMALL,
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Controls\ZoomControlStyle');
+    }
 
-        $this->assertSame($expected, ZoomControlStyle::getZoomControlStyles());
+    public function testConstants()
+    {
+        $this->assertSame('default', ZoomControlStyle::DEFAULT_);
+        $this->assertSame('large', ZoomControlStyle::LARGE);
+        $this->assertSame('small', ZoomControlStyle::SMALL);
     }
 }

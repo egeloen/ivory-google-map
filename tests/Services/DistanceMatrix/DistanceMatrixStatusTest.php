@@ -18,20 +18,21 @@ use Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixStatus;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsMatrixStatusTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixStatusTest extends AbstractTestCase
 {
-    public function testDistanceMatrixStatus()
+    public function testInheritance()
     {
-        $expected = array(
-            DistanceMatrixStatus::INVALID_REQUEST,
-            DistanceMatrixStatus::MAX_DIMENSIONS_EXCEEDED,
-            DistanceMatrixStatus::MAX_ELEMENTS_EXCEEDED,
-            DistanceMatrixStatus::OK,
-            DistanceMatrixStatus::OVER_QUERY_LIMIT,
-            DistanceMatrixStatus::REQUEST_DENIED,
-            DistanceMatrixStatus::UNKNOWN_ERROR,
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixStatus');
+    }
 
-        $this->assertSame($expected, DistanceMatrixStatus::getDistanceMatrixStatus());
+    public function testConstants()
+    {
+        $this->assertSame('INVALID_REQUEST', DistanceMatrixStatus::INVALID_REQUEST);
+        $this->assertSame('MAX_DIMENSIONS_EXCEEDED', DistanceMatrixStatus::MAX_DIMENSIONS_EXCEEDED);
+        $this->assertSame('MAX_ELEMENTS_EXCEEDED', DistanceMatrixStatus::MAX_ELEMENTS_EXCEEDED);
+        $this->assertSame('OK', DistanceMatrixStatus::OK);
+        $this->assertSame('OVER_QUERY_LIMIT', DistanceMatrixStatus::OVER_QUERY_LIMIT);
+        $this->assertSame('REQUEST_DENIED', DistanceMatrixStatus::REQUEST_DENIED);
+        $this->assertSame('UNKNOWN_ERROR', DistanceMatrixStatus::UNKNOWN_ERROR);
     }
 }

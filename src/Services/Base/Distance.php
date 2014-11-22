@@ -11,27 +11,25 @@
 
 namespace Ivory\GoogleMap\Services\Base;
 
-use Ivory\GoogleMap\Exception\ServiceException;
-
 /**
- * Distance which describes a google map distance.
+ * Distance.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Distance
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#Distance
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Distance
 {
     /** @var string */
-    protected $text;
+    private $text;
 
-    /** @var double */
-    protected $value;
+    /** @var float */
+    private $value;
 
     /**
      * Creates a distance.
      *
-     * @param string $text  The distance as text.
-     * @param double $value The distance in meters.
+     * @param string $text  The text.
+     * @param float  $value The value.
      */
     public function __construct($text, $value)
     {
@@ -40,9 +38,9 @@ class Distance
     }
 
     /**
-     * Gets the string representation of the distance value.
+     * Gets the text.
      *
-     * @return string The distance as text.
+     * @return string The text.
      */
     public function getText()
     {
@@ -50,25 +48,19 @@ class Distance
     }
 
     /**
-     * Sets the string representation of the distance value.
+     * Sets the text.
      *
-     * @param string $text The distance as text.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ServiceException If the text is not valid.
+     * @param string $text The text.
      */
     public function setText($text)
     {
-        if (!is_string($text)) {
-            throw ServiceException::invalidDistanceText();
-        }
-
         $this->text = $text;
     }
 
     /**
-     * Gets the distance in meters.
+     * Gets the value.
      *
-     * @return double The distance in meters.
+     * @return float The value.
      */
     public function getValue()
     {
@@ -76,18 +68,12 @@ class Distance
     }
 
     /**
-     * Sets the distance in meters.
+     * Sets the value.
      *
-     * @param double $value The distance in meters.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ServiceException If the distance is not valid.
+     * @param float $value The value.
      */
     public function setValue($value)
     {
-        if (!is_numeric($value)) {
-            throw ServiceException::invalidDistanceValue();
-        }
-
         $this->value = $value;
     }
 }

@@ -11,41 +11,18 @@
 
 namespace Ivory\GoogleMap;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Map type ID which describes a google map type ID.
+ * Map type id.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MapTypeId
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#MapTypeId
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeId
+class MapTypeId extends AbstractUninstantiableAsset
 {
     const HYBRID = 'hybrid';
     const ROADMAP = 'roadmap';
     const SATELLITE = 'satellite';
     const TERRAIN = 'terrain';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available map type IDs.
-     *
-     * @return array The map type IDs.
-     */
-    public static function getMapTypeIds()
-    {
-        return array(
-            self::HYBRID,
-            self::ROADMAP,
-            self::SATELLITE,
-            self::TERRAIN,
-        );
-    }
 }

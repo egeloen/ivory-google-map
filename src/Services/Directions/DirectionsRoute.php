@@ -12,37 +12,36 @@
 namespace Ivory\GoogleMap\Services\Directions;
 
 use Ivory\GoogleMap\Base\Bound;
-use Ivory\GoogleMap\Exception\DirectionsException;
 use Ivory\GoogleMap\Overlays\EncodedPolyline;
 
 /**
- * A directions route which describes a google map route.
+ * Directions route.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsRoute
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsRoute
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DirectionsRoute
 {
     /** @var \Ivory\GoogleMap\Base\Bound */
-    protected $bound;
+    private $bound;
 
     /** @var string */
-    protected $copyrights;
+    private $copyrights;
 
     /** @var array */
-    protected $legs;
+    private $legs;
 
     /** @var \Ivory\GoogleMap\Overlays\EncodedPolyline */
-    protected $overviewPolyline;
+    private $overviewPolyline;
 
     /** @var string */
-    protected $summary;
+    private $summary;
 
     /** @var array */
-    protected $warnings;
+    private $warnings;
 
     /** @var array */
-    protected $waypointOrder;
+    private $waypointOrders;
 
     /**
      * Creates a directions route.
@@ -53,7 +52,7 @@ class DirectionsRoute
      * @param \Ivory\GoogleMap\Overlays\EncodedPolyline $overviewPolyline The encoded polyline.
      * @param string                                    $summary          The summary.
      * @param array                                     $warnings         The warnings.
-     * @param array                                     $waypointOrder    The waypoint order.
+     * @param array                                     $waypointOrders   The waypoint orders.
      */
     public function __construct(
         Bound $bound,
@@ -62,7 +61,7 @@ class DirectionsRoute
         EncodedPolyline $overviewPolyline,
         $summary,
         array $warnings,
-        array $waypointOrder
+        array $waypointOrders
     ) {
         $this->setBound($bound);
         $this->setCopyrights($copyrights);
@@ -70,13 +69,13 @@ class DirectionsRoute
         $this->setOverviewPolyline($overviewPolyline);
         $this->setSummary($summary);
         $this->setWarnings($warnings);
-        $this->setWaypointOrder($waypointOrder);
+        $this->setWaypointOrders($waypointOrders);
     }
 
     /**
-     * Gets the route bound.
+     * Gets the bound.
      *
-     * @return \Ivory\GoogleMap\Base\Bound The route bound.
+     * @return \Ivory\GoogleMap\Base\Bound The bound.
      */
     public function getBound()
     {
@@ -84,9 +83,9 @@ class DirectionsRoute
     }
 
     /**
-     * Sets the route bound.
+     * Sets the bound.
      *
-     * @param \Ivory\GoogleMap\Base\Bound $bound The route bound.
+     * @param \Ivory\GoogleMap\Base\Bound $bound The bound.
      */
     public function setBound(Bound $bound)
     {
@@ -94,9 +93,9 @@ class DirectionsRoute
     }
 
     /**
-     * Gets the route copyrights.
+     * Gets the copyrights.
      *
-     * @return string The route copyrights.
+     * @return string The copyrights.
      */
     public function getCopyrights()
     {
@@ -104,25 +103,37 @@ class DirectionsRoute
     }
 
     /**
-     * Sets the route copyrights.
+     * Sets the copyrights.
      *
-     * @param string $copyrights The route copyrights.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the copyrights is not valid.
+     * @param string $copyrights The copyrights.
      */
     public function setCopyrights($copyrights)
     {
-        if (!is_string($copyrights)) {
-            throw DirectionsException::invalidDirectionsRouteCopyrights();
-        }
-
         $this->copyrights = $copyrights;
     }
 
     /**
-     * Gets the route legs
+     * Resets the legs.
+     */
+    public function resetLegs()
+    {
+        $this->legs = array();
+    }
+
+    /**
+     * Checks if there are legs.
      *
-     * @return array The route legs.
+     * @return boolean TRUE if there are legs else FALSE.
+     */
+    public function hasLegs()
+    {
+        return !empty($this->legs);
+    }
+
+    /**
+     * Gets the legs
+     *
+     * @return array The legs.
      */
     public function getLegs()
     {
@@ -130,33 +141,78 @@ class DirectionsRoute
     }
 
     /**
-     * Sets the route legs
+     * Sets the legs
      *
-     * @param array $legs The route legs.
+     * @param array $legs The legs.
      */
     public function setLegs(array $legs)
     {
-        $this->legs = array();
+        $this->resetLegs();
+        $this->addLegs($legs);
+    }
 
+    /**
+     * Adds the legs.
+     *
+     * @param array $legs The legs.
+     */
+    public function addLegs(array $legs)
+    {
         foreach ($legs as $leg) {
             $this->addLeg($leg);
         }
     }
 
     /**
-     * Adds a leg to the route.
+     * Removes the legs.
      *
-     * @param \Ivory\GoogleMap\Services\Directions\DirectionsLeg The leg to add.
+     * @param array $legs The legs.
      */
-    public function addLeg(DirectionsLeg $leg)
+    public function removeLegs(array $legs)
     {
-        $this->legs[] = $leg;
+        foreach ($legs as $leg) {
+            $this->removeLeg($leg);
+        }
     }
 
     /**
-     * Gets the route overview polyline.
+     * Checks if there is a leg.
      *
-     * @return \Ivory\GoogleMap\Overlays\EncodedPolyline The route overview polyline.
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsLeg $leg The leg.
+     *
+     * @return boolean TRUE if there is the leg else FALSE.
+     */
+    public function hasLeg(DirectionsLeg $leg)
+    {
+        return in_array($leg, $this->legs, true);
+    }
+
+    /**
+     * Adds a leg.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsLeg The leg.
+     */
+    public function addLeg(DirectionsLeg $leg)
+    {
+        if (!$this->hasLeg($leg)) {
+            $this->legs[] = $leg;
+        }
+    }
+
+    /**
+     * Removes a leg.
+     *
+     * @param \Ivory\GoogleMap\Services\Directions\DirectionsLeg $leg The leg.
+     */
+    public function removeLeg(DirectionsLeg $leg)
+    {
+        unset($this->legs[array_search($leg, $this->legs, true)]);
+    }
+
+    /**
+     * Gets the overview polyline.
+     *
+     * @return \Ivory\GoogleMap\Overlays\EncodedPolyline The overview polyline.
      */
     public function getOverviewPolyline()
     {
@@ -164,9 +220,9 @@ class DirectionsRoute
     }
 
     /**
-     * Sets the route overview polyline.
+     * Sets the overview polyline.
      *
-     * @param \Ivory\GoogleMap\Overlays\EncodedPolyline $overviewPolyline The route overview polyline.
+     * @param \Ivory\GoogleMap\Overlays\EncodedPolyline $overviewPolyline The overview polyline.
      */
     public function setOverviewPolyline(EncodedPolyline $overviewPolyline)
     {
@@ -174,9 +230,9 @@ class DirectionsRoute
     }
 
     /**
-     * Gets the route summary.
+     * Gets the summary.
      *
-     * @return string The route summary.
+     * @return string The summary.
      */
     public function getSummary()
     {
@@ -184,25 +240,37 @@ class DirectionsRoute
     }
 
     /**
-     * Sets the route summary.
+     * Sets the summary.
      *
-     * @param string $summary The route summary.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the summary is not valid.
+     * @param string $summary The summary.
      */
     public function setSummary($summary)
     {
-        if (!is_string($summary)) {
-            throw DirectionsException::invalidDirectionsRouteSummary();
-        }
-
         $this->summary = $summary;
     }
 
     /**
-     * Gets the route warnings.
+     * Resets the warnings.
+     */
+    public function resetWarnings()
+    {
+        $this->warnings = array();
+    }
+
+    /**
+     * Checks if there are warnings.
      *
-     * @return array The route warnings.
+     * @return boolean TRUE if there are warnings else FALSE.
+     */
+    public function hasWarnings()
+    {
+        return !empty($this->warnings);
+    }
+
+    /**
+     * Gets the warnings.
+     *
+     * @return array The warnings.
      */
     public function getWarnings()
     {
@@ -210,72 +278,168 @@ class DirectionsRoute
     }
 
     /**
-     * Sets the route warnings.
+     * Sets the warnings.
      *
-     * @param array $warnings The route warnings.
+     * @param array $warnings The warnings.
      */
     public function setWarnings(array $warnings)
     {
-        $this->warnings = array();
+        $this->resetWarnings();
+        $this->addWarnings($warnings);
+    }
 
+    /**
+     * Adds the warnings.
+     *
+     * @param array $warnings The warnings.
+     */
+    public function addWarnings(array $warnings)
+    {
         foreach ($warnings as $warning) {
             $this->addWarning($warning);
         }
     }
 
     /**
-     * Adds a warning to the route.
+     * Removes the warnings.
      *
-     * @param string $warning The warning to add.
+     * @param array $warnings The warnings.
+     */
+    public function removeWarnings(array $warnings)
+    {
+        foreach ($warnings as $warning) {
+            $this->removeWarning($warning);
+        }
+    }
+
+    /**
+     * Checks if there is a warning.
      *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the warning is not valid.
+     * @param string $warning The warning.
+     *
+     * @return boolean TRUE if there is a warning else FALSE.
+     */
+    public function hasWarning($warning)
+    {
+        return in_array($warning, $this->warnings, true);
+    }
+
+    /**
+     * Adds a warning.
+     *
+     * @param string $warning The warning.
      */
     public function addWarning($warning)
     {
-        if (!is_string($warning)) {
-            throw DirectionsException::invalidDirectionsRouteWarning();
+        if (!$this->hasWarning($warning)) {
+            $this->warnings[] = $warning;
         }
-
-        $this->warnings[] = $warning;
     }
 
     /**
-     * Gets the route waypoint order.
+     * Removes a warning.
      *
-     * @return array The route waypoint order.
+     * @param string $warning The warning.
      */
-    public function getWaypointOrder()
+    public function removeWarning($warning)
     {
-        return $this->waypointOrder;
+        unset($this->warnings[array_search($warning, $this->warnings, true)]);
     }
 
     /**
-     * Sets the routes waypoint order.
-     *
-     * @param array $waypointOrder The route waypoint order.
+     * Resets the warypoint orders.
      */
-    public function setWaypointOrder(array $waypointOrder)
+    public function resetWaypointOrders()
     {
-        $this->waypointOrder = array();
+        $this->waypointOrders = array();
+    }
 
-        foreach ($waypointOrder as $waypointOrder) {
+    /**
+     * Checks if there are waypoint orders.
+     *
+     * @return boolean TRUE if there are waypoint orders else FALSE.
+     */
+    public function hasWaypointOrders()
+    {
+        return !empty($this->waypointOrders);
+    }
+
+    /**
+     * Gets the waypoint orders.
+     *
+     * @return array The waypoint orders.
+     */
+    public function getWaypointOrders()
+    {
+        return $this->waypointOrders;
+    }
+
+    /**
+     * Sets the waypoint orders.
+     *
+     * @param array $waypointOrders The waypoint orders.
+     */
+    public function setWaypointOrders(array $waypointOrders)
+    {
+        $this->resetWaypointOrders();
+        $this->addWaypointOrders($waypointOrders);
+    }
+
+    /**
+     * Adds the waypoint orders.
+     *
+     * @param array $waypointOrders The waypoint orders.
+     */
+    public function addWaypointOrders(array $waypointOrders)
+    {
+        foreach ($waypointOrders as $waypointOrder) {
             $this->addWaypointOrder($waypointOrder);
         }
     }
 
     /**
-     * Adds a waypoint order to the route.
+     * Removes the waypoint orders.
      *
-     * @param integer $waypointOrder The waypoint to add.
+     * @param array $waypointOrders The waypoint orders.
+     */
+    public function removeWaypointOrders(array $waypointOrders)
+    {
+        foreach ($waypointOrders as $waypointOrder) {
+            $this->removeWaypointOrder($waypointOrder);
+        }
+    }
+
+    /**
+     * Checks if there is a waypoint order.
      *
-     * @throws \Ivory\GoogleMap\Exception\DirectionsException If the waypoint order is not valid.
+     * @param integer $waypointOrder The waypoint order.
+     *
+     * @return boolean TRUE if there is the waypoint order else FALSE.
+     */
+    public function hasWaypointOrder($waypointOrder)
+    {
+        return in_array($waypointOrder, $this->waypointOrders, true);
+    }
+
+    /**
+     * Adds a waypoint order.
+     *
+     * @param integer $waypointOrder The waypoint order.
      */
     public function addWaypointOrder($waypointOrder)
     {
-        if (!is_int($waypointOrder)) {
-            throw DirectionsException::invalidDirectionsRouteWaypointOrder();
+        if (!$this->hasWaypointOrder($waypointOrder)) {
+            $this->waypointOrders[] = $waypointOrder;
         }
+    }
 
-        $this->waypointOrder[] = $waypointOrder;
+    /**
+     * Removes a waypoint order.
+     *
+     * @param integer $waypointOrder The waypoint order.
+     */
+    public function removeWaypointOrder($waypointOrder)
+    {
+        unset($this->waypointOrders[array_search($waypointOrder, $this->waypointOrders, true)]);
     }
 }

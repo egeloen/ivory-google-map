@@ -11,60 +11,45 @@
 
 namespace Ivory\GoogleMap\Events;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\EventException;
+use Ivory\GoogleMap\Assets\AbstractVariableAsset;
 
 /**
- * Event which describes a google map event.
+ * Event.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MapsEventListener
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#MapsEventListener
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Event extends AbstractJavascriptVariableAsset
+class Event extends AbstractVariableAsset
 {
     /** @var string */
-    protected $instance;
+    private $instance;
 
     /** @var string */
-    protected $eventName;
+    private $eventName;
 
     /** @var string */
-    protected $handle;
-
-    /** @var boolean */
-    protected $capture;
+    private $handle;
 
     /**
      * Creates an event.
      *
-     * @param string  $instance  The event object instance.
-     * @param string  $eventName The event name.
-     * @param string  $handle    The event function handle.
-     * @param boolean $capture   The event capture.
+     * @param string $instance  The instance.
+     * @param string $eventName The event name.
+     * @param string $handle    The handle.
      */
-    public function __construct($instance = null, $eventName = null, $handle = null, $capture = false)
+    public function __construct($instance, $eventName, $handle)
     {
-        $this->setPrefixJavascriptVariable('event_');
+        parent::__construct('event_');
 
-        if ($instance !== null) {
-            $this->setInstance($instance);
-        }
-
-        if ($eventName !== null) {
-            $this->setEventName($eventName);
-        }
-
-        if ($handle !== null) {
-            $this->setHandle($handle);
-        }
-
-        $this->setCapture($capture);
+        $this->setInstance($instance);
+        $this->setEventName($eventName);
+        $this->setHandle($handle);
     }
 
     /**
-     * Gets the event object instance.
+     * Gets the instance.
      *
-     * @return string The event object instance.
+     * @return string The instance.
      */
     public function getInstance()
     {
@@ -72,18 +57,12 @@ class Event extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the event object instance.
+     * Sets the instance.
      *
-     * @param string $instance The event object instance.
-     *
-     * @throws \Ivory\GoogleMap\Exception\EventException If the instance is not valid.
+     * @param string $instance The instance.
      */
     public function setInstance($instance)
     {
-        if (!is_string($instance)) {
-            throw EventException::invalidInstance();
-        }
-
         $this->instance = $instance;
     }
 
@@ -101,22 +80,16 @@ class Event extends AbstractJavascriptVariableAsset
      * Sets the event name.
      *
      * @param string $eventName The event name.
-     *
-     * @throws \Ivory\GoogleMap\Exception\EventException If the event name is not valid.
      */
     public function setEventName($eventName)
     {
-        if (!is_string($eventName)) {
-            throw EventException::invalidEventName();
-        }
-
         $this->eventName = $eventName;
     }
 
     /**
-     * Gets the event function handle.
+     * Gets the handle.
      *
-     * @return string The event function handle.
+     * @return string The handle.
      */
     public function getHandle()
     {
@@ -124,44 +97,12 @@ class Event extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the event function handle.
+     * Sets the handle.
      *
-     * @param string $handle The event function handle.
-     *
-     * @throws \Ivory\GoogleMap\Exception\EventException If the handle is not valid.
+     * @param string $handle The handle.
      */
     public function setHandle($handle)
     {
-        if (!is_string($handle)) {
-            throw EventException::invalidHandle();
-        }
-
         $this->handle = $handle;
-    }
-
-    /**
-     * Checks if the event is capture.
-     *
-     * @return boolean TRUE if the event is capture else FALSE.
-     */
-    public function isCapture()
-    {
-        return $this->capture;
-    }
-
-    /**
-     * Sets if the event is capture.
-     *
-     * @param boolean $capture TRUE if the event is capture else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\EventException If the capture is not valid.
-     */
-    public function setCapture($capture)
-    {
-        if (!is_bool($capture)) {
-            throw EventException::invalidCapture();
-        }
-
-        $this->capture = $capture;
     }
 }

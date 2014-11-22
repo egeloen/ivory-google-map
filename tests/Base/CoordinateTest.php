@@ -12,23 +12,30 @@
 namespace Ivory\Tests\GoogleMap\Base;
 
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\Tests\GoogleMap\AbstractTestCase;
 
 /**
  * Coordinate test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CoordinateTest extends \PHPUnit_Framework_TestCase
+class CoordinateTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $coordinate;
+    private $coordinate;
+
+    /** @var float */
+    private $latitude;
+
+    /** @var float */
+    private $longitude;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->coordinate = new Coordinate();
+        $this->coordinate = new Coordinate($this->latitude = 1, $this->longitude = -1);
     }
 
     /**
@@ -37,79 +44,119 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->coordinate);
+        unset($this->latitude);
+        unset($this->longitude);
     }
 
-    public function testDefaultState()
+    public function testInheritance()
     {
-        $this->assertSame('coordinate_', substr($this->coordinate->getJavascriptVariable(), 0, 11));
-        $this->assertSame(0, $this->coordinate->getLatitude());
-        $this->assertSame(0, $this->coordinate->getLongitude());
-        $this->assertTrue($this->coordinate->isNoWrap());
+        $this->assertVariableAssetInstance($this->coordinate);
     }
 
     public function testInitialState()
     {
-        $this->coordinate = new Coordinate(1, 2, false);
+        $this->assertStringStartsWith('coordinate_', $this->coordinate->getVariable());
 
-        $this->assertSame(1, $this->coordinate->getLatitude());
-        $this->assertSame(2, $this->coordinate->getLongitude());
-        $this->assertFalse($this->coordinate->isNoWrap());
+        $this->assertSame($this->latitude, $this->coordinate->getLatitude());
+        $this->assertSame($this->longitude, $this->coordinate->getLongitude());
     }
 
-    public function testLatitudeWithValidLatitude()
+    public function testSetLatitude()
     {
-        $this->coordinate->setLatitude(1);
-        $this->assertSame(1, $this->coordinate->getLatitude());
-    }
+        $this->coordinate->setLatitude($latitude = 10);
 
-    public function testLatitudeWithNull()
-    {
-        $this->coordinate->setLatitude(null);
-        $this->assertNull($this->coordinate->getLatitude());
+        $this->assertSame($latitude, $this->coordinate->getLatitude());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The latitude of a coordinate must be a numeric value.
+     * @dataProvider latitudeNoWrapProvider
      */
-    public function testLatitudeWithInvalidLatitude()
+    public function testIsLatitudeNoWrap($latitude, $noWrap)
     {
-        $this->coordinate->setLatitude(true);
+        $this->coordinate->setLatitude($latitude);
+
+        $this->assertSame($noWrap, $this->coordinate->isLatitudeNoWrap());
     }
 
-    public function testLongitudeWithValidLongitude()
+    public function testSetLongitude()
     {
-        $this->coordinate->setLongitude(1);
-        $this->assertSame(1, $this->coordinate->getLongitude());
-    }
+        $this->coordinate->setLongitude($longitude = 10);
 
-    public function testLongitudeWithNull()
-    {
-        $this->coordinate->setLongitude(null);
-        $this->assertNull($this->coordinate->getLongitude());
+        $this->assertSame($longitude, $this->coordinate->getLongitude());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The longitude of a coordinate must be a numeric value.
+     * @dataProvider longitudeNoWrapProvider
      */
-    public function testLongitudeWithInvalidLongitude()
+    public function testIsLongitudeNoWrap($longitude, $noWrap)
     {
-        $this->coordinate->setLongitude(true);
-    }
+        $this->coordinate->setLongitude($longitude);
 
-    public function testNoWrapWithValidNoWrap()
-    {
-        $this->coordinate->setNoWrap(false);
-        $this->assertFalse($this->coordinate->isNoWrap());
+        $this->assertSame($noWrap, $this->coordinate->isLongitudeNoWrap());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The no wrap coordinate property must be a boolean value.
+     * @dataProvider noWrapProvider
      */
-    public function testNoWrapWithInvalidNoWrap()
+    public function testIsNoWrap($latitude, $longitude, $noWrap)
     {
-        $this->coordinate->setNoWrap('foo');
+        $this->coordinate->setLatitude($latitude);
+        $this->coordinate->setLongitude($longitude);
+
+        $this->assertSame($noWrap, $this->coordinate->isNoWrap());
+    }
+
+    /**
+     * Gets the latitude no wrap provider.
+     *
+     * @return array The latitude no wrap provider.
+     */
+    public function latitudeNoWrapProvider()
+    {
+        return array(
+            array(0, false),
+            array(90, false),
+            array(-90, false),
+            array(91, true),
+            array(-91, true),
+        );
+    }
+
+    /**
+     * Gets the longitude no wrap provider.
+     *
+     * @return array The longitude no wrap provider.
+     */
+    public function longitudeNoWrapProvider()
+    {
+        return array(
+            array(0, false),
+            array(180, false),
+            array(-180, false),
+            array(181, true),
+            array(-181, true),
+        );
+    }
+
+    /**
+     * Gets the no wrap provider.
+     *
+     * @return array The no wrap provider.
+     */
+    public function noWrapProvider()
+    {
+        $noWraps = array();
+
+        foreach ($this->latitudeNoWrapProvider() as $latitudeProvider) {
+            foreach ($this->longitudeNoWrapProvider() as $longitudeProvider) {
+                $noWraps[] = array(
+                    $latitudeProvider[0],
+                    $longitudeProvider[0],
+                    $latitudeProvider[1] || $longitudeProvider[1],
+                );
+            }
+        }
+
+        return $noWraps;
     }
 }

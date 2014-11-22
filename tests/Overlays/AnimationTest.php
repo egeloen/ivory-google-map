@@ -18,15 +18,16 @@ use Ivory\GoogleMap\Overlays\Animation;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AnimationTest extends \PHPUnit_Framework_TestCase
+class AnimationTest extends AbstractTestCase
 {
-    public function testMapTypeControlStyles()
+    public function testInheritance()
     {
-        $expected = array(
-            Animation::BOUNCE,
-            Animation::DROP,
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Overlays\Animation');
+    }
 
-        $this->assertSame($expected, Animation::getAnimations());
+    public function testConstants()
+    {
+        $this->assertSame('bounce', Animation::BOUNCE);
+        $this->assertSame('drop', Animation::DROP);
     }
 }

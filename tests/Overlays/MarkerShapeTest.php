@@ -12,23 +12,33 @@
 namespace Ivory\Tests\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Overlays\MarkerShape;
+use Ivory\GoogleMap\Overlays\MarkerShapeType;
 
 /**
  * Marker shape test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerShapeTest extends \PHPUnit_Framework_TestCase
+class MarkerShapeTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Overlays\MarkerShape */
-    protected $markerShape;
+    private $markerShape;
+
+    /** @var string */
+    private $type;
+
+    /** @var array */
+    private $coordinates;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->markerShape = new MarkerShape();
+        $this->markerShape = new MarkerShape(
+            $this->type = MarkerShapeType::CIRCLE,
+            $this->coordinates = array(0, 0, 1)
+        );
     }
 
     /**
@@ -39,137 +49,88 @@ class MarkerShapeTest extends \PHPUnit_Framework_TestCase
         unset($this->markerShape);
     }
 
-    public function testDefaultState()
+    public function testInheritance()
     {
-        $this->assertSame('poly', $this->markerShape->getType());
-        $this->assertTrue($this->markerShape->hasCoordinates());
-        $this->assertSame(array(1, 1, 1, -1, -1, -1, -1, 1), $this->markerShape->getCoordinates());
+        $this->assertVariableAssetInstance($this->markerShape);
     }
 
     public function testInitialState()
     {
-        $type = 'rect';
-        $coordinates = array(1, 1, -1, -1);
+        $this->assertStringStartsWith('marker_shape_', $this->markerShape->getVariable());
+        $this->assertSame($this->type, $this->markerShape->getType());
+        $this->assertCoordinates($this->coordinates);
+    }
 
-        $this->markerShape = new MarkerShape($type, $coordinates);
+    public function testSetType()
+    {
+        $this->markerShape->setType($type = MarkerShapeType::RECTANGLE);
 
         $this->assertSame($type, $this->markerShape->getType());
+    }
+
+    public function testResetCoordinates()
+    {
+        $this->markerShape->resetCoordinates();
+
+        $this->assertNoCoordinates();
+    }
+
+    public function testSetCoordinates()
+    {
+        $this->markerShape->setCoordinates($coordinates = array(1, 2, 3, 4));
+
+        $this->assertCoordinates($coordinates);
+    }
+
+    public function testSetCircleCoordinates()
+    {
+        $this->markerShape->setCircleCoordinates($x = 1, $y = 2, $radius = 3);
+
+        $this->assertCoordinates(array($x, $y, $radius));
+    }
+
+    public function testSetRectangleCoordinates()
+    {
+        $this->markerShape->setRectangleCoordinates($x1 = 1, $y1 = 2, $x2 = 3, $y2 = 4);
+
+        $this->assertCoordinates(array($x1, $y1, $x2, $y2));
+    }
+
+    public function testSetPolygonCoordinates()
+    {
+        $this->markerShape->setPolygonCoordinates($polygonCoordinates = array(1, 2, 3, 4));
+
+        $this->assertCoordinates($polygonCoordinates);
+    }
+
+    public function testAddPolygonCoordinate()
+    {
+        $this->markerShape->resetCoordinates();
+        $this->markerShape->addPolygonCoordinate($x1 = 1, $y1 = 2);
+        $this->markerShape->addPolygonCoordinate($x2 = 3, $y2 = 4);
+
+        $this->assertCoordinates(array($x1, $y1, $x2, $y2));
+    }
+
+    /**
+     * Asserts there are coordinates.
+     *
+     * @param array $coordinates The coordinates.
+     */
+    private function assertCoordinates($coordinates)
+    {
+        $this->assertInternalType('array', $coordinates);
+
+        $this->assertTrue($this->markerShape->hasCoordinates());
         $this->assertSame($coordinates, $this->markerShape->getCoordinates());
     }
 
-    public function testTypeWithValidValue()
-    {
-        $this->markerShape->setType('rect');
-
-        $this->assertSame('rect', $this->markerShape->getType());
-    }
-
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The type of a marker shape can only be : circle, poly, rect.
+     * Asserts there are no coordinates.
      */
-    public function testTypeWithInvalidValue()
+    private function assertNoCoordinates()
     {
-        $this->markerShape->setType('foo');
-    }
-
-    public function testCircleCoordinatesWithValidValue()
-    {
-        $this->markerShape->setType('circle');
-        $this->markerShape->setCoordinates(array(1, 2, 3));
-
-        $this->assertSame(array(1, 2, 3), $this->markerShape->getCoordinates());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The coordinates setter arguments is invalid if the marker shape type is circle.
-     * The available prototype is : function setCoordinates(array(double $x, double $y, double $r))
-     */
-    public function testCircleCoordinatesWithInvalidValue()
-    {
-        $this->markerShape->setType('circle');
-        $this->markerShape->setCoordinates(array(true));
-    }
-
-    public function testPolyCoordinatesWithValidValue()
-    {
-        $this->markerShape->setType('poly');
-        $this->markerShape->setCoordinates(array(1, 2, 3, 4, 5, 6));
-
-        $this->assertSame(array(1, 2, 3, 4, 5, 6), $this->markerShape->getCoordinates());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The coordinates setter arguments is invalid if the marker shape type is poly.
-     * The available prototype is : function setCoordinates(array(double $x1, double $y1, ..., double $xn, double $yn))
-     */
-    public function testPolyCoordinatesWithInvalidParametersCount()
-    {
-        $this->markerShape->setType('poly');
-        $this->markerShape->setCoordinates(array(1));
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The coordinates setter arguments is invalid if the marker shape type is poly.
-     * The available prototype is : function setCoordinates(array(double $x1, double $y1, ..., double $xn, double $yn))
-     */
-    public function testPolyCoordinatesWithInvalidValue()
-    {
-        $this->markerShape->setType('poly');
-        $this->markerShape->setCoordinates(array(1, true));
-    }
-
-    public function testRectCoordinatesWithValidValue()
-    {
-        $this->markerShape->setType('rect');
-        $this->markerShape->setCoordinates(array(1, 2, 3, 4));
-
-        $this->assertSame(array(1, 2, 3, 4), $this->markerShape->getCoordinates());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The coordinates setter arguments is invalid if the marker shape type is rect.
-     * The available prototype is : function setCoordinates(array(double $x1, double $y1, double $x2, double $y2))
-     */
-    public function testRectCoordinatesWithInvalidValue()
-    {
-        $this->markerShape->setType('rect');
-        $this->markerShape->setCoordinates(array(true));
-    }
-
-    public function testAddPolyCoordinateWithValidValue()
-    {
-        $this->markerShape->resetCoordinates();
-        $this->markerShape->setType('poly');
-
-        $this->markerShape->addPolyCoordinate(1, 2);
-        $this->markerShape->addPolyCoordinate(3, 4);
-
-        $this->assertSame(array(1, 2, 3, 4), $this->markerShape->getCoordinates());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The MarkerShape::addPolyCoordinate($x, $y) method can only be use with a marker
-     * shape which has type poly.
-     */
-    public function testAddPolyCoordinateWithInvalidType()
-    {
-        $this->markerShape->setType('rect');
-        $this->markerShape->addPolyCoordinate(1, 2);
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\OverlayException
-     * @expectedExceptionMessage The x & y coordinates of a poly marker shape must be numeric values.
-     */
-    public function testAddPolyCoordinateWithInvalidValue()
-    {
-        $this->markerShape->setType('poly');
-        $this->markerShape->addPolyCoordinate(true, false);
+        $this->assertFalse($this->markerShape->hasCoordinates());
+        $this->assertEmpty($this->markerShape->getCoordinates());
     }
 }

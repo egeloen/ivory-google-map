@@ -12,23 +12,28 @@
 namespace Ivory\Tests\GoogleMap\Services\Base;
 
 use Ivory\GoogleMap\Services\Base\TravelMode;
+use Ivory\Tests\GoogleMap\Services\AbstractTestCase;
 
 /**
  * Travel mode test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TravelModeTest extends \PHPUnit_Framework_TestCase
+class TravelModeTest extends AbstractTestCase
 {
-    public function testTravelModes()
+    public function testInheritance()
     {
-        $expected = array(
-            TravelMode::BICYCLING,
-            TravelMode::DRIVING,
-            TravelMode::WALKING,
-            TravelMode::TRANSIT,
-        );
+        $this->assertTrue(is_subclass_of(
+            'Ivory\GoogleMap\Services\Base\TravelMode',
+            'Ivory\GoogleMap\Assets\AbstractUninstantiableAsset'
+        ));
+    }
 
-        $this->assertSame($expected, TravelMode::getTravelModes());
+    public function testConstants()
+    {
+        $this->assertSame('BICYCLING', TravelMode::BICYCLING);
+        $this->assertSame('DRIVING', TravelMode::DRIVING);
+        $this->assertSame('WALKING', TravelMode::WALKING);
+        $this->assertSame('TRANSIT', TravelMode::TRANSIT);
     }
 }

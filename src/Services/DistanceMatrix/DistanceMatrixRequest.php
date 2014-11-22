@@ -11,61 +11,57 @@
 
 namespace Ivory\GoogleMap\Services\DistanceMatrix;
 
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\DistanceMatrixException;
-use Ivory\GoogleMap\Services\Base\TravelMode;
-use Ivory\GoogleMap\Services\Base\UnitSystem;
-
 /**
- * DistanceMatrixRequest represents a google map distance matrix query.
+ * Distance matrix request.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DistanceMatrixRequest
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DistanceMatrixRequest
  * @author GeLo <geloen.eric@gmail.com>
- * @author Tyler Sommer <sommertm@gmail.com>
  */
 class DistanceMatrixRequest
 {
-    /** @var boolean */
-    protected $avoidHighways;
+    /** @var boolean|null */
+    private $avoidHighways;
 
-    /** @var boolean */
-    protected $avoidTolls;
-
-    /** @var array */
-    protected $destinations;
+    /** @var boolean|null */
+    private $avoidTolls;
 
     /** @var array */
-    protected $origins;
+    private $destinations;
 
-    /** @var string */
-    protected $region;
+    /** @var array */
+    private $origins;
 
-    /** @var string */
-    protected $language;
+    /** @var string|null */
+    private $region;
 
-    /** @var string */
-    protected $travelMode;
+    /** @var string|null */
+    private $language;
 
-    /** @var string */
-    protected $unitSystem;
+    /** @var string|null */
+    private $travelMode;
+
+    /** @var string|null */
+    private $unitSystem;
 
     /** @var boolean */
-    protected $sensor;
+    private $sensor = false;
 
     /**
      * Creates a distance matrix request.
+     *
+     * @param array $origins      The origins.
+     * @param array $destinations The destinations.
      */
-    public function __construct()
+    public function __construct(array $origins, array $destinations)
     {
-        $this->origins = array();
-        $this->destinations = array();
-        $this->sensor = false;
+        $this->setOrigins($origins);
+        $this->setDestinations($destinations);
     }
 
     /**
-     * Checks if the distance matrix request has an avoid hightways flag.
+     * Checks if it has an avoid hightways.
      *
-     * @return boolean TRUE if the distance matrix request has an avoid hightways flag else FALSE.
+     * @return boolean TRUE if it has an avoid hightways else FALSE.
      */
     public function hasAvoidHighways()
     {
@@ -73,9 +69,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Checks if the distance matrix request avoid hightways.
+     * Checks if it avoids hightways.
      *
-     * @return boolean TRUE if the distance matrix request avoids hightways else FALSE.
+     * @return boolean|null TRUE if it avoids hightways else FALSE.
      */
     public function getAvoidHighways()
     {
@@ -83,25 +79,19 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets if the the distance matrix request avoids hightways.
+     * Sets if it avoids hightways.
      *
-     * @param boolean $avoidHighways TRUE if the distance matrix request avoids hightways else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the avoid highways flag is not valid.
+     * @param boolean|null $avoidHighways TRUE if it avoids hightways else FALSE.
      */
     public function setAvoidHighways($avoidHighways = null)
     {
-        if (!is_bool($avoidHighways) && ($avoidHighways !== null)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestAvoidHighways();
-        }
-
         $this->avoidHighways = $avoidHighways;
     }
 
     /**
-     * Checks if the distance matrix request has an avoid tolls flag.
+     * Checks if it has an avoid tolls.
      *
-     * @return boolean TRUE if the distance matrix request has an avoid tolls flag else FALSE.
+     * @return boolean TRUE if it has an avoid tolls else FALSE.
      */
     public function hasAvoidTolls()
     {
@@ -109,9 +99,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Checks if the distance matrix request avoid tolls.
+     * Checks if it avoids tolls.
      *
-     * @return boolean TRUE if the distance matrix request avoids tolls else FALSE.
+     * @return boolean|null TRUE if it avoids tolls else FALSE.
      */
     public function getAvoidTolls()
     {
@@ -119,25 +109,27 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets if the the distance matrix request avoids tolls.
+     * Sets if it avoids tolls.
      *
-     * @param boolean $avoidTolls TRUE if the distance matrix request avoids tolls else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the avoid tolls flag is not valid.
+     * @param boolean|null $avoidTolls TRUE if it avoids tolls else FALSE.
      */
     public function setAvoidTolls($avoidTolls = null)
     {
-        if (!is_bool($avoidTolls) && ($avoidTolls !== null)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestAvoidTolls();
-        }
-
         $this->avoidTolls = $avoidTolls;
     }
 
     /**
-     * Checks if the distance matrix request has destinations.
+     * Resets the destinations.
+     */
+    public function resetDestinations()
+    {
+        $this->destinations = array();
+    }
+
+    /**
+     * Checks if it has destinations.
      *
-     * @return boolean TRUE if the distance matrix request has a destination else FALSE.
+     * @return boolean TRUE if it has a destination else FALSE.
      */
     public function hasDestinations()
     {
@@ -145,9 +137,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Gets the distance matrix request destinations
+     * Gets the destinations
      *
-     * @return array The distance matrix request destination.
+     * @return array The destinations.
      */
     public function getDestinations()
     {
@@ -155,56 +147,86 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets the request destinations.
+     * Sets the destinations.
      *
-     * @param array $destinations The distance matrix request destinations.
+     * @param array $destinations The destinations.
      */
-    public function setDestinations(array $destinations = array())
+    public function setDestinations(array $destinations)
     {
-        $this->destinations = array();
+        $this->resetDestinations();
+        $this->addDestinations($destinations);
+    }
 
+    /**
+     * Adds the destinations.
+     *
+     * @param array $destinations The destinations.
+     */
+    public function addDestinations(array $destinations)
+    {
         foreach ($destinations as $destination) {
             $this->addDestination($destination);
         }
     }
 
     /**
-     * Adds a destination to the request.
+     * Removes the destination.
      *
-     * Available prototypes:
-     * - function addDestination(string $destination)
-     * - function addDestination(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function addDestination(double $latitude, double $longitude, boolean $noWrap)
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the destination is not valid (prototypes).
+     * @param array $destinations The destinations.
      */
-    public function addDestination()
+    public function removeDestinations(array $destinations)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && is_string($args[0])) {
-            $this->destinations[] = $args[0];
-        } elseif (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->destinations[] = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            $destination = new Coordinate();
-            $destination->setLatitude($args[0]);
-            $destination->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $destination->setNoWrap($args[2]);
-            }
-
-            $this->destinations[] = $destination;
-        } else {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestDestination();
+        foreach ($destinations as $destination) {
+            $this->removeDestination($destination);
         }
     }
 
     /**
-     * Checks if the distance matrix request has origins.
+     * Check if there is a destination.
      *
-     * @return boolean TRUE if the distance matrix request has origins else FALSE.
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $destination The destination.
+     *
+     * @return boolean TRUE if there is the destination else FALSE.
+     */
+    public function hasDestination($destination)
+    {
+        return in_array($destination, $this->destinations, true);
+    }
+
+    /**
+     * Adds a destination.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $destination The destination.
+     */
+    public function addDestination($destination)
+    {
+        if (!$this->hasDestination($destination)) {
+            $this->destinations[] = $destination;
+        }
+    }
+
+    /**
+     * Removes a destination.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $detination The destination.
+     */
+    public function removeDestination($detination)
+    {
+        unset($this->destinations[array_search($detination, $this->destinations, true)]);
+    }
+
+    /**
+     * Resets the origins.
+     */
+    public function resetOrigins()
+    {
+        $this->origins = array();
+    }
+
+    /**
+     * Checks if there are origins.
+     *
+     * @return boolean TRUE if there are origins else FALSE.
      */
     public function hasOrigins()
     {
@@ -212,9 +234,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Gets the distance matrix request origin.
+     * Gets the origins.
      *
-     * @return array The distance matrix request origin.
+     * @return array The origins.
      */
     public function getOrigins()
     {
@@ -222,56 +244,78 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets the request origins.
+     * Sets the origins.
      *
-     * @param array $origins The distance matrix request origins.
+     * @param array $origins The origins.
      */
-    public function setOrigins(array $origins = array())
+    public function setOrigins(array $origins)
     {
-        $this->origins = array();
+        $this->resetOrigins();
+        $this->addOrigins($origins);
+    }
 
+    /**
+     * Adds the origins.
+     *
+     * @param array $origins The origins.
+     */
+    public function addOrigins(array $origins)
+    {
         foreach ($origins as $origin) {
             $this->addOrigin($origin);
         }
     }
 
     /**
-     * Adds an origin to the request.
+     * Removes the origins.
      *
-     * Available prototypes:
-     * - function addOrigin(string $destination)
-     * - function addOrigin(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function addOrigin(double $latitude, double $longitude, boolean $noWrap)
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the origin is not valid (prototypes).
+     * @param array $origins The origins.
      */
-    public function addOrigin()
+    public function removeOrigins(array $origins)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && is_string($args[0])) {
-            $this->origins[] = $args[0];
-        } elseif (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->origins[] = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            $origin = new Coordinate();
-            $origin->setLatitude($args[0]);
-            $origin->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $origin->setNoWrap($args[2]);
-            }
-
-            $this->origins[] = $origin;
-        } else {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestOrigin();
+        foreach ($origins as $origin) {
+            $this->removeOrigin($origin);
         }
     }
 
     /**
-     * Checks if the distance matrix request has a region.
+     * Checks if there is an origin.
      *
-     * @return boolean TRUE if the distance matrix request has a region else FALSE.
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin The origin.
+     *
+     * @return boolean TRUE if there is the origin else FALSE.
+     */
+    public function hasOrigin($origin)
+    {
+        return in_array($origin, $this->origins, true);
+    }
+
+    /**
+     * Adds an origin.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin The origin.
+     */
+    public function addOrigin($origin)
+    {
+        if (!$this->hasOrigin($origin)) {
+            $this->origins[] = $origin;
+        }
+    }
+
+    /**
+     * Removes an origin.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin The origin.
+     */
+    public function removeOrigin($origin)
+    {
+        unset($this->origins[array_search($origin, $this->origins, true)]);
+    }
+
+    /**
+     * Checks if there is a region.
+     *
+     * @return boolean TRUE if there is a region else FALSE.
      */
     public function hasRegion()
     {
@@ -279,9 +323,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Gets the distance matrix request region.
+     * Gets the region.
      *
-     * @return string The direction request region.
+     * @return string|null The region.
      */
     public function getRegion()
     {
@@ -289,25 +333,19 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets the distance matrix request region.
+     * Sets the region.
      *
-     * @param string $region The distance matrix request region.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the region is not valid.
+     * @param string|null $region The region.
      */
     public function setRegion($region = null)
     {
-        if ((!is_string($region) || (strlen($region) !== 2)) && ($region !== null)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestRegion();
-        }
-
         $this->region = $region;
     }
 
     /**
-     * Checks if the distance matrix request has a language.
+     * Checks if there is a language.
      *
-     * @return boolean TRUE if the distance matrix request has a language else FALSE.
+     * @return boolean TRUE if there is a language else FALSE.
      */
     public function hasLanguage()
     {
@@ -315,9 +353,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Gets the distance matrix request language.
+     * Gets the language.
      *
-     * @return string The direction request language.
+     * @return string|null The language.
      */
     public function getLanguage()
     {
@@ -325,25 +363,19 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets the distance matrix request language.
+     * Sets the language.
      *
-     * @param string $language The distance matrix request language.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the language is not valid.
+     * @param string|null $language The language.
      */
     public function setLanguage($language = null)
     {
-        if ((!is_string($language) || ((strlen($language) !== 2) && (strlen($language) !== 5))) && ($language !== null)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestLanguage();
-        }
-
         $this->language = $language;
     }
 
     /**
-     * Checks if the distance matrix request has a travel mode.
+     * Checks if there is a travel mode.
      *
-     * @return boolean TRUE if the distance matrix request has a travel mode else FALSE.
+     * @return boolean TRUE if there is a travel mode else FALSE.
      */
     public function hasTravelMode()
     {
@@ -351,9 +383,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Gets the distance matrix request travel mode.
+     * Gets the travel mode.
      *
-     * @return string The distance matrix request travel mode.
+     * @return string|null The travel mode.
      */
     public function getTravelMode()
     {
@@ -361,27 +393,19 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets the distance matrix request travel mode.
+     * Sets the travel mode.
      *
-     * @param string $travelMode The distance matrix request travel mode.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the travel mode is not valid.
+     * @param string|null $travelMode The travel mode.
      */
     public function setTravelMode($travelMode = null)
     {
-        $travelModes = array_diff(TravelMode::getTravelModes(), array(TravelMode::TRANSIT));
-
-        if (!in_array($travelMode, $travelModes) && ($travelMode !== null)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestTravelMode();
-        }
-
         $this->travelMode = $travelMode;
     }
 
     /**
-     * Checks if the distance matrix request has a unit system.
+     * Checks if there is a unit system.
      *
-     * @return boolean TRUE if the distance matrix request has a unit system else FALSE.
+     * @return boolean TRUE if there is a unit system else FALSE.
      */
     public function hasUnitSystem()
     {
@@ -389,9 +413,9 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Gets the distance matrix request unit system.
+     * Gets the unit system.
      *
-     * @return string The distance matrix request unit system.
+     * @return string|null The unit system.
      */
     public function getUnitSystem()
     {
@@ -399,25 +423,19 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets  the distance matrix request unit system.
+     * Sets the unit system.
      *
-     * @param string $unitSystem The distance matrix request unit system.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the unit system is not valid.
+     * @param string|null $unitSystem The unit system.
      */
     public function setUnitSystem($unitSystem = null)
     {
-        if (!in_array($unitSystem, UnitSystem::getUnitSystems()) && ($unitSystem !== null)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestUnitSystem();
-        }
-
         $this->unitSystem = $unitSystem;
     }
 
     /**
-     * Checks if the distance matrix request has a sensor.
+     * Checks if there is a sensor.
      *
-     * @return boolean TRUE if the distance matrix request has a sensor else FALSE.
+     * @return boolean TRUE if there is a sensor else FALSE.
      */
     public function hasSensor()
     {
@@ -425,28 +443,12 @@ class DistanceMatrixRequest
     }
 
     /**
-     * Sets the distance matrix request sensor.
+     * Sets the sensor.
      *
-     * @param boolean $sensor TRUE if the distance matrix request has a sensor else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the sensor flag is not valid.
+     * @param boolean $sensor TRUE if there is a sensor else FALSE.
      */
     public function setSensor($sensor)
     {
-        if (!is_bool($sensor)) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestSensor();
-        }
-
         $this->sensor = $sensor;
-    }
-
-    /**
-     * Checks if the distance matrix request is valid.
-     *
-     * @return boolean TRUE if the distance matrix request is valid else FALSE.
-     */
-    public function isValid()
-    {
-        return $this->hasDestinations() && $this->hasOrigins();
     }
 }

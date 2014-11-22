@@ -18,21 +18,22 @@ use Ivory\GoogleMap\Services\Directions\DirectionsStatus;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsStatusTest extends \PHPUnit_Framework_TestCase
+class DirectionsStatusTest extends AbstractTestCase
 {
-    public function testDirectionsStatus()
+    public function testInheritance()
     {
-        $expected = array(
-            DirectionsStatus::INVALID_REQUEST,
-            DirectionsStatus::MAX_WAYPOINTS_EXCEEDED,
-            DirectionsStatus::NOT_FOUND,
-            DirectionsStatus::OK,
-            DirectionsStatus::OVER_QUERY_LIMIT,
-            DirectionsStatus::REQUEST_DENIED,
-            DirectionsStatus::UNKNOWN_ERROR,
-            DirectionsStatus::ZERO_RESULTS,
-        );
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Services\Directions\DirectionsStatus');
+    }
 
-        $this->assertSame($expected, DirectionsStatus::getDirectionsStatus());
+    public function testConstants()
+    {
+        $this->assertSame('INVALID_REQUEST', DirectionsStatus::INVALID_REQUEST);
+        $this->assertSame('MAX_WAYPOINTS_EXCEEDED', DirectionsStatus::MAX_WAYPOINTS_EXCEEDED);
+        $this->assertSame('NOT_FOUND', DirectionsStatus::NOT_FOUND);
+        $this->assertSame('OK', DirectionsStatus::OK);
+        $this->assertSame('OVER_QUERY_LIMIT', DirectionsStatus::OVER_QUERY_LIMIT);
+        $this->assertSame('REQUEST_DENIED', DirectionsStatus::REQUEST_DENIED);
+        $this->assertSame('UNKNOWN_ERROR', DirectionsStatus::UNKNOWN_ERROR);
+        $this->assertSame('ZERO_RESULTS', DirectionsStatus::ZERO_RESULTS);
     }
 }

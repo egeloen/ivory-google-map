@@ -16,22 +16,30 @@ use Ivory\GoogleMap\Services\Base\TravelMode;
 use Ivory\GoogleMap\Services\Base\UnitSystem;
 
 /**
- * DistanceMatrix request test.
+ * Distance matrix request test.
  *
  * @author GeLo <gelon.eric@gmail.com>
- * @author Tyler Sommer <sommertm@gmail.com>
  */
-class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixRequestTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest */
-    protected $distanceMatrixRequest;
+    private $distanceMatrixRequest;
+
+    /** @var array */
+    private $origins;
+
+    /** @var array */
+    private $destinations;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->distanceMatrixRequest = new DistanceMatrixRequest();
+        $this->distanceMatrixRequest = new DistanceMatrixRequest(
+            $this->origins = array('origin'),
+            $this->destinations = array('destination')
+        );
     }
 
     /**
@@ -39,15 +47,21 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->destinations);
+        unset($this->origins);
         unset($this->distanceMatrixRequest);
     }
 
     public function testDefaultState()
     {
+        $this->assertTrue($this->distanceMatrixRequest->hasOrigins());
+        $this->assertSame($this->origins, $this->distanceMatrixRequest->getOrigins());
+
+        $this->assertTrue($this->distanceMatrixRequest->hasDestinations());
+        $this->assertSame($this->destinations, $this->distanceMatrixRequest->getDestinations());
+
         $this->assertFalse($this->distanceMatrixRequest->hasAvoidHighways());
         $this->assertFalse($this->distanceMatrixRequest->hasAvoidTolls());
-        $this->assertFalse($this->distanceMatrixRequest->hasDestinations());
-        $this->assertFalse($this->distanceMatrixRequest->hasOrigins());
         $this->assertFalse($this->distanceMatrixRequest->hasRegion());
         $this->assertFalse($this->distanceMatrixRequest->hasLanguage());
         $this->assertFalse($this->distanceMatrixRequest->hasTravelMode());
@@ -55,7 +69,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->distanceMatrixRequest->hasSensor());
     }
 
-    public function testAvoidHightwaysWithValidValue()
+    public function testSetAvoidHightways()
     {
         $this->distanceMatrixRequest->setAvoidHighways(true);
 
@@ -63,24 +77,16 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->distanceMatrixRequest->getAvoidHighways());
     }
 
-    public function testAvoidHighwaysWithNullValue()
+    public function testResetAvoidHighways()
     {
         $this->distanceMatrixRequest->setAvoidHighways(true);
         $this->distanceMatrixRequest->setAvoidHighways(null);
 
+        $this->assertFalse($this->distanceMatrixRequest->hasAvoidHighways());
         $this->assertNull($this->distanceMatrixRequest->getAvoidHighways());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request avoid hightways flag must be a boolean value.
-     */
-    public function testAvoidHighwaysWithInvalidValue()
-    {
-        $this->distanceMatrixRequest->setAvoidHighways('foo');
-    }
-
-    public function testAvoidTollsWithValidValue()
+    public function testSetAvoidTolls()
     {
         $this->distanceMatrixRequest->setAvoidTolls(true);
 
@@ -88,225 +94,236 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->distanceMatrixRequest->getAvoidTolls());
     }
 
-    public function testAvoidTollsWithNullValue()
+    public function testResetAvoidTolls()
     {
         $this->distanceMatrixRequest->setAvoidTolls(true);
         $this->distanceMatrixRequest->setAvoidTolls(null);
 
+        $this->assertFalse($this->distanceMatrixRequest->hasAvoidTolls());
         $this->assertNull($this->distanceMatrixRequest->getAvoidTolls());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request avoid tolls flag must be a boolean value.
+     * @dataProvider locationProvider
      */
-    public function testAvoidTollsWithInvalidValue()
+    public function testSetDestinations($destination)
     {
-        $this->distanceMatrixRequest->setAvoidTolls('foo');
-    }
+        $this->distanceMatrixRequest->setDestinations($destinations = array($destination));
 
-    public function testDestinationWithString()
-    {
-        $this->distanceMatrixRequest->setDestinations(array('foo'));
-
-        $this->assertTrue($this->distanceMatrixRequest->hasDestinations());
-        $this->assertEquals($this->distanceMatrixRequest->getDestinations(), array('foo'));
-    }
-
-    public function testDestinationWithCoordinate()
-    {
-        $location = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-
-        $this->distanceMatrixRequest->setDestinations(array($location));
-
-        $destinations = $this->distanceMatrixRequest->getDestinations();
-
-        $this->assertArrayHasKey(0, $destinations);
-        $this->assertCount(1, $destinations);
-        $this->assertSame($location, $destinations[0]);
-    }
-
-    public function testDestinationWithLatitudeAndLongitude()
-    {
-        $this->distanceMatrixRequest->addDestination(1.1, 2.1, false);
-
-        $destinations = $this->distanceMatrixRequest->getDestinations();
-
-        $this->assertArrayHasKey(0, $destinations);
-        $this->assertCount(1, $destinations);
-        $this->assertSame(1.1, $destinations[0]->getLatitude());
-        $this->assertSame(2.1, $destinations[0]->getLongitude());
-        $this->assertFalse($destinations[0]->isNoWrap());
+        $this->assertDestinations($destinations);
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The destination adder arguments are invalid.
-     * The available prototypes are :
-     * - function setDestination(string $destination)
-     * - function setDestination(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setDestination(double $latitude, double $longitude, boolean $noWrap)
+     * @dataProvider locationProvider
      */
-    public function testDestinationWithInvalidValue()
+    public function testAddDestinations($destination)
     {
-        $this->distanceMatrixRequest->addDestination(true);
+        $this->distanceMatrixRequest->setDestinations($destinations = array($destination));
+        $this->distanceMatrixRequest->addDestinations($newDestinations = array('bar'));
+
+        $this->assertDestinations(array_merge($destinations, $newDestinations));
     }
 
-    public function testOriginWithString()
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testRemoveDestinations($destination)
     {
-        $this->distanceMatrixRequest->setOrigins(array('foo'));
+        $this->distanceMatrixRequest->setDestinations($destinations = array($destination));
+        $this->distanceMatrixRequest->removeDestinations($destinations);
 
-        $this->assertTrue($this->distanceMatrixRequest->hasOrigins());
-        $this->assertSame(array('foo'), $this->distanceMatrixRequest->getOrigins());
+        $this->assertNoDestinations();
     }
 
-    public function testOriginWithCoordinate()
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testResetDestinations($destination)
     {
-        $origin = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
+        $this->distanceMatrixRequest->setDestinations(array($destination));
+        $this->distanceMatrixRequest->resetDestinations();
+
+        $this->assertNoDestinations();
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testAddDestination($destination)
+    {
+        $this->distanceMatrixRequest->addDestination($destination);
+
+        $this->assertDestination($destination);
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testAddDestinationUnicity($destination)
+    {
+        $this->distanceMatrixRequest->resetDestinations();
+        $this->distanceMatrixRequest->addDestination($destination);
+        $this->distanceMatrixRequest->addDestination($destination);
+
+        $this->assertDestinations(array($destination));
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testRemoveDestination($destination)
+    {
+        $this->distanceMatrixRequest->addDestination($destination);
+        $this->distanceMatrixRequest->removeDestination($destination);
+
+        $this->assertNoDestination($destination);
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testSetOrigins($destination)
+    {
+        $this->distanceMatrixRequest->setOrigins($origins = array($destination));
+
+        $this->assertOrigins($origins);
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testAddOrigins($destination)
+    {
+        $this->distanceMatrixRequest->setOrigins($origins = array($destination));
+        $this->distanceMatrixRequest->addOrigins($newOrigins = array('bar'));
+
+        $this->assertOrigins(array_merge($origins, $newOrigins));
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testRemoveOrigins($destination)
+    {
+        $this->distanceMatrixRequest->setOrigins($origins = array($destination));
+        $this->distanceMatrixRequest->removeOrigins($origins);
+
+        $this->assertNoOrigins();
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testResetOrigins($origin)
+    {
         $this->distanceMatrixRequest->setOrigins(array($origin));
+        $this->distanceMatrixRequest->resetOrigins();
 
-        $origins = $this->distanceMatrixRequest->getOrigins();
-
-        $this->assertArrayHasKey(0, $origins);
-        $this->assertSame($origin, $origins[0]);
-    }
-
-    public function testOriginWithLatitudeAndLongitude()
-    {
-        $this->distanceMatrixRequest->addOrigin(1.1, 2.1, false);
-
-        $origins = $this->distanceMatrixRequest->getOrigins();
-
-        $this->assertArrayHasKey(0, $origins);
-        $this->assertCount(1, $origins);
-        $this->assertSame(1.1, $origins[0]->getLatitude());
-        $this->assertSame(2.1, $origins[0]->getLongitude());
-        $this->assertFalse($origins[0]->isNoWrap());
+        $this->assertNoOrigins();
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The origin adder arguments are invalid.
-     * The available prototypes are :
-     * - function setOrigin(string $origin)
-     * - function setOrigin(Ivory\GoogleMap\Base\Coordinate $origin)
-     * - function setOrigin(double $latitude, double $longitude, boolean $noWrap)
+     * @dataProvider locationProvider
      */
-    public function testOriginWithInvalidValue()
+    public function testAddOrigin($origin)
     {
-        $this->distanceMatrixRequest->addOrigin(true);
+        $this->distanceMatrixRequest->addOrigin($origin);
+
+        $this->assertOrigin($origin);
     }
 
-    public function testRegionWithValidValue()
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testAddOriginUnicity($origin)
     {
-        $this->distanceMatrixRequest->setRegion('fr');
+        $this->distanceMatrixRequest->resetOrigins();
+        $this->distanceMatrixRequest->addOrigin($origin);
+        $this->distanceMatrixRequest->addOrigin($origin);
+
+        $this->assertOrigins(array($origin));
+    }
+
+    /**
+     * @dataProvider locationProvider
+     */
+    public function testRemoveOrigin($origin)
+    {
+        $this->distanceMatrixRequest->addOrigin($origin);
+        $this->distanceMatrixRequest->removeOrigin($origin);
+
+        $this->assertNoOrigin($origin);
+    }
+
+    public function testSetRegion()
+    {
+        $this->distanceMatrixRequest->setRegion($region = 'fr');
 
         $this->assertTrue($this->distanceMatrixRequest->hasRegion());
-        $this->assertSame('fr', $this->distanceMatrixRequest->getRegion());
+        $this->assertSame($region, $this->distanceMatrixRequest->getRegion());
     }
 
-    public function testRegionWithNullValue()
+    public function testResetRegion()
     {
         $this->distanceMatrixRequest->setRegion('fr');
         $this->distanceMatrixRequest->setRegion(null);
 
+        $this->assertFalse($this->distanceMatrixRequest->hasRegion());
         $this->assertNull($this->distanceMatrixRequest->getRegion());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request region must be a string with two characters.
-     */
-    public function testRegionWithInvalidValue()
+    public function testSetLanguage()
     {
-        $this->distanceMatrixRequest->setRegion('foo');
-    }
-
-    public function testLanguageWithValidValue()
-    {
-        $this->distanceMatrixRequest->setLanguage('fr');
+        $this->distanceMatrixRequest->setLanguage($language = 'fr');
 
         $this->assertTrue($this->distanceMatrixRequest->hasLanguage());
-        $this->assertSame('fr', $this->distanceMatrixRequest->getLanguage());
+        $this->assertSame($language, $this->distanceMatrixRequest->getLanguage());
     }
 
-    public function testLanguageWithNullValue()
+    public function testResetLanguage()
     {
         $this->distanceMatrixRequest->setLanguage('fr');
         $this->distanceMatrixRequest->setLanguage(null);
 
+        $this->assertFalse($this->distanceMatrixRequest->hasLanguage());
         $this->assertNull($this->distanceMatrixRequest->getLanguage());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request language must be a string with two or five characters.
-     */
-    public function testLanguageWithInvalidValue()
+    public function testSetTravelMode()
     {
-        $this->distanceMatrixRequest->setLanguage('foo');
-    }
-
-    public function testTravelModeWithValidValue()
-    {
-        $this->distanceMatrixRequest->setTravelMode(TravelMode::WALKING);
+        $this->distanceMatrixRequest->setTravelMode($travelMode = TravelMode::WALKING);
 
         $this->assertTrue($this->distanceMatrixRequest->hasTravelMode());
-        $this->assertSame(TravelMode::WALKING, $this->distanceMatrixRequest->getTravelMode());
+        $this->assertSame($travelMode, $this->distanceMatrixRequest->getTravelMode());
     }
 
-    public function testTravelModeWithNullValue()
+    public function testResetTravelMode()
     {
         $this->distanceMatrixRequest->setTravelMode(TravelMode::WALKING);
         $this->distanceMatrixRequest->setTravelMode(null);
 
+        $this->assertFalse($this->distanceMatrixRequest->hasTravelMode());
         $this->assertNull($this->distanceMatrixRequest->getTravelMode());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request travel mode can only be : BICYCLING, DRIVING, WALKING.
-     */
-    public function testTravelModeWithTransitValue()
+    public function testSetUnitSystem()
     {
-        $this->distanceMatrixRequest->setTravelMode(TravelMode::TRANSIT);
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request travel mode can only be : BICYCLING, DRIVING, WALKING.
-     */
-    public function testTravelModeWithInvalidValue()
-    {
-        $this->distanceMatrixRequest->setTravelMode('foo');
-    }
-
-    public function testUnitSystemWithValidValue()
-    {
-        $this->distanceMatrixRequest->setUnitSystem(UnitSystem::IMPERIAL);
+        $this->distanceMatrixRequest->setUnitSystem($unitSystem = UnitSystem::IMPERIAL);
 
         $this->assertTrue($this->distanceMatrixRequest->hasUnitSystem());
-        $this->assertSame(UnitSystem::IMPERIAL, $this->distanceMatrixRequest->getUnitSystem());
+        $this->assertSame($unitSystem, $this->distanceMatrixRequest->getUnitSystem());
     }
 
-    public function testUnitSystemWithNullValue()
+    public function testResetUnitSystem()
     {
         $this->distanceMatrixRequest->setUnitSystem(UnitSystem::IMPERIAL);
         $this->distanceMatrixRequest->setUnitSystem(null);
 
+        $this->assertFalse($this->distanceMatrixRequest->hasUnitSystem());
         $this->assertNull($this->distanceMatrixRequest->getUnitSystem());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request unit system can only be : IMPERIAL, METRIC.
-     */
-    public function testUnitSystemWithInvalidValue()
-    {
-        $this->distanceMatrixRequest->setUnitSystem('foo');
-    }
-
-    public function testSensorWithValidValue()
+    public function testSetSensor()
     {
         $this->distanceMatrixRequest->setSensor(true);
 
@@ -314,38 +331,123 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
-     * @expectedExceptionMessage The distance matrix request sensor flag must be a boolean value.
+     * Gets the location provider.
+     *
+     * @return array The location provider.
      */
-    public function testSensorWithInvalidValue()
+    public function locationProvider()
     {
-        $this->distanceMatrixRequest->setSensor('foo');
+        return array(
+            array('foo'),
+            array($this->createCoordinateMock()),
+        );
     }
 
-    public function testIsValid()
+    /**
+     * Asserts there are destinations.
+     *
+     * @param array $destinations The destinations.
+     */
+    private function assertDestinations($destinations)
     {
-        $this->assertFalse($this->distanceMatrixRequest->isValid());
+        $this->assertInternalType('array', $destinations);
+
+        $this->assertTrue($this->distanceMatrixRequest->hasDestinations());
+        $this->assertSame($destinations, $this->distanceMatrixRequest->getDestinations());
+
+        foreach ($destinations as $destination) {
+            $this->assertDestination($destination);
+        }
     }
 
-    public function testIsValidWithOrigin()
+    /**
+     * Asserts there is a destination.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $destination The destination.
+     */
+    private function assertDestination($destination)
     {
-        $this->distanceMatrixRequest->addOrigin('foo');
+        if (!is_string($destination)) {
+            $this->assertCoordinateInstance($destination);
+        }
 
-        $this->assertFalse($this->distanceMatrixRequest->isValid());
+        $this->assertTrue($this->distanceMatrixRequest->hasDestination($destination));
     }
 
-    public function testIsValidWithDestination()
+    /**
+     * Asserts there are no destinations.
+     */
+    private function assertNoDestinations()
     {
-        $this->distanceMatrixRequest->addDestination('foo');
-
-        $this->assertFalse($this->distanceMatrixRequest->isValid());
+        $this->assertFalse($this->distanceMatrixRequest->hasDestinations());
+        $this->assertEmpty($this->distanceMatrixRequest->getDestinations());
     }
 
-    public function testIsValidWithOriginAndDestination()
+    /**
+     * Asserts there is no destination.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $destination The destination.
+     */
+    private function assertNoDestination($destination)
     {
-        $this->distanceMatrixRequest->addDestination('foo');
-        $this->distanceMatrixRequest->addOrigin('bar');
+        if (!is_string($destination)) {
+            $this->assertCoordinateInstance($destination);
+        }
 
-        $this->assertTrue($this->distanceMatrixRequest->isValid());
+        $this->assertFalse($this->distanceMatrixRequest->hasDestination($destination));
+    }
+
+    /**
+     * Asserts there are origins.
+     *
+     * @param array $origins The origins.
+     */
+    private function assertOrigins($origins)
+    {
+        $this->assertInternalType('array', $origins);
+
+        $this->assertTrue($this->distanceMatrixRequest->hasOrigins());
+        $this->assertSame($origins, $this->distanceMatrixRequest->getOrigins());
+
+        foreach ($origins as $origin) {
+            $this->assertOrigin($origin);
+        }
+    }
+
+    /**
+     * Asserts there is a origin.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin The origin.
+     */
+    private function assertOrigin($origin)
+    {
+        if (!is_string($origin)) {
+            $this->assertCoordinateInstance($origin);
+        }
+
+        $this->assertTrue($this->distanceMatrixRequest->hasOrigin($origin));
+    }
+
+    /**
+     * Asserts there are no origins.
+     */
+    private function assertNoOrigins()
+    {
+        $this->assertFalse($this->distanceMatrixRequest->hasOrigins());
+        $this->assertEmpty($this->distanceMatrixRequest->getOrigins());
+    }
+
+    /**
+     * Asserts there is no origin.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $origin The origin.
+     */
+    private function assertNoOrigin($origin)
+    {
+        if (!is_string($origin)) {
+            $this->assertCoordinateInstance($origin);
+        }
+
+        $this->assertFalse($this->distanceMatrixRequest->hasOrigin($origin));
     }
 }

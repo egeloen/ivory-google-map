@@ -11,18 +11,16 @@
 
 namespace Ivory\GoogleMap\Controls;
 
-use Ivory\GoogleMap\Exception\ControlException;
-
 /**
- * A street view control describes a google map street view control.
+ * Street view control.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#StreetViewControlOptions
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#StreetViewControlOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
 class StreetViewControl
 {
     /** @var string */
-    protected $controlPosition;
+    private $controlPosition;
 
     /**
      * Creates a street view control.
@@ -48,15 +46,9 @@ class StreetViewControl
      * Sets the control position.
      *
      * @param string $controlPosition The control position.
-     *
-     * @throws \Ivory\GoogleMap\Exception\ControlException If the control position is not valid.
      */
     public function setControlPosition($controlPosition)
     {
-        if (!in_array($controlPosition, ControlPosition::getControlPositions())) {
-            throw ControlException::invalidControlPosition();
-        }
-
         $this->controlPosition = $controlPosition;
     }
 }

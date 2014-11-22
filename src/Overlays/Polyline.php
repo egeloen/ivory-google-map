@@ -12,37 +12,44 @@
 namespace Ivory\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
+use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
- * Polyline which describes a google map polyline.
+ * Polyline.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Polyline
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#Polyline
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Polyline extends AbstractOptionsAsset implements ExtendableInterface
 {
     /** @var array */
-    protected $coordinates;
+    private $coordinates = array();
 
     /**
      * Creates a polyline.
      *
-     * @param array $coordinates The polyline coordinates.
+     * @param array $coordinates The coordinates.
      */
-    public function __construct(array $coordinates = array())
+    public function __construct(array $coordinates)
     {
-        parent::__construct();
+        parent::__construct('polyline_');
 
-        $this->setPrefixJavascriptVariable('polyline_');
-        $this->setCoordinates($coordinates);
+        $this->addCoordinates($coordinates);
     }
 
     /**
-     * Checks if the polyline has coordinates.
+     * Resets the coordinates.
+     */
+    public function resetCoordinates()
+    {
+        $this->coordinates = array();
+    }
+
+    /**
+     * Checks if there are coordinates.
      *
-     * @return boolean TRUE if the polyline has coordinates else FALSE.
+     * @return boolean TRUE if there are coordinates else FALSE.
      */
     public function hasCoordinates()
     {
@@ -50,9 +57,9 @@ class Polyline extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Gets the polyline coordinates.
+     * Gets the coordinates.
      *
-     * @return array The polyline coordinates.
+     * @return array The coordinates.
      */
     public function getCoordinates()
     {
@@ -60,44 +67,79 @@ class Polyline extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the polyline coordinates.
+     * Sets the coordinates.
      *
-     * @param array $coordinates The polyline coordinates.
+     * @param array $coordinates The coordinates.
      */
-    public function setCoordinates($coordinates)
+    public function setCoordinates(array $coordinates)
     {
-        $this->coordinates = array();
+        $this->resetCoordinates();
+        $this->addCoordinates($coordinates);
+    }
 
+    /**
+     * Adds the coordinates.
+     *
+     * @param array $coordinates The coordinates.
+     */
+    public function addCoordinates(array $coordinates)
+    {
         foreach ($coordinates as $coordinate) {
             $this->addCoordinate($coordinate);
         }
     }
 
     /**
-     * Add a coordinate to the polyline.
+     * Removes the coordinates.
      *
-     * Available prototypes:
-     *  - function addCoordinate(Ivory\GoogleMap\Base\Coordinate $coordinate)
-     *  - function addCoordinate(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the coordinate is not valid.
+     * @param array $coordinates The coordinates.
      */
-    public function addCoordinate()
+    public function removeCoordinates(array $coordinates)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->coordinates[] = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            $coordinate = new Coordinate($args[0], $args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $coordinate->setNoWrap($args[2]);
-            }
-
-            $this->coordinates[] = $coordinate;
-        } else {
-            throw OverlayException::invalidPolylineCoordinate();
+        foreach ($coordinates as $coordinate) {
+            $this->removeCoordinate($coordinate);
         }
+    }
+
+    /**
+     * Checks if there is a coordinate.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $coordinate The coordinate.
+     *
+     * @return boolean TRUE if there is a coordinate else FALSE.
+     */
+    public function hasCoordinate(Coordinate $coordinate)
+    {
+        return in_array($coordinate, $this->coordinates, true);
+    }
+
+    /**
+     * Adds a coordinate.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $coordinate The coordinate.
+     */
+    public function addCoordinate(Coordinate $coordinate)
+    {
+        if (!$this->hasCoordinate($coordinate)) {
+            $this->coordinates[] = $coordinate;
+        }
+    }
+
+    /**
+     * Removes a coordinate.
+     *
+     * @param \Ivory\GoogleMap\Base\Coordinate $coordinate The coordinate.
+     */
+    public function removeCoordinate(Coordinate $coordinate)
+    {
+        unset($this->coordinates[array_search($coordinate, $this->coordinates, true)]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function renderExtend(Bound $bound)
+    {
+        return sprintf('%s.getPath().forEach(function(e){%s.extend(e);})', $this->getVariable(), $bound->getVariable());
     }
 }

@@ -12,138 +12,64 @@
 namespace Ivory\GoogleMap\Services\Geocoding;
 
 use Ivory\GoogleMap\Base\Bound;
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\GeocodingException;
 
 /**
- * Geocoder request which describes a google map geocoder request.
+ * Geocoder request.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#GeocoderRequest
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#GeocoderRequest
  * @author GeLo <geloen.eric@gmail.com>
  */
 class GeocoderRequest
 {
-    /** @var string */
-    protected $address;
+    /** @var string|\Ivory\GoogleMap\Base\Coordinate */
+    private $location;
 
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $coordinate;
+    /** @var \Ivory\GoogleMap\Base\Bound|null */
+    private $bound;
 
-    /** @var \Ivory\GoogleMap\Base\Bound */
-    protected $bound;
+    /** @var string|null */
+    private $region;
 
-    /** @var string */
-    protected $region;
-
-    /** @var string */
-    protected $language;
+    /** @var string|null */
+    private $language;
 
     /** @var boolean */
-    protected $sensor;
+    private $sensor = false;
 
     /**
      * Creates a geocoder request.
+     *
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $location The location.
      */
-    public function __construct()
+    public function __construct($location)
     {
-        $this->sensor = false;
+        $this->setLocation($location);
     }
 
     /**
-     * Checks if the geocoder request has an address.
+     * Gets the location.
      *
-     * @return boolean TRUE if the geocoder request has an address else FALSE.
+     * @return string|\Ivory\GoogleMap\Base\Coordinate The location.
      */
-    public function hasAddress()
+    public function getLocation()
     {
-        return $this->address !== null;
+        return $this->location;
     }
 
     /**
-     * Gets the geocoder request address.
+     * Sets the location.
      *
-     * @return string The geocoder request address.
+     * @param string|\Ivory\GoogleMap\Base\Coordinate $location The location.
      */
-    public function getAddress()
+    public function setLocation($location)
     {
-        return $this->address;
+        $this->location = $location;
     }
 
     /**
-     * Sets the geocoder request address.
+     * Checks if it has a bound.
      *
-     * @param string $address The geocoder request address.
-     *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingException If the address is not valid.
-     */
-    public function setAddress($address)
-    {
-        if (!is_string($address) && ($address !== null)) {
-            throw GeocodingException::invalidGeocoderRequestAddress();
-        }
-
-        $this->address = $address;
-    }
-
-    /**
-     * Checks if the geocoder request has a coordinate.
-     *
-     * @return boolean TRUE if the geocoder request has a coordinate else FALSE.
-     */
-    public function hasCoordinate()
-    {
-        return $this->coordinate !== null;
-    }
-
-    /**
-     * Gets the geocoder request coordinate.
-     *
-     * @return \Ivory\GoogleMap\Base\Coordinate The geocoder request coordinate.
-     */
-    public function getCoordinate()
-    {
-        return $this->coordinate;
-    }
-
-    /**
-     * Sets the geocoder request coordinate
-     *
-     * Available prototypes:
-     *  - function setCoordinate(\Ivory\GoogleMap\Base\Coordinate $coordinate = null)
-     *  - function setCoordinate(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingException If the coordinate is not valid (prototypes).
-     */
-    public function setCoordinate()
-    {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->coordinate = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if (!$this->hasCoordinate()) {
-                $this->coordinate = new Coordinate();
-            }
-
-            $this->coordinate->setLatitude($args[0]);
-            $this->coordinate->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->coordinate->setNoWrap($args[2]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->coordinate = null;
-        } else {
-            throw GeocodingException::invalidGeocoderRequestCoordinate();
-        }
-
-        return $this;
-    }
-
-    /**
-     * Checks if the geocoder request has a bound.
-     *
-     * @return boolean TRUE if the geocoder request has a bound else FALSE.
+     * @return boolean TRUE if it has a bound else FALSE.
      */
     public function hasBound()
     {
@@ -151,9 +77,9 @@ class GeocoderRequest
     }
 
     /**
-     * Gets the geocoder request bound.
+     * Gets the bound.
      *
-     * @return \Ivory\GoogleMap\Base\Bound The geocoder request bound.
+     * @return \Ivory\GoogleMap\Base\Bound|null The bound.
      */
     public function getBound()
     {
@@ -161,67 +87,19 @@ class GeocoderRequest
     }
 
     /**
-     * Sets the geocoder request bound.
+     * Sets the bound.
      *
-     * Available prototypes:
-     *  - function setBound(Ivory\GoogleMap\Base\Bound $bound = null)
-     *  - function setBount(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     *  - function setBound(
-     *     double $southWestLatitude,
-     *     double $southWestLongitude,
-     *     double $northEastLatitude,
-     *     double $northEastLongitude,
-     *     boolean southWestNoWrap = true,
-     *     boolean $northEastNoWrap = true
-     * )
-     *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingException If the bound is not valid.
+     * @param \Ivory\GoogleMap\Base\Bound|null $bound The bound.
      */
-    public function setBound()
+    public function setBound(Bound $bound = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Bound)) {
-            $this->bound = $args[0];
-        } elseif ((isset($args[0]) && ($args[0] instanceof Coordinate))
-            && (isset($args[1]) && ($args[1] instanceof Coordinate))
-        ) {
-            if (!$this->hasBound()) {
-                $this->bound = new Bound();
-            }
-
-            $this->bound->setSouthWest($args[0]);
-            $this->bound->setNorthEast($args[1]);
-        } elseif ((isset($args[0]) && is_numeric($args[0]))
-            && (isset($args[1]) && is_numeric($args[1]))
-            && (isset($args[2]) && is_numeric($args[2]))
-            && (isset($args[3]) && is_numeric($args[3]))
-        ) {
-            if (!$this->hasBound()) {
-                $this->bound = new Bound();
-            }
-
-            $this->bound->setSouthWest(new Coordinate($args[0], $args[1]));
-            $this->bound->setNorthEast(new Coordinate($args[2], $args[3]));
-
-            if (isset($args[4]) && is_bool($args[4])) {
-                $this->bound->getSouthWest()->setNoWrap($args[4]);
-            }
-
-            if (isset($args[5]) && is_bool($args[5])) {
-                $this->bound->getNorthEast()->setNoWrap($args[5]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->bound = null;
-        } else {
-            throw GeocodingException::invalidGeocoderRequestBound();
-        }
+        $this->bound = $bound;
     }
 
     /**
-     * Checks if the geocoder request has a region.
+     * Checks if it has a region.
      *
-     * @return boolean TRUE if the geocoder request has a region else FALSE.
+     * @return boolean TRUE if it has a region else FALSE.
      */
     public function hasRegion()
     {
@@ -229,9 +107,9 @@ class GeocoderRequest
     }
 
     /**
-     * Gets the geocoder request region
+     * Gets the region.
      *
-     * @return string
+     * @return string|null The region.
      */
     public function getRegion()
     {
@@ -239,25 +117,19 @@ class GeocoderRequest
     }
 
     /**
-     * Sets the geocoder request region.
+     * Sets the region.
      *
-     * @param string $region The geocoder request region.
-     *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingException If the regin is not valid.
+     * @param string|null $region The region.
      */
     public function setRegion($region = null)
     {
-        if ((!is_string($region) || (strlen($region) !== 2)) && ($region !== null)) {
-            throw GeocodingException::invalidGeocoderRequestRegion();
-        }
-
         $this->region = $region;
     }
 
     /**
-     * Checks if the geocoder request has a language.
+     * Checks if it has a language.
      *
-     * @return boolean TRUE if the geocoder request has a language else FALSE.
+     * @return boolean TRUE if it has a language else FALSE.
      */
     public function hasLanguage()
     {
@@ -265,9 +137,9 @@ class GeocoderRequest
     }
 
     /**
-     * Gets the geocoder request language.
+     * Gets the language.
      *
-     * @return string The geocoder request language.
+     * @return string|null The language.
      */
     public function getLanguage()
     {
@@ -275,25 +147,19 @@ class GeocoderRequest
     }
 
     /**
-     * Sets the geocoder request language.
+     * Sets the language.
      *
-     * @param string $language The geocoder request language.
-     *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingException If the language is not valid.
+     * @param string|null $language The language.
      */
     public function setLanguage($language = null)
     {
-        if ((!is_string($language) || ((strlen($language) !== 2) && (strlen($language) !== 5))) && ($language !== null)) {
-            throw GeocodingException::invalidGeocoderRequestLanguage();
-        }
-
         $this->language = $language;
     }
 
     /**
-     * Checks if the geocoder request has a sensor.
+     * Checks if it has a sensor.
      *
-     * @return boolean TRUE if the geocoder request has a sensor else FALSE.
+     * @return boolean TRUE if it has a sensor else FALSE.
      */
     public function hasSensor()
     {
@@ -301,28 +167,12 @@ class GeocoderRequest
     }
 
     /**
-     * Sets the geocoder request sensor.
+     * Sets the sensor.
      *
-     * @param boolean $sensor TRUE if the geocoder request has a sensor else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\GeocodingRequest If the sensor flag is not valid.
+     * @param boolean $sensor TRUE if it has a sensor else FALSE.
      */
     public function setSensor($sensor)
     {
-        if (!is_bool($sensor)) {
-            throw GeocodingException::invalidGeocoderRequestSensor();
-        }
-
         $this->sensor = $sensor;
-    }
-
-    /**
-     * Checks if the geocoder request is valid.
-     *
-     * @return boolean TRUE if the geocoder request is valid else FALSE.
-     */
-    public function isValid()
-    {
-        return $this->hasAddress() || $this->hasCoordinate();
     }
 }

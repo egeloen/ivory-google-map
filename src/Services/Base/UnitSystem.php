@@ -11,37 +11,16 @@
 
 namespace Ivory\GoogleMap\Services\Base;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * A unit system which describes the google map unit system.
+ * Unit system.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#UnitSystem
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#UnitSystem
  * @author GeLo <geloen.eric@gmail.com>
  */
-class UnitSystem
+class UnitSystem extends AbstractUninstantiableAsset
 {
     const IMPERIAL = 'IMPERIAL';
     const METRIC = 'METRIC';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available unit systems.
-     *
-     * @return array The available unit systems.
-     */
-    public static function getUnitSystems()
-    {
-        return array(
-            self::IMPERIAL,
-            self::METRIC,
-        );
-    }
 }

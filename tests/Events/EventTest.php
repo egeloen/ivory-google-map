@@ -18,17 +18,30 @@ use Ivory\GoogleMap\Events\Event;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EventTest extends \PHPUnit_Framework_TestCase
+class EventTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Events\Event */
-    protected $event;
+    private $event;
+
+    /** @var string */
+    private $instance;
+
+    /** @var string */
+    private $eventName;
+
+    /** @var string */
+    private $handle;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->event = new Event();
+        $this->event = new Event(
+            $this->instance = 'instance',
+            $this->eventName = 'eventName',
+            $this->handle = 'handle'
+        );
     }
 
     /**
@@ -36,88 +49,43 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->handle);
+        unset($this->eventName);
+        unset($this->instance);
         unset($this->event);
     }
 
-    public function testDefaultState()
+    public function testInheritance()
     {
-        $this->assertNull($this->event->getInstance());
-        $this->assertNull($this->event->getEventName());
-        $this->assertNull($this->event->getHandle());
-        $this->assertFalse($this->event->isCapture());
+        $this->assertVariableAssetInstance($this->event);
     }
 
     public function testInitialState()
     {
-        $this->event = new Event('foo', 'bar', 'baz', true);
-
-        $this->assertSame('foo', $this->event->getInstance());
-        $this->assertSame('bar', $this->event->getEventName());
-        $this->assertSame('baz', $this->event->getHandle());
-        $this->assertTrue($this->event->isCapture());
+        $this->assertStringStartsWith('event_', $this->event->getVariable());
+        $this->assertSame($this->instance, $this->event->getInstance());
+        $this->assertSame($this->eventName, $this->event->getEventName());
+        $this->assertSame($this->handle, $this->event->getHandle());
     }
 
-    public function testInstanceWithValidValue()
+    public function testSetInstance()
     {
-        $this->event->setInstance('foo');
+        $this->event->setInstance($instance = 'foo');
 
-        $this->assertSame('foo', $this->event->getInstance());
+        $this->assertSame($instance, $this->event->getInstance());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\EventException
-     * @expectedExceptionMessage The instance of an event must be a string value.
-     */
-    public function testInstanceWithInvalidValue()
+    public function testSetEventName()
     {
-        $this->event->setInstance(true);
+        $this->event->setEventName($eventName = 'foo');
+
+        $this->assertSame($eventName, $this->event->getEventName());
     }
 
-    public function testEventNameWithValidValue()
+    public function testSetHandle()
     {
-        $this->event->setEventName('foo');
+        $this->event->setHandle($handle = 'foo');
 
-        $this->assertSame('foo', $this->event->getEventName());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\EventException
-     * @expectedExceptionMessage The event name of an event must be a string value.
-     */
-    public function testEventNameWithInvalidValue()
-    {
-        $this->event->setEventName(true);
-    }
-
-    public function testHandleWithValidValue()
-    {
-        $this->event->setHandle('foo');
-
-        $this->assertSame('foo', $this->event->getHandle());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\EventException
-     * @expectedExceptionMessage The handle of an event must be a string value.
-     */
-    public function testHandleWithInvalidValue()
-    {
-        $this->event->setHandle(true);
-    }
-
-    public function testCaptureWithValidValue()
-    {
-        $this->event->setCapture(true);
-
-        $this->assertTrue($this->event->isCapture());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\EventException
-     * @expectedExceptionMessage The capture property of an event must be a boolean value.
-     */
-    public function testCaptureWithInvalidValue()
-    {
-        $this->event->setCapture('foo');
+        $this->assertSame($handle, $this->event->getHandle());
     }
 }

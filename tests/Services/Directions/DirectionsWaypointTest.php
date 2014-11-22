@@ -18,17 +18,20 @@ use Ivory\GoogleMap\Services\Directions\DirectionsWaypoint;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsWaypointTest extends \PHPUnit_Framework_TestCase
+class DirectionsWaypointTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Directions\DirectionsWaypoint */
-    protected $directionsWaypoint;
+    private $directionsWaypoint;
+
+    /** @var string */
+    private $location;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->directionsWaypoint = new DirectionsWaypoint();
+        $this->directionsWaypoint = new DirectionsWaypoint($this->location = 'foo');
     }
 
     /**
@@ -36,54 +39,39 @@ class DirectionsWaypointTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->location);
         unset($this->directionsWaypoint);
     }
 
     public function testDefaultState()
     {
-        $this->assertFalse($this->directionsWaypoint->hasLocation());
-        $this->assertFalse($this->directionsWaypoint->hasStopover());
-    }
-
-    public function testLocationWithString()
-    {
-        $this->directionsWaypoint->setLocation('address');
         $this->assertTrue($this->directionsWaypoint->hasLocation());
-        $this->assertEquals($this->directionsWaypoint->getLocation(), 'address');
+        $this->assertSame($this->location, $this->directionsWaypoint->getLocation());
+
+        $this->assertFalse($this->directionsWaypoint->hasStopover());
+        $this->assertNull($this->directionsWaypoint->getStopover());
     }
 
-    public function testLocationWithCoordinate()
+    public function testInitialState()
     {
-        $location = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
+        $this->directionsWaypoint = new DirectionsWaypoint($this->location, $stopover = false);
 
-        $this->directionsWaypoint->setLocation($location);
-
-        $this->assertSame($location, $this->directionsWaypoint->getLocation());
-    }
-
-    public function testLocationWithLatitudeAndLongitude()
-    {
-        $this->directionsWaypoint->setLocation(1.1, 2.1, false);
-
-        $this->assertSame(1.1, $this->directionsWaypoint->getLocation()->getLatitude());
-        $this->assertSame(2.1, $this->directionsWaypoint->getLocation()->getLongitude());
-        $this->assertFalse($this->directionsWaypoint->getLocation()->isNoWrap());
+        $this->assertTrue($this->directionsWaypoint->hasStopover());
+        $this->assertFalse($this->directionsWaypoint->getStopover());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The location setter arguments are invalid.
-     * The available prototypes are :
-     * - function setLocation(string $destination)
-     * - function setLocation(Ivory\GoogleMap\Base\Coordinate $destination)
-     * - function setLocation(double $latitude, double $longitude, boolean $noWrap)
+     * @dataProvider locationProvider
      */
-    public function testLocationWithInvalidValue()
+    public function testSetLocation($location)
     {
-        $this->directionsWaypoint->setLocation(true);
+        $this->directionsWaypoint->setLocation($location);
+
+        $this->assertTrue($this->directionsWaypoint->hasLocation());
+        $this->assertSame($location, $this->directionsWaypoint->getLocation());
     }
 
-    public function testStopoverWithValieValue()
+    public function testSetStopover()
     {
         $this->directionsWaypoint->setStopover(true);
 
@@ -91,32 +79,24 @@ class DirectionsWaypointTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->directionsWaypoint->getStopover());
     }
 
-    public function testStopoverWithNullValue()
+    public function testResetStopover()
     {
-        $this->directionsWaypoint->setStopover(true);
         $this->directionsWaypoint->setStopover(null);
 
         $this->assertFalse($this->directionsWaypoint->hasStopover());
+        $this->assertNull($this->directionsWaypoint->getStopover());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions waypoint stopover flag must be a boolean value.
+     * Gets the location provider.
+     *
+     * @return array The location provider.
      */
-    public function testStopoverWithInvalidValue()
+    public function locationProvider()
     {
-        $this->directionsWaypoint->setStopover('foo');
-    }
-
-    public function testIsValidWithoutLocation()
-    {
-        $this->assertFalse($this->directionsWaypoint->isValid());
-    }
-
-    public function testIsValidWithLocation()
-    {
-        $this->directionsWaypoint->setLocation('foo');
-
-        $this->assertTrue($this->directionsWaypoint->isValid());
+        return array(
+            array('location'),
+            array($this->createCoordinateMock()),
+        );
     }
 }

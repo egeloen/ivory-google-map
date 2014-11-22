@@ -12,23 +12,30 @@
 namespace Ivory\Tests\GoogleMap\Base;
 
 use Ivory\GoogleMap\Base\Point;
+use Ivory\Tests\GoogleMap\AbstractTestCase;
 
 /**
  * Point test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PointTest extends \PHPUnit_Framework_TestCase
+class PointTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Base\Point */
-    protected $point;
+    private $point;
+
+    /** @var float */
+    private $x;
+
+    /** @var float */
+    private $y;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->point = new Point();
+        $this->point = new Point($this->x = -1, $this->y = 1);
     }
 
     /**
@@ -37,52 +44,33 @@ class PointTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->point);
+        unset($this->x);
+        unset($this->y);
     }
 
-    public function testDefaultState()
+    public function testInheritance()
     {
-        $this->assertSame('point_', substr($this->point->getJavascriptVariable(), 0, 6));
-        $this->assertSame(0, $this->point->getX());
-        $this->assertSame(0, $this->point->getY());
+        $this->assertVariableAssetInstance($this->point);
     }
 
     public function testInitialState()
     {
-        $this->point = new Point(1, 2);
-
-        $this->assertSame(1, $this->point->getX());
-        $this->assertSame(2, $this->point->getY());
+        $this->assertStringStartsWith('point_', $this->point->getVariable());
+        $this->assertSame($this->x, $this->point->getX());
+        $this->assertSame($this->y, $this->point->getY());
     }
 
-    public function testXWithValidValue()
+    public function testSetX()
     {
-        $this->point->setX(1);
+        $this->point->setX($x = 10);
 
-        $this->assertSame(1, $this->point->getX());
+        $this->assertSame($x, $this->point->getX());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The x coordinate of a point must be a numeric value.
-     */
-    public function testXWithInvalidValue()
+    public function testSetY()
     {
-        $this->point->setX(true);
-    }
+        $this->point->setY($y = 10);
 
-    public function testYWithValidValue()
-    {
-        $this->point->setY(1);
-
-        $this->assertSame(1, $this->point->getY());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The y coordinate of a point must be a numeric value.
-     */
-    public function testYWithInvalidValue()
-    {
-        $this->point->setY(true);
+        $this->assertSame($y, $this->point->getY());
     }
 }

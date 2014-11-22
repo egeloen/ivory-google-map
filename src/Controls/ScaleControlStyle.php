@@ -11,35 +11,15 @@
 
 namespace Ivory\GoogleMap\Controls;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Scale control style which describes a google map scale control style.
+ * Scale control style.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#ScaleControlStyle
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#ScaleControlStyle
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ScaleControlStyle
+class ScaleControlStyle extends AbstractUninstantiableAsset
 {
     const DEFAULT_ = 'default';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available map scale control styles
-     *
-     * @return array The map scale constrol styles.
-     */
-    public static function getScaleControlStyles()
-    {
-        return array(
-            self::DEFAULT_,
-        );
-    }
 }

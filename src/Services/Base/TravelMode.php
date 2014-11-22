@@ -11,41 +11,18 @@
 
 namespace Ivory\GoogleMap\Services\Base;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * A travel mode which describes the google map travel mode.
+ * Travel mode.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#TravelMode
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#TravelMode
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TravelMode
+class TravelMode extends AbstractUninstantiableAsset
 {
     const BICYCLING = 'BICYCLING';
     const DRIVING = 'DRIVING';
     const WALKING = 'WALKING';
     const TRANSIT = 'TRANSIT';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available travel modes.
-     *
-     * @return array The available travel modes.
-     */
-    public static function getTravelModes()
-    {
-        return array(
-            self::BICYCLING,
-            self::DRIVING,
-            self::WALKING,
-            self::TRANSIT,
-        );
-    }
 }

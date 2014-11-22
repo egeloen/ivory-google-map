@@ -13,39 +13,34 @@ namespace Ivory\GoogleMap\Overlays;
 
 use Ivory\GoogleMap\Assets\AbstractOptionsAsset;
 use Ivory\GoogleMap\Base\Bound;
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Exception\OverlayException;
 
 /**
- * Rectangle which describes a google map rectangle.
+ * Rectangle.
  *
+ * @link https://developers.google.com/maps/documentation/javascript/reference#Rectangle
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Rectangle extends AbstractOptionsAsset implements ExtendableInterface
 {
     /** @var \Ivory\GoogleMap\Base\Bound */
-    protected $bound;
+    private $bound;
 
     /**
      * Creates a rectangle.
+     *
+     * @param \Ivory\GoogleMap\Base\Bound $bound The bound.
      */
-    public function __construct(Bound $bound = null)
+    public function __construct(Bound $bound)
     {
-        parent::__construct();
-
-        $this->setPrefixJavascriptVariable('rectangle_');
-
-        if ($bound === null) {
-            $bound = new Bound(new Coordinate(-1, -1), new Coordinate(1, 1));
-        }
+        parent::__construct('rectangle_');
 
         $this->setBound($bound);
     }
 
     /**
-     * Gets the rectangle bound.
+     * Gets the bound.
      *
-     * @return \Ivory\GoogleMap\Base\Bound The rectangle bound.
+     * @return \Ivory\GoogleMap\Base\Bound The bound.
      */
     public function getBound()
     {
@@ -53,54 +48,20 @@ class Rectangle extends AbstractOptionsAsset implements ExtendableInterface
     }
 
     /**
-     * Sets the rectangle bound.
+     * Sets the bound.
      *
-     * Available prototypes:
-     *  - function setBound(Ivory\GoogleMap\Base\Bound $bound)
-     *  - function setBount(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     *  - function setBound(
-     *     double $southWestLatitude,
-     *     double $southWestLongitude,
-     *     double $northEastLatitude,
-     *     double $northEastLongitude,
-     *     boolean southWestNoWrap = true,
-     *     boolean $northEastNoWrap = true
-     * )
-     *
-     * @throws \Ivory\GoogleMap\Exception\OverlayException If the bound is not valid.
+     * @param \Ivory\GoogleMap\Base\Bound $bound The bound.
      */
-    public function setBound()
+    public function setBound(Bound $bound)
     {
-        $args = func_get_args();
+        $this->bound = $bound;
+    }
 
-        if (isset($args[0]) && ($args[0] instanceof Bound)) {
-            if (!$args[0]->hasCoordinates()) {
-                throw OverlayException::invalidRectangleBoundCoordinates();
-            }
-
-            $this->bound = $args[0];
-        } elseif ((isset($args[0]) && ($args[0] instanceof Coordinate))
-            && (isset($args[1]) && ($args[1] instanceof Coordinate))
-        ) {
-            $this->bound->setSouthWest($args[0]);
-            $this->bound->setNorthEast($args[1]);
-        } elseif ((isset($args[0]) && is_numeric($args[0]))
-            && (isset($args[1]) && is_numeric($args[1]))
-            && (isset($args[2]) && is_numeric($args[2]))
-            && (isset($args[3]) && is_numeric($args[3]))
-        ) {
-            $this->bound->setSouthWest(new Coordinate($args[0], $args[1]));
-            $this->bound->setNorthEast(new Coordinate($args[2], $args[3]));
-
-            if (isset($args[4]) && is_bool($args[4])) {
-                $this->bound->getSouthWest()->setNoWrap($args[4]);
-            }
-
-            if (isset($args[5]) && is_bool($args[5])) {
-                $this->bound->getNorthEast()->setNoWrap($args[5]);
-            }
-        } else {
-            throw OverlayException::invalidRectangleBound();
-        }
+    /**
+     * {@inheritdoc}
+     */
+    public function renderExtend(Bound $bound)
+    {
+        return sprintf('%s.union(%s)', $bound->getVariable(), $this->bound->getVariable());
     }
 }

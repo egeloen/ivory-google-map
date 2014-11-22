@@ -19,59 +19,45 @@ use Ivory\GoogleMap\Services\Base\TravelMode;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsStepTest extends \PHPUnit_Framework_TestCase
+class DirectionsStepTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Services\Directions\DirectionsStep */
-    protected $directionsStep;
+    private $directionsStep;
 
-    /** @var \Ivory\GoogleMap\Services\Base\Distance */
-    protected $distance;
+    /** @var \Ivory\GoogleMap\Services\Base\Distance|\PHPUnit_Framework_MockObject_MockObject */
+    private $distance;
 
-    /** @var \Ivory\GoogleMap\Services\Base\Duration */
-    protected $duration;
+    /** @var \Ivory\GoogleMap\Services\Base\Duration|\PHPUnit_Framework_MockObject_MockObject */
+    private $duration;
 
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $endLocation;
-
-    /** @var string */
-    protected $instructions;
-
-    /** @var \Ivory\GoogleMap\Overlays\EncodedPolyline */
-    protected $encodedPolyline;
-
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $startLocation;
+    /** @var \Ivory\GoogleMap\Base\Coordinate|\PHPUnit_Framework_MockObject_MockObject */
+    private $endLocation;
 
     /** @var string */
-    protected $travelMode;
+    private $instructions;
+
+    /** @var \Ivory\GoogleMap\Overlays\EncodedPolyline|\PHPUnit_Framework_MockObject_MockObject */
+    private $encodedPolyline;
+
+    /** @var \Ivory\GoogleMap\Base\Coordinate|\PHPUnit_Framework_MockObject_MockObject */
+    private $startLocation;
+
+    /** @var string */
+    private $travelMode;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->distance = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Distance')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->duration = $this->getMockBuilder('Ivory\GoogleMap\Services\Base\Duration')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->endLocation = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->instructions = 'instructions';
-        $this->encodedPolyline = $this->getMock('Ivory\GoogleMap\Overlays\EncodedPolyline');
-        $this->startLocation = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->travelMode = TravelMode::DRIVING;
-
         $this->directionsStep = new DirectionsStep(
-            $this->distance,
-            $this->duration,
-            $this->endLocation,
-            $this->instructions,
-            $this->encodedPolyline,
-            $this->startLocation,
-            $this->travelMode
+            $this->distance = $this->createDistanceMock(),
+            $this->duration = $this->createDurationMock(),
+            $this->endLocation = $this->createCoordinateMock(),
+            $this->instructions = 'instructions',
+            $this->encodedPolyline = $this->createEncodedPolylineMock(),
+            $this->startLocation = $this->createCoordinateMock(),
+            $this->travelMode = TravelMode::DRIVING
         );
     }
 
@@ -101,21 +87,52 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->travelMode, $this->directionsStep->getTravelMode());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The step instructions must be a string value.
-     */
-    public function testInstructionsWithInvalidValue()
+    public function testSetDistance()
     {
-        $this->directionsStep->setInstructions(true);
+        $this->directionsStep->setDistance($distance = $this->createDistanceMock());
+
+        $this->assertSame($distance, $this->directionsStep->getDistance());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\DirectionsException
-     * @expectedExceptionMessage The directions step travel mode can only be : BICYCLING, DRIVING, WALKING, TRANSIT.
-     */
-    public function testTravelModeWithInvalidValue()
+    public function testSetDuration()
     {
-        $this->directionsStep->setTravelMode('foo');
+        $this->directionsStep->setDuration($duration = $this->createDurationMock());
+
+        $this->assertSame($duration, $this->directionsStep->getDuration());
+    }
+
+    public function testSetEndLocation()
+    {
+        $this->directionsStep->setEndLocation($endLocation = $this->createCoordinateMock());
+
+        $this->assertSame($endLocation, $this->directionsStep->getEndLocation());
+    }
+
+    public function setSetInstructions()
+    {
+        $this->directionsStep->setInstructions($instructions = 'foo');
+
+        $this->assertSame($instructions, $this->directionsStep->getInstructions());
+    }
+
+    public function testSetEncodedPolyline()
+    {
+        $this->directionsStep->setEncodedPolyline($encodedPolyline = $this->createEncodedPolylineMock());
+
+        $this->assertSame($encodedPolyline, $this->directionsStep->getEncodedPolyline());
+    }
+
+    public function testSetStartLocation()
+    {
+        $this->directionsStep->setStartLocation($startLocation = $this->createCoordinateMock());
+
+        $this->assertSame($startLocation, $this->directionsStep->getStartLocation());
+    }
+
+    public function testSetTravelMode()
+    {
+        $this->directionsStep->setTravelMode($travelMode = TravelMode::BICYCLING);
+
+        $this->assertSame($travelMode, $this->directionsStep->getTravelMode());
     }
 }

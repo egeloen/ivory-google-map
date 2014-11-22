@@ -12,20 +12,20 @@
 namespace Ivory\GoogleMap\Services\DistanceMatrix;
 
 /**
- * A distance matrix response wraps the distance results & the response status.
+ * Distance matrix response row.
  *
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DistanceMatrixResponseRow
  * @author GeLo <geloen.eric@gmail.com>
- * @author Tyler Sommer <sommertm@gmail.com>
  */
 class DistanceMatrixResponseRow
 {
     /** @var array */
-    protected $elements;
+    private $elements;
 
     /**
-     * Create a distance matrix response row.
+     * Creates a distance matrix response row.
      *
-     * @param array $elements The row elements.
+     * @param array $elements The elements.
      */
     public function __construct(array $elements)
     {
@@ -33,9 +33,27 @@ class DistanceMatrixResponseRow
     }
 
     /**
-     * Gets the distance matrix row elements.
+     * Resets the elements.
+     */
+    public function resetElements()
+    {
+        $this->elements = array();
+    }
+
+    /**
+     * Checks if there are elements.
      *
-     * @return array The row elements.
+     * @return boolean TRUE if there are elements else FALSE.
+     */
+    public function hasElements()
+    {
+        return !empty($this->elements);
+    }
+
+    /**
+     * Gets the elements.
+     *
+     * @return array The elements.
      */
     public function getElements()
     {
@@ -43,26 +61,71 @@ class DistanceMatrixResponseRow
     }
 
     /**
-     * Sets the distance matrix row elements.
+     * Sets the elements.
      *
-     * @param array $elements The row elements.
+     * @param array $elements The elements.
      */
     public function setElements(array $elements)
     {
-        $this->elements = array();
+        $this->resetElements();
+        $this->addElements($elements);
+    }
 
+    /**
+     * Adds the elements.
+     *
+     * @param array $elements The elements.
+     */
+    public function addElements(array $elements)
+    {
         foreach ($elements as $element) {
             $this->addElement($element);
         }
     }
 
     /**
-     * Add a distance matrix element.
+     * Removes the elements.
      *
-     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement $element The element to add.
+     * @param array $elements The elements.
+     */
+    public function removeElements(array $elements)
+    {
+        foreach ($elements as $element) {
+            $this->removeElement($element);
+        }
+    }
+
+    /**
+     * Checks if there is an element.
+     *
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement $element The element.
+     *
+     * @return boolean TRUE if there is the element else FALSE.
+     */
+    public function hasElement(DistanceMatrixResponseElement $element)
+    {
+        return in_array($element, $this->elements, true);
+    }
+
+    /**
+     * Adds an element.
+     *
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement $element The element.
      */
     public function addElement(DistanceMatrixResponseElement $element)
     {
-        $this->elements[] = $element;
+        if (!$this->hasElement($element)) {
+            $this->elements[] = $element;
+        }
+    }
+
+    /**
+     * Removes an element.
+     *
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement $element The element.
+     */
+    public function removeElement(DistanceMatrixResponseElement $element)
+    {
+        unset($this->elements[array_search($element, $this->elements, true)]);
     }
 }

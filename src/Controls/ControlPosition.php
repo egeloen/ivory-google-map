@@ -11,13 +11,15 @@
 
 namespace Ivory\GoogleMap\Controls;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Control position which describes a google map control position.
+ * Control position.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#ControlPosition
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#ControlPosition
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ControlPosition
+class ControlPosition extends AbstractUninstantiableAsset
 {
     const BOTTOM_CENTER = 'bottom_center';
     const BOTTOM_LEFT = 'bottom_left';
@@ -31,37 +33,4 @@ class ControlPosition
     const TOP_CENTER = 'top_center';
     const TOP_LEFT = 'top_left';
     const TOP_RIGHT = 'top_right';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available control positions.
-     *
-     * @return array The control positions.
-     */
-    public static function getControlPositions()
-    {
-        return array(
-            self::BOTTOM_CENTER,
-            self::BOTTOM_LEFT,
-            self::BOTTOM_RIGHT,
-            self::LEFT_BOTTOM,
-            self::LEFT_CENTER,
-            self::LEFT_TOP,
-            self::RIGHT_BOTTOM,
-            self::RIGHT_CENTER,
-            self::RIGHT_TOP,
-            self::TOP_CENTER,
-            self::TOP_LEFT,
-            self::TOP_RIGHT,
-        );
-    }
 }

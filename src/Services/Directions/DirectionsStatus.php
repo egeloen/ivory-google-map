@@ -11,13 +11,15 @@
 
 namespace Ivory\GoogleMap\Services\Directions;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * A directions status which describes the google map direction status.
+ * Directions status.
  *
- * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsStatus
+ * @link http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsStatus
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsStatus
+class DirectionsStatus extends AbstractUninstantiableAsset
 {
     const INVALID_REQUEST = 'INVALID_REQUEST';
     const MAX_WAYPOINTS_EXCEEDED = 'MAX_WAYPOINTS_EXCEEDED';
@@ -27,33 +29,4 @@ class DirectionsStatus
     const REQUEST_DENIED = 'REQUEST_DENIED';
     const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
     const ZERO_RESULTS = 'ZERO_RESULTS';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available directions status.
-     *
-     * @return array The available directions status.
-     */
-    public static function getDirectionsStatus()
-    {
-        return array(
-            self::INVALID_REQUEST,
-            self::MAX_WAYPOINTS_EXCEEDED,
-            self::NOT_FOUND,
-            self::OK,
-            self::OVER_QUERY_LIMIT,
-            self::REQUEST_DENIED,
-            self::UNKNOWN_ERROR,
-            self::ZERO_RESULTS,
-        );
-    }
 }

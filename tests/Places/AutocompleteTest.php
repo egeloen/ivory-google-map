@@ -14,16 +14,17 @@ namespace Ivory\Tests\GoogleMap\Places;
 use Ivory\GoogleMap\Places\Autocomplete;
 use Ivory\GoogleMap\Places\AutocompleteComponentRestriction;
 use Ivory\GoogleMap\Places\AutocompleteType;
+use Ivory\Tests\GoogleMap\AbstractTestCase;
 
 /**
  * Autocomplete test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteTest extends \PHPUnit_Framework_TestCase
+class AutocompleteTest extends AbstractTestCase
 {
     /** @var \Ivory\GoogleMap\Places\Autocomplete */
-    protected $autocomplete;
+    private $autocomplete;
 
     /**
      * {@inheritdoc}
@@ -41,241 +42,405 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         unset($this->autocomplete);
     }
 
+    public function testInheritance()
+    {
+        $this->assertVariableAssetInstance($this->autocomplete);
+    }
+
     public function testDefaultState()
     {
-        $this->assertSame('place_input', $this->autocomplete->getInputId());
-        $this->assertFalse($this->autocomplete->hasBound());
-        $this->assertFalse($this->autocomplete->hasTypes());
-        $this->assertFalse($this->autocomplete->hasComponentRestrictions());
-        $this->assertFalse($this->autocomplete->hasValue());
-        $this->assertSame(array('type' => 'text', 'placeholder' => 'off'), $this->autocomplete->getInputAttributes());
-        $this->assertFalse($this->autocomplete->isAsync());
+        $this->assertStringStartsWith('places_autocomplete_', $this->autocomplete->getVariable());
+        $this->assertSame($this->autocomplete->getVariable(), $this->autocomplete->getInputId());
+        $this->assertNoInputAttributes();
+        $this->assertNoValue();
+        $this->assertNoBound();
+        $this->assertNoTypes();
+        $this->assertNoComponentRestrictions();
         $this->assertSame('en', $this->autocomplete->getLanguage());
     }
 
-    public function testInputIdWithValidValue()
+    public function testSetInputId()
     {
-        $this->autocomplete->setInputId('input');
+        $this->autocomplete->setInputId($inputId = 'foo');
 
-        $this->assertSame('input', $this->autocomplete->getInputId());
+        $this->assertSame($inputId, $this->autocomplete->getInputId());
+    }
+
+    public function testSetInputAttributes()
+    {
+        $this->autocomplete->setInputAttributes($inputAttributes = array('foo' => 'bar'));
+
+        $this->assertInputAttributes($inputAttributes);
+    }
+
+    public function testAddInputAttributes()
+    {
+        $this->autocomplete->setInputAttributes($inputAttributes = array('foo' => 'bar'));
+        $this->autocomplete->addInputAttributes($newInputAttributes = array('baz' => 'bat'));
+
+        $this->assertInputAttributes(array_merge($inputAttributes, $newInputAttributes));
+    }
+
+    public function testRemoveInputAttributes()
+    {
+        $this->autocomplete->setInputAttributes($inputAttributes = array('foo' => 'bar'));
+        $this->autocomplete->removeInputAttributes(array_keys($inputAttributes));
+
+        $this->assertNoInputAttributes();
+    }
+
+    public function testResetInputAttributes()
+    {
+        $this->autocomplete->setInputAttributes(array('foo' => 'bar'));
+        $this->autocomplete->resetInputAttributes();
+
+        $this->assertNoInputAttributes();
+    }
+
+    public function testSetInputAttribute()
+    {
+        $this->autocomplete->setInputAttribute($name = 'foo', $value = 'bar');
+
+        $this->assertInputAttribute($name, $value);
+    }
+
+    public function testRemoveInputAttribute()
+    {
+        $this->autocomplete->setInputAttribute($name = 'foo', 'bar');
+        $this->autocomplete->removeInputAttribute($name);
+
+        $this->assertNoInputAttribute($name);
+    }
+
+    public function testValue()
+    {
+        $this->autocomplete->setValue($value = 'value');
+
+        $this->assertValue($value);
+    }
+
+    public function testResetValue()
+    {
+        $this->autocomplete->setValue('value');
+        $this->autocomplete->setValue(null);
+
+        $this->assertNoValue();
+    }
+
+    public function testSetBound()
+    {
+        $this->autocomplete->setBound($bound = $this->createBoundMock());
+
+        $this->assertBound($bound);
+    }
+
+    public function testResetBound()
+    {
+        $this->autocomplete->setBound($this->createBoundMock());
+        $this->autocomplete->setBound(null);
+
+        $this->assertNoBound();
+    }
+
+    public function testSetTypes()
+    {
+        $this->autocomplete->setTypes($types = array(AutocompleteType::CITIES));
+
+        $this->assertTypes($types);
+    }
+
+    public function testAddTypes()
+    {
+        $this->autocomplete->setTypes($types = array(AutocompleteType::CITIES));
+        $this->autocomplete->addTypes($newTypes = array(AutocompleteType::ESTABLISHMENT));
+
+        $this->assertTypes(array_merge($types, $newTypes));
+    }
+
+    public function testRemoveTypes()
+    {
+        $this->autocomplete->setTypes($types = array(AutocompleteType::CITIES));
+        $this->autocomplete->removeTypes($types);
+
+        $this->assertNoTypes();
+    }
+
+    public function testResetTypes()
+    {
+        $this->autocomplete->setTypes(array(AutocompleteType::CITIES));
+        $this->autocomplete->resetTypes();
+
+        $this->assertNoTypes();
+    }
+
+    public function testAddType()
+    {
+        $this->autocomplete->addType($type = AutocompleteType::CITIES);
+
+        $this->assertType($type);
+    }
+
+    public function testAddTypeUnicity()
+    {
+        $this->autocomplete->resetTypes();
+        $this->autocomplete->addType($type = AutocompleteType::CITIES);
+        $this->autocomplete->addType($type);
+
+        $this->assertTypes(array($type));
+    }
+
+    public function testRemoveType()
+    {
+        $this->autocomplete->addType($type = AutocompleteType::CITIES);
+        $this->autocomplete->removeType($type);
+
+        $this->assertNoType($type);
+    }
+
+    public function testSetComponentRestrictions()
+    {
+        $this->autocomplete->setComponentRestrictions(
+            $componentRestrictions = array(AutocompleteComponentRestriction::COUNTRY => 'france')
+        );
+
+        $this->assertComponentRestrictions($componentRestrictions);
+    }
+
+    public function testAddComponentRestrictions()
+    {
+        $this->autocomplete->setComponentRestrictions(
+            $componentRestrictions = array(AutocompleteComponentRestriction::COUNTRY => 'france')
+        );
+
+        $this->autocomplete->addComponentRestrictions($newComponentRestrictions = array('bar' => 'baz'));
+
+        $this->assertComponentRestrictions(array_merge($componentRestrictions, $newComponentRestrictions));
+    }
+
+    public function testRemoveComponentRestrictions()
+    {
+        $this->autocomplete->setComponentRestrictions(
+            $componentRestrictions = array(AutocompleteComponentRestriction::COUNTRY => 'france')
+        );
+
+        $this->autocomplete->removeComponentRestrictions(array_keys($componentRestrictions));
+
+        $this->assertNoComponentRestrictions();
+    }
+
+    public function testResetComponentRestrictions()
+    {
+        $this->autocomplete->setComponentRestrictions(array(AutocompleteComponentRestriction::COUNTRY => 'france'));
+        $this->autocomplete->resetComponentRestrictions();
+
+        $this->assertNoComponentRestrictions();
+    }
+
+    public function testSetComponentRestriction()
+    {
+        $this->autocomplete->setComponentRestriction($name = AutocompleteComponentRestriction::COUNTRY, $value = 'france');
+
+        $this->assertComponentRestriction($name, $value);
+    }
+
+    public function testRemoveComponentRestriction()
+    {
+        $this->autocomplete->setComponentRestriction($name = AutocompleteComponentRestriction::COUNTRY, 'france');
+        $this->autocomplete->removeComponentRestriction($name);
+
+        $this->assertNoComponentRestriction($name);
+    }
+
+    public function testSetLanguage()
+    {
+        $this->autocomplete->setLanguage($language = 'fr');
+
+        $this->assertSame($language, $this->autocomplete->getLanguage());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete input ID must be a string value.
+     * Asserts there are input attributes.
+     *
+     * @param array $inputAttributes The input attributes.
      */
-    public function testInputIdWithInvalidValue()
+    private function assertInputAttributes($inputAttributes)
     {
-        $this->autocomplete->setInputId(true);
+        $this->assertInternalType('array', $inputAttributes);
+
+        $this->assertTrue($this->autocomplete->hasInputAttributes());
+        $this->assertSame($inputAttributes, $this->autocomplete->getInputAttributes());
+
+        foreach ($inputAttributes as $name => $value) {
+            $this->assertInputAttribute($name, $value);
+        }
     }
 
-    public function testBoundWithBound()
+    /**
+     * Asserts there is an input attribute.
+     *
+     * @param string $name  The input attribute name.
+     * @param string $value The input attribute value.
+     */
+    private function assertInputAttribute($name, $value)
     {
-        $bound = $this->getMock('Ivory\GoogleMap\Base\Bound');
-        $this->autocomplete->setBound($bound);
+        $this->assertTrue($this->autocomplete->hasInputAttribute($name));
+        $this->assertSame($value, $this->autocomplete->getInputAttribute($name));
+    }
 
+    /**
+     * Asserts there is a value.
+     *
+     * @param string $value The value.
+     */
+    private function assertValue($value)
+    {
+        $this->assertTrue($this->autocomplete->hasValue());
+        $this->assertSame($value, $this->autocomplete->getValue());
+    }
+
+    /**
+     * Asserts there is a bound.
+     *
+     * @param \Ivory\GoogleMap\Base\Bound $bound The bound.
+     */
+    private function assertBound($bound)
+    {
+        $this->assertBoundInstance($bound);
+
+        $this->assertTrue($this->autocomplete->hasBound());
         $this->assertSame($bound, $this->autocomplete->getBound());
     }
 
-    public function testBoundWithCoordinates()
-    {
-        $southWestCoordinate = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $northEastCoordinate = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-
-        $this->autocomplete->setBound($southWestCoordinate, $northEastCoordinate);
-
-        $this->assertSame($southWestCoordinate, $this->autocomplete->getBound()->getSouthWest());
-        $this->assertSame($northEastCoordinate, $this->autocomplete->getBound()->getNorthEast());
-    }
-
-    public function testBoundWithLatitudesAndLongitudes()
-    {
-        $this->autocomplete->setBound(1, 2, 3, 4, true, false);
-
-        $this->assertSame(1, $this->autocomplete->getBound()->getSouthWest()->getLatitude());
-        $this->assertSame(2, $this->autocomplete->getBound()->getSouthWest()->getLongitude());
-        $this->assertTrue($this->autocomplete->getBound()->getSouthWest()->isNoWrap());
-
-        $this->assertEquals(3, $this->autocomplete->getBound()->getNorthEast()->getLatitude());
-        $this->assertEquals(4, $this->autocomplete->getBound()->getNorthEast()->getLongitude());
-        $this->assertFalse($this->autocomplete->getBound()->getNorthEast()->isNoWrap());
-    }
-
-    public function testBoundWithNullValue()
-    {
-        $this->autocomplete->setBound(1, 2, 3, 4);
-        $this->autocomplete->setBound(null);
-
-        $this->assertNull($this->autocomplete->getBound());
-    }
-
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The bound setter arguments is invalid.
-     * The available prototypes are :
-     * - function setBound(Ivory\GoogleMap\Base\Bound $bound)
-     * - function setBount(Ivory\GoogleMap\Base\Coordinate $southWest, Ivory\GoogleMap\Base\Coordinate $northEast)
-     * - function setBound(
-     *     double $southWestLatitude,
-     *     double $southWestLongitude,
-     *     double $northEastLatitude,
-     *     double $northEastLongitude,
-     *     boolean southWestNoWrap = true,
-     *     boolean $northEastNoWrap = true
-     * )
+     * Asserts there are types.
+     *
+     * @param array $types The types.
      */
-    public function testBoundWithInvalidValue()
+    private function assertTypes($types)
     {
-        $this->autocomplete->setBound('foo');
-    }
-
-    public function testTypesWithValidTypes()
-    {
-        $types = array(AutocompleteType::ESTABLISHMENT, AutocompleteType::GEOCODE);
-        $this->autocomplete->setTypes($types);
-
-        $this->assertSame($types, $this->autocomplete->getTypes());
+        $this->assertInternalType('array', $types);
 
         $this->assertTrue($this->autocomplete->hasTypes());
-        $this->assertTrue($this->autocomplete->hasType(AutocompleteType::ESTABLISHMENT));
+        $this->assertSame($types, $this->autocomplete->getTypes());
+
+        foreach ($types as $type) {
+            $this->assertType($type);
+        }
     }
 
     /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete type can only be: establishment, geocode, (regions), (cities).
+     * Asserts there is a type.
+     *
+     * @param string $type The type.
      */
-    public function testAddTypeWithInvalidType()
+    private function assertType($type)
     {
-        $this->autocomplete->addType('foo');
+        $this->assertTrue($this->autocomplete->hasType($type));
     }
 
     /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete type "establishment" already exists.
+     * Asserts there are component restrictions.
+     *
+     * @param array $componentRestrictions The component restrictions.
      */
-    public function testAddTypeWithExistingType()
+    private function assertComponentRestrictions($componentRestrictions)
     {
-        $this->autocomplete->addType(AutocompleteType::ESTABLISHMENT);
-        $this->autocomplete->addType(AutocompleteType::ESTABLISHMENT);
-    }
-
-    public function testRemoveTypeWithValidType()
-    {
-        $this->autocomplete->addType(AutocompleteType::ESTABLISHMENT);
-        $this->autocomplete->removeType(AutocompleteType::ESTABLISHMENT);
-
-        $this->assertFalse($this->autocomplete->hasType(AutocompleteType::ESTABLISHMENT));
-    }
-
-    /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete type "establishment" does not exist.
-     */
-    public function testRemoveTypeWithNonExistingType()
-    {
-        $this->autocomplete->removeType(AutocompleteType::ESTABLISHMENT);
-    }
-
-    public function testComponentRestrictionsWithValidComponentRestrictions()
-    {
-        $componentRestrictions = array(AutocompleteComponentRestriction::COUNTRY => 'fr');
-        $this->autocomplete->setComponentRestrictions($componentRestrictions);
-
-        $this->assertSame($componentRestrictions, $this->autocomplete->getComponentRestrictions());
+        $this->assertInternalType('array', $componentRestrictions);
 
         $this->assertTrue($this->autocomplete->hasComponentRestrictions());
         $this->assertSame($componentRestrictions, $this->autocomplete->getComponentRestrictions());
 
-        $this->assertTrue($this->autocomplete->hasComponentRestriction(AutocompleteComponentRestriction::COUNTRY));
-        $this->assertSame(
-            $componentRestrictions[AutocompleteComponentRestriction::COUNTRY],
-            $this->autocomplete->getComponentRestriction(AutocompleteComponentRestriction::COUNTRY)
-        );
+        foreach ($componentRestrictions as $name => $value) {
+            $this->assertComponentRestriction($name, $value);
+        }
     }
 
     /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete component restriction type "country" does not exist.
+     * Asserts there is a component restriction.
+     *
+     * @param string $name  The component restriction name.
+     * @param string $value The component restriction value.
      */
-    public function testComponentRestrictionsWithInvalidComponentRestrictions()
+    private function assertComponentRestriction($name, $value)
     {
-        $this->autocomplete->getComponentRestriction(AutocompleteComponentRestriction::COUNTRY);
+        $this->assertTrue($this->autocomplete->hasComponentRestriction($name));
+        $this->assertSame($value, $this->autocomplete->getComponentRestriction($name));
     }
 
     /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete component restriction can only be: country.
+     * Asserts there are no input attributes.
      */
-    public function testAddComponentRestrictionWithInvalidComponentRestrictions()
+    private function assertNoInputAttributes()
     {
-        $this->autocomplete->addComponentRestriction('foo', 'bar');
+        $this->assertFalse($this->autocomplete->hasInputAttributes());
+        $this->assertEmpty($this->autocomplete->getInputAttributes());
     }
 
     /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete component restriction type "country" already exists.
+     * Asserts there is no input attribute.
+     *
+     * @param string $name The input attribute name.
      */
-    public function testAddComponentRestrictionWithExistingComponentRestriction()
+    private function assertNoInputAttribute($name)
     {
-        $this->autocomplete->addComponentRestriction(AutocompleteComponentRestriction::COUNTRY, 'foo');
-        $this->autocomplete->addComponentRestriction(AutocompleteComponentRestriction::COUNTRY, 'bar');
-    }
-
-    public function testRemoveComponentRestrictionWithValidComponentRestriction()
-    {
-        $this->autocomplete->addComponentRestriction(AutocompleteComponentRestriction::COUNTRY, 'foo');
-        $this->autocomplete->removeComponentRestriction(AutocompleteComponentRestriction::COUNTRY);
-
-        $this->assertFalse($this->autocomplete->hasComponentRestriction(AutocompleteComponentRestriction::COUNTRY));
+        $this->assertFalse($this->autocomplete->hasInputAttribute($name));
+        $this->assertNull($this->autocomplete->getInputAttribute($name));
     }
 
     /**
-     * @expectedException Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The place autocomplete component restriction type "country" does not exist.
+     * Asserts there is no value.
      */
-    public function testRemoveComponentRestrictionWithNonExistingComponentRestriction()
+    private function assertNoValue()
     {
-        $this->autocomplete->removeComponentRestriction(AutocompleteComponentRestriction::COUNTRY);
-    }
-
-    public function testInputAttributesWithValidValue()
-    {
-        $this->autocomplete->setInputAttributes(array('foo' => 'bar'));
-
-        $inputAttributes = $this->autocomplete->getInputAttributes();
-
-        $this->assertArrayHasKey('foo', $inputAttributes);
-        $this->assertSame('bar', $inputAttributes['foo']);
-    }
-
-    public function testInputAttributesWithNullValue()
-    {
-        $this->autocomplete->setInputAttribute('foo', 'bar');
-        $this->autocomplete->setInputAttribute('foo', null);
-
-        $this->assertArrayNotHasKey('foo', $this->autocomplete->getInputAttributes());
-    }
-
-    public function testAsyncWithValidValue()
-    {
-        $this->autocomplete->setAsync(true);
-
-        $this->assertTrue($this->autocomplete->isAsync());
+        $this->assertFalse($this->autocomplete->hasValue());
+        $this->assertNull($this->autocomplete->getValue());
     }
 
     /**
-     * @expectedException \Ivory\GoogleMap\Exception\PlaceException
-     * @expectedExceptionMessage The asynchronous load of a place autocomplete must be a boolean value.
+     * Asserts there is no bound.
      */
-    public function testAsyncWithInvalidValue()
+    private function assertNoBound()
     {
-        $this->autocomplete->setAsync('foo');
+        $this->assertFalse($this->autocomplete->hasBound());
+        $this->assertNull($this->autocomplete->getBound());
     }
 
-    public function testLanguage()
+    /**
+     * Asserts there are no types.
+     */
+    private function assertNoTypes()
     {
-        $this->autocomplete->setLanguage('fr');
+        $this->assertFalse($this->autocomplete->hasTypes());
+        $this->assertEmpty($this->autocomplete->getTypes());
+    }
 
-        $this->assertSame('fr', $this->autocomplete->getLanguage());
+    /**
+     * Asserts there is no type.
+     *
+     * @param string $type The type.
+     */
+    private function assertNoType($type)
+    {
+        $this->assertFalse($this->autocomplete->hasType($type));
+    }
+
+    /**
+     * Asserts there are no component restrictions.
+     */
+    private function assertNoComponentRestrictions()
+    {
+        $this->assertFalse($this->autocomplete->hasComponentRestrictions());
+        $this->assertEmpty($this->autocomplete->getComponentRestrictions());
+    }
+
+    /**
+     * Asserts there is no component restriction.
+     *
+     * @param string $name The component restriction name.
+     */
+    private function assertNoComponentRestriction($name)
+    {
+        $this->assertFalse($this->autocomplete->hasComponentRestriction($name));
+        $this->assertNull($this->autocomplete->getComponentRestriction($name));
     }
 }

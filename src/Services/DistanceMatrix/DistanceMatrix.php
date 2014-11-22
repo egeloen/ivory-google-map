@@ -11,104 +11,76 @@
 
 namespace Ivory\GoogleMap\Services\DistanceMatrix;
 
+use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Services\AbstractService;
-use Ivory\GoogleMap\Exception\DistanceMatrixException;
 use Ivory\GoogleMap\Services\Base\Distance;
 use Ivory\GoogleMap\Services\Base\Duration;
-use Widop\HttpAdapter\HttpAdapterInterface;
+use Ivory\GoogleMap\Services\BusinessAccount;
+use Ivory\GoogleMap\Services\Utils\XmlParser;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
- * DistanceMatrix service.
+ * Distance matrix service.
  *
  * @author GeLo <geloen.eric@gmail.com>
- * @author Tyler Sommer <sommertm@gmail.com>
  */
 class DistanceMatrix extends AbstractService
 {
     /**
-     * Creates a distance matrix service.
-     *
-     * @param \Widop\HttpAdapter\HttpAdapterInterface $httpAdapter The http adapter.
+     * {@inheritdoc}
      */
-    public function __construct(HttpAdapterInterface $httpAdapter)
-    {
-        parent::__construct($httpAdapter, 'http://maps.googleapis.com/maps/api/distancematrix');
+    public function __construct(
+        HttpAdapterInterface $httpAdapter,
+        $url = 'http://maps.googleapis.com/maps/api/distancematrix',
+        $https = false,
+        $format = self::FORMAT_JSON,
+        XmlParser $xmlParser = null,
+        BusinessAccount $businessAccount = null
+    ) {
+        parent::__construct($httpAdapter, $url, $https, $format, $xmlParser, $businessAccount);
     }
 
     /**
-     * Processes the given request.
+     * Processes the request.
      *
-     * Available prototypes:
-     * - function process(array $origins, array $destinations)
-     * - function process(Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest $request)
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest $request The request.
      *
-     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the request is not valid (prototypes).
+     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponse The response.
      */
-    public function process()
+    public function process(DistanceMatrixRequest $request)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof DistanceMatrixRequest)) {
-            $distanceMatrixRequest = $args[0];
-        } elseif ((isset($args[0]) && is_array($args[0])) && (isset($args[1]) && is_array($args[1]))) {
-            $distanceMatrixRequest = new DistanceMatrixRequest();
-
-            $distanceMatrixRequest->setOrigins($args[0]);
-            $distanceMatrixRequest->setDestinations($args[1]);
-        } else {
-            throw DistanceMatrixException::invalidDistanceMatrixRequestParameters();
-        }
-
-        if (!$distanceMatrixRequest->isValid()) {
-            throw DistanceMatrixException::invalidDistanceMatrixRequest();
-        }
-
-        $response = $this->send($this->generateUrl($distanceMatrixRequest));
-        $distanceMatrixResponse = $this->buildDistanceMatrixResponse($this->parse($response->getBody()));
-
-        return $distanceMatrixResponse;
+        return $this->buildResponse($this->parse(
+            (string) $this->getHttpAdapter()->get($this->generateUrl($request))->getBody()
+        ));
     }
 
     /**
-     * Generates distance matrix URL API according to the request.
+     * Generates the url.
      *
-     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest $distanceMatrixRequest The distance matrix request.
+     * @param \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixRequest $distanceMatrixRequest The request.
      *
-     * @return string The generated URL.
+     * @return string The generated url.
      */
     protected function generateUrl(DistanceMatrixRequest $distanceMatrixRequest)
     {
-        $httpQuery = array(
-            'origins'      => array(),
-            'destinations' => array(),
-        );
-
+        $origins = array();
         foreach ($distanceMatrixRequest->getOrigins() as $origin) {
-            if (is_string($origin)) {
-                $httpQuery['origins'][] = $origin;
-            } else {
-                $httpQuery['origins'][] = sprintf(
-                    '%s,%s',
-                    $origin->getLatitude(),
-                    $origin->getLongitude()
-                );
-            }
+            $origins[] = $origin instanceof Coordinate
+                ? $origin->getLatitude().','.$origin->getLongitude()
+                : $origin;
         }
 
+        $destinations = array();
         foreach ($distanceMatrixRequest->getDestinations() as $destination) {
-            if (is_string($destination)) {
-                $httpQuery['destinations'][] = $destination;
-            } else {
-                $httpQuery['destinations'][] = sprintf(
-                    '%s,%s',
-                    $destination->getLatitude(),
-                    $destination->getLongitude()
-                );
-            }
+            $destinations[] = $destination instanceof Coordinate
+                ? $destination->getLatitude().','.$destination->getLongitude()
+                : $destination;
         }
 
-        $httpQuery['origins'] = implode('|', $httpQuery['origins']);
-        $httpQuery['destinations'] = implode('|', $httpQuery['destinations']);
+        $httpQuery = array(
+            'origins'      => implode('|', $origins),
+            'destinations' => implode('|', $destinations),
+        );
 
         if ($distanceMatrixRequest->hasTravelMode()) {
             $httpQuery['mode'] = strtolower($distanceMatrixRequest->getTravelMode());
@@ -136,129 +108,121 @@ class DistanceMatrix extends AbstractService
 
         $httpQuery['sensor'] = $distanceMatrixRequest->hasSensor() ? 'true' : 'false';
 
-        $url = sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));
-
-        return $this->signUrl($url);
+        return $this->signUrl($this->getUrl().'/'.$this->getFormat().'?'.http_build_query($httpQuery));
     }
 
     /**
-     * Parses & normalizes the distance matrix API result response.
+     * Parses the body.
      *
-     * @param string $response The distance matrix API response.
+     * @param string $body The body.
      *
-     * @return \stdClass The parsed & normalized distance matrix response.
+     * @return array The parsed response.
      */
-    protected function parse($response)
+    protected function parse($body)
     {
-        if ($this->format === 'json') {
-            return $this->parseJSON($response);
-        }
-
-        return $this->parseXML($response);
+        return $this->getFormat() === self::FORMAT_JSON ? $this->parseJson($body) : $this->parseXml($body);
     }
 
     /**
-     * Parses & normalizes a JSON distance matrix API result response.
+     * Parses the json body.
      *
-     * @param string $response The distance matrix API JSON response.
+     * @param string $response The json body.
      *
-     * @return \stdClass The parsed & normalized distance matrix response.
+     * @return array The parsed json body.
      */
-    protected function parseJSON($response)
+    protected function parseJson($response)
     {
-        return json_decode($response);
+        return json_decode($response, true);
     }
 
     /**
-     * Parses & normalizes an XML distance matrix API result response.
+     * Parses the xml body.
      *
-     * @param string $response The distance matrix API XML response.
+     * @param string $response The xml body.
      *
-     * @return \stdClass The parsed & normalized distance matrix response.
+     * @return array The parsed xml body.
      */
-    protected function parseXML($response)
+    protected function parseXml($response)
     {
-        $rules = array(
-            'destination_address' => 'destination_addresses',
-            'element'             => 'elements',
-            'origin_address'      => 'origin_addresses',
-            'row'                 => 'rows',
+        return $this->getXmlParser()->parse(
+            $response,
+            array(
+                'destination_address' => 'destination_addresses',
+                'element'             => 'elements',
+                'origin_address'      => 'origin_addresses',
+                'row'                 => 'rows',
+            )
         );
-
-        return $this->xmlParser->parse($response, $rules);
     }
 
     /**
-     * Builds the distance matrix response according to the normalized distance matrix API results.
+     * Builds the response.
      *
-     * @param \stdClass $distanceMatrixResponse The normalized distance matrix response.
+     * @param array $response The response.
      *
-     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponse The built distance matrix response.
+     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponse The built response.
      */
-    protected function buildDistanceMatrixResponse(\stdClass $distanceMatrixResponse)
+    protected function buildResponse(array $response)
     {
-        $status = $distanceMatrixResponse->status;
-        $destinations = $distanceMatrixResponse->destination_addresses;
-        $origins = $distanceMatrixResponse->origin_addresses;
-        $rows = $this->buildDistanceMatrixRows($distanceMatrixResponse->rows);
-
-        return new DistanceMatrixResponse($status, $origins, $destinations, $rows);
+        return new DistanceMatrixResponse(
+            $response['status'],
+            $response['origin_addresses'],
+            $response['destination_addresses'],
+            $this->buildRows($response['rows'])
+        );
     }
 
     /**
-     * Builds the distance matrix response rows according to the normalized distance matrix API results.
+     * Builds the rows.
      *
-     * @param array $rows The normalized distance matrix response rows.
+     * @param array $rows The rows.
      *
-     * @return array The built distance matrix response rows.
+     * @return array The built rows.
      */
-    protected function buildDistanceMatrixRows($rows)
+    protected function buildRows($rows)
     {
         $results = array();
 
         foreach ($rows as $row) {
-            $results[] = $this->buildDistanceMatrixRow($row);
+            $results[] = $this->buildRow($row);
         }
 
         return $results;
     }
 
     /**
-     * Builds a distance matrix response row according to the normalized distance matrix API response row.
+     * Builds a row.
      *
-     * @param \stdClass $row The normalized distance matrix response row.
+     * @param array $row The row.
      *
-     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseRow The built distance matrix response row.
+     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseRow The built row.
      */
-    protected function buildDistanceMatrixRow($row)
+    protected function buildRow(array $row)
     {
         $elements = array();
 
-        foreach ($row->elements as $element) {
-            $elements[] = $this->buildDistanceMatrixResponseElement($element);
+        foreach ($row['elements'] as $element) {
+            $elements[] = $this->buildResponseElement($element);
         }
 
         return new DistanceMatrixResponseRow($elements);
     }
 
     /**
-     * Builds a distance matrix response element according to the normalized distance matrix API response elements.
+     * Builds a response element.
      *
-     * @param \stdClass $element The normalized distance matrix response element.
+     * @param array $element The response element.
      *
-     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement The built distance matrix response element.
+     * @return \Ivory\GoogleMap\Services\DistanceMatrix\DistanceMatrixResponseElement The built response element.
      */
-    protected function buildDistanceMatrixResponseElement($element)
+    protected function buildResponseElement(array $element)
     {
-        $status = $element->status;
-        $distance = null;
-        $duration = null;
+        $isStatusOk = $element['status'] === DistanceMatrixElementStatus::OK;
 
-        if ($element->status === DistanceMatrixElementStatus::OK) {
-            $distance = new Distance($element->distance->text, $element->distance->value);
-            $duration = new Duration($element->duration->text, $element->duration->value);
-        }
-
-        return new DistanceMatrixResponseElement($status, $distance, $duration);
+        return new DistanceMatrixResponseElement(
+            $element['status'],
+            $isStatusOk ? new Distance($element['distance']['text'], $element['distance']['value']) : null,
+            $isStatusOk ? new Duration($element['duration']['text'], $element['duration']['value']) : null
+        );
     }
 }

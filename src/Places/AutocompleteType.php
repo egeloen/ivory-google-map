@@ -11,40 +11,18 @@
 
 namespace Ivory\GoogleMap\Places;
 
+use Ivory\GoogleMap\Assets\AbstractUninstantiableAsset;
+
 /**
- * Place autocomplete type.
+ * Autocomplete type.
  *
+ * @link http://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteType
+class AutocompleteType extends AbstractUninstantiableAsset
 {
     const ESTABLISHMENT = 'establishment';
     const GEOCODE = 'geocode';
     const REGIONS = '(regions)';
     const CITIES = '(cities)';
-
-    /**
-     * Disabled constructor.
-     *
-     * @codeCoverageIgnore
-     */
-    final private function __construct()
-    {
-
-    }
-
-    /**
-     * Gets the available autocomplete types.
-     *
-     * @return array The available autocomplete types.
-     */
-    public static function getAvailableAutocompleteTypes()
-    {
-        return array(
-            self::ESTABLISHMENT,
-            self::GEOCODE,
-            self::REGIONS,
-            self::CITIES,
-        );
-    }
 }

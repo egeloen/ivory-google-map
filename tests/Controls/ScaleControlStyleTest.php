@@ -18,12 +18,15 @@ use Ivory\GoogleMap\Controls\ScaleControlStyle;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ScaleControlStyleTest extends \PHPUnit_Framework_TestCase
+class ScaleControlStyleTest extends AbstractTestCase
 {
-    public function testScaleControlStyles()
+    public function testInheritance()
     {
-        $expected = array(ScaleControlStyle::DEFAULT_);
+        $this->assertUninstantiableAssetInstance('Ivory\GoogleMap\Controls\ScaleControlStyle');
+    }
 
-        $this->assertSame($expected, ScaleControlStyle::getScaleControlStyles());
+    public function testConstants()
+    {
+        $this->assertSame('default', ScaleControlStyle::DEFAULT_);
     }
 }
