@@ -53,6 +53,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->distanceMatrixRequest->hasTravelMode());
         $this->assertFalse($this->distanceMatrixRequest->hasUnitSystem());
         $this->assertFalse($this->distanceMatrixRequest->hasSensor());
+        $this->assertFalse($this->distanceMatrixRequest->hasDepartureTime());
     }
 
     public function testAvoidHightwaysWithValidValue()
@@ -320,6 +321,39 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
     public function testSensorWithInvalidValue()
     {
         $this->distanceMatrixRequest->setSensor('foo');
+    }
+
+    public function testDepartureTimeWithValidValue()
+    {
+        $this->distanceMatrixRequest->setDepartureTime(time() + 10);
+
+        $this->assertTrue($this->distanceMatrixRequest->hasDepartureTime());
+    }
+
+    public function testDepartureTimeWithNullValue()
+    {
+        $this->distanceMatrixRequest->setDepartureTime(time() + 10);
+        $this->distanceMatrixRequest->setDepartureTime(null);
+
+        $this->assertNull($this->distanceMatrixRequest->getDepartureTime());
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
+     * @expectedExceptionMessage The distance matrix request departure time must be a timestamp subsequent to current time.
+     */
+    public function testDepartureTimeWithInvalidFormat()
+    {
+        $this->distanceMatrixRequest->setDepartureTime('foo');
+    }
+
+    /**
+     * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
+     * @expectedExceptionMessage The distance matrix request departure time must be a timestamp subsequent to current time.
+     */
+    public function testDepartureTimeWithAnteriorTimestamp()
+    {
+        $this->distanceMatrixRequest->setDepartureTime(time() - 1);
     }
 
     public function testIsValid()

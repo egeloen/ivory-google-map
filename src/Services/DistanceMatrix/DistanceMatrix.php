@@ -134,6 +134,10 @@ class DistanceMatrix extends AbstractService
             $httpQuery['language'] = $distanceMatrixRequest->getLanguage();
         }
 
+        if ($distanceMatrixRequest->hasDepartureTime()) {
+            $httpQuery['departure_time'] = $distanceMatrixRequest->getDepartureTime();
+        }
+
         $httpQuery['sensor'] = $distanceMatrixRequest->hasSensor() ? 'true' : 'false';
 
         $url = sprintf('%s/%s?%s', $this->getUrl(), $this->getFormat(), http_build_query($httpQuery));

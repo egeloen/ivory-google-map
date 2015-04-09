@@ -208,6 +208,20 @@ class DistanceMatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('url', $method->invoke($this->service, $url));
     }
 
+    public function testGenerateUrlWithDepartureTime()
+    {
+        $timestamp = time();
+        $request = new DistanceMatrixRequest();
+        $request->addOrigin('Vancouver BC');
+        $request->addDestination('San Francisco');
+        $request->setDepartureTime($timestamp);
+
+        $method = new \ReflectionMethod($this->service, 'generateUrl');
+        $method->setAccessible(true);
+
+        $this->assertContains(sprintf('departure_time=%d', $timestamp), $method->invoke($this->service, $request));
+    }
+
     /**
      * @expectedException \Ivory\GoogleMap\Exception\DistanceMatrixException
      * @expectedExceptionMessage The process arguments are invalid.
