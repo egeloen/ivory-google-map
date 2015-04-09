@@ -187,4 +187,14 @@ class DistanceMatrixException extends ServiceException
             implode(', ', DistanceMatrixElementStatus::getDistanceMatrixElementStatus())
         ));
     }
+
+    /**
+     * Gets the "INVALID DISTANCE MATRIX REQUEST DEPARTURE TIME" exception.
+     *
+     * @return \Ivory\GoogleMap\Exception\DistanceMatrixException The "INVALID DISTANCE MATRIX REQUEST DEPARTURE TIME" exception.
+     */
+    public static function invalidDistanceMatrixRequestDepartureTime()
+    {
+        return new static('The distance matrix request departure time must be a timestamp subsequent to current time.');
+    }
 }

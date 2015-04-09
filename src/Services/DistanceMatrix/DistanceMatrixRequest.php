@@ -52,6 +52,9 @@ class DistanceMatrixRequest
     /** @var boolean */
     protected $sensor;
 
+    /** @var int */
+    protected $departureTime;
+
     /**
      * Creates a distance matrix request.
      */
@@ -438,6 +441,42 @@ class DistanceMatrixRequest
         }
 
         $this->sensor = $sensor;
+    }
+
+    /**
+     * Checks if the distance matrix request has a departure time.
+     *
+     * @return boolean TRUE if the distance matrix request has a departure time else FALSE.
+     */
+    public function hasDepartureTime()
+    {
+        return $this->departureTime !== null;
+    }
+
+    /**
+     * Gets the distance matrix request departure time.
+     *
+     * @return int The distance matrix request departure time.
+     */
+    public function getDepartureTime()
+    {
+        return $this->departureTime;
+    }
+
+    /**
+     * Sets the distance matrix request departure time.
+     *
+     * @param int $departureTime The distance matrix request departure time.
+     *
+     * @throws \Ivory\GoogleMap\Exception\DistanceMatrixException If the departure time is not valid.
+     */
+    public function setDepartureTime($departureTime = null)
+    {
+        if ((!is_int($departureTime) || $departureTime < time()) && ($departureTime !== null)) {
+            throw DistanceMatrixException::invalidDistanceMatrixRequestDepartureTime();
+        }
+
+        $this->departureTime = $departureTime;
     }
 
     /**
