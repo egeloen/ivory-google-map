@@ -35,6 +35,9 @@ class GeocoderResult
 
     /** @var array */
     protected $types;
+    
+    /** @var  string */
+    protected $placeId;
 
     /**
      * Create a gecoder result.
@@ -44,19 +47,22 @@ class GeocoderResult
      * @param \Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry $geometry          The geometry.
      * @param array                                                       $types             The types.
      * @param boolean                                                     $partialMatch      The partial match flag.
+     * @param string                                                      $placeId           The place_id - unique identifier google place
      */
     public function __construct(
         array $addressComponents,
         $formattedAddress,
         GeocoderGeometry $geometry,
         array $types,
-        $partialMatch = null
+        $partialMatch = null,
+        $placeId = ''
     ) {
         $this->setAddressComponents($addressComponents);
         $this->setFormattedAddress($formattedAddress);
         $this->setGeometry($geometry);
         $this->setTypes($types);
         $this->setPartialMatch($partialMatch);
+        $this->setPlaceId($placeId);
     }
 
     /**
@@ -218,5 +224,25 @@ class GeocoderResult
         }
 
         $this->types[] = $type;
+    }
+    
+    /**
+     * Gets the geocoder place_id.
+     *
+     * @return string The geocoder place_id.
+     */
+    public function getPlaceId()
+    {
+        return $this->placeId;
+    }
+
+    /**
+     * Sets the geocoder place_id.
+     *
+     * @param string $placeId The geocoder place_id.
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->placeId = $placeId;
     }
 }
