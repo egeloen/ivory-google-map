@@ -382,9 +382,10 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         $formattedAddress = $geocoderResult->formatted_address;
         $geometry = $this->buildGeocoderGeometry($geocoderResult->geometry);
         $types = $geocoderResult->types;
+        $placeId = $geocoderResult->place_id;
         $partialMatch = isset($geocoderResult->partial_match) ? $geocoderResult->partial_match : null;
 
-        return new GeocoderResult($addressComponents, $formattedAddress, $geometry, $types, $partialMatch);
+        return new GeocoderResult($addressComponents, $formattedAddress, $geometry, $types, $partialMatch, $placeId);
     }
 
     /**
