@@ -115,11 +115,11 @@ class DistanceMatrix extends AbstractService
         }
 
         if ($distanceMatrixRequest->hasAvoidTolls() && $distanceMatrixRequest->getAvoidTolls()) {
-            $httpQuery['avoidTolls'] = true;
+            $httpQuery['avoid'] = 'tolls';
         }
 
         if ($distanceMatrixRequest->hasAvoidHighways() && $distanceMatrixRequest->getAvoidHighways()) {
-            $httpQuery['avoidHighways'] = true;
+            $httpQuery['avoid'] = 'highways';
         }
 
         if ($distanceMatrixRequest->hasUnitSystem()) {
