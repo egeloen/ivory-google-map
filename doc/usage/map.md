@@ -41,7 +41,7 @@ $map->setLanguage('en');
 
 ## Configure map center & zoom
 
-For configurating the map center & zoom, you have three possibilities:
+For configuring the map center & zoom, you have three possibilities:
 
  1. Standard center coordinate & zoom
  2. Fitting a bound
@@ -88,7 +88,7 @@ $map->setBound(-2.1, -3.9, 2.6, 1.4, true, true);
 For fitting a bound which extends overlays, you need to enable the auto zoom flag & add overlays to the bound.
 In the [overlays documentation](http://github.com/egeloen/ivory-google-map/blob/master/doc/usage/overlays/index.md),
 you learn how you can add overlays to the map. If the auto zoom flag is enabled and you add some overlays to the map,
-the map bound will automatically extends your overlay. So, at the end, all your overlays will be visible on your sreen.
+the map bound will automatically extend your overlay. So, at the end, all your overlays will be visible on your screen.
 
 ``` php
 use Ivory\GoogleMap\Map,
