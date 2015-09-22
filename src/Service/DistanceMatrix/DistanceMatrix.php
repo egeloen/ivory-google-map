@@ -51,7 +51,7 @@ class DistanceMatrix extends AbstractService
      */
     private function parse($data)
     {
-        if ($this->getFormat() === 'json') {
+        if ($this->getFormat() === self::FORMAT_JSON) {
             return json_decode($data, true);
         }
 

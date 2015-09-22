@@ -48,6 +48,7 @@ controls, overlays, events & services through the Google Map API v3.
          - [Directions](/doc/service/directions/directions.md)
          - [Distance Matrix](/doc/service/distance_matrix/distance_matrix.md)
          - [Geocoder](/doc/service/geocoder/geocoder.md)
+         - [TimeZone](/doc/service/timezone/timezone.md)
          - [Business Account](/doc/service/business_account.md)
 
 ## Testing
