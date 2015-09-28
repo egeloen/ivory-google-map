@@ -95,3 +95,25 @@ If you want to go back the normal behavior (anonymous), you need to reset the bu
 ``` php
 $distanceMatrix->setBusinessAccount(null);
 ```
+
+## Timezone
+
+If you want to use the timezone service with a Google business account, you need to set it on the service and
+then, everything is done automatically:
+
+``` php
+use Ivory\GoogleMap\Services\BusinessAccount;
+use Ivory\GoogleMap\Services\Timezones\TimezoneRequest;
+
+$timezoneProvider->setBusinessAccount(new BusinessAccount('client_id', 'secret'));
+$businessAccount = $timezoneProvider->getBusinessAccount();
+
+timezoneRequest = new TimezoneRequest( [ 'lat' => 45.340488, 'lng' => -75.912674 ] );
+$response = $timezoneProvider->getTimezoneData( $timezoneRequest );
+```
+
+If you want to go back the normal behavior (anonymous), you need to reset the business account to `null`:
+
+``` php
+$timezoneProvider->setBusinessAccount(null);
+```

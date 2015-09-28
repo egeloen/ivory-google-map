@@ -1,3 +1,9 @@
+# IDE / OS
+.idea
+*.DS_Store
+.project
+.settings
+
 # Composer
 /bin
 /composer.lock
