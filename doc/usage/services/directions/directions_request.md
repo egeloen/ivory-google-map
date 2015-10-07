@@ -10,7 +10,7 @@ use Ivory\GoogleMap\Services\Base\UnitSystem;
 $request = new DirectionsRequest();
 
 // Set your origin
-$request->setOrigin('New York')
+$request->setOrigin('New York');
 $request->setOrigin(1.1, 2.1, true);
 
 // Set your destination
