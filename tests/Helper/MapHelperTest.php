@@ -318,7 +318,7 @@ class MapHelperTest extends \PHPUnit_Framework_TestCase
         $map->setStylesheetOptions(array('width' => '200px','height' => '100px', 'option1' => 'value1'));
 
         $expected = <<<EOF
-<style type="text/css">
+<style type="text/css" scoped>
 #html_container_id{
 width:200px;
 height:100px;
@@ -1255,13 +1255,13 @@ EOF;
         $map->getCenter()->setJavascriptVariable('map_center');
 
         $expected = <<<EOF
-<div id="map_canvas" style="width:300px;height:300px;"></div>
-<style type="text/css">
+<style type="text/css" scoped>
 #map_canvas{
 width:300px;
 height:300px;
 }
 </style>
+<div id="map_canvas" style="width:300px;height:300px;"></div>
 <script type="text/javascript">
 function load_ivory_google_map_api () { google.load("maps", "3", {"other_params":"language=en&sensor=false"}); };
 </script>
