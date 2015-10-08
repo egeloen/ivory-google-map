@@ -896,8 +896,8 @@ class MapHelper extends AbstractHelper
     public function render(Map $map)
     {
         return implode('', array(
-            $this->renderHtmlContainer($map),
             $this->renderStylesheets($map),
+            $this->renderHtmlContainer($map),
             $this->renderJavascripts($map)
         ));
     }
@@ -930,7 +930,7 @@ class MapHelper extends AbstractHelper
     {
         $html = array();
 
-        $html[] = '<style type="text/css">'.PHP_EOL;
+        $html[] = '<style type="text/css" scoped>'.PHP_EOL;
         $html[] = '#'.$map->getHtmlContainerId().'{'.PHP_EOL;
 
         foreach ($map->getStylesheetOptions() as $option => $value) {
