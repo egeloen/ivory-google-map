@@ -2,6 +2,7 @@
 /bin
 /composer.lock
 /vendor
+/composer.phar
 
 # PHPUnit
 /phpunit.xml
