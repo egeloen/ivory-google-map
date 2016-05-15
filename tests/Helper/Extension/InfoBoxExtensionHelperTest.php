@@ -42,7 +42,7 @@ class InfoBoxExtensionHelperTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertSame(
-            '//google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox_packed.js',
+            '//cdn.rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox_packed.js',
             $this->infoBoxExtensionHelper->getSource()
         );
 
@@ -62,7 +62,7 @@ class InfoBoxExtensionHelperTest extends \PHPUnit_Framework_TestCase
         $map = $this->getMock('Ivory\GoogleMap\Map');
 
         $expected = <<<EOF
-<script type="text/javascript" src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox_packed.js"></script>
+<script type="text/javascript" src="//cdn.rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox_packed.js"></script>
 
 EOF;
 
@@ -123,7 +123,7 @@ EOF;
 var s = document.createElement("script");
 s.type = "text/javascript";
 s.async = true;
-s.src = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox_packed.js";
+s.src = "//cdn.rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox_packed.js";
 s.addEventListener("load", function () { load_ivory_google_map_info_box(); }, false);
 document.getElementsByTagName("head")[0].appendChild(s);
 
