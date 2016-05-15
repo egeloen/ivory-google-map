@@ -11,10 +11,12 @@
 
 namespace Ivory\Tests\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\CurlHttpAdapter;
 use Ivory\GoogleMap\Services\Geocoding\GeocoderProvider;
 use Ivory\GoogleMap\Services\Geocoding\GeocoderRequest;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderStatus;
+use Ivory\HttpAdapter\BuzzHttpAdapter;
+use Ivory\HttpAdapter\CurlHttpAdapter;
+use Ivory\HttpAdapter\Guzzle6HttpAdapter;
 
 /**
  * Geocoder provider test.
@@ -219,7 +221,7 @@ class GeocoderProviderTest extends \PHPUnit_Framework_TestCase
         $httpAdapterMock = $this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface');
         $httpAdapterMock
             ->expects($this->once())
-            ->method('getContent')
+            ->method('sendRequest')
             ->will($this->returnValue(null));
 
         $this->geocoderProvider = new GeocoderProvider($httpAdapterMock);

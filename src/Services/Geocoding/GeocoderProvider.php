@@ -11,9 +11,8 @@
 
 namespace Ivory\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\ProviderInterface;
+use Geocoder\Provider\AbstractHttpProvider;
+use Geocoder\Provider\LocaleAwareProvider;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\GeocodingException;
@@ -23,13 +22,16 @@ use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResult;
 use Ivory\GoogleMap\Services\Utils\XmlParser;
+use Ivory\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\Message\InternalRequest;
+use Ivory\HttpAdapter\Message\Request;
 
 /**
  * Geocoder provider.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderProvider extends AbstractProvider implements ProviderInterface
+class GeocoderProvider extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /** @var string */
     protected $url;
@@ -46,17 +48,21 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
     /** @var \Ivory\GoogleMap\Services\BusinessAccount */
     protected $businessAccount;
 
+    /** @var string|null */
+    protected $locale;
+
     /**
      * {@inheritdoc}
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
         $this->setUrl('http://maps.googleapis.com/maps/api/geocode');
         $this->setHttps(false);
         $this->setFormat('json');
         $this->setXmlParser(new XmlParser());
+        $this->setLocale($locale);
     }
 
     /**
@@ -212,7 +218,9 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         }
 
         $url = $this->generateUrl($geocoderRequest);
-        $response = $this->getAdapter()->getContent($url);
+        $request = new Request($url, 'get');
+
+        $response = $this->getAdapter()->sendRequest($request);
 
         if ($response === null) {
             throw GeocodingException::invalidServiceResult();
@@ -314,10 +322,10 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
     protected function parse($response)
     {
         if ($this->format == 'json') {
-            return $this->parseJSON($response);
+            return $this->parseJSON($response->getBody()->__toString());
         }
 
-        return $this->parseXML($response);
+        return $this->parseXML($response->getBody()->__toString());
     }
 
     /**
@@ -452,5 +460,33 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         }
 
         return new GeocoderGeometry($location, $locationType, $viewport, $bound);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function geocode($value)
+    {
+        // TODO: Implement geocode() method.
+    }
+
+    public function reverse($latitude, $longitude)
+    {
+        // TODO: Implement reverse() method.
     }
 }
