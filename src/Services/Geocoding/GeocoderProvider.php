@@ -23,6 +23,8 @@ use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResult;
 use Ivory\GoogleMap\Services\Utils\XmlParser;
 use Ivory\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\Message\InternalRequest;
+use Ivory\HttpAdapter\Message\Request;
 
 /**
  * Geocoder provider.
@@ -216,7 +218,9 @@ class GeocoderProvider extends AbstractHttpProvider implements LocaleAwareProvid
         }
 
         $url = $this->generateUrl($geocoderRequest);
-        $response = $this->getAdapter()->getContent($url);
+        $request = new Request($url, 'get');
+
+        $response = $this->getAdapter()->sendRequest($request);
 
         if ($response === null) {
             throw GeocodingException::invalidServiceResult();
@@ -318,10 +322,10 @@ class GeocoderProvider extends AbstractHttpProvider implements LocaleAwareProvid
     protected function parse($response)
     {
         if ($this->format == 'json') {
-            return $this->parseJSON($response);
+            return $this->parseJSON($response->getBody()->__toString());
         }
 
-        return $this->parseXML($response);
+        return $this->parseXML($response->getBody()->__toString());
     }
 
     /**
