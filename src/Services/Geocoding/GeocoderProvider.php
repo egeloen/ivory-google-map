@@ -11,9 +11,8 @@
 
 namespace Ivory\GoogleMap\Services\Geocoding;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\ProviderInterface;
+use Geocoder\Provider\AbstractHttpProvider;
+use Geocoder\Provider\LocaleAwareProvider;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Exception\GeocodingException;
@@ -23,13 +22,14 @@ use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderGeometry;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResponse;
 use Ivory\GoogleMap\Services\Geocoding\Result\GeocoderResult;
 use Ivory\GoogleMap\Services\Utils\XmlParser;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * Geocoder provider.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderProvider extends AbstractProvider implements ProviderInterface
+class GeocoderProvider extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /** @var string */
     protected $url;
@@ -46,17 +46,21 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
     /** @var \Ivory\GoogleMap\Services\BusinessAccount */
     protected $businessAccount;
 
+    /** @var string|null */
+    protected $locale;
+
     /**
      * {@inheritdoc}
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
         $this->setUrl('http://maps.googleapis.com/maps/api/geocode');
         $this->setHttps(false);
         $this->setFormat('json');
         $this->setXmlParser(new XmlParser());
+        $this->setLocale($locale);
     }
 
     /**
@@ -452,5 +456,33 @@ class GeocoderProvider extends AbstractProvider implements ProviderInterface
         }
 
         return new GeocoderGeometry($location, $locationType, $viewport, $bound);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function geocode($value)
+    {
+        // TODO: Implement geocode() method.
+    }
+
+    public function reverse($latitude, $longitude)
+    {
+        // TODO: Implement reverse() method.
     }
 }
