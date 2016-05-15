@@ -33,7 +33,7 @@ class InfoBoxExtensionHelper extends AbstractExtensionHelper
      * @param string $callback The info box callback.
      */
     public function __construct(
-        $source = '//google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox_packed.js',
+        $source = '//cdn.rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox_packed.js',
         $callback = 'load_ivory_google_map_info_box'
     ) {
         $this->setSource($source);
