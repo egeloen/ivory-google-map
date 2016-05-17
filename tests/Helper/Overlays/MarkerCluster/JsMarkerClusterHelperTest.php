@@ -93,7 +93,7 @@ EOF;
         $map = new Map();
 
         $expected = <<<EOF
-<script type="text/javascript" src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
+<script type="text/javascript" src="//rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer_compiled.js"></script>
 
 EOF;
 
