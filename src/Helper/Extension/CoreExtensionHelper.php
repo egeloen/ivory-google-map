@@ -105,7 +105,7 @@ class CoreExtensionHelper implements ExtensionHelperInterface
 
         $output = array();
 
-        $output[] = $this->apiHelper->render($map->getLanguage(), $this->getLibraries($map), $callback);
+        $output[] = $this->apiHelper->render($map->getLanguage(), $this->getLibraries($map), $callback, false, $map->getApiKey());
         $output[] = $this->markerClusterHelper->renderLibraries($map->getMarkerCluster(), $map);
 
         return implode('', $output);
