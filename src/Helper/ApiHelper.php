@@ -54,6 +54,7 @@ class ApiHelper extends AbstractHelper
      * @param array   $libraries Additionnal libraries.
      * @param string  $callback  A JS callback.
      * @param boolean $sensor    The sensor flag.
+     * @param string  $api_key   Google Browser API Key for the map
      *
      * @return string The HTML output.
      */
@@ -61,7 +62,8 @@ class ApiHelper extends AbstractHelper
         $language = 'en',
         array $libraries = array(),
         $callback = null,
-        $sensor = false
+        $sensor = false,
+        $api_key = null
     )
     {
         $otherParameters = array();
@@ -71,7 +73,15 @@ class ApiHelper extends AbstractHelper
         }
 
         $otherParameters['language'] = $language;
-        $otherParameters['sensor'] = json_encode((bool) $sensor);
+
+        // Google Maps API warning: SensorNotRequired https://developers.google.com/maps/documentation/javascript/error-messages#sensor-not-required
+        //$otherParameters['sensor'] = json_encode((bool) $sensor);
+
+        if(!is_null($api_key)){
+            $otherParameters['key'] = $api_key;
+        }else{
+            // Google Maps API warning: NoApiKeys https://developers.google.com/maps/documentation/javascript/error-messages#no-api-keys
+        }
 
         $this->jsonBuilder
             ->reset()
