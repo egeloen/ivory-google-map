@@ -76,7 +76,7 @@ class Coordinate extends AbstractJavascriptVariableAsset
     /**
      * Gets the longitude
      *
-     * @return doube The longitude.
+     * @return double The longitude.
      */
     public function getLongitude()
     {
