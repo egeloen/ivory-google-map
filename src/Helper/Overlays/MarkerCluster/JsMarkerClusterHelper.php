@@ -48,7 +48,7 @@ class JsMarkerClusterHelper extends DefaultMarkerClusterHelper
      */
     public function renderLibraries(MarkerCluster $markerCluster, Map $map)
     {
-        $url = '//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js';
+        $url = '//cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js';
 
         return sprintf('<script type="text/javascript" src="%s"></script>'.PHP_EOL, $url);
     }
