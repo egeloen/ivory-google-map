@@ -11,62 +11,39 @@
 
 namespace Ivory\GoogleMap\Helper;
 
-use Ivory\GoogleMap\Map;
-use Ivory\JsonBuilder\JsonBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Abstract helper.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 abstract class AbstractHelper
 {
-    /** @var \Ivory\GoogleMap\Helper\Utils\JsonBuilder */
-    protected $jsonBuilder;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     /**
-     * Creates an helper.
-     *
-     * @param \Ivory\JsonBuilder\JsonBuilder $jsonBuilder The json builder.
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(JsonBuilder $jsonBuilder = null)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        if ($jsonBuilder === null) {
-            $jsonBuilder = new JsonBuilder();
-        }
-
-        $this->setJsonBuilder($jsonBuilder);
+        $this->setEventDispatcher($eventDispatcher);
     }
 
     /**
-     * Gets the json builder.
-     *
-     * @return \Ivory\JsonBuilder\JsonBuilder The json builder.
+     * @return EventDispatcherInterface
      */
-    public function getJsonBuilder()
+    public function getEventDispatcher()
     {
-        return $this->jsonBuilder;
+        return $this->eventDispatcher;
     }
 
     /**
-     * Sets the json builder.
-     *
-     * @param \Ivory\JsonBuilder\JsonBuilder $jsonBuilder The json builder.
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function setJsonBuilder(JsonBuilder $jsonBuilder)
+    public function setEventDispatcher($eventDispatcher)
     {
-        $this->jsonBuilder = $jsonBuilder;
-    }
-
-    /**
-     * Gets the javascript container name according to the map.
-     *
-     * @param \Ivory\GoogleMap\Map $map The map.
-     *
-     * @return string The javascript container name.
-     */
-    protected function getJsContainerName(Map $map)
-    {
-        return $map->getJavascriptVariable().'_container';
+        $this->eventDispatcher = $eventDispatcher;
     }
 }

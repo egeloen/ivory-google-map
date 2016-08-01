@@ -11,52 +11,55 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\BaseException;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
- * Size which describes a google map size.
- *
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Size
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Size extends AbstractJavascriptVariableAsset
+class Size implements VariableAwareInterface
 {
-    /** @var double */
-    protected $width;
-
-    /** @var double */
-    protected $height;
-
-    /** @var string */
-    protected $widthUnit;
-
-    /** @var string */
-    protected $heightUnit;
+    use VariableAwareTrait;
 
     /**
-     * Create a size.
-     *
-     * @param double $width      The width.
-     * @param double $height     The height.
-     * @param string $widthUnit  The width unit.
-     * @param string $heightUnit The height unit.
+     * @var float
      */
-    public function __construct($width = 1, $height = 1, $widthUnit = null, $heightUnit = null)
-    {
-        $this->setPrefixJavascriptVariable('size_');
+    private $width;
 
+    /**
+     * @var float
+     */
+    private $height;
+
+    /**
+     * @var string
+     */
+    private $widthUnit;
+
+    /**
+     * @var string
+     */
+    private $heightUnit;
+
+    /**
+     * @param float       $width
+     * @param float       $height
+     * @param string|null $widthUnit
+     * @param string|null $heightUnit
+     */
+    public function __construct($width = 1.0, $height = 1.0, $widthUnit = null, $heightUnit = null)
+    {
+        $this->setVariablePrefix('size');
         $this->setWidth($width);
         $this->setHeight($height);
-
         $this->setWidthUnit($widthUnit);
         $this->setHeightUnit($heightUnit);
     }
 
     /**
-     * Gets the width size.
-     *
-     * @return double The width size.
+     * @return float
      */
     public function getWidth()
     {
@@ -64,25 +67,15 @@ class Size extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the width size.
-     *
-     * @param double $width The width size.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the width is not valid.
+     * @param float $width
      */
     public function setWidth($width)
     {
-        if (!is_numeric($width)) {
-            throw BaseException::invalidSizeWidth();
-        }
-
         $this->width = $width;
     }
 
     /**
-     * Gets the height size
-     *
-     * @return double The height size.
+     * @return float
      */
     public function getHeight()
     {
@@ -90,35 +83,31 @@ class Size extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the height size.
-     *
-     * @param double $height The height size.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the height is not valid.
+     * @param float $height
      */
     public function setHeight($height)
     {
-        if (!is_numeric($height)) {
-            throw BaseException::invalidSizeHeight();
-        }
-
         $this->height = $height;
     }
 
     /**
-     * Checks if the size has units.
-     *
-     * @return boolean TRUE if the size has units else FALSE.
+     * @return bool
      */
     public function hasUnits()
     {
-        return ($this->widthUnit !== null) && ($this->heightUnit !== null);
+        return $this->hasWidthUnit() && $this->hasHeightUnit();
     }
 
     /**
-     * Gets the width unit size.
-     *
-     * @return string The width unit size.
+     * @return bool
+     */
+    public function hasWidthUnit()
+    {
+        return $this->widthUnit !== null;
+    }
+
+    /**
+     * @return string|null
      */
     public function getWidthUnit()
     {
@@ -126,25 +115,23 @@ class Size extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the width unit size.
-     *
-     * @param string $widthUnit The width unit size.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the width unit is not valid.
+     * @param string|null $widthUnit
      */
-    public function setWidthUnit($widthUnit)
+    public function setWidthUnit($widthUnit = null)
     {
-        if (!is_string($widthUnit) && ($widthUnit !== null)) {
-            throw BaseException::invalidSizeWidthUnit();
-        }
-
         $this->widthUnit = $widthUnit;
     }
 
     /**
-     * Gets the height unit size.
-     *
-     * @return string The height unit size.
+     * @return bool
+     */
+    public function hasHeightUnit()
+    {
+        return $this->heightUnit !== null;
+    }
+
+    /**
+     * @return string|null
      */
     public function getHeightUnit()
     {
@@ -152,18 +139,10 @@ class Size extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the height unit size.
-     *
-     * @param string $heightUnit The height unit size.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the height unit is not valid.
+     * @param string|null $heightUnit
      */
-    public function setHeightUnit($heightUnit)
+    public function setHeightUnit($heightUnit = null)
     {
-        if (!is_string($heightUnit) && ($heightUnit !== null)) {
-            throw BaseException::invalidSizeHeightUnit();
-        }
-
         $this->heightUnit = $heightUnit;
     }
 }

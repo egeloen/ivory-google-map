@@ -1,12 +1,5 @@
-# Composer
-/bin
+/.php_cs.cache
+/build
 /composer.lock
-/vendor
-
-# PHPUnit
 /phpunit.xml
-/clover.xml
-/report
-
-# Coveralls
-/coveralls.json
+/vendor
