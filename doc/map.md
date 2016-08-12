@@ -78,7 +78,7 @@ $map->setBound(new Bound(new Coordinate(-2.1, -3.9), new Coordinate(2.6, 1.4));
 
 For fitting a bound which extends overlays, you need to enable the auto zoom flag & add overlays to the bound.
 In the [Overlays documentation](/doc/overlay/index.md), you learn how you can add overlays to the map. If the 
-auto zoom flag is enabled and you add some overlays to the map, the map bound will automatically extends the added 
+auto zoom flag is enabled and you add some overlays to the map, the map bound will automatically extend the added 
 overlay. So, at the end, all your overlays will be visible on your screen.
 
 ``` php
