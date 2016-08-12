@@ -9,30 +9,31 @@ First of all, if you want to render a map, you will need to build a map helper. 
 ``` php
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
  
-$mapHelper = MapHelperBuilder::create()->build();
+$mapHelperBuilder = MapHelperBuilder::create(); 
+$mapHelper = $mapHelperBuilder->build();
 ```
 
 The map helper is built via a builder. The builder allows you to configure the helper json builder, formatter and 
 subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated code and the 
 subscribers allow you to attach additional code to the map.
 
-``` php
-use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
- 
-$mapHelperBuilder = MapHelperBuilder::create();
+## Configure subscribers
 
+If you want to hook into the map rendering process, you can use: 
+
+``` php
+$mapHelperBuilder->addSubscriber(/* ... */);
+```
+
+## Configure debug
+
+If you want to more easily debug the generated code, you can use:
+
+``` php
 $mapHelperBuilder->getFormatter()->setDebug(true);
 $mapHelperBuilder->getFormatter()->setIndentationStep(4);
 $mapHelperBuilder->getFormatter()->setDefaultIndentation(0);
-
-$mapHelperBuilder->addSubscriber(/* ... */);
-
-$mapHelper = $mapHelperBuilder->build();
 ```
-
-Here, I configure the formatter in debug mode (meaning that the code will be nicely formatted) with an indentation of 
-four spaces and a default/initial indentation of zero. I additionally attach a custom subscriber which will allow to 
-hook into the code generation.
 
 ## Render html container
 

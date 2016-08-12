@@ -157,6 +157,54 @@ class GeocoderProviderTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getResults());
     }
 
+    public function testGeocodeWithKey()
+    {
+        $this->geocoder = new GeocoderProvider(
+            $client = $this->createHttpClientMock(),
+            $messageFactory = $this->createMessageFactoryMock()
+        );
+
+        $this->geocoder->setKey('api-key');
+
+        $request = $this->createGeocoderRequestMock();
+        $request
+            ->expects($this->once())
+            ->method('buildQuery')
+            ->will($this->returnValue($query = ['foo' => 'bar']));
+
+        $messageFactory
+            ->expects($this->once())
+            ->method('createRequest')
+            ->with(
+                $this->identicalTo('GET'),
+                $this->identicalTo(
+                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?foo=bar&key=api-key'
+                )
+            )
+            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->identicalTo($httpRequest))
+            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
+
+        $httpResponse
+            ->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
+
+        $httpStream
+            ->expects($this->once())
+            ->method('__toString')
+            ->will($this->returnValue('{"status":"OK","results":[]}'));
+
+        $response = $this->geocoder->geocode($request);
+
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertEmpty($response->getResults());
+    }
+
     public function testGeocodeWithBusinessAccount()
     {
         $this->geocoder = new GeocoderProvider(
@@ -176,7 +224,7 @@ class GeocoderProviderTest extends AbstractServiceTest
             ->with(
                 $this->identicalTo('GET'),
                 $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/geocoder/json?foo=bar&signature=signature'
+                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?foo=bar&signature=signature'
                 )
             )
             ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));

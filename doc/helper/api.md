@@ -11,32 +11,47 @@ First of all, if you want to render the API, you will need to build an API helpe
 ``` php
 use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
  
-$apiHelper = ApiHelperBuilder::create()->build();
+$apiHelperBuilder = ApiHelperBuilder::create();
+$apiHelper = $apiHelperBuilder->build();
 ```
 
 The api helper is built via a builder. The builder allows you to configure the helper json builder, formatter, language 
 and subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated code, the
 language allows to localize the API (default en) and the subscribers allow you to attach additional code to the API.
 
-``` php
-use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
- 
-$apiHelperBuilder = ApiHelperBuilder::create();
+## Configure language
 
+If you want to update the API language (default en), you can use:
+
+``` php
+$apiHelperBuilder->setLanguage('fr');
+```
+
+## Configure API key
+
+If you have an API key, you can use:
+
+``` php
+$apiHelperBuilder->setKey('api-key');
+```
+
+## Configure subscribers
+
+If you want to hook into the API rendering process, you can use: 
+
+``` php
+$apiHelperBuilder->addSubscriber(/* ... */);
+```
+
+## Configure debug
+
+If you want to more easily debug the generated code, you can use:
+
+``` php
 $apiHelperBuilder->getFormatter()->setDebug(true);
 $apiHelperBuilder->getFormatter()->setIndentationStep(4);
 $apiHelperBuilder->getFormatter()->setDefaultIndentation(0);
-
-$apiHelperBuilder->setLanguage('fr');
-
-$apiHelperBuilder->addSubscriber(/* ... */);
-
-$apiHelper = $apiHelperBuilder->build();
 ```
-
-Here, I configure the formatter in debug mode (meaning that the code will be nicely formatted) with an indentation of 
-four spaces and a default/initial indentation of zero. I additionally attach a custom subscriber which will allow to 
-hook into the code generation.
 
 ## Render
 

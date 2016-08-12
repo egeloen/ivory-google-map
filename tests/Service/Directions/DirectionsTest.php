@@ -235,6 +235,54 @@ class DirectionsTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRoutes());
     }
 
+    public function testRouteWithKey()
+    {
+        $this->directions = new Directions(
+            $client = $this->createHttpClientMock(),
+            $messageFactory = $this->createMessageFactoryMock()
+        );
+
+        $this->directions->setKey('api-key');
+
+        $request = $this->createDirectionsRequestMock();
+        $request
+            ->expects($this->once())
+            ->method('buildQuery')
+            ->will($this->returnValue($query = ['foo' => 'bar']));
+
+        $messageFactory
+            ->expects($this->once())
+            ->method('createRequest')
+            ->with(
+                $this->identicalTo('GET'),
+                $this->identicalTo(
+                    $url = 'https://maps.googleapis.com/maps/api/directions/json?foo=bar&key=api-key'
+                )
+            )
+            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->identicalTo($httpRequest))
+            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
+
+        $httpResponse
+            ->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
+
+        $httpStream
+            ->expects($this->once())
+            ->method('__toString')
+            ->will($this->returnValue('{"status":"OK","routes":[]}'));
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertEmpty($response->getRoutes());
+    }
+
     public function testRouteWithBusinessAccount()
     {
         $this->directions = new Directions(

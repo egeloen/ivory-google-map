@@ -10,31 +10,32 @@ go:
 
 ``` php
 use Ivory\GoogleMap\Helper\Builder\PlaceAutocompleteHelperBuilder;
- 
-$placeAutocompleteHelper = PlaceAutocompleteHelperBuilder::create()->build();
+
+$placeAutocompleteHelperBuilder = PlaceAutocompleteHelperBuilder::create();
+$placeAutocompleteHelper = $placeAutocompleteHelperBuilder->build();
 ```
 
 The place autocomplete helper is built via a builder. The builder allows you to configure the helper json builder, 
 formatter and subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated 
 code and the subscribers allow you to attach additional code to the place autocomplete.
 
+## Configure subscribers
+
+If you want to hook into the map rendering process, you can use: 
+
 ``` php
-use Ivory\GoogleMap\Helper\Builder\PlaceAutocompleteHelperBuilder;
+$placeAutocompleteHelperBuilder->addSubscriber(/* ... */);
+```
 
-$placeAutocompleteHelperBuilder = PlaceAutocompleteHelperBuilder::create();
+## Configure debug
 
+If you want to more easily debug the generated code, you can use:
+
+``` php
 $placeAutocompleteHelperBuilder->getFormatter()->setDebug(true);
 $placeAutocompleteHelperBuilder->getFormatter()->setIndentationStep(4);
 $placeAutocompleteHelperBuilder->getFormatter()->setDefaultIndentation(0);
-
-$placeAutocompleteHelperBuilder->addSubscriber(/* ... */);
-
-$placeAutocompleteHelper = $placeAutocompleteHelperBuilder->build();
 ```
-
-Here, I configure the formatter in debug mode (meaning that the code will be nicely formatted) with an indentation of 
-four spaces and a default/initial indentation of zero. I additionally attach a custom subscriber which will allow to 
-hook into the code generation.
 
 ## Render html input
 

@@ -52,12 +52,22 @@ class ApiHelperBuilder extends AbstractHelperBuilder
     private $language;
 
     /**
+     * @var string|null
+     */
+    private $key;
+
+    /**
      * @param Formatter|null   $formatter
      * @param JsonBuilder|null $jsonBuilder
      * @param string           $language
+     * @param string|null      $key
      */
-    public function __construct(Formatter $formatter = null, JsonBuilder $jsonBuilder = null, $language = 'en')
-    {
+    public function __construct(
+        Formatter $formatter = null,
+        JsonBuilder $jsonBuilder = null,
+        $language = 'en',
+        $key = null
+    ) {
         parent::__construct($formatter, $jsonBuilder);
 
         $this->setLanguage($language);
@@ -77,6 +87,30 @@ class ApiHelperBuilder extends AbstractHelperBuilder
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasKey()
+    {
+        return $this->key !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string|null $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
     }
 
     /**
@@ -105,7 +139,7 @@ class ApiHelperBuilder extends AbstractHelperBuilder
 
         // Utility renderers
         $callbackRenderer = new CallbackRenderer($formatter);
-        $loaderRenderer = new LoaderRenderer($formatter, $jsonBuilder, $this->language);
+        $loaderRenderer = new LoaderRenderer($formatter, $jsonBuilder, $this->language, $this->key);
         $requirementLoaderRenderer = new RequirementLoaderRenderer($formatter);
         $requirementRenderer = new RequirementRenderer($formatter);
         $sourceRenderer = new SourceRenderer($formatter);

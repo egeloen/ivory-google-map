@@ -55,6 +55,11 @@ abstract class AbstractService
     private $xmlParser;
 
     /**
+     * @var string|null
+     */
+    private $key;
+
+    /**
      * @var BusinessAccount|null
      */
     private $businessAccount;
@@ -175,6 +180,30 @@ abstract class AbstractService
     /**
      * @return bool
      */
+    public function hasKey()
+    {
+        return $this->key !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string|null $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return bool
+     */
     public function hasBusinessAccount()
     {
         return $this->businessAccount !== null;
@@ -203,6 +232,10 @@ abstract class AbstractService
      */
     protected function createRequest(array $query)
     {
+        if ($this->hasKey()) {
+            $query['key'] = $this->key;
+        }
+
         $url = $this->getUrl().'/'.$this->getFormat().'?'.http_build_query($query, '', '&');
 
         if ($this->hasBusinessAccount()) {
