@@ -270,7 +270,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([
             'origins'      => implode('|', $this->origins),
             'destinations' => implode('|', $this->destinations),
-            'avoidTolls'   => true,
+            'avoid'        => 'tolls',
         ], $this->request->buildQuery());
     }
 
@@ -281,7 +281,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([
             'origins'       => implode('|', $this->origins),
             'destinations'  => implode('|', $this->destinations),
-            'avoidHighways' => true,
+            'avoid'         => 'highways',
         ], $this->request->buildQuery());
     }
 

@@ -357,11 +357,9 @@ class DistanceMatrixRequest
         }
 
         if ($this->avoidTolls) {
-            $query['avoidTolls'] = true;
-        }
-
-        if ($this->avoidHighways) {
-            $query['avoidHighways'] = true;
+            $query['avoid'] = 'tolls';
+        } elseif ($this->avoidHighways) {
+            $query['avoid'] = 'highways';
         }
 
         if ($this->hasUnitSystem()) {
