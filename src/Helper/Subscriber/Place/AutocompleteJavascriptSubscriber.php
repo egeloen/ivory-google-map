@@ -146,7 +146,6 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
     private function handleApi(ApiEvent $event)
     {
         foreach ($event->getObjects(Autocomplete::class) as $autocomplete) {
-            $event->setLanguage($autocomplete->getLanguage());
             $event->addLibraries(array_unique(array_merge($autocomplete->getLibraries(), ['places'])));
             $event->addCallback($autocomplete, $this->renderCallback($autocomplete));
             $event->addRequirement($autocomplete, $this->autocompleteRenderer->renderRequirement());

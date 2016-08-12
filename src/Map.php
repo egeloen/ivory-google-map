@@ -75,11 +75,6 @@ class Map implements VariableAwareInterface
     private $libraries = [];
 
     /**
-     * @var string
-     */
-    private $language = 'en';
-
-    /**
      * @var mixed[]
      */
     private $mapOptions = [];
@@ -305,22 +300,6 @@ class Map implements VariableAwareInterface
     public function removeLibrary($library)
     {
         unset($this->libraries[array_search($library, $this->libraries, true)]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
     }
 
     /**

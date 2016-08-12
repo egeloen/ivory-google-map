@@ -48,7 +48,6 @@ class ApiEventTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->apiEvent->hasObjects());
         $this->assertSame($this->objects, $this->apiEvent->getObjects());
-        $this->assertSame('en', $this->apiEvent->getLanguage());
         $this->assertFalse($this->apiEvent->hasSources());
         $this->assertEmpty($this->apiEvent->getSources());
         $this->assertFalse($this->apiEvent->hasLibraries());
@@ -66,13 +65,6 @@ class ApiEventTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->apiEvent->hasObjects(Map::class));
         $this->assertEmpty($this->apiEvent->getObjects(Map::class));
-    }
-
-    public function testLanguage()
-    {
-        $this->apiEvent->setLanguage($language = 'fr');
-
-        $this->assertSame($language, $this->apiEvent->getLanguage());
     }
 
     public function testSetSources()

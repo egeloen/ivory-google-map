@@ -127,7 +127,6 @@ class ApiRenderer extends AbstractRenderer
     }
 
     /**
-     * @param string            $language
      * @param \SplObjectStorage $callbacks
      * @param \SplObjectStorage $requirements
      * @param string[]          $sources
@@ -136,7 +135,6 @@ class ApiRenderer extends AbstractRenderer
      * @return string
      */
     public function render(
-        $language,
         \SplObjectStorage $callbacks,
         \SplObjectStorage $requirements,
         array $sources = [],
@@ -150,7 +148,7 @@ class ApiRenderer extends AbstractRenderer
         $initRequirementCallback = $this->getCallbackName('init_requirement');
 
         return $formatter->renderLines([
-            $this->loaderRenderer->render($loadCallback, $initCallback, $language, $libraries, false),
+            $this->loaderRenderer->render($loadCallback, $initCallback, $libraries, false),
             $this->sourceRenderer->render($initSourceCallback, null, null, false),
             $this->requirementLoaderRenderer->render($initRequirementCallback, null, null, null, 100, false),
             $this->apiInitRenderer->render(

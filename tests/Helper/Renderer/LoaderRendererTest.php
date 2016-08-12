@@ -39,16 +39,40 @@ class LoaderRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(AbstractJsonRenderer::class, $this->loaderRenderer);
     }
 
+    public function testDefaultState()
+    {
+        $this->assertSame('en', $this->loaderRenderer->getLanguage());
+    }
+
+    public function testInitialState()
+    {
+        $this->loaderRenderer = new LoaderRenderer(new Formatter(), new JsonBuilder(), $language = 'fr');
+
+        $this->assertSame($language, $this->loaderRenderer->getLanguage());
+    }
+
+    public function testLanguage()
+    {
+        $this->loaderRenderer->setLanguage($language = 'fr');
+
+        $this->assertSame($language, $this->loaderRenderer->getLanguage());
+    }
+
     public function testRender()
     {
         $this->assertSame(
             'function name(){google.load("maps","3",{"other_params":"language=en&libraries=library1,library2","callback":callback})};',
-            $this->loaderRenderer->render(
-                'name',
-                'callback',
-                'en',
-                ['library1', 'library2']
-            )
+            $this->loaderRenderer->render('name', 'callback', ['library1', 'library2'])
+        );
+    }
+
+    public function testRenderWithLanguage()
+    {
+        $this->loaderRenderer->setLanguage('fr');
+
+        $this->assertSame(
+            'function name(){google.load("maps","3",{"other_params":"language=fr","callback":callback})};',
+            $this->loaderRenderer->render('name', 'callback')
         );
     }
 
@@ -69,7 +93,6 @@ EOF;
         $this->assertSame($expected, $this->loaderRenderer->render(
             'name',
             'callback',
-            'en',
             ['library1', 'library2']
         ));
     }

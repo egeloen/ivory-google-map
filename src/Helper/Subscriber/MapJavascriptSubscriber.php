@@ -149,7 +149,6 @@ class MapJavascriptSubscriber extends AbstractDelegateSubscriber
     private function handleApi(ApiEvent $event)
     {
         foreach ($event->getObjects(Map::class) as $map) {
-            $event->setLanguage($map->getLanguage());
             $event->addLibraries($map->getLibraries());
             $event->addCallback($map, $this->renderCallback($map));
             $event->addRequirement($map, $this->mapRenderer->renderRequirement());

@@ -106,14 +106,6 @@ all of them. If you need a custom library (for example `drawing`), you can use:
 $map->addLibrary('drawing');
 ```
 
-## Configure language
-
-If you want to use your own language when displaying your map, you can use:
-
-```
-$map->setLanguage('fr');
-```
-
 ## Configure options
 
 The map options allows you to configure additional map aspects. See the list of available options in the Google Map

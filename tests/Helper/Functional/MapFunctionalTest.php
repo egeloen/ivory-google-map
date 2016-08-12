@@ -44,15 +44,6 @@ class MapFunctionalTest extends AbstractMapFunctionalTest
         $this->assertMap($map);
     }
 
-    public function testRenderWithLanguage()
-    {
-        $map = new Map();
-        $map->setLanguage('fr');
-
-        $this->renderMap($map);
-        $this->assertMap($map);
-    }
-
     public function testRenderWithMapOptions()
     {
         $map = new Map();

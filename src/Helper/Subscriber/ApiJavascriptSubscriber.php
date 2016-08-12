@@ -113,7 +113,6 @@ class ApiJavascriptSubscriber extends AbstractDelegateSubscriber
     private function handleApi(ApiEvent $event)
     {
         $event->setCode($this->javascriptTagRenderer->render($this->apiRenderer->render(
-            $event->getLanguage(),
             $event->getCallbacks(),
             $event->getRequirements(),
             $event->getSources(),

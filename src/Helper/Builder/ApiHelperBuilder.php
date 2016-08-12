@@ -15,6 +15,7 @@ use Ivory\GoogleMap\Helper\ApiHelper;
 use Ivory\GoogleMap\Helper\Collector\Overlay\EncodedPolylineCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoBoxCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
+use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\ApiInitRenderer;
 use Ivory\GoogleMap\Helper\Renderer\ApiRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlManagerRenderer;
@@ -38,12 +39,46 @@ use Ivory\GoogleMap\Helper\Subscriber\Overlay\EncodedPolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\InfoBoxSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\MarkerClustererSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Place\AutocompleteJavascriptSubscriber;
+use Ivory\JsonBuilder\JsonBuilder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ApiHelperBuilder extends AbstractHelperBuilder
 {
+    /**
+     * @var string
+     */
+    private $language;
+
+    /**
+     * @param Formatter|null   $formatter
+     * @param JsonBuilder|null $jsonBuilder
+     * @param string           $language
+     */
+    public function __construct(Formatter $formatter = null, JsonBuilder $jsonBuilder = null, $language = 'en')
+    {
+        parent::__construct($formatter, $jsonBuilder);
+
+        $this->setLanguage($language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
     /**
      * @return ApiHelper
      */
@@ -70,7 +105,7 @@ class ApiHelperBuilder extends AbstractHelperBuilder
 
         // Utility renderers
         $callbackRenderer = new CallbackRenderer($formatter);
-        $loaderRenderer = new LoaderRenderer($formatter, $jsonBuilder);
+        $loaderRenderer = new LoaderRenderer($formatter, $jsonBuilder, $this->language);
         $requirementLoaderRenderer = new RequirementLoaderRenderer($formatter);
         $requirementRenderer = new RequirementRenderer($formatter);
         $sourceRenderer = new SourceRenderer($formatter);

@@ -56,7 +56,6 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(LayerManager::class, $this->map->getLayerManager());
         $this->assertFalse($this->map->hasLibraries());
         $this->assertEmpty($this->map->getLibraries());
-        $this->assertSame('en', $this->map->getLanguage());
         $this->assertFalse($this->map->hasMapOptions());
         $this->assertEmpty($this->map->getMapOptions());
         $this->assertFalse($this->map->hasStylesheetOptions());
@@ -199,13 +198,6 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->map->hasLibraries());
         $this->assertFalse($this->map->hasLibrary($library));
         $this->assertEmpty($this->map->getLibraries());
-    }
-
-    public function testLanguage()
-    {
-        $this->map->setLanguage($language = 'fr');
-
-        $this->assertSame($language, $this->map->getLanguage());
     }
 
     public function testSetMapOptions()

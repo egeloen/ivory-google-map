@@ -84,15 +84,6 @@ class AutocompleteFunctionalTest extends AbstractAutocompleteFunctionalTest
         $this->assertAutocomplete($autocomplete);
     }
 
-    public function testRenderWithLanguage()
-    {
-        $autocomplete = $this->createAutocomplete();
-        $autocomplete->setLanguage('fr');
-
-        $this->renderAutocomplete($autocomplete);
-        $this->assertAutocomplete($autocomplete);
-    }
-
     /**
      * @return Autocomplete
      */
