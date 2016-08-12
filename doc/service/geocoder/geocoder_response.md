@@ -21,13 +21,21 @@ $results = $response->getResults();
 
 ## Result
 
-Each result wraps an human readable address, some address & geometry informations, a partial match flag & some result
-types.
+Each result wraps the place id, a human readable address, some address & geometry informations, a partial match flag & 
+some result types.
 
 ``` php
 foreach ($reponse->getResults() as $result) {
     // ...
 }
+```
+
+### Place id
+
+The place id is a unique identifier that can be used with other Google APIs.
+
+``` php
+$placeId = $result->getPlaceId();
 ```
 
 ### Human readable address

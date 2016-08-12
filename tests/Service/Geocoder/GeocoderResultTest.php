@@ -35,6 +35,8 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialState()
     {
+        $this->assertFalse($this->result->hasPlaceId());
+        $this->assertNull($this->result->getPlaceId());
         $this->assertFalse($this->result->hasAddressComponents());
         $this->assertEmpty($this->result->getAddressComponents());
         $this->assertFalse($this->result->hasFormattedAddress());
@@ -45,6 +47,14 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->result->getTypes());
         $this->assertFalse($this->result->hasPartialMatch());
         $this->assertNull($this->result->isPartialMatch());
+    }
+
+    public function testPlaceId()
+    {
+        $this->result->setPlaceId($placeId = 'id');
+
+        $this->assertTrue($this->result->hasPlaceId());
+        $this->assertSame($placeId, $this->result->getPlaceId());
     }
 
     public function testSetAddressComponents()

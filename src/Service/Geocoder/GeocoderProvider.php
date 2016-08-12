@@ -142,6 +142,7 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     private function buildResult(array $data)
     {
         $result = new GeocoderResult();
+        $result->setPlaceId($data['place_id']);
         $result->setAddressComponents($this->buildAddressComponents($data['address_components']));
         $result->setFormattedAddress($data['formatted_address']);
         $result->setGeometry($this->buildGeometry($data['geometry']));
