@@ -68,6 +68,32 @@ class DistanceMatrixTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRows());
     }
 
+    public function testProcessWithDepartureTime()
+    {
+        $request = new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']);
+        $request->setDepartureTime($this->getDepartureTime());
+
+        $response = $this->distanceMatrix->process($request);
+
+        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getOrigins());
+        $this->assertNotEmpty($response->getDestinations());
+        $this->assertNotEmpty($response->getRows());
+    }
+
+    public function testRouteWithArrivalTime()
+    {
+        $request = new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']);
+        $request->setArrivalTime($this->getArrivalTime());
+
+        $response = $this->distanceMatrix->process($request);
+
+        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getOrigins());
+        $this->assertNotEmpty($response->getDestinations());
+        $this->assertNotEmpty($response->getRows());
+    }
+
     public function testProcessWithTravelMode()
     {
         $request = new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']);
@@ -276,6 +302,22 @@ class DistanceMatrixTest extends AbstractServiceTest
         $this->assertEmpty($response->getOrigins());
         $this->assertEmpty($response->getDestinations());
         $this->assertEmpty($response->getRows());
+    }
+
+    /**
+     * @return \DateTime
+     */
+    private function getDepartureTime()
+    {
+        return $this->getDateTime('departure');
+    }
+
+    /**
+     * @return \DateTime
+     */
+    private function getArrivalTime()
+    {
+        return $this->getDateTime('arrival', '+2 hours');
     }
 
     /**

@@ -46,6 +46,22 @@ use Ivory\GoogleMap\Base\Coordinate;
 $request->setDestination(new Coordinate(2.1, 1.1));
 ```
 
+## Configure departure time
+
+If you want to provide a departure time, you can use:
+
+``` php
+$request->setDepartureTime(new \DateTime());
+```
+
+## Configure arrival time
+
+If you want to provide an arrival time, you can use:
+
+``` php
+$request->setDepartureTime(new \DateTime());
+```
+
 ## Configure waypoints
 
 If you want to add waypoint to your direction, you can use:

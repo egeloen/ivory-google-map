@@ -47,6 +47,22 @@ use Ivory\GoogleMap\Base\Coordinate;
 $request->setDestinations([new Coordinate(2.1, 1.1)]);
 ```
 
+## Configure departure time
+
+If you want to provide a departure time, you can use:
+
+``` php
+$request->setDepartureTime(new \DateTime());
+```
+
+## Configure arrival time
+
+If you want to provide an arrival time, you can use:
+
+``` php
+$request->setDepartureTime(new \DateTime());
+```
+
 ## Configure avoid highways
 
 If you want to avoid highways, you can use:

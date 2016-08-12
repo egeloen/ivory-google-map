@@ -52,6 +52,10 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->origins, $this->request->getOrigins());
         $this->assertTrue($this->request->hasDestinations());
         $this->assertSame($this->destinations, $this->request->getDestinations());
+        $this->assertFalse($this->request->hasDepartureTime());
+        $this->assertNull($this->request->getDepartureTime());
+        $this->assertFalse($this->request->hasArrivalTime());
+        $this->assertNull($this->request->getArrivalTime());
         $this->assertFalse($this->request->hasTravelMode());
         $this->assertNull($this->request->getTravelMode());
         $this->assertFalse($this->request->hasAvoidHighways());
@@ -140,6 +144,40 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->request->hasDestinations());
         $this->assertFalse($this->request->hasDestination($destination));
         $this->assertSame($this->destinations, $this->request->getDestinations());
+    }
+
+    public function testDepartureTime()
+    {
+        $this->request->setDepartureTime($departureTime = new \DateTime());
+
+        $this->assertTrue($this->request->hasDepartureTime());
+        $this->assertSame($departureTime, $this->request->getDepartureTime());
+    }
+
+    public function testResetDepartureTime()
+    {
+        $this->request->setDepartureTime(new \DateTime());
+        $this->request->setDepartureTime(null);
+
+        $this->assertFalse($this->request->hasDepartureTime());
+        $this->assertNull($this->request->getDepartureTime());
+    }
+
+    public function testArrivalTime()
+    {
+        $this->request->setArrivalTime($arrivalTime = new \DateTime());
+
+        $this->assertTrue($this->request->hasArrivalTime());
+        $this->assertSame($arrivalTime, $this->request->getArrivalTime());
+    }
+
+    public function testArrivalTimeWithNullValue()
+    {
+        $this->request->setArrivalTime(new \DateTime());
+        $this->request->setArrivalTime(null);
+
+        $this->assertFalse($this->request->hasArrivalTime());
+        $this->assertNull($this->request->getArrivalTime());
     }
 
     public function testTravelMode()
@@ -249,6 +287,28 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([
             'origins'      => implode('|', $this->origins),
             'destinations' => implode('|', $this->destinations),
+        ], $this->request->buildQuery());
+    }
+
+    public function testQueryWithDepartureTime()
+    {
+        $this->request->setDepartureTime($departureTime = new \DateTime());
+
+        $this->assertSame([
+            'origins'        => implode('|', $this->origins),
+            'destinations'   => implode('|', $this->destinations),
+            'departure_time' => $departureTime->getTimestamp(),
+        ], $this->request->buildQuery());
+    }
+
+    public function testQueryWithArrivalTime()
+    {
+        $this->request->setArrivalTime($arrivalTime = new \DateTime());
+
+        $this->assertSame([
+            'origins'      => implode('|', $this->origins),
+            'destinations' => implode('|', $this->destinations),
+            'arrival_time' => $arrivalTime->getTimestamp(),
         ], $this->request->buildQuery());
     }
 

@@ -83,4 +83,22 @@ abstract class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         return $this->pool;
     }
+
+    /**
+     * @param string $key
+     * @param string $value
+     *
+     * @return \DateTime
+     */
+    protected function getDateTime($key, $value = 'now')
+    {
+        $item = $this->pool->getItem(sha1(get_class().'::'.$key));
+
+        if (!$item->isHit()) {
+            $item->set(new \DateTime($value));
+            $this->pool->save($item);
+        }
+
+        return $item->get();
+    }
 }
