@@ -59,7 +59,9 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @param GeocoderRequest|string $request
+     *
+     * @return GeocoderResponse
      */
     public function geocode($request)
     {
@@ -78,7 +80,10 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @param float $latitude
+     * @param float $longitude
+     *
+     * @return GeocoderResponse
      */
     public function reverse($latitude, $longitude)
     {
