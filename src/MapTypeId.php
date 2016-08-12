@@ -12,12 +12,11 @@
 namespace Ivory\GoogleMap;
 
 /**
- * Map type ID which describes a google map type ID.
- *
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MapTypeId
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeId
+final class MapTypeId
 {
     const HYBRID = 'hybrid';
     const ROADMAP = 'roadmap';
@@ -25,27 +24,9 @@ class MapTypeId
     const TERRAIN = 'terrain';
 
     /**
-     * Disabled constructor.
-     *
      * @codeCoverageIgnore
      */
-    final private function __construct()
+    private function __construct()
     {
-
-    }
-
-    /**
-     * Gets the available map type IDs.
-     *
-     * @return array The map type IDs.
-     */
-    public static function getMapTypeIds()
-    {
-        return array(
-            self::HYBRID,
-            self::ROADMAP,
-            self::SATELLITE,
-            self::TERRAIN,
-        );
     }
 }

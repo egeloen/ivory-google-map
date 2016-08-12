@@ -12,16 +12,19 @@
 namespace Ivory\Tests\GoogleMap\Base;
 
 use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
- * Bound test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class BoundTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Base\Bound */
-    protected $bound;
+    /**
+     * @var Bound
+     */
+    private $bound;
 
     /**
      * {@inheritdoc}
@@ -31,122 +34,137 @@ class BoundTest extends \PHPUnit_Framework_TestCase
         $this->bound = new Bound();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
+    public function testInheritance()
     {
-        unset($this->bound);
+        $this->assertInstanceOf(VariableAwareInterface::class, $this->bound);
     }
 
     public function testDefaultState()
     {
-        $this->assertSame('bound_', substr($this->bound->getJavascriptVariable(), 0, 6));
+        $this->assertStringStartsWith('bound', $this->bound->getVariable());
+        $this->assertFalse($this->bound->hasSouthWest());
+        $this->assertNull($this->bound->getSouthWest());
+        $this->assertFalse($this->bound->hasNorthEast());
+        $this->assertNull($this->bound->getNorthEast());
         $this->assertFalse($this->bound->hasCoordinates());
-        $this->assertFalse($this->bound->hasExtends());
+        $this->assertFalse($this->bound->hasExtendables());
     }
 
     public function testInitialState()
     {
-        $southWest = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $northEast = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $extends = array($this->getMock('Ivory\GoogleMap\Overlays\ExtendableInterface'));
+        $this->bound = new Bound(
+            $southWest = $this->createCoordinateMock(),
+            $northEast = $this->createCoordinateMock()
+        );
 
-        $this->bound = new Bound($southWest, $northEast, $extends);
-
-        $this->assertTrue($this->bound->hasCoordinates());
+        $this->assertStringStartsWith('bound', $this->bound->getVariable());
+        $this->assertTrue($this->bound->hasSouthWest());
         $this->assertSame($southWest, $this->bound->getSouthWest());
+        $this->assertTrue($this->bound->hasNorthEast());
         $this->assertSame($northEast, $this->bound->getNorthEast());
-
-        $this->assertTrue($this->bound->hasExtends());
-        $this->assertSame($extends, $this->bound->getExtends());
+        $this->assertTrue($this->bound->hasCoordinates());
+        $this->assertFalse($this->bound->hasExtendables());
     }
 
-    public function testSouthWestWithCoordinate()
+    public function testSouthWest()
     {
-        $southWest = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->bound->setSouthWest($southWest);
+        $this->bound->setSouthWest($southWest = $this->createCoordinateMock());
 
+        $this->assertFalse($this->bound->hasCoordinates());
+        $this->assertFalse($this->bound->hasExtendables());
+        $this->assertTrue($this->bound->hasSouthWest());
         $this->assertSame($southWest, $this->bound->getSouthWest());
     }
 
-    public function testSouthWestWithLatitudeAndLongitude()
+    public function testResetSouthWest()
     {
-        $this->bound->setSouthWest(1, 2, false);
-
-        $this->assertSame(1, $this->bound->getSouthWest()->getLatitude());
-        $this->assertSame(2, $this->bound->getSouthWest()->getLongitude());
-        $this->assertFalse($this->bound->getSouthWest()->isNoWrap());
-    }
-
-    public function testSouthWestWithNull()
-    {
-        $this->bound->setSouthWest(1, 2, false);
+        $this->bound->setSouthWest($this->createCoordinateMock());
         $this->bound->setSouthWest(null);
 
+        $this->assertFalse($this->bound->hasSouthWest());
         $this->assertNull($this->bound->getSouthWest());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage
-     * The south west setter arguments is invalid.
-     * The available prototypes are :
-     *  - function setSouthWest(Ivory\GoogleMap\Base\Coordinate $southWest)
-     *  - function setSouthWest(double $latitude, double $longitude, boolean $noWrap = true)
-     */
-    public function testSouthWestWithInvalidValue()
+    public function testNorthEast()
     {
-        $this->bound->setSouthWest('foo');
-    }
+        $this->bound->setNorthEast($northEast = $this->createCoordinateMock());
 
-    public function testNorthEastWithCoordinate()
-    {
-        $northEast = $this->getMock('Ivory\GoogleMap\Base\Coordinate');
-        $this->bound->setNorthEast($northEast);
-
+        $this->assertFalse($this->bound->hasCoordinates());
+        $this->assertFalse($this->bound->hasExtendables());
+        $this->assertTrue($this->bound->hasNorthEast());
         $this->assertSame($northEast, $this->bound->getNorthEast());
     }
 
-    public function testNorthEastWithLatitudeAndLongitude()
+    public function testResetNorthEast()
     {
-        $this->bound->setNorthEast(1, 2, false);
-
-        $this->assertSame(1, $this->bound->getNorthEast()->getLatitude());
-        $this->assertSame(2, $this->bound->getNorthEast()->getLongitude());
-        $this->assertFalse($this->bound->getNorthEast()->isNoWrap());
-    }
-
-    public function testNorthEastWithNull()
-    {
-        $this->bound->setNorthEast(1, 2, false);
+        $this->bound->setNorthEast($northEast = $this->createCoordinateMock());
         $this->bound->setNorthEast(null);
 
+        $this->assertFalse($this->bound->hasNorthEast());
         $this->assertNull($this->bound->getNorthEast());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage
-     * The north east setter arguments is invalid.
-     * The available prototypes are :
-     *  - function setNorthEast(Ivory\GoogleMap\Base\Coordinate $northEast)
-     *  - function setNorthEast(double $latitude, double $longitude, boolean $noWrap = true)
-     */
-    public function testNorthEastWithInvalidValue()
+    public function testCoordinates()
     {
-        $this->bound->setNorthEast('foo');
+        $this->bound->setSouthWest($this->createCoordinateMock());
+        $this->bound->setNorthEast($this->createCoordinateMock());
+
+        $this->assertTrue($this->bound->hasCoordinates());
+        $this->assertFalse($this->bound->hasExtendables());
     }
 
-    public function testCenter()
+    public function testSetExtendables()
     {
-        $this->bound->setSouthWest(-1, 0, false);
-        $this->bound->setNorthEast(1, 2, false);
+        $this->bound->setExtendables($extendables = [$extendable = $this->createExtendableMock()]);
+        $this->bound->setExtendables($extendables);
 
-        $center = $this->bound->getCenter();
+        $this->assertFalse($this->bound->hasCoordinates());
+        $this->assertTrue($this->bound->hasExtendables());
+        $this->assertTrue($this->bound->hasExtendable($extendable));
+        $this->assertSame($extendables, $this->bound->getExtendables());
+    }
 
-        $this->assertSame(0, $center->getLatitude());
-        $this->assertSame(1, $center->getLongitude());
-        $this->assertTrue($center->isNoWrap());
+    public function testAddExtendables()
+    {
+        $this->bound->setExtendables($firstExtendables = [$this->createExtendableMock()]);
+        $this->bound->addExtendables($secondExtendables = [$this->createExtendableMock()]);
+
+        $this->assertTrue($this->bound->hasExtendables());
+        $this->assertSame(array_merge($firstExtendables, $secondExtendables), $this->bound->getExtendables());
+    }
+
+    public function testAddExtendable()
+    {
+        $this->bound->addExtendable($extendable = $this->createExtendableMock());
+
+        $this->assertFalse($this->bound->hasCoordinates());
+        $this->assertTrue($this->bound->hasExtendables());
+        $this->assertTrue($this->bound->hasExtendable($extendable));
+        $this->assertSame([$extendable], $this->bound->getExtendables());
+    }
+
+    public function testRemoveExtendable()
+    {
+        $this->bound->addExtendable($extendable = $this->createExtendableMock());
+        $this->bound->removeExtendable($extendable);
+
+        $this->assertFalse($this->bound->hasExtendables());
+        $this->assertFalse($this->bound->hasExtendable($extendable));
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     */
+    private function createCoordinateMock()
+    {
+        return $this->createMock(Coordinate::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ExtendableInterface
+     */
+    private function createExtendableMock()
+    {
+        return $this->createMock(ExtendableInterface::class);
     }
 }

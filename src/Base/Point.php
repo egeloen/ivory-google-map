@@ -11,41 +11,41 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\BaseException;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
- * Point which describes a google map point
- *
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Point
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Point extends AbstractJavascriptVariableAsset
+class Point implements VariableAwareInterface
 {
-    /** @var double */
-    protected $x;
-
-    /** @var double */
-    protected $y;
+    use VariableAwareTrait;
 
     /**
-     * Creates a point.
-     *
-     * @param double $x X coordinate.
-     * @param double $y Y coordinate.
+     * @var float
      */
-    public function __construct($x = 0, $y = 0)
-    {
-        $this->setPrefixJavascriptVariable('point_');
+    private $x;
 
+    /**
+     * @var float
+     */
+    private $y;
+
+    /**
+     * @param float $x
+     * @param float $y
+     */
+    public function __construct($x = 0.0, $y = 0.0)
+    {
+        $this->setVariablePrefix('point');
         $this->setX($x);
         $this->setY($y);
     }
 
     /**
-     * Gets the x coordinate.
-     *
-     * @return double The x coordinate.
+     * @return float
      */
     public function getX()
     {
@@ -53,25 +53,15 @@ class Point extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the x coordinate.
-     *
-     * @param double $x The x coordinate.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the X coordinate is not valid.
+     * @param float $x
      */
     public function setX($x)
     {
-        if (!is_numeric($x)) {
-            throw BaseException::invalidPointX();
-        }
-
         $this->x = $x;
     }
 
     /**
-     * Gets the y coordinate.
-     *
-     * @return double The Y coordinate.
+     * @return float
      */
     public function getY()
     {
@@ -79,18 +69,10 @@ class Point extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the y coordinate.
-     *
-     * @param double $y The y coordinate.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the Y coordinate is not valid.
+     * @param float $y
      */
     public function setY($y)
     {
-        if (!is_numeric($y)) {
-            throw BaseException::invalidPointY();
-        }
-
         $this->y = $y;
     }
 }

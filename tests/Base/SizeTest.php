@@ -12,16 +12,17 @@
 namespace Ivory\Tests\GoogleMap\Base;
 
 use Ivory\GoogleMap\Base\Size;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
- * Size test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class SizeTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Base\Size */
-    protected $size;
+    /**
+     * @var Size
+     */
+    private $size;
 
     /**
      * {@inheritdoc}
@@ -31,99 +32,73 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $this->size = new Size();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
+    public function testInheritance()
     {
-        unset($this->size);
+        $this->assertInstanceOf(VariableAwareInterface::class, $this->size);
     }
 
     public function testDefaultState()
     {
-        $this->assertSame('size_', substr($this->size->getJavascriptVariable(), 0, 5));
-
-        $this->assertSame(1, $this->size->getWidth());
-        $this->assertSame(1, $this->size->getHeight());
-
+        $this->assertStringStartsWith('size', $this->size->getVariable());
+        $this->assertSame(1.0, $this->size->getWidth());
+        $this->assertSame(1.0, $this->size->getHeight());
         $this->assertFalse($this->size->hasUnits());
+        $this->assertFalse($this->size->hasWidthUnit());
+        $this->assertFalse($this->size->hasHeightUnit());
         $this->assertNull($this->size->getWidthUnit());
         $this->assertNull($this->size->getHeightUnit());
     }
 
     public function testInitialState()
     {
-        $this->size = new Size(2, 3, 'px', '%');
+        $this->size = new Size($width = 1.2, $height = 2.3, $widthUnit = 'px', $heightUnit = '%');
 
-        $this->assertSame(2, $this->size->getWidth());
-        $this->assertSame(3, $this->size->getHeight());
-
+        $this->assertSame($width, $this->size->getWidth());
+        $this->assertSame($height, $this->size->getHeight());
         $this->assertTrue($this->size->hasUnits());
-        $this->assertSame('px', $this->size->getWidthUnit());
-        $this->assertSame('%', $this->size->getHeightUnit());
+        $this->assertTrue($this->size->hasWidthUnit());
+        $this->assertTrue($this->size->hasHeightUnit());
+        $this->assertSame($widthUnit, $this->size->getWidthUnit());
+        $this->assertSame($heightUnit, $this->size->getHeightUnit());
     }
 
-    public function testWidthWithValidValue()
+    public function testWidth()
     {
-        $this->size->setWidth(2);
+        $this->size->setWidth($width = 1.2);
 
-        $this->assertSame(2, $this->size->getWidth());
+        $this->assertSame($width, $this->size->getWidth());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The width of a size must be a numeric value.
-     */
-    public function testWidthWithInvalidValue()
+    public function testHeight()
     {
-        $this->size->setWidth(true);
+        $this->size->setHeight($height = 1.2);
+
+        $this->assertSame($height, $this->size->getHeight());
     }
 
-    public function testHeightWithValidValue()
+    public function testWidthUnit()
     {
-        $this->size->setHeight(2);
+        $this->size->setWidthUnit($widthUnit = 'px');
 
-        $this->assertSame(2, $this->size->getHeight());
+        $this->assertFalse($this->size->hasUnits());
+        $this->assertTrue($this->size->hasWidthUnit());
+        $this->assertSame($widthUnit, $this->size->getWidthUnit());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The height of a size must be a numeric value.
-     */
-    public function testHeightWithInvalidValue()
+    public function testHeightUnit()
     {
-        $this->size->setHeight(true);
+        $this->size->setHeightUnit($heightUnit = 'px');
+
+        $this->assertFalse($this->size->hasUnits());
+        $this->assertTrue($this->size->hasHeightUnit());
+        $this->assertSame($heightUnit, $this->size->getHeightUnit());
     }
 
-    public function testWidthUnitWithValidValue()
+    public function testUnits()
     {
         $this->size->setWidthUnit('px');
-
-        $this->assertSame('px', $this->size->getWidthUnit());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The width unit of a size must be a string value.
-     */
-    public function testWidthUnitWithInvalidValue()
-    {
-        $this->size->setWidthUnit(true);
-    }
-
-    public function testHeightUnitWithValidValue()
-    {
         $this->size->setHeightUnit('px');
 
-        $this->assertSame('px', $this->size->getHeightUnit());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The height unit of a size must be a string value.
-     */
-    public function testHeightUnitWithInvalidValue()
-    {
-        $this->size->setHeightUnit(true);
+        $this->assertTrue($this->size->hasUnits());
     }
 }

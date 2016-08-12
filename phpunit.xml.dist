@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit colors="true" bootstrap="tests/bootstrap.php">
+<phpunit colors="true" bootstrap="tests/autoload.php">
     <testsuites>
         <testsuite name="Ivory Google Map Test Suite">
             <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <server name="BROWSER_NAME" value="chrome" />
+    </php>
+    <groups>
+        <exclude>
+            <group>functional</group>
+        </exclude>
+    </groups>
     <filter>
         <whitelist>
             <directory suffix=".php">./src/</directory>

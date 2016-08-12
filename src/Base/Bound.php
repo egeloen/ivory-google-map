@@ -11,53 +11,63 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\BaseException;
-use Ivory\GoogleMap\Overlays\ExtendableInterface;
+use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
- * Bound wich describes a google map bound.
- *
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLngBounds
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Bound extends AbstractJavascriptVariableAsset
+class Bound implements VariableAwareInterface
 {
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $southWest;
-
-    /** @var \Ivory\GoogleMap\Base\Coordinate */
-    protected $northEast;
-
-    /** @var array */
-    protected $extends;
+    use VariableAwareTrait;
 
     /**
-     * Creates a bound.
+     * @var Coordinate|null
      */
-    public function __construct(Coordinate $southWest = null, Coordinate $northEast = null, array $extends = array())
-    {
-        $this->setPrefixJavascriptVariable('bound_');
+    private $southWest;
 
+    /**
+     * @var Coordinate|null
+     */
+    private $northEast;
+
+    /**
+     * @var ExtendableInterface[]
+     */
+    private $extendables = [];
+
+    /**
+     * @param Coordinate|null $southWest
+     * @param Coordinate|null $northEast
+     */
+    public function __construct(Coordinate $southWest = null, Coordinate $northEast = null)
+    {
+        $this->setVariablePrefix('bound');
         $this->setSouthWest($southWest);
         $this->setNorthEast($northEast);
-        $this->setExtends($extends);
     }
 
     /**
-     * Checks if the bound has coordinates.
-     *
-     * @return boolean TRUE if the bound has coordinates else FALSE.
+     * @return bool
      */
     public function hasCoordinates()
     {
-        return ($this->southWest !== null) && ($this->northEast !== null);
+        return $this->hasSouthWest() && $this->hasNorthEast();
     }
 
     /**
-     * Gets the south west coordinate.
-     *
-     * @return \Ivory\GoogleMap\Base\Coordinate The south west coordinate.
+     * @return bool
+     */
+    public function hasSouthWest()
+    {
+        return $this->southWest !== null;
+    }
+
+    /**
+     * @return Coordinate|null
      */
     public function getSouthWest()
     {
@@ -65,42 +75,23 @@ class Bound extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the south west coordinate.
-     *
-     * Available prototypes:
-     *  - function setSouthWest(Ivory\GoogleMap\Base\Coordinate $southWest = null)
-     *  - function setSouthWest(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the south west coordinate is not valid (prototypes).
+     * @param Coordinate|null $southWest
      */
-    public function setSouthWest()
+    public function setSouthWest(Coordinate $southWest = null)
     {
-        $args = func_get_args();
-
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->southWest = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->southWest === null) {
-                $this->southWest = new Coordinate();
-            }
-
-            $this->southWest->setLatitude($args[0]);
-            $this->southWest->setLongitude($args[1]);
-
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->southWest->setNoWrap($args[2]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->southWest = null;
-        } else {
-            throw BaseException::invalidBoundSouthWest();
-        }
+        $this->southWest = $southWest;
     }
 
     /**
-     * Gets the north east coordinate.
-     *
-     * @return \Ivory\GoogleMap\Base\Coordinate The northh east coordinate.
+     * @return bool
+     */
+    public function hasNorthEast()
+    {
+        return $this->northEast !== null;
+    }
+
+    /**
+     * @return Coordinate|null
      */
     public function getNorthEast()
     {
@@ -108,92 +99,73 @@ class Bound extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the north east coordinate.
-     *
-     * Available prototypes:
-     *  - function setNorthEast(Ivory\GoogleMap\Base\Coordinate $northEast = null)
-     *  - function setNorthEast(double $latitude, double $longitude, boolean $noWrap = true)
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the north east coordinate is not valid (prototypes).
+     * @param Coordinate|null $northEast
      */
-    public function setNorthEast()
+    public function setNorthEast(Coordinate $northEast = null)
     {
-        $args = func_get_args();
+        $this->northEast = $northEast;
+    }
 
-        if (isset($args[0]) && ($args[0] instanceof Coordinate)) {
-            $this->northEast = $args[0];
-        } elseif ((isset($args[0]) && is_numeric($args[0])) && (isset($args[1]) && is_numeric($args[1]))) {
-            if ($this->northEast === null) {
-                $this->northEast = new Coordinate();
-            }
+    /**
+     * @return bool
+     */
+    public function hasExtendables()
+    {
+        return !empty($this->extendables);
+    }
 
-            $this->northEast->setLatitude($args[0]);
-            $this->northEast->setLongitude($args[1]);
+    /**
+     * @return ExtendableInterface[]
+     */
+    public function getExtendables()
+    {
+        return $this->extendables;
+    }
 
-            if (isset($args[2]) && is_bool($args[2])) {
-                $this->northEast->setNoWrap($args[2]);
-            }
-        } elseif (!isset($args[0])) {
-            $this->northEast = null;
-        } else {
-            throw BaseException::invalidBoundNorthEast();
+    /**
+     * @param ExtendableInterface[] $extendables
+     */
+    public function setExtendables($extendables)
+    {
+        $this->extendables = [];
+        $this->addExtendables($extendables);
+    }
+
+    /**
+     * @param ExtendableInterface[] $extendables
+     */
+    public function addExtendables($extendables)
+    {
+        foreach ($extendables as $extendable) {
+            $this->addExtendable($extendable);
         }
     }
 
     /**
-     * Checks if the bound extends something.
+     * @param ExtendableInterface $extendable
      *
-     * @return boolean TRUE if the bound extends somethind else FALSE.
+     * @return bool
      */
-    public function hasExtends()
+    public function hasExtendable(ExtendableInterface $extendable)
     {
-        return !empty($this->extends);
+        return in_array($extendable, $this->extendables, true);
     }
 
     /**
-     * Gets the google map objects that the bound extends.
-     *
-     * @return array The objects that the bound extends.
+     * @param ExtendableInterface $extendable
      */
-    public function getExtends()
+    public function addExtendable(ExtendableInterface $extendable)
     {
-        return $this->extends;
-    }
-
-    /**
-     * Sets the google map objects that the bound extends.
-     *
-     * @param array $extends The objects that the bound extends.
-     */
-    public function setExtends($extends)
-    {
-        $this->extends = array();
-
-        foreach ($extends as $extend) {
-            $this->extend($extend);
+        if (!$this->hasExtendable($extendable)) {
+            $this->extendables[] = $extendable;
         }
     }
 
     /**
-     * Adds an object that the bound extends.
-     *
-     * @param \Ivory\GoogleMap\Overlays\ExtendableInterface $extend The object that the bound extends.
+     * @param ExtendableInterface $extendable
      */
-    public function extend(ExtendableInterface $extend)
+    public function removeExtendable(ExtendableInterface $extendable)
     {
-        $this->extends[] = $extend;
-    }
-
-    /**
-     * Gets the center of the bound.
-     *
-     * @return \Ivory\GoogleMap\Base\Coordinate The bound center.
-     */
-    public function getCenter()
-    {
-        $centerLatitude = ($this->getSouthWest()->getLatitude() + $this->getNorthEast()->getLatitude()) / 2;
-        $centerLongitude = ($this->getSouthWest()->getLongitude() + $this->getNorthEast()->getLongitude()) / 2;
-
-        return new Coordinate($centerLatitude, $centerLongitude);
+        unset($this->extendables[array_search($extendable, $this->extendables, true)]);
     }
 }

@@ -12,16 +12,17 @@
 namespace Ivory\Tests\GoogleMap\Base;
 
 use Ivory\GoogleMap\Base\Point;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
- * Point test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PointTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\GoogleMap\Base\Point */
-    protected $point;
+    /**
+     * @var Point
+     */
+    private $point;
 
     /**
      * {@inheritdoc}
@@ -31,58 +32,38 @@ class PointTest extends \PHPUnit_Framework_TestCase
         $this->point = new Point();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
+    public function testInheritance()
     {
-        unset($this->point);
+        $this->assertInstanceOf(VariableAwareInterface::class, $this->point);
     }
 
     public function testDefaultState()
     {
-        $this->assertSame('point_', substr($this->point->getJavascriptVariable(), 0, 6));
-        $this->assertSame(0, $this->point->getX());
-        $this->assertSame(0, $this->point->getY());
+        $this->assertStringStartsWith('point', $this->point->getVariable());
+        $this->assertSame(0.0, $this->point->getX());
+        $this->assertSame(0.0, $this->point->getY());
     }
 
     public function testInitialState()
     {
-        $this->point = new Point(1, 2);
+        $this->point = new Point($x = 1.2, $y = 2.3);
 
-        $this->assertSame(1, $this->point->getX());
-        $this->assertSame(2, $this->point->getY());
+        $this->assertStringStartsWith('point', $this->point->getVariable());
+        $this->assertSame($x, $this->point->getX());
+        $this->assertSame($y, $this->point->getY());
     }
 
-    public function testXWithValidValue()
+    public function testX()
     {
-        $this->point->setX(1);
+        $this->point->setX($x = 1.2);
 
-        $this->assertSame(1, $this->point->getX());
+        $this->assertSame($x, $this->point->getX());
     }
 
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The x coordinate of a point must be a numeric value.
-     */
-    public function testXWithInvalidValue()
+    public function testY()
     {
-        $this->point->setX(true);
-    }
+        $this->point->setY($y = 1.2);
 
-    public function testYWithValidValue()
-    {
-        $this->point->setY(1);
-
-        $this->assertSame(1, $this->point->getY());
-    }
-
-    /**
-     * @expectedException \Ivory\GoogleMap\Exception\BaseException
-     * @expectedExceptionMessage The y coordinate of a point must be a numeric value.
-     */
-    public function testYWithInvalidValue()
-    {
-        $this->point->setY(true);
+        $this->assertSame($y, $this->point->getY());
     }
 }

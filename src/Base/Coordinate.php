@@ -11,46 +11,48 @@
 
 namespace Ivory\GoogleMap\Base;
 
-use Ivory\GoogleMap\Assets\AbstractJavascriptVariableAsset;
-use Ivory\GoogleMap\Exception\BaseException;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
- * Coordinate which describes a google map coordinate.
- *
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLng
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Coordinate extends AbstractJavascriptVariableAsset
+class Coordinate implements VariableAwareInterface
 {
-    /** @var double */
-    protected $latitude;
-
-    /** @var double */
-    protected $longitude;
-
-    /** @var boolean */
-    protected $noWrap;
+    use VariableAwareTrait;
 
     /**
-     * Create a coordinate
-     *
-     * @param double  $latitude  The latitude.
-     * @param double  $longitude The longitude.
-     * @param boolean $noWrap    The no wrap flag.
+     * @var float
      */
-    public function __construct($latitude = 0, $longitude = 0, $noWrap = true)
-    {
-        $this->setPrefixJavascriptVariable('coordinate_');
+    private $latitude;
 
+    /**
+     * @var float
+     */
+    private $longitude;
+
+    /**
+     * @var bool
+     */
+    private $noWrap;
+
+    /**
+     * @param float $latitude
+     * @param float $longitude
+     * @param bool  $noWrap
+     */
+    public function __construct($latitude = 0.0, $longitude = 0.0, $noWrap = true)
+    {
+        $this->setVariablePrefix('coordinate');
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
         $this->setNoWrap($noWrap);
     }
 
     /**
-     * Gets the latitude.
-     *
-     * @return double The latitude.
+     * @return float
      */
     public function getLatitude()
     {
@@ -58,25 +60,15 @@ class Coordinate extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the latitude
-     *
-     * @param double $latitude The latitude.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the latitude is not valid.
+     * @param float $latitude
      */
     public function setLatitude($latitude)
     {
-        if (!is_numeric($latitude) && ($latitude !== null)) {
-            throw BaseException::invalidCoordinateLatitude();
-        }
-
         $this->latitude = $latitude;
     }
 
     /**
-     * Gets the longitude
-     *
-     * @return doube The longitude.
+     * @return float
      */
     public function getLongitude()
     {
@@ -84,25 +76,15 @@ class Coordinate extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets the longitude.
-     *
-     * @param double $longitude The longitude.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the longitude is not valid.
+     * @param float $longitude
      */
     public function setLongitude($longitude)
     {
-        if (!is_numeric($longitude) && ($longitude !== null)) {
-            throw BaseException::invalidCoordinateLongitude();
-        }
-
         $this->longitude = $longitude;
     }
 
     /**
-     * Check if the coordinate is not wrap.
-     *
-     * @return boolean TRUE if the coordinate is not wrap else FALSE.
+     * @return bool
      */
     public function isNoWrap()
     {
@@ -110,18 +92,10 @@ class Coordinate extends AbstractJavascriptVariableAsset
     }
 
     /**
-     * Sets if the coordinate is wrap.
-     *
-     * @param boolean $noWrap TRUE if the coordinate is not wrap else FALSE.
-     *
-     * @throws \Ivory\GoogleMap\Exception\BaseException If the no wrap flag is not valid.
+     * @param bool $noWrap
      */
     public function setNoWrap($noWrap)
     {
-        if (!is_bool($noWrap) && ($noWrap !== null)) {
-            throw BaseException::invalidCoordinateNoWrap();
-        }
-
         $this->noWrap = $noWrap;
     }
 }
