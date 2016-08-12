@@ -22,11 +22,6 @@ class ApiEvent extends AbstractEvent
     private $objects;
 
     /**
-     * @var string
-     */
-    private $language = 'en';
-
-    /**
      * @var string[]
      */
     private $sources = [];
@@ -88,22 +83,6 @@ class ApiEvent extends AbstractEvent
         }
 
         return $objects;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
     }
 
     /**

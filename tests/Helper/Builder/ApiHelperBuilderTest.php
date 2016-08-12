@@ -38,6 +38,18 @@ class ApiHelperBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(AbstractHelperBuilder::class, $this->apiHelperBuilder);
     }
 
+    public function testDefaultState()
+    {
+        $this->assertSame('en', $this->apiHelperBuilder->getLanguage());
+    }
+
+    public function testLanguage()
+    {
+        $this->apiHelperBuilder->setLanguage($language = 'fr');
+
+        $this->assertSame($language, $this->apiHelperBuilder->getLanguage());
+    }
+
     public function testBuild()
     {
         $this->assertInstanceOf(ApiHelper::class, $this->apiHelperBuilder->build());

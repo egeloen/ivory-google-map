@@ -14,9 +14,9 @@ use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
 $apiHelper = ApiHelperBuilder::create()->build();
 ```
 
-The api helper is built via a builder. The builder allows you to configure the helper json builder, formatter and 
-subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated code and the 
-subscribers allow you to attach additional code to the API.
+The api helper is built via a builder. The builder allows you to configure the helper json builder, formatter, language 
+and subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated code, the
+language allows to localize the API (default en) and the subscribers allow you to attach additional code to the API.
 
 ``` php
 use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
@@ -26,6 +26,8 @@ $apiHelperBuilder = ApiHelperBuilder::create();
 $apiHelperBuilder->getFormatter()->setDebug(true);
 $apiHelperBuilder->getFormatter()->setIndentationStep(4);
 $apiHelperBuilder->getFormatter()->setDefaultIndentation(0);
+
+$apiHelperBuilder->setLanguage('fr');
 
 $apiHelperBuilder->addSubscriber(/* ... */);
 

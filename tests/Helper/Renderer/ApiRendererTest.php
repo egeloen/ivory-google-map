@@ -83,7 +83,6 @@ class ApiRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             'function ivory_google_map_load(){google.load("maps","3",{"other_params":"language=en&libraries=library1,library2","callback":ivory_google_map_init})};function ivory_google_map_init_source(src){var script=document.createElement("script");script.type="text/javascript";script.async=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};function ivory_google_map_init_requirement(c,r){if(r()){c();}else{var i=setInterval(function(){if(r()){clearInterval(i);c();}},100);}};function ivory_google_map_init(){ivory_google_map_init_source("source1");ivory_google_map_init_source("source2");ivory_google_map_init_requirement(main_callback,function(){return requirement1&&requirement2;});};ivory_google_map_init_source("https://www.google.com/jsapi?callback=ivory_google_map_load");',
             $this->apiRenderer->render(
-                'en',
                 $this->createCallbacks($object = new \stdClass()),
                 $this->createRequirements($object),
                 ['source1', 'source2'],
@@ -133,7 +132,6 @@ ivory_google_map_init_source("https://www.google.com/jsapi?callback=ivory_google
 EOF;
 
         $this->assertSame($expected, $this->apiRenderer->render(
-            'en',
             $this->createCallbacks($object = new \stdClass()),
             $this->createRequirements($object),
             ['source1', 'source2'],

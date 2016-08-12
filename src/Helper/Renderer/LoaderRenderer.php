@@ -11,15 +11,50 @@
 
 namespace Ivory\GoogleMap\Helper\Renderer;
 
+use Ivory\GoogleMap\Helper\Formatter\Formatter;
+use Ivory\JsonBuilder\JsonBuilder;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class LoaderRenderer extends AbstractJsonRenderer
 {
     /**
+     * @var string
+     */
+    private $language;
+
+    /**
+     * @param Formatter   $formatter
+     * @param JsonBuilder $jsonBuilder
+     * @param string      $language
+     */
+    public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder, $language = 'en')
+    {
+        parent::__construct($formatter, $jsonBuilder);
+
+        $this->setLanguage($language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
      * @param string   $name
      * @param string   $callback
-     * @param string   $language
      * @param string[] $libraries
      * @param bool     $newLine
      *
@@ -28,14 +63,13 @@ class LoaderRenderer extends AbstractJsonRenderer
     public function render(
         $name,
         $callback,
-        $language,
         array $libraries = [],
         $newLine = true
     ) {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
 
-        $parameters = ['language' => $language];
+        $parameters = ['language' => $this->language];
         if (!empty($libraries)) {
             $parameters['libraries'] = implode(',', $libraries);
         }

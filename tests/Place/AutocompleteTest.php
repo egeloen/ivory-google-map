@@ -56,7 +56,6 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->autocomplete->getInputAttributes());
         $this->assertFalse($this->autocomplete->hasLibraries());
         $this->assertEmpty($this->autocomplete->getLibraries());
-        $this->assertSame('en', $this->autocomplete->getLanguage());
     }
 
     public function testInputId()
@@ -250,13 +249,6 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->autocomplete->hasLibraries());
         $this->assertFalse($this->autocomplete->hasLibrary($library));
         $this->assertEmpty($this->autocomplete->getLibraries());
-    }
-
-    public function testLanguage()
-    {
-        $this->autocomplete->setLanguage($language = 'fr');
-
-        $this->assertSame($language, $this->autocomplete->getLanguage());
     }
 
     /**

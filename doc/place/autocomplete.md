@@ -71,14 +71,6 @@ $autocomplete->setBound(new Bound(
 ));
 ```
 
-## Configure language
-
-If you want to use your own language when displaying your autocomplete, you can use:
-
-``` php
-$autocomplete->setLanguage('fr');
-```
-
 ## Configure libraries
 
 Sometimes, you want to use the autocomplete & other Google Map related libraries. The library provides many 
@@ -98,4 +90,6 @@ $autocomplete->setInputAttribute('class', 'my-class');
 
 ## Render autocomplete
 
+Once you have configured your autocomplete, you can render it:
 
+- [Rendering](/doc/helper/index.md)
