@@ -31,6 +31,16 @@ class DistanceMatrixRequest
     private $destinations = [];
 
     /**
+     * @var \DateTime|null
+     */
+    private $departureTime;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $arrivalTime;
+
+    /**
      * @var string|null
      */
     private $travelMode;
@@ -201,6 +211,54 @@ class DistanceMatrixRequest
     /**
      * @return bool
      */
+    public function hasDepartureTime()
+    {
+        return $this->departureTime !== null;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDepartureTime()
+    {
+        return $this->departureTime;
+    }
+
+    /**
+     * @param \DateTime|null $departureTime
+     */
+    public function setDepartureTime(\DateTime $departureTime = null)
+    {
+        $this->departureTime = $departureTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasArrivalTime()
+    {
+        return $this->arrivalTime !== null;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getArrivalTime()
+    {
+        return $this->arrivalTime;
+    }
+
+    /**
+     * @param \DateTime|null $arrivalTime
+     */
+    public function setArrivalTime(\DateTime $arrivalTime = null)
+    {
+        $this->arrivalTime = $arrivalTime;
+    }
+
+    /**
+     * @return bool
+     */
     public function hasTravelMode()
     {
         return $this->travelMode !== null;
@@ -351,6 +409,14 @@ class DistanceMatrixRequest
             'origins'      => implode('|', $this->buildPlaces($this->origins)),
             'destinations' => implode('|', $this->buildPlaces($this->destinations)),
         ];
+
+        if ($this->hasDepartureTime()) {
+            $query['departure_time'] = $this->departureTime->getTimestamp();
+        }
+
+        if ($this->hasArrivalTime()) {
+            $query['arrival_time'] = $this->arrivalTime->getTimestamp();
+        }
 
         if ($this->hasTravelMode()) {
             $query['mode'] = strtolower($this->travelMode);

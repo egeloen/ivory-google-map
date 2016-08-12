@@ -355,25 +355,6 @@ class DirectionsTest extends AbstractServiceTest
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
-     * @return \DateTime
-     */
-    private function getDateTime($key, $value = 'now')
-    {
-        $pool = $this->getPool();
-        $item = $pool->getItem(sha1(__CLASS__.'::'.$key));
-
-        if (!$item->isHit()) {
-            $item->set(new \DateTime($value));
-            $pool->save($item);
-        }
-
-        return $item->get();
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
      */
     private function createHttpClientMock()
