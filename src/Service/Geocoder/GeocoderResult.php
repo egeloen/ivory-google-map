@@ -19,6 +19,11 @@ namespace Ivory\GoogleMap\Service\Geocoder;
 class GeocoderResult
 {
     /**
+     * @var string|null
+     */
+    private $placeId;
+
+    /**
      * @var GeocoderAddressComponent[]
      */
     private $addressComponents = [];
@@ -42,6 +47,30 @@ class GeocoderResult
      * @var string[]
      */
     private $types = [];
+
+    /**
+     * @return bool
+     */
+    public function hasPlaceId()
+    {
+        return $this->placeId !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlaceId()
+    {
+        return $this->placeId;
+    }
+
+    /**
+     * @param string|null $placeId
+     */
+    public function setPlaceId($placeId)
+    {
+        $this->placeId = $placeId;
+    }
 
     /**
      * @param string|null $type
