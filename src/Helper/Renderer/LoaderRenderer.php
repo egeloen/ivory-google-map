@@ -25,15 +25,22 @@ class LoaderRenderer extends AbstractJsonRenderer
     private $language;
 
     /**
+     * @var string|null
+     */
+    private $key;
+
+    /**
      * @param Formatter   $formatter
      * @param JsonBuilder $jsonBuilder
      * @param string      $language
+     * @param string|null $key
      */
-    public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder, $language = 'en')
+    public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder, $language = 'en', $key = null)
     {
         parent::__construct($formatter, $jsonBuilder);
 
         $this->setLanguage($language);
+        $this->setKey($key);
     }
 
     /**
@@ -50,6 +57,30 @@ class LoaderRenderer extends AbstractJsonRenderer
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasKey()
+    {
+        return $this->key !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string|null $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
     }
 
     /**
@@ -70,6 +101,11 @@ class LoaderRenderer extends AbstractJsonRenderer
         $jsonBuilder = $this->getJsonBuilder();
 
         $parameters = ['language' => $this->language];
+
+        if ($this->hasKey()) {
+            $parameters['key'] = $this->key;
+        }
+
         if (!empty($libraries)) {
             $parameters['libraries'] = implode(',', $libraries);
         }

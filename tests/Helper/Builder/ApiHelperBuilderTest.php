@@ -41,6 +41,8 @@ class ApiHelperBuilderTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertSame('en', $this->apiHelperBuilder->getLanguage());
+        $this->assertFalse($this->apiHelperBuilder->hasKey());
+        $this->assertNull($this->apiHelperBuilder->getKey());
     }
 
     public function testLanguage()
@@ -48,6 +50,14 @@ class ApiHelperBuilderTest extends \PHPUnit_Framework_TestCase
         $this->apiHelperBuilder->setLanguage($language = 'fr');
 
         $this->assertSame($language, $this->apiHelperBuilder->getLanguage());
+    }
+
+    public function testKey()
+    {
+        $this->apiHelperBuilder->setKey($key = 'key');
+
+        $this->assertTrue($this->apiHelperBuilder->hasKey());
+        $this->assertSame($key, $this->apiHelperBuilder->getKey());
     }
 
     public function testBuild()

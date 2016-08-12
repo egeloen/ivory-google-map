@@ -42,13 +42,22 @@ class LoaderRendererTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertSame('en', $this->loaderRenderer->getLanguage());
+        $this->assertFalse($this->loaderRenderer->hasKey());
+        $this->assertNull($this->loaderRenderer->getKey());
     }
 
     public function testInitialState()
     {
-        $this->loaderRenderer = new LoaderRenderer(new Formatter(), new JsonBuilder(), $language = 'fr');
+        $this->loaderRenderer = new LoaderRenderer(
+            new Formatter(),
+            new JsonBuilder(),
+            $language = 'fr',
+            $key = 'key'
+        );
 
         $this->assertSame($language, $this->loaderRenderer->getLanguage());
+        $this->assertTrue($this->loaderRenderer->hasKey());
+        $this->assertSame($key, $this->loaderRenderer->getKey());
     }
 
     public function testLanguage()
@@ -56,6 +65,14 @@ class LoaderRendererTest extends \PHPUnit_Framework_TestCase
         $this->loaderRenderer->setLanguage($language = 'fr');
 
         $this->assertSame($language, $this->loaderRenderer->getLanguage());
+    }
+
+    public function testKey()
+    {
+        $this->loaderRenderer->setKey($key = 'key');
+
+        $this->assertTrue($this->loaderRenderer->hasKey());
+        $this->assertSame($key, $this->loaderRenderer->getKey());
     }
 
     public function testRender()
@@ -72,6 +89,16 @@ class LoaderRendererTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             'function name(){google.load("maps","3",{"other_params":"language=fr","callback":callback})};',
+            $this->loaderRenderer->render('name', 'callback')
+        );
+    }
+
+    public function testRenderWithKey()
+    {
+        $this->loaderRenderer->setKey('key');
+
+        $this->assertSame(
+            'function name(){google.load("maps","3",{"other_params":"language=en&key=key","callback":callback})};',
             $this->loaderRenderer->render('name', 'callback')
         );
     }

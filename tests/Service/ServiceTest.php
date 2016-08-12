@@ -64,6 +64,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->service->isHttps());
         $this->assertSame(AbstractService::FORMAT_JSON, $this->service->getFormat());
         $this->assertInstanceOf(XmlParser::class, $this->service->getXmlParser());
+        $this->assertFalse($this->service->hasKey());
+        $this->assertNull($this->service->getKey());
         $this->assertFalse($this->service->hasBusinessAccount());
         $this->assertNull($this->service->getBusinessAccount());
     }
@@ -113,6 +115,23 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->setXmlParser($xmlParser = $this->createXmlParserMock());
 
         $this->assertSame($xmlParser, $this->service->getXmlParser());
+    }
+
+    public function testKey()
+    {
+        $this->service->setKey($key = 'key');
+
+        $this->assertTrue($this->service->hasKey());
+        $this->assertSame($key, $this->service->getKey());
+    }
+
+    public function testResetKey()
+    {
+        $this->service->setKey($key = 'key');
+        $this->service->setKey(null);
+
+        $this->assertFalse($this->service->hasKey());
+        $this->assertNull($this->service->getKey());
     }
 
     public function testBusinessAccount()

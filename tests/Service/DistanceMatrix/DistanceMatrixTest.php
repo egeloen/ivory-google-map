@@ -171,6 +171,56 @@ class DistanceMatrixTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRows());
     }
 
+    public function testRouteWithKey()
+    {
+        $this->distanceMatrix = new DistanceMatrix(
+            $client = $this->createHttpClientMock(),
+            $messageFactory = $this->createMessageFactoryMock()
+        );
+
+        $this->distanceMatrix->setKey('api-key');
+
+        $request = $this->createDistanceMatrixRequestMock();
+        $request
+            ->expects($this->once())
+            ->method('buildQuery')
+            ->will($this->returnValue($query = ['foo' => 'bar']));
+
+        $messageFactory
+            ->expects($this->once())
+            ->method('createRequest')
+            ->with(
+                $this->identicalTo('GET'),
+                $this->identicalTo(
+                    $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?foo=bar&key=api-key'
+                )
+            )
+            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->identicalTo($httpRequest))
+            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
+
+        $httpResponse
+            ->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
+
+        $httpStream
+            ->expects($this->once())
+            ->method('__toString')
+            ->will($this->returnValue('{"status":"OK","origin_addresses":[],"destination_addresses":[],"rows":[]}'));
+
+        $response = $this->distanceMatrix->process($request);
+
+        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertEmpty($response->getOrigins());
+        $this->assertEmpty($response->getDestinations());
+        $this->assertEmpty($response->getRows());
+    }
+
     public function testRouteWithBusinessAccount()
     {
         $this->distanceMatrix = new DistanceMatrix(

@@ -46,6 +46,14 @@ use Ivory\GoogleMap\Service\AbstractService;
 $service->setFormat(AbstractService::FORMAT_XML);
 ```
 
+## Configure API key
+
+If you have an API key, you can use:
+
+``` php
+$service->setKey('api-key');
+```
+
 ## Configure business account
 
 If you want to use a service with a business account, you can read this [documentation](/doc/service/business_account.md).
