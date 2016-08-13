@@ -196,20 +196,35 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     private function buildGeometry(array $data)
     {
         $geometry = new GeocoderGeometry();
-        $geometry->setLocation(new Coordinate($data['location']['lat'], $data['location']['lng']));
+        $geometry->setBound(isset($data['bounds']) ? $this->buildBound($data['bounds']) : null);
+        $geometry->setLocation($this->buildCoordinate($data['location']));
         $geometry->setLocationType($data['location_type']);
-        $geometry->setViewport(new Bound(
-            new Coordinate($data['viewport']['southwest']['lat'], $data['viewport']['southwest']['lng']),
-            new Coordinate($data['viewport']['northeast']['lat'], $data['viewport']['northeast']['lng'])
-        ));
+        $geometry->setViewport($this->buildBound($data['viewport']));
 
-        if (isset($data['bounds'])) {
-            $geometry->setBound(new Bound(
-                new Coordinate($data['bounds']['southwest']['lat'], $data['bounds']['southwest']['lng']),
-                new Coordinate($data['bounds']['northeast']['lat'], $data['bounds']['northeast']['lng'])
-            ));
-        }
 
         return $geometry;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Bound
+     */
+    private function buildBound(array $data)
+    {
+        return new Bound(
+            $this->buildCoordinate($data['southwest']),
+            $this->buildCoordinate($data['northeast'])
+        );
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Coordinate
+     */
+    private function buildCoordinate(array $data)
+    {
+        return new Coordinate($data['lat'], $data['lng']);
     }
 }

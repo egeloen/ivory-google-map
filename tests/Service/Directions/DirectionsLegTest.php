@@ -39,6 +39,8 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->leg->hasDuration());
         $this->assertNull($this->leg->getDuration());
+        $this->assertFalse($this->leg->hasDurationInTraffic());
+        $this->assertNull($this->leg->getDurationInTraffic());
         $this->assertFalse($this->leg->hasDistance());
         $this->assertNull($this->leg->getDistance());
         $this->assertFalse($this->leg->hasEndAddress());
@@ -70,6 +72,23 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->leg->hasDuration());
         $this->assertNull($this->leg->getDuration());
+    }
+
+    public function testDurationInTraffic()
+    {
+        $this->leg->setDurationInTraffic($durationOInTraffic = $this->createDurationMock());
+
+        $this->assertTrue($this->leg->hasDurationInTraffic());
+        $this->assertSame($durationOInTraffic, $this->leg->getDurationInTraffic());
+    }
+
+    public function testResetDurationInTraffic()
+    {
+        $this->leg->setDurationInTraffic($this->createDurationMock());
+        $this->leg->setDurationInTraffic(null);
+
+        $this->assertFalse($this->leg->hasDurationInTraffic());
+        $this->assertNull($this->leg->getDurationInTraffic());
     }
 
     public function testDistance()

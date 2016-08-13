@@ -33,6 +33,11 @@ class DirectionsLeg
     private $duration;
 
     /**
+     * @var Duration|null
+     */
+    private $durationInTraffic;
+
+    /**
      * @var string|null
      */
     private $endAddress;
@@ -108,6 +113,30 @@ class DirectionsLeg
     public function setDuration(Duration $duration = null)
     {
         $this->duration = $duration;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDurationInTraffic()
+    {
+        return $this->durationInTraffic !== null;
+    }
+
+    /**
+     * @return Duration|null
+     */
+    public function getDurationInTraffic()
+    {
+        return $this->durationInTraffic;
+    }
+
+    /**
+     * @param Duration|null $durationInTraffic
+     */
+    public function setDurationInTraffic(Duration $durationInTraffic = null)
+    {
+        $this->durationInTraffic = $durationInTraffic;
     }
 
     /**

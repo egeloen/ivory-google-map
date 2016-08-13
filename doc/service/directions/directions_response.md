@@ -193,8 +193,8 @@ $text = $fare->getText();
 
 ## Leg
 
-A directions leg wraps a distance, a durations, a start location, an end location, a start address, an end address and
-steps.
+A directions leg wraps a distance, a durations, a duration in traffic, a start location, an end location, a start 
+address, an end address and steps.
 
 ``` php
 foreach ($route->getLegs() as $leg) {
@@ -216,6 +216,15 @@ It indicates the total duration of this leg. It is represented by the `Duration`
 
 ``` php
 $duration = $leg->getDuration();
+```
+
+## Duration in traffic
+
+It indicates the total duration of this leg. This value is an estimate of the time in traffic based on current and 
+historical traffic conditions. It is represented by the `Duration`.
+
+``` php
+$durationInTraffic = $leg->getDurationInTraffic();
 ```
 
 ### Start location

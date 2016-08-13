@@ -43,6 +43,8 @@ class DirectionsResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->response->getRoutes());
         $this->assertFalse($this->response->hasGeocodedWaypoints());
         $this->assertEmpty($this->response->getGeocodedWaypoints());
+        $this->assertFalse($this->response->hasAvailableTravelModes());
+        $this->assertEmpty($this->response->getAvailableTravelModes());
     }
 
     public function testStatus()
