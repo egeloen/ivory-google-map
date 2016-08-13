@@ -46,10 +46,12 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
 
     /**
      * @param Autocomplete $autocomplete
+     * @param string|null  $html
      */
-    protected function renderAutocomplete(Autocomplete $autocomplete)
+    protected function renderAutocomplete(Autocomplete $autocomplete, $html = null)
     {
         $this->renderHtml(implode('', [
+            $html,
             $this->placeAutocompleteHelper->render($autocomplete),
             $this->renderApi([$autocomplete]),
         ]));

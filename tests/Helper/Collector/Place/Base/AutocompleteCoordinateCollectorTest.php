@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Helper\Collector\Place;
+namespace Ivory\Tests\GoogleMap\Helper\Collector\Place\Base;
 
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Helper\Collector\Place\AutocompleteBoundCollector;
-use Ivory\GoogleMap\Helper\Collector\Place\AutocompleteCoordinateCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteBoundCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteCoordinateCollector;
 use Ivory\GoogleMap\Place\Autocomplete;
 
 /**

@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Subscriber\Place\Base;
 
-use Ivory\GoogleMap\Helper\Collector\Place\AutocompleteCoordinateCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteCoordinateCollector;
 use Ivory\GoogleMap\Helper\Event\PlaceAutocompleteEvent;
 use Ivory\GoogleMap\Helper\Event\PlaceAutocompleteEvents;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;

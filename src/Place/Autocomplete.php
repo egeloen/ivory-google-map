@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Place;
 
 use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
@@ -26,6 +27,11 @@ class Autocomplete implements VariableAwareInterface
      * @var string
      */
     private $inputId = 'place_input';
+
+    /**
+     * @var EventManager
+     */
+    private $eventManager;
 
     /**
      * @var Bound|null
@@ -60,6 +66,7 @@ class Autocomplete implements VariableAwareInterface
     public function __construct()
     {
         $this->setVariablePrefix('place_autocomplete');
+        $this->setEventManager(new EventManager());
     }
 
     /**
@@ -76,6 +83,22 @@ class Autocomplete implements VariableAwareInterface
     public function setInputId($inputId)
     {
         $this->inputId = $inputId;
+    }
+
+    /**
+     * @return EventManager
+     */
+    public function getEventManager()
+    {
+        return $this->eventManager;
+    }
+
+    /**
+     * @param EventManager $eventManager
+     */
+    public function setEventManager(EventManager $eventManager)
+    {
+        $this->eventManager = $eventManager;
     }
 
     /**

@@ -11,11 +11,19 @@
 
 namespace Ivory\GoogleMap\Helper\Builder;
 
-use Ivory\GoogleMap\Helper\Collector\Place\AutocompleteBoundCollector;
-use Ivory\GoogleMap\Helper\Collector\Place\AutocompleteCoordinateCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteBoundCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteCoordinateCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Event\AutocompleteDomEventCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Event\AutocompleteDomEventOnceCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Event\AutocompleteEventCollector;
+use Ivory\GoogleMap\Helper\Collector\Place\Event\AutocompleteEventOnceCollector;
 use Ivory\GoogleMap\Helper\PlaceAutocompleteHelper;
 use Ivory\GoogleMap\Helper\Renderer\Base\BoundRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Base\CoordinateRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Event\DomEventOnceRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Event\DomEventRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Event\EventOnceRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Event\EventRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\JavascriptTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Place\AutocompleteContainerRenderer;
@@ -31,6 +39,11 @@ use Ivory\GoogleMap\Helper\Subscriber\Place\AutocompleteSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Place\Base\AutocompleteBaseSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Place\Base\AutocompleteBoundSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Place\Base\AutocompleteCoordinateSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteDomEventOnceSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteDomEventSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteEventOnceSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteEventSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteSimpleEventSubscriber;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -57,9 +70,21 @@ class PlaceAutocompleteHelperBuilder extends AbstractHelperBuilder
         $boundCollector = new AutocompleteBoundCollector();
         $coordinateCollector = new AutocompleteCoordinateCollector($boundCollector);
 
+        // Event collectors
+        $domEventCollector = new AutocompleteDomEventCollector();
+        $domEventOnceCollector = new AutocompleteDomEventOnceCollector();
+        $eventCollector = new AutocompleteEventCollector();
+        $eventOnceCollector = new AutocompleteEventOnceCollector();
+
         // Base renderers
         $coordinateRenderer = new CoordinateRenderer($formatter);
         $boundRenderer = new BoundRenderer($formatter);
+
+        // Event renderers
+        $domEventOnceRenderer = new DomEventOnceRenderer($formatter);
+        $domEventRenderer = new DomEventRenderer($formatter);
+        $eventOnceRenderer = new EventOnceRenderer($formatter);
+        $eventRenderer = new EventRenderer($formatter);
 
         // Html renderers
         $tagRenderer = new TagRenderer($formatter);
@@ -75,10 +100,20 @@ class PlaceAutocompleteHelperBuilder extends AbstractHelperBuilder
         $autocompleteRenderer = new AutocompleteRenderer($formatter, $jsonBuilder, $requirementRenderer);
 
         return array_merge([
+            // Base
             new AutocompleteBaseSubscriber($formatter),
-            new AutocompleteContainerSubscriber($formatter, $autocompleteContainerRenderer),
             new AutocompleteCoordinateSubscriber($formatter, $coordinateCollector, $coordinateRenderer),
             new AutocompleteBoundSubscriber($formatter, $boundCollector, $boundRenderer),
+
+            // Event
+            new AutocompleteDomEventOnceSubscriber($formatter, $domEventOnceCollector, $domEventOnceRenderer),
+            new AutocompleteDomEventSubscriber($formatter, $domEventCollector, $domEventRenderer),
+            new AutocompleteEventOnceSubscriber($formatter, $eventOnceCollector, $eventOnceRenderer),
+            new AutocompleteEventSubscriber($formatter),
+            new AutocompleteSimpleEventSubscriber($formatter, $eventCollector, $eventRenderer),
+
+            // Autocomplete
+            new AutocompleteContainerSubscriber($formatter, $autocompleteContainerRenderer),
             new AutocompleteHtmlSubscriber($formatter, $autocompleteHtmlRenderer),
             new AutocompleteInitSubscriber($formatter),
             new AutocompleteJavascriptSubscriber(
