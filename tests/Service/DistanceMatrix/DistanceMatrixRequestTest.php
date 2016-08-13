@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
+use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixAvoid;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
 
 /**
@@ -58,10 +59,8 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getArrivalTime());
         $this->assertFalse($this->request->hasTravelMode());
         $this->assertNull($this->request->getTravelMode());
-        $this->assertFalse($this->request->hasAvoidHighways());
-        $this->assertNull($this->request->getAvoidHighways());
-        $this->assertFalse($this->request->hasAvoidTolls());
-        $this->assertNull($this->request->getAvoidTolls());
+        $this->assertFalse($this->request->hasAvoid());
+        $this->assertNull($this->request->getAvoid());
         $this->assertFalse($this->request->hasRegion());
         $this->assertNull($this->request->getRegion());
         $this->assertFalse($this->request->hasUnitSystem());
@@ -197,38 +196,21 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getTravelMode());
     }
 
-    public function testAvoidHighways()
+    public function testAvoid()
     {
-        $this->request->setAvoidHighways(true);
+        $this->request->setAvoid($avoid = DistanceMatrixAvoid::HIGHWAYS);
 
-        $this->assertTrue($this->request->hasAvoidHighways());
-        $this->assertTrue($this->request->getAvoidHighways());
+        $this->assertTrue($this->request->hasAvoid());
+        $this->assertSame($avoid, $this->request->getAvoid());
     }
 
-    public function testResetAvoidHighways()
+    public function testResetAvoid()
     {
-        $this->request->setAvoidHighways(true);
-        $this->request->setAvoidHighways(null);
+        $this->request->setAvoid(DistanceMatrixAvoid::HIGHWAYS);
+        $this->request->setAvoid(null);
 
-        $this->assertFalse($this->request->hasAvoidHighways());
-        $this->assertNull($this->request->getAvoidHighways());
-    }
-
-    public function testAvoidTolls()
-    {
-        $this->request->setAvoidTolls(true);
-
-        $this->assertTrue($this->request->hasAvoidTolls());
-        $this->assertTrue($this->request->getAvoidTolls());
-    }
-
-    public function testResetAvoidTolls()
-    {
-        $this->request->setAvoidTolls(true);
-        $this->request->setAvoidTolls(null);
-
-        $this->assertFalse($this->request->hasAvoidTolls());
-        $this->assertNull($this->request->getAvoidTolls());
+        $this->assertFalse($this->request->hasAvoid());
+        $this->assertNull($this->request->getAvoid());
     }
 
     public function testRegion()
@@ -323,25 +305,14 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         ], $this->request->buildQuery());
     }
 
-    public function testQueryWithAvoidTolls()
+    public function testQueryWithAvoid()
     {
-        $this->request->setAvoidTolls(true);
+        $this->request->setAvoid($avoid = DistanceMatrixAvoid::HIGHWAYS);
 
         $this->assertSame([
             'origins'      => implode('|', $this->origins),
             'destinations' => implode('|', $this->destinations),
-            'avoid'        => 'tolls',
-        ], $this->request->buildQuery());
-    }
-
-    public function testQueryWithAvoidHighways()
-    {
-        $this->request->setAvoidHighways(true);
-
-        $this->assertSame([
-            'origins'       => implode('|', $this->origins),
-            'destinations'  => implode('|', $this->destinations),
-            'avoid'         => 'highways',
+            'avoid'        => $avoid,
         ], $this->request->buildQuery());
     }
 

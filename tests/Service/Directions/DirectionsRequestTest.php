@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service\Directions;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
+use Ivory\GoogleMap\Service\Directions\DirectionsAvoid;
 use Ivory\GoogleMap\Service\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Service\Directions\DirectionsWaypoint;
 
@@ -62,10 +63,8 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getOptimizeWaypoints());
         $this->assertFalse($this->request->hasTravelMode());
         $this->assertNull($this->request->getTravelMode());
-        $this->assertFalse($this->request->hasAvoidHighways());
-        $this->assertNull($this->request->getAvoidHighways());
-        $this->assertFalse($this->request->hasAvoidTolls());
-        $this->assertNull($this->request->getAvoidTolls());
+        $this->assertFalse($this->request->hasAvoid());
+        $this->assertNull($this->request->getAvoid());
         $this->assertFalse($this->request->hasProvideRouteAlternatives());
         $this->assertNull($this->request->getProvideRouteAlternatives());
         $this->assertFalse($this->request->hasRegion());
@@ -206,60 +205,21 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getTravelMode());
     }
 
-    public function testAvoidHighways()
+    public function testAvoid()
     {
-        $this->request->setAvoidHighways(true);
+        $this->request->setAvoid($avoid = DirectionsAvoid::HIGHWAYS);
 
-        $this->assertTrue($this->request->hasAvoidHighways());
-        $this->assertTrue($this->request->getAvoidHighways());
+        $this->assertTrue($this->request->hasAvoid());
+        $this->assertSame($avoid, $this->request->getAvoid());
     }
 
-    public function testResetAvoidHighways()
+    public function testResetAvoid()
     {
-        $this->request->setAvoidHighways(true);
-        $this->request->setAvoidHighways(null);
+        $this->request->setAvoid(DirectionsAvoid::HIGHWAYS);
+        $this->request->setAvoid(null);
 
-        $this->assertFalse($this->request->hasAvoidHighways());
-        $this->assertNull($this->request->getAvoidHighways());
-    }
-
-    public function testAvoidHighwaysResetAvoidTolls()
-    {
-        $this->request->setAvoidTolls(true);
-        $this->request->setAvoidHighways(true);
-
-        $this->assertFalse($this->request->hasAvoidTolls());
-        $this->assertNull($this->request->getAvoidTolls());
-        $this->assertTrue($this->request->hasAvoidHighways());
-        $this->assertTrue($this->request->getAvoidHighways());
-    }
-
-    public function testAvoidTolls()
-    {
-        $this->request->setAvoidTolls(true);
-
-        $this->assertTrue($this->request->hasAvoidTolls());
-        $this->assertTrue($this->request->getAvoidTolls());
-    }
-
-    public function testResetAvoidTolls()
-    {
-        $this->request->setAvoidTolls(true);
-        $this->request->setAvoidTolls(null);
-
-        $this->assertFalse($this->request->hasAvoidTolls());
-        $this->assertNull($this->request->getAvoidTolls());
-    }
-
-    public function testAvoidTollsResetAvoidHighways()
-    {
-        $this->request->setAvoidHighways(true);
-        $this->request->setAvoidTolls(true);
-
-        $this->assertFalse($this->request->hasAvoidHighways());
-        $this->assertNull($this->request->getAvoidHighways());
-        $this->assertTrue($this->request->hasAvoidTolls());
-        $this->assertTrue($this->request->getAvoidTolls());
+        $this->assertFalse($this->request->hasAvoid());
+        $this->assertNull($this->request->getAvoid());
     }
 
     public function testProvideRouteAlternatives()
@@ -437,25 +397,14 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
         ], $this->request->buildQuery());
     }
 
-    public function testQueryWithAvoidTolls()
+    public function testQueryWithAvoid()
     {
-        $this->request->setAvoidTolls(true);
+        $this->request->setAvoid($avoid = DirectionsAvoid::HIGHWAYS);
 
         $this->assertSame([
             'origin'      => $this->origin,
             'destination' => $this->destination,
-            'avoid'       => 'tolls',
-        ], $this->request->buildQuery());
-    }
-
-    public function testQueryWithAvoidHighways()
-    {
-        $this->request->setAvoidHighways(true);
-
-        $this->assertSame([
-            'origin'      => $this->origin,
-            'destination' => $this->destination,
-            'avoid'       => 'highways',
+            'avoid'       => $avoid,
         ], $this->request->buildQuery());
     }
 

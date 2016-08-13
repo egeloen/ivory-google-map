@@ -46,14 +46,9 @@ class DistanceMatrixRequest
     private $travelMode;
 
     /**
-     * @var bool|null
+     * @var string|null
      */
-    private $avoidHighways;
-
-    /**
-     * @var bool|null
-     */
-    private $avoidTolls;
+    private $avoid;
 
     /**
      * @var string|null
@@ -283,49 +278,25 @@ class DistanceMatrixRequest
     /**
      * @return bool
      */
-    public function hasAvoidHighways()
+    public function hasAvoid()
     {
-        return $this->avoidHighways !== null;
+        return $this->avoid !== null;
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      */
-    public function getAvoidHighways()
+    public function getAvoid()
     {
-        return $this->avoidHighways;
+        return $this->avoid;
     }
 
     /**
-     * @param bool|null $avoidHighways
+     * @param string|null $avoid
      */
-    public function setAvoidHighways($avoidHighways = null)
+    public function setAvoid($avoid = null)
     {
-        $this->avoidHighways = $avoidHighways;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasAvoidTolls()
-    {
-        return $this->avoidTolls !== null;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function getAvoidTolls()
-    {
-        return $this->avoidTolls;
-    }
-
-    /**
-     * @param bool|null $avoidTolls
-     */
-    public function setAvoidTolls($avoidTolls = null)
-    {
-        $this->avoidTolls = $avoidTolls;
+        $this->avoid = $avoid;
     }
 
     /**
@@ -422,10 +393,8 @@ class DistanceMatrixRequest
             $query['mode'] = strtolower($this->travelMode);
         }
 
-        if ($this->avoidTolls) {
-            $query['avoid'] = 'tolls';
-        } elseif ($this->avoidHighways) {
-            $query['avoid'] = 'highways';
+        if ($this->hasAvoid()) {
+            $query['avoid'] = $this->avoid;
         }
 
         if ($this->hasUnitSystem()) {

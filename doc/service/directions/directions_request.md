@@ -89,20 +89,14 @@ If you want to optimize waypoints, you can use:
 $request->setOptimizeWaypoints(true);
 ```
 
-## Configure avoid highways
+## Configure avoid
 
-If you want to avoid highways, you can use:
-
-``` php
-$request->setAvoidHighways(true);
-```
-
-## Configure avoid tolls
-
-If you want to avoid tolls, you can use:
+If you want to avoid tolls, highways ferries or indoor, you can use:
 
 ``` php
-$request->setAvoidTolls(true);
+use Ivory\GoogleMap\Service\Directions\DirectionsAvoid;
+
+$request->setAvoid(DirectionsAvoid::HIGHWAYS);
 ```
 
 ## Configure route alternatives

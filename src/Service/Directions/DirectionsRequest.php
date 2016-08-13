@@ -56,14 +56,9 @@ class DirectionsRequest
     private $travelMode;
 
     /**
-     * @var bool|null
+     * @var string|null
      */
-    private $avoidHighways;
-
-    /**
-     * @var bool|null
-     */
-    private $avoidTolls;
+    private $avoid;
 
     /**
      * @var bool|null
@@ -289,57 +284,25 @@ class DirectionsRequest
     /**
      * @return bool
      */
-    public function hasAvoidTolls()
+    public function hasAvoid()
     {
-        return $this->avoidTolls !== null;
+        return $this->avoid !== null;
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      */
-    public function getAvoidTolls()
+    public function getAvoid()
     {
-        return $this->avoidTolls;
+        return $this->avoid;
     }
 
     /**
-     * @param bool|null $avoidTolls
+     * @param string|null $avoid
      */
-    public function setAvoidTolls($avoidTolls = null)
+    public function setAvoid($avoid = null)
     {
-        $this->avoidTolls = $avoidTolls;
-
-        if ($this->hasAvoidTolls()) {
-            $this->setAvoidHighways(null);
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasAvoidHighways()
-    {
-        return $this->avoidHighways !== null;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function getAvoidHighways()
-    {
-        return $this->avoidHighways;
-    }
-
-    /**
-     * @param bool|null $avoidHighways
-     */
-    public function setAvoidHighways($avoidHighways = null)
-    {
-        $this->avoidHighways = $avoidHighways;
-
-        if ($this->hasAvoidHighways()) {
-            $this->setAvoidTolls(null);
-        }
+        $this->avoid = $avoid;
     }
 
     /**
@@ -475,10 +438,8 @@ class DirectionsRequest
             $query['mode'] = strtolower($this->travelMode);
         }
 
-        if ($this->avoidTolls) {
-            $query['avoid'] = 'tolls';
-        } elseif ($this->avoidHighways) {
-            $query['avoid'] = 'highways';
+        if ($this->hasAvoid()) {
+            $query['avoid'] = $this->avoid;
         }
 
         if ($this->hasProvideRouteAlternatives()) {
