@@ -25,6 +25,5 @@ final class DirectionsTrafficModel
      */
     private function __construct()
     {
-
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Directions;
 
+use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Directions\DirectionsGeocoded;
 use Ivory\GoogleMap\Service\Directions\DirectionsResponse;
 use Ivory\GoogleMap\Service\Directions\DirectionsRoute;
@@ -131,6 +132,49 @@ class DirectionsResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->response->hasGeocodedWaypoints());
         $this->assertFalse($this->response->hasGeocodedWaypoint($geocodedWaypoint));
         $this->assertEmpty($this->response->getGeocodedWaypoints());
+    }
+
+    public function testSetAvailableTravelModes()
+    {
+        $availableTravelModes = [$availableTravelMode = TravelMode::BICYCLING];
+
+        $this->response->setAvailableTravelModes($availableTravelModes);
+        $this->response->setAvailableTravelModes($availableTravelModes);
+
+        $this->assertTrue($this->response->hasAvailableTravelModes());
+        $this->assertTrue($this->response->hasAvailableTravelMode($availableTravelMode));
+        $this->assertSame($availableTravelModes, $this->response->getAvailableTravelModes());
+    }
+
+    public function testAddAvailableTravelModes()
+    {
+        $this->response->setAvailableTravelModes($firstAvailableTravelModes = [TravelMode::BICYCLING]);
+        $this->response->addAvailableTravelModes($secondAvailableTravelModes = [TravelMode::DRIVING]);
+
+        $this->assertTrue($this->response->hasAvailableTravelModes());
+        $this->assertSame(
+            array_merge($firstAvailableTravelModes, $secondAvailableTravelModes),
+            $this->response->getAvailableTravelModes()
+        );
+    }
+
+    public function testAddAvailableTravelMode()
+    {
+        $this->response->addAvailableTravelMode($availableTravelMode = TravelMode::BICYCLING);
+
+        $this->assertTrue($this->response->hasAvailableTravelModes());
+        $this->assertTrue($this->response->hasAvailableTravelMode($availableTravelMode));
+        $this->assertSame([$availableTravelMode], $this->response->getAvailableTravelModes());
+    }
+
+    public function testRemoveAvailableTravelMode()
+    {
+        $this->response->addAvailableTravelMode($availableTravelMode = TravelMode::BICYCLING);
+        $this->response->removeAvailableTravelMode($availableTravelMode);
+
+        $this->assertFalse($this->response->hasAvailableTravelModes());
+        $this->assertFalse($this->response->hasAvailableTravelMode($availableTravelMode));
+        $this->assertEmpty($this->response->getAvailableTravelModes());
     }
 
     /**

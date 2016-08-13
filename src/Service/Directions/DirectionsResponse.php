@@ -32,6 +32,11 @@ class DirectionsResponse
     private $geocodedWaypoints = [];
 
     /**
+     * @var string[]
+     */
+    private $availableTravelModes = [];
+
+    /**
      * @return bool
      */
     public function hasStatus()
@@ -181,5 +186,69 @@ class DirectionsResponse
     {
         unset($this->geocodedWaypoints[array_search($geocodedWaypoint, $this->geocodedWaypoints, true)]);
         $this->geocodedWaypoints = array_values($this->geocodedWaypoints);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAvailableTravelModes()
+    {
+        return !empty($this->availableTravelModes);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableTravelModes()
+    {
+        return $this->availableTravelModes;
+    }
+
+    /**
+     * @param string[] $availableTravelModes
+     */
+    public function setAvailableTravelModes(array $availableTravelModes)
+    {
+        $this->availableTravelModes = [];
+        $this->addAvailableTravelModes($availableTravelModes);
+    }
+
+    /**
+     * @param string[] $availableTravelModes
+     */
+    public function addAvailableTravelModes(array $availableTravelModes)
+    {
+        foreach ($availableTravelModes as $availableTravelMode) {
+            $this->addAvailableTravelMode($availableTravelMode);
+        }
+    }
+
+    /**
+     * @param string $availableTravelMode
+     *
+     * @return bool
+     */
+    public function hasAvailableTravelMode($availableTravelMode)
+    {
+        return in_array($availableTravelMode, $this->availableTravelModes, true);
+    }
+
+    /**
+     * @param string $availableTravelMode
+     */
+    public function addAvailableTravelMode($availableTravelMode)
+    {
+        if (!$this->hasAvailableTravelMode($availableTravelMode)) {
+            $this->availableTravelModes[] = $availableTravelMode;
+        }
+    }
+
+    /**
+     * @param string $availableTravelMode
+     */
+    public function removeAvailableTravelMode($availableTravelMode)
+    {
+        unset($this->availableTravelModes[array_search($availableTravelMode, $this->availableTravelModes, true)]);
+        $this->availableTravelModes = array_values($this->availableTravelModes);
     }
 }

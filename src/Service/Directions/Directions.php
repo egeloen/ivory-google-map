@@ -76,8 +76,13 @@ class Directions extends AbstractService
         $response = new DirectionsResponse();
         $response->setStatus($data['status']);
         $response->setRoutes(isset($data['routes']) ? $this->buildRoutes($data['routes']) : []);
+
         $response->setGeocodedWaypoints(
             isset($data['geocoded_waypoints']) ? $this->buildGeocodedWaypoints($data['geocoded_waypoints']) : []
+        );
+
+        $response->setAvailableTravelModes(
+            isset($data['available_travel_modes']) ? $data['available_travel_modes'] : []
         );
 
         return $response;
