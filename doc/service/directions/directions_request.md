@@ -94,9 +94,9 @@ $request->setOptimizeWaypoints(true);
 If you want to avoid tolls, highways ferries or indoor, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsAvoid;
+use Ivory\GoogleMap\Service\Base\Avoid;
 
-$request->setAvoid(DirectionsAvoid::HIGHWAYS);
+$request->setAvoid(Avoid::HIGHWAYS);
 ```
 
 ## Configure route alternatives
@@ -122,9 +122,9 @@ $request->setTravelMode(TravelMode::DRIVING);
 If you want to define your traffic model, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsTrafficModel;
+use Ivory\GoogleMap\Service\Base\TrafficModel;
 
-$request->setTrafficModel(DirectionsTrafficModel::BEST_GUESS);
+$request->setTrafficModel(TrafficModel::BEST_GUESS);
 ```
 
 ## Configure transit modes
@@ -132,11 +132,11 @@ $request->setTrafficModel(DirectionsTrafficModel::BEST_GUESS);
 If you want to define your transit modes, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsTransitMode;
+use Ivory\GoogleMap\Service\Base\TransitMode;
 
 $request->setTransitModes([
-    DirectionsTransitMode::BUS,
-    DirectionsTransitMode::TRAIN,
+    TransitMode::BUS,
+    TransitMode::TRAIN,
 ]);
 ```
 
@@ -145,9 +145,9 @@ $request->setTransitModes([
 If you want to define your transit routing preference, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsTransitRoutingPreference;
+use Ivory\GoogleMap\Service\Directions\TransitRoutingPreference;
 
-$request->setTransitRoutingPreference(DirectionsTransitRoutingPreference::LESS_WALKING);
+$request->setTransitRoutingPreference(TransitRoutingPreference::LESS_WALKING);
 ```
 
 ## Configure unit system

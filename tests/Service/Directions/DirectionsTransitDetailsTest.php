@@ -68,11 +68,11 @@ class DirectionsTransitDetailsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->transitDetails->hasArrivalStop());
         $this->assertSame($arrivalStop, $this->transitDetails->getArrivalStop());
     }
-    
+
     public function testDepartureTime()
     {
         $this->transitDetails->setDepartureTime($departureTime = new \DateTime());
-        
+
         $this->assertTrue($this->transitDetails->hasDepartureTime());
         $this->assertSame($departureTime, $this->transitDetails->getDepartureTime());
     }

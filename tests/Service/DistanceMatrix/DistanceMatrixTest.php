@@ -14,11 +14,11 @@ namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrix;
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixAvoid;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixStatus;
 use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
@@ -111,7 +111,7 @@ class DistanceMatrixTest extends AbstractServiceTest
     public function testProcessWithAvoid()
     {
         $request = new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']);
-        $request->setAvoid(DistanceMatrixAvoid::HIGHWAYS);
+        $request->setAvoid(Avoid::HIGHWAYS);
 
         $response = $this->distanceMatrix->process($request);
 

@@ -287,4 +287,4 @@ class DirectionsTransitLine
         unset($this->agencies[array_search($agency, $this->agencies, true)]);
         $this->agencies = array_values($this->agencies);
     }
-} 
+}

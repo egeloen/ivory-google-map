@@ -11,9 +11,12 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
+use Ivory\GoogleMap\Service\Base\Avoid;
+use Ivory\GoogleMap\Service\Base\TrafficModel;
+use Ivory\GoogleMap\Service\Base\TransitMode;
+use Ivory\GoogleMap\Service\Base\TransitRoutingPreference;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixAvoid;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
 
 /**
@@ -61,6 +64,12 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getTravelMode());
         $this->assertFalse($this->request->hasAvoid());
         $this->assertNull($this->request->getAvoid());
+        $this->assertFalse($this->request->hasTrafficModel());
+        $this->assertNull($this->request->getTrafficModel());
+        $this->assertFalse($this->request->hasTransitModes());
+        $this->assertEmpty($this->request->getTransitModes());
+        $this->assertFalse($this->request->hasTransitRoutingPreference());
+        $this->assertNull($this->request->getTransitRoutingPreference());
         $this->assertFalse($this->request->hasRegion());
         $this->assertNull($this->request->getRegion());
         $this->assertFalse($this->request->hasUnitSystem());
@@ -198,7 +207,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testAvoid()
     {
-        $this->request->setAvoid($avoid = DistanceMatrixAvoid::HIGHWAYS);
+        $this->request->setAvoid($avoid = Avoid::HIGHWAYS);
 
         $this->assertTrue($this->request->hasAvoid());
         $this->assertSame($avoid, $this->request->getAvoid());
@@ -206,11 +215,85 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testResetAvoid()
     {
-        $this->request->setAvoid(DistanceMatrixAvoid::HIGHWAYS);
+        $this->request->setAvoid(Avoid::HIGHWAYS);
         $this->request->setAvoid(null);
 
         $this->assertFalse($this->request->hasAvoid());
         $this->assertNull($this->request->getAvoid());
+    }
+
+    public function testTrafficModel()
+    {
+        $this->request->setTrafficModel($trafficModel = TrafficModel::BEST_GUESS);
+
+        $this->assertTrue($this->request->hasTrafficModel());
+        $this->assertSame($trafficModel, $this->request->getTrafficModel());
+    }
+
+    public function testResetTrafficModel()
+    {
+        $this->request->setTrafficModel(TrafficModel::BEST_GUESS);
+        $this->request->setTrafficModel(null);
+
+        $this->assertFalse($this->request->hasTrafficModel());
+        $this->assertNull($this->request->getTrafficModel());
+    }
+
+    public function testSetTransitModes()
+    {
+        $this->request->setTransitModes($transitModes = [$transitMode = TransitMode::BUS]);
+        $this->request->setTransitModes($transitModes);
+
+        $this->assertTrue($this->request->hasTransitModes());
+        $this->assertTrue($this->request->hasTransitMode($transitMode));
+        $this->assertSame($transitModes, $this->request->getTransitModes());
+    }
+
+    public function testAddTransitModes()
+    {
+        $this->request->setTransitModes($firstTransitModes = [TransitMode::BUS]);
+        $this->request->addTransitModes($secondTransitModes = [TransitMode::SUBWAY]);
+
+        $this->assertTrue($this->request->hasTransitModes());
+        $this->assertSame(array_merge($firstTransitModes, $secondTransitModes), $this->request->getTransitModes());
+    }
+
+    public function testAddTransitMode()
+    {
+        $this->request->addTransitMode($transitMode = TransitMode::BUS);
+
+        $this->assertTrue($this->request->hasTransitModes());
+        $this->assertTrue($this->request->hasTransitMode($transitMode));
+        $this->assertSame([$transitMode], $this->request->getTransitModes());
+    }
+
+    public function testRemoveTransitMode()
+    {
+        $this->request->addTransitMode($transitMode = TransitMode::BUS);
+        $this->request->removeTransitMode($transitMode);
+
+        $this->assertFalse($this->request->hasTransitModes());
+        $this->assertFalse($this->request->hasTransitMode($transitMode));
+        $this->assertEmpty($this->request->getTransitModes());
+    }
+
+    public function testTransitRoutingPreference()
+    {
+        $transitRoutingPreference = TransitRoutingPreference::LESS_WALKING;
+        $this->request->setTransitRoutingPreference($transitRoutingPreference);
+
+        $this->assertTrue($this->request->hasTransitRoutingPreference());
+        $this->assertSame($transitRoutingPreference, $this->request->getTransitRoutingPreference());
+    }
+
+    public function testResetTransitRoutingPreference()
+    {
+        $transitRoutingPreference = TransitRoutingPreference::LESS_WALKING;
+        $this->request->setTransitRoutingPreference($transitRoutingPreference);
+        $this->request->setTransitRoutingPreference(null);
+
+        $this->assertFalse($this->request->hasTransitRoutingPreference());
+        $this->assertNull($this->request->getTransitRoutingPreference());
     }
 
     public function testRegion()
@@ -307,12 +390,46 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testQueryWithAvoid()
     {
-        $this->request->setAvoid($avoid = DistanceMatrixAvoid::HIGHWAYS);
+        $this->request->setAvoid($avoid = Avoid::HIGHWAYS);
 
         $this->assertSame([
             'origins'      => implode('|', $this->origins),
             'destinations' => implode('|', $this->destinations),
             'avoid'        => $avoid,
+        ], $this->request->buildQuery());
+    }
+
+    public function testQueryWithTrafficModel()
+    {
+        $this->request->setTrafficModel($trafficModel = TrafficModel::BEST_GUESS);
+
+        $this->assertSame([
+            'origins'       => implode('|', $this->origins),
+            'destinations'  => implode('|', $this->destinations),
+            'traffic_model' => $trafficModel,
+        ], $this->request->buildQuery());
+    }
+
+    public function testQueryWithTransitModes()
+    {
+        $this->request->setTransitModes($transitModes = [TransitMode::BUS, TransitMode::SUBWAY]);
+
+        $this->assertSame([
+            'origins'      => implode('|', $this->origins),
+            'destinations' => implode('|', $this->destinations),
+            'transit_mode' => implode('|', $transitModes),
+        ], $this->request->buildQuery());
+    }
+
+    public function testQueryWithTransitRoutingPreference()
+    {
+        $transitRoutingPreference = TransitRoutingPreference::LESS_WALKING;
+        $this->request->setTransitRoutingPreference($transitRoutingPreference);
+
+        $this->assertSame([
+            'origins'                    => implode('|', $this->origins),
+            'destinations'               => implode('|', $this->destinations),
+            'transit_routing_preference' => $transitRoutingPreference,
         ], $this->request->buildQuery());
     }
 

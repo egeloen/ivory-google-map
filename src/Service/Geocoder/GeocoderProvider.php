@@ -201,7 +201,6 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
         $geometry->setLocationType($data['location_type']);
         $geometry->setViewport($this->buildBound($data['viewport']));
 
-
         return $geometry;
     }
 
