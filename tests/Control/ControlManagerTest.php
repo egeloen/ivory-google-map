@@ -17,7 +17,6 @@ use Ivory\GoogleMap\Control\RotateControl;
 use Ivory\GoogleMap\Control\ScaleControl;
 use Ivory\GoogleMap\Control\StreetViewControl;
 use Ivory\GoogleMap\Control\ZoomControl;
-use Ivory\GoogleMap\Map;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -39,8 +38,6 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertFalse($this->controlManager->hasMap());
-        $this->assertNull($this->controlManager->getMap());
         $this->assertFalse($this->controlManager->hasMapTypeControl());
         $this->assertNull($this->controlManager->getMapTypeControl());
         $this->assertFalse($this->controlManager->hasRotateControl());
@@ -51,25 +48,6 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->controlManager->getStreetViewControl());
         $this->assertFalse($this->controlManager->hasZoomControl());
         $this->assertNull($this->controlManager->getZoomControl());
-    }
-
-    public function testMap()
-    {
-        $map = $this->createMapMock();
-        $map
-            ->expects($this->once())
-            ->method('getControlManager')
-            ->will($this->returnValue(null));
-
-        $map
-            ->expects($this->once())
-            ->method('setControlManager')
-            ->with($this->identicalTo($this->controlManager));
-
-        $this->controlManager->setMap($map);
-
-        $this->assertTrue($this->controlManager->hasMap());
-        $this->assertSame($map, $this->controlManager->getMap());
     }
 
     public function testMapTypeControl()
@@ -155,14 +133,6 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->controlManager->hasZoomControl());
         $this->assertNull($this->controlManager->getZoomControl());
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
-     */
-    private function createMapMock()
-    {
-        return $this->createMock(Map::class);
     }
 
     /**

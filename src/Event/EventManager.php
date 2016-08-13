@@ -11,8 +11,6 @@
 
 namespace Ivory\GoogleMap\Event;
 
-use Ivory\GoogleMap\Map;
-
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MapsEventListener
  *
@@ -20,11 +18,6 @@ use Ivory\GoogleMap\Map;
  */
 class EventManager
 {
-    /**
-     * @var Map|null
-     */
-    private $map;
-
     /**
      * @var Event[]
      */
@@ -44,34 +37,6 @@ class EventManager
      * @var Event[]
      */
     private $eventsOnce = [];
-
-    /**
-     * @return bool
-     */
-    public function hasMap()
-    {
-        return $this->map !== null;
-    }
-
-    /**
-     * @return Map|null
-     */
-    public function getMap()
-    {
-        return $this->map;
-    }
-
-    /**
-     * @param Map $map
-     */
-    public function setMap(Map $map)
-    {
-        $this->map = $map;
-
-        if ($map->getEventManager() !== $this) {
-            $map->setEventManager($this);
-        }
-    }
 
     /**
      * @return bool

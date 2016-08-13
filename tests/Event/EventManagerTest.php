@@ -13,7 +13,6 @@ namespace Ivory\Tests\GoogleMap\Event;
 
 use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Event\EventManager;
-use Ivory\GoogleMap\Map;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,8 +34,6 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertFalse($this->eventManager->hasMap());
-        $this->assertNull($this->eventManager->getMap());
         $this->assertFalse($this->eventManager->hasDomEvents());
         $this->assertEmpty($this->eventManager->getDomEvents());
         $this->assertFalse($this->eventManager->hasDomEventsOnce());
@@ -45,25 +42,6 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->eventManager->getEvents());
         $this->assertFalse($this->eventManager->hasEventsOnce());
         $this->assertEmpty($this->eventManager->getEventsOnce());
-    }
-
-    public function testMap()
-    {
-        $map = $this->createMapMock();
-        $map
-            ->expects($this->once())
-            ->method('getEventManager')
-            ->will($this->returnValue(null));
-
-        $map
-            ->expects($this->once())
-            ->method('setEventManager')
-            ->with($this->identicalTo($this->eventManager));
-
-        $this->eventManager->setMap($map);
-
-        $this->assertTrue($this->eventManager->hasMap());
-        $this->assertSame($map, $this->eventManager->getMap());
     }
 
     public function testSetDomEvents()
@@ -222,14 +200,6 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->eventManager->hasEventsOnce());
         $this->assertFalse($this->eventManager->hasEventOnce($eventOnce));
         $this->assertEmpty($this->eventManager->getEventsOnce());
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
-     */
-    private function createMapMock()
-    {
-        return $this->createMock(Map::class);
     }
 
     /**
