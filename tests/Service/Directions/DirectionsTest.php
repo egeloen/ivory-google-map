@@ -182,6 +182,23 @@ class DirectionsTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getAvailableTravelModes());
     }
 
+    public function testRouteWithTransit()
+    {
+        $request = new DirectionsRequest(
+            '601-625 Ashbury Street, San Francisco',
+            'Bike Route 95, San Francisco'
+        );
+
+        $request->setTravelMode(TravelMode::TRANSIT);
+        $request->setDepartureTime($this->getDepartureTime());
+        $request->setArrivalTime($this->getArrivalTime());
+
+        $response = $this->directions->route($request);
+
+        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getRoutes());
+    }
+
     public function testRouteWithUnitSystem()
     {
         $request = new DirectionsRequest('Lille', 'Paris');

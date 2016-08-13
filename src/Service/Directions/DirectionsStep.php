@@ -59,6 +59,11 @@ class DirectionsStep
     private $travelMode;
 
     /**
+     * @var DirectionsTransitDetails|null
+     */
+    private $transitDetails;
+
+    /**
      * @return bool
      */
     public function hasDistance()
@@ -224,5 +229,29 @@ class DirectionsStep
     public function setTravelMode($travelMode = null)
     {
         $this->travelMode = $travelMode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTransitDetails()
+    {
+        return $this->transitDetails !== null;
+    }
+
+    /**
+     * @return DirectionsTransitDetails|null
+     */
+    public function getTransitDetails()
+    {
+        return $this->transitDetails;
+    }
+
+    /**
+     * @param DirectionsTransitDetails|null $transitDetails
+     */
+    public function setTransitDetails(DirectionsTransitDetails $transitDetails = null)
+    {
+        $this->transitDetails = $transitDetails;
     }
 }
