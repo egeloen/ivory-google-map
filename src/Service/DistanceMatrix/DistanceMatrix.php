@@ -120,19 +120,31 @@ class DistanceMatrix extends AbstractService
      */
     private function buildElement(array $data)
     {
-        $distance = isset($data['distance'])
-            ? new Distance($data['distance']['text'], $data['distance']['value'])
-            : null;
-
-        $duration = isset($data['duration'])
-            ? new Duration($data['duration']['text'], $data['duration']['value'])
-            : null;
-
         $element = new DistanceMatrixElement();
         $element->setStatus($data['status']);
-        $element->setDistance($distance);
-        $element->setDuration($duration);
+        $element->setDistance(isset($data['distance']) ? $this->buildDistance($data['distance']) : null);
+        $element->setDuration(isset($data['duration']) ? $this->buildDuration($data['duration']) : null);
 
         return $element;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Distance
+     */
+    private function buildDistance(array $data)
+    {
+        return new Distance($data['text'], $data['value']);
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Duration
+     */
+    private function buildDuration(array $data)
+    {
+        return new Duration($data['text'], $data['value']);
     }
 }

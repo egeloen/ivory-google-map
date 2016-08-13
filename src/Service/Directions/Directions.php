@@ -111,24 +111,14 @@ class Directions extends AbstractService
     private function buildRoute(array $data)
     {
         $route = new DirectionsRoute();
+        $route->setBound($this->buildBound($data['bounds']));
         $route->setCopyrights(isset($data['copyrights']) ? $data['copyrights'] : null);
         $route->setLegs($this->buildLegs($data['legs']));
-        $route->setOverviewPolyline(new EncodedPolyline($data['overview_polyline']['points']));
+        $route->setOverviewPolyline($this->buildEncodedPolyline($data['overview_polyline']));
         $route->setSummary(isset($data['summary']) ? $data['summary'] : null);
         $route->setFare(isset($data['fare']) ? $this->buildFare($data['fare']) : null);
         $route->setWarnings(isset($data['warnings']) ? $data['warnings'] : []);
         $route->setWaypointOrders(isset($data['waypoint_order']) ? $data['waypoint_order'] : []);
-
-        $route->setBound(new Bound(
-            new Coordinate(
-                $data['bounds']['southwest']['lat'],
-                $data['bounds']['southwest']['lng']
-            ),
-            new Coordinate(
-                $data['bounds']['northeast']['lat'],
-                $data['bounds']['northeast']['lng']
-            )
-        ));
 
         return $route;
     }
@@ -187,14 +177,17 @@ class Directions extends AbstractService
     private function buildLeg(array $data)
     {
         $leg = new DirectionsLeg();
-        $leg->setDistance(new Distance($data['distance']['text'], $data['distance']['value']));
-        $leg->setDuration(new Duration($data['duration']['text'], $data['duration']['value']));
+        $leg->setDistance($this->buildDistance($data['distance']));
+        $leg->setDuration($this->buildDuration($data['duration']));
         $leg->setEndAddress($data['end_address']);
-        $leg->setEndLocation(new Coordinate($data['end_location']['lat'], $data['end_location']['lng']));
+        $leg->setEndLocation($this->buildCoordinate($data['end_location']));
         $leg->setStartAddress($data['start_address']);
-        $leg->setStartLocation(new Coordinate($data['start_location']['lat'], $data['start_location']['lng']));
+        $leg->setStartLocation($this->buildCoordinate($data['start_location']));
         $leg->setSteps($this->buildSteps($data['steps']));
         $leg->setViaWaypoints(isset($data['via_waypoint']) ? $data['via_waypoint'] : []);
+        $leg->setDurationInTraffic(
+            isset($data['duration_in_traffic']) ? $this->buildDuration($data['duration_in_traffic']) : null
+        );
 
         return $leg;
     }
@@ -239,14 +232,67 @@ class Directions extends AbstractService
     private function buildStep(array $data)
     {
         $step = new DirectionsStep();
-        $step->setDistance(new Distance($data['distance']['text'], $data['distance']['value']));
-        $step->setDuration(new Duration($data['duration']['text'], $data['duration']['value']));
-        $step->setEndLocation(new Coordinate($data['end_location']['lat'], $data['end_location']['lng']));
+        $step->setDistance($this->buildDistance($data['distance']));
+        $step->setDuration($this->buildDuration($data['duration']));
+        $step->setEndLocation($this->buildCoordinate($data['end_location']));
         $step->setInstructions($data['html_instructions']);
-        $step->setEncodedPolyline(new EncodedPolyline($data['polyline']['points']));
-        $step->setStartLocation(new Coordinate($data['start_location']['lat'], $data['start_location']['lng']));
+        $step->setEncodedPolyline($this->buildEncodedPolyline($data['polyline']));
+        $step->setStartLocation($this->buildCoordinate($data['start_location']));
         $step->setTravelMode($data['travel_mode']);
 
         return $step;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Bound
+     */
+    private function buildBound(array $data)
+    {
+        return new Bound(
+            $this->buildCoordinate($data['southwest']),
+            $this->buildCoordinate($data['northeast'])
+        );
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Coordinate
+     */
+    private function buildCoordinate(array $data)
+    {
+        return new Coordinate($data['lat'], $data['lng']);
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Distance
+     */
+    private function buildDistance(array $data)
+    {
+        return new Distance($data['text'], $data['value']);
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Duration
+     */
+    private function buildDuration(array $data)
+    {
+        return new Duration($data['text'], $data['value']);
+    }
+
+    /**
+     * @param string[] $data
+     *
+     * @return EncodedPolyline
+     */
+    private function buildEncodedPolyline(array $data)
+    {
+        return new EncodedPolyline($data['points']);
     }
 }
