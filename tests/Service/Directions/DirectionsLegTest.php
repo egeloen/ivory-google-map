@@ -43,6 +43,10 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->leg->getDurationInTraffic());
         $this->assertFalse($this->leg->hasDistance());
         $this->assertNull($this->leg->getDistance());
+        $this->assertFalse($this->leg->hasDepartureTime());
+        $this->assertNull($this->leg->getDepartureTime());
+        $this->assertFalse($this->leg->hasArrivalTime());
+        $this->assertNull($this->leg->getArrivalTime());
         $this->assertFalse($this->leg->hasEndAddress());
         $this->assertNull($this->leg->getEndAddress());
         $this->assertFalse($this->leg->hasEndLocation());
@@ -106,6 +110,40 @@ class DirectionsLegTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->leg->hasDistance());
         $this->assertNull($this->leg->getDistance());
+    }
+
+    public function testDepartureTime()
+    {
+        $this->leg->setDepartureTime($departureTime = new \DateTime());
+
+        $this->assertTrue($this->leg->hasDepartureTime());
+        $this->assertSame($departureTime, $this->leg->getDepartureTime());
+    }
+
+    public function testResetDepartureTime()
+    {
+        $this->leg->setDepartureTime(new \DateTime());
+        $this->leg->setDepartureTime(null);
+
+        $this->assertFalse($this->leg->hasDepartureTime());
+        $this->assertNull($this->leg->getDepartureTime());
+    }
+
+    public function testArrivalTime()
+    {
+        $this->leg->setArrivalTime($arrivalTime = new \DateTime());
+
+        $this->assertTrue($this->leg->hasArrivalTime());
+        $this->assertSame($arrivalTime, $this->leg->getArrivalTime());
+    }
+
+    public function testResetArrivalTime()
+    {
+        $this->leg->setArrivalTime(new \DateTime());
+        $this->leg->setArrivalTime(null);
+
+        $this->assertFalse($this->leg->hasArrivalTime());
+        $this->assertNull($this->leg->getArrivalTime());
     }
 
     public function testEndAddress()
