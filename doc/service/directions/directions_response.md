@@ -1,6 +1,7 @@
 # Directions Response
 
-When you have requested your direction, the returned object is a `DirectionsResponse`. It wraps a status & routes.
+When you have requested your direction, the returned object is a `DirectionsResponse`. It wraps a status, geocoded 
+waypoints, routes.
 
 ## Status
 
@@ -8,6 +9,60 @@ The available status are defined by the `DirectionsStatus` constants.
 
 ``` php
 $status = $response->getStatus();
+```
+
+## Geocoded waypoints
+
+It contains an array with details about the geocoding of origin, destination and waypoints.
+
+``` php
+$geocodedWaypoints = $response->getGeocodedWaypoints();
+```
+
+## Geocoded waypoint
+
+It corresponds, by their zero-based position, to the origin, the waypoints in the order they are specified, and the 
+destination. It contains a status, a partial match flag, a place id & types.
+
+``` php
+foreach ($response->getGeocodedWaypoints() as $geocodedWaypoint) {
+    // ...
+}
+```
+
+### Status
+
+It indicates the status code resulting from the geocoding operation. The available status are defined by the 
+`DirectionsGeocodedStatus` constants.
+
+``` php
+$status = $geocodedWaypoint->getStatus();
+```
+
+### Partial match
+
+It indicates that the geocoder did not return an exact match for the original request, though it was able to match part 
+of the requested address.
+
+``` php
+$partialMatch = $geocodedWaypoint->isPartialMatch();
+```
+
+### Place id
+
+It is a unique identifier that can be used with other Google APIs.
+
+``` php
+$placeId = $geocodedWaypoint->getPlaceId();
+```
+
+### Types
+
+It indicates the address type of the geocoding result used for calculating directions. The available types are defined 
+by the `DirectionsGeocodedType` constants.
+
+``` php
+$types = $geocodedWaypoint->getTypes();
 ```
 
 ## Routes
