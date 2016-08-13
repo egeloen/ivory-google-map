@@ -27,6 +27,11 @@ class DirectionsResponse
     private $routes = [];
 
     /**
+     * @var DirectionsGeocoded[]
+     */
+    private $geocodedWaypoints = [];
+
+    /**
      * @return bool
      */
     public function hasStatus()
@@ -112,5 +117,69 @@ class DirectionsResponse
     {
         unset($this->routes[array_search($route, $this->routes, true)]);
         $this->routes = array_values($this->routes);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasGeocodedWaypoints()
+    {
+        return !empty($this->geocodedWaypoints);
+    }
+
+    /**
+     * @return DirectionsGeocoded[]
+     */
+    public function getGeocodedWaypoints()
+    {
+        return $this->geocodedWaypoints;
+    }
+
+    /**
+     * @param DirectionsGeocoded[] $geocodedWaypoints
+     */
+    public function setGeocodedWaypoints(array $geocodedWaypoints)
+    {
+        $this->geocodedWaypoints = [];
+        $this->addGeocodedWaypoints($geocodedWaypoints);
+    }
+
+    /**
+     * @param DirectionsGeocoded[] $geocodedWaypoints
+     */
+    public function addGeocodedWaypoints(array $geocodedWaypoints)
+    {
+        foreach ($geocodedWaypoints as $geocodedWaypoint) {
+            $this->addGeocodedWaypoint($geocodedWaypoint);
+        }
+    }
+
+    /**
+     * @param DirectionsGeocoded $geocodedWaypoint
+     *
+     * @return bool
+     */
+    public function hasGeocodedWaypoint(DirectionsGeocoded $geocodedWaypoint)
+    {
+        return in_array($geocodedWaypoint, $this->geocodedWaypoints, true);
+    }
+
+    /**
+     * @param DirectionsGeocoded $geocodedWaypoint
+     */
+    public function addGeocodedWaypoint(DirectionsGeocoded $geocodedWaypoint)
+    {
+        if (!$this->hasGeocodedWaypoint($geocodedWaypoint)) {
+            $this->geocodedWaypoints[] = $geocodedWaypoint;
+        }
+    }
+
+    /**
+     * @param DirectionsGeocoded $geocodedWaypoint
+     */
+    public function removeGeocodedWaypoint(DirectionsGeocoded $geocodedWaypoint)
+    {
+        unset($this->geocodedWaypoints[array_search($geocodedWaypoint, $this->geocodedWaypoints, true)]);
+        $this->geocodedWaypoints = array_values($this->geocodedWaypoints);
     }
 }
