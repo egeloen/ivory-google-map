@@ -39,11 +39,11 @@ class DirectionsTransitStopTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->transitStop->hasLocation());
         $this->assertNull($this->transitStop->getLocation());
     }
-    
+
     public function testName()
     {
         $this->transitStop->setName($name = 'name');
-        
+
         $this->assertTrue($this->transitStop->hasName());
         $this->assertSame($name, $this->transitStop->getName());
     }

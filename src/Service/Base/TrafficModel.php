@@ -9,17 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Service\Directions;
+namespace Ivory\GoogleMap\Service\Base;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-final class DirectionsAvoid
+final class TrafficModel
 {
-    const TOLLS = 'tolls';
-    const HIGHWAYS = 'highways';
-    const FERRIES = 'ferries';
-    const INDOOR = 'indoor';
+    const BEST_GUESS = 'best_guess';
+    const PESSIMISTIC = 'pessimistic';
+    const OPTIMISTIC = 'optimistic';
 
     /**
      * @codeCoverageIgnore

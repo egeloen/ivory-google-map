@@ -43,11 +43,11 @@ class DirectionsTransitVehicleTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->transitVehicle->hasLocalIcon());
         $this->assertNull($this->transitVehicle->getLocalIcon());
     }
-    
+
     public function testName()
     {
         $this->transitVehicle->setName($name = 'name');
-        
+
         $this->assertTrue($this->transitVehicle->hasName());
         $this->assertSame($name, $this->transitVehicle->getName());
     }
@@ -67,7 +67,7 @@ class DirectionsTransitVehicleTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->transitVehicle->hasType());
         $this->assertSame($type, $this->transitVehicle->getType());
     }
-    
+
     public function testLocalIcon()
     {
         $this->transitVehicle->setLocalIcon($localIcon = 'local_icon');

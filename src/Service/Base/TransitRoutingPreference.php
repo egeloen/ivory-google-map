@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Service\Directions;
+namespace Ivory\GoogleMap\Service\Base;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-final class DirectionsTransitRoutingPreference
+final class TransitRoutingPreference
 {
     const LESS_WALKING = 'less_walking';
     const FEWER_TRANSFERS = 'fewer_transfers';

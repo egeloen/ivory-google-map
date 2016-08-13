@@ -53,6 +53,21 @@ class DistanceMatrixRequest
     /**
      * @var string|null
      */
+    private $trafficModel;
+
+    /**
+     * @var string[]
+     */
+    private $transitModes = [];
+
+    /**
+     * @var string|null
+     */
+    private $transitRoutingPreference;
+
+    /**
+     * @var string|null
+     */
     private $region;
 
     /**
@@ -302,6 +317,118 @@ class DistanceMatrixRequest
     /**
      * @return bool
      */
+    public function hasTrafficModel()
+    {
+        return $this->trafficModel !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrafficModel()
+    {
+        return $this->trafficModel;
+    }
+
+    /**
+     * @param string|null $trafficModel
+     */
+    public function setTrafficModel($trafficModel)
+    {
+        $this->trafficModel = $trafficModel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTransitModes()
+    {
+        return !empty($this->transitModes);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTransitModes()
+    {
+        return $this->transitModes;
+    }
+
+    /**
+     * @param string[] $transitModes
+     */
+    public function setTransitModes(array $transitModes)
+    {
+        $this->transitModes = [];
+        $this->addTransitModes($transitModes);
+    }
+
+    /**
+     * @param string[] $transitModes
+     */
+    public function addTransitModes(array $transitModes)
+    {
+        foreach ($transitModes as $transitMode) {
+            $this->addTransitMode($transitMode);
+        }
+    }
+
+    /**
+     * @param string $transitMode
+     *
+     * @return bool
+     */
+    public function hasTransitMode($transitMode)
+    {
+        return in_array($transitMode, $this->transitModes, true);
+    }
+
+    /**
+     * @param string $transitMode
+     */
+    public function addTransitMode($transitMode)
+    {
+        if (!$this->hasTransitMode($transitMode)) {
+            $this->transitModes[] = $transitMode;
+        }
+    }
+
+    /**
+     * @param string $transitMode
+     */
+    public function removeTransitMode($transitMode)
+    {
+        unset($this->transitModes[array_search($transitMode, $this->transitModes, true)]);
+        $this->transitModes = array_values($this->transitModes);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTransitRoutingPreference()
+    {
+        return $this->transitRoutingPreference !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTransitRoutingPreference()
+    {
+        return $this->transitRoutingPreference;
+    }
+
+    /**
+     * @param string|null $transitRoutingPreference
+     */
+    public function setTransitRoutingPreference($transitRoutingPreference)
+    {
+        $this->transitRoutingPreference = $transitRoutingPreference;
+    }
+
+    /**
+     * @return bool
+     */
     public function hasRegion()
     {
         return $this->region !== null;
@@ -395,6 +522,18 @@ class DistanceMatrixRequest
 
         if ($this->hasAvoid()) {
             $query['avoid'] = $this->avoid;
+        }
+
+        if ($this->hasTrafficModel()) {
+            $query['traffic_model'] = $this->trafficModel;
+        }
+
+        if ($this->hasTransitModes()) {
+            $query['transit_mode'] = implode('|', $this->transitModes);
+        }
+
+        if ($this->hasTransitRoutingPreference()) {
+            $query['transit_routing_preference'] = $this->transitRoutingPreference;
         }
 
         if ($this->hasUnitSystem()) {

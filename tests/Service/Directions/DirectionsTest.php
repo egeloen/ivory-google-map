@@ -14,11 +14,11 @@ namespace Ivory\Tests\GoogleMap\Service\Directions;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Directions\Directions;
-use Ivory\GoogleMap\Service\Directions\DirectionsAvoid;
 use Ivory\GoogleMap\Service\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Service\Directions\DirectionsStatus;
 use Ivory\GoogleMap\Service\Directions\DirectionsWaypoint;
@@ -140,7 +140,7 @@ class DirectionsTest extends AbstractServiceTest
     public function testRouteWithAvoid()
     {
         $request = new DirectionsRequest('Lille', 'Paris');
-        $request->setAvoid(DirectionsAvoid::HIGHWAYS);
+        $request->setAvoid(Avoid::HIGHWAYS);
 
         $response = $this->directions->route($request);
 

@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Service\DistanceMatrix;
+namespace Ivory\GoogleMap\Service\Base;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-final class DistanceMatrixAvoid
+final class Avoid
 {
     const TOLLS = 'tolls';
     const HIGHWAYS = 'highways';

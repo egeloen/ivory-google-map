@@ -68,9 +68,9 @@ $request->setDepartureTime(new \DateTime());
 If you want to avoid tolls, highways, ferries or indoor, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixAvoid;
+use Ivory\GoogleMap\Service\Base\Avoid;
 
-$request->setAvoid(DistanceMatrixAvoid::HIGHWAYS);
+$request->setAvoid(Avoid::HIGHWAYS);
 ```
 
 ## Configure travel mode
