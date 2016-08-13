@@ -173,10 +173,6 @@ class Map implements VariableAwareInterface
     public function setControlManager(ControlManager $controlManager)
     {
         $this->controlManager = $controlManager;
-
-        if ($controlManager->getMap() !== $this) {
-            $controlManager->setMap($this);
-        }
     }
 
     /**
@@ -193,10 +189,6 @@ class Map implements VariableAwareInterface
     public function setEventManager(EventManager $eventManager)
     {
         $this->eventManager = $eventManager;
-
-        if ($eventManager->getMap() !== $this) {
-            $eventManager->setMap($this);
-        }
     }
 
     /**
@@ -213,10 +205,6 @@ class Map implements VariableAwareInterface
     public function setLayerManager(LayerManager $layerManager)
     {
         $this->layerManager = $layerManager;
-
-        if ($layerManager->getMap() !== $this) {
-            $layerManager->setMap($this);
-        }
     }
 
     /**

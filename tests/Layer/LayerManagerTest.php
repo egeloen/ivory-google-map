@@ -13,7 +13,6 @@ namespace Ivory\Tests\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Layer\LayerManager;
-use Ivory\GoogleMap\Map;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,29 +34,8 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertFalse($this->layerManager->hasMap());
-        $this->assertNull($this->layerManager->getMap());
         $this->assertFalse($this->layerManager->hasKmlLayers());
         $this->assertEmpty($this->layerManager->getKmlLayers());
-    }
-
-    public function testMap()
-    {
-        $map = $this->createMapMock();
-        $map
-            ->expects($this->once())
-            ->method('getLayerManager')
-            ->will($this->returnValue(null));
-
-        $map
-            ->expects($this->once())
-            ->method('setLayerManager')
-            ->with($this->identicalTo($this->layerManager));
-
-        $this->layerManager->setMap($map);
-
-        $this->assertTrue($this->layerManager->hasMap());
-        $this->assertSame($map, $this->layerManager->getMap());
     }
 
     public function testSetKmlLayers()
@@ -96,14 +74,6 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->layerManager->hasKmlLayers());
         $this->assertFalse($this->layerManager->hasKmlLayer($kmlLayer));
         $this->assertEmpty($this->layerManager->getKmlLayers());
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
-     */
-    private function createMapMock()
-    {
-        return $this->createMock(Map::class);
     }
 
     /**

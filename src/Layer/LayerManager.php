@@ -11,50 +11,15 @@
 
 namespace Ivory\GoogleMap\Layer;
 
-use Ivory\GoogleMap\Map;
-
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class LayerManager
 {
     /**
-     * @var Map|null
-     */
-    private $map;
-
-    /**
      * @var KmlLayer[]
      */
     private $kmlLayers = [];
-
-    /**
-     * @return bool
-     */
-    public function hasMap()
-    {
-        return $this->map !== null;
-    }
-
-    /**
-     * @return Map|null
-     */
-    public function getMap()
-    {
-        return $this->map;
-    }
-
-    /**
-     * @param Map $map
-     */
-    public function setMap(Map $map)
-    {
-        $this->map = $map;
-
-        if ($map->getLayerManager() !== $this) {
-            $map->setLayerManager($this);
-        }
-    }
 
     /**
      * @return bool

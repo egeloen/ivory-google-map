@@ -92,54 +92,21 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     public function testControlManager()
     {
-        $controlManager = $this->createControlManagerMock();
-        $controlManager
-            ->expects($this->once())
-            ->method('getMap')
-            ->will($this->returnValue(null));
-
-        $controlManager
-            ->expects($this->once())
-            ->method('setMap')
-            ->with($this->identicalTo($this->map));
-
-        $this->map->setControlManager($controlManager);
+        $this->map->setControlManager($controlManager = $this->createControlManagerMock());
 
         $this->assertSame($controlManager, $this->map->getControlManager());
     }
 
     public function testEventManager()
     {
-        $eventManager = $this->createEventManagerMock();
-        $eventManager
-            ->expects($this->once())
-            ->method('getMap')
-            ->will($this->returnValue(null));
-
-        $eventManager
-            ->expects($this->once())
-            ->method('setMap')
-            ->with($this->identicalTo($this->map));
-
-        $this->map->setEventManager($eventManager);
+        $this->map->setEventManager($eventManager = $this->createEventManagerMock());
 
         $this->assertSame($eventManager, $this->map->getEventManager());
     }
 
     public function testLayerManager()
     {
-        $layerManager = $this->createLayerManagerMock();
-        $layerManager
-            ->expects($this->once())
-            ->method('getMap')
-            ->will($this->returnValue(null));
-
-        $layerManager
-            ->expects($this->once())
-            ->method('setMap')
-            ->with($this->identicalTo($this->map));
-
-        $this->map->setLayerManager($layerManager);
+        $this->map->setLayerManager($layerManager = $this->createLayerManagerMock());
 
         $this->assertSame($layerManager, $this->map->getLayerManager());
     }
