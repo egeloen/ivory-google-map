@@ -57,11 +57,12 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @param Map $map
+     * @param Map         $map
+     * @param string|null $html
      */
-    protected function renderMap(Map $map)
+    protected function renderMap(Map $map, $html = null)
     {
-        $this->renderHtml(implode('', [$this->mapHelper->render($map), $this->renderApi([$map])]));
+        $this->renderHtml(implode('', [$html, $this->mapHelper->render($map), $this->renderApi([$map])]));
 
         $this->waitUntil(function () use ($map) {
             try {

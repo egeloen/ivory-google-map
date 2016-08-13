@@ -42,7 +42,7 @@ class AutocompleteContainerRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $this->assertSame(
-            '{"base":{"coordinates":[],"bounds":[]},"autocomplete":null}',
+            '{"base":{"coordinates":[],"bounds":[]},"autocomplete":null,"events":{"dom_events":[],"dom_events_once":[],"events":[],"events_once":[]}}',
             $this->autocompleteContainerRenderer->render()
         );
     }

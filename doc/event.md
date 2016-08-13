@@ -86,3 +86,17 @@ $map->getEventManager()->addDomEventOnce($event);
 $map->getEventManager()->addEvent($event);
 $map->getEventManager()->addEventOnce($event);
 ```
+
+## Append to a place autocomplete
+
+It works exactly the same as the map:
+
+``` php
+// DOM
+$autocomplete->getEventManager()->addDomEvent($event);
+$autocomplete->getEventManager()->addDomEventOnce($event);
+
+// MVC
+$autocomplete->getEventManager()->addEvent($event);
+$autocomplete->getEventManager()->addEventOnce($event);
+```

@@ -27,6 +27,10 @@ class AutocompleteContainerRenderer extends AbstractJsonRenderer
             ->setValue('[base][coordinates]', [])
             ->setValue('[base][bounds]', [])
             ->setValue('[autocomplete]', null)
+            ->setValue('[events][dom_events]', [])
+            ->setValue('[events][dom_events_once]', [])
+            ->setValue('[events][events]', [])
+            ->setValue('[events][events_once]', [])
             ->build();
     }
 }

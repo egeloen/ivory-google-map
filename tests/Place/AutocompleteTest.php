@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Place;
 
 use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Place\Autocomplete;
 use Ivory\GoogleMap\Place\AutocompleteComponentRestriction;
 use Ivory\GoogleMap\Place\AutocompleteType;
@@ -44,6 +45,7 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertStringStartsWith('place_autocomplete', $this->autocomplete->getVariable());
         $this->assertSame('place_input', $this->autocomplete->getHtmlId());
+        $this->assertInstanceOf(EventManager::class, $this->autocomplete->getEventManager());
         $this->assertFalse($this->autocomplete->hasBound());
         $this->assertNull($this->autocomplete->getBound());
         $this->assertFalse($this->autocomplete->hasTypes());
@@ -63,6 +65,13 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->autocomplete->setInputId($inputId = 'input');
 
         $this->assertSame($inputId, $this->autocomplete->getHtmlId());
+    }
+
+    public function testEventManager()
+    {
+        $this->autocomplete->setEventManager($eventManager = $this->createEventManagerMock());
+
+        $this->assertSame($eventManager, $this->autocomplete->getEventManager());
     }
 
     public function testBound()
@@ -249,6 +258,14 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->autocomplete->hasLibraries());
         $this->assertFalse($this->autocomplete->hasLibrary($library));
         $this->assertEmpty($this->autocomplete->getLibraries());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|EventManager
+     */
+    private function createEventManagerMock()
+    {
+        return $this->createMock(EventManager::class);
     }
 
     /**

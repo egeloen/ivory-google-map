@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Helper\Collector\Place;
+namespace Ivory\GoogleMap\Helper\Collector\Place\Base;
 
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Collector\AbstractCollector;

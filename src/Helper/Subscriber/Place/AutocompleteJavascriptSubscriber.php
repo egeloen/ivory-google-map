@@ -136,6 +136,7 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
                 PlaceAutocompleteEvents::JAVASCRIPT_INIT,
                 PlaceAutocompleteEvents::JAVASCRIPT_BASE,
                 PlaceAutocompleteEvents::JAVASCRIPT_AUTOCOMPLETE,
+                PlaceAutocompleteEvents::JAVASCRIPT_EVENT,
             ],
         ];
     }
