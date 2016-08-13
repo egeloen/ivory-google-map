@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Directions;
 
+use Ivory\GoogleMap\Service\Directions\DirectionsGeocoded;
 use Ivory\GoogleMap\Service\Directions\DirectionsResponse;
 use Ivory\GoogleMap\Service\Directions\DirectionsRoute;
 use Ivory\GoogleMap\Service\Directions\DirectionsStatus;
@@ -39,6 +40,8 @@ class DirectionsResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->response->getStatus());
         $this->assertFalse($this->response->hasRoutes());
         $this->assertEmpty($this->response->getRoutes());
+        $this->assertFalse($this->response->hasGeocodedWaypoints());
+        $this->assertEmpty($this->response->getGeocodedWaypoints());
     }
 
     public function testStatus()
@@ -47,15 +50,6 @@ class DirectionsResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->response->hasStatus());
         $this->assertSame($status, $this->response->getStatus());
-    }
-
-    public function testReset()
-    {
-        $this->response->setStatus(DirectionsStatus::INVALID_REQUEST);
-        $this->response->setStatus(null);
-
-        $this->assertFalse($this->response->hasStatus());
-        $this->assertNull($this->response->getStatus());
     }
 
     public function testSetRoutes()
@@ -96,11 +90,62 @@ class DirectionsResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->response->getRoutes());
     }
 
+    public function testSetGeocodedWaypoints()
+    {
+        $geocodedWaypoint = $this->createGeocodedWaypointMock();
+
+        $this->response->setGeocodedWaypoints($geocodedWaypoints = [$geocodedWaypoint]);
+        $this->response->setGeocodedWaypoints($geocodedWaypoints);
+
+        $this->assertTrue($this->response->hasGeocodedWaypoints());
+        $this->assertTrue($this->response->hasGeocodedWaypoint($geocodedWaypoint));
+        $this->assertSame($geocodedWaypoints, $this->response->getGeocodedWaypoints());
+    }
+
+    public function testAddGeocodedWaypoints()
+    {
+        $this->response->setGeocodedWaypoints($firstGeocodedWaypoints = [$this->createGeocodedWaypointMock()]);
+        $this->response->addGeocodedWaypoints($secondGeocodedWaypoints = [$this->createGeocodedWaypointMock()]);
+
+        $this->assertTrue($this->response->hasGeocodedWaypoints());
+        $this->assertSame(
+            array_merge($firstGeocodedWaypoints, $secondGeocodedWaypoints),
+            $this->response->getGeocodedWaypoints()
+        );
+    }
+
+    public function testAddGeocodedWaypoint()
+    {
+        $this->response->addGeocodedWaypoint($geocodedWaypoint = $this->createGeocodedWaypointMock());
+
+        $this->assertTrue($this->response->hasGeocodedWaypoints());
+        $this->assertTrue($this->response->hasGeocodedWaypoint($geocodedWaypoint));
+        $this->assertSame([$geocodedWaypoint], $this->response->getGeocodedWaypoints());
+    }
+
+    public function testRemoveGeocodedWaypoint()
+    {
+        $this->response->addGeocodedWaypoint($geocodedWaypoint = $this->createGeocodedWaypointMock());
+        $this->response->removeGeocodedWaypoint($geocodedWaypoint);
+
+        $this->assertFalse($this->response->hasGeocodedWaypoints());
+        $this->assertFalse($this->response->hasGeocodedWaypoint($geocodedWaypoint));
+        $this->assertEmpty($this->response->getGeocodedWaypoints());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|DirectionsRoute
      */
     private function createRouteMock()
     {
         return $this->createMock(DirectionsRoute::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionsGeocoded
+     */
+    private function createGeocodedWaypointMock()
+    {
+        return $this->createMock(DirectionsGeocoded::class);
     }
 }

@@ -76,6 +76,9 @@ class Directions extends AbstractService
         $response = new DirectionsResponse();
         $response->setStatus($data['status']);
         $response->setRoutes(isset($data['routes']) ? $this->buildRoutes($data['routes']) : []);
+        $response->setGeocodedWaypoints(
+            isset($data['geocoded_waypoints']) ? $this->buildGeocodedWaypoints($data['geocoded_waypoints']) : []
+        );
 
         return $response;
     }
@@ -128,6 +131,37 @@ class Directions extends AbstractService
     /**
      * @param mixed[] $data
      *
+     * @return DirectionsGeocoded[]
+     */
+    private function buildGeocodedWaypoints(array $data)
+    {
+        $geocodedWaypoints = [];
+        foreach ($data as $item) {
+            $geocodedWaypoints[] = $this->buildGeocodedWaypoint($item);
+        }
+
+        return $geocodedWaypoints;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsGeocoded
+     */
+    private function buildGeocodedWaypoint(array $data)
+    {
+        $geocodedWaypoint = new DirectionsGeocoded();
+        $geocodedWaypoint->setStatus($data['geocoder_status']);
+        $geocodedWaypoint->setPartialMatch(isset($data['partial_match']) ? $data['partial_match'] : null);
+        $geocodedWaypoint->setPlaceId(isset($data['place_id']) ? $data['place_id'] : null);
+        $geocodedWaypoint->setTypes($data['types']);
+
+        return $geocodedWaypoint;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
      * @return DirectionsLeg[]
      */
     private function buildLegs(array $data)
@@ -161,6 +195,8 @@ class Directions extends AbstractService
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed[] $data
      *
      * @return DirectionsFare
@@ -170,7 +206,7 @@ class Directions extends AbstractService
         $fare = new DirectionsFare();
         $fare->setCurrency($data['currency']);
         $fare->setValue($data['value']);
-        $fare->setText(['text']);
+        $fare->setText($data['text']);
 
         return $fare;
     }
