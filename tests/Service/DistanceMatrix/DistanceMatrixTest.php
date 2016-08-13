@@ -17,6 +17,7 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
+use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixAvoid;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrix;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixStatus;
@@ -107,23 +108,10 @@ class DistanceMatrixTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRows());
     }
 
-    public function testProcessWithAvoidHighways()
+    public function testProcessWithAvoid()
     {
         $request = new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']);
-        $request->setAvoidHighways(true);
-
-        $response = $this->distanceMatrix->process($request);
-
-        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getOrigins());
-        $this->assertNotEmpty($response->getDestinations());
-        $this->assertNotEmpty($response->getRows());
-    }
-
-    public function testProcessWithAvoidTolls()
-    {
-        $request = new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']);
-        $request->setAvoidTolls(true);
+        $request->setAvoid(DistanceMatrixAvoid::HIGHWAYS);
 
         $response = $this->distanceMatrix->process($request);
 

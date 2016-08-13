@@ -94,7 +94,7 @@ class TimeZoneRequest
     /**
      * @param string|null $language
      */
-    public function setLanguage( $language )
+    public function setLanguage($language)
     {
         $this->language = $language;
     }

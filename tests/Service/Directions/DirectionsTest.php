@@ -18,6 +18,7 @@ use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Directions\Directions;
+use Ivory\GoogleMap\Service\Directions\DirectionsAvoid;
 use Ivory\GoogleMap\Service\Directions\DirectionsRequest;
 use Ivory\GoogleMap\Service\Directions\DirectionsStatus;
 use Ivory\GoogleMap\Service\Directions\DirectionsWaypoint;
@@ -136,21 +137,10 @@ class DirectionsTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRoutes());
     }
 
-    public function testRouteWithAvoidTolls()
+    public function testRouteWithAvoid()
     {
         $request = new DirectionsRequest('Lille', 'Paris');
-        $request->setAvoidTolls(true);
-
-        $response = $this->directions->route($request);
-
-        $this->assertSame(DirectionsStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
-    }
-
-    public function testRouteWithAvoidHighways()
-    {
-        $request = new DirectionsRequest('Lille', 'Paris');
-        $request->setAvoidHighways(true);
+        $request->setAvoid(DirectionsAvoid::HIGHWAYS);
 
         $response = $this->directions->route($request);
 
