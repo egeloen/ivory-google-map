@@ -38,6 +38,16 @@ class DirectionsLeg
     private $durationInTraffic;
 
     /**
+     * @var \DateTime|null
+     */
+    private $arrivalTime;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $departureTime;
+
+    /**
      * @var string|null
      */
     private $endAddress;
@@ -137,6 +147,54 @@ class DirectionsLeg
     public function setDurationInTraffic(Duration $durationInTraffic = null)
     {
         $this->durationInTraffic = $durationInTraffic;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasArrivalTime()
+    {
+        return $this->arrivalTime !== null;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getArrivalTime()
+    {
+        return $this->arrivalTime;
+    }
+
+    /**
+     * @param \DateTime|null $arrivalTime
+     */
+    public function setArrivalTime(\DateTime $arrivalTime = null)
+    {
+        $this->arrivalTime = $arrivalTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDepartureTime()
+    {
+        return $this->departureTime !== null;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDepartureTime()
+    {
+        return $this->departureTime;
+    }
+
+    /**
+     * @param \DateTime|null $departureTime
+     */
+    public function setDepartureTime(\DateTime $departureTime = null)
+    {
+        $this->departureTime = $departureTime;
     }
 
     /**

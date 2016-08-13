@@ -179,6 +179,8 @@ class Directions extends AbstractService
         $leg = new DirectionsLeg();
         $leg->setDistance($this->buildDistance($data['distance']));
         $leg->setDuration($this->buildDuration($data['duration']));
+        $leg->setDepartureTime(isset($data['departure_time']) ? $this->createDateTime($data['departure_time']) : null);
+        $leg->setArrivalTime(isset($data['arrival_time']) ? $this->createDateTime($data['arrival_time']) : null);
         $leg->setEndAddress($data['end_address']);
         $leg->setEndLocation($this->buildCoordinate($data['end_location']));
         $leg->setStartAddress($data['start_address']);
@@ -241,6 +243,16 @@ class Directions extends AbstractService
         $step->setTravelMode($data['travel_mode']);
 
         return $step;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return \DateTime
+     */
+    private function createDateTime(array $data)
+    {
+        return new \DateTime($data['value'], new \DateTimeZone($data['time_zone']));
     }
 
     /**

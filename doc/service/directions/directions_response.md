@@ -227,6 +227,24 @@ historical traffic conditions. It is represented by the `Duration`.
 $durationInTraffic = $leg->getDurationInTraffic();
 ```
 
+### Departure time
+
+It contains the estimated time of departure for this leg. This property is only returned for transit directions. It is 
+represented by the `DateTime`.
+
+``` php
+$departureTime = $leg->getDepartureTime();
+```
+
+### Arrival time
+
+It contains the estimated time of arrival for this leg. This property is only returned for transit directions. It is 
+represented by the `DateTime`.
+
+``` php
+$arrivalTime = $leg->getArrivalTime();
+```
+
 ### Start location
 
 The start location is the coordinate of the start of this leg. It is represented by the `Coordinate`.
