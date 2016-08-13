@@ -16,6 +16,7 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Base\Fare;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -124,8 +125,29 @@ class DistanceMatrix extends AbstractService
         $element->setStatus($data['status']);
         $element->setDistance(isset($data['distance']) ? $this->buildDistance($data['distance']) : null);
         $element->setDuration(isset($data['duration']) ? $this->buildDuration($data['duration']) : null);
+        $element->setFare(isset($data['fare']) ? $this->buildFare($data['fare']) : null);
+        $element->setDurationInTraffic(
+            isset($data['duration_in_traffic']) ? $this->buildDuration($data['duration_in_traffic']) : null
+        );
 
         return $element;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param mixed[] $data
+     *
+     * @return Fare
+     */
+    private function buildFare(array $data)
+    {
+        $fare = new Fare();
+        $fare->setCurrency($data['currency']);
+        $fare->setValue($data['value']);
+        $fare->setText($data['text']);
+
+        return $fare;
     }
 
     /**

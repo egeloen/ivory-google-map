@@ -13,6 +13,7 @@ namespace Ivory\GoogleMap\Service\Directions;
 
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
+use Ivory\GoogleMap\Service\Base\Fare;
 
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsRoute
@@ -47,7 +48,7 @@ class DirectionsRoute
     private $summary;
 
     /**
-     * @var DirectionsFare|null
+     * @var Fare|null
      */
     private $fare;
 
@@ -230,7 +231,7 @@ class DirectionsRoute
     }
 
     /**
-     * @return DirectionsFare|null
+     * @return Fare|null
      */
     public function getFare()
     {
@@ -238,9 +239,9 @@ class DirectionsRoute
     }
 
     /**
-     * @param DirectionsFare|null $fare
+     * @param Fare|null $fare
      */
-    public function setFare(DirectionsFare $fare = null)
+    public function setFare(Fare $fare = null)
     {
         $this->fare = $fare;
     }

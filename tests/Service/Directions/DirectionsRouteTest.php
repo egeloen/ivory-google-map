@@ -13,7 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\Directions;
 
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
-use Ivory\GoogleMap\Service\Directions\DirectionsFare;
+use Ivory\GoogleMap\Service\Base\Fare;
 use Ivory\GoogleMap\Service\Directions\DirectionsLeg;
 use Ivory\GoogleMap\Service\Directions\DirectionsRoute;
 
@@ -252,11 +252,11 @@ class DirectionsRouteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionsFare
+     * @return \PHPUnit_Framework_MockObject_MockObject|Fare
      */
     private function createFareMock()
     {
-        return $this->createMock(DirectionsFare::class);
+        return $this->createMock(Fare::class);
     }
 
     /**

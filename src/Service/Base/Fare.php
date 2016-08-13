@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Service\Directions;
+namespace Ivory\GoogleMap\Service\Base;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsFare
+class Fare
 {
     /**
      * @var string|null
