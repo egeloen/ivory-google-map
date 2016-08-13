@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\Directions;
 
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
+use Ivory\GoogleMap\Service\Directions\DirectionsFare;
 use Ivory\GoogleMap\Service\Directions\DirectionsLeg;
 use Ivory\GoogleMap\Service\Directions\DirectionsRoute;
 
@@ -46,6 +47,8 @@ class DirectionsRouteTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->route->getOverviewPolyline());
         $this->assertFalse($this->route->hasSummary());
         $this->assertNull($this->route->getSummary());
+        $this->assertFalse($this->route->hasFare());
+        $this->assertNull($this->route->getFare());
         $this->assertFalse($this->route->hasWarnings());
         $this->assertEmpty($this->route->getWarnings());
         $this->assertFalse($this->route->hasWaypointOrders());
@@ -158,6 +161,23 @@ class DirectionsRouteTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->route->getSummary());
     }
 
+    public function testFare()
+    {
+        $this->route->setFare($fare = $this->createFareMock());
+
+        $this->assertTrue($this->route->hasFare());
+        $this->assertSame($fare, $this->route->getFare());
+    }
+
+    public function testResetFare()
+    {
+        $this->route->setFare($this->createFareMock());
+        $this->route->setFare(null);
+
+        $this->assertFalse($this->route->hasFare());
+        $this->assertNull($this->route->getFare());
+    }
+
     public function testSetWarnings()
     {
         $this->route->setWarnings($warnings = [$warning = 'warning']);
@@ -229,6 +249,14 @@ class DirectionsRouteTest extends \PHPUnit_Framework_TestCase
     private function createLegMock()
     {
         return $this->createMock(DirectionsLeg::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionsFare
+     */
+    private function createFareMock()
+    {
+        return $this->createMock(DirectionsFare::class);
     }
 
     /**
