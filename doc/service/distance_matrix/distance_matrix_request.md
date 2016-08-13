@@ -63,7 +63,7 @@ If you want to provide an arrival time, you can use:
 $request->setDepartureTime(new \DateTime());
 ```
 
-## Configure avoid highways
+## Configure avoid
 
 If you want to avoid tolls, highways, ferries or indoor, you can use:
 
@@ -71,6 +71,39 @@ If you want to avoid tolls, highways, ferries or indoor, you can use:
 use Ivory\GoogleMap\Service\Base\Avoid;
 
 $request->setAvoid(Avoid::HIGHWAYS);
+```
+
+## Configure traffic model
+
+If you want to define your traffic model, you can use:
+
+``` php
+use Ivory\GoogleMap\Service\Base\TrafficModel;
+
+$request->setTrafficModel(TrafficModel::BEST_GUESS);
+```
+
+## Configure transit modes
+
+If you want to define your transit modes, you can use:
+
+``` php
+use Ivory\GoogleMap\Service\Base\TransitMode;
+
+$request->setTransitModes([
+    TransitMode::BUS,
+    TransitMode::TRAIN,
+]);
+```
+
+## Configure transit routing preference
+
+If you want to define your transit routing preference, you can use:
+
+``` php
+use Ivory\GoogleMap\Service\Base\TransitRoutingPreference;
+
+$request->setTransitRoutingPreference(TransitRoutingPreference::LESS_WALKING);
 ```
 
 ## Configure travel mode

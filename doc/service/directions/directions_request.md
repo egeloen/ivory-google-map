@@ -145,7 +145,7 @@ $request->setTransitModes([
 If you want to define your transit routing preference, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\TransitRoutingPreference;
+use Ivory\GoogleMap\Service\Base\TransitRoutingPreference;
 
 $request->setTransitRoutingPreference(TransitRoutingPreference::LESS_WALKING);
 ```
