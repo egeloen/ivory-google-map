@@ -1,7 +1,7 @@
 # Directions Response
 
-When you have requested your direction, the returned object is a `DirectionsResponse`. It wraps a status, geocoded 
-waypoints, routes.
+When you have requested your direction, the returned object is a `DirectionsResponse`. It wraps a status, available 
+travel modes, geocoded waypoints, routes.
 
 ## Status
 
@@ -9,6 +9,15 @@ The available status are defined by the `DirectionsStatus` constants.
 
 ``` php
 $status = $response->getStatus();
+```
+
+## Available travel modes
+
+It contains an array of available travel modes. This field is returned when a request specifies a travel mode and gets 
+no results. The array contains the available travel modes for the given set of waypoints that do have results.
+
+``` php
+$availableTravelModes = $response->getAvailableTravelModes();
 ```
 
 ## Geocoded waypoints
