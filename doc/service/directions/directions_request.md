@@ -117,6 +117,39 @@ use Ivory\GoogleMap\Service\Base\TravelMode;
 $request->setTravelMode(TravelMode::DRIVING);
 ```
 
+## Configure traffic model
+
+If you want to define your traffic model, you can use:
+
+``` php
+use Ivory\GoogleMap\Service\Directions\DirectionsTrafficModel;
+
+$request->setTrafficModel(DirectionsTrafficModel::BEST_GUESS);
+```
+
+## Configure transit modes
+
+If you want to define your transit modes, you can use:
+
+``` php
+use Ivory\GoogleMap\Service\Directions\DirectionsTransitMode;
+
+$request->setTransitModes([
+    DirectionsTransitMode::BUS,
+    DirectionsTransitMode::TRAIN,
+]);
+```
+
+## Configure transit routing preference
+
+If you want to define your transit routing preference, you can use:
+
+``` php
+use Ivory\GoogleMap\Service\Directions\DirectionsTransitRoutingPreference;
+
+$request->setTransitRoutingPreference(DirectionsTransitRoutingPreference::LESS_WALKING);
+```
+
 ## Configure unit system
 
 If you want to update the unit system, you can use:
