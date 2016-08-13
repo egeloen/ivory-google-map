@@ -38,9 +38,9 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider parseProvider
      */
-    public function testParse($xml, array $expected, array $rules = [])
+    public function testParse($xml, array $expected, array $rules = [], $snakeToCamelCase = false)
     {
-        $this->assertSame($expected, $this->xmlParser->parse($xml, $rules));
+        $this->assertSame($expected, $this->xmlParser->parse($xml, $rules, $snakeToCamelCase));
     }
 
     /**
@@ -48,11 +48,13 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
      */
     public function parseProvider()
     {
-        $xml = '<response><foo>bar</foo></response>';
+        $xml = '<response><foo_foo>bar</foo_foo></response>';
 
         return [
-            [$xml, ['foo' => 'bar']],
-            [$xml, ['baz' => ['bar']],  ['foo' => 'baz']],
+            [$xml, ['foo_foo' => 'bar']],
+            [$xml, ['baz' => ['bar']],  ['foo_foo' => 'baz']],
+            [$xml, ['fooFoo' => 'bar'], [], true],
+            [$xml, ['fooBaz' => ['bar']], ['foo_foo' => 'foo_baz'], true],
         ];
     }
 }
