@@ -293,8 +293,8 @@ contains distance and duration information relating to how this step relates to 
 step denoted as "Merge onto I-80 West" may contain a duration of "37 miles" and "40 minutes," indicating that the next
 step is 37 miles/40 minutes from this step.
 
-A step wraps a distance, a durations, a start location, an end location, instructions, an encoded polyline &
-a travel mode.
+A step wraps a distance, a durations, a start location, an end location, instructions, an encoded polyline, a travel 
+mode & transit details.
 
 ``` php
 foreach ($leg->getSteps() as $step) {
@@ -352,10 +352,23 @@ It represents the step as an [encoded polyline](/doc/overlay/encoded_polyline.md
 $encodedPolyline = $step->getEncodedPolyline();
 ```
 
-### Travel Mode
+### Travel mode
 
 It contains the travel mode of this step. it is represented by the `TravelMode` constants.
 
 ``` php
 $travelMode = $step->getTravelMode();
 ```
+
+### Transit details
+
+Transit directions return additional information that is not relevant for other modes of transportation. These 
+additional properties are exposed through the `DirectionsTransitDetails` object, returned as a field of an element in 
+the steps array. From it, you can access additional information about the transit stop, transit line and transit 
+agency.
+
+``` php
+$transitDetails = $step->getTransitDetails();
+```
+
+If you want to learn more about it, you can read its [documentation](/doc/service/directions/directions_transit_details.md).

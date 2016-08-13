@@ -17,6 +17,7 @@ use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Directions\DirectionsStep;
+use Ivory\GoogleMap\Service\Directions\DirectionsTransitDetails;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -52,6 +53,8 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->step->getStartLocation());
         $this->assertFalse($this->step->hasTravelMode());
         $this->assertNull($this->step->getTravelMode());
+        $this->assertFalse($this->step->hasTransitDetails());
+        $this->assertNull($this->step->getTransitDetails());
     }
 
     public function testDistance()
@@ -173,6 +176,23 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->step->getTravelMode());
     }
 
+    public function testTransitDetails()
+    {
+        $this->step->setTransitDetails($transitDetails = $this->createTransitDetailsMock());
+
+        $this->assertTrue($this->step->hasTransitDetails());
+        $this->assertSame($transitDetails, $this->step->getTransitDetails());
+    }
+
+    public function testResetTransitDetails()
+    {
+        $this->step->setTransitDetails($this->createTransitDetailsMock());
+        $this->step->setTransitDetails(null);
+
+        $this->assertFalse($this->step->hasTransitDetails());
+        $this->assertNull($this->step->getTransitDetails());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|Distance
      */
@@ -203,5 +223,13 @@ class DirectionsStepTest extends \PHPUnit_Framework_TestCase
     private function createEncodedPolylineMock()
     {
         return $this->createMock(EncodedPolyline::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionsTransitDetails
+     */
+    private function createTransitDetailsMock()
+    {
+        return $this->createMock(DirectionsTransitDetails::class);
     }
 }

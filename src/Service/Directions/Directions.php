@@ -179,8 +179,8 @@ class Directions extends AbstractService
         $leg = new DirectionsLeg();
         $leg->setDistance($this->buildDistance($data['distance']));
         $leg->setDuration($this->buildDuration($data['duration']));
-        $leg->setDepartureTime(isset($data['departure_time']) ? $this->createDateTime($data['departure_time']) : null);
-        $leg->setArrivalTime(isset($data['arrival_time']) ? $this->createDateTime($data['arrival_time']) : null);
+        $leg->setDepartureTime(isset($data['departure_time']) ? $this->buildDateTime($data['departure_time']) : null);
+        $leg->setArrivalTime(isset($data['arrival_time']) ? $this->buildDateTime($data['arrival_time']) : null);
         $leg->setEndAddress($data['end_address']);
         $leg->setEndLocation($this->buildCoordinate($data['end_location']));
         $leg->setStartAddress($data['start_address']);
@@ -241,6 +241,9 @@ class Directions extends AbstractService
         $step->setEncodedPolyline($this->buildEncodedPolyline($data['polyline']));
         $step->setStartLocation($this->buildCoordinate($data['start_location']));
         $step->setTravelMode($data['travel_mode']);
+        $step->setTransitDetails(
+            isset($data['transit_details']) ? $this->buildTransitDetails($data['transit_details']) : null
+        );
 
         return $step;
     }
@@ -248,11 +251,111 @@ class Directions extends AbstractService
     /**
      * @param mixed[] $data
      *
+     * @return DirectionsTransitDetails
+     */
+    private function buildTransitDetails(array $data)
+    {
+        $transitDetails = new DirectionsTransitDetails();
+        $transitDetails->setDepartureStop($this->buildTransitStop($data['departure_stop']));
+        $transitDetails->setArrivalStop($this->buildTransitStop($data['arrival_stop']));
+        $transitDetails->setDepartureTime($this->buildDateTime($data['departure_time']));
+        $transitDetails->setArrivalTime($this->buildDateTime($data['arrival_time']));
+        $transitDetails->setHeadSign($data['headsign']);
+        $transitDetails->setHeadWay(isset($data['headway']) ? $data['headway'] : null);
+        $transitDetails->setLine($this->buildTransitLine($data['line']));
+        $transitDetails->setNumStops($data['num_stops']);
+
+        return $transitDetails;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsTransitLine
+     */
+    private function buildTransitLine(array $data)
+    {
+        $transitLine = new DirectionsTransitLine();
+        $transitLine->setName($data['name']);
+        $transitLine->setShortName($data['short_name']);
+        $transitLine->setColor(isset($data['color']) ? $data['color'] : null);
+        $transitLine->setUrl(isset($data['url']) ? $data['url'] : null);
+        $transitLine->setIcon(isset($data['icon']) ? $data['icon'] : null);
+        $transitLine->setTextColor(isset($data['text_color']) ? $data['text_color'] : null);
+        $transitLine->setVehicle($this->buildTransitVehicle($data['vehicle']));
+        $transitLine->setAgencies($this->buildTransitAgencies($data['agencies']));
+
+        return $transitLine;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsTransitAgency[]
+     */
+    private function buildTransitAgencies(array $data)
+    {
+        $transitAgencies = [];
+
+        foreach ($data as $item) {
+            $transitAgencies[] = $this->buildTransitAgency($item);
+        }
+
+        return $transitAgencies;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsTransitAgency
+     */
+    private function buildTransitAgency(array $data)
+    {
+        $transitAgency = new DirectionsTransitAgency();
+        $transitAgency->setName($data['name']);
+        $transitAgency->setPhone($data['phone']);
+        $transitAgency->setUrl($data['url']);
+
+        return $transitAgency;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsTransitStop
+     */
+    private function buildTransitStop(array $data)
+    {
+        $transitStop = new DirectionsTransitStop();
+        $transitStop->setName($data['name']);
+        $transitStop->setLocation($this->buildCoordinate($data['location']));
+
+        return $transitStop;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsTransitVehicle
+     */
+    private function buildTransitVehicle(array $data)
+    {
+        $transitVehicle = new DirectionsTransitVehicle();
+        $transitVehicle->setName($data['name']);
+        $transitVehicle->setIcon($data['icon']);
+        $transitVehicle->setType($data['type']);
+
+        return $transitVehicle;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
      * @return \DateTime
      */
-    private function createDateTime(array $data)
+    private function buildDateTime(array $data)
     {
-        return new \DateTime($data['value'], new \DateTimeZone($data['time_zone']));
+        return new \DateTime('@'.$data['value'], new \DateTimeZone($data['time_zone']));
     }
 
     /**
