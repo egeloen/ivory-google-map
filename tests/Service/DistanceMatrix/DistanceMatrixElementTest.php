@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Base\Fare;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixElement;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixElementStatus;
 
@@ -42,6 +43,10 @@ class DistanceMatrixElementTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->element->getDistance());
         $this->assertFalse($this->element->hasDuration());
         $this->assertNull($this->element->getDuration());
+        $this->assertFalse($this->element->hasDurationInTraffic());
+        $this->assertNull($this->element->getDurationInTraffic());
+        $this->assertFalse($this->element->hasFare());
+        $this->assertNull($this->element->getFare());
     }
 
     public function testStatus()
@@ -95,6 +100,40 @@ class DistanceMatrixElementTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->element->getDuration());
     }
 
+    public function testDurationInTraffic()
+    {
+        $this->element->setDurationInTraffic($durationInTraffic = $this->createDurationMock());
+
+        $this->assertTrue($this->element->hasDurationInTraffic());
+        $this->assertSame($durationInTraffic, $this->element->getDurationInTraffic());
+    }
+
+    public function testResetDurationInTraffic()
+    {
+        $this->element->setDurationInTraffic($this->createDurationMock());
+        $this->element->setDurationInTraffic(null);
+
+        $this->assertFalse($this->element->hasDurationInTraffic());
+        $this->assertNull($this->element->getDurationInTraffic());
+    }
+
+    public function testFare()
+    {
+        $this->element->setFare($fare = $this->createFareMock());
+
+        $this->assertTrue($this->element->hasFare());
+        $this->assertSame($fare, $this->element->getFare());
+    }
+
+    public function testResetFare()
+    {
+        $this->element->setFare($this->createFareMock());
+        $this->element->setFare(null);
+
+        $this->assertFalse($this->element->hasFare());
+        $this->assertNull($this->element->getFare());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|Distance
      */
@@ -109,5 +148,13 @@ class DistanceMatrixElementTest extends \PHPUnit_Framework_TestCase
     private function createDurationMock()
     {
         return $this->createMock(Duration::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Fare
+     */
+    private function createFareMock()
+    {
+        return $this->createMock(Fare::class);
     }
 }

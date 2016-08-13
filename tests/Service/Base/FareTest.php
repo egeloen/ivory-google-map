@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Service\Directions;
+namespace Ivory\Tests\GoogleMap\Service\Base;
 
-use Ivory\GoogleMap\Service\Directions\DirectionsFare;
+use Ivory\GoogleMap\Service\Base\Fare;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsFareTest extends \PHPUnit_Framework_TestCase
+class FareTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var DirectionsFare
+     * @var Fare
      */
     private $fare;
 
@@ -28,7 +28,7 @@ class DirectionsFareTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->fare = new DirectionsFare();
+        $this->fare = new Fare();
     }
 
     public function testDefaultState()

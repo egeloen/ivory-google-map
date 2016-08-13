@@ -19,6 +19,7 @@ use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Base\Fare;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -199,11 +200,11 @@ class Directions extends AbstractService
      *
      * @param mixed[] $data
      *
-     * @return DirectionsFare
+     * @return Fare
      */
     private function buildFare(array $data)
     {
-        $fare = new DirectionsFare();
+        $fare = new Fare();
         $fare->setCurrency($data['currency']);
         $fare->setValue($data['value']);
         $fare->setText($data['text']);

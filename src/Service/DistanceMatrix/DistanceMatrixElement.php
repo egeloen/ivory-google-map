@@ -13,6 +13,7 @@ namespace Ivory\GoogleMap\Service\DistanceMatrix;
 
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Base\Fare;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -33,6 +34,16 @@ class DistanceMatrixElement
      * @var Duration|null
      */
     private $duration;
+
+    /**
+     * @var Duration|null
+     */
+    private $durationInTraffic;
+
+    /**
+     * @var Fare|null
+     */
+    private $fare;
 
     /**
      * @return bool
@@ -104,5 +115,53 @@ class DistanceMatrixElement
     public function setDuration(Duration $duration = null)
     {
         $this->duration = $duration;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDurationInTraffic()
+    {
+        return $this->durationInTraffic !== null;
+    }
+
+    /**
+     * @return Duration|null
+     */
+    public function getDurationInTraffic()
+    {
+        return $this->durationInTraffic;
+    }
+
+    /**
+     * @param Duration|null $durationInTraffic
+     */
+    public function setDurationInTraffic(Duration $durationInTraffic = null)
+    {
+        $this->durationInTraffic = $durationInTraffic;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFare()
+    {
+        return $this->fare !== null;
+    }
+
+    /**
+     * @return Fare|null
+     */
+    public function getFare()
+    {
+        return $this->fare;
+    }
+
+    /**
+     * @param Fare|null $fare
+     */
+    public function setFare(Fare $fare = null)
+    {
+        $this->fare = $fare;
     }
 }
