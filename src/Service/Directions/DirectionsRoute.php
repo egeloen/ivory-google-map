@@ -47,6 +47,11 @@ class DirectionsRoute
     private $summary;
 
     /**
+     * @var DirectionsFare|null
+     */
+    private $fare;
+
+    /**
      * @var string[]
      */
     private $warnings = [];
@@ -214,6 +219,30 @@ class DirectionsRoute
     public function setSummary($summary = null)
     {
         $this->summary = $summary;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFare()
+    {
+        return $this->fare !== null;
+    }
+
+    /**
+     * @return DirectionsFare|null
+     */
+    public function getFare()
+    {
+        return $this->fare;
+    }
+
+    /**
+     * @param DirectionsFare|null $fare
+     */
+    public function setFare(DirectionsFare $fare = null)
+    {
+        $this->fare = $fare;
     }
 
     /**

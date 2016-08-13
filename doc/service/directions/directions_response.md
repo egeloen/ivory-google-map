@@ -72,6 +72,15 @@ alternatives.
 $summary = $route->getSummary();
 ```
 
+### Fare
+
+If present, it contains the total fare (that is, the total ticket costs) on this route. This property is only 
+returned for transit requests and only for routes where fare information is available for all transit legs.
+
+``` php
+$fare = $route->getFare();
+```
+
 ### Warnings
 
 It is an array of warnings to be displayed when showing these directions. You must handle and display these warnings
@@ -88,6 +97,34 @@ the request optimizes waypoints.
 
 ``` php
 $waypointOrders = $route->getWaypointOrders();
+```
+
+## Fare
+
+A directions fare wraps a currency, a value & a text.
+
+### Currency
+
+An ISO 4217 currency code indicating the currency that the amount is expressed in.
+
+``` php
+$currency = $fare->getCurrency();
+```
+
+### Value
+
+The total fare amount, in the currency specified above.
+
+``` php
+$value = $fare->getValue();
+```
+
+### Text
+
+The total fare amount, formatted in the requested language.
+
+``` php
+$text = $fare->getText();
 ```
 
 ## Leg

@@ -59,9 +59,10 @@ class Directions extends AbstractService
         }
 
         return $this->getXmlParser()->parse($data, [
-            'leg'   => 'legs',
-            'route' => 'routes',
-            'step'  => 'steps',
+            'leg'            => 'legs',
+            'route'          => 'routes',
+            'step'           => 'steps',
+            'waypoint_index' => 'waypoint_order',
         ]);
     }
 
@@ -106,6 +107,7 @@ class Directions extends AbstractService
         $route->setLegs($this->buildLegs($data['legs']));
         $route->setOverviewPolyline(new EncodedPolyline($data['overview_polyline']['points']));
         $route->setSummary(isset($data['summary']) ? $data['summary'] : null);
+        $route->setFare(isset($data['fare']) ? $this->buildFare($data['fare']) : null);
         $route->setWarnings(isset($data['warnings']) ? $data['warnings'] : []);
         $route->setWaypointOrders(isset($data['waypoint_order']) ? $data['waypoint_order'] : []);
 
@@ -156,6 +158,21 @@ class Directions extends AbstractService
         $leg->setViaWaypoints(isset($data['via_waypoint']) ? $data['via_waypoint'] : []);
 
         return $leg;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DirectionsFare
+     */
+    private function buildFare(array $data)
+    {
+        $fare = new DirectionsFare();
+        $fare->setCurrency($data['currency']);
+        $fare->setValue($data['value']);
+        $fare->setText(['text']);
+
+        return $fare;
     }
 
     /**
