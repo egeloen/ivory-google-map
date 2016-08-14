@@ -19,6 +19,7 @@ use Ivory\GoogleMap\Helper\Collector\Event\DomEventCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\DomEventOnceCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\EventCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\EventOnceCollector;
+use Ivory\GoogleMap\Helper\Collector\Layer\GeoJsonLayerCollector;
 use Ivory\GoogleMap\Helper\Collector\Layer\KmlLayerCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\CircleCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\DefaultInfoWindowCollector;
@@ -56,6 +57,7 @@ use Ivory\GoogleMap\Helper\Renderer\Html\JavascriptTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Layer\GeoJsonLayerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Layer\KmlLayerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapBoundRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapCenterRenderer;
@@ -95,6 +97,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Event\DomEventSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\EventOnceSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\EventSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\SimpleEventSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Layer\GeoJsonLayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Layer\KmlLayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Layer\LayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\MapBoundSubscriber;
@@ -166,6 +169,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
         $rectangleCollector = new RectangleCollector();
 
         // Layer collectors
+        $geoJsonLayerCollector = new GeoJsonLayerCollector();
         $kmlLayerCollector = new KmlLayerCollector();
 
         // Event collectors
@@ -303,6 +307,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
         $extendableRenderer->setRenderer(Rectangle::class, $unionExtendableRenderer);
 
         // Layer renderers
+        $geoJsonLayerRenderer = new GeoJsonLayerRenderer($formatter, $jsonBuilder);
         $kmlLayerRenderer = new KmlLayerRenderer($formatter, $jsonBuilder);
 
         return array_merge([
@@ -321,6 +326,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
             new SimpleEventSubscriber($formatter, $eventCollector, $eventRenderer),
 
             // Layer
+            new GeoJsonLayerSubscriber($formatter, $geoJsonLayerCollector, $geoJsonLayerRenderer),
             new KmlLayerSubscriber($formatter, $kmlLayerCollector, $kmlLayerRenderer),
             new LayerSubscriber($formatter),
 

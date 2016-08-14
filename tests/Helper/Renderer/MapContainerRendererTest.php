@@ -42,7 +42,7 @@ class MapContainerRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $this->assertSame(
-            '{"base":{"coordinates":[],"bounds":[],"points":[],"sizes":[]},"map":null,"overlays":{"circles":[],"encoded_polylines":[],"ground_overlays":[],"polygons":[],"polylines":[],"rectangles":[],"info_windows":[],"info_boxes":[],"marker_images":[],"markers":[],"marker_cluster":null},"layers":{"kml_layers":[]},"events":{"dom_events":[],"dom_events_once":[],"events":[],"events_once":[]},"functions":[]}',
+            '{"base":{"coordinates":[],"bounds":[],"points":[],"sizes":[]},"map":null,"overlays":{"circles":[],"encoded_polylines":[],"ground_overlays":[],"polygons":[],"polylines":[],"rectangles":[],"info_windows":[],"info_boxes":[],"marker_images":[],"markers":[],"marker_cluster":null},"layers":{"geo_json_layers":[],"kml_layers":[]},"events":{"dom_events":[],"dom_events_once":[],"events":[],"events_once":[]},"functions":[]}',
             $this->mapContainerRenderer->render()
         );
     }
@@ -74,6 +74,7 @@ class MapContainerRendererTest extends \PHPUnit_Framework_TestCase
         "marker_cluster": null
     },
     "layers": {
+        "geo_json_layers": [],
         "kml_layers": []
     },
     "events": {
