@@ -24,14 +24,19 @@ class GeocoderResult
     private $placeId;
 
     /**
-     * @var GeocoderAddressComponent[]
+     * @var GeocoderAddress[]
      */
-    private $addressComponents = [];
+    private $addresses = [];
 
     /**
      * @var string|null
      */
     private $formattedAddress;
+
+    /**
+     * @var string[]
+     */
+    private $postcodeLocalities = [];
 
     /**
      * @var GeocoderGeometry|null
@@ -77,81 +82,81 @@ class GeocoderResult
      *
      * @return bool
      */
-    public function hasAddressComponents($type = null)
+    public function hasAddresses($type = null)
     {
-        $addressComponents = $this->getAddressComponents($type);
+        $addresses = $this->getAddresses($type);
 
-        return !empty($addressComponents);
+        return !empty($addresses);
     }
 
     /**
      * @param string|null $type
      *
-     * @return GeocoderAddressComponent[]
+     * @return GeocoderAddress[]
      */
-    public function getAddressComponents($type = null)
+    public function getAddresses($type = null)
     {
         if ($type === null) {
-            return $this->addressComponents;
+            return $this->addresses;
         }
 
-        $addressComponents = [];
+        $addresses = [];
 
-        foreach ($this->addressComponents as $addressComponent) {
-            if (in_array($type, $addressComponent->getTypes(), true)) {
-                $addressComponents[] = $addressComponent;
+        foreach ($this->addresses as $address) {
+            if (in_array($type, $address->getTypes(), true)) {
+                $addresses[] = $address;
             }
         }
 
-        return $addressComponents;
+        return $addresses;
     }
 
     /**
-     * @param GeocoderAddressComponent[] $addressComponents
+     * @param GeocoderAddress[] $addresses
      */
-    public function setAddressComponents(array $addressComponents)
+    public function setAddresses(array $addresses)
     {
-        $this->addressComponents = [];
-        $this->addAddressComponents($addressComponents);
+        $this->addresses = [];
+        $this->addAddresses($addresses);
     }
 
     /**
-     * @param GeocoderAddressComponent[] $addressComponents
+     * @param GeocoderAddress[] $addresses
      */
-    public function addAddressComponents(array $addressComponents)
+    public function addAddresses(array $addresses)
     {
-        foreach ($addressComponents as $addressComponent) {
-            $this->addAddressComponent($addressComponent);
+        foreach ($addresses as $address) {
+            $this->addAddress($address);
         }
     }
 
     /**
-     * @param GeocoderAddressComponent $addressComponent
+     * @param GeocoderAddress $address
      *
      * @return bool
      */
-    public function hasAddressComponent(GeocoderAddressComponent $addressComponent)
+    public function hasAddress(GeocoderAddress $address)
     {
-        return in_array($addressComponent, $this->addressComponents, true);
+        return in_array($address, $this->addresses, true);
     }
 
     /**
-     * @param GeocoderAddressComponent $addressComponent
+     * @param GeocoderAddress $address
      */
-    public function addAddressComponent(GeocoderAddressComponent $addressComponent)
+    public function addAddress(GeocoderAddress $address)
     {
-        if (!$this->hasAddressComponent($addressComponent)) {
-            $this->addressComponents[] = $addressComponent;
+        if (!$this->hasAddress($address)) {
+            $this->addresses[] = $address;
         }
     }
 
     /**
-     * @param GeocoderAddressComponent $addressComponent
+     * @param GeocoderAddress $address
      */
-    public function removeAddressComponent(GeocoderAddressComponent $addressComponent)
+    public function removeAddress(GeocoderAddress $address)
     {
-        unset($this->addressComponents[array_search($addressComponent, $this->addressComponents, true)]);
-        $this->addressComponents = array_values($this->addressComponents);
+        unset($this->addresses[array_search($address, $this->addresses, true)]);
+        $this->addresses = array_values($this->addresses);
     }
 
     /**
@@ -176,6 +181,70 @@ class GeocoderResult
     public function setFormattedAddress($formattedAddress = null)
     {
         $this->formattedAddress = $formattedAddress;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPostcodeLocalities()
+    {
+        return !empty($this->postcodeLocalities);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPostcodeLocalities()
+    {
+        return $this->postcodeLocalities;
+    }
+
+    /**
+     * @param string[] $postcodeLocalities
+     */
+    public function setPostcodeLocalities(array $postcodeLocalities)
+    {
+        $this->postcodeLocalities = [];
+        $this->addPostcodeLocalities($postcodeLocalities);
+    }
+
+    /**
+     * @param string[] $postcodeLocalities
+     */
+    public function addPostcodeLocalities(array $postcodeLocalities)
+    {
+        foreach ($postcodeLocalities as $postcodeLocality) {
+            $this->addPostcodeLocality($postcodeLocality);
+        }
+    }
+
+    /**
+     * @param string $postcodeLocality
+     *
+     * @return bool
+     */
+    public function hasPostcodeLocality($postcodeLocality)
+    {
+        return in_array($postcodeLocality, $this->postcodeLocalities, true);
+    }
+
+    /**
+     * @param string $postcodeLocality
+     */
+    public function addPostcodeLocality($postcodeLocality)
+    {
+        if (!$this->hasPostcodeLocality($postcodeLocality)) {
+            $this->postcodeLocalities[] = $postcodeLocality;
+        }
+    }
+
+    /**
+     * @param string $postcodeLocality
+     */
+    public function removePostcodeLocality($postcodeLocality)
+    {
+        unset($this->postcodeLocalities[array_search($postcodeLocality, $this->postcodeLocalities, true)]);
+        $this->postcodeLocalities = array_values($this->postcodeLocalities);
     }
 
     /**

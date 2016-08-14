@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Place;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Place\Autocomplete;
-use Ivory\GoogleMap\Place\AutocompleteComponentRestriction;
+use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
@@ -50,8 +50,8 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->autocomplete->getBound());
         $this->assertFalse($this->autocomplete->hasTypes());
         $this->assertEmpty($this->autocomplete->getTypes());
-        $this->assertFalse($this->autocomplete->hasComponentRestrictions());
-        $this->assertEmpty($this->autocomplete->getComponentRestrictions());
+        $this->assertFalse($this->autocomplete->hasComponents());
+        $this->assertEmpty($this->autocomplete->getComponents());
         $this->assertFalse($this->autocomplete->hasValue());
         $this->assertNull($this->autocomplete->getValue());
         $this->assertFalse($this->autocomplete->hasInputAttributes());
@@ -129,53 +129,50 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->autocomplete->getTypes());
     }
 
-    public function testSetComponentRestrictions()
+    public function testSetComponents()
     {
-        $componentRestrictions = [$type = AutocompleteComponentRestriction::COUNTRY => $value = 'fr'];
+        $components = [$type = AutocompleteComponentType::COUNTRY => $value = 'fr'];
 
-        $this->autocomplete->setComponentRestrictions($componentRestrictions);
-        $this->autocomplete->setComponentRestrictions($componentRestrictions);
+        $this->autocomplete->setComponents($components);
+        $this->autocomplete->setComponents($components);
 
-        $this->assertTrue($this->autocomplete->hasComponentRestrictions());
-        $this->assertTrue($this->autocomplete->hasComponentRestriction($type));
-        $this->assertSame($componentRestrictions, $this->autocomplete->getComponentRestrictions());
-        $this->assertSame($value, $this->autocomplete->getComponentRestriction($type));
+        $this->assertTrue($this->autocomplete->hasComponents());
+        $this->assertTrue($this->autocomplete->hasComponent($type));
+        $this->assertSame($components, $this->autocomplete->getComponents());
+        $this->assertSame($value, $this->autocomplete->getComponent($type));
     }
 
-    public function testAddComponentRestrictions()
+    public function testAddComponent()
     {
-        $firstComponentRestrictions = [AutocompleteComponentRestriction::COUNTRY => 'fr'];
-        $secondComponentRestrictions = [AutocompleteComponentRestriction::COUNTRY => 'en'];
+        $this->autocomplete->setComponents($firstComponents = [AutocompleteComponentType::COUNTRY => 'fr']);
+        $this->autocomplete->addComponents($secondComponents = [AutocompleteComponentType::COUNTRY => 'en']);
 
-        $this->autocomplete->setComponentRestrictions($firstComponentRestrictions);
-        $this->autocomplete->addComponentRestrictions($secondComponentRestrictions);
-
-        $this->assertTrue($this->autocomplete->hasComponentRestrictions());
+        $this->assertTrue($this->autocomplete->hasComponents());
         $this->assertSame(
-            array_merge($firstComponentRestrictions, $secondComponentRestrictions),
-            $this->autocomplete->getComponentRestrictions()
+            array_merge($firstComponents, $secondComponents),
+            $this->autocomplete->getComponents()
         );
     }
 
-    public function testSetComponentRestriction()
+    public function testSetComponent()
     {
-        $this->autocomplete->setComponentRestriction($type = AutocompleteComponentRestriction::COUNTRY, $value = 'fr');
+        $this->autocomplete->setComponent($type = AutocompleteComponentType::COUNTRY, $value = 'fr');
 
-        $this->assertTrue($this->autocomplete->hasComponentRestrictions());
-        $this->assertTrue($this->autocomplete->hasComponentRestriction($type));
-        $this->assertSame([$type => $value], $this->autocomplete->getComponentRestrictions());
-        $this->assertSame($value, $this->autocomplete->getComponentRestriction($type));
+        $this->assertTrue($this->autocomplete->hasComponents());
+        $this->assertTrue($this->autocomplete->hasComponent($type));
+        $this->assertSame([$type => $value], $this->autocomplete->getComponents());
+        $this->assertSame($value, $this->autocomplete->getComponent($type));
     }
 
-    public function testRemoveComponentRestriction()
+    public function testRemoveComponent()
     {
-        $this->autocomplete->setComponentRestriction($type = AutocompleteComponentRestriction::COUNTRY, 'fr');
-        $this->autocomplete->removeComponentRestriction($type);
+        $this->autocomplete->setComponent($type = AutocompleteComponentType::COUNTRY, 'fr');
+        $this->autocomplete->removeComponent($type);
 
-        $this->assertFalse($this->autocomplete->hasComponentRestrictions());
-        $this->assertFalse($this->autocomplete->hasComponentRestriction($type));
-        $this->assertEmpty($this->autocomplete->getComponentRestrictions());
-        $this->assertNull($this->autocomplete->getComponentRestriction($type));
+        $this->assertFalse($this->autocomplete->hasComponents());
+        $this->assertFalse($this->autocomplete->hasComponent($type));
+        $this->assertEmpty($this->autocomplete->getComponents());
+        $this->assertNull($this->autocomplete->getComponent($type));
     }
 
     public function testSetInputAttributes()

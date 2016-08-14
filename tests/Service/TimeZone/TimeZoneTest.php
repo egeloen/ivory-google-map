@@ -42,6 +42,22 @@ class TimeZoneTest extends AbstractServiceTest
         $this->timeZone = new TimeZone($this->getClient(), $this->getMessageFactory());
     }
 
+    public function testHttps()
+    {
+        $this->timeZone->setHttps(true);
+
+        $this->assertTrue($this->timeZone->isHttps());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The http scheme is not supported.
+     */
+    public function testHttp()
+    {
+        $this->timeZone->setHttps(false);
+    }
+
     public function testProcess()
     {
         $response = $this->timeZone->process(new TimeZoneRequest(

@@ -16,8 +16,11 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\BusinessAccount;
+use Ivory\GoogleMap\Service\Geocoder\AbstractGeocoderRequest;
+use Ivory\GoogleMap\Service\Geocoder\GeocoderAddressRequest;
+use Ivory\GoogleMap\Service\Geocoder\GeocoderComponentType;
+use Ivory\GoogleMap\Service\Geocoder\GeocoderCoordinateRequest;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderProvider;
-use Ivory\GoogleMap\Service\Geocoder\GeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderStatus;
 use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 use Psr\Http\Message\RequestInterface;
@@ -66,7 +69,7 @@ class GeocoderProviderTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getResults());
     }
 
-    public function testGeocodeWithIp()
+    public function testGeocodeIp()
     {
         $response = $this->geocoder->geocode('66.249.64.1');
 
@@ -74,11 +77,53 @@ class GeocoderProviderTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getResults());
     }
 
-    public function testGeocodeWithRequest()
+    public function testGeocodeAddress()
     {
-        $request = new GeocoderRequest('Paris');
+        $response = $this->geocoder->geocode(new GeocoderAddressRequest('Paris'));
+
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getResults());
+    }
+
+    public function testGeocodeAddressWithComponents()
+    {
+        $request = new GeocoderAddressRequest('Grand place');
+        $request->setComponents([
+            GeocoderComponentType::COUNTRY     => 'fr',
+            GeocoderComponentType::POSTAL_CODE => 59800,
+        ]);
+
+        $response = $this->geocoder->geocode($request);
+
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getResults());
+    }
+
+    public function testGeocodeAddressWithBound()
+    {
+        $request = new GeocoderAddressRequest('Paris');
         $request->setBound(new Bound(new Coordinate(48.815573, 2.224199), new Coordinate(48.9021449, 2.4699208)));
+
+        $response = $this->geocoder->geocode($request);
+
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getResults());
+    }
+
+    public function testGeocodeAddressWithRegion()
+    {
+        $request = new GeocoderAddressRequest('Paris');
         $request->setRegion('fr');
+
+        $response = $this->geocoder->geocode($request);
+
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getResults());
+    }
+
+    public function testGeocodeAddressWithLanguage()
+    {
+        $request = new GeocoderAddressRequest('Paris');
         $request->setLanguage('pl');
 
         $response = $this->geocoder->geocode($request);
@@ -87,10 +132,19 @@ class GeocoderProviderTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getResults());
     }
 
-    public function testGeocodeWithBound()
+    public function testGeocoderCoordinate()
     {
-        $request = new GeocoderRequest('Paris');
-        $request->setBound(new Bound(new Coordinate(48.815573, 2.224199), new Coordinate(48.9021449, 2.4699208)));
+        $request = new GeocoderCoordinateRequest(new Coordinate(48.865475, 2.321118));
+        $response = $this->geocoder->geocode($request);
+
+        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertNotEmpty($response->getResults());
+    }
+
+    public function testGeocoderCoordinateWithLanguage()
+    {
+        $request = new GeocoderCoordinateRequest(new Coordinate(48.865475, 2.321118));
+        $request->setLanguage('fr');
 
         $response = $this->geocoder->geocode($request);
 
@@ -98,31 +152,9 @@ class GeocoderProviderTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getResults());
     }
 
-    public function testGeocodeWithRegion()
+    public function testGeocodeWithHttp()
     {
-        $request = new GeocoderRequest('Paris');
-        $request->setRegion('fr');
-
-        $response = $this->geocoder->geocode($request);
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithLanguage()
-    {
-        $request = new GeocoderRequest('Paris');
-        $request->setLanguage('pl');
-
-        $response = $this->geocoder->geocode($request);
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithHttps()
-    {
-        $this->geocoder->setHttps(true);
+        $this->geocoder->setHttps(false);
 
         $response = $this->geocoder->geocode('Paris');
 
@@ -332,10 +364,10 @@ class GeocoderProviderTest extends AbstractServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeocoderRequest
+     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractGeocoderRequest
      */
     private function createGeocoderRequestMock()
     {
-        return $this->createMock(GeocoderRequest::class);
+        return $this->createMock(AbstractGeocoderRequest::class);
     }
 }

@@ -44,9 +44,9 @@ class Autocomplete implements VariableAwareInterface
     private $types = [];
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    private $componentRestrictions = [];
+    private $components = [];
 
     /**
      * @var string
@@ -191,35 +191,35 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @return bool
      */
-    public function hasComponentRestrictions()
+    public function hasComponents()
     {
-        return !empty($this->componentRestrictions);
+        return !empty($this->components);
     }
 
     /**
-     * @return string[]
+     * @return mixed[]
      */
-    public function getComponentRestrictions()
+    public function getComponents()
     {
-        return $this->componentRestrictions;
+        return $this->components;
     }
 
     /**
-     * @param string[] $componentRestrictions
+     * @param mixed[] $components
      */
-    public function setComponentRestrictions(array $componentRestrictions)
+    public function setComponents(array $components)
     {
-        $this->componentRestrictions = [];
-        $this->addComponentRestrictions($componentRestrictions);
+        $this->components = [];
+        $this->addComponents($components);
     }
 
     /**
-     * @param string[] $componentRestrictions
+     * @param mixed[] $components
      */
-    public function addComponentRestrictions(array $componentRestrictions)
+    public function addComponents(array $components)
     {
-        foreach ($componentRestrictions as $type => $value) {
-            $this->setComponentRestriction($type, $value);
+        foreach ($components as $type => $value) {
+            $this->setComponent($type, $value);
         }
     }
 
@@ -228,36 +228,36 @@ class Autocomplete implements VariableAwareInterface
      *
      * @return bool
      */
-    public function hasComponentRestriction($type)
+    public function hasComponent($type)
     {
-        return isset($this->componentRestrictions[$type]);
+        return isset($this->components[$type]);
     }
 
     /**
      * @param string $type
      *
-     * @return string
+     * @return mixed
      */
-    public function getComponentRestriction($type)
+    public function getComponent($type)
     {
-        return $this->hasComponentRestriction($type) ? $this->componentRestrictions[$type] : null;
+        return $this->hasComponent($type) ? $this->components[$type] : null;
     }
 
     /**
      * @param string $type
-     * @param string $value
+     * @param mixed  $value
      */
-    public function setComponentRestriction($type, $value)
+    public function setComponent($type, $value)
     {
-        $this->componentRestrictions[$type] = $value;
+        $this->components[$type] = $value;
     }
 
     /**
      * @param string $type
      */
-    public function removeComponentRestriction($type)
+    public function removeComponent($type)
     {
-        unset($this->componentRestrictions[$type]);
+        unset($this->components[$type]);
     }
 
     /**

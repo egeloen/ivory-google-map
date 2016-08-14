@@ -160,9 +160,9 @@ class DistanceMatrixTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRows());
     }
 
-    public function testProcessWithHttps()
+    public function testProcessWithHttp()
     {
-        $this->distanceMatrix->setHttps(true);
+        $this->distanceMatrix->setHttps(false);
 
         $response = $this->distanceMatrix->process(new DistanceMatrixRequest(['Vancouver BC'], ['San Francisco']));
 

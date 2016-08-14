@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Place;
+namespace Ivory\GoogleMap\Service\Geocoder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-final class AutocompleteComponentRestriction
+final class GeocoderComponentType
 {
+    const ROUTE = 'route';
+    const LOCALITY = 'locality';
+    const ADMINISTRATIVE_AREA = 'administrative_area';
+    const POSTAL_CODE = 'postal_code';
     const COUNTRY = 'country';
 
     /**

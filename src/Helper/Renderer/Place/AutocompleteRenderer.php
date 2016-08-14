@@ -76,8 +76,8 @@ class AutocompleteRenderer extends AbstractJsonRenderer
             $jsonBuilder->setValue('[bounds]', $autocomplete->getBound()->getVariable(), false);
         }
 
-        if ($autocomplete->hasComponentRestrictions()) {
-            $jsonBuilder->setValue('[componentRestrictions]', $autocomplete->getComponentRestrictions());
+        if ($autocomplete->hasComponents()) {
+            $jsonBuilder->setValue('[componentRestrictions]', $autocomplete->getComponents());
         }
 
         if (!$jsonBuilder->hasValues()) {

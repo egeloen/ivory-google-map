@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Helper\Functional\Place;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Place\Autocomplete;
-use Ivory\GoogleMap\Place\AutocompleteComponentRestriction;
+use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
 
 /**
@@ -51,7 +51,7 @@ class AutocompleteFunctionalTest extends AbstractAutocompleteFunctionalTest
     public function testRenderWithComponentRestrictions()
     {
         $autocomplete = $this->createAutocomplete();
-        $autocomplete->setComponentRestrictions([AutocompleteComponentRestriction::COUNTRY => 'fr']);
+        $autocomplete->setComponents([AutocompleteComponentType::COUNTRY => 'fr']);
 
         $this->renderAutocomplete($autocomplete);
         $this->assertAutocomplete($autocomplete);
