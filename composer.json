@@ -10,10 +10,11 @@
         }
     ],
     "require": {
-        "php": "^5.6|^7.0"
+        "php": "^5.6|^7.0",
+        "egeloen/json-builder": "^2.0",
+        "symfony/event-dispatcher": "^2.0|^3.0"
     },
     "require-dev": {
-        "egeloen/json-builder": "^2.0",
         "friendsofphp/php-cs-fixer": "^1.11",
         "php-http/cache-plugin": "dev-respect-headers",
         "php-http/guzzle6-adapter": "^1.1",
@@ -21,7 +22,6 @@
         "phpunit/phpunit": "^5.0",
         "phpunit/phpunit-selenium": "^3.0",
         "symfony/cache": "^3.0",
-        "symfony/event-dispatcher": "^2.0|^3.0",
         "willdurand/geocoder": "^3.0"
     },
     "suggest": {

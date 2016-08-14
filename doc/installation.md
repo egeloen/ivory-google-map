@@ -23,14 +23,6 @@ $ composer require egeloen/google-map
 
 ## Download additional libraries
 
-If you want to render maps or place autocompletes , you will need the `egeloen/json-builder` and 
-`symfony/event-dispatcher` packages:
-
-``` bash
-$ composer require egeloen/json-builder
-$ composer require symfony/event-dispatcher
-```
-
 If you want to use the Geocoder service, you will need [Geocoder](http://github.com/willdurand/Geocoder):
 
 ``` bash
