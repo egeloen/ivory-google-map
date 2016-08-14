@@ -25,10 +25,8 @@
         "willdurand/geocoder": "^3.0"
     },
     "suggest": {
-        "egeloen/json-builder": "Allows to use map service",
         "php-http/client-implementation": "Allows to use http services",
         "php-http/message": "Allows to use http services",
-        "symfony/event-dispatcher": "Allow to use map service",
         "willdurand/geocoder": "Allows to use geocoder service"
     },
     "repositories": [
