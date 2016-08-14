@@ -19,9 +19,9 @@ use Ivory\GoogleMap\Utility\VariableAwareInterface;
 class Formatter
 {
     /**
-     * @var int
+     * @var bool
      */
-    private $defaultIndentation;
+    private $debug;
 
     /**
      * @var int
@@ -29,52 +29,13 @@ class Formatter
     private $indentationStep;
 
     /**
-     * @var bool
-     */
-    private $debug;
-
-    /**
-     * @param int  $defaultIndentation
-     * @param int  $indentationStep
      * @param bool $debug
+     * @param int  $indentationStep
      */
-    public function __construct($defaultIndentation = 0, $indentationStep = 4, $debug = false)
+    public function __construct($debug = false, $indentationStep = 4)
     {
-        $this->setDefaultIndentation($defaultIndentation);
-        $this->setIndentationStep($indentationStep);
         $this->setDebug($debug);
-    }
-
-    /**
-     * @return int
-     */
-    public function getDefaultIndentation()
-    {
-        return $this->defaultIndentation;
-    }
-
-    /**
-     * @param int $defaultIndentation
-     */
-    public function setDefaultIndentation($defaultIndentation)
-    {
-        $this->defaultIndentation = $defaultIndentation;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIndentationStep()
-    {
-        return $this->indentationStep;
-    }
-
-    /**
-     * @param int $indentationStep
-     */
-    public function setIndentationStep($indentationStep)
-    {
-        $this->indentationStep = $indentationStep;
+        $this->setIndentationStep($indentationStep);
     }
 
     /**
@@ -91,6 +52,22 @@ class Formatter
     public function setDebug($debug)
     {
         $this->debug = $debug;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIndentationStep()
+    {
+        return $this->indentationStep;
+    }
+
+    /**
+     * @param int $indentationStep
+     */
+    public function setIndentationStep($indentationStep)
+    {
+        $this->indentationStep = $indentationStep;
     }
 
     /**
@@ -413,7 +390,7 @@ class Formatter
     public function renderLine($code = null, $newLine = true)
     {
         if ($newLine && !empty($code) && $this->debug) {
-            $code = str_repeat(' ', $this->defaultIndentation).$code.PHP_EOL;
+            $code .= PHP_EOL;
         }
 
         return (string) $code;

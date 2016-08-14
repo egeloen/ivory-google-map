@@ -34,7 +34,6 @@ If you want to more easily debug the generated code, you can use:
 ``` php
 $placeAutocompleteHelperBuilder->getFormatter()->setDebug(true);
 $placeAutocompleteHelperBuilder->getFormatter()->setIndentationStep(4);
-$placeAutocompleteHelperBuilder->getFormatter()->setDefaultIndentation(0);
 ```
 
 ## Render html input

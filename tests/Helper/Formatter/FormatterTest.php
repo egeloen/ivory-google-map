@@ -34,9 +34,16 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertSame(0, $this->formatter->getDefaultIndentation());
-        $this->assertSame(4, $this->formatter->getIndentationStep());
         $this->assertFalse($this->formatter->isDebug());
+        $this->assertSame(4, $this->formatter->getIndentationStep());
+    }
+
+    public function testInitialState()
+    {
+        $this->formatter = new Formatter(true, $indentationStep = 2);
+
+        $this->assertTrue($this->formatter->isDebug());
+        $this->assertSame($indentationStep, $this->formatter->getIndentationStep());
     }
 
     /**

@@ -32,7 +32,6 @@ If you want to more easily debug the generated code, you can use:
 ``` php
 $mapHelperBuilder->getFormatter()->setDebug(true);
 $mapHelperBuilder->getFormatter()->setIndentationStep(4);
-$mapHelperBuilder->getFormatter()->setDefaultIndentation(0);
 ```
 
 ## Render html container

@@ -50,7 +50,6 @@ If you want to more easily debug the generated code, you can use:
 ``` php
 $apiHelperBuilder->getFormatter()->setDebug(true);
 $apiHelperBuilder->getFormatter()->setIndentationStep(4);
-$apiHelperBuilder->getFormatter()->setDefaultIndentation(0);
 ```
 
 ## Render
