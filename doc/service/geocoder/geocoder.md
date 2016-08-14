@@ -40,10 +40,12 @@ All services works the same way, so, if you want to learn more about it, you can
 
 ## Request
 
-Once you have built you geocoder provider, you can geocode a position:
+Once you have built you geocoder provider, you can geocode a position or an address:
 
 ``` php
 $response = $geocoder->geocode('1600 Amphitheatre Parkway, Mountain View, CA');
+// or
+$response = $geocoder->reverse(48.865475, 2.321118);
 ```
 
 The geocoder provider allows you to geocoder a much more advance request. If you want to learn more about it, you can 

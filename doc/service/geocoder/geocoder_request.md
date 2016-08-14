@@ -1,58 +1,53 @@
 # Geocoder Request
 
-A geocoder request is the starting point when you want to geocode a position.
-
-## Build
-
-First of all, if you want to geocode a position, you will need to build a geocoder request. So let's go:
+If you just want to geocode a simple string or a coordinate you don't need to build a request, you can directly use the 
+built-in Geocoder API:
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderRequest;
-
-$request = new GeocoderRequest('1600 Amphitheatre Parkway, Mountain View, CA');
+$response = $geocoder->geocode('1600 Amphitheatre Parkway, Mountain View, CA');
+// or
+$response = $geocoder->reverse(48.865475, 2.321118);
 ```
 
-The geocoder request constructor requires an address as first argument.
+This is already nice but it does not provide as much features as Google provide. The geocoder provider also supports 
+three specialized request which allows you to geocode a much more advanced location.
 
-## Configure address
+## Address request
 
-If you want to update the address, you can use:
+An address request allows you to geocode a coordinate from an address:
 
 ``` php
-$request->setAddress('1600 Amphitheatre Parkway, Mountain View, CA');
+use Ivory\GoogleMap\Service\Geocoder\GeocoderAddressRequest;
+
+$request = new GeocoderAddressRequest('1600 Amphitheatre Parkway, Mountain View, CA');
+$response = $geocoder->geocode($request);
 ```
 
-The address also accepts a coordinate:
+If you want to learn more about it, you can read its [documentation](/doc/service/geocoder/geocoder_address_request.md).
+
+## Coordinate request
+
+A coordinate request allows you to geocode an address from an coordinate:
 
 ``` php
-use Ivory\GoogleMap\Base\Coordinate:
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Service\Geocoder\GeocoderCoordinateRequest;
 
-$request->setAddress(new Coordinate(1.1, 2.1));
+$request = new GeocoderCoordinateRequest(new Coordinate(48.865475, 2.321118));
+$response = $geocoder->geocode($request);
 ```
 
-## Configure bound
+If you want to learn more about it, you can read its [documentation](/doc/service/geocoder/geocoder_coordinate_request.md).
 
-If you want to restrict the geocoder area, you can use a bound:
+## Place id request
+
+A geocoder place id request allows you to geocode an address from an place id:
 
 ``` php
-$request->setBound(new Bound(
-    new Coordinate(-1.1, -2.1), 
-    new Coordinate(2.1, 1.1)
-));
+use Ivory\GoogleMap\Service\Geocoder\GeocoderPlaceIdRequest;
+
+$request = new GeocoderPlaceIdRequest('place_id');
+$response = $geocoder->geocode($request);
 ```
 
-## Configure region
-
-If you want to update the region, you can use:
-
-``` php
-$request->setRegion('en');
-```
-
-## Configure language
-
-If you want to update the language, you can use:
-
-``` php
-$request->setLanguage('fr');
-```
+If you want to learn more about it, you can read its [documentation](/doc/service/geocoder/geocoder_place_id_request.md).

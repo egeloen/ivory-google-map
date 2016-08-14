@@ -232,10 +232,10 @@ class DirectionsTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRoutes());
     }
 
-    public function testRouteWithHttps()
+    public function testRouteWithHttp()
     {
         $request = new DirectionsRequest('Lille', 'Paris');
-        $this->directions->setHttps(true);
+        $this->directions->setHttps(false);
 
         $response = $this->directions->route($request);
 

@@ -59,14 +59,18 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     }
 
     /**
-     * @param GeocoderRequest|string $request
+     * @param AbstractGeocoderRequest|Coordinate|string $request
      *
      * @return GeocoderResponse
      */
     public function geocode($request)
     {
-        if (!$request instanceof GeocoderRequest) {
-            $request = new GeocoderRequest($request);
+        if (!$request instanceof AbstractGeocoderRequest) {
+            if ($request instanceof Coordinate) {
+                $request = new GeocoderCoordinateRequest($request);
+            } else {
+                $request = new GeocoderAddressRequest((string) $request);
+            }
         }
 
         if ($this->locale !== null && !$request->hasLanguage()) {
@@ -123,8 +127,23 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
      */
     private function buildResponse(array $data)
     {
+        $response = new GeocoderResponse();
+        $response->setStatus($data['status']);
+        $response->setResults($this->buildResults($data['results']));
+
+        return $response;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return GeocoderResult[]
+     */
+    private function buildResults(array $data)
+    {
         $results = [];
-        foreach ($data['results'] as $index => $response) {
+
+        foreach ($data as $index => $response) {
             $results[] = $this->buildResult($response);
 
             if ($this->limit !== null && ++$index >= $this->limit) {
@@ -132,11 +151,7 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
             }
         }
 
-        $response = new GeocoderResponse();
-        $response->setStatus($data['status']);
-        $response->setResults($results);
-
-        return $response;
+        return $results;
     }
 
     /**
@@ -148,7 +163,7 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     {
         $result = new GeocoderResult();
         $result->setPlaceId($data['place_id']);
-        $result->setAddressComponents($this->buildAddressComponents($data['address_components']));
+        $result->setAddresses($this->buildAddresses($data['address_components']));
         $result->setFormattedAddress($data['formatted_address']);
         $result->setGeometry($this->buildGeometry($data['geometry']));
         $result->setTypes(isset($data['types']) ? $data['types'] : []);
@@ -160,32 +175,32 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     /**
      * @param mixed[] $data
      *
-     * @return GeocoderAddressComponent[]
+     * @return GeocoderAddress[]
      */
-    private function buildAddressComponents(array $data)
+    private function buildAddresses(array $data)
     {
-        $addressComponents = [];
+        $addresses = [];
 
         foreach ($data as $item) {
-            $addressComponents[] = $this->buildAddressComponent($item);
+            $addresses[] = $this->buildAddress($item);
         }
 
-        return $addressComponents;
+        return $addresses;
     }
 
     /**
      * @param mixed[] $data
      *
-     * @return GeocoderAddressComponent
+     * @return GeocoderAddress
      */
-    private function buildAddressComponent(array $data)
+    private function buildAddress(array $data)
     {
-        $addressComponent = new GeocoderAddressComponent();
-        $addressComponent->setLongName($data['long_name']);
-        $addressComponent->setShortName($data['short_name']);
-        $addressComponent->setTypes($data['types']);
+        $address = new GeocoderAddress();
+        $address->setLongName($data['long_name']);
+        $address->setShortName($data['short_name']);
+        $address->setTypes($data['types']);
 
-        return $addressComponent;
+        return $address;
     }
 
     /**

@@ -16,7 +16,7 @@ namespace Ivory\GoogleMap\Service\Geocoder;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderAddressComponent
+class GeocoderAddress
 {
     /**
      * @var string|null

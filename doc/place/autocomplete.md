@@ -59,14 +59,14 @@ use Ivory\GoogleMap\Place\AutocompleteType;
 $autocomplete->setTypes([AutocompleteType::ESTABLISHMENT]);
 ```
 
-## Configure component restrictions
+## Configure components
 
 If you want to restrict the autocomplete to components, you can use:
 
 ``` php
-use Ivory\GoogleMap\Place\AutocompleteComponentRestriction;
+use Ivory\GoogleMap\Place\AutocompleteComponentType;
 
-$autocomplete->setComponentRestrictions([AutocompleteComponentRestriction::COUNTRY => 'fr']);
+$autocomplete->setComponents([AutocompleteComponentType::COUNTRY => 'fr']);
 ```
 
 ## Configure bound

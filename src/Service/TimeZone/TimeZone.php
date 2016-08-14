@@ -30,6 +30,18 @@ class TimeZone extends AbstractService
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function setHttps($https)
+    {
+        if (!$https) {
+            throw new \InvalidArgumentException('The http scheme is not supported.');
+        }
+
+        parent::setHttps($https);
+    }
+
+    /**
      * @param TimeZoneRequest $request
      *
      * @return TimeZoneResponse

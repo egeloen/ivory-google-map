@@ -17,7 +17,7 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Place\AutocompleteRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementRenderer;
 use Ivory\GoogleMap\Place\Autocomplete;
-use Ivory\GoogleMap\Place\AutocompleteComponentRestriction;
+use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
 use Ivory\JsonBuilder\JsonBuilder;
 
@@ -64,7 +64,7 @@ class AutocompleteRendererTest extends\PHPUnit_Framework_TestCase
         $autocomplete = new Autocomplete();
         $autocomplete->setTypes([AutocompleteType::CITIES]);
         $autocomplete->setBound($bound);
-        $autocomplete->setComponentRestrictions([AutocompleteComponentRestriction::COUNTRY => 'fr']);
+        $autocomplete->setComponents([AutocompleteComponentType::COUNTRY => 'fr']);
         $autocomplete->setVariable('autocomplete');
 
         $this->assertSame(
