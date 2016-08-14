@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Layer;
 
+use Ivory\GoogleMap\Layer\GeoJsonLayer;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Layer\LayerManager;
 
@@ -34,8 +35,51 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
+        $this->assertFalse($this->layerManager->hasGeoJsonLayers());
+        $this->assertEmpty($this->layerManager->getGeoJsonLayers());
         $this->assertFalse($this->layerManager->hasKmlLayers());
         $this->assertEmpty($this->layerManager->getKmlLayers());
+    }
+
+    public function testSetGeoJsonLayers()
+    {
+        $this->layerManager->setGeoJsonLayers($geoJsonLayers = [$geoJsonLayer = $this->createGeoJsonLayerMock()]);
+        $this->layerManager->setGeoJsonLayers($geoJsonLayers);
+
+        $this->assertTrue($this->layerManager->hasGeoJsonLayers());
+        $this->assertTrue($this->layerManager->hasGeoJsonLayer($geoJsonLayer));
+        $this->assertSame($geoJsonLayers, $this->layerManager->getGeoJsonLayers());
+    }
+
+    public function testAddGeoJsonLayers()
+    {
+        $this->layerManager->setGeoJsonLayers($firstGeoJsonLayers = [$this->createGeoJsonLayerMock()]);
+        $this->layerManager->addGeoJsonLayers($secondGeoJsonLayers = [$this->createGeoJsonLayerMock()]);
+
+        $this->assertTrue($this->layerManager->hasGeoJsonLayers());
+        $this->assertSame(
+            array_merge($firstGeoJsonLayers, $secondGeoJsonLayers),
+            $this->layerManager->getGeoJsonLayers()
+        );
+    }
+
+    public function testAddGeoJsonLayer()
+    {
+        $this->layerManager->addGeoJsonLayer($geoJsonLayer = $this->createGeoJsonLayerMock());
+
+        $this->assertTrue($this->layerManager->hasGeoJsonLayers());
+        $this->assertTrue($this->layerManager->hasGeoJsonLayer($geoJsonLayer));
+        $this->assertSame([$geoJsonLayer], $this->layerManager->getGeoJsonLayers());
+    }
+
+    public function testRemoveGeoJsonLayer()
+    {
+        $this->layerManager->addGeoJsonLayer($geoJsonLayer = $this->createGeoJsonLayerMock());
+        $this->layerManager->removeGeoJsonLayer($geoJsonLayer);
+
+        $this->assertFalse($this->layerManager->hasGeoJsonLayers());
+        $this->assertFalse($this->layerManager->hasGeoJsonLayer($geoJsonLayer));
+        $this->assertEmpty($this->layerManager->getGeoJsonLayers());
     }
 
     public function testSetKmlLayers()
@@ -74,6 +118,14 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->layerManager->hasKmlLayers());
         $this->assertFalse($this->layerManager->hasKmlLayer($kmlLayer));
         $this->assertEmpty($this->layerManager->getKmlLayers());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|GeoJsonLayer
+     */
+    private function createGeoJsonLayerMock()
+    {
+        return $this->createMock(GeoJsonLayer::class);
     }
 
     /**

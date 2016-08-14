@@ -24,6 +24,11 @@ class LayerSubscriber extends AbstractDelegateSubscriber
      */
     public static function getDelegatedSubscribedEvents()
     {
-        return [MapEvents::JAVASCRIPT_LAYER => [MapEvents::JAVASCRIPT_LAYER_KML_LAYER]];
+        return [
+            MapEvents::JAVASCRIPT_LAYER => [
+                MapEvents::JAVASCRIPT_LAYER_GEO_JSON_LAYER,
+                MapEvents::JAVASCRIPT_LAYER_KML_LAYER,
+            ],
+        ];
     }
 }

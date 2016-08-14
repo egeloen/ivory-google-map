@@ -41,6 +41,7 @@ final class MapEvents
     const JAVASCRIPT_OVERLAY_MARKER = 'map.javascript.overlay.marker';
     const JAVASCRIPT_OVERLAY_MARKER_CLUSTER = 'map.javascript.overlay.marker_cluster';
     const JAVASCRIPT_LAYER = 'map.javascript.layer';
+    const JAVASCRIPT_LAYER_GEO_JSON_LAYER = 'map.javascript.layer.geo_json_layer';
     const JAVASCRIPT_LAYER_KML_LAYER = 'map.javascript.layer.kml_layer';
     const JAVASCRIPT_EVENT = 'map.javascript.event';
     const JAVASCRIPT_EVENT_DOM_EVENT = 'map.javascript.event.dom_event';

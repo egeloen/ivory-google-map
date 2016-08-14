@@ -26,6 +26,7 @@ controls, overlays, events & services through the Google Map API v3.
          - [Zoom](/doc/control/zoom.md)
       - [Events](/doc/event.md)
       - [Layers](/doc/layer/index.md)
+         - [Geo Json Layer](/doc/layer/geo_json_layer.md)
          - [Kml Layer](/doc/layer/kml_layer.md)
       - [Overlays](/doc/overlay/index.md)
          - [Marker](/doc/overlay/marker.md)

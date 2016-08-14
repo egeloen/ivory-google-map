@@ -82,7 +82,9 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertContainer($map);
         $this->assertOverlayManager($map->getOverlayManager());
 
-        if ($map->getLayerManager()->hasKmlLayers()) {
+        $layerManager = $map->getLayerManager();
+
+        if ($layerManager->hasGeoJsonLayers() || $layerManager->hasKmlLayers()) {
             return;
         }
 

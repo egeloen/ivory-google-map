@@ -17,9 +17,77 @@ namespace Ivory\GoogleMap\Layer;
 class LayerManager
 {
     /**
+     * @var GeoJsonLayer[]
+     */
+    private $geoJsonLayers = [];
+
+    /**
      * @var KmlLayer[]
      */
     private $kmlLayers = [];
+
+    /**
+     * @return bool
+     */
+    public function hasGeoJsonLayers()
+    {
+        return !empty($this->geoJsonLayers);
+    }
+
+    /**
+     * @return GeoJsonLayer[]
+     */
+    public function getGeoJsonLayers()
+    {
+        return $this->geoJsonLayers;
+    }
+
+    /**
+     * @param GeoJsonLayer[] $geoJsonLayers
+     */
+    public function setGeoJsonLayers(array $geoJsonLayers)
+    {
+        $this->geoJsonLayers = [];
+        $this->addGeoJsonLayers($geoJsonLayers);
+    }
+
+    /**
+     * @param GeoJsonLayer[] $geoJsonLayers
+     */
+    public function addGeoJsonLayers(array $geoJsonLayers)
+    {
+        foreach ($geoJsonLayers as $geoJsonLayer) {
+            $this->addGeoJsonLayer($geoJsonLayer);
+        }
+    }
+
+    /**
+     * @param GeoJsonLayer $geoJsonLayer
+     *
+     * @return bool
+     */
+    public function hasGeoJsonLayer(GeoJsonLayer $geoJsonLayer)
+    {
+        return in_array($geoJsonLayer, $this->geoJsonLayers, true);
+    }
+
+    /**
+     * @param GeoJsonLayer $geoJsonLayer
+     */
+    public function addGeoJsonLayer(GeoJsonLayer $geoJsonLayer)
+    {
+        if (!$this->hasGeoJsonLayer($geoJsonLayer)) {
+            $this->geoJsonLayers[] = $geoJsonLayer;
+        }
+    }
+
+    /**
+     * @param GeoJsonLayer $geoJsonLayer
+     */
+    public function removeGeoJsonLayer(GeoJsonLayer $geoJsonLayer)
+    {
+        unset($this->geoJsonLayers[array_search($geoJsonLayer, $this->geoJsonLayers, true)]);
+    }
 
     /**
      * @return bool

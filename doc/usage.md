@@ -34,6 +34,7 @@ generally reflect collections of objects that you add on top of the map to desig
 also alter the presentation layer of the map itself, slightly altering the base tiles in a fashion consistent with the 
 layer.
 
+ - [Geo Json Layer](/doc/layer/geo_json_layer.md)
  - [Kml Layer](/doc/layer/kml_layer.md)
 
 ## Configure overlays
