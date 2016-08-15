@@ -36,6 +36,7 @@ If you want to use the [Directions](/doc/service/geocoder/directions.md),
 
 ``` bash
 $ composer require php-http/guzzle6-adapter
+$ composer require php-http/message
 ```
 
 Here, I have chosen to use [Guzzle6](http://docs.guzzlephp.org/en/latest/psr7.html) but since Httplug supports the 
