@@ -72,6 +72,8 @@ The duration of this route represented by `Distance`.
 $distance = $element->getDistance();
 ```
 
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#distance).
+
 #### Duration
 
 The duration of this route represented by `Duration`.
@@ -79,3 +81,5 @@ The duration of this route represented by `Duration`.
 ``` php
 $duration = $element->getDuration();
 ```
+
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).

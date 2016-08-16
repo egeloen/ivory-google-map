@@ -145,6 +145,8 @@ returned for transit requests and only for routes where fare information is avai
 $fare = $route->getFare();
 ```
 
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#fare).
+
 ### Warnings
 
 It is an array of warnings to be displayed when showing these directions. You must handle and display these warnings
@@ -161,34 +163,6 @@ the request optimizes waypoints.
 
 ``` php
 $waypointOrders = $route->getWaypointOrders();
-```
-
-## Fare
-
-A directions fare wraps a currency, a value & a text.
-
-### Currency
-
-An ISO 4217 currency code indicating the currency that the amount is expressed in.
-
-``` php
-$currency = $fare->getCurrency();
-```
-
-### Value
-
-The total fare amount, in the currency specified above.
-
-``` php
-$value = $fare->getValue();
-```
-
-### Text
-
-The total fare amount, formatted in the requested language.
-
-``` php
-$text = $fare->getText();
 ```
 
 ## Leg
@@ -210,6 +184,8 @@ It indicates the total distance covered by this leg. It represented by the `Dist
 $duration = $leg->getDistance();
 ```
 
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#distance).
+
 ### Duration
 
 It indicates the total duration of this leg. It is represented by the `Duration`.
@@ -217,6 +193,8 @@ It indicates the total duration of this leg. It is represented by the `Duration`
 ``` php
 $duration = $leg->getDuration();
 ```
+
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).
 
 ## Duration in traffic
 
@@ -226,6 +204,8 @@ historical traffic conditions. It is represented by the `Duration`.
 ``` php
 $durationInTraffic = $leg->getDurationInTraffic();
 ```
+
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).
 
 ### Departure time
 
@@ -311,6 +291,8 @@ unknown.
 $distance = $step->getDistance();
 ```
 
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#distance).
+
 ### Duration
 
 It contains the typical time required to perform the step, until the next step. This field may be null if the
@@ -319,6 +301,8 @@ duration is unknown.
 ``` php
 $duration = $step->getDuration();
 ```
+
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).
 
 ### Start Location
 
