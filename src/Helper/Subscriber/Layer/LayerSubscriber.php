@@ -27,6 +27,7 @@ class LayerSubscriber extends AbstractDelegateSubscriber
         return [
             MapEvents::JAVASCRIPT_LAYER => [
                 MapEvents::JAVASCRIPT_LAYER_GEO_JSON_LAYER,
+                MapEvents::JAVASCRIPT_LAYER_HEATMAP_LAYER,
                 MapEvents::JAVASCRIPT_LAYER_KML_LAYER,
             ],
         ];

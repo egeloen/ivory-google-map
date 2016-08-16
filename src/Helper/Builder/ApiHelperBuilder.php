@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Builder;
 
 use Ivory\GoogleMap\Helper\ApiHelper;
+use Ivory\GoogleMap\Helper\Collector\Layer\HeatmapLayerCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\EncodedPolylineCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoBoxCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
@@ -22,6 +23,7 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ControlManagerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Geometry\EncodingRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\JavascriptTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Layer\HeatmapLayerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\LoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapTypeIdRenderer;
@@ -34,6 +36,7 @@ use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementLoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\SourceRenderer;
 use Ivory\GoogleMap\Helper\Subscriber\ApiJavascriptSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Layer\HeatmapLayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\MapJavascriptSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\EncodedPolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\InfoBoxSubscriber;
@@ -129,6 +132,9 @@ class ApiHelperBuilder extends AbstractHelperBuilder
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
 
+        // Layer collectors
+        $heatmapLayerCollector = new HeatmapLayerCollector();
+
         // Overlay collectors
         $encodedPolylineCollector = new EncodedPolylineCollector();
         $markerCollector = new MarkerCollector();
@@ -136,6 +142,9 @@ class ApiHelperBuilder extends AbstractHelperBuilder
 
         // Control renderers
         $controlManagerRenderer = new ControlManagerRenderer();
+
+        // Layer renderers
+        $heatmapLayerRenderer = new HeatmapLayerRenderer($formatter, $jsonBuilder);
 
         // Utility renderers
         $callbackRenderer = new CallbackRenderer($formatter);
@@ -186,6 +195,7 @@ class ApiHelperBuilder extends AbstractHelperBuilder
                 $javascriptTagRenderer
             ),
             new EncodedPolylineSubscriber($formatter, $encodedPolylineCollector, $encodedPolylineRenderer),
+            new HeatmapLayerSubscriber($formatter, $heatmapLayerCollector, $heatmapLayerRenderer),
             new InfoBoxSubscriber($formatter, $infoBoxCollector, $infoBoxRenderer),
             new MapJavascriptSubscriber($formatter, $mapRenderer, $callbackRenderer, $javascriptTagRenderer),
             new MarkerClustererSubscriber($formatter, $markerClustererRenderer),

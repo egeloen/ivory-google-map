@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Layer\GeoJsonLayer;
+use Ivory\GoogleMap\Layer\HeatmapLayer;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Layer\LayerManager;
 
@@ -37,6 +38,8 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->layerManager->hasGeoJsonLayers());
         $this->assertEmpty($this->layerManager->getGeoJsonLayers());
+        $this->assertFalse($this->layerManager->hasHeatmapLayers());
+        $this->assertEmpty($this->layerManager->getHeatmapLayers());
         $this->assertFalse($this->layerManager->hasKmlLayers());
         $this->assertEmpty($this->layerManager->getKmlLayers());
     }
@@ -80,6 +83,47 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->layerManager->hasGeoJsonLayers());
         $this->assertFalse($this->layerManager->hasGeoJsonLayer($geoJsonLayer));
         $this->assertEmpty($this->layerManager->getGeoJsonLayers());
+    }
+
+    public function testSetHeatmapLayers()
+    {
+        $this->layerManager->setHeatmapLayers($heatmapLayers = [$heatmapLayer = $this->createHeatmapLayerMock()]);
+        $this->layerManager->setHeatmapLayers($heatmapLayers);
+
+        $this->assertTrue($this->layerManager->hasHeatmapLayers());
+        $this->assertTrue($this->layerManager->hasHeatmapLayer($heatmapLayer));
+        $this->assertSame($heatmapLayers, $this->layerManager->getHeatmapLayers());
+    }
+
+    public function testAddHeatmapLayers()
+    {
+        $this->layerManager->setHeatmapLayers($firstHeatmapLayers = [$this->createHeatmapLayerMock()]);
+        $this->layerManager->addHeatmapLayers($secondHeatmapLayers = [$this->createHeatmapLayerMock()]);
+
+        $this->assertTrue($this->layerManager->hasHeatmapLayers());
+        $this->assertSame(
+            array_merge($firstHeatmapLayers, $secondHeatmapLayers),
+            $this->layerManager->getHeatmapLayers()
+        );
+    }
+
+    public function testAddHeatmapLayer()
+    {
+        $this->layerManager->addHeatmapLayer($heatmapLayer = $this->createHeatmapLayerMock());
+
+        $this->assertTrue($this->layerManager->hasHeatmapLayers());
+        $this->assertTrue($this->layerManager->hasHeatmapLayer($heatmapLayer));
+        $this->assertSame([$heatmapLayer], $this->layerManager->getHeatmapLayers());
+    }
+
+    public function testRemoveHeatmapLayer()
+    {
+        $this->layerManager->addHeatmapLayer($heatmapLayer = $this->createHeatmapLayerMock());
+        $this->layerManager->removeHeatmapLayer($heatmapLayer);
+
+        $this->assertFalse($this->layerManager->hasHeatmapLayers());
+        $this->assertFalse($this->layerManager->hasHeatmapLayer($heatmapLayer));
+        $this->assertEmpty($this->layerManager->getHeatmapLayers());
     }
 
     public function testSetKmlLayers()
@@ -126,6 +170,14 @@ class LayerManagerTest extends \PHPUnit_Framework_TestCase
     private function createGeoJsonLayerMock()
     {
         return $this->createMock(GeoJsonLayer::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|HeatmapLayer
+     */
+    private function createHeatmapLayerMock()
+    {
+        return $this->createMock(HeatmapLayer::class);
     }
 
     /**

@@ -20,6 +20,7 @@ use Ivory\GoogleMap\Helper\Collector\Event\DomEventOnceCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\EventCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\EventOnceCollector;
 use Ivory\GoogleMap\Helper\Collector\Layer\GeoJsonLayerCollector;
+use Ivory\GoogleMap\Helper\Collector\Layer\HeatmapLayerCollector;
 use Ivory\GoogleMap\Helper\Collector\Layer\KmlLayerCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\CircleCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\DefaultInfoWindowCollector;
@@ -58,6 +59,7 @@ use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Layer\GeoJsonLayerRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Layer\HeatmapLayerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Layer\KmlLayerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapBoundRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapCenterRenderer;
@@ -98,6 +100,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Event\EventOnceSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\EventSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\SimpleEventSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Layer\GeoJsonLayerSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Layer\HeatmapLayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Layer\KmlLayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Layer\LayerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\MapBoundSubscriber;
@@ -170,6 +173,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
 
         // Layer collectors
         $geoJsonLayerCollector = new GeoJsonLayerCollector();
+        $heatmapLayerCollector = new HeatmapLayerCollector();
         $kmlLayerCollector = new KmlLayerCollector();
 
         // Event collectors
@@ -188,7 +192,8 @@ class MapHelperBuilder extends AbstractHelperBuilder
             $infoWindowCollector,
             $markerCollector,
             $polygonCollector,
-            $polylineCollector
+            $polylineCollector,
+            $heatmapLayerCollector
         );
 
         // Base renderers
@@ -308,6 +313,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
 
         // Layer renderers
         $geoJsonLayerRenderer = new GeoJsonLayerRenderer($formatter, $jsonBuilder);
+        $heatmapLayerRenderer = new HeatmapLayerRenderer($formatter, $jsonBuilder);
         $kmlLayerRenderer = new KmlLayerRenderer($formatter, $jsonBuilder);
 
         return array_merge([
@@ -327,6 +333,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
 
             // Layer
             new GeoJsonLayerSubscriber($formatter, $geoJsonLayerCollector, $geoJsonLayerRenderer),
+            new HeatmapLayerSubscriber($formatter, $heatmapLayerCollector, $heatmapLayerRenderer),
             new KmlLayerSubscriber($formatter, $kmlLayerCollector, $kmlLayerRenderer),
             new LayerSubscriber($formatter),
 

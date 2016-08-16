@@ -35,6 +35,7 @@ also alter the presentation layer of the map itself, slightly altering the base 
 layer.
 
  - [Geo Json Layer](/doc/layer/geo_json_layer.md)
+ - [Heatmap Layer](/doc/layer/heatmap_layer.md)
  - [Kml Layer](/doc/layer/kml_layer.md)
 
 ## Configure overlays

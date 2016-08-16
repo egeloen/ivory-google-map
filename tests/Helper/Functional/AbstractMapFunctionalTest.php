@@ -11,8 +11,14 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
+use Ivory\GoogleMap\Event\Event;
+use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
 use Ivory\GoogleMap\Helper\MapHelper;
+use Ivory\GoogleMap\Layer\GeoJsonLayer;
+use Ivory\GoogleMap\Layer\HeatmapLayer;
+use Ivory\GoogleMap\Layer\KmlLayer;
+use Ivory\GoogleMap\Layer\LayerManager;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Circle;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
@@ -72,11 +78,13 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     protected function assertMap(Map $map)
     {
         $this->assertContainer($map);
-        $this->assertOverlayManager($map->getOverlayManager());
+        $this->assertEventManager($map, $map->getEventManager());
+        $this->assertLayerManager($map, $map->getLayerManager());
+        $this->assertOverlayManager($map, $map->getOverlayManager());
 
         $layerManager = $map->getLayerManager();
 
-        if ($layerManager->hasGeoJsonLayers() || $layerManager->hasKmlLayers()) {
+        if ($layerManager->hasGeoJsonLayers() || $layerManager->hasHeatmapLayers() || $layerManager->hasKmlLayers()) {
             return;
         }
 
@@ -96,12 +104,128 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
+     * @param Map          $map
+     * @param EventManager $eventManager
+     */
+    protected function assertEventManager(Map $map, EventManager $eventManager)
+    {
+        foreach ($eventManager->getDomEvents() as $domEvent) {
+            $this->assertDomEvent($map, $domEvent);
+        }
+
+        foreach ($eventManager->getDomEventsOnce() as $domEventOnce) {
+            $this->assertDomEventOnce($map, $domEventOnce);
+        }
+
+        foreach ($eventManager->getEvents() as $event) {
+            $this->assertEvent($map, $event);
+        }
+
+        foreach ($eventManager->getEventsOnce() as $eventOnce) {
+            $this->assertEventOnce($map, $eventOnce);
+        }
+    }
+
+    /**
+     * @param Map   $map
+     * @param Event $event
+     */
+    protected function assertDomEvent(Map $map, Event $event)
+    {
+        $this->assertSameContainerVariable($map, 'events.dom_events', $event);
+    }
+
+    /**
+     * @param Map   $map
+     * @param Event $event
+     */
+    protected function assertDomEventOnce(Map $map, Event $event)
+    {
+        $this->assertSameContainerVariable($map, 'events.dom_events_once', $event);
+    }
+
+    /**
+     * @param Map   $map
+     * @param Event $event
+     */
+    protected function assertEvent(Map $map, Event $event)
+    {
+        $this->assertSameContainerVariable($map, 'events.events', $event);
+    }
+
+    /**
+     * @param Map   $map
+     * @param Event $event
+     */
+    protected function assertEventOnce(Map $map, Event $event)
+    {
+        $this->assertSameContainerVariable($map, 'events.events_once', $event);
+    }
+
+    /**
+     * @param Map          $map
+     * @param LayerManager $layerManager
+     */
+    public function assertLayerManager(Map $map, LayerManager $layerManager)
+    {
+        foreach ($layerManager->getGeoJsonLayers() as $geoJsonLayer) {
+            $this->assertGeoJsonLayer($map, $geoJsonLayer);
+        }
+
+        foreach ($layerManager->getHeatmapLayers() as $heatmapLayer) {
+            $this->assertHeatmapLayer($map, $heatmapLayer);
+        }
+
+        foreach ($layerManager->getKmlLayers() as $kmlLayer) {
+            $this->assertKmlLayer($map, $kmlLayer);
+        }
+    }
+
+    /**
+     * @param Map          $map
+     * @param GeoJsonLayer $geoJsonLayer
+     */
+    protected function assertGeoJsonLayer(Map $map, GeoJsonLayer $geoJsonLayer)
+    {
+        $this->assertSameContainerVariable($map, 'layers.geo_json_layers', $geoJsonLayer);
+    }
+
+    /**
+     * @param Map          $map
+     * @param HeatmapLayer $heatmapLayer
+     */
+    protected function assertHeatmapLayer(Map $map, HeatmapLayer $heatmapLayer)
+    {
+        $this->assertSameContainerVariable(
+            $map,
+            'layers.heatmap_layers',
+            $heatmapLayer,
+            $map->getVariable(),
+            $this->getFormatter()
+        );
+    }
+
+    /**
+     * @param Map      $map
+     * @param KmlLayer $kmlLayer
+     */
+    protected function assertKmlLayer(Map $map, KmlLayer $kmlLayer)
+    {
+        $this->assertSameContainerVariable(
+            $map,
+            'layers.kml_layers',
+            $kmlLayer,
+            $map->getVariable(),
+            $this->getFormatter()
+        );
+    }
+
+    /**
+     * @param Map            $map
      * @param OverlayManager $overlayManager
      */
-    protected function assertOverlayManager(OverlayManager $overlayManager)
+    protected function assertOverlayManager(Map $map, OverlayManager $overlayManager)
     {
-        $map = $overlayManager->getMap();
-
         foreach ($overlayManager->getCircles() as $circle) {
             $this->assertCircle($map, $circle);
         }
