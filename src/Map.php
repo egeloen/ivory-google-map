@@ -84,6 +84,11 @@ class Map implements VariableAwareInterface
      */
     private $stylesheetOptions = [];
 
+    /**
+     * @var string[]
+     */
+    private $htmlAttributes = [];
+
     public function __construct()
     {
         $this->setVariablePrefix('map');
@@ -432,5 +437,77 @@ class Map implements VariableAwareInterface
     public function removeStylesheetOption($stylesheetOption)
     {
         unset($this->stylesheetOptions[$stylesheetOption]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasHtmlAttributes()
+    {
+        return !empty($this->htmlAttributes);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getHtmlAttributes()
+    {
+        return $this->htmlAttributes;
+    }
+
+    /**
+     * @param string[] $htmlAttributes
+     */
+    public function setHtmlAttributes(array $htmlAttributes)
+    {
+        $this->htmlAttributes = [];
+        $this->addHtmlAttributes($htmlAttributes);
+    }
+
+    /**
+     * @param string[] $htmlAttributes
+     */
+    public function addHtmlAttributes(array $htmlAttributes)
+    {
+        foreach ($htmlAttributes as $htmlAttribute => $value) {
+            $this->setHtmlAttribute($htmlAttribute, $value);
+        }
+    }
+
+    /**
+     * @param string $htmlAttribute
+     *
+     * @return bool
+     */
+    public function hasHtmlAttribute($htmlAttribute)
+    {
+        return isset($this->htmlAttributes[$htmlAttribute]);
+    }
+
+    /**
+     * @param string $htmlAttribute
+     *
+     * @return string|null
+     */
+    public function getHtmlAttribute($htmlAttribute)
+    {
+        return $this->hasHtmlAttribute($htmlAttribute) ? $this->htmlAttributes[$htmlAttribute] : null;
+    }
+
+    /**
+     * @param string $htmlAttribute
+     * @param string $value
+     */
+    public function setHtmlAttribute($htmlAttribute, $value)
+    {
+        $this->htmlAttributes[$htmlAttribute] = $value;
+    }
+
+    /**
+     * @param string $htmlAttribute
+     */
+    public function removeHtmlAttribute($htmlAttribute)
+    {
+        unset($this->htmlAttributes[$htmlAttribute]);
     }
 }

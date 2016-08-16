@@ -72,9 +72,9 @@ class MapHtmlRenderer extends AbstractTagRenderer
             $styles[] = $this->stylesheetRenderer->render($stylesheet, $value);
         }
 
-        return $this->getTagRenderer()->render('div', null, [
+        return $this->getTagRenderer()->render('div', null, array_merge($map->getHtmlAttributes(), [
             'id'    => $map->getHtmlId(),
             'style' => implode('', $styles),
-        ]);
+        ]));
     }
 }
