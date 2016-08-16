@@ -42,8 +42,8 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
     {
         parent::setUp();
 
-        $this->placeAutocompleteHelper = PlaceAutocompleteHelperBuilder::create()->build();
-        $this->mapHelper = MapHelperBuilder::create()->build();
+        $this->placeAutocompleteHelper = $this->createPlaceAutocompleteHelper();
+        $this->mapHelper = $this->createMapHelper();
     }
 
     public function testRender()
@@ -72,5 +72,21 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
             } catch (\Exception $e) {
             }
         }, 5000);
+    }
+
+    /**
+     * @return PlaceAutocompleteHelper
+     */
+    protected function createPlaceAutocompleteHelper()
+    {
+        return PlaceAutocompleteHelperBuilder::create()->build();
+    }
+
+    /**
+     * @return MapHelper
+     */
+    protected function createMapHelper()
+    {
+        return MapHelperBuilder::create()->build();
     }
 }

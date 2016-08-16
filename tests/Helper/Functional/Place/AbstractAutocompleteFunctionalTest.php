@@ -37,14 +37,6 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
     }
 
     /**
-     * @return PlaceAutocompleteHelper
-     */
-    protected function createPlaceAutocompleteHelper()
-    {
-        return PlaceAutocompleteHelperBuilder::create()->build();
-    }
-
-    /**
      * @param Autocomplete $autocomplete
      * @param string|null  $html
      */
@@ -107,6 +99,14 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
         }
 
         $this->assertSameContainerVariable($autocomplete, 'autocomplete');
+    }
+
+    /**
+     * @return PlaceAutocompleteHelper
+     */
+    protected function createPlaceAutocompleteHelper()
+    {
+        return PlaceAutocompleteHelperBuilder::create()->build();
     }
 
     /**

@@ -49,14 +49,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @return MapHelper
-     */
-    protected function createMapHelper()
-    {
-        return MapHelperBuilder::create()->build();
-    }
-
-    /**
      * @param Map         $map
      * @param string|null $html
      */
@@ -372,6 +364,14 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
 
         $this->assertSameContainerVariable($map, 'map');
+    }
+
+    /**
+     * @return MapHelper
+     */
+    protected function createMapHelper()
+    {
+        return MapHelperBuilder::create()->build();
     }
 
     /**
