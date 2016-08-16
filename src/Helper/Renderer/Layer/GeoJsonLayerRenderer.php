@@ -31,13 +31,9 @@ class GeoJsonLayerRenderer extends AbstractJsonRenderer
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()->setValues($geoJsonLayer->getOptions());
 
-        return $formatter->renderObjectAssignment($geoJsonLayer, $formatter->renderObjectCall(
-            $map,
-            $formatter->renderProperty('data', 'loadGeoJson'),
-            [
-                $formatter->renderEscape($geoJsonLayer->getUrl()),
-                $jsonBuilder->build(),
-            ]
-        ));
+        return $formatter->renderObjectCall($map, $formatter->renderProperty('data', 'loadGeoJson'), [
+            $formatter->renderEscape($geoJsonLayer->getUrl()),
+            $jsonBuilder->build(),
+        ]);
     }
 }

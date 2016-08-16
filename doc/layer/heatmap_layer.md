@@ -42,6 +42,14 @@ $heatmapLayer = new HeatmapLayer(
 );
 ```
 
+## Configure variable
+
+A variable is automatically generated when creating a heatmap layer but if you want to update it, you can use:
+
+``` php
+$heatmapLayer->setVariable('heatmap_layer');
+```
+
 ## Configure coordinates
 
 If you want to update the heatmap layer coordinates, you can use:

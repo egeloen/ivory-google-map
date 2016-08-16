@@ -47,10 +47,9 @@ class GeoJsonLayerRendererTest extends \PHPUnit_Framework_TestCase
         $map->setVariable('map');
 
         $geoJsonLayer = new GeoJsonLayer('url', ['foo' => 'bar']);
-        $geoJsonLayer->setVariable('geo_json_layer');
 
         $this->assertSame(
-            'geo_json_layer=map.data.loadGeoJson("url",{"foo":"bar"})',
+            'map.data.loadGeoJson("url",{"foo":"bar"})',
             $this->geoJsonLayerRenderer->render($geoJsonLayer, $map)
         );
     }
