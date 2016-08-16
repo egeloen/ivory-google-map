@@ -5,6 +5,9 @@ php:
     - 7.0
     - hhvm
 
+branches:
+    only: master
+
 env:
     global:
         - COMPOSER_PREFER_LOWEST=false
