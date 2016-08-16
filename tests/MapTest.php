@@ -60,6 +60,8 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->map->getMapOptions());
         $this->assertFalse($this->map->hasStylesheetOptions());
         $this->assertEmpty($this->map->getStylesheetOptions());
+        $this->assertFalse($this->map->hasHtmlAttributes());
+        $this->assertEmpty($this->map->getHtmlAttributes());
     }
 
     public function testHtmlId()
@@ -254,6 +256,51 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->map->hasStylesheetOption($stylesheetOption));
         $this->assertEmpty($this->map->getStylesheetOptions());
         $this->assertNull($this->map->getStylesheetOption($stylesheetOption));
+    }
+
+    public function testSetHtmlAttributes()
+    {
+        $this->map->setHtmlAttributes($htmlAttributes = [$htmlAttribute = 'class' => $value = 'my-class']);
+        $this->map->setHtmlAttributes($htmlAttributes);
+
+        $this->assertTrue($this->map->hasHtmlAttributes());
+        $this->assertTrue($this->map->hasHtmlAttribute($htmlAttribute));
+        $this->assertSame($htmlAttributes, $this->map->getHtmlAttributes());
+
+        $this->assertSame($value, $this->map->getHtmlAttribute($htmlAttribute));
+    }
+
+    public function testAddHtmlAttributes()
+    {
+        $this->map->setHtmlAttributes($firstHtmlAttributes = ['class' => 'my-class']);
+        $this->map->addHtmlAttributes($secondHtmlAttributes = ['data-order' => '1']);
+
+        $this->assertTrue($this->map->hasHtmlAttributes());
+        $this->assertSame(
+            array_merge($firstHtmlAttributes, $secondHtmlAttributes),
+            $this->map->getHtmlAttributes()
+        );
+    }
+
+    public function testAddHtmlAttribute()
+    {
+        $this->map->setHtmlAttribute($htmlAttribute = 'class', $value = 'my-class');
+
+        $this->assertTrue($this->map->hasHtmlAttributes());
+        $this->assertTrue($this->map->hasHtmlAttribute($htmlAttribute));
+        $this->assertSame([$htmlAttribute => $value], $this->map->getHtmlAttributes());
+        $this->assertSame($value, $this->map->getHtmlAttribute($htmlAttribute));
+    }
+
+    public function testRemoveHtmlAttribute()
+    {
+        $this->map->setHtmlAttribute($htmlAttribute = 'class', 'my-class');
+        $this->map->removeHtmlAttribute($htmlAttribute);
+
+        $this->assertFalse($this->map->hasHtmlAttributes());
+        $this->assertFalse($this->map->hasHtmlAttribute($htmlAttribute));
+        $this->assertEmpty($this->map->getHtmlAttributes());
+        $this->assertNull($this->map->getHtmlAttribute($htmlAttribute));
     }
 
     /**

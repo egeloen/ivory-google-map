@@ -60,7 +60,7 @@ class MapHtmlRendererTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRenderWithSIzes()
+    public function testRenderWithSizes()
     {
         $map = new Map();
         $map->setStylesheetOption('width', '100px');
@@ -68,6 +68,17 @@ class MapHtmlRendererTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             '<div id="map_canvas" style="width:100px;height:200px;"></div>',
+            $this->mapHtmlRenderer->render($map)
+        );
+    }
+
+    public function testRenderWithAttributes()
+    {
+        $map = new Map();
+        $map->setHtmlAttributes(['class' => 'my-class']);
+
+        $this->assertSame(
+            '<div class="my-class" id="map_canvas" style="width:300px;height:300px;"></div>',
             $this->mapHtmlRenderer->render($map)
         );
     }

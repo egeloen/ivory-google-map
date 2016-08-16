@@ -125,3 +125,11 @@ If you want to configure map stylesheets, you can use:
 ``` php
 $map->setStylesheet('position', 'absolute');
 ```
+
+## Configure html attributes
+
+If you want to configure map container html attributes, you can use:
+
+``` php
+$map->setHtmlAttributes('class', 'my-class');
+```
