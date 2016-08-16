@@ -5,6 +5,10 @@ php:
     - 7.0
     - hhvm
 
+env:
+    global:
+        - COMPOSER_PREFER_LOWEST=false
+
 before_script:
     - export DISPLAY=:99
     - /sbin/start-stop-daemon -Sbmq -p /tmp/xvfb_99.pid -x /usr/bin/Xvfb -- ${DISPLAY} -ac -screen 0, 1600x1200x24
@@ -13,6 +17,11 @@ before_script:
     - unzip chromedriver.zip
     - java -jar selenium.jar -Dwebdriver.chrome.driver=./chromedriver > /dev/null 2>&1 &
     - composer self-update
-    - composer install --prefer-source
+    - composer update --prefer-source `if [[ $COMPOSER_PREFER_LOWEST = true ]]; then echo "--prefer-lowest --prefer-stable"; fi`
 
 script: vendor/bin/phpunit --configuration phpunit.travis.xml
+
+matrix:
+    include:
+        - php: 5.6
+          env: COMPOSER_PREFER_LOWEST=true
