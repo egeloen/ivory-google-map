@@ -39,6 +39,7 @@ class MapContainerRenderer extends AbstractJsonRenderer
             ->setValue('[overlays][markers]', [])
             ->setValue('[overlays][marker_cluster]', null)
             ->setValue('[layers][geo_json_layers]', [])
+            ->setValue('[layers][heatmap_layers]', [])
             ->setValue('[layers][kml_layers]', [])
             ->setValue('[events][dom_events]', [])
             ->setValue('[events][dom_events_once]', [])

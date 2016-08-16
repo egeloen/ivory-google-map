@@ -22,6 +22,11 @@ class LayerManager
     private $geoJsonLayers = [];
 
     /**
+     * @var HeatmapLayer[]
+     */
+    private $heatmapLayers = [];
+
+    /**
      * @var KmlLayer[]
      */
     private $kmlLayers = [];
@@ -87,6 +92,71 @@ class LayerManager
     public function removeGeoJsonLayer(GeoJsonLayer $geoJsonLayer)
     {
         unset($this->geoJsonLayers[array_search($geoJsonLayer, $this->geoJsonLayers, true)]);
+        $this->geoJsonLayers = array_values($this->geoJsonLayers);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasHeatmapLayers()
+    {
+        return !empty($this->heatmapLayers);
+    }
+
+    /**
+     * @return HeatmapLayer[]
+     */
+    public function getHeatmapLayers()
+    {
+        return $this->heatmapLayers;
+    }
+
+    /**
+     * @param HeatmapLayer[] $heatmapLayers
+     */
+    public function setHeatmapLayers(array $heatmapLayers)
+    {
+        $this->heatmapLayers = [];
+        $this->addHeatmapLayers($heatmapLayers);
+    }
+
+    /**
+     * @param HeatmapLayer[] $heatmapLayers
+     */
+    public function addHeatmapLayers(array $heatmapLayers)
+    {
+        foreach ($heatmapLayers as $heatmapLayer) {
+            $this->addHeatmapLayer($heatmapLayer);
+        }
+    }
+
+    /**
+     * @param HeatmapLayer $heatmapLayer
+     *
+     * @return bool
+     */
+    public function hasHeatmapLayer(HeatmapLayer $heatmapLayer)
+    {
+        return in_array($heatmapLayer, $this->heatmapLayers, true);
+    }
+
+    /**
+     * @param HeatmapLayer $heatmapLayer
+     */
+    public function addHeatmapLayer(HeatmapLayer $heatmapLayer)
+    {
+        if (!$this->hasHeatmapLayer($heatmapLayer)) {
+            $this->heatmapLayers[] = $heatmapLayer;
+        }
+    }
+
+    /**
+     * @param HeatmapLayer $heatmapLayer
+     */
+    public function removeHeatmapLayer(HeatmapLayer $heatmapLayer)
+    {
+        unset($this->heatmapLayers[array_search($heatmapLayer, $this->heatmapLayers, true)]);
+        $this->heatmapLayers = array_values($this->heatmapLayers);
     }
 
     /**
@@ -150,5 +220,6 @@ class LayerManager
     public function removeKmlLayer(KmlLayer $kmlLayer)
     {
         unset($this->kmlLayers[array_search($kmlLayer, $this->kmlLayers, true)]);
+        $this->kmlLayers = array_values($this->kmlLayers);
     }
 }

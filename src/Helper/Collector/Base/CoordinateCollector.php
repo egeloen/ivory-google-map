@@ -13,6 +13,7 @@ namespace Ivory\GoogleMap\Helper\Collector\Base;
 
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\AbstractCollector;
+use Ivory\GoogleMap\Helper\Collector\Layer\HeatmapLayerCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\CircleCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoWindowCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
@@ -56,12 +57,18 @@ class CoordinateCollector extends AbstractCollector
     private $polylineCollector;
 
     /**
-     * @param BoundCollector      $boundCollector
-     * @param CircleCollector     $circleCollector
-     * @param InfoWindowCollector $infoWindowCollector
-     * @param MarkerCollector     $markerCollector
-     * @param PolygonCollector    $polygonCollector
-     * @param PolylineCollector   $polylineCollector
+     * @var HeatmapLayerCollector
+     */
+    private $heatmapLayerCollector;
+
+    /**
+     * @param BoundCollector        $boundCollector
+     * @param CircleCollector       $circleCollector
+     * @param InfoWindowCollector   $infoWindowCollector
+     * @param MarkerCollector       $markerCollector
+     * @param PolygonCollector      $polygonCollector
+     * @param PolylineCollector     $polylineCollector
+     * @param HeatmapLayerCollector $heatmapLayerCollector
      */
     public function __construct(
         BoundCollector $boundCollector,
@@ -69,7 +76,8 @@ class CoordinateCollector extends AbstractCollector
         InfoWindowCollector $infoWindowCollector,
         MarkerCollector $markerCollector,
         PolygonCollector $polygonCollector,
-        PolylineCollector $polylineCollector
+        PolylineCollector $polylineCollector,
+        HeatmapLayerCollector $heatmapLayerCollector
     ) {
         $this->setBoundCollector($boundCollector);
         $this->setCircleCollector($circleCollector);
@@ -77,6 +85,7 @@ class CoordinateCollector extends AbstractCollector
         $this->setMarkerCollector($markerCollector);
         $this->setPolygonCollector($polygonCollector);
         $this->setPolylineCollector($polylineCollector);
+        $this->setHeatmapLayerCollector($heatmapLayerCollector);
     }
 
     /**
@@ -176,6 +185,22 @@ class CoordinateCollector extends AbstractCollector
     }
 
     /**
+     * @return HeatmapLayerCollector
+     */
+    public function getHeatmapLayerCollector()
+    {
+        return $this->heatmapLayerCollector;
+    }
+
+    /**
+     * @param HeatmapLayerCollector $heatmapLayerCollector
+     */
+    public function setHeatmapLayerCollector(HeatmapLayerCollector $heatmapLayerCollector)
+    {
+        $this->heatmapLayerCollector = $heatmapLayerCollector;
+    }
+
+    /**
      * @param Map          $map
      * @param Coordinate[] $coordinates
      *
@@ -209,15 +234,15 @@ class CoordinateCollector extends AbstractCollector
         }
 
         foreach ($this->polygonCollector->collect($map) as $polygon) {
-            foreach ($polygon->getCoordinates() as $coordinate) {
-                $coordinates = $this->collectValue($coordinate, $coordinates);
-            }
+            $coordinates = $this->collectValues($polygon->getCoordinates(), $coordinates);
         }
 
         foreach ($this->polylineCollector->collect($map) as $polyline) {
-            foreach ($polyline->getCoordinates() as $coordinate) {
-                $coordinates = $this->collectValue($coordinate, $coordinates);
-            }
+            $coordinates = $this->collectValues($polyline->getCoordinates(), $coordinates);
+        }
+
+        foreach ($this->heatmapLayerCollector->collect($map) as $heatmapLayer) {
+            $coordinates = $this->collectValues($heatmapLayer->getCoordinates(), $coordinates);
         }
 
         return $coordinates;
