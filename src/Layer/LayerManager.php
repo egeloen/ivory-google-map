@@ -11,11 +11,19 @@
 
 namespace Ivory\GoogleMap\Layer;
 
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlay\ExtendableInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class LayerManager
 {
+    /**
+     * @var Map|null
+     */
+    private $map;
+
     /**
      * @var GeoJsonLayer[]
      */
@@ -30,6 +38,34 @@ class LayerManager
      * @var KmlLayer[]
      */
     private $kmlLayers = [];
+
+    /**
+     * @return bool
+     */
+    public function hasMap()
+    {
+        return $this->map !== null;
+    }
+
+    /**
+     * @return Map|null
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * @param Map $map
+     */
+    public function setMap(Map $map)
+    {
+        $this->map = $map;
+
+        if ($map->getLayerManager() !== $this) {
+            $map->setLayerManager($this);
+        }
+    }
 
     /**
      * @return bool
@@ -116,7 +152,10 @@ class LayerManager
      */
     public function setHeatmapLayers(array $heatmapLayers)
     {
-        $this->heatmapLayers = [];
+        foreach ($this->heatmapLayers as $heatmapLayer) {
+            $this->removeHeatmapLayer($heatmapLayer);
+        }
+
         $this->addHeatmapLayers($heatmapLayers);
     }
 
@@ -148,6 +187,8 @@ class LayerManager
         if (!$this->hasHeatmapLayer($heatmapLayer)) {
             $this->heatmapLayers[] = $heatmapLayer;
         }
+
+        $this->addExtendable($heatmapLayer);
     }
 
     /**
@@ -157,6 +198,7 @@ class LayerManager
     {
         unset($this->heatmapLayers[array_search($heatmapLayer, $this->heatmapLayers, true)]);
         $this->heatmapLayers = array_values($this->heatmapLayers);
+        $this->removeExtendable($heatmapLayer);
     }
 
     /**
@@ -180,7 +222,10 @@ class LayerManager
      */
     public function setKmlLayers(array $kmlLayers)
     {
-        $this->kmlLayers = [];
+        foreach ($this->kmlLayers as $kmlLayer) {
+            $this->removeKmlLayer($kmlLayer);
+        }
+
         $this->addKmlLayers($kmlLayers);
     }
 
@@ -212,6 +257,8 @@ class LayerManager
         if (!$this->hasKmlLayer($kmlLayer)) {
             $this->kmlLayers[] = $kmlLayer;
         }
+
+        $this->addExtendable($kmlLayer);
     }
 
     /**
@@ -221,5 +268,34 @@ class LayerManager
     {
         unset($this->kmlLayers[array_search($kmlLayer, $this->kmlLayers, true)]);
         $this->kmlLayers = array_values($this->kmlLayers);
+        $this->removeExtendable($kmlLayer);
+    }
+
+    /**
+     * @param ExtendableInterface $extendable
+     */
+    private function addExtendable(ExtendableInterface $extendable)
+    {
+        if ($this->isAutoZoom()) {
+            $this->getMap()->getBound()->addExtendable($extendable);
+        }
+    }
+
+    /**
+     * @param ExtendableInterface $extendable
+     */
+    private function removeExtendable(ExtendableInterface $extendable)
+    {
+        if ($this->isAutoZoom()) {
+            $this->getMap()->getBound()->removeExtendable($extendable);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    private function isAutoZoom()
+    {
+        return $this->hasMap() && $this->getMap()->isAutoZoom();
     }
 }

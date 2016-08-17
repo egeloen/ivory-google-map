@@ -14,32 +14,32 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay\Extendable;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\BoundsExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
-use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\UnionExtendableRenderer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class UnionExtendableRendererTest extends \PHPUnit_Framework_TestCase
+class BoundsExtendableRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var UnionExtendableRenderer
+     * @var BoundsExtendableRenderer
      */
-    private $unionExtendableRenderer;
+    private $boundsExtendableRenderer;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->unionExtendableRenderer = new UnionExtendableRenderer(new Formatter());
+        $this->boundsExtendableRenderer = new BoundsExtendableRenderer(new Formatter());
     }
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractRenderer::class, $this->unionExtendableRenderer);
-        $this->assertInstanceOf(ExtendableRendererInterface::class, $this->unionExtendableRenderer);
+        $this->assertInstanceOf(AbstractRenderer::class, $this->boundsExtendableRenderer);
+        $this->assertInstanceOf(ExtendableRendererInterface::class, $this->boundsExtendableRenderer);
     }
 
     public function testRender()
@@ -58,7 +58,7 @@ class UnionExtendableRendererTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             'bound.union(extendable.getBounds())',
-            $this->unionExtendableRenderer->render($extendable, $bound)
+            $this->boundsExtendableRenderer->render($extendable, $bound)
         );
     }
 

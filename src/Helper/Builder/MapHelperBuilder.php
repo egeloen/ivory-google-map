@@ -71,10 +71,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\AnimationRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\CircleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\DefaultInfoWindowRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\EncodedPolylineRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\BoundsExtendableRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\DefaultViewportExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\HeatmapLayerExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PathExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PositionExtendableRenderer;
-use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\UnionExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\GroundOverlayRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\IconRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoBoxRenderer;
@@ -127,6 +129,8 @@ use Ivory\GoogleMap\Helper\Subscriber\Overlay\PolygonSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\PolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\RectangleSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Utility\ObjectToArraySubscriber;
+use Ivory\GoogleMap\Layer\HeatmapLayer;
+use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Overlay\Circle;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Overlay\GroundOverlay;
@@ -297,19 +301,23 @@ class MapHelperBuilder extends AbstractHelperBuilder
         );
 
         // Extendable renderers
+        $defaultViewportExtendableRenderer = new DefaultViewportExtendableRenderer($formatter);
+        $heatmapLayerExtendableRenderer = new HeatmapLayerExtendableRenderer($formatter);
         $pathExtendableRenderer = new PathExtendableRenderer($formatter);
         $positionExtendableRenderer = new PositionExtendableRenderer($formatter);
-        $unionExtendableRenderer = new UnionExtendableRenderer($formatter);
+        $boundsExtendableRenderer = new BoundsExtendableRenderer($formatter);
 
         $extendableRenderer = new ExtendableRenderer();
-        $extendableRenderer->setRenderer(Circle::class, $unionExtendableRenderer);
+        $extendableRenderer->setRenderer(Circle::class, $boundsExtendableRenderer);
         $extendableRenderer->setRenderer(EncodedPolyline::class, $pathExtendableRenderer);
-        $extendableRenderer->setRenderer(GroundOverlay::class, $unionExtendableRenderer);
+        $extendableRenderer->setRenderer(GroundOverlay::class, $boundsExtendableRenderer);
+        $extendableRenderer->setRenderer(HeatmapLayer::class, $heatmapLayerExtendableRenderer);
         $extendableRenderer->setRenderer(InfoWindow::class, $positionExtendableRenderer);
+        $extendableRenderer->setRenderer(KmlLayer::class, $defaultViewportExtendableRenderer);
         $extendableRenderer->setRenderer(Marker::class, $positionExtendableRenderer);
         $extendableRenderer->setRenderer(Polyline::class, $pathExtendableRenderer);
         $extendableRenderer->setRenderer(Polygon::class, $pathExtendableRenderer);
-        $extendableRenderer->setRenderer(Rectangle::class, $unionExtendableRenderer);
+        $extendableRenderer->setRenderer(Rectangle::class, $boundsExtendableRenderer);
 
         // Layer renderers
         $geoJsonLayerRenderer = new GeoJsonLayerRenderer($formatter, $jsonBuilder);

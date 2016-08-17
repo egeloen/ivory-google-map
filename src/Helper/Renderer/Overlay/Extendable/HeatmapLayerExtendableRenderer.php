@@ -14,13 +14,13 @@ namespace Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PathExtendableRenderer extends AbstractCoordinateExtendableRenderer
+class HeatmapLayerExtendableRenderer extends AbstractCoordinateExtendableRenderer
 {
     /**
      * {@inheritdoc}
      */
     protected function getMethod()
     {
-        return 'getPath';
+        return 'getData';
     }
 }

@@ -108,7 +108,18 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     public function testLayerManager()
     {
-        $this->map->setLayerManager($layerManager = $this->createLayerManagerMock());
+        $layerManager = $this->createLayerManagerMock();
+        $layerManager
+            ->expects($this->once())
+            ->method('getMap')
+            ->will($this->returnValue(null));
+
+        $layerManager
+            ->expects($this->once())
+            ->method('setMap')
+            ->with($this->identicalTo($this->map));
+
+        $this->map->setLayerManager($layerManager);
 
         $this->assertSame($layerManager, $this->map->getLayerManager());
     }

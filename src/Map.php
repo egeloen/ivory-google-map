@@ -210,6 +210,10 @@ class Map implements VariableAwareInterface
     public function setLayerManager(LayerManager $layerManager)
     {
         $this->layerManager = $layerManager;
+
+        if ($layerManager->getMap() !== $this) {
+            $layerManager->setMap($this);
+        }
     }
 
     /**

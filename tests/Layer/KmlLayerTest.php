@@ -12,8 +12,8 @@
 namespace Ivory\Tests\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Layer\KmlLayer;
+use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
-use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -40,8 +40,8 @@ class KmlLayerTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
+        $this->assertInstanceOf(ExtendableInterface::class, $this->kmlLayer);
         $this->assertInstanceOf(OptionsAwareInterface::class, $this->kmlLayer);
-        $this->assertInstanceOf(VariableAwareInterface::class, $this->kmlLayer);
     }
 
     public function testDefaultState()

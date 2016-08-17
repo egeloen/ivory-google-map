@@ -13,8 +13,8 @@ namespace Ivory\Tests\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
+use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
-use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -36,8 +36,8 @@ class HeatmapLayerTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
+        $this->assertInstanceOf(ExtendableInterface::class, $this->heatmapLayer);
         $this->assertInstanceOf(OptionsAwareInterface::class, $this->heatmapLayer);
-        $this->assertInstanceOf(VariableAwareInterface::class, $this->heatmapLayer);
     }
 
     public function testDefaultState()
