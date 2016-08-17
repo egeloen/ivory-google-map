@@ -18,7 +18,7 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class UnionExtendableRenderer extends AbstractRenderer implements ExtendableRendererInterface
+abstract class AbstractCoordinateExtendableRenderer extends AbstractRenderer implements ExtendableRendererInterface
 {
     /**
      * {@inheritdoc}
@@ -27,8 +27,19 @@ class UnionExtendableRenderer extends AbstractRenderer implements ExtendableRend
     {
         $formatter = $this->getFormatter();
 
-        return $formatter->renderObjectCall($bound, 'union', [
-            $formatter->renderObjectCall($extendable, 'getBounds'),
-        ]);
+        return $formatter->renderCall(
+            $formatter->renderProperty($formatter->renderObjectCall($extendable, $this->getMethod()), 'forEach'),
+            [
+                $formatter->renderClosure(
+                    $formatter->renderObjectCall($bound, 'extend', [$variable = 'c']),
+                    [$variable]
+                ),
+            ]
+        );
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getMethod();
 }

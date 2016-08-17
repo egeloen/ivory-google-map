@@ -31,16 +31,6 @@ class GeoJsonLayerFunctionalTest extends AbstractMapFunctionalTest
         $this->assertMap($map);
     }
 
-    public function testRenderWithAutoZoom()
-    {
-        $map = new Map();
-        $map->setAutoZoom(true);
-        $map->getLayerManager()->addGeoJsonLayer($this->createGeoJsonLayer());
-
-        $this->renderMap($map);
-        $this->assertMap($map);
-    }
-
     /**
      * @return GeoJsonLayer
      */

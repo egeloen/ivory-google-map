@@ -32,7 +32,7 @@ For configuring the map center & zoom, you have three possibilities:
 
  1. Standard center coordinate & zoom
  2. Fitting a bound
- 3. Fitting a bound which extends overlays
+ 3. Fitting a bound which extends overlays/layers
 
 ### Standard center coordinate & zoom
 
@@ -74,12 +74,13 @@ $map->setAutoZoom(true);
 $map->setBound(new Bound(new Coordinate(-2.1, -3.9), new Coordinate(2.6, 1.4));
 ```
 
-### Fitting a bound which extends overlays
+### Fitting a bound which extends overlays/layers
 
-For fitting a bound which extends overlays, you need to enable the auto zoom flag & add overlays to the bound.
-In the [Overlays documentation](/doc/overlay/index.md), you learn how you can add overlays to the map. If the 
-auto zoom flag is enabled and you add some overlays to the map, the map bound will automatically extend the added 
-overlay. So, at the end, all your overlays will be visible on your screen.
+For fitting a bound which extends overlays/layers, you need to enable the auto zoom flag & add overlays to the bound.
+In the [Overlays documentation](/doc/overlay/index.md) as well as in the [Layers documentation](/doc/layer/index.md), 
+you learn how you can add overlays/layers to the map. If the auto zoom flag is enabled and you add some overlays/layers 
+to the map, the map bound will automatically extend the added elements. So, at the end, all your overlays/layers will 
+be automatically visible on your screen.
 
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;

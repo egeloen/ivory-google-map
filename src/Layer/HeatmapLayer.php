@@ -12,15 +12,15 @@
 namespace Ivory\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareTrait;
-use Ivory\GoogleMap\Utility\VariableAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class HeatmapLayer implements OptionsAwareInterface, VariableAwareInterface
+class HeatmapLayer implements ExtendableInterface, OptionsAwareInterface
 {
     use OptionsAwareTrait;
     use VariableAwareTrait;

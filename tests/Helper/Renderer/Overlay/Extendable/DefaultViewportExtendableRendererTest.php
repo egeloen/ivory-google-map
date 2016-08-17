@@ -14,32 +14,32 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay\Extendable;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\DefaultViewportExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
-use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PathExtendableRenderer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PathExtendableRendererTest extends \PHPUnit_Framework_TestCase
+class DefaultViewportExtendableRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var PathExtendableRenderer
+     * @var DefaultViewportExtendableRenderer
      */
-    private $pathExtendableRenderer;
+    private $defaultViewportExtendableRenderer;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->pathExtendableRenderer = new PathExtendableRenderer(new Formatter());
+        $this->defaultViewportExtendableRenderer = new DefaultViewportExtendableRenderer(new Formatter());
     }
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractRenderer::class, $this->pathExtendableRenderer);
-        $this->assertInstanceOf(ExtendableRendererInterface::class, $this->pathExtendableRenderer);
+        $this->assertInstanceOf(AbstractRenderer::class, $this->defaultViewportExtendableRenderer);
+        $this->assertInstanceOf(ExtendableRendererInterface::class, $this->defaultViewportExtendableRenderer);
     }
 
     public function testRender()
@@ -57,8 +57,8 @@ class PathExtendableRendererTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('bound'));
 
         $this->assertSame(
-            'extendable.getPath().forEach(function(c){bound.extend(c)})',
-            $this->pathExtendableRenderer->render($extendable, $bound)
+            'bound.union(extendable.getDefaultViewport())',
+            $this->defaultViewportExtendableRenderer->render($extendable, $bound)
         );
     }
 

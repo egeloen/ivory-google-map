@@ -14,13 +14,13 @@ namespace Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PathExtendableRenderer extends AbstractCoordinateExtendableRenderer
+class BoundsExtendableRenderer extends AbstractUnionExtendableRenderer
 {
     /**
      * {@inheritdoc}
      */
     protected function getMethod()
     {
-        return 'getPath';
+        return 'getBounds';
     }
 }
