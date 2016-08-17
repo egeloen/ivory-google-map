@@ -90,12 +90,7 @@ class GeoJsonLayerSubscriber extends AbstractSubscriber
         $map = $event->getMap();
 
         foreach ($this->geoJsonLayerCollector->collect($map) as $geoJsonLayer) {
-            $event->addCode($formatter->renderContainerAssignment(
-                $map,
-                $this->geoJsonLayerRenderer->render($geoJsonLayer, $map),
-                'layers.geo_json_layers',
-                $geoJsonLayer
-            ));
+            $event->addCode($formatter->renderCode($this->geoJsonLayerRenderer->render($geoJsonLayer, $map)));
         }
     }
 

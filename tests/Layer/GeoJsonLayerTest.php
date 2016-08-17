@@ -13,7 +13,6 @@ namespace Ivory\Tests\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Layer\GeoJsonLayer;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
-use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -41,12 +40,10 @@ class GeoJsonLayerTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(OptionsAwareInterface::class, $this->geoJsonLayer);
-        $this->assertInstanceOf(VariableAwareInterface::class, $this->geoJsonLayer);
     }
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('geo_json_layer', $this->geoJsonLayer->getVariable());
         $this->assertSame($this->url, $this->geoJsonLayer->getUrl());
         $this->assertFalse($this->geoJsonLayer->hasOptions());
     }

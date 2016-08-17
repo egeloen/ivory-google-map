@@ -187,7 +187,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
      */
     protected function assertGeoJsonLayer(Map $map, GeoJsonLayer $geoJsonLayer)
     {
-        $this->assertSameContainerVariable($map, 'layers.geo_json_layers', $geoJsonLayer);
     }
 
     /**

@@ -13,16 +13,13 @@ namespace Ivory\GoogleMap\Layer;
 
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareTrait;
-use Ivory\GoogleMap\Utility\VariableAwareInterface;
-use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeoJsonLayer implements OptionsAwareInterface, VariableAwareInterface
+class GeoJsonLayer implements OptionsAwareInterface
 {
     use OptionsAwareTrait;
-    use VariableAwareTrait;
 
     /**
      * @var string
@@ -35,7 +32,6 @@ class GeoJsonLayer implements OptionsAwareInterface, VariableAwareInterface
      */
     public function __construct($url, array $options = [])
     {
-        $this->setVariablePrefix('geo_json_layer');
         $this->setUrl($url);
         $this->setOptions($options);
     }

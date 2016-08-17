@@ -25,6 +25,14 @@ $kmlLayer = new KmlLayer(
 );
 ```
 
+## Configure variable
+
+A variable is automatically generated when creating a kml layer but if you want to update it, you can use:
+
+``` php
+$kmlLayer->setVariable('kml_layer');
+```
+
 ## Configure url
 
 If you want to update the kml layer url, you can use:
