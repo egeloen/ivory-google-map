@@ -107,7 +107,7 @@ class LoaderRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->loaderRenderer->getFormatter()->setDebug(true);
 
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 function name () {
     google.load("maps", "3", {
         "other_params": "language=en&libraries=library1,library2",

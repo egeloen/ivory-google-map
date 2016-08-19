@@ -7,7 +7,7 @@ A geocoder place id request allows you to geocode an address from an place id.
 First of all, let's build a geocoder place id request:
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderPlaceIdRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderPlaceIdRequest;
 
 $request = new GeocoderPlaceIdRequest('place_id');
 ```
@@ -28,7 +28,7 @@ It specifies a type will restrict the results to this type. If multiple types ar
 addresses that match any of the types.
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderAddressType;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressType;
 
 $request->setLocationTypes([GeocoderAddressType::COUNTRY]);
 ```

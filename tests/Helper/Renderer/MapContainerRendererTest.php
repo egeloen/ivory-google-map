@@ -51,7 +51,7 @@ class MapContainerRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->mapContainerRenderer->getFormatter()->setDebug(true);
 
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 {
     "base": {
         "coordinates": [],

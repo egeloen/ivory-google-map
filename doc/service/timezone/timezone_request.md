@@ -8,7 +8,7 @@ First of all, if you want to process a timezone, you will need to build a timezo
 
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\TimeZone\TimeZoneRequest;
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 
 $request = new TimeZoneRequest(
     new Coordinate(39.6034810, -119.6822510),
@@ -25,7 +25,7 @@ If you want to update the location, you can use:
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
 
-$request->setLocation():
+$request->setLocation(new Coordinate(39.6034810, -119.6822510)):
 ```
 
 ## Configure date

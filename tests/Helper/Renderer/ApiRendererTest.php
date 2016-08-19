@@ -95,7 +95,7 @@ class ApiRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->apiRenderer->getFormatter()->setDebug(true);
 
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 function ivory_google_map_load () {
     google.load("maps", "3", {
         "other_params": "language=en&libraries=library1,library2",

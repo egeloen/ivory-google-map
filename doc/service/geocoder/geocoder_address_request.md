@@ -7,7 +7,7 @@ A geocoder address request allows you to geocode a coordinate from an address.
 First of all, let's build a geocoder address request:
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderAddressRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
 
 $request = new GeocoderAddressRequest('1600 Amphitheatre Parkway, Mountain View, CA');
 ```
@@ -29,7 +29,7 @@ Be aware, the address also allows IP address.
 If you want to provide component filtering, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderComponentType;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
 
 $request->setComponents([
     GeocoderComponentType::POST_CODE => 59800,

@@ -7,9 +7,13 @@ A distance matrix request is the starting point when you want to process a dista
 First of all, if you want to process a distance matrix, you will need to build a distance matrix request. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
 
-$request = new DistanceMatrixRequest(['New York'], ['Washington']);
+$request = new DistanceMatrixRequest(
+    [new AddressLocation('New York')], 
+    [new AddressLocation('Washington')]
+);
 ```
 
 The distance matrix constructor requires an array of origins as first argument and an array of destinations as second 
@@ -20,32 +24,26 @@ argument.
 If you want to update origins, you can use:
  
 ``` php
-$request->setOrigins(['New York']);
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+
+$request->setOrigins([new AddressLocation('New York')]);
 ```
 
-The origins also accepts coordinates:
-
-``` php
-use Ivory\GoogleMap\Base\Coordinate;
-
-$request->setOrigins([new Coordinate(1.1, 2.1)]);
-```
+The origins are represented by the `LocationInterface`. If you want to learn more about it, you can read its 
+[documentation](/doc/service/base.html#location).
 
 ## Configure destinations
 
 If you want to update destinations, you can use:
 
 ``` php
-$request->setDestinations(['Washington']);
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+
+$request->setDestinations([new AddressLocation('Washington')]);
 ```
 
-The destinations also accepts coordinates:
-
-``` php
-use Ivory\GoogleMap\Base\Coordinate;
-
-$request->setDestinations([new Coordinate(2.1, 1.1)]);
-```
+The destinations are represented by the `LocationInterface`. If you want to learn more about it, you can read its 
+[documentation](/doc/service/base.html#location).
 
 ## Configure departure time
 

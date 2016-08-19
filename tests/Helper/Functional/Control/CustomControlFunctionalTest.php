@@ -40,7 +40,7 @@ class CustomControlFunctionalTest extends AbstractMapFunctionalTest
      */
     private function getControl()
     {
-        return <<<EOF
+        return <<<'EOF'
 var container = document.createElement('div');
 container.style.backgroundColor = '#fff';
 container.style.border = '2px solid #fff';

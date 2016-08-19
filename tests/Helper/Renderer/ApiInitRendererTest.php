@@ -57,7 +57,7 @@ class ApiInitRendererTest extends\PHPUnit_Framework_TestCase
     {
         $this->apiInitRenderer->getFormatter()->setDebug(true);
 
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 function name () {
     source_callback("source1");
     source_callback("source2");

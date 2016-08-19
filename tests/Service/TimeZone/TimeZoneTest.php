@@ -15,9 +15,9 @@ use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\BusinessAccount;
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
+use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneStatus;
 use Ivory\GoogleMap\Service\TimeZone\TimeZone;
-use Ivory\GoogleMap\Service\TimeZone\TimeZoneRequest;
-use Ivory\GoogleMap\Service\TimeZone\TimeZoneStatus;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -60,10 +60,7 @@ class TimeZoneTest extends AbstractServiceTest
 
     public function testProcess()
     {
-        $response = $this->timeZone->process(new TimeZoneRequest(
-            new Coordinate(39.6034810, -119.6822510),
-            new \DateTime('@1331161200')
-        ));
+        $response = $this->timeZone->process($this->createRequest());
 
         $this->assertSame(TimeZoneStatus::OK, $response->getStatus());
         $this->assertSame(0, $response->getDstOffset());
@@ -74,11 +71,7 @@ class TimeZoneTest extends AbstractServiceTest
 
     public function testProcessWithLanguage()
     {
-        $request = new TimeZoneRequest(
-            new Coordinate(39.6034810, -119.6822510),
-            new \DateTime('@1331161200')
-        );
-
+        $request = $this->createRequest();
         $request->setLanguage('fr');
 
         $response = $this->timeZone->process($request);
@@ -92,12 +85,10 @@ class TimeZoneTest extends AbstractServiceTest
 
     public function testProcessWithXmlFormat()
     {
+        $request = $this->createRequest();
         $this->timeZone->setFormat(TimeZone::FORMAT_XML);
 
-        $response = $this->timeZone->process(new TimeZoneRequest(
-            new Coordinate(39.6034810, -119.6822510),
-            new \DateTime('@1331161200')
-        ));
+        $response = $this->timeZone->process($request);
 
         $this->assertSame(TimeZoneStatus::OK, $response->getStatus());
         $this->assertSame(0, $response->getDstOffset());
@@ -118,7 +109,7 @@ class TimeZoneTest extends AbstractServiceTest
         $request = $this->createTimeZoneRequestMock();
         $request
             ->expects($this->once())
-            ->method('buildQuery')
+            ->method('build')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -167,7 +158,7 @@ class TimeZoneTest extends AbstractServiceTest
         $request = $this->createTimeZoneRequestMock();
         $request
             ->expects($this->once())
-            ->method('buildQuery')
+            ->method('build')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -213,6 +204,17 @@ class TimeZoneTest extends AbstractServiceTest
         $this->assertSame(-28800, $response->getRawOffset());
         $this->assertSame('America/Los_Angeles', $response->getTimeZoneId());
         $this->assertSame('Pacific Standard Time', $response->getTimeZoneName());
+    }
+
+    /**
+     * @return TimeZoneRequest
+     */
+    private function createRequest()
+    {
+        return new TimeZoneRequest(
+            new Coordinate(39.6034810, -119.6822510),
+            new \DateTime('@1331161200')
+        );
     }
 
     /**

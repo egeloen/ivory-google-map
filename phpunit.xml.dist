@@ -8,6 +8,10 @@
     </testsuites>
     <php>
         <server name="BROWSER_NAME" value="chrome" />
+         <!--<server name="DIRECTIONS_API_KEY" value="key" /> -->
+         <!--<server name="DISTANCE_MATRIX_API_KEY" value="key" /> -->
+         <!--<server name="GEOCODER_API_KEY" value="key" /> -->
+         <!--<server name="TIME_ZONE_API_KEY" value="key" /> -->
     </php>
     <groups>
         <exclude>

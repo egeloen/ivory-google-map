@@ -12,7 +12,6 @@
 namespace Ivory\Tests\GoogleMap\Control;
 
 use Ivory\GoogleMap\Control\ControlManager;
-use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Control\CustomControl;
 use Ivory\GoogleMap\Control\FullscreenControl;
 use Ivory\GoogleMap\Control\MapTypeControl;
