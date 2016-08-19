@@ -9,4 +9,5 @@ do nothing and let the Google Maps API handle all control behavior.
  - [Scale](/doc/control/scale.md)
  - [Street View](/doc/control/street_view.md)
  - [Zoom](/doc/control/zoom.md)
+ - [Fullscreen](/doc/control/fullscreen.md)
  - [Custom](/doc/control/custom.md)

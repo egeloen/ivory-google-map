@@ -17,6 +17,11 @@ namespace Ivory\GoogleMap\Control;
 class ControlManager
 {
     /**
+     * @var FullscreenControl|null
+     */
+    private $fullscreenControl;
+
+    /**
      * @var MapTypeControl|null
      */
     private $mapTypeControl;
@@ -45,6 +50,30 @@ class ControlManager
      * @var CustomControl[]
      */
     private $customControls = [];
+
+    /**
+     * @return bool
+     */
+    public function hasFullscreenControl()
+    {
+        return $this->fullscreenControl !== null;
+    }
+
+    /**
+     * @return FullscreenControl|null
+     */
+    public function getFullscreenControl()
+    {
+        return $this->fullscreenControl;
+    }
+
+    /**
+     * @param FullscreenControl|null $fullscreenControl
+     */
+    public function setFullscreenControl(FullscreenControl $fullscreenControl = null)
+    {
+        $this->fullscreenControl = $fullscreenControl;
+    }
 
     /**
      * @return bool
