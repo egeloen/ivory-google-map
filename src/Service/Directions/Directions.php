@@ -26,11 +26,11 @@ use Ivory\GoogleMap\Service\Directions\Response\DirectionsLeg;
 use Ivory\GoogleMap\Service\Directions\Response\DirectionsResponse;
 use Ivory\GoogleMap\Service\Directions\Response\DirectionsRoute;
 use Ivory\GoogleMap\Service\Directions\Response\DirectionsStep;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitAgency;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitDetails;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitLine;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitStop;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitVehicle;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitAgency;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitDetails;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitLine;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitStop;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitVehicle;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

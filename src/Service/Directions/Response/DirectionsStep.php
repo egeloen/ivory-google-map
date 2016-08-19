@@ -15,6 +15,7 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitDetails;
 
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionsStep

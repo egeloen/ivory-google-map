@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Service\Directions\Response;
+namespace Ivory\GoogleMap\Service\Directions\Response\Transit;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsTransitVehicle
+class DirectionsTransitAgency
 {
     /**
      * @var string|null
@@ -24,17 +24,12 @@ class DirectionsTransitVehicle
     /**
      * @var string|null
      */
-    private $icon;
+    private $phone;
 
     /**
      * @var string|null
      */
-    private $type;
-
-    /**
-     * @var string|null
-     */
-    private $localIcon;
+    private $url;
 
     /**
      * @return bool
@@ -63,72 +58,48 @@ class DirectionsTransitVehicle
     /**
      * @return bool
      */
-    public function hasIcon()
+    public function hasPhone()
     {
-        return $this->icon !== null;
+        return $this->phone !== null;
     }
 
     /**
      * @return string|null
      */
-    public function getIcon()
+    public function getPhone()
     {
-        return $this->icon;
+        return $this->phone;
     }
 
     /**
-     * @param string|null $icon
+     * @param string|null $phone
      */
-    public function setIcon($icon)
+    public function setPhone($phone)
     {
-        $this->icon = $icon;
+        $this->phone = $phone;
     }
 
     /**
      * @return bool
      */
-    public function hasType()
+    public function hasUrl()
     {
-        return $this->type !== null;
+        return $this->url !== null;
     }
 
     /**
      * @return string|null
      */
-    public function getType()
+    public function getUrl()
     {
-        return $this->type;
+        return $this->url;
     }
 
     /**
-     * @param string|null $type
+     * @param string|null $url
      */
-    public function setType($type)
+    public function setUrl($url)
     {
-        $this->type = $type;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasLocalIcon()
-    {
-        return $this->localIcon !== null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLocalIcon()
-    {
-        return $this->localIcon;
-    }
-
-    /**
-     * @param string|null $localIcon
-     */
-    public function setLocalIcon($localIcon)
-    {
-        $this->localIcon = $localIcon;
+        $this->url = $url;
     }
 }

@@ -17,7 +17,7 @@ use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Directions\Response\DirectionsStep;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitDetails;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitDetails;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
