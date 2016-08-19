@@ -43,6 +43,7 @@ use Ivory\GoogleMap\Helper\Renderer\Base\SizeRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlManagerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\CustomControlRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Control\FullscreenControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\RotateControlRenderer;
@@ -216,6 +217,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
         // Control renderers
         $controlPositionRenderer = new ControlPositionRenderer($formatter);
         $customControlRenderer = new CustomControlRenderer($formatter, $controlPositionRenderer);
+        $fullscreenControlRenderer = new FullscreenControlRenderer($formatter, $jsonBuilder, $controlPositionRenderer);
         $mapTypeControlStyleRenderer = new MapTypeControlStyleRenderer($formatter);
         $rotateControlRenderer = new RotateControlRenderer($formatter, $jsonBuilder, $controlPositionRenderer);
         $scaleControlStyleRenderer = new ScaleControlStyleRenderer($formatter);
@@ -245,6 +247,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
         );
 
         $controlManagerRenderer = new ControlManagerRenderer();
+        $controlManagerRenderer->addRenderer($fullscreenControlRenderer);
         $controlManagerRenderer->addRenderer($mapTypeControlRenderer);
         $controlManagerRenderer->addRenderer($rotateControlRenderer);
         $controlManagerRenderer->addRenderer($scaleControlRenderer);

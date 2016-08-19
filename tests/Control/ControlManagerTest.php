@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Control;
 use Ivory\GoogleMap\Control\ControlManager;
 use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Control\CustomControl;
+use Ivory\GoogleMap\Control\FullscreenControl;
 use Ivory\GoogleMap\Control\MapTypeControl;
 use Ivory\GoogleMap\Control\RotateControl;
 use Ivory\GoogleMap\Control\ScaleControl;
@@ -40,6 +41,8 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
+        $this->assertFalse($this->controlManager->hasFullscreenControl());
+        $this->assertNull($this->controlManager->getFullscreenControl());
         $this->assertFalse($this->controlManager->hasMapTypeControl());
         $this->assertNull($this->controlManager->getMapTypeControl());
         $this->assertFalse($this->controlManager->hasRotateControl());
@@ -52,6 +55,23 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->controlManager->getZoomControl());
         $this->assertFalse($this->controlManager->hasCustomControls());
         $this->assertEmpty($this->controlManager->getCustomControls());
+    }
+
+    public function testFullscreenControl()
+    {
+        $this->controlManager->setFullscreenControl($fullscreenControl = $this->createFullscreenControlMock());
+
+        $this->assertTrue($this->controlManager->hasFullscreenControl());
+        $this->assertSame($fullscreenControl, $this->controlManager->getFullscreenControl());
+    }
+
+    public function testResetFullscreenControl()
+    {
+        $this->controlManager->setFullscreenControl($this->createFullscreenControlMock());
+        $this->controlManager->setFullscreenControl(null);
+
+        $this->assertFalse($this->controlManager->hasFullscreenControl());
+        $this->assertNull($this->controlManager->getFullscreenControl());
     }
 
     public function testMapTypeControl()
@@ -178,6 +198,14 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->controlManager->hasCustomControls());
         $this->assertFalse($this->controlManager->hasCustomControl($customControl));
         $this->assertEmpty($this->controlManager->getCustomControls());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|FullscreenControl
+     */
+    private function createFullscreenControlMock()
+    {
+        return $this->createMock(FullscreenControl::class);
     }
 
     /**

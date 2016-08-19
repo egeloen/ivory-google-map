@@ -24,6 +24,7 @@ controls, overlays, events & services through the Google Map API v3.
          - [Scale](/doc/control/scale.md)
          - [Street view](/doc/control/street_view.md)
          - [Zoom](/doc/control/zoom.md)
+         - [Fullscreen](/doc/control/fullscreen.md)
          - [Custom](/doc/control/custom.md)
       - [Events](/doc/event.md)
       - [Layers](/doc/layer/index.md)
