@@ -16,7 +16,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^1.11",
-        "php-http/cache-plugin": "dev-respect-headers",
+        "php-http/cache-plugin": "^1.2",
         "php-http/guzzle6-adapter": "^1.1.1",
         "php-http/message": "^1.3",
         "phpunit/phpunit": "^5.4",
@@ -29,12 +29,6 @@
         "php-http/message": "Allows to use http services",
         "willdurand/geocoder": "Allows to use geocoder service"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/egeloen/cache-plugin.git"
-        }
-    ],
     "autoload": {
         "psr-4": { "Ivory\\GoogleMap\\": "src/" }
     },
