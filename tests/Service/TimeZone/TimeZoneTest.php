@@ -37,6 +37,8 @@ class TimeZoneTest extends AbstractServiceTest
      */
     protected function setUp()
     {
+        //sleep(2);
+
         parent::setUp();
 
         $this->timeZone = new TimeZone($this->getClient(), $this->getMessageFactory());
