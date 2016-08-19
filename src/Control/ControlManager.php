@@ -42,6 +42,11 @@ class ControlManager
     private $zoomControl;
 
     /**
+     * @var CustomControl[]
+     */
+    private $customControls = [];
+
+    /**
      * @return bool
      */
     public function hasMapTypeControl()
@@ -159,5 +164,69 @@ class ControlManager
     public function setZoomControl(ZoomControl $zoomControl = null)
     {
         $this->zoomControl = $zoomControl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCustomControls()
+    {
+        return !empty($this->customControls);
+    }
+
+    /**
+     * @return CustomControl[]
+     */
+    public function getCustomControls()
+    {
+        return $this->customControls;
+    }
+
+    /**
+     * @param CustomControl[] $customControls
+     */
+    public function setCustomControls(array $customControls)
+    {
+        $this->customControls = [];
+        $this->addCustomControls($customControls);
+    }
+
+    /**
+     * @param CustomControl[] $customControls
+     */
+    public function addCustomControls(array $customControls)
+    {
+        foreach ($customControls as $customControl) {
+            $this->addCustomControl($customControl);
+        }
+    }
+
+    /**
+     * @param CustomControl $customControl
+     *
+     * @return bool
+     */
+    public function hasCustomControl(CustomControl $customControl)
+    {
+        return in_array($customControl, $this->customControls, true);
+    }
+
+    /**
+     * @param CustomControl $customControl
+     */
+    public function addCustomControl(CustomControl $customControl)
+    {
+        if (!$this->hasCustomControl($customControl)) {
+            $this->customControls[] = $customControl;
+        }
+    }
+
+    /**
+     * @param CustomControl $customControl
+     */
+    public function removeCustomControl(CustomControl $customControl)
+    {
+        unset($this->customControls[array_search($customControl, $this->customControls, true)]);
+        $this->customControls = array_values($this->customControls);
     }
 }

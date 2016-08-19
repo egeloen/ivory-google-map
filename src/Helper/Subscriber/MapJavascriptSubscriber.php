@@ -137,6 +137,7 @@ class MapJavascriptSubscriber extends AbstractDelegateSubscriber
                 MapEvents::JAVASCRIPT_MAP,
                 MapEvents::JAVASCRIPT_OVERLAY,
                 MapEvents::JAVASCRIPT_LAYER,
+                MapEvents::JAVASCRIPT_CONTROL,
                 MapEvents::JAVASCRIPT_EVENT,
                 MapEvents::JAVASCRIPT_FINISH,
             ],
