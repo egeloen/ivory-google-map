@@ -45,7 +45,7 @@ final class MapEvents
     const JAVASCRIPT_LAYER_HEATMAP_LAYER = 'map.javascript.layer.heatmap_layer';
     const JAVASCRIPT_LAYER_KML_LAYER = 'map.javascript.layer.kml_layer';
     const JAVASCRIPT_CONTROL = 'map.javascript.control';
-    const JAVASCRIPT_CONTROL_CUSTOM = 'map.javascript.control';
+    const JAVASCRIPT_CONTROL_CUSTOM = 'map.javascript.control.custom';
     const JAVASCRIPT_EVENT = 'map.javascript.event';
     const JAVASCRIPT_EVENT_DOM_EVENT = 'map.javascript.event.dom_event';
     const JAVASCRIPT_EVENT_DOM_EVENT_ONCE = 'map.javascript.event.dom_event_once';
