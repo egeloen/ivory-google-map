@@ -17,6 +17,10 @@ use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
+use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
+use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixElement;
+use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
+use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -39,7 +43,7 @@ class DistanceMatrix extends AbstractService
      */
     public function process(DistanceMatrixRequest $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->buildQuery()));
+        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
         $data = $this->parse((string) $response->getBody());
 
         return $this->buildResponse($data);

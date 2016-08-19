@@ -18,6 +18,13 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
+use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderAddress;
+use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderGeometry;
+use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
+use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -77,7 +84,7 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
             $request->setLanguage($this->locale);
         }
 
-        $response = $this->getClient()->sendRequest($this->createRequest($request->buildQuery()));
+        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
         $data = $this->parse((string) $response->getBody());
 
         return $this->buildResponse($data);

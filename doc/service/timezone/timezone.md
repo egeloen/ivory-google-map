@@ -33,7 +33,7 @@ Once you have built you timezone service, you can process a timezone:
 
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\TimeZone\TimeZoneRequest;
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 
 $response = $timeZone->process(new TimeZoneRequest(
     new Coordinate(39.6034810, -119.6822510),

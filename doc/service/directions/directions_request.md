@@ -7,9 +7,13 @@ A directions request is the starting point when you want to request a direction.
 First of all, if you want to route a direction, you will need to build a directions request. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsRequest;
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+use Ivory\GoogleMap\Service\Directions\DirectionsRequest\Request;
 
-$request = new DirectionsRequest('New York', 'Washington');
+$request = new DirectionsRequest(
+    new AddressLocation('New York'), 
+    new AddressLocation('Washington')
+);
 ```
 
 The directions request constructor requires an origin as first argument and a destination as second argument.
@@ -19,32 +23,26 @@ The directions request constructor requires an origin as first argument and a de
 If you want to update the origin, you can use:
 
 ``` php
-$request->setOrigin('New York');
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+
+$request->setOrigin(new AddressLocation('New York'));
 ```
 
-The origin also accepts a coordinate:
-
-``` php
-use Ivory\GoogleMap\Base\Coordinate;
-
-$request->setOrigin(new Coordinate(1.1, 2.1));
-```
+The origin is represented by the `LocationInterface`. If you want to learn more about it, you can read its 
+[documentation](/doc/service/base.html#location).
 
 ## Configure destination
 
 If you want to update the destination, you can use:
 
 ``` php
-$request->setDestination('Washington');
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+
+$request->setDestination(new AddressLocation('Washington'));
 ```
 
-The destination also accepts a coordinate:
-
-``` php
-use Ivory\GoogleMap\Base\Coordinate;
-
-$request->setDestination(new Coordinate(2.1, 1.1));
-```
+The destination is represented by the `LocationInterface`. If you want to learn more about it, you can read its 
+[documentation](/doc/service/base.html#location).
 
 ## Configure departure time
 
@@ -67,19 +65,14 @@ $request->setDepartureTime(new \DateTime());
 If you want to add waypoint to your direction, you can use:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsWaypoint;
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+use Ivory\GoogleMap\Service\Directions\Request\DirectionsWaypoint;
 
-$request->addWaypoint(new DirectionsWaypoint('Philadelphia'));
+$request->addWaypoint(new DirectionsWaypoint(new AddressLocation('Philadelphia')));
 ```
 
-The waypoint also accepts a coordinate:
-
-``` php
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\Directions\DirectionsWaypoint;
-
-$request->addWaypoint(new DirectionsWaypoint(new Coordinate(1.2, 2.2)));
-```
+The waypoint accepts a `LocationInterface` as first argument. If you want to learn more about it, you can read its 
+[documentation](/doc/service/base.html#location).
 
 ## Configure waypoints optimization
 

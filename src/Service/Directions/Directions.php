@@ -20,6 +20,17 @@ use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
+use Ivory\GoogleMap\Service\Directions\Request\DirectionsRequest;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsGeocoded;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsLeg;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsResponse;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsRoute;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsStep;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitAgency;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitDetails;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitLine;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitStop;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitVehicle;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -42,7 +53,7 @@ class Directions extends AbstractService
      */
     public function route(DirectionsRequest $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->buildQuery()));
+        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
         $data = $this->parse((string) $response->getBody());
 
         return $this->buildResponse($data);

@@ -34,11 +34,12 @@ All services works the same way, so, if you want to learn more about it, you can
 Once you have built you distance matrix service, you can process a matrix:
 
 ``` php
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
 
 $response = $distanceMatrix->process(new DistanceMatrixRequest(
-    ['Vancouver BC'], 
-    ['San Francisco']
+    [new AddressLocation('Vancouver BC')], 
+    [new AddressLocation('San Francisco')]
 ));
 ```
 

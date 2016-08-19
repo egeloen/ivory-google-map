@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Service\Service;
+namespace Ivory\Tests\GoogleMap\Service\Base;
 
 use Ivory\GoogleMap\Service\Base\Distance;
 

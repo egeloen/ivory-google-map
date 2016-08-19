@@ -34,9 +34,13 @@ All services works the same way, so, if you want to learn more about it, you can
 Once you have built you directions service, you can request a direction:
 
 ``` php
-use Ivory\GoogleMap\Service\Directions\DirectionsRequest;
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+use Ivory\GoogleMap\Service\Directions\Request\DirectionsRequest;
 
-$response = $directions->route(new DirectionsRequest('New York', 'Washington'));
+$response = $directions->route(new DirectionsRequest(
+    new AddressLocation('New York'), 
+    new AddressLocation('Washington')
+));
 ```
 
 The directions service allows you to route a much more advance request. If you want to learn more about it, you can 

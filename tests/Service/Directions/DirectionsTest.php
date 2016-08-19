@@ -15,13 +15,15 @@ use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Avoid;
+use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Directions\Directions;
-use Ivory\GoogleMap\Service\Directions\DirectionsRequest;
-use Ivory\GoogleMap\Service\Directions\DirectionsStatus;
-use Ivory\GoogleMap\Service\Directions\DirectionsWaypoint;
+use Ivory\GoogleMap\Service\Directions\Request\DirectionsRequest;
+use Ivory\GoogleMap\Service\Directions\Request\DirectionsWaypoint;
+use Ivory\GoogleMap\Service\Directions\Response\DirectionsStatus;
 use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -59,9 +61,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRoute()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
-
-        $response = $this->directions->route($request);
+        $response = $this->directions->route($this->createRequest());
 
         $this->assertSame(DirectionsStatus::OK, $response->getStatus());
         $this->assertNotEmpty($response->getRoutes());
@@ -70,8 +70,8 @@ class DirectionsTest extends AbstractServiceTest
     public function testRouteWithCoordinates()
     {
         $request = new DirectionsRequest(
-            new Coordinate(50.629381, 3.057268),
-            new Coordinate(48.856633, 2.352254)
+            new CoordinateLocation(new Coordinate(50.629381, 3.057268)),
+            new CoordinateLocation(new Coordinate(48.856633, 2.352254))
         );
 
         $response = $this->directions->route($request);
@@ -82,7 +82,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithDepartureTime()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setDepartureTime($this->getDepartureTime());
 
         $response = $this->directions->route($request);
@@ -93,7 +93,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithArrivalTime()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setArrivalTime($this->getArrivalTime());
 
         $response = $this->directions->route($request);
@@ -104,8 +104,8 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithStringWaypoint()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
-        $request->addWaypoint(new DirectionsWaypoint('Compiègne'));
+        $request = $this->createRequest();
+        $request->addWaypoint(new DirectionsWaypoint(new AddressLocation('Compiègne')));
         $request->setOptimizeWaypoints(true);
 
         $response = $this->directions->route($request);
@@ -116,8 +116,8 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithCoordinateWaypoint()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
-        $request->addWaypoint(new DirectionsWaypoint(new Coordinate(49.418079, 2.826190)));
+        $request = $this->createRequest();
+        $request->addWaypoint(new DirectionsWaypoint(new CoordinateLocation(new Coordinate(49.418079, 2.826190))));
         $request->setOptimizeWaypoints(true);
 
         $response = $this->directions->route($request);
@@ -128,8 +128,8 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithStopoverWaypoint()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
-        $request->addWaypoint(new DirectionsWaypoint('Compiègne', true));
+        $request = $this->createRequest();
+        $request->addWaypoint(new DirectionsWaypoint(new AddressLocation('Compiègne'), true));
 
         $response = $this->directions->route($request);
 
@@ -139,7 +139,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithAvoid()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setAvoid(Avoid::HIGHWAYS);
 
         $response = $this->directions->route($request);
@@ -150,7 +150,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithTravelMode()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setTravelMode(TravelMode::DRIVING);
 
         $response = $this->directions->route($request);
@@ -161,7 +161,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithAlternatives()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setProvideRouteAlternatives(true);
 
         $response = $this->directions->route($request);
@@ -172,7 +172,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithAvailableTravelModes()
     {
-        $request = new DirectionsRequest('Brest', 'Washington');
+        $request = new DirectionsRequest(new AddressLocation('Brest'), new AddressLocation('Washington'));
         $request->setTravelMode(TravelMode::BICYCLING);
 
         $response = $this->directions->route($request);
@@ -185,8 +185,8 @@ class DirectionsTest extends AbstractServiceTest
     public function testRouteWithTransit()
     {
         $request = new DirectionsRequest(
-            '601-625 Ashbury Street, San Francisco',
-            'Bike Route 95, San Francisco'
+            new AddressLocation('601-625 Ashbury Street, San Francisco'),
+            new AddressLocation('Bike Route 95, San Francisco')
         );
 
         $request->setTravelMode(TravelMode::TRANSIT);
@@ -201,7 +201,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithUnitSystem()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setUnitSystem(UnitSystem::METRIC);
 
         $response = $this->directions->route($request);
@@ -212,7 +212,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithRegion()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setRegion('fr');
 
         $response = $this->directions->route($request);
@@ -223,7 +223,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithLanguage()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $request->setLanguage('fr');
 
         $response = $this->directions->route($request);
@@ -234,7 +234,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithHttp()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
         $this->directions->setHttps(false);
 
         $response = $this->directions->route($request);
@@ -245,7 +245,7 @@ class DirectionsTest extends AbstractServiceTest
 
     public function testRouteWithXmlFormat()
     {
-        $request = new DirectionsRequest('Lille', 'Paris');
+        $request = $this->createRequest();
 
         $this->directions->setFormat(Directions::FORMAT_XML);
         $response = $this->directions->route($request);
@@ -266,7 +266,7 @@ class DirectionsTest extends AbstractServiceTest
         $request = $this->createDirectionsRequestMock();
         $request
             ->expects($this->once())
-            ->method('buildQuery')
+            ->method('build')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -312,7 +312,7 @@ class DirectionsTest extends AbstractServiceTest
         $request = $this->createDirectionsRequestMock();
         $request
             ->expects($this->once())
-            ->method('buildQuery')
+            ->method('build')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -355,6 +355,14 @@ class DirectionsTest extends AbstractServiceTest
 
         $this->assertSame(DirectionsStatus::OK, $response->getStatus());
         $this->assertEmpty($response->getRoutes());
+    }
+
+    /**
+     * @return DirectionsRequest
+     */
+    private function createRequest()
+    {
+        return new DirectionsRequest(new AddressLocation('Lille'), new AddressLocation('Paris'));
     }
 
     /**

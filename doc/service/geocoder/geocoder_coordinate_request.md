@@ -8,7 +8,7 @@ First of all, let's build a geocoder coordinate request:
 
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\Geocoder\GeocoderCoordinateRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
 
 $request = new GeocoderCoordinateRequest(new Coordinate(48.865475, 2.321118));
 ```
@@ -29,7 +29,7 @@ It specifies a type will restrict the results to this type. If multiple types ar
 addresses that match any of the types.
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderAddressType;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressType;
 
 $request->setLocationTypes([GeocoderAddressType::COUNTRY]);
 ```
