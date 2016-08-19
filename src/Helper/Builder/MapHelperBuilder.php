@@ -15,6 +15,7 @@ use Ivory\GoogleMap\Helper\Collector\Base\BoundCollector;
 use Ivory\GoogleMap\Helper\Collector\Base\CoordinateCollector;
 use Ivory\GoogleMap\Helper\Collector\Base\PointCollector;
 use Ivory\GoogleMap\Helper\Collector\Base\SizeCollector;
+use Ivory\GoogleMap\Helper\Collector\Control\CustomControlCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\DomEventCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\DomEventOnceCollector;
 use Ivory\GoogleMap\Helper\Collector\Event\EventCollector;
@@ -41,6 +42,7 @@ use Ivory\GoogleMap\Helper\Renderer\Base\PointRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Base\SizeRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlManagerRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Control\CustomControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\RotateControlRenderer;
@@ -96,6 +98,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Base\BoundSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Base\CoordinateSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Base\PointSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Base\SizeSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Control\CustomControlSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\DomEventOnceSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\DomEventSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\EventOnceSubscriber;
@@ -186,6 +189,9 @@ class MapHelperBuilder extends AbstractHelperBuilder
         $eventCollector = new EventCollector();
         $eventOnceCollector = new EventOnceCollector();
 
+        // Control collectors
+        $customControlCollector = new CustomControlCollector();
+
         // Base collectors
         $boundCollector = new BoundCollector($groundOverlayCollector, $rectangleCollector);
         $pointCollector = new PointCollector($markerCollector);
@@ -209,6 +215,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
 
         // Control renderers
         $controlPositionRenderer = new ControlPositionRenderer($formatter);
+        $customControlRenderer = new CustomControlRenderer($formatter, $controlPositionRenderer);
         $mapTypeControlStyleRenderer = new MapTypeControlStyleRenderer($formatter);
         $rotateControlRenderer = new RotateControlRenderer($formatter, $jsonBuilder, $controlPositionRenderer);
         $scaleControlStyleRenderer = new ScaleControlStyleRenderer($formatter);
@@ -331,6 +338,9 @@ class MapHelperBuilder extends AbstractHelperBuilder
             new CoordinateSubscriber($formatter, $coordinateCollector, $coordinateRenderer),
             new PointSubscriber($formatter, $pointCollector, $pointRenderer),
             new SizeSubscriber($formatter, $sizeCollector, $sizeRenderer),
+
+            // Control
+            new CustomControlSubscriber($formatter, $customControlCollector, $customControlRenderer),
 
             // Event
             new DomEventOnceSubscriber($formatter, $domEventOnceCollector, $domEventOnceRenderer),

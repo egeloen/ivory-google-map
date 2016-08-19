@@ -12,6 +12,8 @@
 namespace Ivory\Tests\GoogleMap\Control;
 
 use Ivory\GoogleMap\Control\ControlManager;
+use Ivory\GoogleMap\Control\ControlPosition;
+use Ivory\GoogleMap\Control\CustomControl;
 use Ivory\GoogleMap\Control\MapTypeControl;
 use Ivory\GoogleMap\Control\RotateControl;
 use Ivory\GoogleMap\Control\ScaleControl;
@@ -48,6 +50,8 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->controlManager->getStreetViewControl());
         $this->assertFalse($this->controlManager->hasZoomControl());
         $this->assertNull($this->controlManager->getZoomControl());
+        $this->assertFalse($this->controlManager->hasCustomControls());
+        $this->assertEmpty($this->controlManager->getCustomControls());
     }
 
     public function testMapTypeControl()
@@ -135,6 +139,47 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->controlManager->getZoomControl());
     }
 
+    public function testSetCustomControls()
+    {
+        $this->controlManager->setCustomControls($customControls = [$customControl = $this->createCustomControlMock()]);
+        $this->controlManager->setCustomControls($customControls);
+
+        $this->assertTrue($this->controlManager->hasCustomControls());
+        $this->assertTrue($this->controlManager->hasCustomControl($customControl));
+        $this->assertSame($customControls, $this->controlManager->getCustomControls());
+    }
+
+    public function testAddCustomControls()
+    {
+        $this->controlManager->setCustomControls($firstCustomControls = [$this->createCustomControlMock()]);
+        $this->controlManager->addCustomControls($secondCustomControls = [$this->createCustomControlMock()]);
+
+        $this->assertTrue($this->controlManager->hasCustomControls());
+        $this->assertSame(
+            array_merge($firstCustomControls, $secondCustomControls),
+            $this->controlManager->getCustomControls()
+        );
+    }
+
+    public function testAddCustomControl()
+    {
+        $this->controlManager->addCustomControl($customControl = $this->createCustomControlMock());
+
+        $this->assertTrue($this->controlManager->hasCustomControls());
+        $this->assertTrue($this->controlManager->hasCustomControl($customControl));
+        $this->assertSame([$customControl], $this->controlManager->getCustomControls());
+    }
+
+    public function testRemoveCustomControl()
+    {
+        $this->controlManager->addCustomControl($customControl = $this->createCustomControlMock());
+        $this->controlManager->removeCustomControl($customControl);
+
+        $this->assertFalse($this->controlManager->hasCustomControls());
+        $this->assertFalse($this->controlManager->hasCustomControl($customControl));
+        $this->assertEmpty($this->controlManager->getCustomControls());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|MapTypeControl
      */
@@ -173,5 +218,13 @@ class ControlManagerTest extends \PHPUnit_Framework_TestCase
     private function createZoomControlMock()
     {
         return $this->createMock(ZoomControl::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|CustomControl
+     */
+    private function createCustomControlMock()
+    {
+        return $this->createMock(CustomControl::class);
     }
 }
