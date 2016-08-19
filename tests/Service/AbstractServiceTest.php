@@ -55,7 +55,11 @@ abstract class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             new CachePlugin(
                 $this->pool,
                 new GuzzleStreamFactory(),
-                ['respect_cache_headers' => false]
+                [
+                    'cache_lifetime'        => null,
+                    'default_ttl'           => null,
+                    'respect_cache_headers' => false,
+                ]
             ),
         ]);
     }
