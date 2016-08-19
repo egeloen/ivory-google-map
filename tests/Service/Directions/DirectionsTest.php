@@ -44,15 +44,7 @@ class DirectionsTest extends AbstractServiceTest
      */
     protected function setUp()
     {
-        /*
-
-            Uncomment when generating the http cache.
-            It needs to wait a little bit between test cases
-            in order to not hit the OVER_QUERY_LIMIT...
-
-         */
-
-        // sleep(2);
+        //sleep(2);
 
         parent::setUp();
 
@@ -102,7 +94,7 @@ class DirectionsTest extends AbstractServiceTest
         $this->assertNotEmpty($response->getRoutes());
     }
 
-    public function testRouteWithStringWaypoint()
+    public function testRouteWithAddressWaypoint()
     {
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionsWaypoint(new AddressLocation('Compiègne')));

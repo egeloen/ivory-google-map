@@ -42,6 +42,8 @@ class GeocoderProviderTest extends AbstractServiceTest
      */
     protected function setUp()
     {
+        //sleep(2);
+
         parent::setUp();
 
         $this->geocoder = new GeocoderProvider($this->getClient(), $this->getMessageFactory());

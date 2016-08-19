@@ -43,6 +43,8 @@ class DistanceMatrixTest extends AbstractServiceTest
      */
     protected function setUp()
     {
+        //sleep(2);
+
         parent::setUp();
 
         $this->distanceMatrix = new DistanceMatrix($this->getClient(), $this->getMessageFactory());
