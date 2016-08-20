@@ -18,7 +18,7 @@ use Ivory\GoogleMap\Base\Coordinate;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractGeocoderRequest
+abstract class AbstractGeocoderRequest implements GeocoderRequestInterface
 {
     /**
      * @var string|null
@@ -50,7 +50,7 @@ abstract class AbstractGeocoderRequest
     }
 
     /**
-     * @return mixed[]
+     * {@inheritdoc}
      */
     public function build()
     {

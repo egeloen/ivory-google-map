@@ -50,7 +50,7 @@ class GeocoderCoordinateRequest extends AbstractGeocoderReverseRequest
     }
 
     /**
-     * @return mixed[]
+     * {@inheritdoc}
      */
     public function build()
     {

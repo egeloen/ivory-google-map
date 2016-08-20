@@ -14,7 +14,7 @@ namespace Ivory\GoogleMap\Service\TimeZone;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractService;
-use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
 
 /**
@@ -44,11 +44,11 @@ class TimeZone extends AbstractService
     }
 
     /**
-     * @param TimeZoneRequest $request
+     * @param TimeZoneRequestInterface $request
      *
      * @return TimeZoneResponse
      */
-    public function process(TimeZoneRequest $request)
+    public function process(TimeZoneRequestInterface $request)
     {
         $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
         $data = $this->parse((string) $response->getBody());

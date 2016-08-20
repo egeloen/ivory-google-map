@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -29,6 +30,11 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->request = $this->createAbstractRequestMock();
+    }
+
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(GeocoderRequestInterface::class, $this->request);
     }
 
     public function testDefaultState()

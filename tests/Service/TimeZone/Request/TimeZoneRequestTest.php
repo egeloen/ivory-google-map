@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\TimeZone\Request;
 
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -43,6 +44,11 @@ class TimeZoneRequestTest extends \PHPUnit_Framework_TestCase
             $this->location = $this->createCoordinateMock(),
             $this->date = new \DateTime()
         );
+    }
+
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(TimeZoneRequestInterface::class, $this->request);
     }
 
     public function testDefaultState()

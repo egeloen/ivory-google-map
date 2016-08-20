@@ -20,6 +20,7 @@ use Ivory\GoogleMap\Service\Base\TransitRoutingPreference;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
+use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
 
 /**
  * @author GeLo <gelon.eric@gmail.com>
@@ -50,6 +51,11 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
             $this->origins = [new AddressLocation('Paris')],
             $this->destinations = [new AddressLocation('Lille')]
         );
+    }
+
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(DistanceMatrixRequestInterface::class, $this->request);
     }
 
     public function testDefaultState()

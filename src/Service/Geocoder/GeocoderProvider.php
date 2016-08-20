@@ -18,9 +18,9 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\AbstractService;
-use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderAddress;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderGeometry;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
@@ -66,13 +66,13 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     }
 
     /**
-     * @param AbstractGeocoderRequest|Coordinate|string $request
+     * @param GeocoderRequestInterface|Coordinate|string $request
      *
      * @return GeocoderResponse
      */
     public function geocode($request)
     {
-        if (!$request instanceof AbstractGeocoderRequest) {
+        if (!$request instanceof GeocoderRequestInterface) {
             if ($request instanceof Coordinate) {
                 $request = new GeocoderCoordinateRequest($request);
             } else {

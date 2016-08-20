@@ -16,7 +16,7 @@ use Ivory\GoogleMap\Base\Coordinate;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TimeZoneRequest
+class TimeZoneRequest implements TimeZoneRequestInterface
 {
     /**
      * @var Coordinate
