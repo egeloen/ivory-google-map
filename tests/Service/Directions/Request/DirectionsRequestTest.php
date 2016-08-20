@@ -19,6 +19,7 @@ use Ivory\GoogleMap\Service\Base\TransitRoutingPreference;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\Directions\Request\DirectionsRequest;
+use Ivory\GoogleMap\Service\Directions\Request\DirectionsRequestInterface;
 use Ivory\GoogleMap\Service\Directions\Request\DirectionsWaypoint;
 
 /**
@@ -50,6 +51,11 @@ class DirectionsRequestTest extends \PHPUnit_Framework_TestCase
             $this->origin = $this->createLocationMock('origin'),
             $this->destination = $this->createLocationMock('destination')
         );
+    }
+
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(DirectionsRequestInterface::class, $this->request);
     }
 
     public function testDefaultState()

@@ -48,7 +48,7 @@ class GeocoderPlaceIdRequest extends AbstractGeocoderReverseRequest
     }
 
     /**
-     * @return mixed[]
+     * {@inheritdoc}
      */
     public function build()
     {

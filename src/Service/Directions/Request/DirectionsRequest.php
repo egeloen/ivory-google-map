@@ -18,7 +18,7 @@ use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionsRequest
+class DirectionsRequest implements DirectionsRequestInterface
 {
     /**
      * @var LocationInterface
@@ -529,7 +529,7 @@ class DirectionsRequest
     }
 
     /**
-     * @return mixed[]
+     * {@inheritdoc}
      */
     public function build()
     {

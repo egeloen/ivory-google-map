@@ -185,7 +185,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     }
 
     /**
-     * @return mixed[]
+     * {@inheritdoc}
      */
     public function build()
     {

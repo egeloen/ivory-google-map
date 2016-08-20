@@ -18,7 +18,7 @@ use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixRequest
+class DistanceMatrixRequest implements DistanceMatrixRequestInterface
 {
     /**
      * @var LocationInterface[]
@@ -499,7 +499,7 @@ class DistanceMatrixRequest
     }
 
     /**
-     * @return mixed[]
+     * {@inheritdoc}
      */
     public function build()
     {
