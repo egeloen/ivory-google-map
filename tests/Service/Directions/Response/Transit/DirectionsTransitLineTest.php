@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\Tests\GoogleMap\Service\Directions\Response;
+namespace Ivory\Tests\GoogleMap\Service\Directions\Response\Transit;
 
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitAgency;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitLine;
-use Ivory\GoogleMap\Service\Directions\Response\DirectionsTransitVehicle;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitAgency;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitLine;
+use Ivory\GoogleMap\Service\Directions\Response\Transit\DirectionsTransitVehicle;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

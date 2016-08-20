@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\GoogleMap\Service\Directions\Response;
+namespace Ivory\GoogleMap\Service\Directions\Response\Transit;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
