@@ -29,7 +29,7 @@ If you want to use the Geocoder service, you will need [Geocoder](http://github.
 $ composer require willdurand/geocoder
 ```
 
-If you want to use the [Directions](/doc/service/geocoder/directions.md), 
+If you want to use the [Direction](/doc/service/geocoder/direction.md), 
 [Distance Matrix](/doc/service/geocoder/distance-matrix.md), [Elevation](/doc/service/elevation/elevation.md),
 [Geocoder](/doc/service/geocoder/geocoder.md), [Time Zone](/doc/service/time_zone/time_zone.md) services, you will need 
 an http client and message factory via [Httplug](http://httplug.io/) which is an http client abstraction library:

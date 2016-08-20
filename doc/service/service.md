@@ -1,6 +1,6 @@
 # Services
 
-All services (directions, distance matrix, geocoder, ...) share common features.  
+All services (direction, distance matrix, geocoder, ...) share common features.  
 
 ## Configure http client
 
