@@ -1,6 +1,6 @@
 ## Base Service Objects
 
-The base service objects are shared classes which are reused across multiple services such as Directions, Distance 
+The base service objects are shared classes which are reused across multiple services such as Direction, Distance 
 Matrix, ...
 
 ## Distance
@@ -75,7 +75,7 @@ $currency = $fare->getCurrency();
 
 ## Location
 
-A location is a place you would like to request in the [Direction](/doc/service/directons/directions.md) or 
+A location is a place you would like to request in the [Direction](/doc/service/directons/direction.md) or 
 [Distance Matrix](/doc/service/distance_matrix/distance_matrix.md) services. When configuring an origin or a 
 destination, you can use one of the following implementations.
 

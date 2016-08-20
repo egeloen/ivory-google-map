@@ -52,18 +52,18 @@ $businessAccount->setChannel('channel');
 
 When you have built you business account, you need to configure it on a service.
 
-### Directions
+### Direction
 
-If you want to use the directions service with a Google business account, you need to set it on the service:
+If you want to use the direction service with a Google business account, you need to set it on the service:
 
 ``` php
-$directions->setBusinessAccount($businessAccount);
+$direction->setBusinessAccount($businessAccount);
 ```
 
 If you want to go back the normal behavior (anonymous), you need to reset the business account:
 
 ``` php
-$directions->setBusinessAccount(null);
+$direction->setBusinessAccount(null);
 ```
 
 ### Distance Matrix

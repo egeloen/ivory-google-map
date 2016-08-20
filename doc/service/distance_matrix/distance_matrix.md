@@ -5,7 +5,7 @@ destinations. The information returned is based on the recommended route between
 by the Google Maps API, and consists of rows containing duration and distance values for each pair.
 
 This service does not return detailed route information. Route information can be obtained by passing the desired
-single origin and destination to the [Directions API](/doc/service/directions/directions.md).
+single origin and destination to the [Direction API](/doc/service/direction/direction.md).
 
 ## Dependencies
 
