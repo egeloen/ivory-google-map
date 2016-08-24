@@ -20,6 +20,7 @@ use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
+use Ivory\GoogleMap\Service\Base\Time;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionLeg;
@@ -225,11 +226,11 @@ class Direction extends AbstractService
         $leg->setSteps($this->buildSteps($data['steps']));
 
         if (isset($data['departure_time'])) {
-            $leg->setDepartureTime($this->buildDateTime($data['departure_time']));
+            $leg->setDepartureTime($this->buildTime($data['departure_time']));
         }
 
         if (isset($data['arrival_time'])) {
-            $leg->setArrivalTime($this->buildDateTime($data['arrival_time']));
+            $leg->setArrivalTime($this->buildTime($data['arrival_time']));
         }
 
         if (isset($data['via_waypoint'])) {
@@ -292,8 +293,8 @@ class Direction extends AbstractService
         $transitDetails = new DirectionTransitDetails();
         $transitDetails->setDepartureStop($this->buildTransitStop($data['departure_stop']));
         $transitDetails->setArrivalStop($this->buildTransitStop($data['arrival_stop']));
-        $transitDetails->setDepartureTime($this->buildDateTime($data['departure_time']));
-        $transitDetails->setArrivalTime($this->buildDateTime($data['arrival_time']));
+        $transitDetails->setDepartureTime($this->buildTime($data['departure_time']));
+        $transitDetails->setArrivalTime($this->buildTime($data['arrival_time']));
         $transitDetails->setLine($this->buildTransitLine($data['line']));
         $transitDetails->setHeadSign($data['headsign']);
         $transitDetails->setNumStops($data['num_stops']);
@@ -400,16 +401,6 @@ class Direction extends AbstractService
     /**
      * @param mixed[] $data
      *
-     * @return \DateTime
-     */
-    private function buildDateTime(array $data)
-    {
-        return new \DateTime('@'.$data['value'], new \DateTimeZone($data['time_zone']));
-    }
-
-    /**
-     * @param mixed[] $data
-     *
      * @return Bound
      */
     private function buildBound(array $data)
@@ -468,5 +459,19 @@ class Direction extends AbstractService
     private function buildFare(array $data)
     {
         return new Fare($data['value'], $data['currency'], $data['text']);
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Time
+     */
+    private function buildTime(array $data)
+    {
+        return new Time(
+            new \DateTime('@'.$data['value'], new \DateTimeZone($data['time_zone'])),
+            $data['time_zone'],
+            $data['text']
+        );
     }
 }

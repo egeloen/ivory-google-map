@@ -27,19 +27,23 @@ $arrivalStop = $transitDetails->getArrivalStop();
 
 ## Departure time
 
-It contain the departure times for this leg of the journey.
+It contain the departure times for this leg of the journey. It is represented by a `Time`.
 
 ``` php
 $departureTime = $transitDetails->getDepartureTime();
 ```
 
+If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
+
 ## Arrival time
 
-It contain the arrival times for this leg of the journey.
+It contain the arrival times for this leg of the journey. It is represented by a `Time`.
 
 ``` php
 $arrrivalTime = $transitDetails->getArrivalTime();
 ```
+
+If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
 
 ## Head sign
 

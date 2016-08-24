@@ -210,20 +210,24 @@ If you want to learn more about the duration, you can read its [documentation](/
 ### Departure time
 
 It contains the estimated time of departure for this leg. This property is only returned for transit direction. It is 
-represented by the `DateTime`.
+represented by the `Time`.
 
 ``` php
 $departureTime = $leg->getDepartureTime();
 ```
 
+If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
+
 ### Arrival time
 
 It contains the estimated time of arrival for this leg. This property is only returned for transit direction. It is 
-represented by the `DateTime`.
+represented by the `Time`.
 
 ``` php
 $arrivalTime = $leg->getArrivalTime();
 ```
+
+If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
 
 ### Start location
 

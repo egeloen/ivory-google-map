@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response\Transit;
 
+use Ivory\GoogleMap\Service\Base\Time;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitStop;
@@ -71,7 +72,7 @@ class DirectionTransitDetailsTest extends \PHPUnit_Framework_TestCase
 
     public function testDepartureTime()
     {
-        $this->transitDetails->setDepartureTime($departureTime = new \DateTime());
+        $this->transitDetails->setDepartureTime($departureTime = $this->createTimeMock());
 
         $this->assertTrue($this->transitDetails->hasDepartureTime());
         $this->assertSame($departureTime, $this->transitDetails->getDepartureTime());
@@ -79,7 +80,7 @@ class DirectionTransitDetailsTest extends \PHPUnit_Framework_TestCase
 
     public function testArrivalTime()
     {
-        $this->transitDetails->setArrivalTime($arrivalTime = new \DateTime());
+        $this->transitDetails->setArrivalTime($arrivalTime = $this->createTimeMock());
 
         $this->assertTrue($this->transitDetails->hasArrivalTime());
         $this->assertSame($arrivalTime, $this->transitDetails->getArrivalTime());
@@ -131,5 +132,13 @@ class DirectionTransitDetailsTest extends \PHPUnit_Framework_TestCase
     private function createTransitLineMock()
     {
         return $this->createMock(DirectionTransitLine::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Time
+     */
+    private function createTimeMock()
+    {
+        return $this->createMock(Time::class);
     }
 }

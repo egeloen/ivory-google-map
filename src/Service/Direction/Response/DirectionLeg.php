@@ -14,6 +14,7 @@ namespace Ivory\GoogleMap\Service\Direction\Response;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Base\Time;
 
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#DirectionLeg
@@ -38,12 +39,12 @@ class DirectionLeg
     private $durationInTraffic;
 
     /**
-     * @var \DateTime|null
+     * @var Time|null
      */
     private $arrivalTime;
 
     /**
-     * @var \DateTime|null
+     * @var Time|null
      */
     private $departureTime;
 
@@ -158,7 +159,7 @@ class DirectionLeg
     }
 
     /**
-     * @return \DateTime|null
+     * @return Time|null
      */
     public function getArrivalTime()
     {
@@ -166,9 +167,9 @@ class DirectionLeg
     }
 
     /**
-     * @param \DateTime|null $arrivalTime
+     * @param Time|null $arrivalTime
      */
-    public function setArrivalTime(\DateTime $arrivalTime = null)
+    public function setArrivalTime(Time $arrivalTime = null)
     {
         $this->arrivalTime = $arrivalTime;
     }
@@ -182,7 +183,7 @@ class DirectionLeg
     }
 
     /**
-     * @return \DateTime|null
+     * @return Time|null
      */
     public function getDepartureTime()
     {
@@ -190,9 +191,9 @@ class DirectionLeg
     }
 
     /**
-     * @param \DateTime|null $departureTime
+     * @param Time|null $departureTime
      */
-    public function setDepartureTime(\DateTime $departureTime = null)
+    public function setDepartureTime(Time $departureTime = null)
     {
         $this->departureTime = $departureTime;
     }
