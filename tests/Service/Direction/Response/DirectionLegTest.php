@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
+use Ivory\GoogleMap\Service\Base\Time;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionLeg;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStep;
 
@@ -114,7 +115,7 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
 
     public function testDepartureTime()
     {
-        $this->leg->setDepartureTime($departureTime = new \DateTime());
+        $this->leg->setDepartureTime($departureTime = $this->createTimeMock());
 
         $this->assertTrue($this->leg->hasDepartureTime());
         $this->assertSame($departureTime, $this->leg->getDepartureTime());
@@ -122,7 +123,7 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
 
     public function testResetDepartureTime()
     {
-        $this->leg->setDepartureTime(new \DateTime());
+        $this->leg->setDepartureTime($this->createTimeMock());
         $this->leg->setDepartureTime(null);
 
         $this->assertFalse($this->leg->hasDepartureTime());
@@ -131,7 +132,7 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
 
     public function testArrivalTime()
     {
-        $this->leg->setArrivalTime($arrivalTime = new \DateTime());
+        $this->leg->setArrivalTime($arrivalTime = $this->createTimeMock());
 
         $this->assertTrue($this->leg->hasArrivalTime());
         $this->assertSame($arrivalTime, $this->leg->getArrivalTime());
@@ -139,7 +140,7 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
 
     public function testResetArrivalTime()
     {
-        $this->leg->setArrivalTime(new \DateTime());
+        $this->leg->setArrivalTime($this->createTimeMock());
         $this->leg->setArrivalTime(null);
 
         $this->assertFalse($this->leg->hasArrivalTime());
@@ -282,6 +283,14 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
     private function createCoordinateMock()
     {
         return $this->createMock(Coordinate::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Time
+     */
+    private function createTimeMock()
+    {
+        return $this->createMock(Time::class);
     }
 
     /**

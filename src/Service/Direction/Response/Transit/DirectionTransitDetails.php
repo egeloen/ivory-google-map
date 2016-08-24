@@ -11,6 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\Direction\Response\Transit;
 
+use Ivory\GoogleMap\Service\Base\Time;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -27,12 +29,12 @@ class DirectionTransitDetails
     private $arrivalStop;
 
     /**
-     * @var \DateTime|null
+     * @var Time|null
      */
     private $departureTime;
 
     /**
-     * @var \DateTime|null
+     * @var Time|null
      */
     private $arrivalTime;
 
@@ -113,7 +115,7 @@ class DirectionTransitDetails
     }
 
     /**
-     * @return \DateTime|null
+     * @return Time|null
      */
     public function getDepartureTime()
     {
@@ -121,9 +123,9 @@ class DirectionTransitDetails
     }
 
     /**
-     * @param \DateTime|null $departureTime
+     * @param Time|null $departureTime
      */
-    public function setDepartureTime(\DateTime $departureTime = null)
+    public function setDepartureTime(Time $departureTime = null)
     {
         $this->departureTime = $departureTime;
     }
@@ -137,7 +139,7 @@ class DirectionTransitDetails
     }
 
     /**
-     * @return \DateTime|null
+     * @return Time|null
      */
     public function getArrivalTime()
     {
@@ -145,9 +147,9 @@ class DirectionTransitDetails
     }
 
     /**
-     * @param \DateTime|null $arrivalTime
+     * @param Time|null $arrivalTime
      */
-    public function setArrivalTime(\DateTime $arrivalTime = null)
+    public function setArrivalTime(Time $arrivalTime = null)
     {
         $this->arrivalTime = $arrivalTime;
     }
