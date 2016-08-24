@@ -7,28 +7,19 @@ process is known as "reverse geocoding".
 
 ## Dependencies
 
-The Geocoder API uses [Geocoder](http://github.com/willdurand/Geocoder) which is the most popular PHP Geocoder. So, 
-first, I recommend you to read its documentation. To install it, read this [documentation](/doc/installation.md).
-
-It also requires an http client and so, the library relies on [Httplug](http://httplug.io/) which is an http 
-client abstraction library. To install it, read this [documentation](/doc/installation.md).
-
-## Why an other Geocoder?
-
-The Geocoder shipped with the library is not an other Geocoder but an extension of the most popular 
-[Geocoder](http://github.com/willdurand/Geocoder). The main difference is instead of giving you a typical response, 
-it returns a custom once wrapping Ivory objects allowing you to more easily reuse them. 
+The Geocoder API requires an http client and so, the library relies on [Httplug](http://httplug.io/) which is an 
+http client abstraction library. To install it, read this [documentation](/doc/installation.md).
 
 ## Build
 
 First of all, if you want to geocode a position, you will need to build a geocoder provider. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderProvider;
+use Ivory\GoogleMap\Service\Geocoder\Geocoder;
 use Http\Adapter\Guzzle6\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 
-$geocoder = new GeocoderProvider(new Client(), new GuzzleMessageFactory());
+$geocoder = new Geocoder(new Client(), new GuzzleMessageFactory());
 ```
 
 The geocoder provider constructor requires an `HttpClient` as first argument and a `MessageFactory` as second argument. 
@@ -43,9 +34,10 @@ All services works the same way, so, if you want to learn more about it, you can
 Once you have built you geocoder provider, you can geocode a position or an address:
 
 ``` php
-$response = $geocoder->geocode('1600 Amphitheatre Parkway, Mountain View, CA');
-// or
-$response = $geocoder->reverse(48.865475, 2.321118);
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
+
+$request = new GeocoderAddressRequest('1600 Amphitheatre Parkway, Mountain View, CA');
+$response = $geocoder->geocode($request);
 ```
 
 The geocoder provider allows you to geocoder a much more advance request. If you want to learn more about it, you can 
