@@ -17,11 +17,11 @@ http client abstraction library. To install it, read this [documentation](/doc/i
 First of all, if you want to process a distance matrix, you will need to build a distance matrix service. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrix;
+use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixService;
 use Http\Adapter\Guzzle6\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 
-$distanceMatrix = new DistanceMatrix(new Client(), new GuzzleMessageFactory());
+$distanceMatrix = new DistanceMatrixService(new Client(), new GuzzleMessageFactory());
 ```
 
 The distance matrix constructor requires an `HttpClient` as first argument and a `MessageFactory` as second argument. 

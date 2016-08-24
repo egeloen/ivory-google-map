@@ -15,11 +15,11 @@ client abstraction library. To install it, read this [documentation](/doc/instal
 First of all, if you want to route a direction, you will need to build a direction service. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\Direction\Direction;
+use Ivory\GoogleMap\Service\Direction\DirectionService;
 use Http\Adapter\Guzzle6\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 
-$direction = new Direction(new Client(), new GuzzleMessageFactory());
+$direction = new DirectionService(new Client(), new GuzzleMessageFactory());
 ```
 
 The direction constructor requires an `HttpClient` as first argument and a `MessageFactory` as second argument. Here, 

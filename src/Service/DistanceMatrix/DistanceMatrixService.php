@@ -25,7 +25,7 @@ use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrix extends AbstractService
+class DistanceMatrixService extends AbstractService
 {
     /**
      * @param HttpClient     $client

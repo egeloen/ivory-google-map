@@ -20,7 +20,7 @@ use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrix;
+use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixService;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixStatus;
 use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
@@ -31,10 +31,10 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixTest extends AbstractServiceTest
+class DistanceMatrixServiceTest extends AbstractServiceTest
 {
     /**
-     * @var DistanceMatrix
+     * @var DistanceMatrixService
      */
     private $distanceMatrix;
 
@@ -47,7 +47,7 @@ class DistanceMatrixTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->distanceMatrix = new DistanceMatrix($this->getClient(), $this->getMessageFactory());
+        $this->distanceMatrix = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
     }
 
     public function testProcess()
@@ -180,7 +180,7 @@ class DistanceMatrixTest extends AbstractServiceTest
     public function testProcessWithXmlFormat()
     {
         $request = $this->createRequest();
-        $this->distanceMatrix->setFormat(DistanceMatrix::FORMAT_XML);
+        $this->distanceMatrix->setFormat(DistanceMatrixService::FORMAT_XML);
 
         $response = $this->distanceMatrix->process($request);
 
@@ -192,7 +192,7 @@ class DistanceMatrixTest extends AbstractServiceTest
 
     public function testRouteWithKey()
     {
-        $this->distanceMatrix = new DistanceMatrix(
+        $this->distanceMatrix = new DistanceMatrixService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -242,7 +242,7 @@ class DistanceMatrixTest extends AbstractServiceTest
 
     public function testRouteWithBusinessAccount()
     {
-        $this->distanceMatrix = new DistanceMatrix(
+        $this->distanceMatrix = new DistanceMatrixService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );

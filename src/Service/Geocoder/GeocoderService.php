@@ -25,7 +25,7 @@ use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Geocoder extends AbstractService
+class GeocoderService extends AbstractService
 {
     /**
      * @param HttpClient     $client

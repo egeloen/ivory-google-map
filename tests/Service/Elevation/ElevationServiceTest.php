@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service\Elevation;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
-use Ivory\GoogleMap\Service\Elevation\Elevation;
+use Ivory\GoogleMap\Service\Elevation\ElevationService;
 use Ivory\GoogleMap\Service\Elevation\Request\PathElevationRequest;
 use Ivory\GoogleMap\Service\Elevation\Request\PositionalElevationRequest;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationStatus;
@@ -23,10 +23,10 @@ use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ElevationTest extends AbstractServiceTest
+class ElevationServiceTest extends AbstractServiceTest
 {
     /**
-     * @var Elevation
+     * @var ElevationService
      */
     private $elevation;
 
@@ -43,7 +43,7 @@ class ElevationTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->elevation = new Elevation($this->getClient(), $this->getMessageFactory());
+        $this->elevation = new ElevationService($this->getClient(), $this->getMessageFactory());
         $this->elevation->setKey($_SERVER['API_KEY']);
     }
 

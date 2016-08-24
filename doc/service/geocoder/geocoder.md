@@ -15,11 +15,11 @@ http client abstraction library. To install it, read this [documentation](/doc/i
 First of all, if you want to geocode a position, you will need to build a geocoder provider. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\Geocoder;
+use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
 use Http\Adapter\Guzzle6\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 
-$geocoder = new Geocoder(new Client(), new GuzzleMessageFactory());
+$geocoder = new GeocoderService(new Client(), new GuzzleMessageFactory());
 ```
 
 The geocoder provider constructor requires an `HttpClient` as first argument and a `MessageFactory` as second argument. 

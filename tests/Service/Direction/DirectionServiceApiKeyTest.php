@@ -12,7 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\Direction;
 
 use Ivory\GoogleMap\Service\Base\Location\PlaceIdLocation;
-use Ivory\GoogleMap\Service\Direction\Direction;
+use Ivory\GoogleMap\Service\Direction\DirectionService;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequest;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionWaypoint;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStatus;
@@ -21,10 +21,10 @@ use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionApiKeyTest extends AbstractServiceTest
+class DirectionServiceApiKeyTest extends AbstractServiceTest
 {
     /**
-     * @var Direction
+     * @var DirectionService
      */
     private $directions;
 
@@ -41,7 +41,7 @@ class DirectionApiKeyTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->directions = new Direction($this->getClient(), $this->getMessageFactory());
+        $this->directions = new DirectionService($this->getClient(), $this->getMessageFactory());
         $this->directions->setKey($_SERVER['API_KEY']);
     }
 

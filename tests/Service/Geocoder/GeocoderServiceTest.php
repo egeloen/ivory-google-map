@@ -16,7 +16,7 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\GoogleMap\Service\Geocoder\Geocoder;
+use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
@@ -30,10 +30,10 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderTest extends AbstractServiceTest
+class GeocoderServiceTest extends AbstractServiceTest
 {
     /**
-     * @var Geocoder
+     * @var GeocoderService
      */
     private $geocoder;
 
@@ -46,7 +46,7 @@ class GeocoderTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->geocoder = new Geocoder($this->getClient(), $this->getMessageFactory());
+        $this->geocoder = new GeocoderService($this->getClient(), $this->getMessageFactory());
     }
 
     public function testGeocodeAddress()
@@ -136,7 +136,7 @@ class GeocoderTest extends AbstractServiceTest
 
     public function testGeocodeWithXmlFormat()
     {
-        $this->geocoder->setFormat(Geocoder::FORMAT_XML);
+        $this->geocoder->setFormat(GeocoderService::FORMAT_XML);
 
         $response = $this->geocoder->geocode($this->createRequest());
 
@@ -146,7 +146,7 @@ class GeocoderTest extends AbstractServiceTest
 
     public function testGeocodeWithKey()
     {
-        $this->geocoder = new Geocoder(
+        $this->geocoder = new GeocoderService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -194,7 +194,7 @@ class GeocoderTest extends AbstractServiceTest
 
     public function testGeocodeWithBusinessAccount()
     {
-        $this->geocoder = new Geocoder(
+        $this->geocoder = new GeocoderService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
