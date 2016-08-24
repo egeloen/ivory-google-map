@@ -22,7 +22,7 @@ use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Elevation extends AbstractService
+class ElevationService extends AbstractService
 {
     /**
      * @param HttpClient     $client

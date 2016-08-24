@@ -17,7 +17,7 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneStatus;
-use Ivory\GoogleMap\Service\TimeZone\TimeZone;
+use Ivory\GoogleMap\Service\TimeZone\TimeZoneService;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -25,10 +25,10 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TimeZoneTest extends AbstractServiceTest
+class TimeZoneServiceTest extends AbstractServiceTest
 {
     /**
-     * @var TimeZone
+     * @var TimeZoneService
      */
     private $timeZone;
 
@@ -41,7 +41,7 @@ class TimeZoneTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->timeZone = new TimeZone($this->getClient(), $this->getMessageFactory());
+        $this->timeZone = new TimeZoneService($this->getClient(), $this->getMessageFactory());
     }
 
     public function testHttps()
@@ -88,7 +88,7 @@ class TimeZoneTest extends AbstractServiceTest
     public function testProcessWithXmlFormat()
     {
         $request = $this->createRequest();
-        $this->timeZone->setFormat(TimeZone::FORMAT_XML);
+        $this->timeZone->setFormat(TimeZoneService::FORMAT_XML);
 
         $response = $this->timeZone->process($request);
 
@@ -101,7 +101,7 @@ class TimeZoneTest extends AbstractServiceTest
 
     public function testProcessWithApiKey()
     {
-        $this->timeZone = new TimeZone(
+        $this->timeZone = new TimeZoneService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -152,7 +152,7 @@ class TimeZoneTest extends AbstractServiceTest
 
     public function testProcessWithBusinessAccount()
     {
-        $this->timeZone = new TimeZone(
+        $this->timeZone = new TimeZoneService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );

@@ -36,7 +36,7 @@ use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Direction extends AbstractService
+class DirectionService extends AbstractService
 {
     /**
      * @param HttpClient     $client

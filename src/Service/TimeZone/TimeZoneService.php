@@ -20,7 +20,7 @@ use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TimeZone extends AbstractService
+class TimeZoneService extends AbstractService
 {
     /**
      * @param HttpClient     $client

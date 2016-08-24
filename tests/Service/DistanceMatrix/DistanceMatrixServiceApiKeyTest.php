@@ -12,7 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
 use Ivory\GoogleMap\Service\Base\Location\PlaceIdLocation;
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrix;
+use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixService;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixStatus;
 use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
@@ -20,10 +20,10 @@ use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixApiKeyTest extends AbstractServiceTest
+class DistanceMatrixServiceApiKeyTest extends AbstractServiceTest
 {
     /**
-     * @var DistanceMatrix
+     * @var DistanceMatrixService
      */
     private $distanceMatrix;
 
@@ -40,7 +40,7 @@ class DistanceMatrixApiKeyTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->distanceMatrix = new DistanceMatrix($this->getClient(), $this->getMessageFactory());
+        $this->distanceMatrix = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
         $this->distanceMatrix->setKey($_SERVER['API_KEY']);
     }
 

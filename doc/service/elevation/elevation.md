@@ -14,11 +14,11 @@ http client abstraction library. To install it, read this [documentation](/doc/i
 First of all, if you want to process an elevation, you will need to build an elevation service. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\Elevation\Elevation;
+use Ivory\GoogleMap\Service\Elevation\ElevationService;
 use Http\Adapter\Guzzle6\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 
-$elevation = new Elevation(new Client(), new GuzzleMessageFactory());
+$elevation = new ElevationService(new Client(), new GuzzleMessageFactory());
 ```
 
 The elevation constructor requires an `HttpClient` as first argument and a `MessageFactory` as second argument. 

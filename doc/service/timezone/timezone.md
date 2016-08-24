@@ -13,11 +13,11 @@ client abstraction library. To install it, read this [documentation](/doc/instal
 First of all, if you want to process a timezone, you will need to build a timezone service. So let's go:
 
 ``` php
-use Ivory\GoogleMap\Service\TimeZone\TimeZone;
+use Ivory\GoogleMap\Service\TimeZone\TimeZoneService;
 use Http\Adapter\Guzzle6\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 
-$timeZone = new TimeZone(new Client(), new GuzzleMessageFactory());
+$timeZone = new TimeZoneService(new Client(), new GuzzleMessageFactory());
 ```
 
 The timezone constructor requires an `HttpClient` as first argument and a `MessageFactory` as second argument. Here, 

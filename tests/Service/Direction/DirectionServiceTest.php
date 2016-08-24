@@ -20,7 +20,7 @@ use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\GoogleMap\Service\Direction\Direction;
+use Ivory\GoogleMap\Service\Direction\DirectionService;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequest;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionWaypoint;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStatus;
@@ -32,10 +32,10 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionTest extends AbstractServiceTest
+class DirectionServiceTest extends AbstractServiceTest
 {
     /**
-     * @var Direction
+     * @var DirectionService
      */
     private $directions;
 
@@ -48,7 +48,7 @@ class DirectionTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->directions = new Direction($this->getClient(), $this->getMessageFactory());
+        $this->directions = new DirectionService($this->getClient(), $this->getMessageFactory());
     }
 
     public function testRoute()
@@ -239,7 +239,7 @@ class DirectionTest extends AbstractServiceTest
     {
         $request = $this->createRequest();
 
-        $this->directions->setFormat(Direction::FORMAT_XML);
+        $this->directions->setFormat(DirectionService::FORMAT_XML);
         $response = $this->directions->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
@@ -248,7 +248,7 @@ class DirectionTest extends AbstractServiceTest
 
     public function testRouteWithKey()
     {
-        $this->directions = new Direction(
+        $this->directions = new DirectionService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -296,7 +296,7 @@ class DirectionTest extends AbstractServiceTest
 
     public function testRouteWithBusinessAccount()
     {
-        $this->directions = new Direction(
+        $this->directions = new DirectionService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
