@@ -169,12 +169,18 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     private function buildResult(array $data)
     {
         $result = new GeocoderResult();
-        $result->setPlaceId($data['place_id']);
         $result->setAddresses($this->buildAddresses($data['address_components']));
-        $result->setFormattedAddress($data['formatted_address']);
         $result->setGeometry($this->buildGeometry($data['geometry']));
-        $result->setTypes(isset($data['types']) ? $data['types'] : []);
-        $result->setPartialMatch(isset($data['partial_match']) ? $data['partial_match'] : null);
+        $result->setPlaceId($data['place_id']);
+        $result->setFormattedAddress($data['formatted_address']);
+
+        if (isset($data['types'])) {
+            $result->setTypes($data['types']);
+        }
+
+        if (isset($data['partial_match'])) {
+            $result->setPartialMatch($data['partial_match']);
+        }
 
         return $result;
     }
@@ -188,8 +194,8 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     {
         $addresses = [];
 
-        foreach ($data as $item) {
-            $addresses[] = $this->buildAddress($item);
+        foreach ($data as $address) {
+            $addresses[] = $this->buildAddress($address);
         }
 
         return $addresses;
@@ -218,10 +224,13 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     private function buildGeometry(array $data)
     {
         $geometry = new GeocoderGeometry();
-        $geometry->setBound(isset($data['bounds']) ? $this->buildBound($data['bounds']) : null);
         $geometry->setLocation($this->buildCoordinate($data['location']));
-        $geometry->setLocationType($data['location_type']);
         $geometry->setViewport($this->buildBound($data['viewport']));
+        $geometry->setLocationType($data['location_type']);
+
+        if (isset($data['bounds'])) {
+            $geometry->setBound($this->buildBound($data['bounds']));
+        }
 
         return $geometry;
     }

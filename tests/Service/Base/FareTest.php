@@ -24,44 +24,57 @@ class FareTest extends \PHPUnit_Framework_TestCase
     private $fare;
 
     /**
+     * @var float
+     */
+    private $value;
+
+    /**
+     * @var string
+     */
+    private $currency;
+
+    /**
+     * @var string
+     */
+    private $text;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->fare = new Fare();
+        $this->fare = new Fare(
+            $this->value = 123.4,
+            $this->currency = 'EUR',
+            $this->text = '123.4€'
+        );
     }
 
     public function testDefaultState()
     {
-        $this->assertFalse($this->fare->hasCurrency());
-        $this->assertNull($this->fare->getCurrency());
-        $this->assertFalse($this->fare->hasValue());
-        $this->assertNull($this->fare->getValue());
-        $this->assertFalse($this->fare->hasText());
-        $this->assertNull($this->fare->getText());
-    }
-
-    public function testCurrency()
-    {
-        $this->fare->setCurrency($currency = 'EUR');
-
-        $this->assertTrue($this->fare->hasCurrency());
-        $this->assertSame($currency, $this->fare->getCurrency());
+        $this->assertSame($this->value, $this->fare->getValue());
+        $this->assertSame($this->currency, $this->fare->getCurrency());
+        $this->assertSame($this->text, $this->fare->getText());
     }
 
     public function testValue()
     {
         $this->fare->setValue($value = 123.45);
 
-        $this->assertTrue($this->fare->hasValue());
         $this->assertSame($value, $this->fare->getValue());
+    }
+
+    public function testCurrency()
+    {
+        $this->fare->setCurrency($currency = 'USD');
+
+        $this->assertSame($currency, $this->fare->getCurrency());
     }
 
     public function testText()
     {
         $this->fare->setText($text = 'text');
 
-        $this->assertTrue($this->fare->hasText());
         $this->assertSame($text, $this->fare->getText());
     }
 }

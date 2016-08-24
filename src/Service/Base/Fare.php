@@ -17,54 +17,34 @@ namespace Ivory\GoogleMap\Service\Base;
 class Fare
 {
     /**
-     * @var string|null
-     */
-    private $currency;
-
-    /**
-     * @var float|null
+     * @var float
      */
     private $value;
 
     /**
-     * @var string|null
+     * @var string
+     */
+    private $currency;
+
+    /**
+     * @var string
      */
     private $text;
 
     /**
-     * @return bool
+     * @param float  $value
+     * @param string $currency
+     * @param string $text
      */
-    public function hasCurrency()
+    public function __construct($value, $currency, $text)
     {
-        return $this->currency !== null;
+        $this->setValue($value);
+        $this->setCurrency($currency);
+        $this->setText($text);
     }
 
     /**
-     * @return string|null
-     */
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-
-    /**
-     * @param string|null $currency
-     */
-    public function setCurrency($currency)
-    {
-        $this->currency = $currency;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasValue()
-    {
-        return $this->value !== null;
-    }
-
-    /**
-     * @return float|null
+     * @return float
      */
     public function getValue()
     {
@@ -72,7 +52,7 @@ class Fare
     }
 
     /**
-     * @param float|null $value
+     * @param float $value
      */
     public function setValue($value)
     {
@@ -80,15 +60,23 @@ class Fare
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function hasText()
+    public function getCurrency()
     {
-        return $this->text !== null;
+        return $this->currency;
     }
 
     /**
-     * @return string|null
+     * @param string $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    }
+
+    /**
+     * @return string
      */
     public function getText()
     {
@@ -96,7 +84,7 @@ class Fare
     }
 
     /**
-     * @param string|null $text
+     * @param string $text
      */
     public function setText($text)
     {

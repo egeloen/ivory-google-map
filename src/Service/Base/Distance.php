@@ -19,39 +19,23 @@ namespace Ivory\GoogleMap\Service\Base;
 class Distance
 {
     /**
-     * @var string
-     */
-    private $text;
-
-    /**
      * @var float
      */
     private $value;
 
     /**
-     * @param string $text
+     * @var string
+     */
+    private $text;
+
+    /**
      * @param float  $value
-     */
-    public function __construct($text, $value)
-    {
-        $this->setText($text);
-        $this->setValue($value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
      * @param string $text
      */
-    public function setText($text)
+    public function __construct($value, $text)
     {
-        $this->text = $text;
+        $this->setValue($value);
+        $this->setText($text);
     }
 
     /**
@@ -68,5 +52,21 @@ class Distance
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
     }
 }

@@ -87,15 +87,18 @@ class Direction extends AbstractService
     {
         $response = new DirectionResponse();
         $response->setStatus($data['status']);
-        $response->setRoutes(isset($data['routes']) ? $this->buildRoutes($data['routes']) : []);
 
-        $response->setGeocodedWaypoints(
-            isset($data['geocoded_waypoints']) ? $this->buildGeocodedWaypoints($data['geocoded_waypoints']) : []
-        );
+        if (isset($data['routes'])) {
+            $response->setRoutes($this->buildRoutes($data['routes']));
+        }
 
-        $response->setAvailableTravelModes(
-            isset($data['available_travel_modes']) ? $data['available_travel_modes'] : []
-        );
+        if (isset($data['geocoded_waypoints'])) {
+            $response->setGeocodedWaypoints($this->buildGeocodedWaypoints($data['geocoded_waypoints']));
+        }
+
+        if (isset($data['available_travel_modes'])) {
+            $response->setAvailableTravelModes($data['available_travel_modes']);
+        }
 
         return $response;
     }
@@ -108,8 +111,9 @@ class Direction extends AbstractService
     private function buildRoutes(array $data)
     {
         $routes = [];
-        foreach ($data as $item) {
-            $routes[] = $this->buildRoute($item);
+
+        foreach ($data as $route) {
+            $routes[] = $this->buildRoute($route);
         }
 
         return $routes;
@@ -124,13 +128,28 @@ class Direction extends AbstractService
     {
         $route = new DirectionRoute();
         $route->setBound($this->buildBound($data['bounds']));
-        $route->setCopyrights(isset($data['copyrights']) ? $data['copyrights'] : null);
         $route->setLegs($this->buildLegs($data['legs']));
         $route->setOverviewPolyline($this->buildEncodedPolyline($data['overview_polyline']));
-        $route->setSummary(isset($data['summary']) ? $data['summary'] : null);
-        $route->setFare(isset($data['fare']) ? $this->buildFare($data['fare']) : null);
-        $route->setWarnings(isset($data['warnings']) ? $data['warnings'] : []);
-        $route->setWaypointOrders(isset($data['waypoint_order']) ? $data['waypoint_order'] : []);
+
+        if (isset($data['copyrights'])) {
+            $route->setCopyrights($data['copyrights']);
+        }
+
+        if (isset($data['summary'])) {
+            $route->setSummary($data['summary']);
+        }
+
+        if (isset($data['fare'])) {
+            $route->setFare($this->buildFare($data['fare']));
+        }
+
+        if (isset($data['warnings'])) {
+            $route->setWarnings($data['warnings']);
+        }
+
+        if (isset($data['waypoint_order'])) {
+            $route->setWaypointOrders($data['waypoint_order']);
+        }
 
         return $route;
     }
@@ -142,12 +161,13 @@ class Direction extends AbstractService
      */
     private function buildGeocodedWaypoints(array $data)
     {
-        $geocodedWaypoints = [];
-        foreach ($data as $item) {
-            $geocodedWaypoints[] = $this->buildGeocodedWaypoint($item);
+        $waypoints = [];
+
+        foreach ($data as $waypoint) {
+            $waypoints[] = $this->buildGeocodedWaypoint($waypoint);
         }
 
-        return $geocodedWaypoints;
+        return $waypoints;
     }
 
     /**
@@ -159,9 +179,15 @@ class Direction extends AbstractService
     {
         $geocodedWaypoint = new DirectionGeocoded();
         $geocodedWaypoint->setStatus($data['geocoder_status']);
-        $geocodedWaypoint->setPartialMatch(isset($data['partial_match']) ? $data['partial_match'] : null);
-        $geocodedWaypoint->setPlaceId(isset($data['place_id']) ? $data['place_id'] : null);
         $geocodedWaypoint->setTypes($data['types']);
+
+        if (isset($data['place_id'])) {
+            $geocodedWaypoint->setPlaceId($data['place_id']);
+        }
+
+        if (isset($data['partial_match'])) {
+            $geocodedWaypoint->setPartialMatch($data['partial_match']);
+        }
 
         return $geocodedWaypoint;
     }
@@ -174,8 +200,9 @@ class Direction extends AbstractService
     private function buildLegs(array $data)
     {
         $legs = [];
-        foreach ($data as $item) {
-            $legs[] = $this->buildLeg($item);
+
+        foreach ($data as $leg) {
+            $legs[] = $this->buildLeg($leg);
         }
 
         return $legs;
@@ -191,36 +218,29 @@ class Direction extends AbstractService
         $leg = new DirectionLeg();
         $leg->setDistance($this->buildDistance($data['distance']));
         $leg->setDuration($this->buildDuration($data['duration']));
-        $leg->setDepartureTime(isset($data['departure_time']) ? $this->buildDateTime($data['departure_time']) : null);
-        $leg->setArrivalTime(isset($data['arrival_time']) ? $this->buildDateTime($data['arrival_time']) : null);
-        $leg->setEndAddress($data['end_address']);
+        $leg->setStartLocation($this->buildCoordinate($data['start_location']));
         $leg->setEndLocation($this->buildCoordinate($data['end_location']));
         $leg->setStartAddress($data['start_address']);
-        $leg->setStartLocation($this->buildCoordinate($data['start_location']));
+        $leg->setEndAddress($data['end_address']);
         $leg->setSteps($this->buildSteps($data['steps']));
-        $leg->setViaWaypoints(isset($data['via_waypoint']) ? $data['via_waypoint'] : []);
-        $leg->setDurationInTraffic(
-            isset($data['duration_in_traffic']) ? $this->buildDuration($data['duration_in_traffic']) : null
-        );
+
+        if (isset($data['departure_time'])) {
+            $leg->setDepartureTime($this->buildDateTime($data['departure_time']));
+        }
+
+        if (isset($data['arrival_time'])) {
+            $leg->setArrivalTime($this->buildDateTime($data['arrival_time']));
+        }
+
+        if (isset($data['via_waypoint'])) {
+            $leg->setViaWaypoints($data['via_waypoint']);
+        }
+
+        if (isset($data['duration_in_traffic'])) {
+            $leg->setDurationInTraffic($this->buildDuration($data['duration_in_traffic']));
+        }
 
         return $leg;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     *
-     * @param mixed[] $data
-     *
-     * @return Fare
-     */
-    private function buildFare(array $data)
-    {
-        $fare = new Fare();
-        $fare->setCurrency($data['currency']);
-        $fare->setValue($data['value']);
-        $fare->setText($data['text']);
-
-        return $fare;
     }
 
     /**
@@ -231,8 +251,9 @@ class Direction extends AbstractService
     private function buildSteps(array $data)
     {
         $steps = [];
-        foreach ($data as $item) {
-            $steps[] = $this->buildStep($item);
+
+        foreach ($data as $step) {
+            $steps[] = $this->buildStep($step);
         }
 
         return $steps;
@@ -249,13 +270,14 @@ class Direction extends AbstractService
         $step->setDistance($this->buildDistance($data['distance']));
         $step->setDuration($this->buildDuration($data['duration']));
         $step->setEndLocation($this->buildCoordinate($data['end_location']));
-        $step->setInstructions($data['html_instructions']);
         $step->setEncodedPolyline($this->buildEncodedPolyline($data['polyline']));
         $step->setStartLocation($this->buildCoordinate($data['start_location']));
+        $step->setInstructions($data['html_instructions']);
         $step->setTravelMode($data['travel_mode']);
-        $step->setTransitDetails(
-            isset($data['transit_details']) ? $this->buildTransitDetails($data['transit_details']) : null
-        );
+
+        if (isset($data['transit_details'])) {
+            $step->setTransitDetails($this->buildTransitDetails($data['transit_details']));
+        }
 
         return $step;
     }
@@ -272,10 +294,13 @@ class Direction extends AbstractService
         $transitDetails->setArrivalStop($this->buildTransitStop($data['arrival_stop']));
         $transitDetails->setDepartureTime($this->buildDateTime($data['departure_time']));
         $transitDetails->setArrivalTime($this->buildDateTime($data['arrival_time']));
-        $transitDetails->setHeadSign($data['headsign']);
-        $transitDetails->setHeadWay(isset($data['headway']) ? $data['headway'] : null);
         $transitDetails->setLine($this->buildTransitLine($data['line']));
+        $transitDetails->setHeadSign($data['headsign']);
         $transitDetails->setNumStops($data['num_stops']);
+
+        if (isset($data['headway'])) {
+            $transitDetails->setHeadWay($data['headway']);
+        }
 
         return $transitDetails;
     }
@@ -290,12 +315,24 @@ class Direction extends AbstractService
         $transitLine = new DirectionTransitLine();
         $transitLine->setName($data['name']);
         $transitLine->setShortName($data['short_name']);
-        $transitLine->setColor(isset($data['color']) ? $data['color'] : null);
-        $transitLine->setUrl(isset($data['url']) ? $data['url'] : null);
-        $transitLine->setIcon(isset($data['icon']) ? $data['icon'] : null);
-        $transitLine->setTextColor(isset($data['text_color']) ? $data['text_color'] : null);
         $transitLine->setVehicle($this->buildTransitVehicle($data['vehicle']));
         $transitLine->setAgencies($this->buildTransitAgencies($data['agencies']));
+
+        if (isset($data['color'])) {
+            $transitLine->setColor($data['color']);
+        }
+
+        if (isset($data['url'])) {
+            $transitLine->setUrl($data['url']);
+        }
+
+        if (isset($data['icon'])) {
+            $transitLine->setIcon($data['icon']);
+        }
+
+        if (isset($data['text_color'])) {
+            $transitLine->setTextColor($data['text_color']);
+        }
 
         return $transitLine;
     }
@@ -307,13 +344,13 @@ class Direction extends AbstractService
      */
     private function buildTransitAgencies(array $data)
     {
-        $transitAgencies = [];
+        $agencies = [];
 
-        foreach ($data as $item) {
-            $transitAgencies[] = $this->buildTransitAgency($item);
+        foreach ($data as $agency) {
+            $agencies[] = $this->buildTransitAgency($agency);
         }
 
-        return $transitAgencies;
+        return $agencies;
     }
 
     /**
@@ -400,7 +437,7 @@ class Direction extends AbstractService
      */
     private function buildDistance(array $data)
     {
-        return new Distance($data['text'], $data['value']);
+        return new Distance($data['value'], $data['text']);
     }
 
     /**
@@ -410,7 +447,7 @@ class Direction extends AbstractService
      */
     private function buildDuration(array $data)
     {
-        return new Duration($data['text'], $data['value']);
+        return new Duration($data['value'], $data['text']);
     }
 
     /**
@@ -421,5 +458,15 @@ class Direction extends AbstractService
     private function buildEncodedPolyline(array $data)
     {
         return new EncodedPolyline($data['points']);
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Fare
+     */
+    private function buildFare(array $data)
+    {
+        return new Fare($data['value'], $data['currency'], $data['text']);
     }
 }
