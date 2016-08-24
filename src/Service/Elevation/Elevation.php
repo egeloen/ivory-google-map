@@ -100,7 +100,10 @@ class Elevation extends AbstractService
         $element = new ElevationResult();
         $element->setLocation($this->buildCoordinate($data['location']));
         $element->setElevation($data['elevation']);
-        $element->setResolution(isset($data['resolution']) ? $data['resolution'] : null);
+
+        if (isset($data['resolution'])) {
+            $element->setResolution($data['resolution']);
+        }
 
         return $element;
     }

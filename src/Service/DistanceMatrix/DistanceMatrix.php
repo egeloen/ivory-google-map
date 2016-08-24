@@ -93,8 +93,8 @@ class DistanceMatrix extends AbstractService
     {
         $rows = [];
 
-        foreach ($data as $item) {
-            $rows[] = $this->buildRow($item);
+        foreach ($data as $row) {
+            $rows[] = $this->buildRow($row);
         }
 
         return $rows;
@@ -107,15 +107,26 @@ class DistanceMatrix extends AbstractService
      */
     private function buildRow($data)
     {
+        $row = new DistanceMatrixRow();
+        $row->setElements($this->buildElements($data['elements']));
+
+        return $row;
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return DistanceMatrixElement[]
+     */
+    private function buildElements(array $data)
+    {
         $elements = [];
-        foreach ($data['elements'] as $element) {
+
+        foreach ($data as $element) {
             $elements[] = $this->buildElement($element);
         }
 
-        $row = new DistanceMatrixRow();
-        $row->setElements($elements);
-
-        return $row;
+        return $elements;
     }
 
     /**
@@ -127,31 +138,24 @@ class DistanceMatrix extends AbstractService
     {
         $element = new DistanceMatrixElement();
         $element->setStatus($data['status']);
-        $element->setDistance(isset($data['distance']) ? $this->buildDistance($data['distance']) : null);
-        $element->setDuration(isset($data['duration']) ? $this->buildDuration($data['duration']) : null);
-        $element->setFare(isset($data['fare']) ? $this->buildFare($data['fare']) : null);
-        $element->setDurationInTraffic(
-            isset($data['duration_in_traffic']) ? $this->buildDuration($data['duration_in_traffic']) : null
-        );
+
+        if (isset($data['distance'])) {
+            $element->setDistance($this->buildDistance($data['distance']));
+        }
+
+        if (isset($data['duration'])) {
+            $element->setDuration($this->buildDuration($data['duration']));
+        }
+
+        if (isset($data['duration_in_traffic'])) {
+            $element->setDurationInTraffic($this->buildDuration($data['duration_in_traffic']));
+        }
+
+        if (isset($data['fare'])) {
+            $element->setFare($this->buildFare($data['fare']));
+        }
 
         return $element;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     *
-     * @param mixed[] $data
-     *
-     * @return Fare
-     */
-    private function buildFare(array $data)
-    {
-        $fare = new Fare();
-        $fare->setCurrency($data['currency']);
-        $fare->setValue($data['value']);
-        $fare->setText($data['text']);
-
-        return $fare;
     }
 
     /**
@@ -161,7 +165,7 @@ class DistanceMatrix extends AbstractService
      */
     private function buildDistance(array $data)
     {
-        return new Distance($data['text'], $data['value']);
+        return new Distance($data['value'], $data['text']);
     }
 
     /**
@@ -171,6 +175,16 @@ class DistanceMatrix extends AbstractService
      */
     private function buildDuration(array $data)
     {
-        return new Duration($data['text'], $data['value']);
+        return new Duration($data['value'], $data['text']);
+    }
+
+    /**
+     * @param mixed[] $data
+     *
+     * @return Fare
+     */
+    private function buildFare(array $data)
+    {
+        return new Fare($data['value'], $data['currency'], $data['text']);
     }
 }

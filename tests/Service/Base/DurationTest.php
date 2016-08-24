@@ -24,34 +24,27 @@ class DurationTest extends \PHPUnit_Framework_TestCase
     private $duration;
 
     /**
-     * @var string
-     */
-    private $text;
-
-    /**
      * @var float
      */
     private $value;
+
+    /**
+     * @var string
+     */
+    private $text;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->duration = new Duration($this->text = 'foo', $this->value = 2.3);
+        $this->duration = new Duration($this->value = 2.3, $this->text = 'foo');
     }
 
     public function testInitialState()
     {
-        $this->assertSame($this->text, $this->duration->getText());
         $this->assertSame($this->value, $this->duration->getValue());
-    }
-
-    public function testText()
-    {
-        $this->duration->setText($text = 'bar');
-
-        $this->assertSame($text, $this->duration->getText());
+        $this->assertSame($this->text, $this->duration->getText());
     }
 
     public function testValue()
@@ -59,5 +52,12 @@ class DurationTest extends \PHPUnit_Framework_TestCase
         $this->duration->setValue($value = 3.2);
 
         $this->assertSame($value, $this->duration->getValue());
+    }
+
+    public function testText()
+    {
+        $this->duration->setText($text = 'bar');
+
+        $this->assertSame($text, $this->duration->getText());
     }
 }

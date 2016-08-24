@@ -24,34 +24,27 @@ class DistanceTest extends \PHPUnit_Framework_TestCase
     private $distance;
 
     /**
-     * @var string
-     */
-    private $text;
-
-    /**
      * @var float
      */
     private $value;
+
+    /**
+     * @var string
+     */
+    private $text;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->distance = new Distance($this->text = 'foo', $this->value = 2.3);
+        $this->distance = new Distance($this->value = 2.3, $this->text = 'foo');
     }
 
     public function testInitialState()
     {
-        $this->assertSame($this->text, $this->distance->getText());
         $this->assertSame($this->value, $this->distance->getValue());
-    }
-
-    public function testText()
-    {
-        $this->distance->setText($text = 'bar');
-
-        $this->assertSame($text, $this->distance->getText());
+        $this->assertSame($this->text, $this->distance->getText());
     }
 
     public function testValue()
@@ -59,5 +52,12 @@ class DistanceTest extends \PHPUnit_Framework_TestCase
         $this->distance->setValue($value = 3.2);
 
         $this->assertSame($value, $this->distance->getValue());
+    }
+
+    public function testText()
+    {
+        $this->distance->setText($text = 'bar');
+
+        $this->assertSame($text, $this->distance->getText());
     }
 }
