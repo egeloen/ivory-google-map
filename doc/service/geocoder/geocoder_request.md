@@ -1,16 +1,7 @@
 # Geocoder Request
 
-If you just want to geocode a simple string or a coordinate you don't need to build a request, you can directly use the 
-built-in Geocoder API:
-
-``` php
-$response = $geocoder->geocode('1600 Amphitheatre Parkway, Mountain View, CA');
-// or
-$response = $geocoder->reverse(48.865475, 2.321118);
-```
-
-This is already nice but it does not provide as much features as Google provide. The geocoder provider also supports 
-three specialized request which allows you to geocode a much more advanced location.
+Depending on what you want to geocode, you need to choose the appropriate request. The library allows you to geocode
+from an address, a coordinate or a place id.
 
 ## Address request
 

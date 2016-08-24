@@ -12,7 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\Geocoder\GeocoderProvider;
+use Ivory\GoogleMap\Service\Geocoder\Geocoder;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressType;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderPlaceIdRequest;
@@ -22,10 +22,10 @@ use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderProviderApiKeyTest extends AbstractServiceTest
+class GeocoderApiKeyTest extends AbstractServiceTest
 {
     /**
-     * @var GeocoderProvider
+     * @var Geocoder
      */
     private $geocoder;
 
@@ -42,7 +42,7 @@ class GeocoderProviderApiKeyTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->geocoder = new GeocoderProvider($this->getClient(), $this->getMessageFactory());
+        $this->geocoder = new Geocoder($this->getClient(), $this->getMessageFactory());
         $this->geocoder->setKey($_SERVER['API_KEY']);
     }
 

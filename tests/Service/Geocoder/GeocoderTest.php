@@ -16,7 +16,7 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\GoogleMap\Service\Geocoder\GeocoderProvider;
+use Ivory\GoogleMap\Service\Geocoder\Geocoder;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
@@ -30,10 +30,10 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderProviderTest extends AbstractServiceTest
+class GeocoderTest extends AbstractServiceTest
 {
     /**
-     * @var GeocoderProvider
+     * @var Geocoder
      */
     private $geocoder;
 
@@ -46,37 +46,7 @@ class GeocoderProviderTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->geocoder = new GeocoderProvider($this->getClient(), $this->getMessageFactory());
-    }
-
-    public function testLimit()
-    {
-        $this->geocoder->limit($limit = 1);
-
-        $this->assertSame($limit, $this->geocoder->getLimit());
-    }
-
-    public function testLocale()
-    {
-        $this->geocoder->setLocale($locale = 'fr');
-
-        $this->assertSame($locale, $this->geocoder->getLocale());
-    }
-
-    public function testGeocode()
-    {
-        $response = $this->geocoder->geocode('Paris');
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeIp()
-    {
-        $response = $this->geocoder->geocode('66.249.64.1');
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->geocoder = new Geocoder($this->getClient(), $this->getMessageFactory());
     }
 
     public function testGeocodeAddress()
@@ -158,7 +128,7 @@ class GeocoderProviderTest extends AbstractServiceTest
     {
         $this->geocoder->setHttps(false);
 
-        $response = $this->geocoder->geocode('Paris');
+        $response = $this->geocoder->geocode($this->createRequest());
 
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
         $this->assertNotEmpty($response->getResults());
@@ -166,29 +136,9 @@ class GeocoderProviderTest extends AbstractServiceTest
 
     public function testGeocodeWithXmlFormat()
     {
-        $this->geocoder->setFormat(GeocoderProvider::FORMAT_XML);
+        $this->geocoder->setFormat(Geocoder::FORMAT_XML);
 
-        $response = $this->geocoder->geocode('Paris');
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithLimit()
-    {
-        $this->geocoder->limit(1);
-
-        $response = $this->geocoder->geocode('Chelsea, New York, NY, USA');
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertCount(1, $response->getResults());
-    }
-
-    public function testGeocodeWithLocale()
-    {
-        $this->geocoder->setLocale('fr');
-
-        $response = $this->geocoder->geocode('Paris');
+        $response = $this->geocoder->geocode($this->createRequest());
 
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
         $this->assertNotEmpty($response->getResults());
@@ -196,7 +146,7 @@ class GeocoderProviderTest extends AbstractServiceTest
 
     public function testGeocodeWithKey()
     {
-        $this->geocoder = new GeocoderProvider(
+        $this->geocoder = new Geocoder(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -244,7 +194,7 @@ class GeocoderProviderTest extends AbstractServiceTest
 
     public function testGeocodeWithBusinessAccount()
     {
-        $this->geocoder = new GeocoderProvider(
+        $this->geocoder = new Geocoder(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -295,29 +245,6 @@ class GeocoderProviderTest extends AbstractServiceTest
 
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
         $this->assertEmpty($response->getResults());
-    }
-
-    public function testReverse()
-    {
-        $response = $this->geocoder->reverse(48.856633, 2.352254);
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testReverseWithXmlFormat()
-    {
-        $this->geocoder->setFormat(GeocoderProvider::FORMAT_XML);
-
-        $response = $this->geocoder->reverse(48.856633, 2.352254);
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testName()
-    {
-        $this->assertSame('ivory_google_map', $this->geocoder->getName());
     }
 
     /**

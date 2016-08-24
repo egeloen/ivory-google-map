@@ -11,15 +11,11 @@
 
 namespace Ivory\GoogleMap\Service\Geocoder;
 
-use Geocoder\Provider\LocaleAwareProvider;
-use Geocoder\Provider\LocaleTrait;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\AbstractService;
-use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
-use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderAddress;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderGeometry;
@@ -29,15 +25,8 @@ use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderProvider extends AbstractService implements LocaleAwareProvider
+class Geocoder extends AbstractService
 {
-    use LocaleTrait;
-
-    /**
-     * @var int|null
-     */
-    private $limit;
-
     /**
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
@@ -48,65 +37,16 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getLimit()
-    {
-        return $this->limit;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function limit($limit)
-    {
-        $this->limit = $limit;
-
-        return $this;
-    }
-
-    /**
-     * @param GeocoderRequestInterface|Coordinate|string $request
+     * @param GeocoderRequestInterface $request
      *
      * @return GeocoderResponse
      */
-    public function geocode($request)
+    public function geocode(GeocoderRequestInterface $request)
     {
-        if (!$request instanceof GeocoderRequestInterface) {
-            if ($request instanceof Coordinate) {
-                $request = new GeocoderCoordinateRequest($request);
-            } else {
-                $request = new GeocoderAddressRequest((string) $request);
-            }
-        }
-
-        if ($this->locale !== null && !$request->hasLanguage()) {
-            $request->setLanguage($this->locale);
-        }
-
         $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
         $data = $this->parse((string) $response->getBody());
 
         return $this->buildResponse($data);
-    }
-
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return GeocoderResponse
-     */
-    public function reverse($latitude, $longitude)
-    {
-        return $this->geocode(new Coordinate($latitude, $longitude));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'ivory_google_map';
     }
 
     /**
@@ -150,12 +90,8 @@ class GeocoderProvider extends AbstractService implements LocaleAwareProvider
     {
         $results = [];
 
-        foreach ($data as $index => $response) {
+        foreach ($data as $response) {
             $results[] = $this->buildResult($response);
-
-            if ($this->limit !== null && ++$index >= $this->limit) {
-                break;
-            }
         }
 
         return $results;
