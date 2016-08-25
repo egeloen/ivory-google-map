@@ -32,15 +32,15 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string   $xml
-     * @param mixed[]  $expected
-     * @param string[] $rules
+     * @param string  $data
+     * @param mixed[] $expected
+     * @param mixed[] $options
      *
      * @dataProvider parseProvider
      */
-    public function testParse($xml, array $expected, array $rules = [], $snakeToCamelCase = false)
+    public function testParse($data, array $expected, array $options = [])
     {
-        $this->assertSame($expected, $this->xmlParser->parse($xml, $rules, $snakeToCamelCase));
+        $this->assertSame($expected, $this->xmlParser->parse($data, $options));
     }
 
     /**
@@ -48,13 +48,20 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
      */
     public function parseProvider()
     {
-        $xml = '<response><foo_foo>bar</foo_foo></response>';
+        $data = '<response><foo_foo>bar</foo_foo></response>';
 
         return [
-            [$xml, ['foo_foo' => 'bar']],
-            [$xml, ['baz' => ['bar']],  ['foo_foo' => 'baz']],
-            [$xml, ['fooFoo' => 'bar'], [], true],
-            [$xml, ['fooBaz' => ['bar']], ['foo_foo' => 'foo_baz'], true],
+            [$data, ['foo_foo' => 'bar']],
+            [$data, ['baz' => ['bar']],  ['pluralization_rules' => ['foo_foo' => 'baz']]],
+            [$data, ['fooFoo' => 'bar'], ['snake_to_camel' => true]],
+            [
+                $data,
+                ['fooBaz' => ['bar']],
+                [
+                    'pluralization_rules' => ['foo_foo' => 'foo_baz'],
+                    'snake_to_camel'      => true,
+                ],
+            ],
         ];
     }
 }

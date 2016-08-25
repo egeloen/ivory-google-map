@@ -13,6 +13,8 @@ namespace Ivory\GoogleMap\Service;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
+use Ivory\GoogleMap\Service\Utility\JsonParser;
+use Ivory\GoogleMap\Service\Utility\Parser;
 use Ivory\GoogleMap\Service\Utility\XmlParser;
 use Psr\Http\Message\RequestInterface;
 
@@ -21,8 +23,8 @@ use Psr\Http\Message\RequestInterface;
  */
 abstract class AbstractService
 {
-    const FORMAT_JSON = 'json';
-    const FORMAT_XML = 'xml';
+    const FORMAT_JSON = Parser::FORMAT_JSON;
+    const FORMAT_XML = Parser::FORMAT_XML;
 
     /**
      * @var HttpClient
@@ -33,6 +35,11 @@ abstract class AbstractService
      * @var MessageFactory
      */
     private $messageFactory;
+
+    /**
+     * @var Parser
+     */
+    private $parser;
 
     /**
      * @var string
@@ -50,11 +57,6 @@ abstract class AbstractService
     private $format = self::FORMAT_JSON;
 
     /**
-     * @var XmlParser
-     */
-    private $xmlParser;
-
-    /**
      * @var string|null
      */
     private $key;
@@ -68,13 +70,21 @@ abstract class AbstractService
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
      * @param string         $url
+     * @param Parser|null    $parser
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, $url)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, $url, Parser $parser = null)
     {
+        if ($parser === null) {
+            $parser = new Parser([
+                self::FORMAT_JSON => new JsonParser(),
+                self::FORMAT_XML  => new XmlParser(),
+            ]);
+        }
+
         $this->setClient($client);
         $this->setMessageFactory($messageFactory);
         $this->setUrl($url);
-        $this->setXmlParser(new XmlParser());
+        $this->setParser($parser);
     }
 
     /**
@@ -107,6 +117,22 @@ abstract class AbstractService
     public function setMessageFactory(MessageFactory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
+    }
+
+    /**
+     * @return Parser
+     */
+    public function getParser()
+    {
+        return $this->parser;
+    }
+
+    /**
+     * @param Parser $parser
+     */
+    public function setParser(Parser $parser)
+    {
+        $this->parser = $parser;
     }
 
     /**
@@ -159,22 +185,6 @@ abstract class AbstractService
     public function setFormat($format)
     {
         $this->format = $format;
-    }
-
-    /**
-     * @return XmlParser
-     */
-    public function getXmlParser()
-    {
-        return $this->xmlParser;
-    }
-
-    /**
-     * @param XmlParser $xmlParser
-     */
-    public function setXmlParser(XmlParser $xmlParser)
-    {
-        $this->xmlParser = $xmlParser;
     }
 
     /**
@@ -243,5 +253,16 @@ abstract class AbstractService
         }
 
         return $this->messageFactory->createRequest('GET', $url);
+    }
+
+    /**
+     * @param string  $data
+     * @param mixed[] $options
+     *
+     * @return mixed[]
+     */
+    protected function parse($data, array $options = [])
+    {
+        return $this->parser->parse($data, $this->getFormat(), $options);
     }
 }

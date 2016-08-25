@@ -18,6 +18,7 @@ use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
+use Ivory\GoogleMap\Service\Utility\Parser;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -27,10 +28,11 @@ class ElevationService extends AbstractService
     /**
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
+     * @param Parser|null    $parser
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, Parser $parser = null)
     {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/elevation');
+        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/elevation', $parser);
     }
 
     /**
@@ -44,20 +46,6 @@ class ElevationService extends AbstractService
         $data = $this->parse((string) $response->getBody());
 
         return $this->buildResponse($data);
-    }
-
-    /**
-     * @param string $data
-     *
-     * @return mixed[]
-     */
-    private function parse($data)
-    {
-        if ($this->getFormat() === self::FORMAT_JSON) {
-            return json_decode($data, true);
-        }
-
-        return $this->getXmlParser()->parse($data);
     }
 
     /**

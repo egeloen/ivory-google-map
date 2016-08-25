@@ -14,70 +14,65 @@ namespace Ivory\GoogleMap\Service\Utility;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class XmlParser
+class XmlParser implements ParserInterface
 {
     /**
-     * @param string   $xml
-     * @param string[] $rules
-     * @param bool     $snakeToCamelCase
-     *
-     * @return mixed[]
+     * {@inheritdoc}
      */
-    public function parse($xml, array $rules = [], $snakeToCamelCase = false)
+    public function parse($data, array $options = [])
     {
-        return $this->pluralize(
-            json_decode(json_encode(new \SimpleXMLElement($xml)), true),
-            $rules,
-            $snakeToCamelCase
+        return $this->process(
+            json_decode(json_encode(new \SimpleXMLElement($data)), true),
+            isset($options['pluralization_rules']) ? $options['pluralization_rules'] : [],
+            isset($options['snake_to_camel']) ? $options['snake_to_camel'] : false
         );
     }
 
     /**
-     * @param mixed[]  $xml
-     * @param string[] $rules
-     * @param bool     $snakeToCamelCase
+     * @param mixed[]  $data
+     * @param string[] $pluralizationRules
+     * @param bool     $snakeToCamel
      *
      * @return mixed[]
      */
-    private function pluralize(array $xml, array $rules, $snakeToCamelCase)
+    private function process(array $data, array $pluralizationRules, $snakeToCamel)
     {
-        foreach ($xml as $attribute => $value) {
-            if (isset($rules[$attribute])) {
-                $xml[$rules[$attribute]] = $value;
-                unset($xml[$attribute]);
+        foreach ($data as $attribute => $value) {
+            if (isset($pluralizationRules[$attribute])) {
+                $data[$pluralizationRules[$attribute]] = $value;
+                unset($data[$attribute]);
 
-                $attribute = $rules[$attribute];
+                $attribute = $pluralizationRules[$attribute];
 
                 if (!is_array($value) || is_string(key($value))) {
-                    $xml[$attribute] = [$value];
+                    $data[$attribute] = [$value];
                 }
             }
 
-            if (is_array($xml[$attribute])) {
-                $xml[$attribute] = $this->pluralize($xml[$attribute], $rules, $snakeToCamelCase);
+            if (is_array($data[$attribute])) {
+                $data[$attribute] = $this->process($data[$attribute], $pluralizationRules, $snakeToCamel);
             }
 
-            if ($snakeToCamelCase
-                && is_string($attribute)
-                && ($newAttribute = $this->convertSnakeToCamelCase($attribute)) !== $attribute
+            if ($snakeToCamel && is_string($attribute)
+                && ($newAttribute = $this->snakeToCamel($attribute)) !== $attribute
             ) {
-                $xml[$newAttribute] = $xml[$attribute];
-                unset($xml[$attribute]);
+                $data[$newAttribute] = $data[$attribute];
+                unset($data[$attribute]);
             }
         }
 
-        return $xml;
+        return $data;
     }
 
     /**
-     * @param string $value
+     * @param string $data
      *
      * @return string
      */
-    private function convertSnakeToCamelCase($value)
+    private function snakeToCamel($data)
     {
         return lcfirst(implode('', array_map(function ($word) {
             return ucfirst($word);
-        }, explode('_', $value))));
+        }, explode('_', $data))));
     }
 }

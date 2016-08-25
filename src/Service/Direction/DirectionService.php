@@ -32,6 +32,7 @@ use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitStop;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle;
+use Ivory\GoogleMap\Service\Utility\Parser;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -41,10 +42,11 @@ class DirectionService extends AbstractService
     /**
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
+     * @param Parser|null    $parser
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, Parser $parser = null)
     {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/directions');
+        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/directions', $parser);
     }
 
     /**
@@ -55,28 +57,16 @@ class DirectionService extends AbstractService
     public function route(DirectionRequestInterface $request)
     {
         $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody());
+        $data = $this->parse((string) $response->getBody(), [
+            'pluralization_rules' => [
+                'leg'            => 'legs',
+                'route'          => 'routes',
+                'step'           => 'steps',
+                'waypoint_index' => 'waypoint_order',
+            ],
+        ]);
 
         return $this->buildResponse($data);
-    }
-
-    /**
-     * @param string $data
-     *
-     * @return mixed[]
-     */
-    private function parse($data)
-    {
-        if ($this->getFormat() === self::FORMAT_JSON) {
-            return json_decode($data, true);
-        }
-
-        return $this->getXmlParser()->parse($data, [
-            'leg'            => 'legs',
-            'route'          => 'routes',
-            'step'           => 'steps',
-            'waypoint_index' => 'waypoint_order',
-        ]);
     }
 
     /**

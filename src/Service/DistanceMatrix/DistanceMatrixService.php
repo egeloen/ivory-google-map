@@ -21,6 +21,7 @@ use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterfac
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixElement;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow;
+use Ivory\GoogleMap\Service\Utility\Parser;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -30,10 +31,11 @@ class DistanceMatrixService extends AbstractService
     /**
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
+     * @param Parser|null    $parser
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, Parser $parser = null)
     {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/distancematrix');
+        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/distancematrix', $parser);
     }
 
     /**
@@ -44,28 +46,16 @@ class DistanceMatrixService extends AbstractService
     public function process(DistanceMatrixRequestInterface $request)
     {
         $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody());
+        $data = $this->parse((string) $response->getBody(), [
+            'pluralization_rules' => [
+                'destination_address' => 'destination_addresses',
+                'element'             => 'elements',
+                'origin_address'      => 'origin_addresses',
+                'row'                 => 'rows',
+            ],
+        ]);
 
         return $this->buildResponse($data);
-    }
-
-    /**
-     * @param string $data
-     *
-     * @return mixed[]
-     */
-    private function parse($data)
-    {
-        if ($this->getFormat() === self::FORMAT_JSON) {
-            return json_decode($data, true);
-        }
-
-        return $this->getXmlParser()->parse($data, [
-            'destination_address' => 'destination_addresses',
-            'element'             => 'elements',
-            'origin_address'      => 'origin_addresses',
-            'row'                 => 'rows',
-        ]);
     }
 
     /**
