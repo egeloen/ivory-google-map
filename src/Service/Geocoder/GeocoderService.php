@@ -21,6 +21,7 @@ use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderAddress;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderGeometry;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
+use Ivory\GoogleMap\Service\Utility\Parser;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -30,10 +31,11 @@ class GeocoderService extends AbstractService
     /**
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
+     * @param Parser|null    $parser
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, Parser $parser = null)
     {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/geocode');
+        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/geocode', $parser);
     }
 
     /**
@@ -44,27 +46,15 @@ class GeocoderService extends AbstractService
     public function geocode(GeocoderRequestInterface $request)
     {
         $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody());
+        $data = $this->parse((string) $response->getBody(), [
+            'pluralization_rules' => [
+                'address_component' => 'address_components',
+                'type'              => 'types',
+                'result'            => 'results',
+            ],
+        ]);
 
         return $this->buildResponse($data);
-    }
-
-    /**
-     * @param string $data
-     *
-     * @return mixed[]
-     */
-    private function parse($data)
-    {
-        if ($this->getFormat() === self::FORMAT_JSON) {
-            return json_decode($data, true);
-        }
-
-        return $this->getXmlParser()->parse($data, [
-            'address_component' => 'address_components',
-            'type'              => 'types',
-            'result'            => 'results',
-        ]);
     }
 
     /**
