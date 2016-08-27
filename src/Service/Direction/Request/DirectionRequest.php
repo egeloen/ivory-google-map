@@ -531,11 +531,11 @@ class DirectionRequest implements DirectionRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         $query = [
-            'origin'      => $this->origin->build(),
-            'destination' => $this->destination->build(),
+            'origin'      => $this->origin->buildQuery(),
+            'destination' => $this->destination->buildQuery(),
         ];
 
         if ($this->hasDepartureTime()) {
@@ -554,7 +554,7 @@ class DirectionRequest implements DirectionRequestInterface
             }
 
             foreach ($this->waypoints as $waypoint) {
-                $waypoints[] = ($waypoint->getStopover() ? 'via:' : '').$waypoint->getLocation()->build();
+                $waypoints[] = ($waypoint->getStopover() ? 'via:' : '').$waypoint->getLocation()->buildQuery();
             }
 
             $query['waypoints'] = implode('|', $waypoints);

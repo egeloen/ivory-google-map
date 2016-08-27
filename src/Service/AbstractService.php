@@ -13,19 +13,13 @@ namespace Ivory\GoogleMap\Service;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\Utility\JsonParser;
-use Ivory\GoogleMap\Service\Utility\Parser;
-use Ivory\GoogleMap\Service\Utility\XmlParser;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface as PsrRequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 abstract class AbstractService
 {
-    const FORMAT_JSON = Parser::FORMAT_JSON;
-    const FORMAT_XML = Parser::FORMAT_XML;
-
     /**
      * @var HttpClient
      */
@@ -37,11 +31,6 @@ abstract class AbstractService
     private $messageFactory;
 
     /**
-     * @var Parser
-     */
-    private $parser;
-
-    /**
      * @var string
      */
     private $url;
@@ -50,11 +39,6 @@ abstract class AbstractService
      * @var bool
      */
     private $https = true;
-
-    /**
-     * @var string
-     */
-    private $format = self::FORMAT_JSON;
 
     /**
      * @var string|null
@@ -70,21 +54,12 @@ abstract class AbstractService
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
      * @param string         $url
-     * @param Parser|null    $parser
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, $url, Parser $parser = null)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, $url)
     {
-        if ($parser === null) {
-            $parser = new Parser([
-                self::FORMAT_JSON => new JsonParser(),
-                self::FORMAT_XML  => new XmlParser(),
-            ]);
-        }
-
         $this->setClient($client);
         $this->setMessageFactory($messageFactory);
         $this->setUrl($url);
-        $this->setParser($parser);
     }
 
     /**
@@ -117,22 +92,6 @@ abstract class AbstractService
     public function setMessageFactory(MessageFactory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
-    }
-
-    /**
-     * @return Parser
-     */
-    public function getParser()
-    {
-        return $this->parser;
-    }
-
-    /**
-     * @param Parser $parser
-     */
-    public function setParser(Parser $parser)
-    {
-        $this->parser = $parser;
     }
 
     /**
@@ -169,22 +128,6 @@ abstract class AbstractService
     public function setHttps($https)
     {
         $this->https = $https;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * @param string $format
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
     }
 
     /**
@@ -236,17 +179,19 @@ abstract class AbstractService
     }
 
     /**
-     * @param string[] $query
+     * @param RequestInterface $request
      *
-     * @return RequestInterface
+     * @return PsrRequestInterface
      */
-    protected function createRequest(array $query)
+    protected function createRequest(RequestInterface $request)
     {
+        $query = $request->buildQuery();
+
         if ($this->hasKey()) {
             $query['key'] = $this->key;
         }
 
-        $url = $this->getUrl().'/'.$this->getFormat().'?'.http_build_query($query, '', '&');
+        $url = $this->createUrl($request).'?'.http_build_query($query, '', '&');
 
         if ($this->hasBusinessAccount()) {
             $url = $this->businessAccount->signUrl($url);
@@ -256,13 +201,18 @@ abstract class AbstractService
     }
 
     /**
-     * @param string  $data
-     * @param mixed[] $options
+     * @param RequestInterface $request
      *
-     * @return mixed[]
+     * @return string
      */
-    protected function parse($data, array $options = [])
+    protected function createUrl(RequestInterface $request)
     {
-        return $this->parser->parse($data, $this->getFormat(), $options);
+        $url = $this->getUrl();
+
+        if ($request instanceof ContextualizedRequestInterface) {
+            $url .= '/'.$request->buildContext();
+        }
+
+        return $url;
     }
 }

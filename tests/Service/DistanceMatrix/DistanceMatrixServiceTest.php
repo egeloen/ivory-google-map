@@ -36,7 +36,7 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
     /**
      * @var DistanceMatrixService
      */
-    private $distanceMatrix;
+    private $service;
 
     /**
      * {@inheritdoc}
@@ -47,14 +47,15 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->distanceMatrix = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
+        $this->service = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
     }
 
     public function testProcess()
     {
-        $response = $this->distanceMatrix->process($this->createRequest());
+        $response = $this->service->process($request = $this->createRequest());
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -62,12 +63,15 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
 
     public function testProcessWithCoordinates()
     {
-        $response = $this->distanceMatrix->process(new DistanceMatrixRequest(
+        $request = new DistanceMatrixRequest(
             [new CoordinateLocation(new Coordinate(49.262428, -123.113136))],
             [new CoordinateLocation(new Coordinate(37.775328, -122.418938))]
-        ));
+        );
+
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -78,9 +82,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setDepartureTime($this->getDepartureTime());
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -91,9 +96,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setArrivalTime($this->getArrivalTime());
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -104,9 +110,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setTravelMode(TravelMode::BICYCLING);
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -117,9 +124,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setAvoid(Avoid::HIGHWAYS);
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -130,9 +138,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setRegion('en');
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -143,9 +152,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setUnitSystem(UnitSystem::METRIC);
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -156,9 +166,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setLanguage('fr');
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -167,11 +178,12 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
     public function testProcessWithHttp()
     {
         $request = $this->createRequest();
-        $this->distanceMatrix->setHttps(false);
+        $this->service->setHttps(false);
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -180,11 +192,12 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
     public function testProcessWithXmlFormat()
     {
         $request = $this->createRequest();
-        $this->distanceMatrix->setFormat(DistanceMatrixService::FORMAT_XML);
+        $this->service->setFormat(DistanceMatrixService::FORMAT_XML);
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());
@@ -192,17 +205,17 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
 
     public function testRouteWithKey()
     {
-        $this->distanceMatrix = new DistanceMatrixService(
+        $this->service = new DistanceMatrixService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
 
-        $this->distanceMatrix->setKey('api-key');
+        $this->service->setKey('api-key');
 
         $request = $this->createDistanceMatrixRequestMock();
         $request
             ->expects($this->once())
-            ->method('build')
+            ->method('buildQuery')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -232,9 +245,10 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
             ->method('__toString')
             ->will($this->returnValue('{"status":"OK","origin_addresses":[],"destination_addresses":[],"rows":[]}'));
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertEmpty($response->getOrigins());
         $this->assertEmpty($response->getDestinations());
         $this->assertEmpty($response->getRows());
@@ -242,7 +256,7 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
 
     public function testRouteWithBusinessAccount()
     {
-        $this->distanceMatrix = new DistanceMatrixService(
+        $this->service = new DistanceMatrixService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -250,7 +264,7 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
         $request = $this->createDistanceMatrixRequestMock();
         $request
             ->expects($this->once())
-            ->method('build')
+            ->method('buildQuery')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -287,11 +301,12 @@ class DistanceMatrixServiceTest extends AbstractServiceTest
             ->with($this->equalTo('https://maps.googleapis.com/maps/api/distancematrix/json?foo=bar'))
             ->will($this->returnValue($url));
 
-        $this->distanceMatrix->setBusinessAccount($businessAccount);
+        $this->service->setBusinessAccount($businessAccount);
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertEmpty($response->getOrigins());
         $this->assertEmpty($response->getDestinations());
         $this->assertEmpty($response->getRows());

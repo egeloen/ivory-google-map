@@ -15,10 +15,10 @@ use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractParsableService;
+use Ivory\GoogleMap\Service\Base\AddressComponent;
+use Ivory\GoogleMap\Service\Base\Geometry;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
-use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderAddress;
-use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderGeometry;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 use Ivory\GoogleMap\Service\Utility\Parser;
@@ -26,7 +26,7 @@ use Ivory\GoogleMap\Service\Utility\Parser;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderService extends AbstractService
+class GeocoderService extends AbstractParsableService
 {
     /**
      * @param HttpClient     $client
@@ -45,8 +45,10 @@ class GeocoderService extends AbstractService
      */
     public function geocode(GeocoderRequestInterface $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody(), [
+        $httpRequest = $this->createRequest($request);
+        $httpResponse = $this->getClient()->sendRequest($httpRequest);
+
+        $data = $this->parse((string) $httpResponse->getBody(), [
             'pluralization_rules' => [
                 'address_component' => 'address_components',
                 'type'              => 'types',
@@ -54,7 +56,10 @@ class GeocoderService extends AbstractService
             ],
         ]);
 
-        return $this->buildResponse($data);
+        $response = $this->buildResponse($data);
+        $response->setRequest($request);
+
+        return $response;
     }
 
     /**
@@ -95,7 +100,7 @@ class GeocoderService extends AbstractService
     private function buildResult(array $data)
     {
         $result = new GeocoderResult();
-        $result->setAddresses($this->buildAddresses($data['address_components']));
+        $result->setAddressComponents($this->buildAddressComponents($data['address_components']));
         $result->setGeometry($this->buildGeometry($data['geometry']));
         $result->setPlaceId($data['place_id']);
         $result->setFormattedAddress($data['formatted_address']);
@@ -114,27 +119,27 @@ class GeocoderService extends AbstractService
     /**
      * @param mixed[] $data
      *
-     * @return GeocoderAddress[]
+     * @return AddressComponent[]
      */
-    private function buildAddresses(array $data)
+    private function buildAddressComponents(array $data)
     {
-        $addresses = [];
+        $addressComponents = [];
 
-        foreach ($data as $address) {
-            $addresses[] = $this->buildAddress($address);
+        foreach ($data as $addressComponent) {
+            $addressComponents[] = $this->buildAddressComponent($addressComponent);
         }
 
-        return $addresses;
+        return $addressComponents;
     }
 
     /**
      * @param mixed[] $data
      *
-     * @return GeocoderAddress
+     * @return AddressComponent
      */
-    private function buildAddress(array $data)
+    private function buildAddressComponent(array $data)
     {
-        $address = new GeocoderAddress();
+        $address = new AddressComponent();
         $address->setLongName($data['long_name']);
         $address->setShortName($data['short_name']);
         $address->setTypes($data['types']);
@@ -145,11 +150,11 @@ class GeocoderService extends AbstractService
     /**
      * @param mixed[] $data
      *
-     * @return GeocoderGeometry
+     * @return Geometry
      */
     private function buildGeometry(array $data)
     {
-        $geometry = new GeocoderGeometry();
+        $geometry = new Geometry();
         $geometry->setLocation($this->buildCoordinate($data['location']));
         $geometry->setViewport($this->buildBound($data['viewport']));
         $geometry->setLocationType($data['location_type']);

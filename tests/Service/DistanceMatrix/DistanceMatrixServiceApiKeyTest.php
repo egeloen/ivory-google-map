@@ -25,7 +25,7 @@ class DistanceMatrixServiceApiKeyTest extends AbstractServiceTest
     /**
      * @var DistanceMatrixService
      */
-    private $distanceMatrix;
+    private $service;
 
     /**
      * {@inheritdoc}
@@ -40,8 +40,8 @@ class DistanceMatrixServiceApiKeyTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->distanceMatrix = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
-        $this->distanceMatrix->setKey($_SERVER['API_KEY']);
+        $this->service = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
     public function testProcessWithPlaceIds()
@@ -51,9 +51,10 @@ class DistanceMatrixServiceApiKeyTest extends AbstractServiceTest
             [new PlaceIdLocation('ChIJC_jkvdJv5kcRNX4NW3iuID8')]
         );
 
-        $response = $this->distanceMatrix->process($request);
+        $response = $this->service->process($request);
 
         $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getOrigins());
         $this->assertNotEmpty($response->getDestinations());
         $this->assertNotEmpty($response->getRows());

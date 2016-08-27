@@ -37,7 +37,7 @@ class DirectionServiceTest extends AbstractServiceTest
     /**
      * @var DirectionService
      */
-    private $directions;
+    private $service;
 
     /**
      * {@inheritdoc}
@@ -48,14 +48,15 @@ class DirectionServiceTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->directions = new DirectionService($this->getClient(), $this->getMessageFactory());
+        $this->service = new DirectionService($this->getClient(), $this->getMessageFactory());
     }
 
     public function testRoute()
     {
-        $response = $this->directions->route($this->createRequest());
+        $response = $this->service->route($request = $this->createRequest());
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -66,9 +67,10 @@ class DirectionServiceTest extends AbstractServiceTest
             new CoordinateLocation(new Coordinate(48.856633, 2.352254))
         );
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -77,9 +79,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setDepartureTime($this->getDepartureTime());
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -88,9 +91,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setArrivalTime($this->getArrivalTime());
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -100,9 +104,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request->addWaypoint(new DirectionWaypoint(new AddressLocation('Compiègne')));
         $request->setOptimizeWaypoints(true);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -112,9 +117,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request->addWaypoint(new DirectionWaypoint(new CoordinateLocation(new Coordinate(49.418079, 2.826190))));
         $request->setOptimizeWaypoints(true);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -123,9 +129,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionWaypoint(new AddressLocation('Compiègne'), true));
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -134,9 +141,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setAvoid(Avoid::HIGHWAYS);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -145,9 +153,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setTravelMode(TravelMode::DRIVING);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -156,9 +165,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setProvideRouteAlternatives(true);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -167,9 +177,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = new DirectionRequest(new AddressLocation('Brest'), new AddressLocation('Washington'));
         $request->setTravelMode(TravelMode::BICYCLING);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::ZERO_RESULTS, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertEmpty($response->getRoutes());
         $this->assertNotEmpty($response->getAvailableTravelModes());
     }
@@ -185,9 +196,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request->setDepartureTime($this->getDepartureTime());
         $request->setArrivalTime($this->getArrivalTime());
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -196,9 +208,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setUnitSystem(UnitSystem::METRIC);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -207,9 +220,10 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setRegion('fr');
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -218,20 +232,22 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->setLanguage('fr');
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
     public function testRouteWithHttp()
     {
         $request = $this->createRequest();
-        $this->directions->setHttps(false);
+        $this->service->setHttps(false);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -239,26 +255,27 @@ class DirectionServiceTest extends AbstractServiceTest
     {
         $request = $this->createRequest();
 
-        $this->directions->setFormat(DirectionService::FORMAT_XML);
-        $response = $this->directions->route($request);
+        $this->service->setFormat(DirectionService::FORMAT_XML);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
     public function testRouteWithKey()
     {
-        $this->directions = new DirectionService(
+        $this->service = new DirectionService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
 
-        $this->directions->setKey('api-key');
+        $this->service->setKey('api-key');
 
         $request = $this->createDirectionRequestMock();
         $request
             ->expects($this->once())
-            ->method('build')
+            ->method('buildQuery')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -288,15 +305,16 @@ class DirectionServiceTest extends AbstractServiceTest
             ->method('__toString')
             ->will($this->returnValue('{"status":"OK","routes":[]}'));
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertEmpty($response->getRoutes());
     }
 
     public function testRouteWithBusinessAccount()
     {
-        $this->directions = new DirectionService(
+        $this->service = new DirectionService(
             $client = $this->createHttpClientMock(),
             $messageFactory = $this->createMessageFactoryMock()
         );
@@ -304,7 +322,7 @@ class DirectionServiceTest extends AbstractServiceTest
         $request = $this->createDirectionRequestMock();
         $request
             ->expects($this->once())
-            ->method('build')
+            ->method('buildQuery')
             ->will($this->returnValue($query = ['foo' => 'bar']));
 
         $messageFactory
@@ -341,11 +359,12 @@ class DirectionServiceTest extends AbstractServiceTest
             ->with($this->equalTo('https://maps.googleapis.com/maps/api/directions/json?foo=bar'))
             ->will($this->returnValue($url));
 
-        $this->directions->setBusinessAccount($businessAccount);
+        $this->service->setBusinessAccount($businessAccount);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertEmpty($response->getRoutes());
     }
 

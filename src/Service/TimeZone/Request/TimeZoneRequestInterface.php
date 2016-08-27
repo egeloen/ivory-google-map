@@ -11,13 +11,11 @@
 
 namespace Ivory\GoogleMap\Service\TimeZone\Request;
 
+use Ivory\GoogleMap\Service\RequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface TimeZoneRequestInterface
+interface TimeZoneRequestInterface extends RequestInterface
 {
-    /**
-     * @return mixed[]
-     */
-    public function build();
 }

@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service;
 use Http\Adapter\Guzzle6\Client;
 use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Common\Plugin\RedirectPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
@@ -52,6 +53,7 @@ abstract class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->client = new PluginClient(new Client(), [
             new ErrorPlugin(),
+            new RedirectPlugin(),
             new CachePlugin(
                 $this->pool,
                 new GuzzleStreamFactory(),

@@ -13,7 +13,7 @@ namespace Ivory\GoogleMap\Service\TimeZone;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractParsableService;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
 use Ivory\GoogleMap\Service\Utility\Parser;
@@ -21,7 +21,7 @@ use Ivory\GoogleMap\Service\Utility\Parser;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TimeZoneService extends AbstractService
+class TimeZoneService extends AbstractParsableService
 {
     /**
      * @param HttpClient     $client
@@ -52,10 +52,15 @@ class TimeZoneService extends AbstractService
      */
     public function process(TimeZoneRequestInterface $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody(), ['snake_to_camel' => true]);
+        $httpRequest = $this->createRequest($request);
+        $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        return $this->buildResponse($data);
+        $data = $this->parse((string) $httpResponse->getBody(), ['snake_to_camel' => true]);
+
+        $response = $this->buildResponse($data);
+        $response->setRequest($request);
+
+        return $response;
     }
 
     /**

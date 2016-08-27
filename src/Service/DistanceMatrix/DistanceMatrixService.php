@@ -13,7 +13,7 @@ namespace Ivory\GoogleMap\Service\DistanceMatrix;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractParsableService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
@@ -26,7 +26,7 @@ use Ivory\GoogleMap\Service\Utility\Parser;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixService extends AbstractService
+class DistanceMatrixService extends AbstractParsableService
 {
     /**
      * @param HttpClient     $client
@@ -45,8 +45,10 @@ class DistanceMatrixService extends AbstractService
      */
     public function process(DistanceMatrixRequestInterface $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody(), [
+        $httpRequest = $this->createRequest($request);
+        $httpResponse = $this->getClient()->sendRequest($httpRequest);
+
+        $data = $this->parse((string) $httpResponse->getBody(), [
             'pluralization_rules' => [
                 'destination_address' => 'destination_addresses',
                 'element'             => 'elements',
@@ -55,7 +57,10 @@ class DistanceMatrixService extends AbstractService
             ],
         ]);
 
-        return $this->buildResponse($data);
+        $response = $this->buildResponse($data);
+        $response->setRequest($request);
+
+        return $response;
     }
 
     /**

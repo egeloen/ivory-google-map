@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
+use Ivory\GoogleMap\Service\RequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,6 +36,7 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(GeocoderRequestInterface::class, $this->request);
+        $this->assertInstanceOf(RequestInterface::class, $this->request);
     }
 
     public function testDefaultState()
@@ -60,16 +62,16 @@ class GeocoderRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getLanguage());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertEmpty($this->request->build());
+        $this->assertEmpty($this->request->buildQuery());
     }
 
-    public function testBuildWithLanguage()
+    public function testBuildQueryWithLanguage()
     {
         $this->request->setLanguage($language = 'fr');
 
-        $this->assertSame(['language' => $language], $this->request->build());
+        $this->assertSame(['language' => $language], $this->request->buildQuery());
     }
 
     /**

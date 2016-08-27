@@ -11,13 +11,11 @@
 
 namespace Ivory\GoogleMap\Service\Geocoder\Request;
 
+use Ivory\GoogleMap\Service\RequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface GeocoderRequestInterface
+interface GeocoderRequestInterface extends RequestInterface
 {
-    /**
-     * @return mixed[]
-     */
-    public function build();
 }

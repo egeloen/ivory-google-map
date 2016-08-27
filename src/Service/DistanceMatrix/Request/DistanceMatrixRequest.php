@@ -501,10 +501,10 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         $locationBuilder = function (LocationInterface $location) {
-            return $location->build();
+            return $location->buildQuery();
         };
 
         $query = [

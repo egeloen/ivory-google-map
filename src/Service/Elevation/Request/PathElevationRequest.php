@@ -121,11 +121,11 @@ class PathElevationRequest implements ElevationRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         return [
             'path' => implode('|', array_map(function (LocationInterface $path) {
-                return $path->build();
+                return $path->buildQuery();
             }, $this->paths)),
             'samples' => $this->samples,
         ];

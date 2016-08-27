@@ -15,7 +15,6 @@ use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\GoogleMap\Service\Utility\Parser;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -62,29 +61,10 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
         $this->assertSame('https://foo', $this->service->getUrl());
         $this->assertTrue($this->service->isHttps());
-        $this->assertSame(AbstractService::FORMAT_JSON, $this->service->getFormat());
-        $this->assertInstanceOf(Parser::class, $this->service->getParser());
-        $this->assertTrue($this->service->getParser()->hasParsers());
-        $this->assertTrue($this->service->getParser()->hasParser(Parser::FORMAT_JSON));
-        $this->assertTrue($this->service->getParser()->hasParser(Parser::FORMAT_XML));
         $this->assertFalse($this->service->hasKey());
         $this->assertNull($this->service->getKey());
         $this->assertFalse($this->service->hasBusinessAccount());
         $this->assertNull($this->service->getBusinessAccount());
-    }
-
-    public function testInitialState()
-    {
-        $this->service = $this->getMockBuilder(AbstractService::class)
-            ->setConstructorArgs([
-                $this->client = $this->createHttpClientMock(),
-                $this->messageFactory = $this->createMessageFactoryMock(),
-                $this->url = 'http://foo',
-                $parser = $this->createParserMock(),
-            ])
-            ->getMockForAbstractClass();
-
-        $this->assertSame($parser, $this->service->getParser());
     }
 
     public function testClient()
@@ -118,20 +98,6 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->setHttps(false);
 
         $this->assertSame('http://foo', $this->service->getUrl());
-    }
-
-    public function testFormat()
-    {
-        $this->service->setFormat($format = AbstractService::FORMAT_XML);
-
-        $this->assertSame($format, $this->service->getFormat());
-    }
-
-    public function testParser()
-    {
-        $this->service->setParser($parser = $this->createParserMock());
-
-        $this->assertSame($parser, $this->service->getParser());
     }
 
     public function testKey()
@@ -182,14 +148,6 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     private function createMessageFactoryMock()
     {
         return $this->createMock(MessageFactory::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Parser
-     */
-    private function createParserMock()
-    {
-        return $this->createMock(Parser::class);
     }
 
     /**

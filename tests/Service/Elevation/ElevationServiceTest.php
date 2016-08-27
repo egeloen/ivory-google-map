@@ -28,7 +28,7 @@ class ElevationServiceTest extends AbstractServiceTest
     /**
      * @var ElevationService
      */
-    private $elevation;
+    private $service;
 
     /**
      * {@inheritdoc}
@@ -43,50 +43,61 @@ class ElevationServiceTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->elevation = new ElevationService($this->getClient(), $this->getMessageFactory());
-        $this->elevation->setKey($_SERVER['API_KEY']);
+        $this->service = new ElevationService($this->getClient(), $this->getMessageFactory());
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
     public function testProcessPositional()
     {
-        $response = $this->elevation->process(new PositionalElevationRequest([
+        $request = new PositionalElevationRequest([
             new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
             new CoordinateLocation(new Coordinate(-34.397, 150.644)),
-        ]));
+        ]);
+
+        $response = $this->service->process($request);
 
         $this->assertSame(ElevationStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertTrue($response->hasResults());
     }
 
     public function testProcessPositionalWithEncodedPolylines()
     {
-        $response = $this->elevation->process(new PositionalElevationRequest([
+        $request = new PositionalElevationRequest([
             new EncodedPolylineLocation('gfo}EtohhU'),
-        ]));
+        ]);
+
+        $response = $this->service->process($request);
 
         $this->assertSame(ElevationStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertTrue($response->hasResults());
     }
 
     public function testProcessPath()
     {
-        $response = $this->elevation->process(new PathElevationRequest([
+        $request = new PathElevationRequest([
             new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
             new CoordinateLocation(new Coordinate(-34.397, 150.644)),
-        ], 3));
+        ], 3);
+
+        $response = $this->service->process($request);
 
         $this->assertSame(ElevationStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertTrue($response->hasResults());
     }
 
     public function testProcessPathWithEncodedPolylines()
     {
-        $response = $this->elevation->process(new PathElevationRequest(
-            [new EncodedPolylineLocation('gfo}EtohhUxD@bAxJmGF')],
-            3
-        ));
+        $request = new PathElevationRequest([
+            new EncodedPolylineLocation('gfo}EtohhUxD@bAxJmGF'),
+        ], 3);
+
+        $response = $this->service->process($request);
 
         $this->assertSame(ElevationStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertTrue($response->hasResults());
     }
 }

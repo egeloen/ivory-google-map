@@ -98,10 +98,10 @@ class PositionalElevationRequest implements ElevationRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         return ['locations' => implode('|', array_map(function (LocationInterface $location) {
-            return $location->build();
+            return $location->buildQuery();
         }, $this->locations))];
     }
 }

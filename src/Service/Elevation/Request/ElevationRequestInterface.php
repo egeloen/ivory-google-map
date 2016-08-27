@@ -11,13 +11,11 @@
 
 namespace Ivory\GoogleMap\Service\Elevation\Request;
 
+use Ivory\GoogleMap\Service\RequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface ElevationRequestInterface
+interface ElevationRequestInterface extends RequestInterface
 {
-    /**
-     * @return mixed[]
-     */
-    public function build();
 }

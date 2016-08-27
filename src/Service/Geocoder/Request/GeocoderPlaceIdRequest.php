@@ -50,8 +50,8 @@ class GeocoderPlaceIdRequest extends AbstractGeocoderReverseRequest
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
-        return array_merge(['place_id' => $this->placeId], parent::build());
+        return array_merge(['place_id' => $this->placeId], parent::buildQuery());
     }
 }

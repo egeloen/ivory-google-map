@@ -52,7 +52,7 @@ abstract class AbstractGeocoderRequest implements GeocoderRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         $query = [];
 

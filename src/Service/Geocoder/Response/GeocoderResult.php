@@ -11,6 +11,9 @@
 
 namespace Ivory\GoogleMap\Service\Geocoder\Response;
 
+use Ivory\GoogleMap\Service\Base\AddressComponent;
+use Ivory\GoogleMap\Service\Base\Geometry;
+
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#GeocoderResult
  *
@@ -24,9 +27,9 @@ class GeocoderResult
     private $placeId;
 
     /**
-     * @var GeocoderAddress[]
+     * @var AddressComponent[]
      */
-    private $addresses = [];
+    private $addressComponents = [];
 
     /**
      * @var string|null
@@ -39,7 +42,7 @@ class GeocoderResult
     private $postcodeLocalities = [];
 
     /**
-     * @var GeocoderGeometry|null
+     * @var Geometry|null
      */
     private $geometry;
 
@@ -82,9 +85,9 @@ class GeocoderResult
      *
      * @return bool
      */
-    public function hasAddresses($type = null)
+    public function hasAddressComponents($type = null)
     {
-        $addresses = $this->getAddresses($type);
+        $addresses = $this->getAddressComponents($type);
 
         return !empty($addresses);
     }
@@ -92,71 +95,71 @@ class GeocoderResult
     /**
      * @param string|null $type
      *
-     * @return GeocoderAddress[]
+     * @return AddressComponent[]
      */
-    public function getAddresses($type = null)
+    public function getAddressComponents($type = null)
     {
         if ($type === null) {
-            return $this->addresses;
+            return $this->addressComponents;
         }
 
-        $addresses = [];
+        $addressComponents = [];
 
-        foreach ($this->addresses as $address) {
-            if (in_array($type, $address->getTypes(), true)) {
-                $addresses[] = $address;
+        foreach ($this->addressComponents as $addressComponent) {
+            if (in_array($type, $addressComponent->getTypes(), true)) {
+                $addressComponents[] = $addressComponent;
             }
         }
 
-        return $addresses;
+        return $addressComponents;
     }
 
     /**
-     * @param GeocoderAddress[] $addresses
+     * @param AddressComponent[] $addressComponents
      */
-    public function setAddresses(array $addresses)
+    public function setAddressComponents(array $addressComponents)
     {
-        $this->addresses = [];
-        $this->addAddresses($addresses);
+        $this->addressComponents = [];
+        $this->addAddressComponents($addressComponents);
     }
 
     /**
-     * @param GeocoderAddress[] $addresses
+     * @param AddressComponent[] $addressComponents
      */
-    public function addAddresses(array $addresses)
+    public function addAddressComponents(array $addressComponents)
     {
-        foreach ($addresses as $address) {
-            $this->addAddress($address);
+        foreach ($addressComponents as $addressComponent) {
+            $this->addAddressComponent($addressComponent);
         }
     }
 
     /**
-     * @param GeocoderAddress $address
+     * @param AddressComponent $addressComponent
      *
      * @return bool
      */
-    public function hasAddress(GeocoderAddress $address)
+    public function hasAddressComponent(AddressComponent $addressComponent)
     {
-        return in_array($address, $this->addresses, true);
+        return in_array($addressComponent, $this->addressComponents, true);
     }
 
     /**
-     * @param GeocoderAddress $address
+     * @param AddressComponent $addressComponent
      */
-    public function addAddress(GeocoderAddress $address)
+    public function addAddressComponent(AddressComponent $addressComponent)
     {
-        if (!$this->hasAddress($address)) {
-            $this->addresses[] = $address;
+        if (!$this->hasAddressComponent($addressComponent)) {
+            $this->addressComponents[] = $addressComponent;
         }
     }
 
     /**
-     * @param GeocoderAddress $address
+     * @param AddressComponent $addressComponent
      */
-    public function removeAddress(GeocoderAddress $address)
+    public function removeAddressComponent(AddressComponent $addressComponent)
     {
-        unset($this->addresses[array_search($address, $this->addresses, true)]);
-        $this->addresses = array_values($this->addresses);
+        unset($this->addressComponents[array_search($addressComponent, $this->addressComponents, true)]);
+        $this->addressComponents = array_values($this->addressComponents);
     }
 
     /**
@@ -256,7 +259,7 @@ class GeocoderResult
     }
 
     /**
-     * @return GeocoderGeometry|null
+     * @return Geometry|null
      */
     public function getGeometry()
     {
@@ -264,9 +267,9 @@ class GeocoderResult
     }
 
     /**
-     * @param GeocoderGeometry|null $geometry
+     * @param Geometry|null $geometry
      */
-    public function setGeometry(GeocoderGeometry $geometry = null)
+    public function setGeometry(Geometry $geometry = null)
     {
         $this->geometry = $geometry;
     }

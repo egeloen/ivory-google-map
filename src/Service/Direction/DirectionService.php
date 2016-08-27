@@ -16,7 +16,7 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractParsableService;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
@@ -37,7 +37,7 @@ use Ivory\GoogleMap\Service\Utility\Parser;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionService extends AbstractService
+class DirectionService extends AbstractParsableService
 {
     /**
      * @param HttpClient     $client
@@ -56,8 +56,10 @@ class DirectionService extends AbstractService
      */
     public function route(DirectionRequestInterface $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody(), [
+        $httpRequest = $this->createRequest($request);
+        $httpResponse = $this->getClient()->sendRequest($httpRequest);
+
+        $data = $this->parse((string) $httpResponse->getBody(), [
             'pluralization_rules' => [
                 'leg'            => 'legs',
                 'route'          => 'routes',
@@ -66,7 +68,10 @@ class DirectionService extends AbstractService
             ],
         ]);
 
-        return $this->buildResponse($data);
+        $response = $this->buildResponse($data);
+        $response->setRequest($request);
+
+        return $response;
     }
 
     /**

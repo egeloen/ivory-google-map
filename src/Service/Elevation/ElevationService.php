@@ -14,7 +14,7 @@ namespace Ivory\GoogleMap\Service\Elevation;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractParsableService;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
@@ -23,7 +23,7 @@ use Ivory\GoogleMap\Service\Utility\Parser;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ElevationService extends AbstractService
+class ElevationService extends AbstractParsableService
 {
     /**
      * @param HttpClient     $client
@@ -42,10 +42,15 @@ class ElevationService extends AbstractService
      */
     public function process(ElevationRequestInterface $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody());
+        $httpRequest = $this->createRequest($request);
+        $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        return $this->buildResponse($data);
+        $data = $this->parse((string) $httpResponse->getBody());
+
+        $response = $this->buildResponse($data);
+        $response->setRequest($request);
+
+        return $response;
     }
 
     /**

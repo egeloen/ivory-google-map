@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
 
 /**
@@ -37,6 +38,11 @@ class GeocoderCoordinateRequestTest extends \PHPUnit_Framework_TestCase
         $this->request = new GeocoderCoordinateRequest($this->coordinate = $this->createCoordinateMock());
     }
 
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(AbstractGeocoderReverseRequest::class, $this->request);
+    }
+
     public function testDefaultState()
     {
         $this->assertSame($this->coordinate, $this->request->getCoordinate());
@@ -49,7 +55,7 @@ class GeocoderCoordinateRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($coordinate, $this->request->getCoordinate());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
         $this->coordinate
             ->expects($this->once())
@@ -61,7 +67,7 @@ class GeocoderCoordinateRequestTest extends \PHPUnit_Framework_TestCase
             ->method('getLongitude')
             ->will($this->returnValue($longitude = 2.3));
 
-        $this->assertSame(['latlng' => implode(',', [$latitude, $longitude])], $this->request->build());
+        $this->assertSame(['latlng' => implode(',', [$latitude, $longitude])], $this->request->buildQuery());
     }
 
     /**

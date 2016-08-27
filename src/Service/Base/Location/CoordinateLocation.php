@@ -50,7 +50,7 @@ class CoordinateLocation implements LocationInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         return $this->coordinate->getLatitude().','.$this->coordinate->getLongitude();
     }

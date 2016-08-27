@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
 use Ivory\GoogleMap\Service\Base\TravelMode;
+use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionResponse;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionRoute;
@@ -39,6 +40,8 @@ class DirectionResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->response->hasStatus());
         $this->assertNull($this->response->getStatus());
+        $this->assertFalse($this->response->hasRequest());
+        $this->assertNull($this->response->getRequest());
         $this->assertFalse($this->response->hasRoutes());
         $this->assertEmpty($this->response->getRoutes());
         $this->assertFalse($this->response->hasGeocodedWaypoints());
@@ -53,6 +56,14 @@ class DirectionResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->response->hasStatus());
         $this->assertSame($status, $this->response->getStatus());
+    }
+
+    public function testRequest()
+    {
+        $this->response->setRequest($request = $this->createRequestMock());
+
+        $this->assertTrue($this->response->hasRequest());
+        $this->assertSame($request, $this->response->getRequest());
     }
 
     public function testSetRoutes()
@@ -177,6 +188,14 @@ class DirectionResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->response->hasAvailableTravelModes());
         $this->assertFalse($this->response->hasAvailableTravelMode($availableTravelMode));
         $this->assertEmpty($this->response->getAvailableTravelModes());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionRequestInterface
+     */
+    private function createRequestMock()
+    {
+        return $this->createMock(DirectionRequestInterface::class);
     }
 
     /**

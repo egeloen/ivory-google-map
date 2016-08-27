@@ -11,6 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\TimeZone\Response;
 
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -20,6 +22,11 @@ class TimeZoneResponse
      * @var string|null
      */
     private $status;
+
+    /**
+     * @var TimeZoneRequestInterface|null
+     */
+    private $request;
 
     /**
      * @var int|null
@@ -63,6 +70,30 @@ class TimeZoneResponse
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRequest()
+    {
+        return $this->request !== null;
+    }
+
+    /**
+     * @return TimeZoneRequestInterface|null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param TimeZoneRequestInterface|null $request
+     */
+    public function setRequest(TimeZoneRequestInterface $request = null)
+    {
+        $this->request = $request;
     }
 
     /**

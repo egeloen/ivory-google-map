@@ -26,7 +26,7 @@ class DirectionServiceApiKeyTest extends AbstractServiceTest
     /**
      * @var DirectionService
      */
-    private $directions;
+    private $service;
 
     /**
      * {@inheritdoc}
@@ -41,15 +41,16 @@ class DirectionServiceApiKeyTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->directions = new DirectionService($this->getClient(), $this->getMessageFactory());
-        $this->directions->setKey($_SERVER['API_KEY']);
+        $this->service = new DirectionService($this->getClient(), $this->getMessageFactory());
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
     public function testRouteWithPlaceId()
     {
-        $response = $this->directions->route($this->createRequest());
+        $response = $this->service->route($request = $this->createRequest());
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -59,9 +60,10 @@ class DirectionServiceApiKeyTest extends AbstractServiceTest
         $request->addWaypoint(new DirectionWaypoint(new PlaceIdLocation('ChIJs5IGBuNv5kcRVOC-kOamBzw')));
         $request->setOptimizeWaypoints(true);
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 
@@ -70,9 +72,10 @@ class DirectionServiceApiKeyTest extends AbstractServiceTest
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionWaypoint(new PlaceIdLocation('ChIJs5IGBuNv5kcRVOC-kOamBzw'), true));
 
-        $response = $this->directions->route($request);
+        $response = $this->service->route($request);
 
         $this->assertSame(DirectionStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getRoutes());
     }
 

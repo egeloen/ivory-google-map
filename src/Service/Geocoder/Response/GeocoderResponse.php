@@ -11,6 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\Geocoder\Response;
 
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -20,6 +22,11 @@ class GeocoderResponse
      * @var string|null
      */
     private $status;
+
+    /**
+     * @var GeocoderRequestInterface|null
+     */
+    private $request;
 
     /**
      * @var GeocoderResult[]
@@ -48,6 +55,30 @@ class GeocoderResponse
     public function setStatus($status = null)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRequest()
+    {
+        return $this->request !== null;
+    }
+
+    /**
+     * @return GeocoderRequestInterface|null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param GeocoderRequestInterface|null $request
+     */
+    public function setRequest(GeocoderRequestInterface $request = null)
+    {
+        $this->request = $request;
     }
 
     /**

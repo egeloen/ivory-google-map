@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Service\TimeZone\Request;
 
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Service\RequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 
@@ -49,6 +50,7 @@ class TimeZoneRequestTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(TimeZoneRequestInterface::class, $this->request);
+        $this->assertInstanceOf(RequestInterface::class, $this->request);
     }
 
     public function testDefaultState()
@@ -80,15 +82,15 @@ class TimeZoneRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($language, $this->request->getLanguage());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
         $this->assertSame([
             'location'  => $this->location->getLatitude().','.$this->location->getLongitude(),
             'timestamp' => $this->date->getTimestamp(),
-        ], $this->request->build());
+        ], $this->request->buildQuery());
     }
 
-    public function testBuildWithLanguage()
+    public function testBuildQueryWithLanguage()
     {
         $this->request->setLanguage($language = 'fr');
 
@@ -96,7 +98,7 @@ class TimeZoneRequestTest extends \PHPUnit_Framework_TestCase
             'location'  => $this->location->getLatitude().','.$this->location->getLongitude(),
             'timestamp' => $this->date->getTimestamp(),
             'language'  => $language,
-        ], $this->request->build());
+        ], $this->request->buildQuery());
     }
 
     /**

@@ -143,12 +143,12 @@ class GeocoderAddressRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getRegion());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertSame(['address' => $this->address], $this->request->build());
+        $this->assertSame(['address' => $this->address], $this->request->buildQuery());
     }
 
-    public function testBuildWithComponents()
+    public function testBuildQueryWithComponents()
     {
         $this->request->setComponents([
             GeocoderComponentType::COUNTRY     => 'fr',
@@ -158,10 +158,10 @@ class GeocoderAddressRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([
             'address'    => $this->address,
             'components' => 'country:fr|postal_code:59800',
-        ], $this->request->build());
+        ], $this->request->buildQuery());
     }
 
-    public function testBuildWithBound()
+    public function testBuildQueryWithBound()
     {
         $bound = $this->createBoundMock();
         $bound
@@ -199,17 +199,17 @@ class GeocoderAddressRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([
             'address' => $this->address,
             'bound'   => $southWestLatitude.','.$southWestLongitude.'|'.$northEastLatitude.','.$northEastLongitude,
-        ], $this->request->build());
+        ], $this->request->buildQuery());
     }
 
-    public function testBuildWithRegion()
+    public function testBuildQueryWithRegion()
     {
         $this->request->setRegion($region = 'fr');
 
         $this->assertSame([
             'address' => $this->address,
             'region'  => 'fr',
-        ], $this->request->build());
+        ], $this->request->buildQuery());
     }
 
     /**

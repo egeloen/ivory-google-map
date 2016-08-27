@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Response;
 
-use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderAddress;
-use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderGeometry;
+use Ivory\GoogleMap\Service\Base\AddressComponent;
+use Ivory\GoogleMap\Service\Base\Geometry;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 
 /**
@@ -37,8 +37,8 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->result->hasPlaceId());
         $this->assertNull($this->result->getPlaceId());
-        $this->assertFalse($this->result->hasAddresses());
-        $this->assertEmpty($this->result->getAddresses());
+        $this->assertFalse($this->result->hasAddressComponents());
+        $this->assertEmpty($this->result->getAddressComponents());
         $this->assertFalse($this->result->hasFormattedAddress());
         $this->assertNull($this->result->getFormattedAddress());
         $this->assertFalse($this->result->hasPostcodeLocalities());
@@ -59,58 +59,63 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($placeId, $this->result->getPlaceId());
     }
 
-    public function testSetAddresses()
+    public function testSetAddressComponents()
     {
-        $this->result->setAddresses($addresses = [$address = $this->createAddressMock()]);
-        $this->result->setAddresses($addresses);
+        $addressComponents = [$addressComponent = $this->createAddressComponentMock()];
 
-        $this->assertTrue($this->result->hasAddresses());
-        $this->assertTrue($this->result->hasAddress($address));
-        $this->assertSame($addresses, $this->result->getAddresses());
+        $this->result->setAddressComponents($addressComponents);
+        $this->result->setAddressComponents($addressComponents);
+
+        $this->assertTrue($this->result->hasAddressComponents());
+        $this->assertTrue($this->result->hasAddressComponent($addressComponent));
+        $this->assertSame($addressComponents, $this->result->getAddressComponents());
     }
 
-    public function testAddAddresses()
+    public function testAddAddressComponents()
     {
-        $this->result->setAddresses($firstAddresses = [$this->createAddressMock()]);
-        $this->result->addAddresses($secondAddresses = [$this->createAddressMock()]);
+        $this->result->setAddressComponents($firstAddressComponents = [$this->createAddressComponentMock()]);
+        $this->result->addAddressComponents($secondAddressComponents = [$this->createAddressComponentMock()]);
 
-        $this->assertTrue($this->result->hasAddresses());
-        $this->assertSame(array_merge($firstAddresses, $secondAddresses), $this->result->getAddresses());
+        $this->assertTrue($this->result->hasAddressComponents());
+        $this->assertSame(
+            array_merge($firstAddressComponents, $secondAddressComponents),
+            $this->result->getAddressComponents()
+        );
     }
 
-    public function testAddAddress()
+    public function testAddAddressComponent()
     {
-        $this->result->addAddress($address = $this->createAddressMock());
+        $this->result->addAddressComponent($addressComponent = $this->createAddressComponentMock());
 
-        $this->assertTrue($this->result->hasAddresses());
-        $this->assertTrue($this->result->hasAddress($address));
-        $this->assertSame([$address], $this->result->getAddresses());
+        $this->assertTrue($this->result->hasAddressComponents());
+        $this->assertTrue($this->result->hasAddressComponent($addressComponent));
+        $this->assertSame([$addressComponent], $this->result->getAddressComponents());
     }
 
-    public function testRemoveAddress()
+    public function testRemoveAddressComponent()
     {
-        $this->result->addAddress($address = $this->createAddressMock());
-        $this->result->removeAddress($address);
+        $this->result->addAddressComponent($addressComponent = $this->createAddressComponentMock());
+        $this->result->removeAddressComponent($addressComponent);
 
-        $this->assertFalse($this->result->hasAddresses());
-        $this->assertFalse($this->result->hasAddress($address));
-        $this->assertEmpty($this->result->getAddresses());
+        $this->assertFalse($this->result->hasAddressComponents());
+        $this->assertFalse($this->result->hasAddressComponent($addressComponent));
+        $this->assertEmpty($this->result->getAddressComponents());
     }
 
-    public function testTypedAddresses()
+    public function testTypedAddressComponents()
     {
-        $address = $this->createAddressMock();
-        $address
+        $addressComponent = $this->createAddressComponentMock();
+        $addressComponent
             ->expects($this->exactly(4))
             ->method('getTypes')
             ->will($this->returnValue([$type = 'foo']));
 
-        $this->result->setAddresses($addresses = [$address]);
+        $this->result->setAddressComponents($addressComponents = [$addressComponent]);
 
-        $this->assertTrue($this->result->hasAddresses($type));
-        $this->assertSame($addresses, $this->result->getAddresses($type));
-        $this->assertFalse($this->result->hasAddresses('bar'));
-        $this->assertEmpty($this->result->getAddresses('bar'));
+        $this->assertTrue($this->result->hasAddressComponents($type));
+        $this->assertSame($addressComponents, $this->result->getAddressComponents($type));
+        $this->assertFalse($this->result->hasAddressComponents('bar'));
+        $this->assertEmpty($this->result->getAddressComponents('bar'));
     }
 
     public function testFormattedAddress()
@@ -241,18 +246,18 @@ class GeocoderResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeocoderAddress
+     * @return \PHPUnit_Framework_MockObject_MockObject|AddressComponent
      */
-    private function createAddressMock()
+    private function createAddressComponentMock()
     {
-        return $this->createMock(GeocoderAddress::class);
+        return $this->createMock(AddressComponent::class);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeocoderGeometry
+     * @return \PHPUnit_Framework_MockObject_MockObject|Geometry
      */
     private function createGeometryMock()
     {
-        return $this->createMock(GeocoderGeometry::class);
+        return $this->createMock(Geometry::class);
     }
 }

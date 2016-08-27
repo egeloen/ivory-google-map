@@ -159,7 +159,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         $query = [];
 
@@ -171,6 +171,6 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
             $query['location_type'] = implode('|', $this->locationTypes);
         }
 
-        return array_merge(parent::build(), $query);
+        return array_merge(parent::buildQuery(), $query);
     }
 }

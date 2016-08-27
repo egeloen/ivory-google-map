@@ -11,6 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\Elevation\Response;
 
+use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -20,6 +22,11 @@ class ElevationResponse
      * @var string|null
      */
     private $status;
+
+    /**
+     * @var ElevationRequestInterface|null
+     */
+    private $request;
 
     /**
      * @var ElevationResult[]
@@ -48,6 +55,30 @@ class ElevationResponse
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRequest()
+    {
+        return $this->request !== null;
+    }
+
+    /**
+     * @return ElevationRequestInterface|null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param ElevationRequestInterface|null $request
+     */
+    public function setRequest(ElevationRequestInterface $request = null)
+    {
+        $this->request = $request;
     }
 
     /**

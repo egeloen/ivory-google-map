@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
+use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderPlaceIdRequest;
 
 /**
@@ -36,6 +37,11 @@ class GeocoderPlaceIdRequestTest extends \PHPUnit_Framework_TestCase
         $this->request = new GeocoderPlaceIdRequest($this->placeId = 'ChIJLU7jZClu5kcR4PcOOO6p3I0');
     }
 
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(AbstractGeocoderReverseRequest::class, $this->request);
+    }
+
     public function testDefaultState()
     {
         $this->assertSame($this->placeId, $this->request->getPlaceId());
@@ -48,8 +54,8 @@ class GeocoderPlaceIdRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($placeId, $this->request->getPlaceId());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertSame(['place_id' => $this->placeId], $this->request->build());
+        $this->assertSame(['place_id' => $this->placeId], $this->request->buildQuery());
     }
 }

@@ -27,7 +27,7 @@ class GeocoderServiceApiKeyTest extends AbstractServiceTest
     /**
      * @var GeocoderService
      */
-    private $geocoder;
+    private $service;
 
     /**
      * {@inheritdoc}
@@ -42,15 +42,16 @@ class GeocoderServiceApiKeyTest extends AbstractServiceTest
 
         parent::setUp();
 
-        $this->geocoder = new GeocoderService($this->getClient(), $this->getMessageFactory());
-        $this->geocoder->setKey($_SERVER['API_KEY']);
+        $this->service = new GeocoderService($this->getClient(), $this->getMessageFactory());
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
     public function testGeocodePlaceId()
     {
-        $response = $this->geocoder->geocode(new GeocoderPlaceIdRequest('ChIJtdVv8-Fv5kcRV7t53Y2Ao3c'));
+        $response = $this->service->geocode($request = new GeocoderPlaceIdRequest('ChIJtdVv8-Fv5kcRV7t53Y2Ao3c'));
 
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getResults());
     }
 
@@ -59,9 +60,10 @@ class GeocoderServiceApiKeyTest extends AbstractServiceTest
         $request = new GeocoderCoordinateRequest(new Coordinate(50.637004, 3.063646));
         $request->setResultTypes([GeocoderAddressType::POSTAL_CODE]);
 
-        $response = $this->geocoder->geocode($request);
+        $response = $this->service->geocode($request);
 
         $this->assertSame(GeocoderStatus::OK, $response->getStatus());
+        $this->assertSame($request, $response->getRequest());
         $this->assertNotEmpty($response->getResults());
     }
 }
