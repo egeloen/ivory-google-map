@@ -132,5 +132,5 @@ $map->setStylesheet('position', 'absolute');
 If you want to configure map container html attributes, you can use:
 
 ``` php
-$map->setHtmlAttributes('class', 'my-class');
+$map->setHtmlAttribute('class', 'my-class');
 ```
