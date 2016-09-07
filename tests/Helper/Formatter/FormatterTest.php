@@ -741,6 +741,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['"/"', '/'],
             ['"\'"', '\''],
             ['"\\""', '"'],
+            ['"Dakar, Sénégal"', 'Dakar, Sénégal'],
         ];
     }
 
