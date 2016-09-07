@@ -403,7 +403,7 @@ class Formatter
      */
     public function renderEscape($argument)
     {
-        return json_encode($argument, JSON_UNESCAPED_SLASHES);
+        return json_encode($argument, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /**
