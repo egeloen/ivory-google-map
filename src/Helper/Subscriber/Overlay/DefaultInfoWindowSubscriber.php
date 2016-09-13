@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Helper\Subscriber\Overlay;
 
 use Ivory\GoogleMap\Helper\Collector\Overlay\DefaultInfoWindowCollector;
+use Ivory\GoogleMap\Helper\Collector\Overlay\InfoWindowCollector;
 use Ivory\GoogleMap\Helper\Event\MapEvent;
 use Ivory\GoogleMap\Helper\Event\MapEvents;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -66,12 +67,13 @@ class DefaultInfoWindowSubscriber extends AbstractInfoWindowSubscriber
     public function handleMap(MapEvent $event)
     {
         $map = $event->getMap();
+        $collector = $this->getInfoWindowCollector();
 
-        foreach ($this->getInfoWindowCollector()->collect($map) as $infoWindow) {
+        foreach ($collector->collect($map, [], InfoWindowCollector::STRATEGY_MAP) as $infoWindow) {
             $event->addCode($this->renderInfoWindow($map, $infoWindow));
         }
 
-        foreach ($this->getInfoWindowCollector()->collect($map, [], false) as $infoWindow) {
+        foreach ($collector->collect($map, [], InfoWindowCollector::STRATEGY_MARKER) as $infoWindow) {
             $event->addCode($this->renderInfoWindow($map, $infoWindow, false));
         }
     }
