@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
+use Ivory\GoogleMap\Control\ControlPosition;
+use Ivory\GoogleMap\Control\CustomControl;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\PlaceAutocompleteHelperBuilder;
 use Ivory\GoogleMap\Helper\MapHelper;
@@ -48,7 +50,17 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
 
     public function testRender()
     {
-        $this->render(new Autocomplete(), new Map());
+        $autocomplete = new Autocomplete();
+
+        $control = new CustomControl(
+            ControlPosition::RIGHT_TOP,
+            'return document.getElementById("'.$autocomplete->getHtmlId().'")'
+        );
+
+        $map = new Map();
+        $map->getControlManager()->addCustomControl($control);
+
+        $this->render($autocomplete, $map);
     }
 
     /**

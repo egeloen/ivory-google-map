@@ -99,6 +99,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Base\BoundSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Base\CoordinateSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Base\PointSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Base\SizeSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Control\ControlSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Control\CustomControlSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\DomEventOnceSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Event\DomEventSubscriber;
@@ -343,6 +344,7 @@ class MapHelperBuilder extends AbstractHelperBuilder
             new SizeSubscriber($formatter, $sizeCollector, $sizeRenderer),
 
             // Control
+            new ControlSubscriber($formatter),
             new CustomControlSubscriber($formatter, $customControlCollector, $customControlRenderer),
 
             // Event
