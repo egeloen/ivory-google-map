@@ -13,8 +13,6 @@ namespace Ivory\Tests\GoogleMap\Helper\Collector\Overlay;
 
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoBoxCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
-use Ivory\GoogleMap\Map;
-use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\InfoWindowType;
 
 /**
@@ -35,14 +33,8 @@ class InfoBoxCollectorTest extends \PHPUnit_Framework_TestCase
         $this->infoBoxCollector = new InfoBoxCollector(new MarkerCollector());
     }
 
-    public function testCollect()
+    public function testDefaultState()
     {
-        $infoBox = new InfoWindow('content', InfoWindowType::INFO_BOX);
-        $defaultInfoWindow = new InfoWindow('content', InfoWindowType::DEFAULT_);
-
-        $map = new Map();
-        $map->getOverlayManager()->addInfoWindows([$infoBox, $defaultInfoWindow]);
-
-        $this->assertSame([$infoBox], $this->infoBoxCollector->collect($map));
+        $this->assertSame(InfoWindowType::INFO_BOX, $this->infoBoxCollector->getType());
     }
 }

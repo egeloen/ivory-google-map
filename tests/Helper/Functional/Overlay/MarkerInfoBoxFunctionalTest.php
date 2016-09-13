@@ -11,11 +11,23 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional\Overlay;
 
+use Ivory\GoogleMap\Overlay\InfoWindowType;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  *
  * @group functional
  */
-class MarkerInfoWindowFunctionalTest extends AbstractMarkerInfoWindowFunctionalTest
+class MarkerInfoBoxFunctionalTest extends AbstractMarkerInfoWindowFunctionalTest
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected function createInfoWindowMarker()
+    {
+        $infoWindow = parent::createInfoWindowMarker();
+        $infoWindow->setType(InfoWindowType::INFO_BOX);
+
+        return $infoWindow;
+    }
 }

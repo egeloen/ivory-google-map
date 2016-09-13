@@ -51,50 +51,58 @@ class InfoWindowCollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($type, $this->infoWindowCollector->getType());
     }
 
-    public function testCollect()
+    /**
+     * @param InfoWindow[] $expected
+     * @param Map          $map
+     * @param int          $strategy
+     * @param string|null  $type
+     *
+     * @dataProvider collectProvider
+     */
+    public function testCollect(array $expected, Map $map, $strategy, $type = null)
     {
-        $defaultInfoWindow = new InfoWindow('content', InfoWindowType::DEFAULT_);
-        $infoBox = new InfoWindow('content', InfoWindowType::INFO_BOX);
+        $this->infoWindowCollector->setType($type);
 
-        $map = new Map();
-        $map->getOverlayManager()->addInfoWindows([$defaultInfoWindow, $infoBox]);
-
-        $this->assertSame([$defaultInfoWindow, $infoBox], $this->infoWindowCollector->collect($map));
+        $this->assertSame($expected, $this->infoWindowCollector->collect($map, [], $strategy));
     }
 
-    public function testCollectMarker()
+    /**
+     * @return mixed[][]
+     */
+    public function collectProvider()
     {
+        $infoWindow = new InfoWindow('content');
+        $markerInfoWindow = new InfoWindow('content');
+
+        $infoBox = new InfoWindow('content');
+        $infoBox->setType(InfoWindowType::INFO_BOX);
+
+        $markerInfoBox = new InfoWindow('content');
+        $markerInfoBox->setType(InfoWindowType::INFO_BOX);
+
         $marker = new Marker(new Coordinate());
-        $marker->setInfoWindow(new InfoWindow('content'));
+        $marker->setInfoWindow($markerInfoWindow);
+
+        $markerBox = new Marker(new Coordinate());
+        $markerBox->setInfoWindow($markerInfoBox);
 
         $map = new Map();
         $map->getOverlayManager()->addMarker($marker);
+        $map->getOverlayManager()->addMarker($markerBox);
+        $map->getOverlayManager()->addInfoWindow($infoWindow);
+        $map->getOverlayManager()->addInfoWindow($infoBox);
 
-        $this->assertEmpty($this->infoWindowCollector->collect($map));
-    }
-
-    public function testCollectMarkerWithoutPosition()
-    {
-        $marker = new Marker(new Coordinate());
-        $marker->setInfoWindow($infoWindow = new InfoWindow('content'));
-
-        $map = new Map();
-        $map->getOverlayManager()->addMarker($marker);
-
-        $this->assertSame([$infoWindow], $this->infoWindowCollector->collect($map, [], false));
-    }
-
-    public function testCollectWithType()
-    {
-        $this->infoWindowCollector->setType(InfoWindowType::DEFAULT_);
-
-        $defaultInfoWindow = new InfoWindow('content', InfoWindowType::DEFAULT_);
-        $infoBox = new InfoWindow('content', InfoWindowType::INFO_BOX);
-
-        $map = new Map();
-        $map->getOverlayManager()->addInfoWindows([$defaultInfoWindow, $infoBox]);
-
-        $this->assertSame([$defaultInfoWindow], $this->infoWindowCollector->collect($map));
+        return [
+            [[$infoWindow, $infoBox, $markerInfoWindow, $markerInfoBox], $map, InfoWindowCollector::STRATEGY_MAP | InfoWindowCollector::STRATEGY_MARKER],
+            [[$infoWindow, $infoBox], $map, InfoWindowCollector::STRATEGY_MAP],
+            [[$markerInfoWindow, $markerInfoBox], $map, InfoWindowCollector::STRATEGY_MARKER],
+            [[$infoWindow, $markerInfoWindow], $map, InfoWindowCollector::STRATEGY_MAP | InfoWindowCollector::STRATEGY_MARKER, InfoWindowType::DEFAULT_],
+            [[$infoWindow], $map, InfoWindowCollector::STRATEGY_MAP, InfoWindowType::DEFAULT_],
+            [[$markerInfoWindow], $map, InfoWindowCollector::STRATEGY_MARKER, InfoWindowType::DEFAULT_],
+            [[$infoBox, $markerInfoBox], $map, InfoWindowCollector::STRATEGY_MAP | InfoWindowCollector::STRATEGY_MARKER, InfoWindowType::INFO_BOX],
+            [[$infoBox], $map, InfoWindowCollector::STRATEGY_MAP, InfoWindowType::INFO_BOX],
+            [[$markerInfoBox], $map, InfoWindowCollector::STRATEGY_MARKER, InfoWindowType::INFO_BOX],
+        ];
     }
 
     /**

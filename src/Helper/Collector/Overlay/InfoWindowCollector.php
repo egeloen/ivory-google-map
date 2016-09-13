@@ -20,6 +20,9 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
  */
 class InfoWindowCollector extends AbstractCollector
 {
+    const STRATEGY_MAP = 1;
+    const STRATEGY_MARKER = 2;
+
     /**
      * @var MarkerCollector
      */
@@ -75,19 +78,24 @@ class InfoWindowCollector extends AbstractCollector
     /**
      * @param Map          $map
      * @param InfoWindow[] $infoWindows
-     * @param bool         $position
+     * @param int          $strategy
      *
      * @return InfoWindow[]
      */
-    public function collect(Map $map, array $infoWindows = [], $position = true)
-    {
-        if ($position) {
-            return $this->collectValues($map->getOverlayManager()->getInfoWindows(), $infoWindows);
+    public function collect(
+        Map $map,
+        array $infoWindows = [],
+        $strategy = self::STRATEGY_MAP | self::STRATEGY_MARKER
+    ) {
+        if ($strategy & self::STRATEGY_MAP) {
+            $infoWindows = $this->collectValues($map->getOverlayManager()->getInfoWindows(), $infoWindows);
         }
 
-        foreach ($this->markerCollector->collect($map) as $marker) {
-            if ($marker->hasInfoWindow()) {
-                $infoWindows = $this->collectValue($marker->getInfoWindow(), $infoWindows);
+        if ($strategy & self::STRATEGY_MARKER) {
+            foreach ($this->markerCollector->collect($map) as $marker) {
+                if ($marker->hasInfoWindow()) {
+                    $infoWindows = $this->collectValue($marker->getInfoWindow(), $infoWindows);
+                }
             }
         }
 
