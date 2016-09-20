@@ -29,7 +29,7 @@ $marker = new Marker(
     new Coordinate(),
     Animation::BOUNCE,
     new Icon(),
-    new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.1, 1.4])
+    new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.1, 1.4]),
     ['clickable' => false]
 );
 ```

@@ -71,7 +71,7 @@ $map = new Map();
 $map->setAutoZoom(true);
 
 // Sets the bound coordinates
-$map->setBound(new Bound(new Coordinate(-2.1, -3.9), new Coordinate(2.6, 1.4));
+$map->setBound(new Bound(new Coordinate(-2.1, -3.9), new Coordinate(2.6, 1.4)));
 ```
 
 ### Fitting a bound which extends overlays/layers
