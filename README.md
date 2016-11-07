@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/egeloen/ivory-google-map.svg?branch=master)](http://travis-ci.org/egeloen/ivory-google-map)
 [![Code Coverage](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/?branch=master)
-[![Dependency Status](http://www.versioneye.com/php/egeloen:ckeditor-bundle/badge.svg)](http://www.versioneye.com/php/egeloen:ckeditor-bundle)
+[![Dependency Status](http://www.versioneye.com/php/egeloen:google-map/badge.svg)](http://www.versioneye.com/php/egeloen:google-map)
 
 [![Latest Stable Version](https://poser.pugx.org/egeloen/google-map/v/stable.svg)](https://packagist.org/packages/egeloen/google-map)
 [![Latest Unstable Version](https://poser.pugx.org/egeloen/google-map/v/unstable.svg)](https://packagist.org/packages/egeloen/google-map)
@@ -57,7 +57,7 @@ controls, overlays, events & services through the Google Map API v3.
 
 ## Testing
 
-The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**. To
+The library is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**. To
 execute the test suite, check the travis [configuration](/.travis.yml).
 
 ## Contribute
