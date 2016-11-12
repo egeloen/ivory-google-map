@@ -90,6 +90,12 @@ abstract class AbstractHelperBuilder
      */
     public function setJsonBuilder(JsonBuilder $jsonBuilder)
     {
+        $options = $jsonBuilder->getJsonEncodeOptions();
+
+        if (!($options & JSON_UNESCAPED_SLASHES)) {
+            $jsonBuilder->setJsonEncodeOptions($options | JSON_UNESCAPED_SLASHES);
+        }
+
         $this->jsonBuilder = $jsonBuilder;
 
         return $this;
