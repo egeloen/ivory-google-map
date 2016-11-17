@@ -31,7 +31,7 @@ class EncodingRenderer extends AbstractRenderer
 
         return $formatter->renderCall(
             $formatter->renderProperty($formatter->renderClass('geometry.encoding'), 'decodePath'),
-            [$formatter->renderEscape(addslashes($encodedPath))]
+            [$formatter->renderEscape($encodedPath)]
         );
     }
 }
