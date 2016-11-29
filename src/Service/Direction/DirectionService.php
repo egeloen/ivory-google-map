@@ -304,10 +304,13 @@ class DirectionService extends AbstractService
     private function buildTransitLine(array $data)
     {
         $transitLine = new DirectionTransitLine();
-        $transitLine->setName($data['name']);
         $transitLine->setShortName($data['short_name']);
         $transitLine->setVehicle($this->buildTransitVehicle($data['vehicle']));
         $transitLine->setAgencies($this->buildTransitAgencies($data['agencies']));
+
+        if (isset($data['name'])) {
+            $transitLine->setName($data['name']);
+        }
 
         if (isset($data['color'])) {
             $transitLine->setColor($data['color']);
