@@ -85,8 +85,13 @@ class InfoWindowCollector extends AbstractCollector
     public function collect(
         Map $map,
         array $infoWindows = [],
-        $strategy = self::STRATEGY_MAP | self::STRATEGY_MARKER
+        $strategy = null
     ) {
+        if (empty($strategy))
+        {
+            $strategy = self::STRATEGY_MAP | self::STRATEGY_MARKER;
+        }
+        
         if ($strategy & self::STRATEGY_MAP) {
             $infoWindows = $this->collectValues($map->getOverlayManager()->getInfoWindows(), $infoWindows);
         }
