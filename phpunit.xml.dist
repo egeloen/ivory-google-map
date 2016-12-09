@@ -8,7 +8,7 @@
     </testsuites>
     <php>
         <server name="BROWSER_NAME" value="chrome" />
-        <server name="API_KEY" value="AIzaSyDD19m3pRgpj-_rpgshAcu65893V2lLbTY" />
+        <server name="API_KEY" value="AIzaSyBYSzoBMMotHuyKcEIw_jAp26jIc6iryxQ" />
     </php>
     <groups>
         <exclude>

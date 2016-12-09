@@ -36,8 +36,12 @@ abstract class AbstractEventFunctionalTest extends AbstractAutocompleteFunctiona
 
     protected function selectAutocomplete()
     {
+        sleep(1);
+
         $this->keys(\PHPUnit_Extensions_Selenium2TestCase_Keys::DOWN);
         $this->keys(\PHPUnit_Extensions_Selenium2TestCase_Keys::ENTER);
+
+        sleep(1);
     }
 
     /**
