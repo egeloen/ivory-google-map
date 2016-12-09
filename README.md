@@ -15,6 +15,9 @@ controls, overlays, events & services through the Google Map API v3.
 
 ## Documentation
 
+**You're currently browsing the 2.x documentation, if you're using the 1.x, read 
+[this documentation](https://github.com/egeloen/ivory-google-map/tree/1.4.1) instead.**
+
    - [Installation](/doc/installation.md)
    - [Usage](/doc/usage.md)
       - [Map](/doc/map.md)
