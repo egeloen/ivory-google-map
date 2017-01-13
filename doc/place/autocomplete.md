@@ -34,7 +34,7 @@ $autocomplete->setInputId('place_input');
 Javascript within the browser is event driven, meaning that Javascript responds to interactions by generating events, 
 and expects a program to listen to interesting events.
 
- - [Build an avent](/doc/event.md#build)
+ - [Build an event](/doc/event.md#build)
  - [Configure variable](/doc/event.md#configure-variable)
  - [Configure instance](/doc/event.md#configure-instance)
  - [Configure trigger](/doc/event.md#configure-trigger)
