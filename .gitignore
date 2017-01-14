@@ -1,5 +1,10 @@
-/.php_cs.cache
-/build
+# Composer
 /composer.lock
-/phpunit.xml
 /vendor
+
+# PHPUnit
+/phpunit.xml
+/build
+
+# PHP CS Fixer
+/.php_cs.cache
