@@ -1,5 +1,80 @@
 # CHANGELOG
 
+### 2.0.0 (????-??-??)
+
+ * 3c53919 - [Travis] Add PHP 7.1 to the matrix
+ * 55cc0fe - [Gitignore] Reorganize by section
+ * b205ba5 - [Scrutinizer] Add configuration file
+ * d6e0f9e - Add .gitattributes file
+ * d8b2c1d - Add CONTRIBUTING file
+ * cf54dd4 - [License] Happy new year
+ * e3036d1 - Spelling of event
+ * d7d8bd0 - [README] Add section about doc versions
+ * a1a7087 - Fix syntax error + transient tests
+ * 7373d65 - Fix encoded polyline rendering
+ * 0097535 - [README] Fix some links
+ * c122162 - Fix link for 'Autocomplete'
+ * 5d87649 - Fix some errors in code example
+ * c99d9b5 - spelling mistake
+ * a9ce1b1 - [Helper] Fix custom control rendering
+ * 3ae8e09 - [Collector] Fix info window collector strategy
+ * aa78bcd - [Formatter] Fix escaping
+ * 5e87cc8 - [Doc] Fix typo
+ * 4f99553 - [Service] Refactor parser
+ * 98364d5 - [Service] Add suffix to all services
+ * bcefffd - [Service] Introduce time
+ * edcebbb - [Geocoder] Drop 'willdurand/geocoder' dependency
+ * 688c262 - [Service] Add some adjustments
+ * 8dd9863 - [Direction] Refactor namespace
+ * 2295f47 - [Service] Add elevation support
+ * 1faea83 - [Directions] Move transit classes in an sub namespace
+ * 136ebc4 - [Service] Add API key tests
+ * 126977b - [Services] Reorganize classes
+ * 763674c - [MapEvents] Fix event name typo
+ * 9a18502 - [Map] Add fullscreen control support
+ * 51d0461 - [Map] Add custom control support
+ * 52d41b4 - [Composer] Remove http cache plugin fork
+ * b10cd2f - [Map] Add layer auto-zoom support
+ * 979319d - [Layer] Fix geo json layer
+ * cb5310f - [Map] Add heatmap layer support
+ * 7ba65a2 - [Map] Add html container attributes support
+ * 61c180c - [Travis] Only build the master branch & PRs
+ * 481ca4e - [Doc] Add base service objects doc
+ * 540f540 - [Composer] Refine lowest deps
+ * 2990211 - [Tests] Fix typo
+ * d802998 - [Tests] Add extension point for creating helpers
+ * 062630b - [Doc] Add missing info in installation
+ * 22e7296 - [Formatter] Remove default indentation
+ * 687d059 - [Composer] Update suggest
+ * 8fd40e0 - [Composer] Make egeloen/json-builder & symfony/event-dispatcher mandatory
+ * b266f56 - [Map] Add GeoJson support
+ * 2ae2a83 - [Geocoder] Add missing features
+ * f038466 - [DistanceMatrix] Add missing properties to element
+ * 06770ef - [Autocomplete] Add events support
+ * 80c2a43 - [Map] Remove bidirectionality with manager when not needed
+ * 979ffff - [Doc] Fix some missing docs + typos
+ * 3c93a63 - [DistanceMatrix] Add missing request properties
+ * 1cdae99 - [Directions] Add transit support
+ * 9151950 - [Directions] Add departure/arrival time response support
+ * f64b323 - [Directions] Add duration in traffic support
+ * f774ff0 - [Directions] Add available travel modes support
+ * 984a911 - [Directions] Add missing request properties
+ * 9fe3744 - [Doc] Add geocoded waypoints in directions response
+ * 7bce058 - [Directions] Add geocoded waypoints support
+ * f0e9b2e - [Directions] Add fare support
+ * 4277460 - [Service] Mutualize avoid highways and tolls
+ * e9b1e1b - [Doc] Fix typo in filename
+ * dd9129b - [Doc] Fix typo in directory
+ * abee4d2 - [Service] Add TimeZone API support
+ * 736ef9c - [Geocoder] Fix PHPDoc
+ * 6b0c3ad - [DistanceMatrix] Add departure/arrival time support
+ * 2231b69 - [Geocoder] Add place id
+ * ca036f4 - [DistanceMatrix] Fix avoid tolls/highways
+ * fdfa34d - [Doc] Fix typo
+ * 376c954 - Add API key support
+ * 1281697 - Move language from map/autocomplete to the renderer
+ * c39c5f3 - [2.0] Refactor core
+ 
 ### 1.4.1 (2014-10-30)
 
  * 882cb65 - [Services] Fix origins/destinations switch for distance matrix construction
