@@ -2,6 +2,7 @@
 
 ### 2.0.0 (????-??-??)
 
+ * fe31d0e - [Travis] Fix the functional tests
  * 6f07212 - [Travis] Upgrade selenium + chrome driver
  * 3c53919 - [Travis] Add PHP 7.1 to the matrix
  * 55cc0fe - [Gitignore] Reorganize by section
