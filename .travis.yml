@@ -3,6 +3,7 @@ language: php
 php:
     - 5.6
     - 7.0
+    - 7.1
     - hhvm
 
 branches:
@@ -22,9 +23,16 @@ before_script:
     - composer self-update
     - composer update --prefer-source `if [[ $COMPOSER_PREFER_LOWEST = true ]]; then echo "--prefer-lowest --prefer-stable"; fi`
 
-script: vendor/bin/phpunit --configuration phpunit.travis.xml
+script: vendor/bin/phpunit --configuration phpunit.travis.xml --coverage-clover build/clover.xml
+
+after_success:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover build/clover.xml
 
 matrix:
     include:
         - php: 5.6
           env: COMPOSER_PREFER_LOWEST=true
+
+notifications:
+    email: geloen.eric@gmail.com
