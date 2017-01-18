@@ -37,7 +37,7 @@ Once you have built you distance matrix service, you can process a matrix:
 
 ``` php
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixRequest;
+use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
 
 $response = $distanceMatrix->process(new DistanceMatrixRequest(
     [new AddressLocation('Vancouver BC')], 
