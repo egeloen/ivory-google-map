@@ -122,4 +122,4 @@ This methods renders all:
 ## What Next?
 
 Since the place autocomplete rendering is the first step in the rendering process, you should be interested into 
-rendering the [API](/doc/helper/api.doc).
+rendering the [API](/doc/helper/api.md).
