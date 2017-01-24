@@ -35,6 +35,7 @@ class VariableAwareTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertInternalType('string', $this->variableAware->getVariable());
+        $this->assertRegExp('/^variableawaremock[a-z0-9]*$/', $this->variableAware->getVariable());
     }
 
     public function testVariable()
@@ -42,13 +43,6 @@ class VariableAwareTest extends \PHPUnit_Framework_TestCase
         $this->variableAware->setVariable($variable = 'foo');
 
         $this->assertSame($variable, $this->variableAware->getVariable());
-    }
-
-    public function testPrefixedVariable()
-    {
-        $this->variableAware = new PrefixedVariableAwareMock();
-
-        $this->assertStringStartsWith('prefix', $this->variableAware->getVariable());
     }
 }
 
@@ -58,17 +52,4 @@ class VariableAwareTest extends \PHPUnit_Framework_TestCase
 class VariableAwareMock implements VariableAwareInterface
 {
     use VariableAwareTrait;
-}
-
-/**
- * @author GeLo <geloen.eric@gmail.com>
- */
-class PrefixedVariableAwareMock implements VariableAwareInterface
-{
-    use VariableAwareTrait;
-
-    public function __construct()
-    {
-        $this->setVariablePrefix('prefix');
-    }
 }

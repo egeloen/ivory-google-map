@@ -52,7 +52,7 @@ class InfoWindowTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('info_window', $this->infoWindow->getVariable());
+        $this->assertStringStartsWith('infowindow', $this->infoWindow->getVariable());
         $this->assertSame($this->content, $this->infoWindow->getContent());
         $this->assertSame(InfoWindowType::DEFAULT_, $this->infoWindow->getType());
         $this->assertNull($this->infoWindow->getPosition());
@@ -72,16 +72,8 @@ class InfoWindowTest extends \PHPUnit_Framework_TestCase
             $position = $this->createCoordinateMock()
         );
 
-        $this->assertStringStartsWith('info_window', $this->infoWindow->getVariable());
-        $this->assertSame($this->content, $this->infoWindow->getContent());
         $this->assertSame($type, $this->infoWindow->getType());
         $this->assertSame($position, $this->infoWindow->getPosition());
-        $this->assertFalse($this->infoWindow->hasPixelOffset());
-        $this->assertFalse($this->infoWindow->isOpen());
-        $this->assertTrue($this->infoWindow->isAutoOpen());
-        $this->assertSame(MouseEvent::CLICK, $this->infoWindow->getOpenEvent());
-        $this->assertTrue($this->infoWindow->isAutoClose());
-        $this->assertFalse($this->infoWindow->hasOptions());
     }
 
     public function testContent()

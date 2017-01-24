@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Elevation\Response\ElevationResult"
+        exclusion-policy="all"
+    >
+        <property
+            name="location"
+            type="Ivory\GoogleMap\Base\Coordinate"
+            expose="true"
+        />
+
+        <property
+            name="elevation"
+            type="float"
+            expose="true"
+        />
+
+        <property
+            name="resolution"
+            type="float"
+            expose="true"
+        />
+    </class>
+</serializer>

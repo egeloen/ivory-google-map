@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded"
+        exclusion-policy="all"
+    >
+        <property
+            name="status"
+            alias="geocoder_status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="partialMatch"
+            type="boolean"
+            expose="true"
+        />
+
+        <property
+            name="placeId"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="types"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="type"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

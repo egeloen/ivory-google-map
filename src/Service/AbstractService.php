@@ -21,6 +21,11 @@ use Psr\Http\Message\RequestInterface as PsrRequestInterface;
 abstract class AbstractService
 {
     /**
+     * @var string
+     */
+    private $url;
+
+    /**
      * @var HttpClient
      */
     private $client;
@@ -29,16 +34,6 @@ abstract class AbstractService
      * @var MessageFactory
      */
     private $messageFactory;
-
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var bool
-     */
-    private $https = true;
 
     /**
      * @var string|null
@@ -51,15 +46,31 @@ abstract class AbstractService
     private $businessAccount;
 
     /**
+     * @param string         $url
      * @param HttpClient     $client
      * @param MessageFactory $messageFactory
-     * @param string         $url
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, $url)
+    public function __construct($url, HttpClient $client, MessageFactory $messageFactory)
     {
+        $this->setUrl($url);
         $this->setClient($client);
         $this->setMessageFactory($messageFactory);
-        $this->setUrl($url);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     /**
@@ -92,42 +103,6 @@ abstract class AbstractService
     public function setMessageFactory(MessageFactory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        if ($this->isHttps()) {
-            return str_replace('http://', 'https://', $this->url);
-        }
-
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isHttps()
-    {
-        return $this->https;
-    }
-
-    /**
-     * @param bool $https
-     */
-    public function setHttps($https)
-    {
-        $this->https = $https;
     }
 
     /**

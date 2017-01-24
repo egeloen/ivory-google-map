@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow"
+        exclusion-policy="all"
+    >
+        <property
+            name="elements"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixElement&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="element"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

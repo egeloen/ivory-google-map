@@ -46,7 +46,7 @@ class KmlLayerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('kml_layer', $this->kmlLayer->getVariable());
+        $this->assertStringStartsWith('kmllayer', $this->kmlLayer->getVariable());
         $this->assertSame($this->url, $this->kmlLayer->getUrl());
         $this->assertFalse($this->kmlLayer->hasOptions());
     }

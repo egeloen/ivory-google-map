@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service\Base;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Geometry;
-use Ivory\GoogleMap\Service\Geocoder\GeocoderLocationType;
+use Ivory\GoogleMap\Service\Base\GeometryLocationType;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -65,7 +65,7 @@ class GeometryTest extends \PHPUnit_Framework_TestCase
 
     public function testLocationType()
     {
-        $this->geometry->setLocationType($locationType = GeocoderLocationType::GEOMETRIC_CENTER);
+        $this->geometry->setLocationType($locationType = GeometryLocationType::GEOMETRIC_CENTER);
 
         $this->assertTrue($this->geometry->hasLocationType());
         $this->assertSame($locationType, $this->geometry->getLocationType());
@@ -73,7 +73,7 @@ class GeometryTest extends \PHPUnit_Framework_TestCase
 
     public function testResetLocationType()
     {
-        $this->geometry->setLocationType(GeocoderLocationType::GEOMETRIC_CENTER);
+        $this->geometry->setLocationType(GeometryLocationType::GEOMETRIC_CENTER);
         $this->geometry->setLocationType(null);
 
         $this->assertFalse($this->geometry->hasLocationType());

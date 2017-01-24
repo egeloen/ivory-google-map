@@ -27,7 +27,8 @@ trait VariableAwareTrait
     public function getVariable()
     {
         if ($this->variable === null) {
-            $this->variable = $this->generateVariable();
+            $prefix = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+            $this->variable = $prefix.substr_replace(uniqid(null, true), '', 14, 1);
         }
 
         return $this->variable;
@@ -39,23 +40,5 @@ trait VariableAwareTrait
     public function setVariable($variable)
     {
         $this->variable = $variable;
-    }
-
-    /**
-     * @param string $prefix
-     */
-    private function setVariablePrefix($prefix)
-    {
-        $this->variable = $this->generateVariable($prefix);
-    }
-
-    /**
-     * @param string $prefix
-     *
-     * @return string
-     */
-    private function generateVariable($prefix = null)
-    {
-        return str_replace('.', '', uniqid($prefix, true));
     }
 }

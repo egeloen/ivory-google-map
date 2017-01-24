@@ -11,26 +11,24 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
-use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Place\Autocomplete\PlaceAutocompleteService;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteQueryRequest;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequest;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestInterface;
+use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteMatch;
+use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompletePrediction;
+use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteResponse;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteTerm;
+use Ivory\Tests\GoogleMap\Service\Place\AbstractPlaceSerializableServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceAutocompleteServiceTest extends AbstractServiceTest
+class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
 {
     /**
      * @var PlaceAutocompleteService
@@ -46,307 +44,204 @@ class PlaceAutocompleteServiceTest extends AbstractServiceTest
             $this->markTestSkipped();
         }
 
-        //sleep(2);
-
         parent::setUp();
 
-        $this->service = new PlaceAutocompleteService($this->getClient(), $this->getMessageFactory());
+        $this->service = new PlaceAutocompleteService($this->client, $this->messageFactory);
         $this->service->setKey($_SERVER['API_KEY']);
     }
 
-    public function testHttps()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteRequest($format)
     {
-        $this->service->setHttps(true);
+        $request = $this->createPlaceAutocompleteRequest();
 
-        $this->assertTrue($this->service->isHttps());
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The http scheme is not supported.
+     * @param string $format
+     *
+     * @dataProvider formatProvider
      */
-    public function testHttp()
-    {
-        $this->service->setHttps(false);
-    }
-
-    public function testProcessWithAutocompleteRequest()
-    {
-        $response = $this->service->process($request = $this->createPlaceAutocompleteRequest());
-
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
-    }
-
-    public function testProcessWithAutocompleteRequestAndOffset()
+    public function testProcessWithAutocompleteRequestAndOffset($format)
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setInput('Paris, Madrid');
         $request->setOffset(5);
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteRequestAndLocation()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteRequestAndLocation($format)
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteRequestAndRadius()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteRequestAndRadius($format)
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
         $request->setRadius(1000);
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteRequestAndTypes()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteRequestAndTypes($format)
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setTypes([AutocompleteType::CITIES]);
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteRequestAndComponents()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteRequestAndComponents($format)
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setComponents([AutocompleteComponentType::COUNTRY => 'fr']);
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteRequestAndLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteRequestAndLanguage($format)
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setLanguage('fr');
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteRequestAndXmlFormat()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteQueryRequest($format)
     {
-        $this->service->setFormat(PlaceAutocompleteService::FORMAT_XML);
+        $request = $this->createPlaceAutocompleteQueryRequest();
 
-        $response = $this->service->process($request = $this->createPlaceAutocompleteRequest());
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteQueryRequest()
-    {
-        $response = $this->service->process($request = $this->createPlaceAutocompleteQueryRequest());
-
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
-    }
-
-    public function testProcessWithAutocompleteQueryRequestAndOffset()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteQueryRequestAndOffset($format)
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setInput('Paris, Madrid');
         $request->setOffset(5);
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteQueryRequestAndLocation()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteQueryRequestAndLocation($format)
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteQueryRequestAndRadius()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteQueryRequestAndRadius($format)
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
         $request->setRadius(1000);
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    public function testProcessWithAutocompleteQueryRequestAndLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithAutocompleteQueryRequestAndLanguage($format)
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setLanguage('fr');
 
+        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
-    }
-
-    public function testProcessWithAutocompleteQueryRequestAndXmlFormat()
-    {
-        $this->service->setFormat(PlaceAutocompleteService::FORMAT_XML);
-
-        $response = $this->service->process($request = $this->createPlaceAutocompleteQueryRequest());
-
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getPredictions());
-    }
-
-    public function testProcessWithApiKey()
-    {
-        $this->service = new PlaceAutocompleteService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $this->service->setKey('api-key');
-
-        $request = $this->createPlaceAutocompleteRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('buildContext')
-            ->will($this->returnValue($context = 'autocomplete'));
-
-        $request
-            ->expects($this->once())
-            ->method('buildQuery')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/place/'.$context.'/json?foo=bar&key=api-key'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status": "OK", "predictions": []}'));
-
-        $response = $this->service->process($request);
-
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertEmpty($response->getPredictions());
-    }
-
-    public function testProcessWithBusinessAccount()
-    {
-        $this->service = new PlaceAutocompleteService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $request = $this->createPlaceAutocompleteRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('buildContext')
-            ->will($this->returnValue($context = 'autocomplete'));
-
-        $request
-            ->expects($this->once())
-            ->method('buildQuery')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/place/'.$context.'/json?foo=bar&signature=signature'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status": "OK", "predictions": []}'));
-
-        $businessAccount = $this->createBusinessAccountMock();
-        $businessAccount
-            ->expects($this->once())
-            ->method('signUrl')
-            ->with($this->equalTo('https://maps.googleapis.com/maps/api/place/'.$context.'/json?foo=bar'))
-            ->will($this->returnValue($url));
-
-        $this->service->setBusinessAccount($businessAccount);
-
-        $response = $this->service->process($request);
-
-        $this->assertSame(PlaceAutocompleteStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertEmpty($response->getPredictions());
+        $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
@@ -366,58 +261,93 @@ class PlaceAutocompleteServiceTest extends AbstractServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @param PlaceAutocompleteResponse         $response
+     * @param PlaceAutocompleteRequestInterface $request
      */
-    private function createHttpClientMock()
+    private function assertPlaceAutocompleteResponse($response, $request)
     {
-        return $this->createMock(HttpClient::class);
+        $options = array_merge([
+            'status'      => PlaceAutocompleteStatus::OK,
+            'predictions' => [],
+        ], self::$journal->getData());
+
+        $this->assertInstanceOf(PlaceAutocompleteResponse::class, $response);
+
+        $this->assertSame($request, $response->getRequest());
+        $this->assertCount(count($options['predictions']), $predictions = $response->getPredictions());
+
+        foreach ($options['predictions'] as $key => $prediction) {
+            $this->assertArrayHasKey($key, $predictions);
+            $this->assertPlaceAutocompletePrediction($predictions[$key], $prediction);
+        }
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @param PlaceAutocompletePrediction $prediction
+     * @param mixed[]                     $options
      */
-    private function createMessageFactoryMock()
+    private function assertPlaceAutocompletePrediction($prediction, array $options = [])
     {
-        return $this->createMock(MessageFactory::class);
+        $options = array_merge([
+            'place_id'           => null,
+            'description'        => null,
+            'types'              => [],
+            'terms'              => [],
+            'matched_substrings' => [],
+        ], $options);
+
+        $this->assertInstanceOf(PlaceAutocompletePrediction::class, $prediction);
+
+        $this->assertSame($options['place_id'], $prediction->getPlaceId());
+        $this->assertSame($options['description'], $prediction->getDescription());
+        $this->assertSame($options['types'], $prediction->getTypes());
+
+        $this->assertCount(count($options['terms']), $terms = $prediction->getTerms());
+
+        foreach ($options['terms'] as $key => $term) {
+            $this->assertArrayHasKey($key, $terms);
+            $this->assertPlaceAutocompleteTerm($terms[$key], $term);
+        }
+
+        $this->assertCount(count($options['matched_substrings']), $matches = $prediction->getMatches());
+
+        foreach ($options['matched_substrings'] as $key => $match) {
+            $this->assertArrayHasKey($key, $matches);
+            $this->assertPlaceAutocompleteMatch($matches[$key], $match);
+        }
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequestInterface
+     * @param PlaceAutocompleteTerm $term
+     * @param mixed[]               $options
      */
-    private function createHttpRequestMock()
+    private function assertPlaceAutocompleteTerm($term, array $options = [])
     {
-        return $this->createMock(RequestInterface::class);
+        $options = array_merge([
+            'value'  => null,
+            'offset' => null,
+        ], $options);
+
+        $this->assertInstanceOf(PlaceAutocompleteTerm::class, $term);
+
+        $this->assertSame($options['value'], $term->getValue());
+        $this->assertSame($options['offset'], $term->getOffset());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResponseInterface
+     * @param PlaceAutocompleteMatch $match
+     * @param mixed[]                $options
      */
-    private function createHttpResponseMock()
+    private function assertPlaceAutocompleteMatch($match, array $options = [])
     {
-        return $this->createMock(ResponseInterface::class);
-    }
+        $options = array_merge([
+            'length'  => null,
+            'offset' => null,
+        ], $options);
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|StreamInterface
-     */
-    private function createHttpStreamMock()
-    {
-        return $this->createMock(StreamInterface::class);
-    }
+        $this->assertInstanceOf(PlaceAutocompleteMatch::class, $match);
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
-     */
-    private function createBusinessAccountMock()
-    {
-        return $this->createMock(BusinessAccount::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceAutocompleteRequestInterface
-     */
-    private function createPlaceAutocompleteRequestMock()
-    {
-        return $this->createMock(PlaceAutocompleteRequestInterface::class);
+        $this->assertSame($options['length'], $match->getLength());
+        $this->assertSame($options['offset'], $match->getOffset());
     }
 }

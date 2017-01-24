@@ -22,11 +22,6 @@ abstract class AbstractTextualPlaceSearchRequest extends AbstractPlaceSearchRequ
     private $keyword;
 
     /**
-     * @var string[]
-     */
-    private $names = [];
-
-    /**
      * @return bool
      */
     public function hasKeyword()
@@ -51,70 +46,6 @@ abstract class AbstractTextualPlaceSearchRequest extends AbstractPlaceSearchRequ
     }
 
     /**
-     * @return bool
-     */
-    public function hasNames()
-    {
-        return !empty($this->names);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getNames()
-    {
-        return $this->names;
-    }
-
-    /**
-     * @param string[] $names
-     */
-    public function setNames(array $names)
-    {
-        $this->names = [];
-        $this->addNames($names);
-    }
-
-    /**
-     * @param string[] $names
-     */
-    public function addNames(array $names)
-    {
-        foreach ($names as $name) {
-            $this->addName($name);
-        }
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasName($name)
-    {
-        return in_array($name, $this->names, true);
-    }
-
-    /**
-     * @param string $name
-     */
-    public function addName($name)
-    {
-        if (!$this->hasName($name)) {
-            $this->names[] = $name;
-        }
-    }
-
-    /**
-     * @param string $name
-     */
-    public function removeName($name)
-    {
-        unset($this->names[array_search($name, $this->names, true)]);
-        $this->names = array_values($this->names);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildQuery()
@@ -123,10 +54,6 @@ abstract class AbstractTextualPlaceSearchRequest extends AbstractPlaceSearchRequ
 
         if ($this->hasKeyword()) {
             $query['keyword'] = $this->keyword;
-        }
-
-        if ($this->hasNames()) {
-            $query['name'] = implode('|', $this->names);
         }
 
         return $query;

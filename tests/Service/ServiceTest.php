@@ -27,6 +27,11 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     private $service;
 
     /**
+     * @var string
+     */
+    private $url;
+
+    /**
      * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
      */
     private $client;
@@ -37,34 +42,33 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     private $messageFactory;
 
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->service = $this->getMockBuilder(AbstractService::class)
             ->setConstructorArgs([
+                $this->url = 'https://foo',
                 $this->client = $this->createHttpClientMock(),
-                $this->messageFactory = $this->createMessageFactoryMock(),
-                $this->url = 'http://foo',
+                $this->messageFactory = $this->createMessageFactoryMock()
             ])
             ->getMockForAbstractClass();
     }
 
     public function testDefaultState()
     {
+        $this->assertSame('https://foo', $this->service->getUrl());
         $this->assertSame($this->client, $this->service->getClient());
         $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
-        $this->assertSame('https://foo', $this->service->getUrl());
-        $this->assertTrue($this->service->isHttps());
         $this->assertFalse($this->service->hasKey());
         $this->assertNull($this->service->getKey());
         $this->assertFalse($this->service->hasBusinessAccount());
         $this->assertNull($this->service->getBusinessAccount());
+    }
+
+    public function testUrl()
+    {
+        $this->assertSame('https://foo', $this->service->getUrl());
     }
 
     public function testClient()
@@ -79,25 +83,6 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->setMessageFactory($messageFactory = $this->createMessageFactoryMock());
 
         $this->assertSame($messageFactory, $this->service->getMessageFactory());
-    }
-
-    public function testHttps()
-    {
-        $this->service->setHttps(true);
-
-        $this->assertTrue($this->service->isHttps());
-    }
-
-    public function testUrl()
-    {
-        $this->assertSame('https://foo', $this->service->getUrl());
-    }
-
-    public function testUrlWithHttps()
-    {
-        $this->service->setHttps(false);
-
-        $this->assertSame('http://foo', $this->service->getUrl());
     }
 
     public function testKey()

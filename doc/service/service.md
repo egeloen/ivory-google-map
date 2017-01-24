@@ -28,12 +28,14 @@ $service->setMessageFactory(new GuzzleMessageFactory());
 Here, I have chosen to use the [Guzzle6](http://docs.guzzlephp.org/en/latest/psr7.html) message factory but since 
 [Httplug](http://httplug.io/) supports the most popular http clients, you can choose you preferred one instead.
 
-## Configure https
+## Configure serializer
 
-If you want to rely on http instead of https, you can use:
+If you want to update the serializer, you can use:
 
 ``` php
-$service->setHttps(false);
+use Ivory\Serializer\Serializer;
+
+$service->setSerializer(new Serializer());
 ```
 
 ## Configure format

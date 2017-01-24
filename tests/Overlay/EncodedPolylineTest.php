@@ -48,7 +48,7 @@ class EncodedPolylineTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('encoded_polyline', $this->encodedPolyline->getVariable());
+        $this->assertStringStartsWith('encodedpolyline', $this->encodedPolyline->getVariable());
         $this->assertSame($this->value, $this->encodedPolyline->getValue());
         $this->assertFalse($this->encodedPolyline->hasOptions());
     }
@@ -57,7 +57,6 @@ class EncodedPolylineTest extends \PHPUnit_Framework_TestCase
     {
         $this->encodedPolyline = new EncodedPolyline($this->value, $options = ['foo' => 'bar']);
 
-        $this->assertStringStartsWith('encoded_polyline', $this->encodedPolyline->getVariable());
         $this->assertSame($this->value, $this->encodedPolyline->getValue());
         $this->assertSame($options, $this->encodedPolyline->getOptions());
     }

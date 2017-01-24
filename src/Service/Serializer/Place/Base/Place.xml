@@ -1,0 +1,161 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Base\Place"
+        exclusion-policy="all"
+    >
+        <property
+            name="id"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="placeId"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="name"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="formattedAddress"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="formattedPhoneNumber"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="internationalPhoneNumber"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="url"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="icon"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="scope"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="priceLevel"
+            type="integer"
+            expose="true"
+        />
+
+        <property
+            name="rating"
+            type="float"
+            expose="true"
+        />
+
+        <property
+            name="utcOffset"
+            type="integer"
+            expose="true"
+        />
+
+        <property
+            name="vicinity"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="website"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="geometry"
+            type="Ivory\GoogleMap\Service\Base\Geometry"
+            expose="true"
+        />
+
+        <property
+            name="openingHours"
+            type="Ivory\GoogleMap\Service\Place\Base\OpeningHours"
+            expose="true"
+        />
+
+        <property
+            name="addressComponents"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Base\AddressComponent&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="address_component"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="photos"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Base\Photo&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="photo"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="alternatePlaceIds"
+            alias="alt_ids"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Base\AlternatePlaceId&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="alternate_place_id"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="reviews"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Base\Review&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="review"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="types"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="type"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="permanentlyClose"
+            type="boolean"
+            expose="true"
+        />
+    </class>
+</serializer>

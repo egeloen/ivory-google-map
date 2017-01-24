@@ -65,7 +65,6 @@ class Autocomplete implements VariableAwareInterface
 
     public function __construct()
     {
-        $this->setVariablePrefix('place_autocomplete');
         $this->setEventManager(new EventManager());
     }
 

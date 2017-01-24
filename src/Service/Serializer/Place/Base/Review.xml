@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Base\Review"
+        exclusion-policy="all"
+    >
+        <property
+            name="authorName"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="authorUrl"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="text"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="rating"
+            type="float"
+            expose="true"
+        />
+
+        <property
+            name="time"
+            type="DateTime&lt;format=U&gt;"
+            expose="true"
+        />
+
+        <property
+            name="language"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="aspects"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Base\AspectRating&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="aspect"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

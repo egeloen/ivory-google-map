@@ -32,18 +32,6 @@ class PlacePhotoService extends AbstractPlaceService
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function setHttps($https)
-    {
-        if (!$https) {
-            throw new \InvalidArgumentException('The http scheme is not supported.');
-        }
-
-        parent::setHttps($https);
-    }
-
-    /**
      * @param PlacePhotoRequestInterface $request
      *
      * @return StreamInterface

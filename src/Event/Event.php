@@ -51,7 +51,6 @@ class Event implements VariableAwareInterface
      */
     public function __construct($instance, $trigger, $handle, $capture = false)
     {
-        $this->setVariablePrefix('event');
         $this->setInstance($instance);
         $this->setTrigger($trigger);
         $this->setHandle($handle);

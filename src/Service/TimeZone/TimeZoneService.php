@@ -13,36 +13,29 @@ namespace Ivory\GoogleMap\Service\TimeZone;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\AbstractParsableService;
+use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
-use Ivory\GoogleMap\Service\Utility\Parser;
+use Ivory\Serializer\Context\Context;
+use Ivory\Serializer\Naming\SnakeCaseNamingStrategy;
+use Ivory\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TimeZoneService extends AbstractParsableService
+class TimeZoneService extends AbstractSerializableService
 {
     /**
-     * @param HttpClient     $client
-     * @param MessageFactory $messageFactory
-     * @param Parser|null    $parser
+     * @param HttpClient               $client
+     * @param MessageFactory           $messageFactory
+     * @param SerializerInterface|null $serializer
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, Parser $parser = null)
-    {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/timezone', $parser);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setHttps($https)
-    {
-        if (!$https) {
-            throw new \InvalidArgumentException('The http scheme is not supported.');
-        }
-
-        parent::setHttps($https);
+    public function __construct(
+        HttpClient $client,
+        MessageFactory $messageFactory,
+        SerializerInterface $serializer = null
+    ) {
+        parent::__construct('https://maps.googleapis.com/maps/api/timezone', $client, $messageFactory, $serializer);
     }
 
     /**
@@ -55,27 +48,14 @@ class TimeZoneService extends AbstractParsableService
         $httpRequest = $this->createRequest($request);
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        $data = $this->parse((string) $httpResponse->getBody(), ['snake_to_camel' => true]);
+        $context = new Context();
 
-        $response = $this->buildResponse($data);
+        if ($this->getFormat() === self::FORMAT_XML) {
+            $context->setNamingStrategy(new SnakeCaseNamingStrategy());
+        }
+
+        $response = $this->deserialize($httpResponse, TimeZoneResponse::class, $context);
         $response->setRequest($request);
-
-        return $response;
-    }
-
-    /**
-     * @param mixed[] $data
-     *
-     * @return TimeZoneResponse
-     */
-    private function buildResponse(array $data)
-    {
-        $response = new TimeZoneResponse();
-        $response->setStatus($data['status']);
-        $response->setDstOffset((int) $data['dstOffset']);
-        $response->setRawOffset((int) $data['rawOffset']);
-        $response->setTimeZoneId($data['timeZoneId']);
-        $response->setTimeZoneName($data['timeZoneName']);
 
         return $response;
     }

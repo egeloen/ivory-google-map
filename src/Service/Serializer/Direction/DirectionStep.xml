@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\DirectionStep"
+        exclusion-policy="all"
+    >
+        <property
+            name="distance"
+            type="Ivory\GoogleMap\Service\Base\Distance"
+            expose="true"
+        />
+
+        <property
+            name="duration"
+            type="Ivory\GoogleMap\Service\Base\Duration"
+            expose="true"
+        />
+
+        <property
+            name="endLocation"
+            type="Ivory\GoogleMap\Base\Coordinate"
+            expose="true"
+        />
+
+        <property
+            name="instructions"
+            alias="html_instructions"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="encodedPolyline"
+            alias="polyline"
+            type="Ivory\GoogleMap\Overlay\EncodedPolyline"
+            expose="true"
+        />
+
+        <property
+            name="startLocation"
+            type="Ivory\GoogleMap\Base\Coordinate"
+            expose="true"
+        />
+
+        <property
+            name="travelMode"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="transitDetails"
+            type="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails"
+            expose="true"
+        />
+    </class>
+</serializer>

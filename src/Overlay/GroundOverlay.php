@@ -43,7 +43,6 @@ class GroundOverlay implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct($url, Bound $bound, array $options = [])
     {
-        $this->setVariablePrefix('ground_overlay');
         $this->setUrl($url);
         $this->setBound($bound);
         $this->addOptions($options);

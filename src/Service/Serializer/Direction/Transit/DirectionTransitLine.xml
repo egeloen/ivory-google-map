@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine"
+        exclusion-policy="all"
+    >
+        <property
+            name="name"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="shortName"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="color"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="url"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="icon"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="textColor"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="vehicle"
+            type="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle"
+            expose="true"
+        />
+
+        <property
+            name="agencies"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitAgency&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="agency"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

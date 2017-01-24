@@ -42,7 +42,7 @@ class HeatmapLayerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('heatmap_layer', $this->heatmapLayer->getVariable());
+        $this->assertStringStartsWith('heatmaplayer', $this->heatmapLayer->getVariable());
         $this->assertFalse($this->heatmapLayer->hasCoordinates());
         $this->assertEmpty($this->heatmapLayer->getCoordinates());
     }

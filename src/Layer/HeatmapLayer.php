@@ -36,7 +36,6 @@ class HeatmapLayer implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct(array $coordinates = [], array $options = [])
     {
-        $this->setVariablePrefix('heatmap_layer');
         $this->setCoordinates($coordinates);
         $this->setOptions($options);
     }

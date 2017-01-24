@@ -35,7 +35,6 @@ class KmlLayer implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct($url, array $options = [])
     {
-        $this->setVariablePrefix('kml_layer');
         $this->setUrl($url);
         $this->addOptions($options);
     }

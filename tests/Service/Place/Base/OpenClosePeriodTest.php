@@ -50,7 +50,7 @@ class OpenClosePeriodTest extends \PHPUnit_Framework_TestCase
 
     public function testTime()
     {
-        $this->openClosePeriod->setTime($time = new \DateTime());
+        $this->openClosePeriod->setTime($time = '0800');
 
         $this->assertTrue($this->openClosePeriod->hasTime());
         $this->assertSame($time, $this->openClosePeriod->getTime());

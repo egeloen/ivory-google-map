@@ -30,7 +30,7 @@ class PlaceSearchResponseIterator implements \Iterator
     private $responses = [];
 
     /**
-     * @var int|null
+     * @var int
      */
     private $position = 0;
 

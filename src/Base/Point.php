@@ -39,7 +39,6 @@ class Point implements VariableAwareInterface
      */
     public function __construct($x = 0.0, $y = 0.0)
     {
-        $this->setVariablePrefix('point');
         $this->setX($x);
         $this->setY($y);
     }

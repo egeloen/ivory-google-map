@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails"
+        exclusion-policy="all"
+    >
+        <property
+            name="departureStop"
+            type="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitStop"
+            expose="true"
+        />
+
+        <property
+            name="arrivalStop"
+            type="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitStop"
+            expose="true"
+        />
+
+        <property
+            name="departureTime"
+            type="Ivory\GoogleMap\Service\Base\Time"
+            expose="true"
+        />
+
+        <property
+            name="arrivalTime"
+            type="Ivory\GoogleMap\Service\Base\Time"
+            expose="true"
+        />
+
+        <property
+            name="headSign"
+            alias="headsign"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="headWay"
+            alias="headway"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="line"
+            type="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine"
+            expose="true"
+        />
+
+        <property
+            name="numStops"
+            type="integer"
+            expose="true"
+        />
+    </class>
+</serializer>

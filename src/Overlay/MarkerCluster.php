@@ -39,11 +39,6 @@ class MarkerCluster implements OptionsAwareInterface, VariableAwareInterface
      */
     private $markers = [];
 
-    public function __construct()
-    {
-        $this->setVariablePrefix('marker_cluster');
-    }
-
     /**
      * @return bool
      */

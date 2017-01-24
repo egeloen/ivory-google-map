@@ -11,24 +11,14 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressType;
-use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderPlaceIdRequest;
-use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderServiceApiKeyTest extends AbstractServiceTest
+class GeocoderServiceApiKeyTest extends GeocoderServiceTest
 {
-    /**
-     * @var GeocoderService
-     */
-    private $service;
-
     /**
      * {@inheritdoc}
      */
@@ -38,32 +28,39 @@ class GeocoderServiceApiKeyTest extends AbstractServiceTest
             $this->markTestSkipped();
         }
 
-        //sleep(2);
-
         parent::setUp();
 
-        $this->service = new GeocoderService($this->getClient(), $this->getMessageFactory());
         $this->service->setKey($_SERVER['API_KEY']);
     }
 
-    public function testGeocodePlaceId()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodePlaceId($format)
     {
-        $response = $this->service->geocode($request = new GeocoderPlaceIdRequest('ChIJtdVv8-Fv5kcRV7t53Y2Ao3c'));
+        $request = new GeocoderPlaceIdRequest('ChIJLU7jZClu5kcR4PcOOO6p3I0');
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithResultType()
-    {
-        $request = new GeocoderCoordinateRequest(new Coordinate(50.637004, 3.063646));
-        $request->setResultTypes([GeocoderAddressType::POSTAL_CODE]);
-
+        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
+        $this->assertGeocoderResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodeWithResultType($format)
+    {
+        $request = $this->createCoordinateRequest();
+        $request->setResultTypes([GeocoderAddressType::POSTAL_CODE]);
+
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
+
+        $this->assertGeocoderResponse($response, $request);
     }
 }

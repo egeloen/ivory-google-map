@@ -23,10 +23,10 @@ $ composer require egeloen/google-map
 
 ## Download additional libraries
 
-If you want to use the [Direction](/doc/service/direction/direction.md), 
-[Distance Matrix](/doc/service/distance_matrix/distance_matrix.md), [Elevation](/doc/service/elevation/elevation.md),
-[Geocoder](/doc/service/geocoder/geocoder.md), [Time Zone](/doc/service/time_zone/time_zone.md) services, you will need 
-an http client and message factory via [Httplug](http://httplug.io/) which is an http client abstraction library:
+### Httplug
+
+If you want to use a service (geocoder, direction, ...), you will need an http client and message factory via 
+[Httplug](http://httplug.io/) which is an http client abstraction library:
 
 ``` bash
 $ composer require php-http/guzzle6-adapter
@@ -35,6 +35,15 @@ $ composer require php-http/message
 
 Here, I have chosen to use [Guzzle6](http://docs.guzzlephp.org/en/latest/psr7.html) but since Httplug supports the 
 most popular http clients, you can install your preferred one instead.
+
+### Ivory Serializer
+
+If you want to use a service (geocoder, direction, ...), you will need the 
+[Ivory Serializer](https://github.com/egeloen/ivory-serializer) in order to deserialize the http response:
+
+``` bash
+$ composer require egeleon/serializer
+```
 
 ## Autoload
 

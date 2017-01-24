@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle"
+        exclusion-policy="all"
+    >
+        <property
+            name="name"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="icon"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="type"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="localIcon"
+            type="string"
+            expose="true"
+        />
+    </class>
+</serializer>

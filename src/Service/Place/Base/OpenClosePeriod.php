@@ -22,7 +22,7 @@ class OpenClosePeriod
     private $day;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $time;
 
@@ -59,7 +59,7 @@ class OpenClosePeriod
     }
 
     /**
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getTime()
     {
@@ -67,9 +67,9 @@ class OpenClosePeriod
     }
 
     /**
-     * @param \DateTime|null $time
+     * @param string $time
      */
-    public function setTime(\DateTime $time = null)
+    public function setTime($time)
     {
         $this->time = $time;
     }

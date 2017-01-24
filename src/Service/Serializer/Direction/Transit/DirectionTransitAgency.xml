@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitAgency"
+        exclusion-policy="all"
+    >
+        <property
+            name="name"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="phone"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="url"
+            type="string"
+            expose="true"
+        />
+    </class>
+</serializer>

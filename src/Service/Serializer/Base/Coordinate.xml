@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Base\Coordinate"
+        exclusion-policy="all"
+    >
+        <property
+            name="latitude"
+            alias="lat"
+            type="float"
+            expose="true"
+        />
+
+        <property
+            name="longitude"
+            alias="lng"
+            type="float"
+            expose="true"
+        />
+    </class>
+</serializer>

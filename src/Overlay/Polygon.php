@@ -37,7 +37,6 @@ class Polygon implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct(array $coordinates = [], array $options = [])
     {
-        $this->setVariablePrefix('polygon');
         $this->addCoordinates($coordinates);
         $this->addOptions($options);
     }

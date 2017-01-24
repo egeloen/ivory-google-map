@@ -33,7 +33,7 @@ It contain the departure times for this leg of the journey. It is represented by
 $departureTime = $transitDetails->getDepartureTime();
 ```
 
-If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
+If you want to learn more about the time, you can read its [documentation](/doc/service/base/time.md).
 
 ## Arrival time
 
@@ -43,7 +43,7 @@ It contain the arrival times for this leg of the journey. It is represented by a
 $arrrivalTime = $transitDetails->getArrivalTime();
 ```
 
-If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
+If you want to learn more about the time, you can read its [documentation](/doc/service/base/time.md).
 
 ## Head sign
 

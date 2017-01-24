@@ -65,7 +65,6 @@ class Marker implements ExtendableInterface, OptionsAwareInterface
         MarkerShape $shape = null,
         array $options = []
     ) {
-        $this->setVariablePrefix('marker');
         $this->setPosition($position);
         $this->setAnimation($animation);
         $this->setIcon($icon);

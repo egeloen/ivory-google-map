@@ -11,28 +11,25 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Place\Base\PlaceType;
 use Ivory\GoogleMap\Service\Place\Base\PriceLevel;
 use Ivory\GoogleMap\Service\Place\Search\PlaceSearchService;
 use Ivory\GoogleMap\Service\Place\Search\Request\NearbyPlaceSearchRequest;
+use Ivory\GoogleMap\Service\Place\Search\Request\PageTokenPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRankBy;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Request\RadarPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Request\TextPlaceSearchRequest;
+use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
+use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponseIterator;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Ivory\Tests\GoogleMap\Service\Place\AbstractPlaceSerializableServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceSearchServiceTest extends AbstractServiceTest
+class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
 {
     /**
      * @var PlaceSearchService
@@ -48,655 +45,485 @@ class PlaceSearchServiceTest extends AbstractServiceTest
             $this->markTestSkipped();
         }
 
-        //sleep(2);
-
         parent::setUp();
 
-        $this->service = new PlaceSearchService($this->getClient(), $this->getMessageFactory());
+        if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
+            sleep(5);
+        }
+
+        $this->service = new PlaceSearchService($this->client, $this->messageFactory);
         $this->service->setKey($_SERVER['API_KEY']);
     }
 
-    public function testHttps()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithNearbyRequest($format)
     {
-        $this->service->setHttps(true);
+        $request = $this->createNearbyRequest();
 
-        $this->assertTrue($this->service->isHttps());
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
+
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The http scheme is not supported.
+     * @param string $format
+     *
+     * @dataProvider formatProvider
      */
-    public function testHttp()
+    public function testProcessWithNearbyRequestAndKeyword($format)
     {
-        $this->service->setHttps(false);
-    }
-
-    public function testProcessWithNearbyRequest()
-    {
-        $request = $this->createNearbyRequest();
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithNearbyRequestAndKeyword()
-    {
-        $request = $this->createNearbyRequest();
+        $request = $this->createNearbyRequest(300);
         $request->setKeyword('Bank');
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator= $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithNearbyRequestAndNames()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithNearbyRequestAndMinPrice($format)
     {
-        $request = $this->createNearbyRequest();
-        $request->setNames(['Mother', 'Breakfast']);
-
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithNearbyRequestAndMinPrice()
-    {
-        $request = $this->createNearbyRequest();
+        $request = $this->createNearbyRequest(100);
         $request->setMinPrice(PriceLevel::FREE);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithNearbyRequestAndMaxPrice()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithNearbyRequestAndMaxPrice($format)
     {
-        $request = $this->createNearbyRequest();
+        $request = $this->createNearbyRequest(100);
         $request->setMaxPrice(PriceLevel::MODERATE);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithNearbyRequestAndOpenNow()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithNearbyRequestAndOpenNow($format)
     {
-        $request = $this->createNearbyRequest();
+        $request = $this->createNearbyRequest(20);
         $request->setOpenNow(true);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithNearbyRequestAndType()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithNearbyRequestAndType($format)
     {
-        $request = $this->createNearbyRequest();
+        $request = $this->createNearbyRequest(500);
         $request->setType(PlaceType::BANK);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithNearbyRequestAndLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithNearbyRequestAndLanguage($format)
     {
         $request = $this->createNearbyRequest();
         $request->setLanguage('fr');
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithRadarRequestAndKeyword()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithRadarRequestAndKeyword($format)
     {
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
+        $request = $this->createRadarRequest(300);
+        $request->setKeyword('Bank');
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithRadarRequestAndNames()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithRadarRequestAndMinPrice($format)
     {
-        $request = $this->createRadarRequest();
-        $request->setNames(['Mother', 'Breakfast']);
-
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithRadarRequestAndMinPrice()
-    {
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
+        $request = $this->createRadarRequest(150);
+        $request->setKeyword('Mother');
         $request->setMinPrice(PriceLevel::FREE);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithRadarRequestAndMaxPrice()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithRadarRequestAndMaxPrice($format)
     {
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
+        $request = $this->createRadarRequest(200);
+        $request->setKeyword('Mother');
         $request->setMaxPrice(PriceLevel::MODERATE);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithRadarRequestAndOpenNow()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithRadarRequestAndOpenNow($format)
     {
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
+        $request = $this->createRadarRequest(150);
+        $request->setKeyword('Mother');
         $request->setOpenNow(true);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator  = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithRadarRequestAndType()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithRadarRequestAndType($format)
     {
-        $request = $this->createRadarRequest();
+        $request = $this->createRadarRequest(500);
         $request->setType(PlaceType::BANK);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithRadarRequestAndLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithRadarRequestAndLanguage($format)
     {
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
+        $request = $this->createRadarRequest(150);
+        $request->setKeyword('Mother');
         $request->setLanguage('fr');
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequest()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequest($format)
     {
         $request = $this->createTextRequest();
-        $response = $this->service->process($request)->current();
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
+
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithLocation()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithLocation($format)
     {
         $request = $this->createTextRequest();
-        $request->setLocation(new Coordinate(-33.857097, 150.996833));
+        $request->setLocation(new Coordinate(50.637133, 3.063657));
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithRadius()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithRadius($format)
     {
         $request = $this->createTextRequest();
-        $request->setRadius(5000);
+        $request->setLocation(new Coordinate(50.637133, 3.063657));
+        $request->setRadius(1000);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithMinPrice()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithMinPrice($format)
     {
-        $request = $this->createTextRequest();
-        $request->setMinPrice(PriceLevel::MODERATE);
+        $request = $this->createTextRequest('Restaurants in Lille');
+        $request->setMinPrice(PriceLevel::EXPENSIVE);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithMaxPrice()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithMaxPrice($format)
     {
-        $request = $this->createTextRequest();
+        $request = $this->createTextRequest('Pizza in Lille');
         $request->setMaxPrice(PriceLevel::MODERATE);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithOpenNow()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithOpenNow($format)
     {
         $request = $this->createTextRequest();
         $request->setOpenNow(true);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithType()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithType($format)
     {
         $request = $this->createTextRequest();
-        $request->setType(PlaceType::RESTAURANT);
+        $request->setType(PlaceType::CASINO);
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    public function testProcessWithTextRequestWithLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithTextRequestWithLanguage($format)
     {
         $request = $this->createTextRequest();
         $request->setLanguage('fr');
 
-        $response = $this->service->process($request)->current();
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
 
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithNearbyRequestAndXmlFormat()
-    {
-        $this->service->setFormat(PlaceSearchService::FORMAT_XML);
-
-        $request = $this->createNearbyRequest();
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithRadarRequestAndXmlFormat()
-    {
-        $this->service->setFormat(PlaceSearchService::FORMAT_XML);
-
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
-
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithTextRequestAndXmlFormat()
-    {
-        $this->service->setFormat(PlaceSearchService::FORMAT_XML);
-
-        $request = $this->createTextRequest();
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertNotEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNotNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     public function testIteratorWithNearbyRequest()
     {
-        $responses = [];
-        $request = $this->createNearbyRequest();
+        $request = $this->createNearbyRequest(5000);
+        $request->setType(PlaceType::HOSPITAL);
+
         $iterator = $this->service->process($request);
 
-        foreach ($iterator as $response) {
-            $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-            $this->assertNotEmpty($response->getResults());
-            $this->assertEmpty($response->getHtmlAttributions());
-
-            $responses[] = $response;
-            //sleep(2);
-        }
-
-        $this->assertSame($responses, iterator_to_array($iterator));
-    }
-
-    public function testIteratorWithRadarRequest()
-    {
-        $request = $this->createRadarRequest();
-        $request->setKeyword('vegetarian');
-
-        $responses = [];
-        $iterator = $this->service->process($request);
-
-        foreach ($iterator as $response) {
-            $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-            $this->assertNotEmpty($response->getResults());
-            $this->assertEmpty($response->getHtmlAttributions());
-
-            $responses[] = $response;
-            //sleep(2);
-        }
-
-        $this->assertSame($responses, iterator_to_array($iterator));
-    }
-
-    public function testIteratorWithTextRequest()
-    {
-        $responses = [];
-        $request = $this->createTextRequest();
-        $iterator = $this->service->process($request);
-
-        foreach ($iterator as $response) {
-            $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-            $this->assertNotEmpty($response->getResults());
-            $this->assertEmpty($response->getHtmlAttributions());
-
-            $responses[] = $response;
-            //sleep(2);
-        }
-
-        $this->assertSame($responses, iterator_to_array($iterator));
-    }
-
-    public function testProcessWithApiKey()
-    {
-        $this->service = new PlaceSearchService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $this->service->setKey('api-key');
-
-        $request = $this->createPlaceSearchRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('buildContext')
-            ->will($this->returnValue($context = 'context'));
-
-        $request
-            ->expects($this->once())
-            ->method('buildQuery')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/place/'.$context.'/json?foo=bar&key=api-key'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status": "OK", "results": []}'));
-
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
-    }
-
-    public function testProcessWithBusinessAccount()
-    {
-        $this->service = new PlaceSearchService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $request = $this->createPlaceSearchRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('buildContext')
-            ->will($this->returnValue($context = 'context'));
-
-        $request
-            ->expects($this->once())
-            ->method('buildQuery')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/place/'.$context.'/json?foo=bar&signature=signature'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status": "OK", "results": []}'));
-
-        $businessAccount = $this->createBusinessAccountMock();
-        $businessAccount
-            ->expects($this->once())
-            ->method('signUrl')
-            ->with($this->equalTo('https://maps.googleapis.com/maps/api/place/'.$context.'/json?foo=bar'))
-            ->will($this->returnValue($url));
-
-        $this->service->setBusinessAccount($businessAccount);
-
-        $response = $this->service->process($request)->current();
-
-        $this->assertSame(PlaceSearchStatus::OK, $response->getStatus());
-        $this->assertSame($request, $response->getRequest());
-        $this->assertEmpty($response->getResults());
-        $this->assertEmpty($response->getHtmlAttributions());
-        $this->assertNull($response->getNextPageToken());
+        $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testIteratorWithRadarRequest($format)
+    {
+        $request = $this->createRadarRequest(1000);
+        $request->setKeyword('Bank');
+
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
+
+        $this->assertPlaceSearchIterator($iterator, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testIteratorWithTextRequest($format)
+    {
+        $request = $this->createTextRequest('Church in Lille');
+
+        $this->service->setFormat($format);
+        $iterator = $this->service->process($request);
+
+        $this->assertPlaceSearchIterator($iterator, $request);
+    }
+
+    /**
+     * @param int $radius
+     *
      * @return NearbyPlaceSearchRequest
      */
-    private function createNearbyRequest()
+    private function createNearbyRequest($radius = 10)
     {
         return new NearbyPlaceSearchRequest(
             new Coordinate(-33.8670522, 151.1957362),
             PlaceSearchRankBy::PROMINENCE,
-            10000
+            $radius
         );
     }
 
     /**
+     * @param int $radius
+     *
      * @return RadarPlaceSearchRequest
      */
-    private function createRadarRequest()
+    private function createRadarRequest($radius = 10)
     {
         return new RadarPlaceSearchRequest(
             new Coordinate(-33.8670522, 151.1957362),
-            5000
+            $radius
         );
     }
 
     /**
+     * @param string $query
+     *
      * @return TextPlaceSearchRequest
      */
-    private function createTextRequest()
+    private function createTextRequest($query = 'Casino in Lille')
     {
-        return new TextPlaceSearchRequest('Restaurants in Sydney');
+        return new TextPlaceSearchRequest($query);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @param PlaceSearchResponseIterator $iterator
+     * @param PlaceSearchRequestInterface $request
      */
-    private function createHttpClientMock()
+    private function assertPlaceSearchIterator($iterator, $request)
     {
-        return $this->createMock(HttpClient::class);
+        $this->assertInstanceOf(PlaceSearchResponseIterator::class, $iterator);
+
+        foreach ($iterator as $key => $response) {
+            $this->assertPlaceSearchResponse($response, $key === 0 ? $request : null);
+
+            if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
+                sleep(5);
+            }
+        }
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @param PlaceSearchResponse              $response
+     * @param PlaceSearchRequestInterface|null $request
      */
-    private function createMessageFactoryMock()
+    private function assertPlaceSearchResponse($response, $request)
     {
-        return $this->createMock(MessageFactory::class);
-    }
+        $options = array_merge([
+            'status'            => PlaceSearchStatus::OK,
+            'results'           => [],
+            'html_attributions' => [],
+            'next_page_token'   => null,
+        ], self::$journal->getData());
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequestInterface
-     */
-    private function createHttpRequestMock()
-    {
-        return $this->createMock(RequestInterface::class);
-    }
+        $this->assertInstanceOf(PlaceSearchResponse::class, $response);
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResponseInterface
-     */
-    private function createHttpResponseMock()
-    {
-        return $this->createMock(ResponseInterface::class);
-    }
+        if ($request !== null) {
+            $this->assertSame($request, $response->getRequest());
+        } else {
+            $this->assertInstanceOf(PageTokenPlaceSearchRequest::class, $response->getRequest());
+        }
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|StreamInterface
-     */
-    private function createHttpStreamMock()
-    {
-        return $this->createMock(StreamInterface::class);
-    }
+        $this->assertSame($options['status'], $response->getStatus());
+        $this->assertSame($options['html_attributions'], $response->getHtmlAttributions());
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
-     */
-    private function createBusinessAccountMock()
-    {
-        return $this->createMock(BusinessAccount::class);
-    }
+        if ($options['next_page_token'] !== null) {
+            $this->assertNotEmpty($options['next_page_token']);
+        } else {
+            $this->assertNull($options['next_page_token']);
+        }
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchRequestInterface
-     */
-    private function createPlaceSearchRequestMock()
-    {
-        return $this->createMock(PlaceSearchRequestInterface::class);
+        $this->assertCount(count($options['results']), $results = $response->getResults());
+
+        foreach ($options['results'] as $key => $result) {
+            $this->assertArrayHasKey($key, $results);
+            $this->assertPlace($results[$key], $result);
+        }
     }
 }

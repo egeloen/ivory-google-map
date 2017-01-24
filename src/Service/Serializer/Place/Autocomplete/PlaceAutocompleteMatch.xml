@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteMatch"
+        exclusion-policy="all"
+    >
+        <property
+            name="length"
+            type="integer"
+            expose="true"
+        />
+
+        <property
+            name="offset"
+            type="integer"
+            expose="true"
+        />
+    </class>
+</serializer>

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteResponse"
+        exclusion-policy="all"
+        xml-root="PlaceAutocompleteResponse"
+    >
+        <property
+            name="status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="predictions"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompletePrediction&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="prediction"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

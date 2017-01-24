@@ -27,6 +27,6 @@ abstract class AbstractPlaceService extends AbstractService
      */
     public function __construct(HttpClient $client, MessageFactory $messageFactory, $context)
     {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/place/'.$context);
+        parent::__construct('https://maps.googleapis.com/maps/api/place/'.$context, $client, $messageFactory);
     }
 }
