@@ -33,7 +33,7 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
     /**
      * @var Journal
      */
-    static protected $journal;
+    protected static $journal;
 
     /**
      * @var HttpClient

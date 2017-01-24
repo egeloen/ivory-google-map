@@ -50,7 +50,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             ->setConstructorArgs([
                 $this->url = 'https://foo',
                 $this->client = $this->createHttpClientMock(),
-                $this->messageFactory = $this->createMessageFactoryMock()
+                $this->messageFactory = $this->createMessageFactoryMock(),
             ])
             ->getMockForAbstractClass();
     }

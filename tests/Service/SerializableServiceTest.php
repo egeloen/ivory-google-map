@@ -58,7 +58,7 @@ class SerializableServiceTest extends \PHPUnit_Framework_TestCase
                 $this->url = 'https://foo',
                 $this->client = $this->createHttpClientMock(),
                 $this->messageFactory = $this->createMessageFactoryMock(),
-                $this->serializer = $this->createSerializerMock()
+                $this->serializer = $this->createSerializerMock(),
             ])
             ->getMockForAbstractClass();
     }

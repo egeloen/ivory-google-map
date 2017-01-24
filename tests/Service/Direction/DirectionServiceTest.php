@@ -533,7 +533,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
      * @param DirectionTransitStop $stop
      * @param mixed[]              $options
      */
-    private function assertDirectionTransitStop($stop, array $options  = [])
+    private function assertDirectionTransitStop($stop, array $options = [])
     {
         $options = array_merge([
             'name'     => null,

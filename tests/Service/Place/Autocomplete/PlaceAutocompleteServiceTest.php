@@ -341,7 +341,7 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
     private function assertPlaceAutocompleteMatch($match, array $options = [])
     {
         $options = array_merge([
-            'length'  => null,
+            'length' => null,
             'offset' => null,
         ], $options);
 

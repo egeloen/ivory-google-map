@@ -81,7 +81,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $request->setKeyword('Bank');
 
         $this->service->setFormat($format);
-        $iterator= $this->service->process($request);
+        $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
@@ -228,7 +228,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $request->setOpenNow(true);
 
         $this->service->setFormat($format);
-        $iterator  = $this->service->process($request);
+        $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
