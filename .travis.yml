@@ -21,6 +21,7 @@ before_script:
     - unzip chromedriver.zip
     - java -jar selenium.jar -Dwebdriver.chrome.driver=./chromedriver > /dev/null 2>&1 &
     - composer self-update
+    - composer remove --no-update --dev friendsofphp/php-cs-fixer
     - composer update --prefer-source `if [[ $COMPOSER_PREFER_LOWEST = true ]]; then echo "--prefer-lowest --prefer-stable"; fi`
 
 script: vendor/bin/phpunit --configuration phpunit.travis.xml --coverage-clover build/clover.xml

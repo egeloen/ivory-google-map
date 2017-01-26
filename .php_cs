@@ -1,20 +1,30 @@
 <?php
 
-use Symfony\CS\Config\Config;
-use Symfony\CS\Finder\DefaultFinder;
+/*
+ * This file is part of the Ivory Google Map package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
 
-$finder = DefaultFinder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
     ->in([
         __DIR__.'/src',
         __DIR__.'/tests',
-    ]);
+    ])
+    ->exclude('tests/Fixture/Resource/config');
 
 return Config::create()
     ->setUsingCache(true)
-    ->fixers([
-        'align_double_arrow',
-        'short_array_syntax',
-        'ordered_use',
-        '-psr0',
+    ->setRules([
+        '@Symfony'               => true,
+        'array_syntax'           => ['syntax' => 'short'],
+        'binary_operator_spaces' => ['align_double_arrow' => true],
+        'ordered_imports'        => true,
     ])
-    ->finder($finder);
+    ->setFinder($finder);
