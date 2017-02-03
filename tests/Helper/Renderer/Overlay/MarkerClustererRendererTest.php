@@ -64,7 +64,7 @@ class MarkerClustererRendererTest extends \PHPUnit_Framework_TestCase
         $markerCluster->setOptions(['foo' => 'bar']);
 
         $this->assertSame(
-            'marker_cluster=new MarkerClusterer(map,markers,{"foo":"bar"})',
+            'marker_cluster=new MarkerClusterer(map,markers,{"foo":"bar","imagePath":"https:\/\/cdn.rawgit.com\/googlemaps\/js-marker-clusterer\/gh-pages\/images\/m"})',
             $this->markerClustererRenderer->render($markerCluster, $map, 'markers')
         );
     }

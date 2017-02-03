@@ -68,9 +68,14 @@ class MarkerClustererRenderer extends AbstractJsonRenderer
      */
     public function render(MarkerCluster $markerCluster, Map $map, $markers)
     {
+        $options = $markerCluster->getOptions();
+
+        if (!isset($options['imagePath'])) {
+            $options['imagePath'] = 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m';
+        }
+
         $formatter = $this->getFormatter();
-        $jsonBuilder = $this->getJsonBuilder()
-            ->setValues($markerCluster->getOptions());
+        $jsonBuilder = $this->getJsonBuilder()->setValues($options);
 
         return $formatter->renderObjectAssignment($markerCluster, $formatter->renderObject('MarkerClusterer', [
             $map->getVariable(),
