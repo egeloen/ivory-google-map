@@ -2,6 +2,8 @@
 
 ### 2.0.0 (????-??-??)
 
+ * dd50f06 - [Doc] Improve map auto zoom
+ * 231e915 - [MarkerClusterer] Fix default image path
  * 1f604d0 - [Composer] Upgrade friendsofphp/php-cs-fixer to 2.x
  * fe31d0e - [Travis] Fix the functional tests
  * 6f07212 - [Travis] Upgrade selenium + chrome driver
