@@ -82,6 +82,10 @@ you learn how you can add overlays/layers to the map. If the auto zoom flag is e
 to the map, the map bound will automatically extend the added elements. So, at the end, all your overlays/layers will 
 be automatically visible on your screen.
 
+It is important to understand that the overlays/layers are only extended by the map bound if the auto zoom is enabled
+at the moment you add them. That allows you for example to center the map on some markers and add others markers on
+the map which will be outside of the map viewport.
+
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Map;
@@ -89,11 +93,15 @@ use Ivory\GoogleMap\Overlay\Marker;
 
 $map = new Map();
 
+// This marker will not be extended by the map bound because the auto zoom is not enabled
+$map->getOverlayManager()->addMarker(new Marker(new Coordinate(4.4705, 54.6548)));
+
 // Enable the auto zoom flag (disabled by default)
 $map->setAutoZoom(true);
 
-// Add a marker to your map
-$map->getOverlayManager()->addMarker(new Marker(new Coordinate()));
+// Add markers to your map which will be extended by the map bound
+$map->getOverlayManager()->addMarker(new Marker(new Coordinate(1.543, 1.8754)));
+$map->getOverlayManager()->addMarker(new Marker(new Coordinate(2.654, 1.8657)));
 ```
 
 That's it. The map will be automatically centered on your marker.
