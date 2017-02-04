@@ -7,14 +7,10 @@
         </testsuite>
     </testsuites>
     <php>
-        <server name="BROWSER_NAME" value="chrome" />
         <server name="API_KEY" value="AIzaSyA0la9HfPpSwyiG3MOoi0hvcTazu-Nhn98" />
+        <server name="BROWSER_NAME" value="chrome" />
+        <server name="SELENIUM_HOST" value="selenium" />
     </php>
-    <groups>
-        <exclude>
-            <group>functional</group>
-        </exclude>
-    </groups>
     <filter>
         <whitelist>
             <directory suffix=".php">./src/</directory>

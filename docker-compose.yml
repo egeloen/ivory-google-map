@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+    php:
+        build: docker/php
+        environment:
+            GROUP_ID: ${GROUP_ID}
+            USER_ID: ${USER_ID}
+            SYMFONY_DEPRECATIONS_HELPER: ${SYMFONY_DEPRECATIONS_HELPER}
+            XDEBUG: ${XDEBUG}
+            XDEBUG_CONFIG: remote_host=${XDEBUG_HOST} remote_port=${XDEBUG_PORT} idekey=${XDEBUG_IDEKEY}
+            PHP_IDE_CONFIG: serverName=${IDE_SERVER_NAME}
+        volumes:
+            - ~/.composer:/var/www/.composer
+            - .:/var/www/html
+            - tmp:/tmp
+    selenium:
+        build: docker/selenium
+        volumes:
+          - tmp:/tmp
+
+volumes:
+    tmp: {}

@@ -21,6 +21,10 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
      */
     protected function setUp()
     {
+        if (isset($_SERVER['SELENIUM_HOST'])) {
+            $this->setHost($_SERVER['SELENIUM_HOST']);
+        }
+
         $this->setBrowser(isset($_SERVER['BROWSER_NAME']) ? $_SERVER['BROWSER_NAME'] : 'chrome');
         $this->setBrowserUrl('file://'.sys_get_temp_dir());
     }

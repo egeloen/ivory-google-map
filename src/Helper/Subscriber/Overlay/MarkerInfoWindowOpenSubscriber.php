@@ -98,7 +98,7 @@ class MarkerInfoWindowOpenSubscriber extends AbstractMarkerSubscriber
             if ($marker->hasInfoWindow() && $marker->getInfoWindow()->isAutoOpen()) {
                 $event->addCode($formatter->renderContainerAssignment(
                     $map,
-                    $this->eventRenderer->render($rawEvent = $this->createEvent($map, $marker)),
+                    $this->getEventRenderer()->render($rawEvent = $this->createEvent($map, $marker)),
                     'events.events',
                     $rawEvent
                 ));
@@ -137,7 +137,7 @@ class MarkerInfoWindowOpenSubscriber extends AbstractMarkerSubscriber
                     true
                 ),
                 $formatter->renderCode(
-                    $this->infoWindowOpenRenderer->render($marker->getInfoWindow(), $map, $marker),
+                    $this->getInfoWindowOpenRenderer()->render($marker->getInfoWindow(), $map, $marker),
                     true,
                     false
                 ),

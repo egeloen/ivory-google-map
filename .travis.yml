@@ -12,6 +12,7 @@ branches:
 env:
     global:
         - COMPOSER_PREFER_LOWEST=false
+        - SYMFONY_DEPRECATIONS_HELPER=strict
 
 before_script:
     - export DISPLAY=:99

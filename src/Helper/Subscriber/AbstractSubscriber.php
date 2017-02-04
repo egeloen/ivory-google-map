@@ -29,7 +29,7 @@ abstract class AbstractSubscriber implements EventSubscriberInterface
      */
     public function __construct(Formatter $formatter)
     {
-        $this->formatter = $formatter;
+        $this->setFormatter($formatter);
     }
 
     /**
