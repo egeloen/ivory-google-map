@@ -31,21 +31,12 @@ $ git clone git@github.com:your-name/ivory-google-map.git
 $ git checkout -b bug-fix-description
 ```
 
-Then, install the dependencies through [Composer](https://getcomposer.org/):
-
-``` bash
-$ composer install
-```
+Then, we recommend to use [Docker](https://www.docker.com) and follow this [instructions](/doc/docker.md) in order to
+set up the project.
 
 When you're on the new branch with the dependencies, code as much as you want and when the fix is ready, don't commit
 it immediately. Before, you will need to add tests and update the doc. For the tests, everything is tested with
 [PHPUnit](http://phpunit.de/) and the doc is in the markdown format under the `doc` directory.
-
-To execute the tests, use the following command:
-
-``` bash
-$ vendor/bin/phpunit
-```
 
 When you have fixed the bug, tested it and documented it, you can commit and push it with the following commands:
 

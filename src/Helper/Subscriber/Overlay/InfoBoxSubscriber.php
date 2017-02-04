@@ -72,8 +72,8 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
             $infoBoxes = $this->getInfoWindowCollector()->collect($map);
 
             if (!empty($infoBoxes)) {
-                $event->addSource($this->infoBoxRenderer->renderSource());
-                $event->addRequirement($map, $this->infoBoxRenderer->renderRequirement());
+                $event->addSource($this->getInfoBoxRenderer()->renderSource());
+                $event->addRequirement($map, $this->getInfoBoxRenderer()->renderRequirement());
 
                 continue;
             }
@@ -119,7 +119,7 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
     {
         return $this->getFormatter()->renderContainerAssignment(
             $map,
-            $this->infoBoxRenderer->render($infoWindow, $position),
+            $this->getInfoBoxRenderer()->render($infoWindow, $position),
             'overlays.info_boxes',
             $infoWindow
         );
