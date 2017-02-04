@@ -51,7 +51,7 @@ $formattedAddress = $result->getFormattedAddress();
 
 ### Address informations
 
-The method `getAddressComponents` returns an array containing the separate address components. Each address_component
+The method `getAddresses` returns an array containing the separate address components. Each address_component
 typically contains:
 
  - types which is an array indicating the type of the address component.
@@ -61,7 +61,7 @@ typically contains:
    postal abbreviation.
 
 ``` php
-foreach ($result->getAddressComponents() as $address) {
+foreach ($result->getAddresses() as $address) {
     $longName = $address->getLongName();
     $shortName = $address->getShortName();
     $types = $address->getTypes();
@@ -71,7 +71,7 @@ foreach ($result->getAddressComponents() as $address) {
 You can also filter the address components by type:
 
 ``` php
-foreach ($result->getAddressComponents('route') as $address) {
+foreach ($result->getAddresses('route') as $address) {
     // ...
 }
 ```
