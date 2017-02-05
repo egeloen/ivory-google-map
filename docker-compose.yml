@@ -2,7 +2,7 @@ version: '2'
 
 services:
     php:
-        build: docker/php
+        build: docker
         environment:
             GROUP_ID: ${GROUP_ID}
             USER_ID: ${USER_ID}
@@ -15,7 +15,7 @@ services:
             - .:/var/www/html
             - tmp:/tmp
     selenium:
-        build: docker/selenium
+        image: selenium/standalone-chrome:latest
         volumes:
           - tmp:/tmp
 
