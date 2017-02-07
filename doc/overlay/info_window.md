@@ -114,14 +114,14 @@ $infoWindow->setOption('zIndex', 10);
 
 ## Append to a map/marker
 
-After building your info window, you can add it to a map with:
+After building your info window, you can add it to a map (the info window is draw at the info window coordinate):
 
 ``` php
 $map->getOverlayManager()->addInfoWindow($infoWindow);
 ```
-Or attach it directly to a marker with:
+
+Or you can attach it to a marker (the info window is draw on top of the marker):
 
 ``` php
 $marker->setInfoWindow($infoWindow);
 ```
-
