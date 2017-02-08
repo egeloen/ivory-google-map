@@ -2,6 +2,11 @@
 
 ### 2.0.0 (????-??-??)
 
+ * c462d08 - [Docker] Add HHVM container
+ * 898d2cf - [Doc] Improve info window
+ * 20e7c35 - [Docker] Rely directly on the selenium image
+ * f9189b3 - [Git] Fix gitattributes
+ * 24f2091 - Add docker support
  * dd50f06 - [Doc] Improve map auto zoom
  * 231e915 - [MarkerClusterer] Fix default image path
  * 1f604d0 - [Composer] Upgrade friendsofphp/php-cs-fixer to 2.x
