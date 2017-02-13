@@ -15,78 +15,141 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
 use Ivory\GoogleMap\Service\Elevation\ElevationService;
+use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\PathElevationRequest;
 use Ivory\GoogleMap\Service\Elevation\Request\PositionalElevationRequest;
+use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
+use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
+use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ElevationServiceTest extends AbstractServiceTest
+class ElevationServiceTest extends AbstractSerializableServiceTest
 {
     /**
      * @var ElevationService
      */
-    private $elevation;
+    protected $service;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        if (!isset($_SERVER['API_KEY'])) {
-            $this->markTestSkipped();
-        }
-
-        //sleep(2);
-
         parent::setUp();
 
-        $this->elevation = new ElevationService($this->getClient(), $this->getMessageFactory());
-        $this->elevation->setKey($_SERVER['API_KEY']);
+        $this->service = new ElevationService($this->client, $this->messageFactory);
     }
 
-    public function testProcessPositional()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPositional($format)
     {
-        $response = $this->elevation->process(new PositionalElevationRequest([
+        $request = new PositionalElevationRequest([
             new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
             new CoordinateLocation(new Coordinate(-34.397, 150.644)),
-        ]));
+        ]);
 
-        $this->assertSame(ElevationStatus::OK, $response->getStatus());
-        $this->assertTrue($response->hasResults());
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
     }
 
-    public function testProcessPositionalWithEncodedPolylines()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPositionalWithEncodedPolylines($format)
     {
-        $response = $this->elevation->process(new PositionalElevationRequest([
+        $request = new PositionalElevationRequest([
             new EncodedPolylineLocation('gfo}EtohhU'),
-        ]));
+        ]);
 
-        $this->assertSame(ElevationStatus::OK, $response->getStatus());
-        $this->assertTrue($response->hasResults());
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
     }
 
-    public function testProcessPath()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPath($format)
     {
-        $response = $this->elevation->process(new PathElevationRequest([
+        $request = new PathElevationRequest([
             new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
             new CoordinateLocation(new Coordinate(-34.397, 150.644)),
-        ], 3));
+        ], 3);
 
-        $this->assertSame(ElevationStatus::OK, $response->getStatus());
-        $this->assertTrue($response->hasResults());
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
     }
 
-    public function testProcessPathWithEncodedPolylines()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPathWithEncodedPolylines($format)
     {
-        $response = $this->elevation->process(new PathElevationRequest(
-            [new EncodedPolylineLocation('gfo}EtohhUxD@bAxJmGF')],
-            3
-        ));
+        $request = new PathElevationRequest([
+            new EncodedPolylineLocation('gfo}EtohhUxD@bAxJmGF'),
+        ], 3);
 
-        $this->assertSame(ElevationStatus::OK, $response->getStatus());
-        $this->assertTrue($response->hasResults());
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
+    }
+
+    /**
+     * @param ElevationResponse         $response
+     * @param ElevationRequestInterface $request
+     */
+    private function assertElevationResponse($response, $request)
+    {
+        $options = array_merge([
+            'status'  => ElevationStatus::OK,
+            'results' => [],
+        ], self::$journal->getData());
+
+        $this->assertInstanceOf(ElevationResponse::class, $response);
+
+        $this->assertSame($request, $response->getRequest());
+        $this->assertSame($options['status'], $response->getStatus());
+        $this->assertCount(count($options['results']), $results = $response->getResults());
+
+        foreach ($options['results'] as $key => $result) {
+            $this->assertArrayHasKey($key, $results);
+            $this->assertElevationResult($results[$key], $result);
+        }
+    }
+
+    /**
+     * @param ElevationResult $result
+     * @param mixed[]         $options
+     */
+    private function assertElevationResult($result, array $options = [])
+    {
+        $options = array_merge([
+            'location'   => [],
+            'elevation'  => null,
+            'resolution' => null,
+        ], $options);
+
+        $this->assertCoordinate($result->getLocation(), $options['location']);
+        $this->assertSame(round($options['elevation'], 5), round($result->getElevation(), 5));
+        $this->assertSame(round($options['resolution'], 5), round($result->getResolution(), 5));
     }
 }

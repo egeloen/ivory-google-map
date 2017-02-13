@@ -43,7 +43,7 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('place_autocomplete', $this->autocomplete->getVariable());
+        $this->assertStringStartsWith('autocomplete', $this->autocomplete->getVariable());
         $this->assertSame('place_input', $this->autocomplete->getHtmlId());
         $this->assertInstanceOf(EventManager::class, $this->autocomplete->getEventManager());
         $this->assertFalse($this->autocomplete->hasBound());

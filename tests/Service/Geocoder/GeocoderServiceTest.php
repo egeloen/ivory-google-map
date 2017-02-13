@@ -11,53 +11,59 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
-use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
+use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
+use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderServiceTest extends AbstractServiceTest
+class GeocoderServiceTest extends AbstractSerializableServiceTest
 {
     /**
      * @var GeocoderService
      */
-    private $geocoder;
+    protected $service;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        //sleep(2);
-
         parent::setUp();
 
-        $this->geocoder = new GeocoderService($this->getClient(), $this->getMessageFactory());
+        $this->service = new GeocoderService($this->client, $this->messageFactory);
     }
 
-    public function testGeocodeAddress()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodeAddress($format)
     {
-        $response = $this->geocoder->geocode($this->createRequest());
+        $request = $this->createAddressRequest();
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
+
+        $this->assertGeocoderResponse($response, $request);
     }
 
-    public function testGeocodeAddressWithComponents()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodeAddressWithComponents($format)
     {
         $request = new GeocoderAddressRequest('Grand place');
         $request->setComponents([
@@ -65,249 +71,166 @@ class GeocoderServiceTest extends AbstractServiceTest
             GeocoderComponentType::POSTAL_CODE => 59800,
         ]);
 
-        $response = $this->geocoder->geocode($request);
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->assertGeocoderResponse($response, $request);
     }
 
-    public function testGeocodeAddressWithBound()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodeAddressWithBound($format)
     {
-        $request = $this->createRequest();
-        $request->setBound(new Bound(new Coordinate(48.815573, 2.224199), new Coordinate(48.9021449, 2.4699208)));
+        $request = $this->createAddressRequest();
+        $request->setBound(new Bound(
+            new Coordinate(48.815573, 2.224199),
+            new Coordinate(48.9021449, 2.4699208)
+        ));
 
-        $response = $this->geocoder->geocode($request);
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->assertGeocoderResponse($response, $request);
     }
 
-    public function testGeocodeAddressWithRegion()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodeAddressWithRegion($format)
     {
-        $request = $this->createRequest();
+        $request = $this->createAddressRequest();
         $request->setRegion('fr');
 
-        $response = $this->geocoder->geocode($request);
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->assertGeocoderResponse($response, $request);
     }
 
-    public function testGeocodeAddressWithLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocodeAddressWithLanguage($format)
     {
-        $request = $this->createRequest();
+        $request = $this->createAddressRequest();
         $request->setLanguage('pl');
 
-        $response = $this->geocoder->geocode($request);
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->assertGeocoderResponse($response, $request);
     }
 
-    public function testGeocoderCoordinate()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocoderCoordinate($format)
     {
-        $request = new GeocoderCoordinateRequest(new Coordinate(48.865475, 2.321118));
-        $response = $this->geocoder->geocode($request);
+        $request = $this->createCoordinateRequest();
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
+
+        $this->assertGeocoderResponse($response, $request);
     }
 
-    public function testGeocoderCoordinateWithLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testGeocoderCoordinateWithLanguage($format)
     {
-        $request = new GeocoderCoordinateRequest(new Coordinate(48.865475, 2.321118));
-        $request->setLanguage('fr');
+        $request = $this->createCoordinateRequest();
+        $request->setLanguage('pl');
 
-        $response = $this->geocoder->geocode($request);
+        $this->service->setFormat($format);
+        $response = $this->service->geocode($request);
 
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithHttp()
-    {
-        $this->geocoder->setHttps(false);
-
-        $response = $this->geocoder->geocode($this->createRequest());
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithXmlFormat()
-    {
-        $this->geocoder->setFormat(GeocoderService::FORMAT_XML);
-
-        $response = $this->geocoder->geocode($this->createRequest());
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithKey()
-    {
-        $this->geocoder = new GeocoderService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $this->geocoder->setKey('api-key');
-
-        $request = $this->createGeocoderRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?foo=bar&key=api-key'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status":"OK","results":[]}'));
-
-        $response = $this->geocoder->geocode($request);
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertEmpty($response->getResults());
-    }
-
-    public function testGeocodeWithBusinessAccount()
-    {
-        $this->geocoder = new GeocoderService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $request = $this->createGeocoderRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?foo=bar&signature=signature'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status":"OK","results":[]}'));
-
-        $businessAccount = $this->createBusinessAccountMock();
-        $businessAccount
-            ->expects($this->once())
-            ->method('signUrl')
-            ->with($this->equalTo('https://maps.googleapis.com/maps/api/geocode/json?foo=bar'))
-            ->will($this->returnValue($url));
-
-        $this->geocoder->setBusinessAccount($businessAccount);
-
-        $response = $this->geocoder->geocode($request);
-
-        $this->assertSame(GeocoderStatus::OK, $response->getStatus());
-        $this->assertEmpty($response->getResults());
+        $this->assertGeocoderResponse($response, $request);
     }
 
     /**
      * @return GeocoderAddressRequest
      */
-    private function createRequest()
+    protected function createAddressRequest()
     {
         return new GeocoderAddressRequest('Paris');
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return GeocoderCoordinateRequest
      */
-    private function createHttpClientMock()
+    protected function createCoordinateRequest()
     {
-        return $this->createMock(HttpClient::class);
+        return new GeocoderCoordinateRequest(new Coordinate(48.858369, 2.294482));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @param GeocoderResponse         $response
+     * @param GeocoderRequestInterface $request
      */
-    private function createMessageFactoryMock()
+    protected function assertGeocoderResponse($response, $request)
     {
-        return $this->createMock(MessageFactory::class);
+        $options = array_merge([
+            'status'  => GeocoderStatus::OK,
+            'results' => [],
+        ], self::$journal->getData());
+
+        $this->assertInstanceOf(GeocoderResponse::class, $response);
+
+        $this->assertSame($request, $response->getRequest());
+        $this->assertSame($options['status'], $response->getStatus());
+        $this->assertCount(count($options['results']), $results = $response->getResults());
+
+        foreach ($options['results'] as $key => $result) {
+            $this->assertArrayHasKey($key, $results);
+            $this->assertGeocoderResult($results[$key], $result);
+        }
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequestInterface
+     * @param GeocoderResult $result
+     * @param mixed[]        $options
      */
-    private function createHttpRequestMock()
+    private function assertGeocoderResult($result, array $options = [])
     {
-        return $this->createMock(RequestInterface::class);
-    }
+        $options = array_merge([
+            'place_id'            => null,
+            'formatted_address'   => null,
+            'partial_match'       => null,
+            'types'               => [],
+            'postcode_localities' => [],
+            'address_components'  => [],
+            'geometry'            => [],
+        ], $options);
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResponseInterface
-     */
-    private function createHttpResponseMock()
-    {
-        return $this->createMock(ResponseInterface::class);
-    }
+        $this->assertInstanceOf(GeocoderResult::class, $result);
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|StreamInterface
-     */
-    private function createHttpStreamMock()
-    {
-        return $this->createMock(StreamInterface::class);
-    }
+        $this->assertSame($options['place_id'], $result->getPlaceId());
+        $this->assertSame($options['formatted_address'], $result->getFormattedAddress());
+        $this->assertSame($options['partial_match'], $result->isPartialMatch());
+        $this->assertSame($options['types'], $result->getTypes());
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
-     */
-    private function createBusinessAccountMock()
-    {
-        return $this->createMock(BusinessAccount::class);
-    }
+        $this->assertCount(
+            count($options['address_components']),
+            $addressComponents = $result->getAddressComponents()
+        );
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractGeocoderRequest
-     */
-    private function createGeocoderRequestMock()
-    {
-        return $this->createMock(AbstractGeocoderRequest::class);
+        foreach ($options['address_components'] as $key => $addressComponent) {
+            $this->assertArrayHasKey($key, $addressComponents);
+            $this->assertAddressComponent($addressComponents[$key], $addressComponent);
+        }
+
+        $this->assertGeometry($result->getGeometry(), $options['geometry']);
     }
 }

@@ -145,7 +145,7 @@ returned for transit requests and only for routes where fare information is avai
 $fare = $route->getFare();
 ```
 
-If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#fare).
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base/fare.md).
 
 ### Warnings
 
@@ -184,7 +184,7 @@ It indicates the total distance covered by this leg. It represented by the `Dist
 $duration = $leg->getDistance();
 ```
 
-If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#distance).
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base/distance.md).
 
 ### Duration
 
@@ -194,7 +194,7 @@ It indicates the total duration of this leg. It is represented by the `Duration`
 $duration = $leg->getDuration();
 ```
 
-If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base/duration.md).
 
 ## Duration in traffic
 
@@ -205,7 +205,7 @@ historical traffic conditions. It is represented by the `Duration`.
 $durationInTraffic = $leg->getDurationInTraffic();
 ```
 
-If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base/duration.md).
 
 ### Departure time
 
@@ -216,7 +216,7 @@ represented by the `Time`.
 $departureTime = $leg->getDepartureTime();
 ```
 
-If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
+If you want to learn more about the time, you can read its [documentation](/doc/service/base/time.md).
 
 ### Arrival time
 
@@ -227,7 +227,7 @@ represented by the `Time`.
 $arrivalTime = $leg->getArrivalTime();
 ```
 
-If you want to learn more about the time, you can read its [documentation](/doc/service/base.md#time).
+If you want to learn more about the time, you can read its [documentation](/doc/service/base/time.md).
 
 ### Start location
 
@@ -295,7 +295,7 @@ unknown.
 $distance = $step->getDistance();
 ```
 
-If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#distance).
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base/distance.md).
 
 ### Duration
 
@@ -306,7 +306,7 @@ duration is unknown.
 $duration = $step->getDuration();
 ```
 
-If you want to learn more about the duration, you can read its [documentation](/doc/service/base.md#duration).
+If you want to learn more about the duration, you can read its [documentation](/doc/service/base/duration.md).
 
 ### Start Location
 

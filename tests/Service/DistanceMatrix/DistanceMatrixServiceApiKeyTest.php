@@ -12,21 +12,13 @@
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
 use Ivory\GoogleMap\Service\Base\Location\PlaceIdLocation;
-use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixService;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
-use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixServiceApiKeyTest extends AbstractServiceTest
+class DistanceMatrixServiceApiKeyTest extends DistanceMatrixServiceTest
 {
-    /**
-     * @var DistanceMatrixService
-     */
-    private $distanceMatrix;
-
     /**
      * {@inheritdoc}
      */
@@ -36,26 +28,26 @@ class DistanceMatrixServiceApiKeyTest extends AbstractServiceTest
             $this->markTestSkipped();
         }
 
-        //sleep(2);
-
         parent::setUp();
 
-        $this->distanceMatrix = new DistanceMatrixService($this->getClient(), $this->getMessageFactory());
-        $this->distanceMatrix->setKey($_SERVER['API_KEY']);
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
-    public function testProcessWithPlaceIds()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithPlaceIds($format)
     {
         $request = new DistanceMatrixRequest(
             [new PlaceIdLocation('ChIJtdVv8-Fv5kcRV7t53Y2Ao3c')],
             [new PlaceIdLocation('ChIJC_jkvdJv5kcRNX4NW3iuID8')]
         );
 
-        $response = $this->distanceMatrix->process($request);
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
 
-        $this->assertSame(DistanceMatrixStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getOrigins());
-        $this->assertNotEmpty($response->getDestinations());
-        $this->assertNotEmpty($response->getRows());
+        $this->assertDistanceMatrixResponse($response, $request, 'place_id');
     }
 }

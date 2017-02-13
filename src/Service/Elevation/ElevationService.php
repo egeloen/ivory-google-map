@@ -13,26 +13,27 @@ namespace Ivory\GoogleMap\Service\Elevation;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
-use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
-use Ivory\GoogleMap\Service\Utility\Parser;
+use Ivory\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ElevationService extends AbstractService
+class ElevationService extends AbstractSerializableService
 {
     /**
-     * @param HttpClient     $client
-     * @param MessageFactory $messageFactory
-     * @param Parser|null    $parser
+     * @param HttpClient               $client
+     * @param MessageFactory           $messageFactory
+     * @param SerializerInterface|null $serializer
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, Parser $parser = null)
-    {
-        parent::__construct($client, $messageFactory, 'http://maps.googleapis.com/maps/api/elevation', $parser);
+    public function __construct(
+        HttpClient $client,
+        MessageFactory $messageFactory,
+        SerializerInterface $serializer = null
+    ) {
+        parent::__construct('https://maps.googleapis.com/maps/api/elevation', $client, $messageFactory, $serializer);
     }
 
     /**
@@ -42,67 +43,12 @@ class ElevationService extends AbstractService
      */
     public function process(ElevationRequestInterface $request)
     {
-        $response = $this->getClient()->sendRequest($this->createRequest($request->build()));
-        $data = $this->parse((string) $response->getBody());
+        $httpRequest = $this->createRequest($request);
+        $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        return $this->buildResponse($data);
-    }
-
-    /**
-     * @param mixed[] $data
-     *
-     * @return ElevationResponse
-     */
-    private function buildResponse(array $data)
-    {
-        $response = new ElevationResponse();
-        $response->setStatus($data['status']);
-        $response->setResults($this->buildResults($data['results']));
+        $response = $this->deserialize($httpResponse, ElevationResponse::class);
+        $response->setRequest($request);
 
         return $response;
-    }
-
-    /**
-     * @param mixed[] $data
-     *
-     * @return ElevationResult[]
-     */
-    private function buildResults(array $data)
-    {
-        $results = [];
-
-        foreach ($data as $result) {
-            $results[] = $this->buildResult($result);
-        }
-
-        return $results;
-    }
-
-    /**
-     * @param mixed[] $data
-     *
-     * @return ElevationResult
-     */
-    private function buildResult(array $data)
-    {
-        $element = new ElevationResult();
-        $element->setLocation($this->buildCoordinate($data['location']));
-        $element->setElevation($data['elevation']);
-
-        if (isset($data['resolution'])) {
-            $element->setResolution($data['resolution']);
-        }
-
-        return $element;
-    }
-
-    /**
-     * @param mixed[] $data
-     *
-     * @return Coordinate
-     */
-    private function buildCoordinate(array $data)
-    {
-        return new Coordinate($data['lat'], $data['lng']);
     }
 }

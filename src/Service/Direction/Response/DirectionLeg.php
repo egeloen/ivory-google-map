@@ -74,7 +74,7 @@ class DirectionLeg
     private $steps = [];
 
     /**
-     * @var mixed[]
+     * @var DirectionWaypoint[]
      */
     private $viaWaypoints = [];
 
@@ -366,7 +366,7 @@ class DirectionLeg
     }
 
     /**
-     * @return mixed[]
+     * @return DirectionWaypoint[]
      */
     public function getViaWaypoints()
     {
@@ -374,10 +374,49 @@ class DirectionLeg
     }
 
     /**
-     * @param mixed[] $viaWaypoints
+     * @param DirectionWaypoint[] $viaWaypoints
      */
     public function setViaWaypoints(array $viaWaypoints)
     {
-        $this->viaWaypoints = $viaWaypoints;
+        $this->viaWaypoints = [];
+        $this->addViaWaypoints($viaWaypoints);
+    }
+
+    /**
+     * @param DirectionWaypoint[] $viaWaypoints
+     */
+    public function addViaWaypoints(array $viaWaypoints)
+    {
+        foreach ($viaWaypoints as $viaWaypoint) {
+            $this->addViaWaypoint($viaWaypoint);
+        }
+    }
+
+    /**
+     * @param DirectionWaypoint $viaWaypoint
+     *
+     * @return bool
+     */
+    public function hasViaWaypoint(DirectionWaypoint $viaWaypoint)
+    {
+        return in_array($viaWaypoint, $this->viaWaypoints, true);
+    }
+
+    /**
+     * @param DirectionWaypoint $viaWaypoint
+     */
+    public function addViaWaypoint(DirectionWaypoint $viaWaypoint)
+    {
+        if (!$this->hasViaWaypoint($viaWaypoint)) {
+            $this->viaWaypoints[] = $viaWaypoint;
+        }
+    }
+
+    /**
+     * @param DirectionWaypoint $viaWaypoint
+     */
+    public function removeViaWaypoint(DirectionWaypoint $viaWaypoint)
+    {
+        unset($this->viaWaypoints[array_search($viaWaypoint, $this->viaWaypoints, true)]);
     }
 }

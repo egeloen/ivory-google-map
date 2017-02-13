@@ -56,7 +56,7 @@ class CoordinateLocationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($coordinate, $this->coordinateLocation->getCoordinate());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
         $this->coordinate
             ->expects($this->once())
@@ -68,7 +68,7 @@ class CoordinateLocationTest extends \PHPUnit_Framework_TestCase
             ->method('getLongitude')
             ->will($this->returnValue(2.3));
 
-        $this->assertSame('1.2,2.3', $this->coordinateLocation->build());
+        $this->assertSame('1.2,2.3', $this->coordinateLocation->buildQuery());
     }
 
     /**

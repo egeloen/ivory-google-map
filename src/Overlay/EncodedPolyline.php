@@ -36,7 +36,6 @@ class EncodedPolyline implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct($value, array $options = [])
     {
-        $this->setVariablePrefix('encoded_polyline');
         $this->setValue($value);
         $this->addOptions($options);
     }

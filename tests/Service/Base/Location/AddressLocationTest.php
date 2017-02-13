@@ -54,8 +54,8 @@ class AddressLocationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($address, $this->addressLocation->getAddress());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertSame($this->address, $this->addressLocation->build());
+        $this->assertSame($this->address, $this->addressLocation->buildQuery());
     }
 }

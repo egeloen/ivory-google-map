@@ -22,8 +22,8 @@ final class GeocoderAddressType
     const POLITICAL = 'political';
     const COUNTRY = 'country';
     const ADMINISTRATIVE_AREA_LEVEL_1 = 'administrative_area_level_1';
-    const ADMINISTRATIVE_AREA_LEVEL_2 = 'administrative_area_level_3';
-    const ADMINISTRATIVE_AREA_LEVEL_3 = 'administrative_area_level_4';
+    const ADMINISTRATIVE_AREA_LEVEL_2 = 'administrative_area_level_2';
+    const ADMINISTRATIVE_AREA_LEVEL_3 = 'administrative_area_level_3';
     const ADMINISTRATIVE_AREA_LEVEL_4 = 'administrative_area_level_4';
     const ADMINISTRATIVE_AREA_LEVEL_5 = 'administrative_area_level_5';
     const COLLOQUIAL_AREA = 'colloquial_area';

@@ -75,7 +75,6 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct($content, $type = InfoWindowType::DEFAULT_, Coordinate $position = null)
     {
-        $this->setVariablePrefix('info_window');
         $this->setContent($content);
         $this->setType($type);
         $this->setPosition($position);

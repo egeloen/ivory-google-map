@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailResponse"
+        exclusion-policy="all"
+        xml-root="PlaceDetailResponse"
+    >
+        <property
+            name="status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="result"
+            type="Ivory\GoogleMap\Service\Place\Base\Place"
+            expose="true"
+        />
+
+        <property
+            name="htmlAttributions"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="html_attribution"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

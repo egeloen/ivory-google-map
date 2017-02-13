@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service\Elevation\Request;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\PathElevationRequest;
+use Ivory\GoogleMap\Service\RequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -43,6 +44,7 @@ class PathElevationRequestTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(ElevationRequestInterface::class, $this->request);
+        $this->assertInstanceOf(RequestInterface::class, $this->request);
     }
 
     public function testDefaultState()
@@ -106,12 +108,12 @@ class PathElevationRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($samples, $this->request->getSamples());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
         $this->assertSame([
             'path'    => 'first|second',
             'samples' => 3,
-        ], $this->request->build());
+        ], $this->request->buildQuery());
     }
 
     /**
@@ -124,7 +126,7 @@ class PathElevationRequestTest extends \PHPUnit_Framework_TestCase
         $location = $this->createMock(LocationInterface::class);
         $location
             ->expects($this->any())
-            ->method('build')
+            ->method('buildQuery')
             ->will($this->returnValue($value));
 
         return $location;

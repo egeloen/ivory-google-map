@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse"
+        exclusion-policy="all"
+        xml-root="DistanceMatrixResponse"
+    >
+        <property
+            name="status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="origins"
+            alias="origin_addresses"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="origin_address"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="destinations"
+            alias="destination_addresses"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="destination_address"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="rows"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="row"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

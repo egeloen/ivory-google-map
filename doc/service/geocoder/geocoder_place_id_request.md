@@ -39,9 +39,9 @@ It specifies a type will restrict the results to this type. If multiple types ar
 addresses that match any of the types.
 
 ``` php
-use Ivory\GoogleMap\Service\Geocoder\GeocoderLocationType;
+use Ivory\GoogleMap\Service\Base\GeometryLocationType;
 
-$request->setLocationTypes([GeocoderLocationType::APPROXIMATE]);
+$request->setLocationTypes([GeometryLocationType::APPROXIMATE]);
 ```
 
 ## Configure language

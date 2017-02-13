@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation\Response;
 
+use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationStatus;
@@ -37,6 +38,8 @@ class ElevationResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->response->hasStatus());
         $this->assertNull($this->response->getStatus());
+        $this->assertFalse($this->response->hasRequest());
+        $this->assertNull($this->response->getRequest());
         $this->assertFalse($this->response->hasResults());
         $this->assertEmpty($this->response->getResults());
     }
@@ -49,18 +52,17 @@ class ElevationResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($status, $this->response->getStatus());
     }
 
-    public function testResetStatus()
+    public function testRequest()
     {
-        $this->response->setStatus(ElevationStatus::OK);
-        $this->response->setStatus(null);
+        $this->response->setRequest($request = $this->createRequestMock());
 
-        $this->assertFalse($this->response->hasStatus());
-        $this->assertNull($this->response->getStatus());
+        $this->assertTrue($this->response->hasRequest());
+        $this->assertSame($request, $this->response->getRequest());
     }
 
     public function testSetResults()
     {
-        $this->response->setResults($results = [$result = $this->createElevationResultMock()]);
+        $this->response->setResults($results = [$result = $this->createResultMock()]);
         $this->response->setResults($results);
 
         $this->assertTrue($this->response->hasResults());
@@ -70,8 +72,8 @@ class ElevationResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testAddResults()
     {
-        $this->response->setResults($firstResults = [$this->createElevationResultMock()]);
-        $this->response->addResults($secondResults = [$this->createElevationResultMock()]);
+        $this->response->setResults($firstResults = [$this->createResultMock()]);
+        $this->response->addResults($secondResults = [$this->createResultMock()]);
 
         $this->assertTrue($this->response->hasResults());
         $this->assertSame(array_merge($firstResults, $secondResults), $this->response->getResults());
@@ -79,7 +81,7 @@ class ElevationResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testAddResult()
     {
-        $this->response->addResult($result = $this->createElevationResultMock());
+        $this->response->addResult($result = $this->createResultMock());
 
         $this->assertTrue($this->response->hasResults());
         $this->assertTrue($this->response->hasResult($result));
@@ -88,7 +90,7 @@ class ElevationResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testRemoveResult()
     {
-        $this->response->addResult($result = $this->createElevationResultMock());
+        $this->response->addResult($result = $this->createResultMock());
         $this->response->removeResult($result);
 
         $this->assertFalse($this->response->hasResults());
@@ -97,9 +99,17 @@ class ElevationResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ElevationRequestInterface
+     */
+    private function createRequestMock()
+    {
+        return $this->createMock(ElevationRequestInterface::class);
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|ElevationResult
      */
-    private function createElevationResultMock()
+    private function createResultMock()
     {
         return $this->createMock(ElevationResult::class);
     }

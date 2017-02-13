@@ -48,7 +48,7 @@ class PlaceIdLocation implements LocationInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         return 'place_id:'.$this->placeId;
     }

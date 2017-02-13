@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse"
+        exclusion-policy="all"
+        xml-root="GeocodeResponse"
+    >
+        <property
+            name="status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="results"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="result"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

@@ -11,6 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\DistanceMatrix\Response;
 
+use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -20,6 +22,11 @@ class DistanceMatrixResponse
      * @var string|null
      */
     private $status;
+
+    /**
+     * @var DistanceMatrixRequestInterface|null
+     */
+    private $request;
 
     /**
      * @var string[]
@@ -58,6 +65,30 @@ class DistanceMatrixResponse
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRequest()
+    {
+        return $this->request !== null;
+    }
+
+    /**
+     * @return DistanceMatrixRequestInterface|null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param DistanceMatrixRequestInterface|null $request
+     */
+    public function setRequest(DistanceMatrixRequestInterface $request = null)
+    {
+        $this->request = $request;
     }
 
     /**

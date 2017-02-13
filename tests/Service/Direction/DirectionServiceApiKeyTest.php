@@ -12,22 +12,13 @@
 namespace Ivory\Tests\GoogleMap\Service\Direction;
 
 use Ivory\GoogleMap\Service\Base\Location\PlaceIdLocation;
-use Ivory\GoogleMap\Service\Direction\DirectionService;
-use Ivory\GoogleMap\Service\Direction\Request\DirectionRequest;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionWaypoint;
-use Ivory\GoogleMap\Service\Direction\Response\DirectionStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionServiceApiKeyTest extends AbstractServiceTest
+class DirectionServiceApiKeyTest extends DirectionServiceTest
 {
-    /**
-     * @var DirectionService
-     */
-    private $directions;
-
     /**
      * {@inheritdoc}
      */
@@ -37,53 +28,56 @@ class DirectionServiceApiKeyTest extends AbstractServiceTest
             $this->markTestSkipped();
         }
 
-        //sleep(2);
-
         parent::setUp();
 
-        $this->directions = new DirectionService($this->getClient(), $this->getMessageFactory());
-        $this->directions->setKey($_SERVER['API_KEY']);
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
-    public function testRouteWithPlaceId()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithPlaceId($format)
     {
-        $response = $this->directions->route($this->createRequest());
+        $request = $this->createRequest();
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
+
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithPlaceIdWaypoint()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithPlaceIdWaypoint($format)
     {
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionWaypoint(new PlaceIdLocation('ChIJs5IGBuNv5kcRVOC-kOamBzw')));
         $request->setOptimizeWaypoints(true);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithStopoverPlaceIdWaypoint()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithStopoverPlaceIdWaypoint($format)
     {
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionWaypoint(new PlaceIdLocation('ChIJs5IGBuNv5kcRVOC-kOamBzw'), true));
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
-    }
-
-    /**
-     * @return DirectionRequest
-     */
-    private function createRequest()
-    {
-        return new DirectionRequest(
-            new PlaceIdLocation('ChIJtdVv8-Fv5kcRV7t53Y2Ao3c'),
-            new PlaceIdLocation('ChIJC_jkvdJv5kcRNX4NW3iuID8')
-        );
+        $this->assertDirectionResponse($response, $request);
     }
 }

@@ -57,7 +57,7 @@ class GroundOverlayTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertStringStartsWith('ground_overlay', $this->groundOverlay->getVariable());
+        $this->assertStringStartsWith('groundoverlay', $this->groundOverlay->getVariable());
         $this->assertSame($this->url, $this->groundOverlay->getUrl());
         $this->assertSame($this->bound, $this->groundOverlay->getBound());
         $this->assertFalse($this->groundOverlay->hasOptions());
@@ -67,9 +67,6 @@ class GroundOverlayTest extends \PHPUnit_Framework_TestCase
     {
         $this->groundOverlay = new GroundOverlay($this->url, $this->bound, $options = ['foo' => 'bar']);
 
-        $this->assertStringStartsWith('ground_overlay', $this->groundOverlay->getVariable());
-        $this->assertSame($this->url, $this->groundOverlay->getUrl());
-        $this->assertSame($this->bound, $this->groundOverlay->getBound());
         $this->assertSame($options, $this->groundOverlay->getOptions());
     }
 

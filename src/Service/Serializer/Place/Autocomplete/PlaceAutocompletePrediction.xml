@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompletePrediction"
+        exclusion-policy="all"
+    >
+        <property
+            name="placeId"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="description"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="types"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="type"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="terms"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteTerm&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="term"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="matches"
+            alias="matched_substrings"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteMatch&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="matched_substring"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

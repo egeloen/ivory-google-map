@@ -11,10 +11,11 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
-use Ivory\GoogleMap\Service\Geocoder\GeocoderLocationType;
+use Ivory\GoogleMap\Service\Base\GeometryLocationType;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressType;
+use Ivory\GoogleMap\Service\RequestInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -37,6 +38,7 @@ class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(AbstractGeocoderRequest::class, $this->request);
+        $this->assertInstanceOf(RequestInterface::class, $this->request);
     }
 
     public function testDefaultState()
@@ -90,7 +92,7 @@ class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testSetLocationTypes()
     {
-        $locationTypes = [$locationType = GeocoderLocationType::APPROXIMATE];
+        $locationTypes = [$locationType = GeometryLocationType::APPROXIMATE];
 
         $this->request->setLocationTypes($locationTypes);
         $this->request->setLocationTypes($locationTypes);
@@ -102,8 +104,8 @@ class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testAddLocationTypes()
     {
-        $this->request->setLocationTypes($firstLocationTypes = [GeocoderLocationType::APPROXIMATE]);
-        $this->request->addLocationTypes($secondLocationTypes = [GeocoderLocationType::GEOMETRIC_CENTER]);
+        $this->request->setLocationTypes($firstLocationTypes = [GeometryLocationType::APPROXIMATE]);
+        $this->request->addLocationTypes($secondLocationTypes = [GeometryLocationType::GEOMETRIC_CENTER]);
 
         $this->assertTrue($this->request->hasLocationTypes());
         $this->assertSame(
@@ -114,7 +116,7 @@ class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testAddLocationType()
     {
-        $this->request->addLocationType($locationType = GeocoderLocationType::APPROXIMATE);
+        $this->request->addLocationType($locationType = GeometryLocationType::APPROXIMATE);
 
         $this->assertTrue($this->request->hasLocationTypes());
         $this->assertTrue($this->request->hasLocationType($locationType));
@@ -123,7 +125,7 @@ class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testRemoveLocationType()
     {
-        $this->request->addLocationType($locationType = GeocoderLocationType::APPROXIMATE);
+        $this->request->addLocationType($locationType = GeometryLocationType::APPROXIMATE);
         $this->request->removeLocationType($locationType);
 
         $this->assertFalse($this->request->hasLocationTypes());
@@ -131,24 +133,24 @@ class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->request->getLocationTypes());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertEmpty($this->request->build());
+        $this->assertEmpty($this->request->buildQuery());
     }
 
-    public function testBuildWithResultType()
+    public function testBuildQueryWithResultType()
     {
         $this->request->setResultTypes($resultTypes = [GeocoderAddressType::AIRPORT, GeocoderAddressType::PARK]);
 
-        $this->assertSame(['result_type' => implode('|', $resultTypes)], $this->request->build());
+        $this->assertSame(['result_type' => implode('|', $resultTypes)], $this->request->buildQuery());
     }
 
-    public function testBuildWithLocationType()
+    public function testBuildQueryWithLocationType()
     {
-        $locationTypes = [GeocoderLocationType::APPROXIMATE, GeocoderLocationType::GEOMETRIC_CENTER];
+        $locationTypes = [GeometryLocationType::APPROXIMATE, GeometryLocationType::GEOMETRIC_CENTER];
         $this->request->setLocationTypes($locationTypes);
 
-        $this->assertSame(['location_type' => implode('|', $locationTypes)], $this->request->build());
+        $this->assertSame(['location_type' => implode('|', $locationTypes)], $this->request->buildQuery());
     }
 
     /**

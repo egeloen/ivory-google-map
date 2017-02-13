@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\DirectionResponse"
+        exclusion-policy="all"
+        xml-root="DirectionResponse"
+    >
+        <property
+            name="status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="routes"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Direction\Response\DirectionRoute&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="route"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="geocodedWaypoints"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="geocoded_waypoint"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="availableTravelModes"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="available_travel_mode"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

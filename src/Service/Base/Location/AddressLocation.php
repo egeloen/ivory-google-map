@@ -48,7 +48,7 @@ class AddressLocation implements LocationInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         return $this->address;
     }

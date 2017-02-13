@@ -21,6 +21,7 @@ use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequest;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
+use Ivory\GoogleMap\Service\RequestInterface;
 
 /**
  * @author GeLo <gelon.eric@gmail.com>
@@ -56,6 +57,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(DistanceMatrixRequestInterface::class, $this->request);
+        $this->assertInstanceOf(RequestInterface::class, $this->request);
     }
 
     public function testDefaultState()
@@ -355,80 +357,80 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getLanguage());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertBuild($this->request->build());
+        $this->assertBuild($this->request->buildQuery());
     }
 
-    public function testBuildWithDepartureTime()
+    public function testBuildQueryWithDepartureTime()
     {
         $this->request->setDepartureTime($departureTime = new \DateTime());
 
-        $this->assertBuild($this->request->build(), ['departure_time' => $departureTime->getTimestamp()]);
+        $this->assertBuild($this->request->buildQuery(), ['departure_time' => $departureTime->getTimestamp()]);
     }
 
-    public function testBuildWithArrivalTime()
+    public function testBuildQueryWithArrivalTime()
     {
         $this->request->setArrivalTime($arrivalTime = new \DateTime());
 
-        $this->assertBuild($this->request->build(), ['arrival_time' => $arrivalTime->getTimestamp()]);
+        $this->assertBuild($this->request->buildQuery(), ['arrival_time' => $arrivalTime->getTimestamp()]);
     }
 
-    public function testBuildWithTravelMode()
+    public function testBuildQueryWithTravelMode()
     {
         $this->request->setTravelMode($travelMode = TravelMode::BICYCLING);
 
-        $this->assertBuild($this->request->build(), ['mode' => strtolower($travelMode)]);
+        $this->assertBuild($this->request->buildQuery(), ['mode' => strtolower($travelMode)]);
     }
 
-    public function testBuildWithAvoid()
+    public function testBuildQueryWithAvoid()
     {
         $this->request->setAvoid($avoid = Avoid::HIGHWAYS);
 
-        $this->assertBuild($this->request->build(), ['avoid' => $avoid]);
+        $this->assertBuild($this->request->buildQuery(), ['avoid' => $avoid]);
     }
 
-    public function testBuildWithTrafficModel()
+    public function testBuildQueryWithTrafficModel()
     {
         $this->request->setTrafficModel($trafficModel = TrafficModel::BEST_GUESS);
 
-        $this->assertBuild($this->request->build(), ['traffic_model' => $trafficModel]);
+        $this->assertBuild($this->request->buildQuery(), ['traffic_model' => $trafficModel]);
     }
 
-    public function testBuildWithTransitModes()
+    public function testBuildQueryWithTransitModes()
     {
         $this->request->setTransitModes($transitModes = [TransitMode::BUS, TransitMode::SUBWAY]);
 
-        $this->assertBuild($this->request->build(), ['transit_mode' => implode('|', $transitModes)]);
+        $this->assertBuild($this->request->buildQuery(), ['transit_mode' => implode('|', $transitModes)]);
     }
 
-    public function testBuildWithTransitRoutingPreference()
+    public function testBuildQueryWithTransitRoutingPreference()
     {
         $transitRoutingPreference = TransitRoutingPreference::LESS_WALKING;
         $this->request->setTransitRoutingPreference($transitRoutingPreference);
 
-        $this->assertBuild($this->request->build(), ['transit_routing_preference' => $transitRoutingPreference]);
+        $this->assertBuild($this->request->buildQuery(), ['transit_routing_preference' => $transitRoutingPreference]);
     }
 
-    public function testBuildWithUnitSystem()
+    public function testBuildQueryWithUnitSystem()
     {
         $this->request->setUnitSystem($unitSystem = UnitSystem::IMPERIAL);
 
-        $this->assertBuild($this->request->build(), ['units' => strtolower($unitSystem)]);
+        $this->assertBuild($this->request->buildQuery(), ['units' => strtolower($unitSystem)]);
     }
 
-    public function testBuildWithRegion()
+    public function testBuildQueryWithRegion()
     {
         $this->request->setRegion($region = 'fr');
 
-        $this->assertBuild($this->request->build(), ['region' => $region]);
+        $this->assertBuild($this->request->buildQuery(), ['region' => $region]);
     }
 
-    public function testBuildWithLanguage()
+    public function testBuildQueryWithLanguage()
     {
         $this->request->setLanguage($language = 'fr');
 
-        $this->assertBuild($this->request->build(), ['language' => $language]);
+        $this->assertBuild($this->request->buildQuery(), ['language' => $language]);
     }
 
     /**
@@ -438,7 +440,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
     private function assertBuild($actual, array $expected = [])
     {
         $locationBuilder = function (LocationInterface $location) {
-            return $location->build();
+            return $location->buildQuery();
         };
 
         $this->assertSame(array_merge([

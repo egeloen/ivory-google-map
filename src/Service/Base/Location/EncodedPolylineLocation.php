@@ -48,7 +48,7 @@ class EncodedPolylineLocation implements LocationInterface
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         return 'enc:'.$this->encodedPolyline;
     }

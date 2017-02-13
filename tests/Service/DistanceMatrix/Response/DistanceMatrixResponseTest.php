@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix\Response;
 
+use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixStatus;
@@ -37,6 +38,8 @@ class DistanceMatrixResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->response->hasStatus());
         $this->assertNull($this->response->getStatus());
+        $this->assertFalse($this->response->hasRequest());
+        $this->assertNull($this->response->getRequest());
         $this->assertFalse($this->response->hasOrigins());
         $this->assertEmpty($this->response->getOrigins());
         $this->assertFalse($this->response->hasDestinations());
@@ -51,6 +54,14 @@ class DistanceMatrixResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->response->hasStatus());
         $this->assertSame($status, $this->response->getStatus());
+    }
+
+    public function testRequest()
+    {
+        $this->response->setRequest($request = $this->createRequestMock());
+
+        $this->assertTrue($this->response->hasRequest());
+        $this->assertSame($request, $this->response->getRequest());
     }
 
     public function testResetStatus()
@@ -174,6 +185,14 @@ class DistanceMatrixResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->response->hasRows());
         $this->assertFalse($this->response->hasRow($row));
         $this->assertEmpty($this->response->getRows());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DistanceMatrixRequestInterface
+     */
+    private function createRequestMock()
+    {
+        return $this->createMock(DistanceMatrixRequestInterface::class);
     }
 
     /**

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\TimeZone\Response;
 
+use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneStatus;
 
@@ -36,6 +37,8 @@ class TimeZoneResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->response->hasStatus());
         $this->assertNull($this->response->getStatus());
+        $this->assertFalse($this->response->hasRequest());
+        $this->assertNull($this->response->getRequest());
         $this->assertFalse($this->response->hasDstOffset());
         $this->assertNull($this->response->getDstOffset());
         $this->assertFalse($this->response->hasRawOffset());
@@ -52,6 +55,14 @@ class TimeZoneResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->response->hasStatus());
         $this->assertSame($status, $this->response->getStatus());
+    }
+
+    public function testRequest()
+    {
+        $this->response->setRequest($request = $this->createRequestMock());
+
+        $this->assertTrue($this->response->hasRequest());
+        $this->assertSame($request, $this->response->getRequest());
     }
 
     public function testDstOffset()
@@ -84,5 +95,13 @@ class TimeZoneResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->response->hasTimeZoneName());
         $this->assertSame($timeZoneName, $this->response->getTimeZoneName());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|TimeZoneRequestInterface
+     */
+    private function createRequestMock()
+    {
+        return $this->createMock(TimeZoneRequestInterface::class);
     }
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse"
+        exclusion-policy="all"
+        xml-root="PlaceSearchResponse"
+    >
+        <property
+            name="status"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="results"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Place\Base\Place&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="result"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="htmlAttributions"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="html_attribution"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="nextPageToken"
+            type="string"
+            expose="true"
+        />
+    </class>
+</serializer>

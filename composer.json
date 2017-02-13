@@ -15,7 +15,9 @@
         "symfony/event-dispatcher": "^2.4|^3.0"
     },
     "require-dev": {
+        "egeloen/serializer": "^1.0@dev",
         "friendsofphp/php-cs-fixer": "^2.0",
+        "guzzlehttp/psr7": "^1.3.1",
         "php-http/cache-plugin": "^1.2",
         "php-http/guzzle6-adapter": "^1.1.1",
         "php-http/message": "^1.3",
@@ -25,6 +27,7 @@
         "symfony/phpunit-bridge": "^2.7|^3.0"
     },
     "suggest": {
+        "egeloen/serializer": "Allows to use http services",
         "php-http/client-implementation": "Allows to use http services",
         "php-http/message": "Allows to use http services"
     },

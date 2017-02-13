@@ -74,25 +74,19 @@ You can also filter the address components by type:
 foreach ($result->getAddresses('route') as $address) {
     // ...
 }
-```
+
+If you want to learn more about the address component, you can read this 
+[documentation](/doc/service/base/address_component.md).
 
 ### Geometry informations
 
-Geometry contains the following information:
-
- - location which is an `Coordinate`.
- - location type stores additional data about the specified location. The available possibilites are describes by the
-   `GeocoderLocationType` constants.
- - viewport which contains the recommended viewport for displaying the returned result, specified as `Bound`.
- - bounds (optionally returned) which stores the bounding box which can fully contain the returned result, specified as
-   `Bound`. Note that these bounds may not match the recommended viewport.
+The method `getGeometry` returns a set of technical geographic informations about your geocoding.
 
 ``` php
-$location = $result->getGeometry()->getLocation()
-$locationType = $result->getGeometry()->getLocationType();
-$viewport = $result->getGeometry()->getViewport();
-$bound = $result->getGeometry()->getBound();
+$geometry = $result->getGeometry();
 ```
+
+If you want to learn more about the gemetry, you can read this [documentation](/doc/service/base/geometry.md).
 
 ### Partial match flag
 

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Response;
 
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderStatus;
@@ -37,6 +38,8 @@ class GeocoderResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->response->hasStatus());
         $this->assertNull($this->response->getStatus());
+        $this->assertFalse($this->response->hasRequest());
+        $this->assertNull($this->response->getRequest());
         $this->assertFalse($this->response->hasResults());
         $this->assertEmpty($this->response->getResults());
     }
@@ -49,13 +52,12 @@ class GeocoderResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($status, $this->response->getStatus());
     }
 
-    public function testResetStatus()
+    public function testRequest()
     {
-        $this->response->setStatus(GeocoderStatus::ERROR);
-        $this->response->setStatus(null);
+        $this->response->setRequest($request = $this->createRequestMock());
 
-        $this->assertFalse($this->response->hasStatus());
-        $this->assertNull($this->response->getStatus());
+        $this->assertTrue($this->response->hasRequest());
+        $this->assertSame($request, $this->response->getRequest());
     }
 
     public function testSetResults()
@@ -94,6 +96,14 @@ class GeocoderResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->response->hasResults());
         $this->assertFalse($this->response->hasResult($result));
         $this->assertEmpty($this->response->getResults());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|GeocoderRequestInterface
+     */
+    private function createRequestMock()
+    {
+        return $this->createMock(GeocoderRequestInterface::class);
     }
 
     /**

@@ -35,7 +35,6 @@ class Rectangle implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct(Bound $bound, array $options = [])
     {
-        $this->setVariablePrefix('rectangle');
         $this->setBound($bound);
         $this->addOptions($options);
     }

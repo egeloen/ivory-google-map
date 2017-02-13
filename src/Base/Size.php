@@ -51,7 +51,6 @@ class Size implements VariableAwareInterface
      */
     public function __construct($width = 1.0, $height = 1.0, $widthUnit = null, $heightUnit = null)
     {
-        $this->setVariablePrefix('size');
         $this->setWidth($width);
         $this->setHeight($height);
         $this->setWidthUnit($widthUnit);

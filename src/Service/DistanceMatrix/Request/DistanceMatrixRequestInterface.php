@@ -11,13 +11,11 @@
 
 namespace Ivory\GoogleMap\Service\DistanceMatrix\Request;
 
+use Ivory\GoogleMap\Service\RequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface DistanceMatrixRequestInterface
+interface DistanceMatrixRequestInterface extends RequestInterface
 {
-    /**
-     * @return mixed[]
-     */
-    public function build();
 }

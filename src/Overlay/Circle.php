@@ -43,7 +43,6 @@ class Circle implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct(Coordinate $center, $radius = 1.0, array $options = [])
     {
-        $this->setVariablePrefix('circle');
         $this->setCenter($center);
         $this->setRadius($radius);
         $this->addOptions($options);

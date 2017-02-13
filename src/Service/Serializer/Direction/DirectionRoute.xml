@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Direction\Response\DirectionRoute"
+        exclusion-policy="all"
+    >
+        <property
+            name="bound"
+            alias="bounds"
+            type="Ivory\GoogleMap\Base\Bound"
+            expose="true"
+        />
+
+        <property
+            name="copyrights"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="legs"
+            type="array&lt;key=integer,value=Ivory\GoogleMap\Service\Direction\Response\DirectionLeg&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="leg"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="overviewPolyline"
+            type="Ivory\GoogleMap\Overlay\EncodedPolyline"
+            expose="true"
+        />
+
+        <property
+            name="summary"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="fare"
+            type="Ivory\GoogleMap\Service\Base\Fare"
+            expose="true"
+        />
+
+        <property
+            name="warnings"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="warning"
+            xml-key-as-attribute="false"
+        />
+
+        <property
+            name="waypointOrders"
+            type="array&lt;key=integer,value=integer&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="waypoint_order"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

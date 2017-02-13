@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<serializer
+    xmlns="http://egeloen.fr/schema/ivory-serializer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://egeloen.fr/schema/ivory-serializer
+                        http://egeloen.fr/schema/ivory-serializer/mapping-1.0.xsd"
+>
+    <class
+        name="Ivory\GoogleMap\Service\Place\Base\Photo"
+        exclusion-policy="all"
+    >
+        <property
+            name="reference"
+            alias="photo_reference"
+            type="string"
+            expose="true"
+        />
+
+        <property
+            name="width"
+            type="integer"
+            expose="true"
+        />
+
+        <property
+            name="height"
+            type="integer"
+            expose="true"
+        />
+
+        <property
+            name="htmlAttributions"
+            type="array&lt;key=integer,value=string&gt;"
+            expose="true"
+            xml-inline="true"
+            xml-entry="html_attribution"
+            xml-key-as-attribute="false"
+        />
+    </class>
+</serializer>

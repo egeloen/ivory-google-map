@@ -52,8 +52,8 @@ class GeocoderCoordinateRequest extends AbstractGeocoderReverseRequest
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
-        return array_merge(['latlng' => $this->buildCoordinate($this->coordinate)], parent::build());
+        return array_merge(['latlng' => $this->buildCoordinate($this->coordinate)], parent::buildQuery());
     }
 }

@@ -11,6 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\Direction\Response;
 
+use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -20,6 +22,11 @@ class DirectionResponse
      * @var string|null
      */
     private $status;
+
+    /**
+     * @var DirectionRequestInterface|null
+     */
+    private $request;
 
     /**
      * @var DirectionRoute[]
@@ -58,6 +65,30 @@ class DirectionResponse
     public function setStatus($status = null)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRequest()
+    {
+        return $this->request !== null;
+    }
+
+    /**
+     * @return DirectionRequestInterface|null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param DirectionRequestInterface|null $request
+     */
+    public function setRequest(DirectionRequestInterface $request = null)
+    {
+        $this->request = $request;
     }
 
     /**

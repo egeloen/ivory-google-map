@@ -37,7 +37,6 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface
      */
     public function __construct(array $coordinates = [], array $options = [])
     {
-        $this->setVariablePrefix('polyline');
         $this->addCoordinates($coordinates);
         $this->addOptions($options);
     }

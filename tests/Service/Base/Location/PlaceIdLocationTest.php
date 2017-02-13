@@ -54,8 +54,8 @@ class PlaceIdLocationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($placeId, $this->placeIdLocation->getPlaceId());
     }
 
-    public function testBuild()
+    public function testBuildQuery()
     {
-        $this->assertSame('place_id:'.$this->placeId, $this->placeIdLocation->build());
+        $this->assertSame('place_id:'.$this->placeId, $this->placeIdLocation->buildQuery());
     }
 }

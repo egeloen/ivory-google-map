@@ -45,7 +45,6 @@ class Coordinate implements VariableAwareInterface
      */
     public function __construct($latitude = 0.0, $longitude = 0.0, $noWrap = true)
     {
-        $this->setVariablePrefix('coordinate');
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
         $this->setNoWrap($noWrap);

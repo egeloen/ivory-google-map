@@ -45,7 +45,6 @@ class Bound implements VariableAwareInterface
      */
     public function __construct(Coordinate $southWest = null, Coordinate $northEast = null)
     {
-        $this->setVariablePrefix('bound');
         $this->setSouthWest($southWest);
         $this->setNorthEast($northEast);
     }

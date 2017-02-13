@@ -19,5 +19,5 @@ interface LocationInterface
     /**
      * @return string
      */
-    public function build();
+    public function buildQuery();
 }

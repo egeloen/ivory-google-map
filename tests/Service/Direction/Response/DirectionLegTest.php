@@ -17,6 +17,7 @@ use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Time;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionLeg;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStep;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionWaypoint;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -255,10 +256,40 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
 
     public function testSetViaWaypoints()
     {
-        $this->leg->setViaWaypoints($viaWaypoints = ['foo' => 'bar']);
+        $this->leg->setViaWaypoints($viaWaypoints = [$viaWaypoint = $this->createWaypointMock()]);
+        $this->leg->setViaWaypoints($viaWaypoints);
 
         $this->assertTrue($this->leg->hasViaWaypoints());
+        $this->assertTrue($this->leg->hasViaWaypoint($viaWaypoint));
         $this->assertSame($viaWaypoints, $this->leg->getViaWaypoints());
+    }
+
+    public function testAddViaWaypoints()
+    {
+        $this->leg->setViaWaypoints($firstViaWaypoints = [$this->createWaypointMock()]);
+        $this->leg->addViaWaypoints($secondViaWaypoints = [$this->createWaypointMock()]);
+
+        $this->assertTrue($this->leg->hasViaWaypoints());
+        $this->assertSame(array_merge($firstViaWaypoints, $secondViaWaypoints), $this->leg->getViaWaypoints());
+    }
+
+    public function testAddWaypoint()
+    {
+        $this->leg->addViaWaypoint($viaWaypoint = $this->createWaypointMock());
+
+        $this->assertTrue($this->leg->hasViaWaypoints());
+        $this->assertTrue($this->leg->hasViaWaypoint($viaWaypoint));
+        $this->assertSame([$viaWaypoint], $this->leg->getViaWaypoints());
+    }
+
+    public function testRemoveWaypoint()
+    {
+        $this->leg->addViaWaypoint($viaWaypoint = $this->createWaypointMock());
+        $this->leg->removeViaWaypoint($viaWaypoint);
+
+        $this->assertFalse($this->leg->hasViaWaypoints());
+        $this->assertFalse($this->leg->hasViaWaypoint($viaWaypoint));
+        $this->assertEmpty($this->leg->getViaWaypoints());
     }
 
     /**
@@ -299,5 +330,13 @@ class DirectionLegTest extends \PHPUnit_Framework_TestCase
     private function createStepMock()
     {
         return $this->createMock(DirectionStep::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionWaypoint
+     */
+    private function createWaypointMock()
+    {
+        return $this->createMock(DirectionWaypoint::class);
     }
 }

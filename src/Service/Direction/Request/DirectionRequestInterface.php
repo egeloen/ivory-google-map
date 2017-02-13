@@ -11,13 +11,11 @@
 
 namespace Ivory\GoogleMap\Service\Direction\Request;
 
+use Ivory\GoogleMap\Service\RequestInterface;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface DirectionRequestInterface
+interface DirectionRequestInterface extends RequestInterface
 {
-    /**
-     * @return mixed[]
-     */
-    public function build();
 }

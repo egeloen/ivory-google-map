@@ -68,7 +68,7 @@ class MarkerClusterTest extends \PHPUnit_Framework_TestCase
     {
         $this->markerCluster = new MarkerCluster();
 
-        $this->assertStringStartsWith('marker_cluster', $this->markerCluster->getVariable());
+        $this->assertStringStartsWith('markercluster', $this->markerCluster->getVariable());
         $this->assertFalse($this->markerCluster->hasOverlayManager());
         $this->assertNull($this->markerCluster->getOverlayManager());
         $this->assertSame(MarkerClusterType::DEFAULT_, $this->markerCluster->getType());

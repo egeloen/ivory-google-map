@@ -187,7 +187,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * {@inheritdoc}
      */
-    public function build()
+    public function buildQuery()
     {
         $query = ['address' => $this->address];
 
@@ -208,6 +208,6 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
             $query['region'] = $this->region;
         }
 
-        return array_merge($query, parent::build());
+        return array_merge($query, parent::buildQuery());
     }
 }

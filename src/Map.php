@@ -91,7 +91,6 @@ class Map implements VariableAwareInterface
 
     public function __construct()
     {
-        $this->setVariablePrefix('map');
         $this->setCenter(new Coordinate());
         $this->setBound(new Bound());
         $this->setControlManager(new ControlManager());

@@ -11,350 +11,625 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Base\UnitSystem;
-use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Direction\DirectionService;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequest;
-use Ivory\GoogleMap\Service\Direction\Request\DirectionWaypoint;
+use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
+use Ivory\GoogleMap\Service\Direction\Request\DirectionWaypoint as DirectionRequestWaypoint;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocodedStatus;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionLeg;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionResponse;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionRoute;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStatus;
-use Ivory\Tests\GoogleMap\Service\AbstractServiceTest;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionStep;
+use Ivory\GoogleMap\Service\Direction\Response\DirectionWaypoint as DirectionResponseWaypoint;
+use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitAgency;
+use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
+use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
+use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitStop;
+use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle;
+use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionServiceTest extends AbstractServiceTest
+class DirectionServiceTest extends AbstractSerializableServiceTest
 {
     /**
      * @var DirectionService
      */
-    private $directions;
+    protected $service;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        //sleep(2);
-
         parent::setUp();
 
-        $this->directions = new DirectionService($this->getClient(), $this->getMessageFactory());
+        $this->service = new DirectionService($this->client, $this->messageFactory);
     }
 
-    public function testRoute()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRoute($format)
     {
-        $response = $this->directions->route($this->createRequest());
+        $request = $this->createRequest();
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
+
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithCoordinates()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithCoordinates($format)
     {
         $request = new DirectionRequest(
-            new CoordinateLocation(new Coordinate(50.629381, 3.057268)),
-            new CoordinateLocation(new Coordinate(48.856633, 2.352254))
+            new CoordinateLocation(new Coordinate(48.873491, 2.295929)),
+            new CoordinateLocation(new Coordinate(48.865869, 2.319885))
         );
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithDepartureTime()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithDepartureTime($format)
     {
         $request = $this->createRequest();
         $request->setDepartureTime($this->getDepartureTime());
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithArrivalTime()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithArrivalTime($format)
     {
         $request = $this->createRequest();
         $request->setArrivalTime($this->getArrivalTime());
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithAddressWaypoint()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithAddressWaypoint($format)
     {
+        $location = new AddressLocation('Statue du Général De Gaulle, Paris');
+
         $request = $this->createRequest();
-        $request->addWaypoint(new DirectionWaypoint(new AddressLocation('Compiègne')));
+        $request->addWaypoint(new DirectionRequestWaypoint($location));
         $request->setOptimizeWaypoints(true);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithCoordinateWaypoint()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithCoordinateWaypoint($format)
     {
+        $location = new CoordinateLocation(new Coordinate(48.867513, 2.313604));
+
         $request = $this->createRequest();
-        $request->addWaypoint(new DirectionWaypoint(new CoordinateLocation(new Coordinate(49.418079, 2.826190))));
+        $request->addWaypoint(new DirectionRequestWaypoint($location));
         $request->setOptimizeWaypoints(true);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithStopoverWaypoint()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithStopoverWaypoint($format)
     {
+        $location = new AddressLocation('Statue du Général De Gaulle, Paris');
+
         $request = $this->createRequest();
-        $request->addWaypoint(new DirectionWaypoint(new AddressLocation('Compiègne'), true));
+        $request->addWaypoint(new DirectionRequestWaypoint($location, true));
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithAvoid()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithAvoid($format)
     {
         $request = $this->createRequest();
         $request->setAvoid(Avoid::HIGHWAYS);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithTravelMode()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithTravelMode($format)
     {
         $request = $this->createRequest();
         $request->setTravelMode(TravelMode::DRIVING);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithAlternatives()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithAlternatives($format)
     {
         $request = $this->createRequest();
         $request->setProvideRouteAlternatives(true);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithAvailableTravelModes()
-    {
-        $request = new DirectionRequest(new AddressLocation('Brest'), new AddressLocation('Washington'));
-        $request->setTravelMode(TravelMode::BICYCLING);
-
-        $response = $this->directions->route($request);
-
-        $this->assertSame(DirectionStatus::ZERO_RESULTS, $response->getStatus());
-        $this->assertEmpty($response->getRoutes());
-        $this->assertNotEmpty($response->getAvailableTravelModes());
-    }
-
-    public function testRouteWithTransit()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithTransit($format)
     {
         $request = new DirectionRequest(
-            new AddressLocation('601-625 Ashbury Street, San Francisco'),
-            new AddressLocation('Bike Route 95, San Francisco')
+            new AddressLocation('Brooklyn'),
+            new AddressLocation('Queens')
         );
 
         $request->setTravelMode(TravelMode::TRANSIT);
         $request->setDepartureTime($this->getDepartureTime());
         $request->setArrivalTime($this->getArrivalTime());
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithUnitSystem()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithUnitSystem($format)
     {
         $request = $this->createRequest();
         $request->setUnitSystem(UnitSystem::METRIC);
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithRegion()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithRegion($format)
     {
         $request = $this->createRequest();
         $request->setRegion('fr');
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
-    public function testRouteWithLanguage()
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testRouteWithLanguage($format)
     {
         $request = $this->createRequest();
         $request->setLanguage('fr');
 
-        $response = $this->directions->route($request);
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
 
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
-    }
-
-    public function testRouteWithHttp()
-    {
-        $request = $this->createRequest();
-        $this->directions->setHttps(false);
-
-        $response = $this->directions->route($request);
-
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
-    }
-
-    public function testRouteWithXmlFormat()
-    {
-        $request = $this->createRequest();
-
-        $this->directions->setFormat(DirectionService::FORMAT_XML);
-        $response = $this->directions->route($request);
-
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertNotEmpty($response->getRoutes());
-    }
-
-    public function testRouteWithKey()
-    {
-        $this->directions = new DirectionService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $this->directions->setKey('api-key');
-
-        $request = $this->createDirectionRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/directions/json?foo=bar&key=api-key'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status":"OK","routes":[]}'));
-
-        $response = $this->directions->route($request);
-
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertEmpty($response->getRoutes());
-    }
-
-    public function testRouteWithBusinessAccount()
-    {
-        $this->directions = new DirectionService(
-            $client = $this->createHttpClientMock(),
-            $messageFactory = $this->createMessageFactoryMock()
-        );
-
-        $request = $this->createDirectionRequestMock();
-        $request
-            ->expects($this->once())
-            ->method('build')
-            ->will($this->returnValue($query = ['foo' => 'bar']));
-
-        $messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo(
-                    $url = 'https://maps.googleapis.com/maps/api/directions/json?foo=bar&signature=signature'
-                )
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
-        $client
-            ->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
-            ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
-
-        $httpResponse
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($httpStream = $this->createHttpStreamMock()));
-
-        $httpStream
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue('{"status":"OK","routes":[]}'));
-
-        $businessAccount = $this->createBusinessAccountMock();
-        $businessAccount
-            ->expects($this->once())
-            ->method('signUrl')
-            ->with($this->equalTo('https://maps.googleapis.com/maps/api/directions/json?foo=bar'))
-            ->will($this->returnValue($url));
-
-        $this->directions->setBusinessAccount($businessAccount);
-
-        $response = $this->directions->route($request);
-
-        $this->assertSame(DirectionStatus::OK, $response->getStatus());
-        $this->assertEmpty($response->getRoutes());
+        $this->assertDirectionResponse($response, $request);
     }
 
     /**
      * @return DirectionRequest
      */
-    private function createRequest()
+    protected function createRequest()
     {
-        return new DirectionRequest(new AddressLocation('Lille'), new AddressLocation('Paris'));
+        return new DirectionRequest(
+            new AddressLocation('Place Charles de Gaulle, Paris'),
+            new AddressLocation('Place de la Concorde, Paris')
+        );
+    }
+
+    /**
+     * @param DirectionResponse         $response
+     * @param DirectionRequestInterface $request
+     */
+    protected function assertDirectionResponse($response, $request)
+    {
+        $options = array_merge([
+            'status'                 => DirectionStatus::OK,
+            'routes'                 => [],
+            'geocoded_waypoints'     => [],
+            'available_travel_modes' => [],
+        ], self::$journal->getData());
+
+        $this->assertInstanceOf(DirectionResponse::class, $response);
+
+        $this->assertSame($request, $response->getRequest());
+        $this->assertSame($options['status'], $response->getStatus());
+        $this->assertSame($options['available_travel_modes'], $response->getAvailableTravelModes());
+        $this->assertCount(count($options['routes']), $routes = $response->getRoutes());
+
+        foreach ($options['routes'] as $key => $route) {
+            $this->assertArrayHasKey($key, $routes);
+            $this->assertDirectionRoute($routes[$key], $route);
+        }
+
+        $this->assertCount(
+            count($options['geocoded_waypoints']),
+            $geocodedWaypoints = $response->getGeocodedWaypoints()
+        );
+
+        foreach ($options['geocoded_waypoints'] as $key => $geocodedWaypoint) {
+            $this->assertArrayHasKey($key, $geocodedWaypoints);
+            $this->assertDirectionGeocoded($geocodedWaypoints[$key], $geocodedWaypoint);
+        }
+    }
+
+    /**
+     * @param DirectionRoute $route
+     * @param mixed[]        $options
+     */
+    private function assertDirectionRoute($route, array $options = [])
+    {
+        $options = array_merge([
+            'bounds'            => [],
+            'copyrights'        => null,
+            'legs'              => [],
+            'overview_polyline' => [],
+            'summary'           => null,
+            'fare'              => [],
+            'warnings'          => [],
+            'waypoint_orders'   => [],
+        ], $options);
+
+        $this->assertInstanceOf(DirectionRoute::class, $route);
+
+        $this->assertEquals($options['summary'], $route->getSummary());
+        $this->assertSame($options['copyrights'], $route->getCopyrights());
+        $this->assertSame($options['warnings'], $route->getWarnings());
+        $this->assertSame($options['waypoint_orders'], $route->getWaypointOrders());
+
+        $this->assertBound($route->getBound(), $options['bounds']);
+        $this->assertEncodedPolyline($route->getOverviewPolyline(), $options['overview_polyline']);
+        $this->assertFare($route->getFare(), $options['fare']);
+        $this->assertCount(count($options['legs']), $legs = $route->getLegs());
+
+        foreach ($options['legs'] as $key => $leg) {
+            $this->assertArrayHasKey($key, $legs);
+            $this->assertDirectionLeg($legs[$key], $leg);
+        }
+    }
+
+    /**
+     * @param DirectionLeg $leg
+     * @param mixed[]      $options
+     */
+    private function assertDirectionLeg($leg, array $options = [])
+    {
+        $options = array_merge([
+            'distance'            => [],
+            'duration'            => [],
+            'duration_in_traffic' => [],
+            'arrival_time'        => [],
+            'departure_time'      => [],
+            'end_address'         => null,
+            'end_location'        => [],
+            'start_address'       => null,
+            'start_location'      => [],
+            'steps'               => [],
+            'via_waypoint'        => [],
+        ], $options);
+
+        $this->assertInstanceOf(DirectionLeg::class, $leg);
+
+        $this->assertSame($leg->getEndAddress(), $options['end_address']);
+        $this->assertSame($leg->getStartAddress(), $options['start_address']);
+        $this->assertDuration($leg->getDuration(), $options['duration']);
+        $this->assertDuration($leg->getDurationInTraffic(), $options['duration_in_traffic']);
+        $this->assertDistance($leg->getDistance(), $options['distance']);
+        $this->assertTime($leg->getArrivalTime(), $options['arrival_time']);
+        $this->assertTime($leg->getDepartureTime(), $options['departure_time']);
+        $this->assertCoordinate($leg->getEndLocation(), $options['end_location']);
+        $this->assertCoordinate($leg->getStartLocation(), $options['start_location']);
+
+        $this->assertCount(count($options['via_waypoint']), $viaWaypoints = $leg->getViaWaypoints());
+
+        foreach ($options['via_waypoint'] as $key => $viaWaypoint) {
+            $this->assertArrayHasKey($key, $viaWaypoints);
+            $this->assertDirectionWaypoint($viaWaypoints[$key], $viaWaypoint);
+        }
+
+        $this->assertCount(count($options['steps']), $steps = $leg->getSteps());
+
+        foreach ($options['steps'] as $key => $step) {
+            $this->assertArrayHasKey($key, $steps);
+            $this->assertDirectionStep($steps[$key], $step);
+        }
+    }
+
+    /**
+     * @param DirectionStep $step
+     * @param mixed[]       $options
+     */
+    private function assertDirectionStep($step, array $options = [])
+    {
+        $options = array_merge([
+            'distance'          => [],
+            'duration'          => [],
+            'start_location'    => [],
+            'end_location'      => [],
+            'html_instructions' => null,
+            'polyline'          => [],
+            'travel_mode'       => null,
+            'transit_details'   => [],
+        ], $options);
+
+        $this->assertInstanceOf(DirectionStep::class, $step);
+
+        $this->assertSame($options['html_instructions'], $step->getInstructions());
+        $this->assertSame($options['travel_mode'], $step->getTravelMode());
+
+        $this->assertDistance($step->getDistance(), $options['distance']);
+        $this->assertDuration($step->getDuration(), $options['duration']);
+        $this->assertCoordinate($step->getStartLocation(), $options['start_location']);
+        $this->assertCoordinate($step->getEndLocation(), $options['end_location']);
+        $this->assertEncodedPolyline($step->getEncodedPolyline(), $options['polyline']);
+        $this->assertDirectionTransitDetails($step->getTransitDetails(), $options['transit_details']);
+    }
+
+    /**
+     * @param DirectionGeocoded $geocoded
+     * @param mixed[]           $options
+     */
+    private function assertDirectionGeocoded($geocoded, array $options = [])
+    {
+        $options = array_merge([
+            'status'        => DirectionGeocodedStatus::OK,
+            'partial_match' => null,
+            'place_id'      => null,
+            'types'         => [],
+        ], $options);
+
+        $this->assertInstanceOf(DirectionGeocoded::class, $geocoded);
+
+        $this->assertSame($options['status'], $geocoded->getStatus());
+        $this->assertSame($options['partial_match'], $geocoded->isPartialMatch());
+        $this->assertSame($options['place_id'], $geocoded->getPlaceId());
+        $this->assertSame($options['types'], $geocoded->getTypes());
+    }
+
+    /**
+     * @param DirectionResponseWaypoint $waypoint
+     * @param mixed[]                   $options
+     */
+    private function assertDirectionWaypoint($waypoint, array $options = [])
+    {
+        $options = array_merge([
+            'location'           => [],
+            'step_index'         => null,
+            'step_interpolation' => null,
+        ], $options);
+
+        $this->assertInstanceOf(DirectionResponseWaypoint::class, $waypoint);
+
+        $this->assertSame($options['step_index'], $waypoint->getStepIndex());
+        $this->assertSame(round($options['step_interpolation'], 5), round($waypoint->getStepInterpolation(), 5));
+        $this->assertCoordinate($waypoint->getLocation(), $options['location']);
+    }
+
+    /**
+     * @param DirectionTransitDetails $details
+     * @param mixed[]                 $options
+     */
+    private function assertDirectionTransitDetails($details, array $options = [])
+    {
+        if (empty($options)) {
+            return $this->assertNull($details);
+        }
+
+        $options = array_merge([
+            'departure_stop' => [],
+            'arrival_stop'   => [],
+            'departure_time' => [],
+            'arrival_time'   => [],
+            'headsign'       => null,
+            'headway'        => null,
+            'line'           => [],
+            'num_stops'      => null,
+        ], $options);
+
+        $this->assertInstanceOf(DirectionTransitDetails::class, $details);
+
+        $this->assertSame($options['headsign'], $details->getHeadSign());
+        $this->assertSame($options['headway'], $details->getHeadWay());
+        $this->assertSame($options['num_stops'], $details->getNumStops());
+
+        $this->assertDirectionTransitStop($details->getDepartureStop(), $options['departure_stop']);
+        $this->assertDirectionTransitStop($details->getArrivalStop(), $options['arrival_stop']);
+        $this->assertTime($details->getDepartureTime(), $options['departure_time']);
+        $this->assertTime($details->getArrivalTime(), $options['arrival_time']);
+        $this->assertDirectionTransitLine($details->getLine(), $options['line']);
+    }
+
+    /**
+     * @param DirectionTransitStop $stop
+     * @param mixed[]              $options
+     */
+    private function assertDirectionTransitStop($stop, array $options = [])
+    {
+        $options = array_merge([
+            'name'     => null,
+            'location' => [],
+        ], $options);
+
+        $this->assertInstanceOf(DirectionTransitStop::class, $stop);
+
+        $this->assertSame($options['name'], $stop->getName());
+        $this->assertCoordinate($stop->getLocation(), $options['location']);
+    }
+
+    /**
+     * @param DirectionTransitLine $line
+     * @param mixed[]              $options
+     */
+    private function assertDirectionTransitLine($line, array $options = [])
+    {
+        $options = array_merge([
+            'name'       => null,
+            'short_name' => null,
+            'color'      => null,
+            'url'        => null,
+            'icon'       => null,
+            'text_color' => null,
+            'vehicle'    => [],
+            'agencies'   => [],
+        ], $options);
+
+        $this->assertInstanceOf(DirectionTransitLine::class, $line);
+
+        $this->assertSame($options['name'], $line->getName());
+        $this->assertSame($options['short_name'], $line->getShortName());
+        $this->assertSame($options['color'], $line->getColor());
+        $this->assertSame($options['url'], $line->getUrl());
+        $this->assertSame($options['icon'], $line->getIcon());
+        $this->assertSame($options['text_color'], $line->getTextColor());
+        $this->assertDirectionTransitVehicle($line->getVehicle(), $options['vehicle']);
+        $this->assertCount(count($options['agencies']), $agencies = $line->getAgencies());
+
+        foreach ($options['agencies'] as $key => $agency) {
+            $this->assertArrayHasKey($key, $agencies);
+            $this->assertDirectionTransitAgency($agencies[$key], $agency);
+        }
+    }
+
+    /**
+     * @param DirectionTransitVehicle $vehicle
+     * @param mixed[]                 $options
+     */
+    private function assertDirectionTransitVehicle($vehicle, array $options = [])
+    {
+        $options = array_merge([
+            'name'       => null,
+            'icon'       => null,
+            'type'       => null,
+            'local_icon' => null,
+        ], $options);
+
+        $this->assertInstanceOf(DirectionTransitVehicle::class, $vehicle);
+
+        $this->assertSame($options['name'], $vehicle->getName());
+        $this->assertSame($options['icon'], $vehicle->getIcon());
+        $this->assertSame($options['type'], $vehicle->getType());
+        $this->assertSame($options['local_icon'], $vehicle->getLocalIcon());
+    }
+
+    /**
+     * @param DirectionTransitAgency $agency
+     * @param mixed[]                $options
+     */
+    private function assertDirectionTransitAgency($agency, array $options = [])
+    {
+        $options = array_merge([
+            'name'  => null,
+            'phone' => null,
+            'url'   => null,
+        ], $options);
+
+        $this->assertInstanceOf(DirectionTransitAgency::class, $agency);
+
+        $this->assertSame($options['name'], $agency->getName());
+        $this->assertSame($options['phone'], $agency->getPhone());
+        $this->assertSame($options['url'], $agency->getUrl());
+    }
+
+    /**
+     * @param EncodedPolyline $encodedPolyline
+     * @param mixed[]         $options
+     */
+    private function assertEncodedPolyline($encodedPolyline, array $options = [])
+    {
+        $options = array_merge(['points' => null], $options);
+
+        $this->assertInstanceOf(EncodedPolyline::class, $encodedPolyline);
+        $this->assertSame($options['points'], $encodedPolyline->getValue());
     }
 
     /**
@@ -362,7 +637,7 @@ class DirectionServiceTest extends AbstractServiceTest
      */
     private function getDepartureTime()
     {
-        return $this->getDateTime('departure');
+        return $this->getDateTime('departure', '+1 hour');
     }
 
     /**
@@ -370,62 +645,6 @@ class DirectionServiceTest extends AbstractServiceTest
      */
     private function getArrivalTime()
     {
-        return $this->getDateTime('arrival', '+2 hours');
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
-     */
-    private function createHttpClientMock()
-    {
-        return $this->createMock(HttpClient::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
-     */
-    private function createMessageFactoryMock()
-    {
-        return $this->createMock(MessageFactory::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequestInterface
-     */
-    private function createHttpRequestMock()
-    {
-        return $this->createMock(RequestInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResponseInterface
-     */
-    private function createHttpResponseMock()
-    {
-        return $this->createMock(ResponseInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|StreamInterface
-     */
-    private function createHttpStreamMock()
-    {
-        return $this->createMock(StreamInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
-     */
-    private function createBusinessAccountMock()
-    {
-        return $this->createMock(BusinessAccount::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionRequest
-     */
-    private function createDirectionRequestMock()
-    {
-        return $this->createMock(DirectionRequest::class);
+        return $this->getDateTime('arrival', '+4 hours');
     }
 }

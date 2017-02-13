@@ -102,10 +102,10 @@ class TimeZoneRequest implements TimeZoneRequestInterface
     /**
      * @return mixed[]
      */
-    public function build()
+    public function buildQuery()
     {
         $query = [
-            'location'  => $this->location->getLatitude().','.$this->location->getLongitude(),
+            'location'  => $this->buildCoordinate($this->location),
             'timestamp' => $this->date->getTimestamp(),
         ];
 
@@ -114,5 +114,15 @@ class TimeZoneRequest implements TimeZoneRequestInterface
         }
 
         return $query;
+    }
+
+    /**
+     * @param Coordinate $coordinate
+     *
+     * @return string
+     */
+    private function buildCoordinate(Coordinate $coordinate)
+    {
+        return $coordinate->getLatitude().','.$coordinate->getLongitude();
     }
 }
