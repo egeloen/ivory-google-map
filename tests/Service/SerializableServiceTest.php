@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Service;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\Serializer\SerializerInterface;
 
@@ -65,7 +65,7 @@ class SerializableServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractService::class, $this->service);
+        $this->assertInstanceOf(AbstractHttpService::class, $this->service);
     }
 
     public function testDefaultState()

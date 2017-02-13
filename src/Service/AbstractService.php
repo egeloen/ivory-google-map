@@ -26,16 +26,6 @@ abstract class AbstractService
     private $url;
 
     /**
-     * @var HttpClient
-     */
-    private $client;
-
-    /**
-     * @var MessageFactory
-     */
-    private $messageFactory;
-
-    /**
      * @var string|null
      */
     private $key;
@@ -46,15 +36,11 @@ abstract class AbstractService
     private $businessAccount;
 
     /**
-     * @param string         $url
-     * @param HttpClient     $client
-     * @param MessageFactory $messageFactory
+     * @param string $url
      */
-    public function __construct($url, HttpClient $client, MessageFactory $messageFactory)
+    public function __construct($url)
     {
         $this->setUrl($url);
-        $this->setClient($client);
-        $this->setMessageFactory($messageFactory);
     }
 
     /**
@@ -71,38 +57,6 @@ abstract class AbstractService
     public function setUrl($url)
     {
         $this->url = $url;
-    }
-
-    /**
-     * @return HttpClient
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param HttpClient $client
-     */
-    public function setClient(HttpClient $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
-     * @return MessageFactory
-     */
-    public function getMessageFactory()
-    {
-        return $this->messageFactory;
-    }
-
-    /**
-     * @param MessageFactory $messageFactory
-     */
-    public function setMessageFactory(MessageFactory $messageFactory)
-    {
-        $this->messageFactory = $messageFactory;
     }
 
     /**
@@ -156,9 +110,9 @@ abstract class AbstractService
     /**
      * @param RequestInterface $request
      *
-     * @return PsrRequestInterface
+     * @return string
      */
-    protected function createRequest(RequestInterface $request)
+    protected function createUrl(RequestInterface $request)
     {
         $query = $request->buildQuery();
 
@@ -166,13 +120,13 @@ abstract class AbstractService
             $query['key'] = $this->key;
         }
 
-        $url = $this->createUrl($request).'?'.http_build_query($query, '', '&');
+        $url = $this->createBaseUrl($request).'?'.http_build_query($query, '', '&');
 
         if ($this->hasBusinessAccount()) {
             $url = $this->businessAccount->signUrl($url);
         }
 
-        return $this->messageFactory->createRequest('GET', $url);
+        return $url;
     }
 
     /**
@@ -180,7 +134,7 @@ abstract class AbstractService
      *
      * @return string
      */
-    protected function createUrl(RequestInterface $request)
+    protected function createBaseUrl(RequestInterface $request)
     {
         $url = $this->getUrl();
 

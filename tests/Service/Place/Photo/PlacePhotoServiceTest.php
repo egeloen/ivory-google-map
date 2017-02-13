@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Photo;
 
+use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Place\Photo\PlacePhotoService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequest;
 use Ivory\Tests\GoogleMap\Service\AbstractFunctionalServiceTest;
@@ -19,7 +20,7 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlacePhotoServiceTest extends AbstractFunctionalServiceTest
+class PlacePhotoServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var PlacePhotoService
@@ -27,18 +28,17 @@ class PlacePhotoServiceTest extends AbstractFunctionalServiceTest
     private $service;
 
     /**
+     * @var string
+     */
+    private $key;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        if (!isset($_SERVER['API_KEY'])) {
-            $this->markTestSkipped();
-        }
-
-        parent::setUp();
-
-        $this->service = new PlacePhotoService($this->client, $this->messageFactory);
-        $this->service->setKey($_SERVER['API_KEY']);
+        $this->service = new PlacePhotoService();
+        $this->service->setKey($this->key = 'foo');
     }
 
     public function testProcessWithMaxWidth()
@@ -46,10 +46,10 @@ class PlacePhotoServiceTest extends AbstractFunctionalServiceTest
         $request = $this->createRequest();
         $request->setMaxWidth(400);
 
-        $stream = $this->service->process($request);
-
-        $this->assertInstanceOf(StreamInterface::class, $stream);
-        $this->assertSame(file_get_contents(__DIR__.'/Fixture/max_width.jpg'), (string) $stream);
+        $this->assertSame(
+            'https://maps.googleapis.com/maps/api/place/photo?photoreference='.$request->getReference().'&maxwidth=400&key='.$this->key,
+            $this->service->process($request)
+        );
     }
 
     public function testProcessWithMaxHeight()
@@ -57,10 +57,28 @@ class PlacePhotoServiceTest extends AbstractFunctionalServiceTest
         $request = $this->createRequest();
         $request->setMaxHeight(400);
 
-        $stream = $this->service->process($request);
+        $this->assertSame(
+            'https://maps.googleapis.com/maps/api/place/photo?photoreference='.$request->getReference().'&maxheight=400&key='.$this->key,
+            $this->service->process($request)
+        );
+    }
 
-        $this->assertInstanceOf(StreamInterface::class, $stream);
-        $this->assertSame(file_get_contents(__DIR__.'/Fixture/max_height.jpg'), (string) $stream);
+    public function testProcessWithBusinessAccount()
+    {
+        $request = $this->createRequest();
+
+        $businessAccount = $this->createBusinessAccountMock();
+        $businessAccount
+            ->expects($this->once())
+            ->method('signUrl')
+            ->with($this->identicalTo(
+                $url = 'https://maps.googleapis.com/maps/api/place/photo?photoreference='.$request->getReference().'&key='.$this->key
+            ))
+            ->will($this->returnValue($signedUrl = $url.'&signature=signature'));
+
+        $this->service->setBusinessAccount($businessAccount);
+
+        $this->assertSame($signedUrl, $this->service->process($request));
     }
 
     /**
@@ -68,6 +86,14 @@ class PlacePhotoServiceTest extends AbstractFunctionalServiceTest
      */
     private function createRequest()
     {
-        return new PlacePhotoRequest('CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU');
+        return new PlacePhotoRequest('bar');
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     */
+    private function createBusinessAccountMock()
+    {
+        return $this->createMock(BusinessAccount::class);
     }
 }

@@ -13,7 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 
 /**
@@ -22,7 +22,7 @@ use Ivory\GoogleMap\Service\BusinessAccount;
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var AbstractService|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractHttpService|\PHPUnit_Framework_MockObject_MockObject
      */
     private $service;
 
@@ -46,7 +46,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->service = $this->getMockBuilder(AbstractService::class)
+        $this->service = $this->getMockBuilder(AbstractHttpService::class)
             ->setConstructorArgs([
                 $this->url = 'https://foo',
                 $this->client = $this->createHttpClientMock(),

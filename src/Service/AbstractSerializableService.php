@@ -22,7 +22,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractSerializableService extends AbstractService
+abstract class AbstractSerializableService extends AbstractHttpService
 {
     const FORMAT_JSON = Format::JSON;
     const FORMAT_XML = Format::XML;
@@ -89,9 +89,9 @@ abstract class AbstractSerializableService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    protected function createUrl(RequestInterface $request)
+    protected function createBaseUrl(RequestInterface $request)
     {
-        return parent::createUrl($request).'/'.$this->format;
+        return parent::createBaseUrl($request).'/'.$this->format;
     }
 
     /**

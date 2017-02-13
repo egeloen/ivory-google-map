@@ -13,6 +13,7 @@ namespace Ivory\GoogleMap\Service\Place\Photo;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
+use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\Place\AbstractPlaceService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -20,27 +21,23 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlacePhotoService extends AbstractPlaceService
+class PlacePhotoService extends AbstractService
 {
     /**
-     * @param HttpClient     $client
-     * @param MessageFactory $messageFactory
+     * {@inheritdoc}
      */
-    public function __construct(HttpClient $client, MessageFactory $messageFactory)
+    public function __construct()
     {
-        parent::__construct($client, $messageFactory, 'photo');
+        parent::__construct('https://maps.googleapis.com/maps/api/place/photo');
     }
 
     /**
      * @param PlacePhotoRequestInterface $request
      *
-     * @return StreamInterface
+     * @return string
      */
     public function process(PlacePhotoRequestInterface $request)
     {
-        $httpRequest = $this->createRequest($request);
-        $httpResponse = $this->getClient()->sendRequest($httpRequest);
-
-        return $httpResponse->getBody();
+        return $this->createUrl($request);
     }
 }
