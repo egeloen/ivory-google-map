@@ -11,12 +11,8 @@
 
 namespace Ivory\GoogleMap\Service\Place\Photo;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractService;
-use Ivory\GoogleMap\Service\Place\AbstractPlaceService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequestInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

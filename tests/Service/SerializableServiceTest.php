@@ -13,8 +13,8 @@ namespace Ivory\Tests\GoogleMap\Service;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\AbstractHttpService;
+use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\Serializer\SerializerInterface;
 

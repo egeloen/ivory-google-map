@@ -14,8 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\Photo;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Place\Photo\PlacePhotoService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequest;
-use Ivory\Tests\GoogleMap\Service\AbstractFunctionalServiceTest;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

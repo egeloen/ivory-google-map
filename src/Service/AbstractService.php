@@ -11,10 +11,6 @@
 
 namespace Ivory\GoogleMap\Service;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Psr\Http\Message\RequestInterface as PsrRequestInterface;
-
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */

@@ -11,9 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Ivory\GoogleMap\Service\AbstractHttpService;
+use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 
 /**
@@ -22,7 +20,7 @@ use Ivory\GoogleMap\Service\BusinessAccount;
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var AbstractHttpService|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractService|\PHPUnit_Framework_MockObject_MockObject
      */
     private $service;
 
@@ -32,34 +30,18 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     private $url;
 
     /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $client;
-
-    /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $messageFactory;
-
-    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->service = $this->getMockBuilder(AbstractHttpService::class)
-            ->setConstructorArgs([
-                $this->url = 'https://foo',
-                $this->client = $this->createHttpClientMock(),
-                $this->messageFactory = $this->createMessageFactoryMock(),
-            ])
+        $this->service = $this->getMockBuilder(AbstractService::class)
+            ->setConstructorArgs([$this->url = 'https://foo'])
             ->getMockForAbstractClass();
     }
 
     public function testDefaultState()
     {
         $this->assertSame('https://foo', $this->service->getUrl());
-        $this->assertSame($this->client, $this->service->getClient());
-        $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
         $this->assertFalse($this->service->hasKey());
         $this->assertNull($this->service->getKey());
         $this->assertFalse($this->service->hasBusinessAccount());
@@ -69,20 +51,6 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     public function testUrl()
     {
         $this->assertSame('https://foo', $this->service->getUrl());
-    }
-
-    public function testClient()
-    {
-        $this->service->setClient($client = $this->createHttpClientMock());
-
-        $this->assertSame($client, $this->service->getClient());
-    }
-
-    public function testMessageFactory()
-    {
-        $this->service->setMessageFactory($messageFactory = $this->createMessageFactoryMock());
-
-        $this->assertSame($messageFactory, $this->service->getMessageFactory());
     }
 
     public function testKey()
@@ -117,22 +85,6 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->service->hasBusinessAccount());
         $this->assertNull($this->service->getBusinessAccount());
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
-     */
-    private function createHttpClientMock()
-    {
-        return $this->createMock(HttpClient::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
-     */
-    private function createMessageFactoryMock()
-    {
-        return $this->createMock(MessageFactory::class);
     }
 
     /**
