@@ -43,9 +43,12 @@ class MarkerShapeRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
+        $markerShape = new MarkerShape(MarkerShapeType::CIRCLE, [1.2, 2.3, 3.4]);
+        $markerShape->setVariable('marker_shape');
+
         $this->assertSame(
-            '{"type":"circle","coords":[1.2,2.3,3.4]}',
-            $this->markerShapeRenderer->render(new MarkerShape(MarkerShapeType::CIRCLE, [1.2, 2.3, 3.4]))
+            'marker_shape={"type":"circle","coords":[1.2,2.3,3.4]}',
+            $this->markerShapeRenderer->render($markerShape)
         );
     }
 }

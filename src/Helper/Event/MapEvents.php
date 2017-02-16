@@ -29,6 +29,9 @@ final class MapEvents
     const JAVASCRIPT_BASE_SIZE = 'map.javascript.base.size';
     const JAVASCRIPT_MAP = 'map.javascript.map';
     const JAVASCRIPT_OVERLAY = 'map.javascript.overlay';
+    const JAVASCRIPT_OVERLAY_SYMBOL = 'map.javascript.overlay.symbol';
+    const JAVASCRIPT_OVERLAY_ICON = 'map.javascript.overlay.icon';
+    const JAVASCRIPT_OVERLAY_ICON_SEQUENCE = 'map.javascript.overlay.icon_sequence';
     const JAVASCRIPT_OVERLAY_CIRCLE = 'map.javascript.overlay.circle';
     const JAVASCRIPT_OVERLAY_ENCODED_POLYLINE = 'map.javascript.overlay.encoded_polyline';
     const JAVASCRIPT_OVERLAY_GROUND_OVERLAY = 'map.javascript.overlay.ground_overlay';
@@ -36,7 +39,6 @@ final class MapEvents
     const JAVASCRIPT_OVERLAY_POLYLINE = 'map.javascript.overlay.polyline';
     const JAVASCRIPT_OVERLAY_RECTANGLE = 'map.javascript.overlay.rectangle';
     const JAVASCRIPT_OVERLAY_INFO_WINDOW = 'map.javascript.overlay.info_window';
-    const JAVASCRIPT_OVERLAY_MARKER_IMAGE = 'map.javascript.overlay.marker_image';
     const JAVASCRIPT_OVERLAY_MARKER_SHAPE = 'map.javascript.overlay.marker_shape';
     const JAVASCRIPT_OVERLAY_MARKER = 'map.javascript.overlay.marker';
     const JAVASCRIPT_OVERLAY_MARKER_CLUSTER = 'map.javascript.overlay.marker_cluster';

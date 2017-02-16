@@ -14,8 +14,8 @@ $marker = new Marker(new Coordinate());
 ```
 
 The marker constructor requires a coordinate as first argument which represents the marker position. It also accepts 
-additional parameters such as the animation (default null), icon (default null), shape (default null) and 
-options (default empty):
+additional parameters such as the animation (default null), icon (default null), symbol (default null), shape (default
+null) and options (default empty):
 
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
@@ -24,15 +24,20 @@ use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\MarkerShapeType;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 
 $marker = new Marker(
     new Coordinate(),
     Animation::BOUNCE,
     new Icon(),
+    new Symbol(SymbolPath::CIRCLE),
     new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.1, 1.4]),
     ['clickable' => false]
 );
 ```
+
+If you pass an icon and a symbol together, the icon will be used.
 
 ## Configure variable
 
@@ -70,7 +75,22 @@ use Ivory\GoogleMap\Overlay\Icon;
 $marker->setIcon(new Icon());
 ```
 
-If you want to learn more about icon, you can read its [documentation](/doc/overlay/icon.md).
+If a symbol was previously set, it will be automatically removed in order to use your icon instead. If you want to
+learn more about icon, you can read its [documentation](/doc/overlay/icon.md).
+
+## Configure symbol
+
+If you want to update the marker symbol, you can use:
+
+``` php
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
+
+$marker->setSymbol(new Symbol(SymbolPath::CIRCLE));
+```
+
+If an icon was previously set, it will be automatically removed in order to use your symbol instead. If you want to
+learn more about symbol, you can read its [documentation](/doc/overlay/symbol.md).
 
 ## Configure shape
 

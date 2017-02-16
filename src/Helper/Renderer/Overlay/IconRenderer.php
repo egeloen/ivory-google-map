@@ -45,6 +45,6 @@ class IconRenderer extends AbstractJsonRenderer
             $jsonBuilder->setValue('[size]', $icon->getScaledSize()->getVariable(), false);
         }
 
-        return $jsonBuilder->build();
+        return $this->getFormatter()->renderObjectAssignment($icon, $jsonBuilder->build());
     }
 }

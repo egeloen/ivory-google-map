@@ -29,12 +29,15 @@ use Ivory\GoogleMap\Helper\Collector\Overlay\EncodedPolylineCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\ExtendableCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\GroundOverlayCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\IconCollector;
+use Ivory\GoogleMap\Helper\Collector\Overlay\IconSequenceCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoBoxCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoWindowCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
+use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerShapeCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\PolygonCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\PolylineCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\RectangleCollector;
+use Ivory\GoogleMap\Helper\Collector\Overlay\SymbolCollector;
 use Ivory\GoogleMap\Helper\MapHelper;
 use Ivory\GoogleMap\Helper\Renderer\Base\BoundRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Base\CoordinateRenderer;
@@ -82,6 +85,7 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PathExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PositionExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\GroundOverlayRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\IconRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\IconSequenceRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoBoxRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoWindowCloseRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoWindowOpenRenderer;
@@ -91,6 +95,8 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\MarkerShapeRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\PolygonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\PolylineRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\RectangleRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\SymbolPathRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Overlay\SymbolRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\CallbackRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\ObjectToArrayRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementRenderer;
@@ -123,16 +129,20 @@ use Ivory\GoogleMap\Helper\Subscriber\Overlay\DefaultInfoWindowSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\EncodedPolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\ExtendableSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\GroundOverlaySubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Overlay\IconSequenceSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Overlay\IconSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\InfoBoxSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\InfoWindowCloseSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\InfoWindowOpenSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\MarkerClustererSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\MarkerInfoWindowOpenSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Overlay\MarkerShapeSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\MarkerSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\OverlaySubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\PolygonSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\PolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\RectangleSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Overlay\SymbolSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Utility\ObjectToArraySubscriber;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
 use Ivory\GoogleMap\Layer\KmlLayer;
@@ -168,17 +178,20 @@ class MapHelperBuilder extends AbstractHelperBuilder
 
         // Overlay collectors
         $markerCollector = new MarkerCollector();
+        $polylineCollector = new PolylineCollector();
         $circleCollector = new CircleCollector();
         $defaultInfoWindowCollector = new DefaultInfoWindowCollector($markerCollector);
         $encodedPolylineCollector = new EncodedPolylineCollector();
         $extendableCollector = new ExtendableCollector();
         $groundOverlayCollector = new GroundOverlayCollector();
+        $iconSequenceCollector = new IconSequenceCollector($polylineCollector);
         $infoBoxCollector = new InfoBoxCollector($markerCollector);
         $infoWindowCollector = new InfoWindowCollector($markerCollector);
         $iconCollector = new IconCollector($markerCollector);
+        $markerShapeCollector = new MarkerShapeCollector($markerCollector);
         $polygonCollector = new PolygonCollector();
-        $polylineCollector = new PolylineCollector();
         $rectangleCollector = new RectangleCollector();
+        $symbolCollector = new SymbolCollector($markerCollector, $iconSequenceCollector);
 
         // Layer collectors
         $geoJsonLayerCollector = new GeoJsonLayerCollector();
@@ -298,18 +311,15 @@ class MapHelperBuilder extends AbstractHelperBuilder
         $infoWindowCloseRenderer = new InfoWindowCloseRenderer($formatter);
         $infoWindowOpenRenderer = new InfoWindowOpenRenderer($formatter);
         $iconRenderer = new IconRenderer($formatter, $jsonBuilder);
+        $iconSequenceRenderer = new IconSequenceRenderer($formatter, $jsonBuilder);
         $markerClustererRenderer = new MarkerClustererRenderer($formatter, $jsonBuilder, $requirementRenderer);
+        $markerRenderer = new MarkerRenderer($formatter, $jsonBuilder, $animationRenderer);
         $markerShapeRenderer = new MarkerShapeRenderer($formatter, $jsonBuilder);
         $polygonRenderer = new PolygonRenderer($formatter, $jsonBuilder);
         $polylineRenderer = new PolylineRenderer($formatter, $jsonBuilder);
         $rectangleRenderer = new RectangleRenderer($formatter, $jsonBuilder);
-        $markerRenderer = new MarkerRenderer(
-            $formatter,
-            $jsonBuilder,
-            $animationRenderer,
-            $iconRenderer,
-            $markerShapeRenderer
-        );
+        $symbolPathRenderer = new SymbolPathRenderer($formatter);
+        $symbolRenderer = new SymbolRenderer($formatter, $jsonBuilder, $symbolPathRenderer);
 
         // Extendable renderers
         $defaultViewportExtendableRenderer = new DefaultViewportExtendableRenderer($formatter);
@@ -366,16 +376,20 @@ class MapHelperBuilder extends AbstractHelperBuilder
             new EncodedPolylineSubscriber($formatter, $encodedPolylineCollector, $encodedPolylineRenderer),
             new ExtendableSubscriber($formatter, $extendableCollector, $extendableRenderer),
             new GroundOverlaySubscriber($formatter, $groundOverlayCollector, $groundOverlayRenderer),
+            new IconSequenceSubscriber($formatter, $iconSequenceCollector, $iconSequenceRenderer),
+            new IconSubscriber($formatter, $iconCollector, $iconRenderer),
             new InfoBoxSubscriber($formatter, $infoBoxCollector, $infoBoxRenderer),
             new InfoWindowCloseSubscriber($formatter, $infoWindowCollector, $infoWindowCloseRenderer),
             new InfoWindowOpenSubscriber($formatter, $infoWindowCollector, $infoWindowOpenRenderer),
             new MarkerClustererSubscriber($formatter, $markerClustererRenderer),
             new MarkerInfoWindowOpenSubscriber($formatter, $markerCollector, $infoWindowOpenRenderer, $eventRenderer),
+            new MarkerShapeSubscriber($formatter, $markerShapeCollector, $markerShapeRenderer),
             new MarkerSubscriber($formatter, $markerCollector, $markerRenderer),
             new OverlaySubscriber($formatter),
             new PolygonSubscriber($formatter, $polygonCollector, $polygonRenderer),
             new PolylineSubscriber($formatter, $polylineCollector, $polylineRenderer),
             new RectangleSubscriber($formatter, $rectangleCollector, $rectangleRenderer),
+            new SymbolSubscriber($formatter, $symbolCollector, $symbolRenderer),
 
             // Map
             new MapBoundSubscriber($formatter, $mapBoundRenderer),

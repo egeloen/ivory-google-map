@@ -42,6 +42,11 @@ class Marker implements ExtendableInterface, OptionsAwareInterface
     private $icon;
 
     /**
+     * @var Symbol|null
+     */
+    private $symbol;
+
+    /**
      * @var MarkerShape|null
      */
     private $shape;
@@ -56,20 +61,27 @@ class Marker implements ExtendableInterface, OptionsAwareInterface
      * @param string|null      $animation
      * @param Icon|null        $icon
      * @param MarkerShape|null $shape
+     * @param Symbol|null      $symbol
      * @param mixed[]          $options
      */
     public function __construct(
         Coordinate $position,
         $animation = null,
         Icon $icon = null,
+        Symbol $symbol = null,
         MarkerShape $shape = null,
         array $options = []
     ) {
         $this->setPosition($position);
         $this->setAnimation($animation);
-        $this->setIcon($icon);
         $this->setShape($shape);
         $this->addOptions($options);
+
+        if ($icon !== null) {
+            $this->setIcon($icon);
+        } elseif ($symbol !== null) {
+            $this->setSymbol($symbol);
+        }
     }
 
     /**
@@ -134,6 +146,38 @@ class Marker implements ExtendableInterface, OptionsAwareInterface
     public function setIcon(Icon $icon = null)
     {
         $this->icon = $icon;
+
+        if ($icon !== null) {
+            $this->setSymbol(null);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSymbol()
+    {
+        return $this->symbol !== null;
+    }
+
+    /**
+     * @return Symbol|null
+     */
+    public function getSymbol()
+    {
+        return $this->symbol;
+    }
+
+    /**
+     * @param Symbol|null $symbol
+     */
+    public function setSymbol(Symbol $symbol = null)
+    {
+        $this->symbol = $symbol;
+
+        if ($symbol !== null) {
+            $this->setIcon(null);
+        }
     }
 
     /**

@@ -11,14 +11,14 @@ services:
         volumes:
             - ~/.composer:/var/www/.composer
             - .:/var/www/html
-            - tmp:/tmp
+            - tmp:/tmp/ivory-google-map
     hhvm:
         <<: *php
         build: docker/hhvm
     selenium:
         image: selenium/standalone-chrome:latest
         volumes:
-          - tmp:/tmp
+            - tmp:/tmp/ivory-google-map
 
 volumes:
     tmp: {}

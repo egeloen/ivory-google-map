@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay;
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
-use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
+use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\IconRenderer;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\JsonBuilder\JsonBuilder;
@@ -39,7 +39,7 @@ class IconRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractRenderer::class, $this->iconRenderer);
+        $this->assertInstanceOf(AbstractJsonRenderer::class, $this->iconRenderer);
     }
 
     public function testRender()
@@ -56,17 +56,23 @@ class IconRendererTest extends \PHPUnit_Framework_TestCase
         $scaledSize = new Size();
         $scaledSize->setVariable('scaled_size');
 
+        $icon = new Icon('url', $anchor, $origin, $scaledSize, $size);
+        $icon->setVariable('icon');
+
         $this->assertSame(
-            '{"url":"url","anchor":anchor,"origin":origin,"scaledSize":scaled_size,"size":scaled_size}',
-            $this->iconRenderer->render(new Icon('url', $anchor, $origin, $scaledSize, $size))
+            'icon={"url":"url","anchor":anchor,"origin":origin,"scaledSize":scaled_size,"size":scaled_size}',
+            $this->iconRenderer->render($icon)
         );
     }
 
     public function testRenderWithoutOptions()
     {
+        $icon = new Icon();
+        $icon->setVariable('icon');
+
         $this->assertSame(
-            '{"url":"https:\/\/maps.gstatic.com\/mapfiles\/markers\/marker.png"}',
-            $this->iconRenderer->render(new Icon())
+            'icon={"url":"https:\/\/maps.gstatic.com\/mapfiles\/markers\/marker.png"}',
+            $this->iconRenderer->render($icon)
         );
     }
 }

@@ -16,7 +16,10 @@ use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\PolylineRenderer;
 use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\JsonBuilder\JsonBuilder;
 
 /**
@@ -53,11 +56,14 @@ class PolylineRendererTest extends \PHPUnit_Framework_TestCase
         $coordinate2 = new Coordinate();
         $coordinate2->setVariable('coordinate2');
 
-        $polyline = new Polyline([$coordinate1, $coordinate2], ['foo' => 'bar']);
+        $iconSequence = new IconSequence(new Symbol(SymbolPath::CIRCLE), ['baz' => 'bat']);
+        $iconSequence->setVariable('icon_sequence');
+
+        $polyline = new Polyline([$coordinate1, $coordinate2], [$iconSequence], ['foo' => 'bar']);
         $polyline->setVariable('polyline');
 
         $this->assertSame(
-            'polyline=new google.maps.Polyline({"map":map,"path":[coordinate1,coordinate2],"foo":"bar"})',
+            'polyline=new google.maps.Polyline({"map":map,"path":[coordinate1,coordinate2],"icons":[icon_sequence],"foo":"bar"})',
             $this->polylineRenderer->render($polyline, $map)
         );
     }

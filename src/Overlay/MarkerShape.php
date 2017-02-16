@@ -11,13 +11,18 @@
 
 namespace Ivory\GoogleMap\Overlay;
 
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use Ivory\GoogleMap\Utility\VariableAwareTrait;
+
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerShape
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerShape
+class MarkerShape implements VariableAwareInterface
 {
+    use VariableAwareTrait;
+
     /**
      * @var string
      */

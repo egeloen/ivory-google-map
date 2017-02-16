@@ -17,6 +17,39 @@ namespace Ivory\Tests\GoogleMap\Helper\Functional;
 abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 {
     /**
+     * @var string
+     */
+    private static $directory;
+
+    /**
+     * @var bool
+     */
+    private static $hasDirectory;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$directory = sys_get_temp_dir().'/ivory-google-map';
+        self::$hasDirectory = is_dir(self::$directory);
+
+        if (!self::$hasDirectory) {
+            mkdir(self::$directory);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tearDownAfterClass()
+    {
+        if (!self::$hasDirectory) {
+            rmdir(self::$directory);
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
@@ -26,7 +59,7 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
         }
 
         $this->setBrowser(isset($_SERVER['BROWSER_NAME']) ? $_SERVER['BROWSER_NAME'] : 'chrome');
-        $this->setBrowserUrl('file://'.sys_get_temp_dir());
+        $this->setBrowserUrl('file://'.self::$directory);
     }
 
     /**
@@ -34,15 +67,15 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
      */
     protected function renderHtml($html)
     {
-        $name = tempnam(sys_get_temp_dir(), uniqid());
+        $name = tempnam(self::$directory, uniqid());
         $file = fopen($name, 'w+');
         fwrite($file, '<html><body>'.implode('', (array) $html).'</body></html>');
         fflush($file);
 
         $this->url(basename($name));
 
-        unlink($name);
         fclose($file);
+        unlink($name);
     }
 
     /**

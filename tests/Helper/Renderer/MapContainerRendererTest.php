@@ -42,7 +42,7 @@ class MapContainerRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $this->assertSame(
-            '{"base":{"coordinates":[],"bounds":[],"points":[],"sizes":[]},"map":null,"overlays":{"circles":[],"encoded_polylines":[],"ground_overlays":[],"polygons":[],"polylines":[],"rectangles":[],"info_windows":[],"info_boxes":[],"marker_images":[],"markers":[],"marker_cluster":null},"layers":{"heatmap_layers":[],"kml_layers":[]},"events":{"dom_events":[],"dom_events_once":[],"events":[],"events_once":[]},"functions":[]}',
+            '{"base":{"coordinates":[],"bounds":[],"points":[],"sizes":[]},"map":null,"overlays":{"icons":[],"symbols":[],"icon_sequences":[],"circles":[],"encoded_polylines":[],"ground_overlays":[],"polygons":[],"polylines":[],"rectangles":[],"info_windows":[],"info_boxes":[],"marker_shapes":[],"markers":[],"marker_cluster":null},"layers":{"heatmap_layers":[],"kml_layers":[]},"events":{"dom_events":[],"dom_events_once":[],"events":[],"events_once":[]},"functions":[]}',
             $this->mapContainerRenderer->render()
         );
     }
@@ -61,6 +61,9 @@ class MapContainerRendererTest extends \PHPUnit_Framework_TestCase
     },
     "map": null,
     "overlays": {
+        "icons": [],
+        "symbols": [],
+        "icon_sequences": [],
         "circles": [],
         "encoded_polylines": [],
         "ground_overlays": [],
@@ -69,7 +72,7 @@ class MapContainerRendererTest extends \PHPUnit_Framework_TestCase
         "rectangles": [],
         "info_windows": [],
         "info_boxes": [],
-        "marker_images": [],
+        "marker_shapes": [],
         "markers": [],
         "marker_cluster": null
     },

@@ -17,6 +17,7 @@ use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Helper\ApiHelper;
 use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
+use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
@@ -130,6 +131,18 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
         $this->assertSameContainerVariable($object, 'base.sizes', $size, $expected);
         $this->assertSameVariable($size->getVariable().'.width', $size->getWidth());
         $this->assertSameVariable($size->getVariable().'.height', $size->getHeight());
+    }
+
+    /**
+     * @param OptionsAwareInterface $object
+     */
+    protected function assertOptions(OptionsAwareInterface $object)
+    {
+        foreach ($object->getOptions() as $option => $value) {
+            if ($object instanceof VariableAwareInterface) {
+                $this->assertSameVariable($object->getVariable().'.'.$option, $value);
+            }
+        }
     }
 
     /**
