@@ -27,6 +27,14 @@ use Ivory\GoogleMap\Overlay\MarkerShapeType;
 $markerShape = new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.0, 1.4]);
 ```
 
+## Configure variable
+
+A variable is automatically generated when creating a marker shape but if you want to update it, you can use:
+
+``` php
+$markerShape->setVariable('marker_shape');
+```
+
 ## Configure type
 
 If you want to update the type, you can use:

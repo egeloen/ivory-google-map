@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Overlay;
 
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
@@ -46,6 +47,7 @@ class PolylineTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertStringStartsWith('polyline', $this->polyline->getVariable());
         $this->assertFalse($this->polyline->hasCoordinates());
+        $this->assertFalse($this->polyline->hasIconSequences());
         $this->assertFalse($this->polyline->hasOptions());
     }
 
@@ -53,10 +55,14 @@ class PolylineTest extends \PHPUnit_Framework_TestCase
     {
         $this->polyline = new Polyline(
             $coordinates = [$coordinate = $this->createCoordinateMock()],
+            $iconSequences = [$iconSequence = $this->createIconSequenceMock()],
             $options = ['foo' => 'bar']
         );
 
         $this->assertStringStartsWith('polyline', $this->polyline->getVariable());
+        $this->assertTrue($this->polyline->hasIconSequences());
+        $this->assertTrue($this->polyline->hasIconSequence($iconSequence));
+        $this->assertSame($iconSequences, $this->polyline->getIconSequences());
         $this->assertTrue($this->polyline->hasCoordinates());
         $this->assertTrue($this->polyline->hasCoordinate($coordinate));
         $this->assertSame($coordinates, $this->polyline->getCoordinates());
@@ -101,11 +107,57 @@ class PolylineTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->polyline->getCoordinates());
     }
 
+    public function testSetIconSequences()
+    {
+        $this->polyline->setIconSequences($iconSequences = [$iconSequence = $this->createIconSequenceMock()]);
+        $this->polyline->setIconSequences($iconSequences);
+
+        $this->assertTrue($this->polyline->hasIconSequences());
+        $this->assertTrue($this->polyline->hasIconSequence($iconSequence));
+        $this->assertSame($iconSequences, $this->polyline->getIconSequences());
+    }
+
+    public function testAddIconSequences()
+    {
+        $this->polyline->setIconSequences($firstIconSequences = [$this->createIconSequenceMock()]);
+        $this->polyline->addIconSequences($secondIconSequences = [$this->createIconSequenceMock()]);
+
+        $this->assertTrue($this->polyline->hasIconSequences());
+        $this->assertSame(array_merge($firstIconSequences, $secondIconSequences), $this->polyline->getIconSequences());
+    }
+
+    public function testAddIconSequence()
+    {
+        $this->polyline->addIconSequence($iconSequence = $this->createIconSequenceMock());
+
+        $this->assertTrue($this->polyline->hasIconSequences());
+        $this->assertTrue($this->polyline->hasIconSequence($iconSequence));
+        $this->assertSame([$iconSequence], $this->polyline->getIconSequences());
+    }
+
+    public function testRemoveIconSequence()
+    {
+        $this->polyline->addIconSequence($iconSequence = $this->createIconSequenceMock());
+        $this->polyline->removeIconSequence($iconSequence);
+
+        $this->assertFalse($this->polyline->hasIconSequences());
+        $this->assertFalse($this->polyline->hasIconSequence($iconSequence));
+        $this->assertEmpty($this->polyline->getIconSequences());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
         return $this->createMock(Coordinate::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|IconSequence
+     */
+    private function createIconSequenceMock()
+    {
+        return $this->createMock(IconSequence::class);
     }
 }

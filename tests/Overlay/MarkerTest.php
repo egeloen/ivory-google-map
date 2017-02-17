@@ -18,6 +18,7 @@ use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\MarkerShape;
+use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
@@ -66,12 +67,13 @@ class MarkerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->marker->hasOptions());
     }
 
-    public function testInitialState()
+    public function testInitialStateWithIcon()
     {
         $this->marker = new Marker(
             $position = $this->createCoordinateMock(),
             $animation = Animation::BOUNCE,
             $icon = $this->createIconMock(),
+            null,
             $shape = $this->createMarkerShapeMock(),
             $options = ['foo' => 'bar']
         );
@@ -82,6 +84,34 @@ class MarkerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($animation, $this->marker->getAnimation());
         $this->assertTrue($this->marker->hasIcon());
         $this->assertSame($icon, $this->marker->getIcon());
+        $this->assertFalse($this->marker->hasSymbol());
+        $this->assertNull($this->marker->getSymbol());
+        $this->assertTrue($this->marker->hasShape());
+        $this->assertSame($shape, $this->marker->getShape());
+        $this->assertFalse($this->marker->hasInfoWindow());
+        $this->assertNull($this->marker->getInfoWindow());
+        $this->assertSame($options, $this->marker->getOptions());
+    }
+
+    public function testInitialStateWithSymbol()
+    {
+        $this->marker = new Marker(
+            $position = $this->createCoordinateMock(),
+            $animation = Animation::BOUNCE,
+            null,
+            $symbol = $this->createSymbolMock(),
+            $shape = $this->createMarkerShapeMock(),
+            $options = ['foo' => 'bar']
+        );
+
+        $this->assertStringStartsWith('marker', $this->marker->getVariable());
+        $this->assertSame($position, $this->marker->getPosition());
+        $this->assertTrue($this->marker->hasAnimation());
+        $this->assertSame($animation, $this->marker->getAnimation());
+        $this->assertFalse($this->marker->hasIcon());
+        $this->assertNull($this->marker->getIcon());
+        $this->assertTrue($this->marker->hasSymbol());
+        $this->assertSame($symbol, $this->marker->getSymbol());
         $this->assertTrue($this->marker->hasShape());
         $this->assertSame($shape, $this->marker->getShape());
         $this->assertFalse($this->marker->hasInfoWindow());
@@ -125,6 +155,47 @@ class MarkerTest extends \PHPUnit_Framework_TestCase
     {
         $this->marker->setIcon($this->createIconMock());
         $this->marker->setIcon(null);
+
+        $this->assertFalse($this->marker->hasIcon());
+        $this->assertNull($this->marker->getIcon());
+    }
+
+    public function testIconResetSymbol()
+    {
+        $this->marker->setSymbol($this->createSymbolMock());
+        $this->marker->setIcon($icon = $this->createIconMock());
+
+        $this->assertTrue($this->marker->hasIcon());
+        $this->assertSame($icon, $this->marker->getIcon());
+
+        $this->assertFalse($this->marker->hasSymbol());
+        $this->assertNull($this->marker->getSymbol());
+    }
+
+    public function testSymbol()
+    {
+        $this->marker->setSymbol($symbol = $this->createSymbolMock());
+
+        $this->assertTrue($this->marker->hasSymbol());
+        $this->assertSame($symbol, $this->marker->getSymbol());
+    }
+
+    public function testResetSymbol()
+    {
+        $this->marker->setSymbol($this->createSymbolMock());
+        $this->marker->setSymbol(null);
+
+        $this->assertFalse($this->marker->hasSymbol());
+        $this->assertNull($this->marker->getSymbol());
+    }
+
+    public function testSymbolResetIcon()
+    {
+        $this->marker->setIcon($this->createIconMock());
+        $this->marker->setSymbol($symbol = $this->createSymbolMock());
+
+        $this->assertTrue($this->marker->hasSymbol());
+        $this->assertSame($symbol, $this->marker->getSymbol());
 
         $this->assertFalse($this->marker->hasIcon());
         $this->assertNull($this->marker->getIcon());
@@ -194,5 +265,13 @@ class MarkerTest extends \PHPUnit_Framework_TestCase
     private function createInfoWindowMock()
     {
         return $this->createMock(InfoWindow::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Symbol
+     */
+    private function createSymbolMock()
+    {
+        return $this->createMock(Symbol::class);
     }
 }

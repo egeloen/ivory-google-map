@@ -18,6 +18,8 @@ use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\MarkerShapeType;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\Tests\GoogleMap\Helper\Functional\AbstractMapFunctionalTest;
 
 /**
@@ -62,6 +64,18 @@ class MarkerFunctionalTest extends AbstractMapFunctionalTest
     {
         $marker = $this->createMarker();
         $marker->setIcon(new Icon());
+
+        $map = new Map();
+        $map->getOverlayManager()->addMarker($marker);
+
+        $this->renderMap($map);
+        $this->assertMap($map);
+    }
+
+    public function testRenderWithSymbol()
+    {
+        $marker = $this->createMarker();
+        $marker->setSymbol(new Symbol(SymbolPath::CIRCLE));
 
         $map = new Map();
         $map->getOverlayManager()->addMarker($marker);

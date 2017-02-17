@@ -13,12 +13,15 @@ use Ivory\GoogleMap\Overlay\Polyline;
 $polyline = new Polyline();
 ```
 
-The polyline constructor does not require anything but It  accepts additional parameters such as coordinates (default 
-empty) and options (default empty):
+The polyline constructor does not require anything but it accepts additional parameters such as coordinates (default
+empty), icon sequences (default empty) and options (default empty):
 
 ``` php
 use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 
 $polyline = new Polyline(
     [
@@ -27,6 +30,9 @@ $polyline = new Polyline(
         new Coordinate(32.321, -64.757),
         new Coordinate(25.774, -80.190),
     ],
+    [
+        new IconSequence(new Symbol(SymbolPath::FORWARD_OPEN_ARROW)),
+    ]
     ['fillOpacity' => 0.5]
 );
 ```
@@ -44,8 +50,31 @@ $polyline->setVariable('polyline');
 If you want to update the polyline coordinates, you can use:
 
 ``` php
-$polyline->setCoordinates([]);
+use Ivory\GoogleMap\Base\Coordinate;
+
+$polyline->setCoordinates([
+    new Coordinate(25.774, -80.190),
+    new Coordinate(18.466, -66.118),
+    new Coordinate(32.321, -64.757),
+    new Coordinate(25.774, -80.190),
+]);
 ```
+
+## Configure icon sequences
+
+If you want to update the icon sequences, you can use:
+
+``` php
+use Ivory\GoogleMap\Overlay\IconSequence;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
+
+$polyline->setIconSequences([
+    new IconSequence(new Symbol(SymbolPath::FORWARD_OPEN_ARROW)),
+]);
+```
+
+If you want to learn more about icon sequence, you can read its [documentation](/doc/overlay/icon_sequence.md).
 
 ## Configure options
 

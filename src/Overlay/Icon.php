@@ -13,14 +13,18 @@ namespace Ivory\GoogleMap\Overlay;
 
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Base\Size;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#Icon
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Icon
+class Icon implements VariableAwareInterface
 {
+    use VariableAwareTrait;
+
     /**
      * @var string
      */

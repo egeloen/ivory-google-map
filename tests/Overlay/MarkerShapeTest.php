@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Overlay;
 
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\MarkerShapeType;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -45,8 +46,14 @@ class MarkerShapeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(VariableAwareInterface::class, $this->markerShape);
+    }
+
     public function testDefaultState()
     {
+        $this->assertStringStartsWith('markershape', $this->markerShape->getVariable());
         $this->assertSame($this->type, $this->markerShape->getType());
         $this->assertTrue($this->markerShape->hasCoordinates());
         $this->assertSame($this->coordinates, $this->markerShape->getCoordinates());

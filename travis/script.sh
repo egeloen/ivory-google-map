@@ -5,7 +5,7 @@ set -e
 DOCKER_BUILD=${DOCKER_BUILD-false}
 
 if [ "$DOCKER_BUILD" = false ]; then
-    vendor/bin/phpunit --coverage-clover build/clover.xml
+    vendor/bin/phpunit --configuration phpunit.travis.xml --coverage-clover build/clover.xml
 fi
 
 if [ "$DOCKER_BUILD" = true ]; then

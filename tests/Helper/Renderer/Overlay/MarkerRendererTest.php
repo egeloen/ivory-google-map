@@ -15,15 +15,15 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\AnimationRenderer;
-use Ivory\GoogleMap\Helper\Renderer\Overlay\IconRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\MarkerRenderer;
-use Ivory\GoogleMap\Helper\Renderer\Overlay\MarkerShapeRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Animation;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\MarkerShapeType;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\JsonBuilder\JsonBuilder;
 
 /**
@@ -43,10 +43,8 @@ class MarkerRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->markerRenderer = new MarkerRenderer(
             $formatter = new Formatter(),
-            $jsonBuilder = new JsonBuilder(),
-            new AnimationRenderer($formatter),
-            new IconRenderer($formatter, $jsonBuilder),
-            new MarkerShapeRenderer($formatter, $jsonBuilder)
+            new JsonBuilder(),
+            new AnimationRenderer($formatter)
         );
     }
 
@@ -62,21 +60,7 @@ class MarkerRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($animationRenderer, $this->markerRenderer->getAnimationRenderer());
     }
 
-    public function testIconRendererMock()
-    {
-        $this->markerRenderer->setIconRenderer($iconRenderer = $this->createIconRendererMock());
-
-        $this->assertSame($iconRenderer, $this->markerRenderer->getIconRenderer());
-    }
-
-    public function testMarkerShapeRenderer()
-    {
-        $this->markerRenderer->setMarkerShapeRenderer($markerShapeRenderer = $this->createMarkerShapeRendererMock());
-
-        $this->assertSame($markerShapeRenderer, $this->markerRenderer->getMarkerShapeRenderer());
-    }
-
-    public function testRender()
+    public function testRenderWithIcon()
     {
         $map = new Map();
         $map->setVariable('map');
@@ -84,18 +68,56 @@ class MarkerRendererTest extends \PHPUnit_Framework_TestCase
         $position = new Coordinate();
         $position->setVariable('position');
 
+        $icon = new Icon();
+        $icon->setVariable('icon');
+
+        $markerShape = new MarkerShape(MarkerShapeType::CIRCLE, [1.2, 2.3, 3.4]);
+        $markerShape->setVariable('marker_shape');
+
         $marker = new Marker(
             $position,
             Animation::DROP,
-            new Icon(),
-            new MarkerShape(MarkerShapeType::CIRCLE, [1.2, 2.3, 3.4]),
+            $icon,
+            null,
+            $markerShape,
             ['foo' => 'bar']
         );
 
         $marker->setVariable('marker');
 
         $this->assertSame(
-            'marker=new google.maps.Marker({"position":position,"map":map,"animation":google.maps.Animation.DROP,"icon":{"url":"https:\/\/maps.gstatic.com\/mapfiles\/markers\/marker.png"},"shape":{"type":"circle","coords":[1.2,2.3,3.4]},"foo":"bar"})',
+            'marker=new google.maps.Marker({"position":position,"map":map,"animation":google.maps.Animation.DROP,"icon":icon,"shape":marker_shape,"foo":"bar"})',
+            $this->markerRenderer->render($marker, $map)
+        );
+    }
+
+    public function testRenderWithSymbol()
+    {
+        $map = new Map();
+        $map->setVariable('map');
+
+        $position = new Coordinate();
+        $position->setVariable('position');
+
+        $symbol = new Symbol(SymbolPath::CIRCLE);
+        $symbol->setVariable('symbol');
+
+        $markerShape = new MarkerShape(MarkerShapeType::CIRCLE, [1.2, 2.3, 3.4]);
+        $markerShape->setVariable('marker_shape');
+
+        $marker = new Marker(
+            $position,
+            Animation::DROP,
+            null,
+            $symbol,
+            $markerShape,
+            ['foo' => 'bar']
+        );
+
+        $marker->setVariable('marker');
+
+        $this->assertSame(
+            'marker=new google.maps.Marker({"position":position,"map":map,"animation":google.maps.Animation.DROP,"icon":symbol,"shape":marker_shape,"foo":"bar"})',
             $this->markerRenderer->render($marker, $map)
         );
     }
@@ -120,21 +142,5 @@ class MarkerRendererTest extends \PHPUnit_Framework_TestCase
     private function createAnimationRendererMock()
     {
         return $this->createMock(AnimationRenderer::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|IconRenderer
-     */
-    private function createIconRendererMock()
-    {
-        return $this->createMock(IconRenderer::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerShapeRenderer
-     */
-    private function createMarkerShapeRendererMock()
-    {
-        return $this->createMock(MarkerShapeRenderer::class);
     }
 }

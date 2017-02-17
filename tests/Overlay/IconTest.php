@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Overlay;
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Overlay\Icon;
+use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -21,7 +22,7 @@ use Ivory\GoogleMap\Overlay\Icon;
 class IconTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Ivory\GoogleMap\Overlay\Icon
+     * @var Icon
      */
     private $icon;
 
@@ -33,8 +34,14 @@ class IconTest extends \PHPUnit_Framework_TestCase
         $this->icon = new Icon();
     }
 
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(VariableAwareInterface::class, $this->icon);
+    }
+
     public function testDefaultState()
     {
+        $this->assertStringStartsWith('icon', $this->icon->getVariable());
         $this->assertSame('https://maps.gstatic.com/mapfiles/markers/marker.png', $this->icon->getUrl());
         $this->assertFalse($this->icon->hasAnchor());
         $this->assertNull($this->icon->getAnchor());

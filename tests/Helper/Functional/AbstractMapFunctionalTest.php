@@ -24,6 +24,7 @@ use Ivory\GoogleMap\Overlay\Circle;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Overlay\GroundOverlay;
 use Ivory\GoogleMap\Overlay\Icon;
+use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\InfoWindowType;
 use Ivory\GoogleMap\Overlay\Marker;
@@ -33,6 +34,8 @@ use Ivory\GoogleMap\Overlay\OverlayManager;
 use Ivory\GoogleMap\Overlay\Polygon;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Rectangle;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -200,7 +203,7 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'layers.heatmap_layers',
             $heatmapLayer,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
     }
 
@@ -215,7 +218,7 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'layers.kml_layers',
             $kmlLayer,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
     }
 
@@ -269,11 +272,12 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.circles',
             $circle,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         $this->assertCoordinate($map, $circle->getCenter());
         $this->assertSameVariable($circle->getRadius(), $circle->getVariable().'.getRadius()');
+        $this->assertOptions($circle);
     }
 
     /**
@@ -287,8 +291,10 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.encoded_polylines',
             $encodedPolyline,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
+
+        $this->assertOptions($encodedPolyline);
     }
 
     /**
@@ -302,11 +308,12 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.ground_overlays',
             $groundOverlay,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         $this->assertSameVariable('"'.$groundOverlay->getUrl().'"', $groundOverlay->getVariable().'.getUrl()');
         $this->assertBound($map, $groundOverlay->getBound(), $groundOverlay->getVariable().'.getBounds()');
+        $this->assertOptions($groundOverlay);
     }
 
     /**
@@ -320,7 +327,7 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             $infoWindow->getType() === InfoWindowType::INFO_BOX ? 'overlays.info_boxes' : 'overlays.info_windows',
             $infoWindow,
             $infoWindow->getPosition() !== null ? $map->getVariable() : null,
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         $this->assertSameVariable('"'.$infoWindow->getContent().'"', $infoWindow->getVariable().'.getContent()');
@@ -334,8 +341,10 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
 
         if ($infoWindow->isOpen()) {
-            $this->assertSameObject($map->getVariable(), $infoWindow, $this->getFormatter());
+            $this->assertSameObject($map->getVariable(), $infoWindow, $this->getMapFormatter());
         }
+
+        $this->assertOptions($infoWindow);
     }
 
     /**
@@ -353,7 +362,7 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.markers',
             $marker,
             $variable,
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         $this->assertCoordinate($map, $marker->getPosition(), $marker->getVariable().'.getPosition()');
@@ -366,59 +375,96 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
 
         if ($marker->hasIcon()) {
-            $this->assertIcon($map, $marker, $marker->getIcon());
+            $this->assertIcon($map, $marker->getIcon(), $marker->getVariable().'.getIcon()');
+        }
+
+        if ($marker->hasSymbol()) {
+            $this->assertSymbol($map, $marker->getSymbol(), $marker->getVariable().'.getIcon()');
         }
 
         if ($marker->hasShape()) {
-            $this->assertMarkerShape($map, $marker, $marker->getShape());
+            $this->assertMarkerShape($map, $marker->getShape(), $marker->getVariable().'.getShape()');
         }
 
         if ($marker->hasInfoWindow()) {
             $this->assertInfoWindow($map, $marker->getInfoWindow());
         }
+
+        $this->assertOptions($marker);
     }
 
     /**
      * @param Map    $map
-     * @param Marker $marker
      * @param Icon   $icon
+     * @param string $expected
      */
-    protected function assertIcon(Map $map, Marker $marker, Icon $icon)
+    protected function assertIcon(Map $map, Icon $icon, $expected)
     {
-        $variable = $marker->getVariable().'.getIcon()';
+        $this->assertSameContainerVariable(
+            $map,
+            'overlays.icons',
+            $icon,
+            $expected,
+            $this->getJsonFormatter()
+        );
 
-        $this->assertSameVariable('"'.$icon->getUrl().'"', $variable.'.url');
+        $this->assertSameVariable('"'.$icon->getUrl().'"', $icon->getVariable().'.url');
 
         if ($icon->hasAnchor()) {
-            $this->assertPoint($map, $icon->getAnchor(), $variable.'.anchor');
+            $this->assertPoint($map, $icon->getAnchor(), $icon->getVariable().'.anchor');
         }
 
         if ($icon->hasOrigin()) {
-            $this->assertPoint($map, $icon->getOrigin(), $variable.'.origin');
+            $this->assertPoint($map, $icon->getOrigin(), $icon->getVariable().'.origin');
         }
 
         if ($icon->hasScaledSize()) {
-            $this->assertSize($map, $icon->getScaledSize(), $variable.'.scaledSize');
+            $this->assertSize($map, $icon->getScaledSize(), $icon->getVariable().'.scaledSize');
         }
 
         if ($icon->hasSize()) {
-            $this->assertSize($map, $icon->getSize(), $variable.'.size');
+            $this->assertSize($map, $icon->getSize(), $icon->getVariable().'.size');
         }
     }
 
     /**
-     * @param Map         $map
-     * @param Marker      $marker
-     * @param MarkerShape $markerShape
+     * @param Map          $map
+     * @param IconSequence $iconSequence
+     * @param string       $expected
      */
-    protected function assertMarkerShape(Map $map, Marker $marker, MarkerShape $markerShape)
+    protected function assertIconSequence(Map $map, IconSequence $iconSequence, $expected)
     {
-        $variable = $marker->getVariable().'.getShape()';
+        $this->assertSameContainerVariable(
+            $map,
+            'overlays.icon_sequences',
+            $iconSequence,
+            $expected,
+            $this->getJsonFormatter()
+        );
 
-        $this->assertSameVariable('"'.$markerShape->getType().'"', $variable.'.type');
+        $this->assertSymbol($map, $iconSequence->getSymbol(), $iconSequence->getVariable().'.icon');
+        $this->assertOptions($iconSequence);
+    }
+
+    /**
+     * @param Map         $map
+     * @param MarkerShape $markerShape
+     * @param string      $expected
+     */
+    protected function assertMarkerShape(Map $map, MarkerShape $markerShape, $expected)
+    {
+        $this->assertSameContainerVariable(
+            $map,
+            'overlays.marker_shapes',
+            $markerShape,
+            $expected,
+            $this->getJsonFormatter()
+        );
+
+        $this->assertSameVariable('"'.$markerShape->getType().'"', $markerShape->getVariable().'.type');
         $this->assertSameVariable(
             json_encode($markerShape->getCoordinates()).'.toString()',
-            $variable.'.coords.toString()'
+            $markerShape->getVariable().'.coords.toString()'
         );
     }
 
@@ -433,12 +479,14 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.polygons',
             $polygon,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         foreach ($polygon->getCoordinates() as $coordinate) {
             $this->assertCoordinate($map, $coordinate);
         }
+
+        $this->assertOptions($polygon);
     }
 
     /**
@@ -452,12 +500,18 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.polylines',
             $polyline,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         foreach ($polyline->getCoordinates() as $coordinate) {
             $this->assertCoordinate($map, $coordinate);
         }
+
+        foreach ($polyline->getIconSequences() as $iconSequence) {
+            $this->assertIconSequence($map, $iconSequence, $polyline->getVariable().'.icons');
+        }
+
+        $this->assertOptions($polyline);
     }
 
     /**
@@ -471,10 +525,50 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             'overlays.rectangles',
             $rectangle,
             $map->getVariable(),
-            $this->getFormatter()
+            $this->getMapFormatter()
         );
 
         $this->assertBound($map, $rectangle->getBound(), $rectangle->getVariable().'.getBounds()');
+        $this->assertOptions($rectangle);
+    }
+
+    /**
+     * @param Map    $map
+     * @param Symbol $symbol
+     * @param string $expected
+     */
+    protected function assertSymbol(Map $map, Symbol $symbol, $expected)
+    {
+        $this->assertSameContainerVariable(
+            $map,
+            'overlays.symbols',
+            $symbol,
+            $expected,
+            $this->getJsonFormatter()
+        );
+
+        $symbolPaths = [
+            SymbolPath::CIRCLE                => 0,
+            SymbolPath::FORWARD_CLOSED_ARROW  => 1,
+            SymbolPath::FORWARD_OPEN_ARROW    => 2,
+            SymbolPath::BACKWARD_CLOSED_ARROW => 3,
+            SymbolPath::BACKWARD_OPEN_ARROW   => 4,
+        ];
+
+        $this->assertSameVariable(
+            isset($symbolPaths[$path = $symbol->getPath()]) ? $symbolPaths[$path] : $path,
+            $symbol->getVariable().'.path'
+        );
+
+        if ($symbol->hasAnchor()) {
+            $this->assertPoint($map, $symbol->getAnchor(), $symbol->getVariable().'.anchor');
+        }
+
+        if ($symbol->hasLabelOrigin()) {
+            $this->assertPoint($map, $symbol->getLabelOrigin(), $symbol->getVariable().'.labelOrigin');
+        }
+
+        $this->assertOptions($symbol);
     }
 
     /**
@@ -500,10 +594,20 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     /**
      * @return callable
      */
-    private function getFormatter()
+    private function getMapFormatter()
     {
         return function ($expected, $variable, $formatter) {
             return call_user_func($formatter, $expected, $variable.'.getMap()', $formatter);
+        };
+    }
+
+    /**
+     * @return callable
+     */
+    private function getJsonFormatter()
+    {
+        return function ($expected, $variable, $formatter) {
+            return call_user_func($formatter, $expected.'.toString()', $variable.'.toString()');
         };
     }
 
@@ -521,6 +625,9 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             $base.'.sizes',
             'map',
             $overlays = 'overlays',
+            $overlays.'.icons',
+            $overlays.'.symbols',
+            $overlays.'.icon_sequences',
             $overlays.'.circles',
             $overlays.'.encoded_polylines',
             $overlays.'.ground_overlays',
@@ -529,7 +636,8 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
             $overlays.'.rectangles',
             $overlays.'.info_windows',
             $overlays.'.info_boxes',
-            $overlays.'.marker_images',
+            $overlays.'.marker_shapes',
+            $overlays.'.markers',
             $overlays.'.marker_cluster',
             $layers = 'layers',
             $layers.'.kml_layers',

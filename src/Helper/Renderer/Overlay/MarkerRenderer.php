@@ -28,34 +28,18 @@ class MarkerRenderer extends AbstractJsonRenderer
     private $animationRenderer;
 
     /**
-     * @var IconRenderer
-     */
-    private $iconRenderer;
-
-    /**
-     * @var MarkerShapeRenderer
-     */
-    private $markerShapeRenderer;
-
-    /**
-     * @param Formatter           $formatter
-     * @param JsonBuilder         $jsonBuilder
-     * @param AnimationRenderer   $animationRenderer
-     * @param IconRenderer        $iconRenderer
-     * @param MarkerShapeRenderer $markerShapeRenderer
+     * @param Formatter         $formatter
+     * @param JsonBuilder       $jsonBuilder
+     * @param AnimationRenderer $animationRenderer
      */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
-        AnimationRenderer $animationRenderer,
-        IconRenderer $iconRenderer,
-        MarkerShapeRenderer $markerShapeRenderer
+        AnimationRenderer $animationRenderer
     ) {
         parent::__construct($formatter, $jsonBuilder);
 
         $this->setAnimationRenderer($animationRenderer);
-        $this->setIconRenderer($iconRenderer);
-        $this->setMarkerShapeRenderer($markerShapeRenderer);
     }
 
     /**
@@ -72,38 +56,6 @@ class MarkerRenderer extends AbstractJsonRenderer
     public function setAnimationRenderer(AnimationRenderer $animationRenderer)
     {
         $this->animationRenderer = $animationRenderer;
-    }
-
-    /**
-     * @return IconRenderer
-     */
-    public function getIconRenderer()
-    {
-        return $this->iconRenderer;
-    }
-
-    /**
-     * @param IconRenderer $iconRenderer
-     */
-    public function setIconRenderer(IconRenderer $iconRenderer)
-    {
-        $this->iconRenderer = $iconRenderer;
-    }
-
-    /**
-     * @return MarkerShapeRenderer
-     */
-    public function getMarkerShapeRenderer()
-    {
-        return $this->markerShapeRenderer;
-    }
-
-    /**
-     * @param MarkerShapeRenderer $markerShapeRenderer
-     */
-    public function setMarkerShapeRenderer(MarkerShapeRenderer $markerShapeRenderer)
-    {
-        $this->markerShapeRenderer = $markerShapeRenderer;
     }
 
     /**
@@ -131,11 +83,13 @@ class MarkerRenderer extends AbstractJsonRenderer
         }
 
         if ($marker->hasIcon()) {
-            $jsonBuilder->setValue('[icon]', $this->iconRenderer->render($marker->getIcon()), false);
+            $jsonBuilder->setValue('[icon]', $marker->getIcon()->getVariable(), false);
+        } elseif ($marker->hasSymbol()) {
+            $jsonBuilder->setValue('[icon]', $marker->getSymbol()->getVariable(), false);
         }
 
         if ($marker->hasShape()) {
-            $jsonBuilder->setValue('[shape]', $this->markerShapeRenderer->render($marker->getShape()), false);
+            $jsonBuilder->setValue('[shape]', $marker->getShape()->getVariable(), false);
         }
 
         $jsonBuilder->setValues($marker->getOptions());

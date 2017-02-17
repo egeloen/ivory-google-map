@@ -12,24 +12,25 @@
 namespace Ivory\GoogleMap\Helper\Renderer\Overlay;
 
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
-use Ivory\GoogleMap\Overlay\MarkerShape;
+use Ivory\GoogleMap\Overlay\Icon;
+use Ivory\GoogleMap\Overlay\IconSequence;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerShapeRenderer extends AbstractJsonRenderer
+class IconSequenceRenderer extends AbstractJsonRenderer
 {
     /**
-     * @param MarkerShape $markerShape
+     * @param IconSequence $icon
      *
      * @return string
      */
-    public function render(MarkerShape $markerShape)
+    public function render(IconSequence $icon)
     {
         $jsonBuilder = $this->getJsonBuilder()
-            ->setValue('[type]', $markerShape->getType())
-            ->setValue('[coords]', $markerShape->getCoordinates());
+            ->setValue('[icon]', $icon->getSymbol()->getVariable(), false)
+            ->setValues($icon->getOptions());
 
-        return $this->getFormatter()->renderObjectAssignment($markerShape, $jsonBuilder->build());
+        return $this->getFormatter()->renderObjectAssignment($icon, $jsonBuilder->build());
     }
 }

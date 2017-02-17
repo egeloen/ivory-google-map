@@ -26,6 +26,9 @@ class OverlaySubscriber extends AbstractDelegateSubscriber
     {
         return [
             MapEvents::JAVASCRIPT_OVERLAY => [
+                MapEvents::JAVASCRIPT_OVERLAY_ICON,
+                MapEvents::JAVASCRIPT_OVERLAY_SYMBOL,
+                MapEvents::JAVASCRIPT_OVERLAY_ICON_SEQUENCE,
                 MapEvents::JAVASCRIPT_OVERLAY_CIRCLE,
                 MapEvents::JAVASCRIPT_OVERLAY_ENCODED_POLYLINE,
                 MapEvents::JAVASCRIPT_OVERLAY_GROUND_OVERLAY,
@@ -33,7 +36,6 @@ class OverlaySubscriber extends AbstractDelegateSubscriber
                 MapEvents::JAVASCRIPT_OVERLAY_POLYLINE,
                 MapEvents::JAVASCRIPT_OVERLAY_RECTANGLE,
                 MapEvents::JAVASCRIPT_OVERLAY_INFO_WINDOW,
-                MapEvents::JAVASCRIPT_OVERLAY_MARKER_IMAGE,
                 MapEvents::JAVASCRIPT_OVERLAY_MARKER_SHAPE,
                 MapEvents::JAVASCRIPT_OVERLAY_MARKER,
                 MapEvents::JAVASCRIPT_OVERLAY_MARKER_CLUSTER,

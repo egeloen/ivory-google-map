@@ -13,7 +13,10 @@ namespace Ivory\Tests\GoogleMap\Helper\Functional\Overlay;
 
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
+use Ivory\GoogleMap\Overlay\Symbol;
+use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\Tests\GoogleMap\Helper\Functional\AbstractMapFunctionalTest;
 
 /**
@@ -27,6 +30,18 @@ class PolylineFunctionalTest extends AbstractMapFunctionalTest
     {
         $map = new Map();
         $map->getOverlayManager()->addPolyline($this->createPolyline());
+
+        $this->renderMap($map);
+        $this->assertMap($map);
+    }
+
+    public function testRenderWithIconSequence()
+    {
+        $polyline = $this->createPolyline();
+        $polyline->addIconSequence(new IconSequence(new Symbol(SymbolPath::FORWARD_OPEN_ARROW)));
+
+        $map = new Map();
+        $map->getOverlayManager()->addPolyline($polyline);
 
         $this->renderMap($map);
         $this->assertMap($map);

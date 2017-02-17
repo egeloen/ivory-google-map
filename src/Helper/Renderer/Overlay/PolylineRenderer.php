@@ -37,6 +37,10 @@ class PolylineRenderer extends AbstractJsonRenderer
             $jsonBuilder->setValue('[path]['.$index.']', $coordinate->getVariable(), false);
         }
 
+        foreach ($polyline->getIconSequences() as $index => $icon) {
+            $jsonBuilder->setValue('[icons]['.$index.']', $icon->getVariable(), false);
+        }
+
         $jsonBuilder->setValues($polyline->getOptions());
 
         return $formatter->renderObjectAssignment($polyline, $formatter->renderObject('Polyline', [

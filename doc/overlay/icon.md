@@ -31,6 +31,14 @@ $icon = new Icon(
 );
 ```
 
+## Configure variable
+
+A variable is automatically generated when creating an icon but if you want to update it, you can use:
+
+``` php
+$icon->setVariable('icon');
+```
+
 ## Configure url
 
 If you want to update thr url, you can use:
