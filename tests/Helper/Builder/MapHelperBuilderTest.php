@@ -11,7 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Builder;
 
-use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
+use Ivory\GoogleMap\Helper\Builder\AbstractJavascriptHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -35,7 +35,7 @@ class MapHelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractHelperBuilder::class, $this->mapHelperBuilder);
+        $this->assertInstanceOf(AbstractJavascriptHelperBuilder::class, $this->mapHelperBuilder);
     }
 
     public function testBuild()

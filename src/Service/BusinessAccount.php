@@ -106,17 +106,6 @@ class BusinessAccount
      */
     public function signUrl($url)
     {
-        $url .= '&client=gme-'.$this->clientId;
-
-        if ($this->hasChannel()) {
-            $url .= '&channel='.$this->channel;
-        }
-
-        $urlParts = parse_url($url);
-        $data = $urlParts['path'].'?'.$urlParts['query'];
-        $key = base64_decode(str_replace(['-', '_'], ['+', '/'], $this->secret));
-        $signature = base64_encode(hash_hmac('sha1', $data, $key, true));
-
-        return $url.'&signature='.str_replace(['+', '/'], ['-', '_'], $signature);
+        return UrlSigner::sign($url, $this->secret, $this->clientId, $this->channel);
     }
 }

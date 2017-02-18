@@ -18,6 +18,7 @@ use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Layer\LayerManager;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\OverlayManager;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
@@ -41,6 +42,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
     public function testInheritance()
     {
         $this->assertInstanceOf(VariableAwareInterface::class, $this->map);
+        $this->assertInstanceOf(StaticOptionsAwareInterface::class, $this->map);
     }
 
     public function testDefaultState()

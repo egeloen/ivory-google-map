@@ -47,7 +47,7 @@ use Ivory\JsonBuilder\JsonBuilder;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ApiHelperBuilder extends AbstractHelperBuilder
+class ApiHelperBuilder extends AbstractJavascriptHelperBuilder
 {
     /**
      * @var string
@@ -86,10 +86,14 @@ class ApiHelperBuilder extends AbstractHelperBuilder
 
     /**
      * @param string $language
+     *
+     * @return $this
      */
     public function setLanguage($language)
     {
         $this->language = $language;
+
+        return $this;
     }
 
     /**
@@ -110,10 +114,14 @@ class ApiHelperBuilder extends AbstractHelperBuilder
 
     /**
      * @param string|null $key
+     *
+     * @return $this
      */
     public function setKey($key)
     {
         $this->key = $key;
+
+        return $this;
     }
 
     /**

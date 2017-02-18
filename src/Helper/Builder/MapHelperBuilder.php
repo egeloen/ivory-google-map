@@ -158,7 +158,7 @@ use Ivory\GoogleMap\Overlay\Rectangle;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapHelperBuilder extends AbstractHelperBuilder
+class MapHelperBuilder extends AbstractJavascriptHelperBuilder
 {
     /**
      * @return MapHelper

@@ -181,10 +181,8 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
      */
     protected function assertGeocoderResponse($response, $request)
     {
-        $options = array_merge([
-            'status'  => GeocoderStatus::OK,
-            'results' => [],
-        ], self::$journal->getData());
+        $options = array_merge(['results' => []], self::$journal->getData());
+        $options['status'] = GeocoderStatus::OK;
 
         $this->assertInstanceOf(GeocoderResponse::class, $response);
 

@@ -48,6 +48,6 @@ class DistanceMatrixServiceApiKeyTest extends DistanceMatrixServiceTest
         $this->service->setFormat($format);
         $response = $this->service->process($request);
 
-        $this->assertDistanceMatrixResponse($response, $request, 'place_id');
+        $this->assertDistanceMatrixResponse($response, $request);
     }
 }

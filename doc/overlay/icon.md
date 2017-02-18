@@ -23,7 +23,7 @@ use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Overlay\Icon;
 
 $icon = new Icon(
-    'https://maps.gstatic.com/mapfiles/markers/marker.png',
+    Icon::DEFAULT_URL,
     new Point(20, 34),
     new Point(0, 0),
     new Size(20, 34),

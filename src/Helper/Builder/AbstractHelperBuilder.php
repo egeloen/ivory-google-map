@@ -11,8 +11,6 @@
 
 namespace Ivory\GoogleMap\Helper\Builder;
 
-use Ivory\GoogleMap\Helper\Formatter\Formatter;
-use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,29 +21,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 abstract class AbstractHelperBuilder
 {
     /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
-     * @var JsonBuilder
-     */
-    private $jsonBuilder;
-
-    /**
      * @var EventSubscriberInterface[]
      */
     private $subscribers = [];
-
-    /**
-     * @param Formatter|null   $formatter
-     * @param JsonBuilder|null $jsonBuilder
-     */
-    public function __construct(Formatter $formatter = null, JsonBuilder $jsonBuilder = null)
-    {
-        $this->setFormatter($formatter ?: new Formatter());
-        $this->setJsonBuilder($jsonBuilder ?: new JsonBuilder());
-    }
 
     /**
      * @return static
@@ -53,46 +31,6 @@ abstract class AbstractHelperBuilder
     public static function create()
     {
         return new static();
-    }
-
-    /**
-     * @return Formatter
-     */
-    public function getFormatter()
-    {
-        return $this->formatter;
-    }
-
-    /**
-     * @param Formatter $formatter
-     *
-     * @return $this
-     */
-    public function setFormatter(Formatter $formatter)
-    {
-        $this->formatter = $formatter;
-
-        return $this;
-    }
-
-    /**
-     * @return JsonBuilder
-     */
-    public function getJsonBuilder()
-    {
-        return $this->jsonBuilder;
-    }
-
-    /**
-     * @param JsonBuilder $jsonBuilder
-     *
-     * @return $this
-     */
-    public function setJsonBuilder(JsonBuilder $jsonBuilder)
-    {
-        $this->jsonBuilder = $jsonBuilder;
-
-        return $this;
     }
 
     /**

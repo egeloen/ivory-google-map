@@ -49,6 +49,7 @@ controls, overlays, events & services through the Google Map API v3.
          - [Autocomplete](/doc/place/autocomplete.md)
       - [Rendering](/doc/helper/index.md)
          - [Map Rendering](/doc/helper/map.md)
+         - [Static Map Rendering](/doc/helper/static_map.md)
          - [Places Autocomplete Rendering](/doc/helper/place_autocomplete.md)
          - [API Rendering](/doc/helper/api.md)
       - [Services](/doc/service/index.md)

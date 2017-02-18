@@ -10,6 +10,7 @@
  */
 
 if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
+    exec(sprintf('rm -rf %s/Helper/Functional/.cache/*', __DIR__));
     exec(sprintf('rm -rf %s/Service/.cache/*', __DIR__));
 }
 

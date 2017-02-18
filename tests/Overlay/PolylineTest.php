@@ -16,6 +16,7 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
@@ -40,6 +41,7 @@ class PolylineTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(ExtendableInterface::class, $this->polyline);
         $this->assertInstanceOf(OptionsAwareInterface::class, $this->polyline);
+        $this->assertInstanceOf(StaticOptionsAwareInterface::class, $this->polyline);
         $this->assertInstanceOf(VariableAwareInterface::class, $this->polyline);
     }
 

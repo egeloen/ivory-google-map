@@ -17,6 +17,8 @@ use Ivory\GoogleMap\Control\ControlManager;
 use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Layer\LayerManager;
 use Ivory\GoogleMap\Overlay\OverlayManager;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareTrait;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
@@ -25,8 +27,9 @@ use Ivory\GoogleMap\Utility\VariableAwareTrait;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Map implements VariableAwareInterface
+class Map implements VariableAwareInterface, StaticOptionsAwareInterface
 {
+    use StaticOptionsAwareTrait;
     use VariableAwareTrait;
 
     /**

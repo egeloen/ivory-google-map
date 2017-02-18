@@ -88,12 +88,13 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
     private function assertTimeZoneResponse($response, $request)
     {
         $options = array_merge([
-            'status'       => TimeZoneStatus::OK,
             'dstOffset'    => null,
             'rawOffset'    => null,
             'timeZoneId'   => null,
             'timeZoneName' => null,
         ], self::$journal->getData());
+
+        $options['status'] = TimeZoneStatus::OK;
 
         $this->assertInstanceOf(TimeZoneResponse::class, $response);
 

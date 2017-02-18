@@ -210,11 +210,12 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     protected function assertDistanceMatrixResponse($response, $request)
     {
         $options = array_merge([
-            'status'                => DistanceMatrixStatus::OK,
             'origin_addresses'      => [],
             'destination_addresses' => [],
             'rows'                  => [],
         ], self::$journal->getData());
+
+        $options['status'] = DistanceMatrixStatus::OK;
 
         $this->assertInstanceOf(DistanceMatrixResponse::class, $response);
 

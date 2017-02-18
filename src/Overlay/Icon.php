@@ -23,6 +23,8 @@ use Ivory\GoogleMap\Utility\VariableAwareTrait;
  */
 class Icon implements VariableAwareInterface
 {
+    const DEFAULT_URL = 'https://maps.gstatic.com/mapfiles/markers/marker.png';
+
     use VariableAwareTrait;
 
     /**
@@ -58,7 +60,7 @@ class Icon implements VariableAwareInterface
      * @param Size|null  $size
      */
     public function __construct(
-        $url = 'https://maps.gstatic.com/mapfiles/markers/marker.png',
+        $url = self::DEFAULT_URL,
         Point $anchor = null,
         Point $origin = null,
         Size $scaledSize = null,

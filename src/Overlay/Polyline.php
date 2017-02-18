@@ -14,6 +14,8 @@ namespace Ivory\GoogleMap\Overlay;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareTrait;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareTrait;
 use Ivory\GoogleMap\Utility\VariableAwareTrait;
 
 /**
@@ -21,9 +23,10 @@ use Ivory\GoogleMap\Utility\VariableAwareTrait;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Polyline implements ExtendableInterface, OptionsAwareInterface
+class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOptionsAwareInterface
 {
     use OptionsAwareTrait;
+    use StaticOptionsAwareTrait;
     use VariableAwareTrait;
 
     /**

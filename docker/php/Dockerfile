@@ -17,6 +17,9 @@ RUN pecl install xdebug \
 # XDebug configuration
 COPY config/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
+# PHP configuration
+COPY config/php.ini /usr/local/etc/php/php.ini
+
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 

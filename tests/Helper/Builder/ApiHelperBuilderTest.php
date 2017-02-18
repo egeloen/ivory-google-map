@@ -12,7 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Helper\Builder;
 
 use Ivory\GoogleMap\Helper\ApiHelper;
-use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
+use Ivory\GoogleMap\Helper\Builder\AbstractJavascriptHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
 
 /**
@@ -35,7 +35,7 @@ class ApiHelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractHelperBuilder::class, $this->apiHelperBuilder);
+        $this->assertInstanceOf(AbstractJavascriptHelperBuilder::class, $this->apiHelperBuilder);
     }
 
     public function testDefaultState()
@@ -47,15 +47,13 @@ class ApiHelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testLanguage()
     {
-        $this->apiHelperBuilder->setLanguage($language = 'fr');
-
+        $this->assertSame($this->apiHelperBuilder, $this->apiHelperBuilder->setLanguage($language = 'fr'));
         $this->assertSame($language, $this->apiHelperBuilder->getLanguage());
     }
 
     public function testKey()
     {
-        $this->apiHelperBuilder->setKey($key = 'key');
-
+        $this->assertSame($this->apiHelperBuilder, $this->apiHelperBuilder->setKey($key = 'key'));
         $this->assertTrue($this->apiHelperBuilder->hasKey());
         $this->assertSame($key, $this->apiHelperBuilder->getKey());
     }

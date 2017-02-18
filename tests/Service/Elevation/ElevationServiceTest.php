@@ -119,10 +119,8 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
      */
     private function assertElevationResponse($response, $request)
     {
-        $options = array_merge([
-            'status'  => ElevationStatus::OK,
-            'results' => [],
-        ], self::$journal->getData());
+        $options = array_merge(['results' => []], self::$journal->getData());
+        $options['status'] = ElevationStatus::OK;
 
         $this->assertInstanceOf(ElevationResponse::class, $response);
 
