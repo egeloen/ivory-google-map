@@ -2,6 +2,10 @@
 
 ### 2.0.0 (????-??-??)
 
+ * 5ac8483 - [Composer] Remove phpunit selenium fork
+ * fcf0a52 - [Helper] Add static map support
+ * de7e430 - [Overlay] Add Symbol support
+ * f79bcb4 - [Service] Add Place support
  * c462d08 - [Docker] Add HHVM container
  * 898d2cf - [Doc] Improve info window
  * 20e7c35 - [Docker] Rely directly on the selenium image
