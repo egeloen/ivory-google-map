@@ -22,7 +22,7 @@
         "php-http/guzzle6-adapter": "^1.1.1",
         "php-http/message": "^1.3",
         "phpunit/phpunit": "^5.4",
-        "phpunit/phpunit-selenium": "dev-code-coverage as 3.0.0",
+        "phpunit/phpunit-selenium": "dev-master",
         "symfony/cache": "^3.2",
         "symfony/phpunit-bridge": "^2.7|^3.0"
     },
@@ -37,12 +37,6 @@
     "autoload-dev": {
         "psr-4": { "Ivory\\Tests\\GoogleMap\\": "tests/" }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/egeloen/phpunit-selenium"
-        }
-    ],
     "extra": {
         "branch-alias": {
             "dev-master": "2.0-dev"
