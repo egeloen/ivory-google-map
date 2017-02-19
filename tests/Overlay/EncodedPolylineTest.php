@@ -14,6 +14,7 @@ namespace Ivory\Tests\GoogleMap\Overlay;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
@@ -43,6 +44,7 @@ class EncodedPolylineTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(ExtendableInterface::class, $this->encodedPolyline);
         $this->assertInstanceOf(OptionsAwareInterface::class, $this->encodedPolyline);
+        $this->assertInstanceOf(StaticOptionsAwareInterface::class, $this->encodedPolyline);
         $this->assertInstanceOf(VariableAwareInterface::class, $this->encodedPolyline);
     }
 

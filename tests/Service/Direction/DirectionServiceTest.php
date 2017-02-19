@@ -314,11 +314,12 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     protected function assertDirectionResponse($response, $request)
     {
         $options = array_merge([
-            'status'                 => DirectionStatus::OK,
             'routes'                 => [],
             'geocoded_waypoints'     => [],
             'available_travel_modes' => [],
         ], self::$journal->getData());
+
+        $options['status'] = DirectionStatus::OK;
 
         $this->assertInstanceOf(DirectionResponse::class, $response);
 
@@ -462,11 +463,12 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     private function assertDirectionGeocoded($geocoded, array $options = [])
     {
         $options = array_merge([
-            'status'        => DirectionGeocodedStatus::OK,
             'partial_match' => null,
             'place_id'      => null,
             'types'         => [],
         ], $options);
+
+        $options['status'] = DirectionGeocodedStatus::OK;
 
         $this->assertInstanceOf(DirectionGeocoded::class, $geocoded);
 

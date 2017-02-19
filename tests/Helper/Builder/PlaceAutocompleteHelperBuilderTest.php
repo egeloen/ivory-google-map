@@ -11,7 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Builder;
 
-use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
+use Ivory\GoogleMap\Helper\Builder\AbstractJavascriptHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\PlaceAutocompleteHelperBuilder;
 use Ivory\GoogleMap\Helper\PlaceAutocompleteHelper;
 
@@ -35,7 +35,7 @@ class PlaceAutocompleteHelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(AbstractHelperBuilder::class, $this->placeAutocompleteHelperBuilder);
+        $this->assertInstanceOf(AbstractJavascriptHelperBuilder::class, $this->placeAutocompleteHelperBuilder);
     }
 
     public function testBuild()

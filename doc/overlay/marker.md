@@ -103,6 +103,8 @@ use Ivory\GoogleMap\Overlay\MarkerShapeType;
 $marker->setIcon(new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.1, 1.4]));
 ```
 
+If you want to learn more about marker shape, you can read its [documentation](/doc/overlay/marker_shape.md).
+
 ## Configure options
 
 The marker options allows you to configure additional marker aspects. See the list of available options in the 
@@ -113,7 +115,28 @@ Then, to configure them, you can use:
 $marker->setOption('flat', true);
 ```
 
-If you want to learn more about marker shape, you can read its [documentation](/doc/overlay/marker_shape.md).
+## Configure static options
+
+The static options allows you to configure specific options which will be used when rendering your marker in a static 
+map. By default, the library will try to guess as much options as possible according to default options but if you 
+want to override them, you can use the following ones:
+
+ - location: The marker location which can be either a `Coordinate` or an address.
+ - styles: The marker styles (default empty).
+ 
+The styles is an array which can wrap the following options:
+
+ - icon: The marker icon url.
+ - anchor: The marker icon anchor which can be either a `Point` or a descriptive anchor (default normal).
+ - size: The marker size (default normal).
+ - color: The marker color (default none).
+ - label: The marker label (default none).
+
+``` php
+use Ivory\GoogleMap\MapTypeId;
+
+$marker->setStaticOption('location', 'Lille, France');
+```
 
 ## Append to a map
 

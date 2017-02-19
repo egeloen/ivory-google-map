@@ -127,6 +127,28 @@ use Ivory\GoogleMap\MapTypeId;
 $map->setMapOption('mapTypeId', MapTypeId::HYBRID);
 ```
 
+## Configure static options
+
+The static options allows you to configure specific options which will be used when rendering your map as a static 
+image. By default, the library will try to guess as much options as possible according to default options but if you 
+want to override them, you can use the following ones:
+
+ - center: The map center which can be either a `Coordinate` or an address (default `Coordinate(0, 0)`).
+ - zoom: The map zoom (default 3).
+ - format: The map format (default png).
+ - scale: The map scale (default 1).
+ - width: The map width (default 300).
+ - height: The map height (default 300).
+ - maptype: The map type (default roadmap).
+ - visible: The elements which should be visible which can be either a `Coordinate`, an address or an array of both 
+   (default empty).
+   
+``` php
+use Ivory\GoogleMap\MapTypeId;
+
+$map->setStaticOption('maptype', MapTypeId::HYBRID);
+```
+
 ## Configure stylesheets
 
 If you want to configure map stylesheets, you can use:

@@ -12,8 +12,6 @@
 namespace Ivory\Tests\GoogleMap\Helper\Builder;
 
 use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
-use Ivory\GoogleMap\Helper\Formatter\Formatter;
-use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -36,44 +34,18 @@ class HelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->assertInstanceOf(Formatter::class, $this->helperBuilder->getFormatter());
-        $this->assertInstanceOf(JsonBuilder::class, $this->helperBuilder->getJsonBuilder());
         $this->assertFalse($this->helperBuilder->hasSubscribers());
         $this->assertEmpty($this->helperBuilder->getSubscribers());
-    }
-
-    public function testInitialState()
-    {
-        $this->helperBuilder = $this->createAbstractHelperBuilder(
-            $formatter = $this->createFormatterMock(),
-            $jsonBuilder = $this->createJsonBuilderMock()
-        );
-
-        $this->assertSame($formatter, $this->helperBuilder->getFormatter());
-        $this->assertSame($jsonBuilder, $this->helperBuilder->getJsonBuilder());
-        $this->assertFalse($this->helperBuilder->hasSubscribers());
-        $this->assertEmpty($this->helperBuilder->getSubscribers());
-    }
-
-    public function testFormatter()
-    {
-        $this->helperBuilder->setFormatter($formatter = $this->createFormatterMock());
-
-        $this->assertSame($formatter, $this->helperBuilder->getFormatter());
-    }
-
-    public function testJsonBuilder()
-    {
-        $this->helperBuilder->setJsonBuilder($jsonBuilder = $this->createJsonBuilderMock());
-
-        $this->assertSame($jsonBuilder, $this->helperBuilder->getJsonBuilder());
     }
 
     public function testSetSubscribers()
     {
-        $this->helperBuilder->setSubscribers($subscribers = [$subscriber = $this->createEventSubscriberMock()]);
-        $this->helperBuilder->setSubscribers($subscribers);
+        $this->assertSame(
+            $this->helperBuilder,
+            $this->helperBuilder->setSubscribers($subscribers = [$subscriber = $this->createEventSubscriberMock()])
+        );
 
+        $this->assertSame($this->helperBuilder, $this->helperBuilder->setSubscribers($subscribers));
         $this->assertTrue($this->helperBuilder->hasSubscribers());
         $this->assertTrue($this->helperBuilder->hasSubscriber($subscriber));
         $this->assertSame($subscribers, $this->helperBuilder->getSubscribers());
@@ -81,8 +53,15 @@ class HelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddSubscribers()
     {
-        $this->helperBuilder->setSubscribers($firstSubscribers = [$this->createEventSubscriberMock()]);
-        $this->helperBuilder->addSubscribers($secondSubscribers = [$this->createEventSubscriberMock()]);
+        $this->assertSame(
+            $this->helperBuilder,
+            $this->helperBuilder->setSubscribers($firstSubscribers = [$this->createEventSubscriberMock()])
+        );
+
+        $this->assertSame(
+            $this->helperBuilder,
+            $this->helperBuilder->addSubscribers($secondSubscribers = [$this->createEventSubscriberMock()])
+        );
 
         $this->assertTrue($this->helperBuilder->hasSubscribers());
         $this->assertSame(array_merge($firstSubscribers, $secondSubscribers), $this->helperBuilder->getSubscribers());
@@ -90,7 +69,10 @@ class HelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddSubscriber()
     {
-        $this->helperBuilder->addSubscriber($subscriber = $this->createEventSubscriberMock());
+        $this->assertSame(
+            $this->helperBuilder,
+            $this->helperBuilder->addSubscriber($subscriber = $this->createEventSubscriberMock())
+        );
 
         $this->assertTrue($this->helperBuilder->hasSubscribers());
         $this->assertTrue($this->helperBuilder->hasSubscriber($subscriber));
@@ -99,41 +81,23 @@ class HelperBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testRemoveSubscriber()
     {
-        $this->helperBuilder->addSubscriber($subscriber = $this->createEventSubscriberMock());
-        $this->helperBuilder->removeSubscriber($subscriber);
+        $this->assertSame(
+            $this->helperBuilder,
+            $this->helperBuilder->addSubscriber($subscriber = $this->createEventSubscriberMock())
+        );
 
+        $this->assertSame($this->helperBuilder, $this->helperBuilder->removeSubscriber($subscriber));
         $this->assertFalse($this->helperBuilder->hasSubscribers());
         $this->assertFalse($this->helperBuilder->hasSubscriber($subscriber));
         $this->assertEmpty($this->helperBuilder->getSubscribers());
     }
 
     /**
-     * @param Formatter|null   $formatter
-     * @param JsonBuilder|null $jsonBuilder
-     *
      * @return \PHPUnit_Framework_MockObject_MockObject|AbstractHelperBuilder
      */
-    private function createAbstractHelperBuilder(Formatter $formatter = null, JsonBuilder $jsonBuilder = null)
+    private function createAbstractHelperBuilder()
     {
-        return $this->getMockBuilder(AbstractHelperBuilder::class)
-            ->setConstructorArgs([$formatter, $jsonBuilder])
-            ->getMockForAbstractClass();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Formatter
-     */
-    private function createFormatterMock()
-    {
-        return $this->createMock(Formatter::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|JsonBuilder
-     */
-    private function createJsonBuilderMock()
-    {
-        return $this->createMock(JsonBuilder::class);
+        return $this->getMockForAbstractClass(AbstractHelperBuilder::class);
     }
 
     /**

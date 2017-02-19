@@ -20,6 +20,7 @@ use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
+use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 
 /**
@@ -49,6 +50,7 @@ class MarkerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(ExtendableInterface::class, $this->marker);
         $this->assertInstanceOf(OptionsAwareInterface::class, $this->marker);
+        $this->assertInstanceOf(StaticOptionsAwareInterface::class, $this->marker);
         $this->assertInstanceOf(VariableAwareInterface::class, $this->marker);
     }
 

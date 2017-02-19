@@ -89,10 +89,11 @@ class PlaceDetailServiceTest extends AbstractPlaceSerializableServiceTest
     private function assertPlaceDetailResponse($response, $request)
     {
         $options = array_merge([
-            'status'            => PlaceDetailStatus::OK,
             'result'            => [],
             'html_attributions' => [],
         ], self::$journal->getData());
+
+        $options['status'] = PlaceDetailStatus::OK;
 
         $this->assertInstanceOf(PlaceDetailResponse::class, $response);
         $this->assertSame($request, $response->getRequest());

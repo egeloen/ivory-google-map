@@ -266,10 +266,8 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
      */
     private function assertPlaceAutocompleteResponse($response, $request)
     {
-        $options = array_merge([
-            'status'      => PlaceAutocompleteStatus::OK,
-            'predictions' => [],
-        ], self::$journal->getData());
+        $options = array_merge(['predictions' => []], self::$journal->getData());
+        $options['status'] = PlaceAutocompleteStatus::OK;
 
         $this->assertInstanceOf(PlaceAutocompleteResponse::class, $response);
 

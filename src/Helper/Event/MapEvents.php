@@ -16,7 +16,7 @@ namespace Ivory\GoogleMap\Helper\Event;
  */
 final class MapEvents
 {
-    const HTML = 'map.renderHtml';
+    const HTML = 'map.html';
     const STYLESHEET = 'map.stylesheet';
     const JAVASCRIPT = 'map.javascript';
     const JAVASCRIPT_INIT = 'map.javascript.init';

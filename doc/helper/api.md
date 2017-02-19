@@ -15,9 +15,10 @@ $apiHelperBuilder = ApiHelperBuilder::create();
 $apiHelper = $apiHelperBuilder->build();
 ```
 
-The api helper is built via a builder. The builder allows you to configure the helper json builder, formatter, language 
-and subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated code, the
-language allows to localize the API (default en) and the subscribers allow you to attach additional code to the API.
+The api helper is built via a builder. The builder allows you to configure the helper json builder, formatter, api key, 
+language and subscribers. The json builder allows to build advanced JSON, the formatter allows to format the generated 
+code, the api key allows to bypass Google rate limits, the language allows to localize the API (default en) and the 
+subscribers allow you to attach additional code to the API.
 
 ## Configure language
 

@@ -86,6 +86,31 @@ to configure them, you can use:
 $polyline->setOption('fillOpacity', 0.5);
 ```
 
+## Configure static options
+
+The static options allows you to configure specific options which will be used when rendering your polyline in a static 
+map. By default, the library will try to guess as much options as possible according to default options but if you 
+want to override them, you can use the following ones:
+
+ - locations: The polyline locations which can be either an array of `Coordinate` or an array of address.
+ - styles: The polyline styles (default empty).
+ 
+The styles is an array which can wrap the following options:
+
+ - geodesic: The polyline path should be interpreted as a geodesic (default false).
+ - color: The polyline color.
+ - fillcolor: The polyline fill color.
+ - weight: The polyline weight.
+
+``` php
+use Ivory\GoogleMap\Base\Coordinate;
+
+$polyline->setStaticOption('locations', [
+    new Coordinate(1, 1), 
+    'Lille, France',
+]);
+```
+
 ## Append to a map
 
 After building your polyline, you need to add it to a map with:

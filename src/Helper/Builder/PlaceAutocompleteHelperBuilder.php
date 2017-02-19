@@ -48,7 +48,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteSimpleEventSubscri
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceAutocompleteHelperBuilder extends AbstractHelperBuilder
+class PlaceAutocompleteHelperBuilder extends AbstractJavascriptHelperBuilder
 {
     /**
      * @return PlaceAutocompleteHelper
