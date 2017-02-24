@@ -42,7 +42,7 @@ If you want to use a service (geocoder, direction, ...), you will need the
 [Ivory Serializer](https://github.com/egeloen/ivory-serializer) in order to deserialize the http response:
 
 ``` bash
-$ composer require egeleon/serializer
+$ composer require egeloen/serializer
 ```
 
 ## Autoload
