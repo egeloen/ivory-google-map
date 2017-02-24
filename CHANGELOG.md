@@ -2,6 +2,8 @@
 
 ### 2.0.0 (????-??-??)
 
+ * d2507c2 - [Doc] Fix typo                                                                                                                                                                                                                        
+ * c627918 - [Doc] Update setHtmlId to setHtmlContainerId
  * 5ac8483 - [Composer] Remove phpunit selenium fork
  * fcf0a52 - [Helper] Add static map support
  * de7e430 - [Overlay] Add Symbol support
