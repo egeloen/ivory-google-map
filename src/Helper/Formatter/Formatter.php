@@ -347,7 +347,7 @@ class Formatter
     {
         if ($this->debug && !empty($code)) {
             $indentation = str_repeat(' ', $this->indentationStep);
-            $code = $indentation.str_replace(PHP_EOL, PHP_EOL.$indentation, $code);
+            $code = $indentation.str_replace("\n", "\n".$indentation, $code);
         }
 
         return (string) $code;
@@ -363,22 +363,13 @@ class Formatter
     public function renderLines(array $codes, $newLine = true, $eolLine = true)
     {
         $result = '';
+        $count = count($codes);
 
-        foreach ($codes as $code) {
-            $result .= $this->renderLine($code, $newLine);
+        for ($index = 0; $index < $count; ++$index) {
+            $result .= $this->renderLine($codes[$index], $newLine && $index !== $count - 1);
         }
 
-        if (empty($result)) {
-            return $result;
-        }
-
-        if (!$newLine) {
-            $result = $this->renderLine($result, $eolLine);
-        } elseif (!$eolLine) {
-            $result = substr($result, 0, $position = strrpos($result, PHP_EOL)).substr($result, ++$position);
-        }
-
-        return $result;
+        return $this->renderLine($result, $eolLine);
     }
 
     /**
@@ -390,7 +381,7 @@ class Formatter
     public function renderLine($code = null, $newLine = true)
     {
         if ($newLine && !empty($code) && $this->debug) {
-            $code .= PHP_EOL;
+            $code .= "\n";
         }
 
         return (string) $code;

@@ -89,11 +89,11 @@ class StylesheetTagRendererTest extends \PHPUnit_Framework_TestCase
             ['<style type="test/css" baz="bat">name{foo:bar;}</style>', 'name', ['foo' => 'bar'], ['baz' => 'bat'], false],
 
             // Debug enabled
-            ['<style type="test/css">'.PHP_EOL.'    name {}'.PHP_EOL.'</style>'.PHP_EOL, 'name', [], [], true, true],
-            ['<style type="test/css">'.PHP_EOL.'    name {'.PHP_EOL.'        foo: bar;'.PHP_EOL.'    }'.PHP_EOL.'</style>'.PHP_EOL, 'name', ['foo' => 'bar'], [], true, true],
-            ['<style type="test/css" foo="bar">'.PHP_EOL.'    name {}'.PHP_EOL.'</style>'.PHP_EOL, 'name', [], ['foo' => 'bar'], true, true],
-            ['<style type="test/css">'.PHP_EOL.'    name {}'.PHP_EOL.'</style>', 'name', [], [], false, true],
-            ['<style type="test/css" baz="bat">'.PHP_EOL.'    name {'.PHP_EOL.'        foo: bar;'.PHP_EOL.'    }'.PHP_EOL.'</style>', 'name', ['foo' => 'bar'], ['baz' => 'bat'], false, true],
+            ['<style type="test/css">'."\n".'    name {}'."\n".'</style>'."\n", 'name', [], [], true, true],
+            ['<style type="test/css">'."\n".'    name {'."\n".'        foo: bar;'."\n".'    }'."\n".'</style>'."\n", 'name', ['foo' => 'bar'], [], true, true],
+            ['<style type="test/css" foo="bar">'."\n".'    name {}'."\n".'</style>'."\n", 'name', [], ['foo' => 'bar'], true, true],
+            ['<style type="test/css">'."\n".'    name {}'."\n".'</style>', 'name', [], [], false, true],
+            ['<style type="test/css" baz="bat">'."\n".'    name {'."\n".'        foo: bar;'."\n".'    }'."\n".'</style>', 'name', ['foo' => 'bar'], ['baz' => 'bat'], false, true],
         ];
     }
 

@@ -75,11 +75,11 @@ class TagRendererTest extends \PHPUnit_Framework_TestCase
             ['<tag foo="bar">code</tag>', 'tag', 'code', ['foo' => 'bar'], true],
 
             // Debug enabled
-            ['<tag></tag>'.PHP_EOL, 'tag', null, [], true, true],
-            ['<tag>'.PHP_EOL.'    code'.PHP_EOL.'</tag>'.PHP_EOL, 'tag', 'code', [], true, true],
-            ['<tag foo="bar"></tag>'.PHP_EOL, 'tag', null, ['foo' => 'bar'], true, true],
+            ['<tag></tag>'."\n", 'tag', null, [], true, true],
+            ['<tag>'."\n".'    code'."\n".'</tag>'."\n", 'tag', 'code', [], true, true],
+            ['<tag foo="bar"></tag>'."\n", 'tag', null, ['foo' => 'bar'], true, true],
             ['<tag></tag>', 'tag', null, [], false, true],
-            ['<tag foo="bar">'.PHP_EOL.'    code'.PHP_EOL.'</tag>', 'tag', 'code', ['foo' => 'bar'], false, true],
+            ['<tag foo="bar">'."\n".'    code'."\n".'</tag>', 'tag', 'code', ['foo' => 'bar'], false, true],
         ];
     }
 }

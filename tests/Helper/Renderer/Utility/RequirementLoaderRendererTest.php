@@ -59,7 +59,7 @@ class RequirementLoaderRendererTest extends \PHPUnit_Framework_TestCase
         $this->requirementLoaderRenderer->getFormatter()->setDebug(true);
 
         $this->assertSame(
-            'function name (c, r) {'.PHP_EOL.'    if (r()) {'.PHP_EOL.'        c();'.PHP_EOL.'    } else {'.PHP_EOL.'        var i = setInterval(function () {'.PHP_EOL.'            if (r()) {'.PHP_EOL.'                clearInterval(i);'.PHP_EOL.'                c();'.PHP_EOL.'            }'.PHP_EOL.'        }, 10);'.PHP_EOL.'    }'.PHP_EOL.'};'.PHP_EOL,
+            'function name (c, r) {'."\n".'    if (r()) {'."\n".'        c();'."\n".'    } else {'."\n".'        var i = setInterval(function () {'."\n".'            if (r()) {'."\n".'                clearInterval(i);'."\n".'                c();'."\n".'            }'."\n".'        }, 10);'."\n".'    }'."\n".'};'."\n",
             $this->requirementLoaderRenderer->render('name')
         );
     }
