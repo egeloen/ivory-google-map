@@ -72,11 +72,11 @@ class JavascriptTagRendererTest extends \PHPUnit_Framework_TestCase
             ['<script type="text/javascript" foo="bar">code</script>', 'code', ['foo' => 'bar'], false],
 
             // Debug enabled
-            ['<script type="text/javascript"></script>'.PHP_EOL, null, [], true, true],
-            ['<script type="text/javascript">'.PHP_EOL.'    code'.PHP_EOL.'</script>'.PHP_EOL, 'code', [], true, true],
-            ['<script type="text/javascript" foo="bar"></script>'.PHP_EOL, null, ['foo' => 'bar'], true, true],
+            ['<script type="text/javascript"></script>'."\n", null, [], true, true],
+            ['<script type="text/javascript">'."\n".'    code'."\n".'</script>'."\n", 'code', [], true, true],
+            ['<script type="text/javascript" foo="bar"></script>'."\n", null, ['foo' => 'bar'], true, true],
             ['<script type="text/javascript"></script>', null, [], false, true],
-            ['<script type="text/javascript" foo="bar">'.PHP_EOL.'    code'.PHP_EOL.'</script>', 'code', ['foo' => 'bar'], false, true],
+            ['<script type="text/javascript" foo="bar">'."\n".'    code'."\n".'</script>', 'code', ['foo' => 'bar'], false, true],
         ];
     }
 }

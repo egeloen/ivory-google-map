@@ -88,7 +88,7 @@ class MapHtmlRendererTest extends \PHPUnit_Framework_TestCase
         $this->mapHtmlRenderer->getFormatter()->setDebug(true);
 
         $this->assertSame(
-            '<div id="map_canvas" style="width: 300px;height: 300px;"></div>'.PHP_EOL,
+            '<div id="map_canvas" style="width: 300px;height: 300px;"></div>'."\n",
             $this->mapHtmlRenderer->render(new Map())
         );
     }

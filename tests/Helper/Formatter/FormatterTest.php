@@ -475,8 +475,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['new google.maps.class(arg1, arg2)', 'class', ['arg1', 'arg2'], null, false, false, true],
             ['new namespace.class()', 'class', [], 'namespace', false, false, true],
             ['new google.maps.class();', 'class', [], null, true, false, true],
-            ['new google.maps.class()'.PHP_EOL, 'class', [], null, false, true, true],
-            ['new namespace.class(arg1, arg2);'.PHP_EOL, 'class', ['arg1', 'arg2'], 'namespace', true, true, true],
+            ['new google.maps.class()'."\n", 'class', [], null, false, true, true],
+            ['new namespace.class(arg1, arg2);'."\n", 'class', ['arg1', 'arg2'], 'namespace', true, true, true],
         ];
     }
 
@@ -508,8 +508,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['variable.method()', $this->createVariableAwareMock(), 'method', [], false, false, true],
             ['variable.method(arg1, arg2)', $this->createVariableAwareMock(), 'method', ['arg1', 'arg2'], false, false, true],
             ['variable.method();', $this->createVariableAwareMock(), 'method', [], true, false, true],
-            ['variable.method()'.PHP_EOL, $this->createVariableAwareMock(), 'method', [], false, true, true],
-            ['variable.method(arg1, arg2);'.PHP_EOL, $this->createVariableAwareMock(), 'method', ['arg1', 'arg2'], true, true, true],
+            ['variable.method()'."\n", $this->createVariableAwareMock(), 'method', [], false, true, true],
+            ['variable.method(arg1, arg2);'."\n", $this->createVariableAwareMock(), 'method', ['arg1', 'arg2'], true, true, true],
         ];
     }
 
@@ -530,8 +530,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['method()', 'method', [], false, false, true],
             ['method(arg1, arg2)', 'method', ['arg1', 'arg2'], false, false, true],
             ['method();', 'method', [], true, false, true],
-            ['method()'.PHP_EOL, 'method', [], false, true, true],
-            ['method(arg1, arg2);'.PHP_EOL, 'method', ['arg1', 'arg2'], true, true, true],
+            ['method()'."\n", 'method', [], false, true, true],
+            ['method(arg1, arg2);'."\n", 'method', ['arg1', 'arg2'], true, true, true],
         ];
     }
 
@@ -541,6 +541,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     public function closureProvider()
     {
         return [
+            // Debug disabled
             ['function(){}'],
             ['function(){code}', 'code'],
             ['function(arg1,arg2){}', null, ['arg1', 'arg2']],
@@ -549,13 +550,14 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['function(){}', null, [], null, false, true],
             ['function name(arg1,arg2){code};', 'code', ['arg1', 'arg2'], 'name', true, true],
 
+            // Debug enabled
             ['function () {}', null, [], null, false, false, true],
-            ['function () {'.PHP_EOL.'    code'.PHP_EOL.'}', 'code', [], null, false, false, true],
+            ['function () {'."\n".'    code'."\n".'}', 'code', [], null, false, false, true],
             ['function (arg1, arg2) {}', null, ['arg1', 'arg2'], null, false, false, true],
             ['function name () {}', null, [], 'name', false, false, true],
             ['function () {};', null, [], null, true, false, true],
-            ['function () {}'.PHP_EOL, null, [], null, false, true, true],
-            ['function name (arg1, arg2) {'.PHP_EOL.'    code'.PHP_EOL.'};'.PHP_EOL, 'code', ['arg1', 'arg2'], 'name', true, true, true],
+            ['function () {}'."\n", null, [], null, false, true, true],
+            ['function name (arg1, arg2) {'."\n".'    code'."\n".'};'."\n", 'code', ['arg1', 'arg2'], 'name', true, true, true],
         ];
     }
 
@@ -574,8 +576,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             // Debug enabled
             ['variable = declaration', $this->createVariableAwareMock(), 'declaration', false, false, true],
             ['variable = declaration;', $this->createVariableAwareMock(), 'declaration', true, false, true],
-            ['variable = declaration'.PHP_EOL, $this->createVariableAwareMock(), 'declaration', false, true, true],
-            ['variable = declaration;'.PHP_EOL, $this->createVariableAwareMock(), 'declaration', true, true, true],
+            ['variable = declaration'."\n", $this->createVariableAwareMock(), 'declaration', false, true, true],
+            ['variable = declaration;'."\n", $this->createVariableAwareMock(), 'declaration', true, true, true],
         ];
     }
 
@@ -594,10 +596,10 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['root_container.path.variable=declaration', $this->createVariableAwareMock('root'), 'declaration', 'path', $this->createVariableAwareMock(), false, false],
 
             // Debug enabled
-            ['root_container = declaration;'.PHP_EOL, $this->createVariableAwareMock('root'), 'declaration', null, null, true, true, true],
-            ['root_container.path = declaration;'.PHP_EOL, $this->createVariableAwareMock('root'), 'declaration', 'path', null, true, true, true],
-            ['root_container.variable = declaration;'.PHP_EOL, $this->createVariableAwareMock('root'), 'declaration', null, $this->createVariableAwareMock(), true, true, true],
-            ['root_container = declaration'.PHP_EOL, $this->createVariableAwareMock('root'), 'declaration', null, null, false, true, true],
+            ['root_container = declaration;'."\n", $this->createVariableAwareMock('root'), 'declaration', null, null, true, true, true],
+            ['root_container.path = declaration;'."\n", $this->createVariableAwareMock('root'), 'declaration', 'path', null, true, true, true],
+            ['root_container.variable = declaration;'."\n", $this->createVariableAwareMock('root'), 'declaration', null, $this->createVariableAwareMock(), true, true, true],
+            ['root_container = declaration'."\n", $this->createVariableAwareMock('root'), 'declaration', null, null, false, true, true],
             ['root_container = declaration;', $this->createVariableAwareMock('root'), 'declaration', null, null, true, false, true],
             ['root_container.path.variable = declaration', $this->createVariableAwareMock('root'), 'declaration', 'path', $this->createVariableAwareMock(), false, false, true],
         ];
@@ -631,8 +633,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             // Debug enabled
             ['variable = declaration', 'variable', 'declaration', false, false, true],
             ['variable = declaration;', 'variable', 'declaration', true, false, true],
-            ['variable = declaration'.PHP_EOL, 'variable', 'declaration', false, true, true],
-            ['variable = declaration;'.PHP_EOL, 'variable', 'declaration', true, true, true],
+            ['variable = declaration'."\n", 'variable', 'declaration', false, true, true],
+            ['variable = declaration;'."\n", 'variable', 'declaration', true, true, true],
         ];
     }
 
@@ -648,9 +650,9 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['if(condition){code}else{}', 'if', 'code', 'condition', 'else{}', false],
 
             // Debug enabled
-            ['else {'.PHP_EOL.'    code'.PHP_EOL.'}'.PHP_EOL, 'else', 'code', null, null, true, true],
-            ['if (condition) {'.PHP_EOL.'    code'.PHP_EOL.'}'.PHP_EOL, 'if', 'code', 'condition', null, true, true],
-            ['if (condition) {'.PHP_EOL.'    code'.PHP_EOL.'} else {}', 'if', 'code', 'condition', 'else {}', false, true],
+            ['else {'."\n".'    code'."\n".'}'."\n", 'else', 'code', null, null, true, true],
+            ['if (condition) {'."\n".'    code'."\n".'}'."\n", 'if', 'code', 'condition', null, true, true],
+            ['if (condition) {'."\n".'    code'."\n".'} else {}', 'if', 'code', 'condition', 'else {}', false, true],
         ];
     }
 
@@ -666,8 +668,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             ['code;', 'code', true, false],
 
             // Debug enabled
-            ['code;'.PHP_EOL, 'code', true, true, true],
-            ['code'.PHP_EOL, 'code', false, true, true],
+            ['code;'."\n", 'code', true, true, true],
+            ['code'."\n", 'code', false, true, true],
             ['code;', 'code', true, false, true],
         ];
     }
@@ -703,9 +705,9 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
             // Debug enabled
             ['', [], true, true, true],
-            ['line1;'.PHP_EOL.'line2;'.PHP_EOL, ['line1;', 'line2;'], true, true, true],
-            ['line1;line2;'.PHP_EOL, ['line1;', 'line2;'], false, true, true],
-            ['line1;'.PHP_EOL.'line2;', ['line1;', 'line2;'], true, false, true],
+            ['line1;'."\n".'line2;'."\n", ['line1;', 'line2;'], true, true, true],
+            ['line1;line2;'."\n", ['line1;', 'line2;'], false, true, true],
+            ['line1;'."\n".'line2;', ['line1;', 'line2;'], true, false, true],
             ['line1;line2;', ['line1;', 'line2;'], false, false, true],
         ];
     }
@@ -723,7 +725,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
             // Debug enabled
             ['', null, true, true],
-            ['line'.PHP_EOL, 'line', true, true],
+            ['line'."\n", 'line', true, true],
             ['line', 'line', false, true],
         ];
     }

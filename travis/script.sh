@@ -3,9 +3,10 @@
 set -e
 
 DOCKER_BUILD=${DOCKER_BUILD-false}
+TRAVIS_PHP_VERSION=${TRAVIS_PHP_VERSION-5.6}
 
 if [ "$DOCKER_BUILD" = false ]; then
-    vendor/bin/phpunit --configuration phpunit.travis.xml --coverage-clover build/clover.xml
+    vendor/bin/phpunit --configuration phpunit.ci.xml `if [ ! "$TRAVIS_PHP_VERSION" = "hhvm" ]; then echo "--coverage-clover build/clover.xml"; fi`
 fi
 
 if [ "$DOCKER_BUILD" = true ]; then

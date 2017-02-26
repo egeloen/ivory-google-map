@@ -59,7 +59,7 @@ class ObjectToArrayRendererTest extends \PHPUnit_Framework_TestCase
         $this->objectToArrayRenderer->getFormatter()->setDebug(true);
 
         $this->assertSame(
-            'function (o) {'.PHP_EOL.'    var a = [];'.PHP_EOL.'    for (var k in o) {'.PHP_EOL.'        a.push(o[k]);'.PHP_EOL.'    }'.PHP_EOL.'    return a;'.PHP_EOL.'}',
+            'function (o) {'."\n".'    var a = [];'."\n".'    for (var k in o) {'."\n".'        a.push(o[k]);'."\n".'    }'."\n".'    return a;'."\n".'}',
             $this->objectToArrayRenderer->render()
         );
     }

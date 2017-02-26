@@ -59,7 +59,7 @@ class SourceRendererTest extends \PHPUnit_Framework_TestCase
         $this->sourceRenderer->getFormatter()->setDebug(true);
 
         $this->assertSame(
-            'function name (src) {'.PHP_EOL.'    var script = document.createElement("script");'.PHP_EOL.'    script.type = "text/javascript";'.PHP_EOL.'    script.async = true;'.PHP_EOL.'    script.src = src;'.PHP_EOL.'    document.getElementsByTagName("head")[0].appendChild(script);'.PHP_EOL.'};'.PHP_EOL,
+            'function name (src) {'."\n".'    var script = document.createElement("script");'."\n".'    script.type = "text/javascript";'."\n".'    script.async = true;'."\n".'    script.src = src;'."\n".'    document.getElementsByTagName("head")[0].appendChild(script);'."\n".'};'."\n",
             $this->sourceRenderer->render('name')
         );
     }
