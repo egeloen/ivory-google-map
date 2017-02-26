@@ -2,7 +2,8 @@
 
 ### 2.0.0 (????-??-??)
 
- * d2507c2 - [Doc] Fix typo                                                                                                                                                                                                                        
+ * b31cc49 - Bump Symfony to 2.7 + Add AppVeyor support
+ * d2507c2 - [Doc] Fix typo
  * c627918 - [Doc] Update setHtmlId to setHtmlContainerId
  * 5ac8483 - [Composer] Remove phpunit selenium fork
  * fcf0a52 - [Helper] Add static map support
