@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.0.1 (????-??-??)
+
+ * e47c292 - [Travis] Fix the build
+
 ### 2.0.0 (2017-02-17)
 
  * b31cc49 - Bump Symfony to 2.7 + Add AppVeyor support
