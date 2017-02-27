@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.0.0 (????-??-??)
+### 2.0.0 (2017-02-17)
 
  * b31cc49 - Bump Symfony to 2.7 + Add AppVeyor support
  * d2507c2 - [Doc] Fix typo
