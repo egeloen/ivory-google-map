@@ -89,7 +89,7 @@ my_map_container = {
     "base": {
         "coordinates": [],
         "bounds": [],
-        "points: [],
+        "points": [],
         "sizes": []
     },
     "map": null,
