@@ -26,4 +26,9 @@ java -jar selenium.jar -Dwebdriver.chrome.driver=./chromedriver > /dev/null 2>&1
 composer self-update
 composer remove --no-update --dev friendsofphp/php-cs-fixer
 
+# Hackery since https://github.com/composer/composer/issues/5355 is fixed
+if [ "$COMPOSER_PREFER_LOWEST" = true ]; then
+    composer update --prefer-source
+fi
+
 composer update --prefer-source `if [ "$COMPOSER_PREFER_LOWEST" = true ]; then echo "--prefer-lowest --prefer-stable"; fi`
