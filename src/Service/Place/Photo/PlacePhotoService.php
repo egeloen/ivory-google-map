@@ -12,6 +12,7 @@
 namespace Ivory\GoogleMap\Service\Place\Photo;
 
 use Ivory\GoogleMap\Service\AbstractService;
+use Ivory\GoogleMap\Service\Place\AbstractPlaceSerializableService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequestInterface;
 
 /**
@@ -19,6 +20,8 @@ use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequestInterface;
  */
 class PlacePhotoService extends AbstractService
 {
+    const URL = AbstractPlaceSerializableService::URL.'/photo';
+
     /**
      * {@inheritdoc}
      */

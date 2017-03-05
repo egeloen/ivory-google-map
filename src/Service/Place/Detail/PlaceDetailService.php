@@ -14,6 +14,7 @@ namespace Ivory\GoogleMap\Service\Place\Detail;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
+use Ivory\GoogleMap\Service\Place\AbstractPlaceSerializableService;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
 use Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailResponse;
 use Ivory\Serializer\Context\Context;
@@ -25,6 +26,8 @@ use Ivory\Serializer\SerializerInterface;
  */
 class PlaceDetailService extends AbstractSerializableService
 {
+    const URL = AbstractPlaceSerializableService::URL.'/details';
+
     /**
      * @param HttpClient               $client
      * @param MessageFactory           $messageFactory
@@ -35,12 +38,7 @@ class PlaceDetailService extends AbstractSerializableService
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
     ) {
-        parent::__construct(
-            'https://maps.googleapis.com/maps/api/place/details',
-            $client,
-            $messageFactory,
-            $serializer
-        );
+        parent::__construct(self::URL, $client, $messageFactory, $serializer);
     }
 
     /**

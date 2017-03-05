@@ -23,6 +23,8 @@ use Ivory\Serializer\SerializerInterface;
  */
 class ElevationService extends AbstractSerializableService
 {
+    const URL = 'https://maps.googleapis.com/maps/api/elevation';
+
     /**
      * @param HttpClient               $client
      * @param MessageFactory           $messageFactory
@@ -33,7 +35,7 @@ class ElevationService extends AbstractSerializableService
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
     ) {
-        parent::__construct('https://maps.googleapis.com/maps/api/elevation', $client, $messageFactory, $serializer);
+        parent::__construct(self::URL, $client, $messageFactory, $serializer);
     }
 
     /**

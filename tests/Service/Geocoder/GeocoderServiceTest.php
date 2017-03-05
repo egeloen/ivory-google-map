@@ -11,11 +11,9 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
-use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
-use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
@@ -48,7 +46,7 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
      *
      * @dataProvider formatProvider
      */
-    public function testGeocodeAddress($format)
+    public function testGeocode($format)
     {
         $request = $this->createAddressRequest();
 
@@ -56,123 +54,6 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testGeocodeAddressWithComponents($format)
-    {
-        $request = new GeocoderAddressRequest('Grand place');
-        $request->setComponents([
-            GeocoderComponentType::COUNTRY     => 'fr',
-            GeocoderComponentType::POSTAL_CODE => 59800,
-        ]);
-
-        $this->service->setFormat($format);
-        $response = $this->service->geocode($request);
-
-        $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testGeocodeAddressWithBound($format)
-    {
-        $request = $this->createAddressRequest();
-        $request->setBound(new Bound(
-            new Coordinate(48.815573, 2.224199),
-            new Coordinate(48.9021449, 2.4699208)
-        ));
-
-        $this->service->setFormat($format);
-        $response = $this->service->geocode($request);
-
-        $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testGeocodeAddressWithRegion($format)
-    {
-        $request = $this->createAddressRequest();
-        $request->setRegion('fr');
-
-        $this->service->setFormat($format);
-        $response = $this->service->geocode($request);
-
-        $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testGeocodeAddressWithLanguage($format)
-    {
-        $request = $this->createAddressRequest();
-        $request->setLanguage('pl');
-
-        $this->service->setFormat($format);
-        $response = $this->service->geocode($request);
-
-        $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testGeocoderCoordinate($format)
-    {
-        $request = $this->createCoordinateRequest();
-
-        $this->service->setFormat($format);
-        $response = $this->service->geocode($request);
-
-        $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testGeocoderCoordinateWithLanguage($format)
-    {
-        $request = $this->createCoordinateRequest();
-        $request->setLanguage('pl');
-
-        $this->service->setFormat($format);
-        $response = $this->service->geocode($request);
-
-        $this->assertGeocoderResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
-    {
-        $this->service->setFormat($format);
-        $this->service->setKey('invalid');
-
-        $this->service->geocode($this->createAddressRequest());
     }
 
     /**

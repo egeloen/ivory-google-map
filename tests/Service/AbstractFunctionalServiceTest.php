@@ -15,12 +15,16 @@ use Http\Adapter\Guzzle6\Client;
 use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin as HttpErrorPlugin;
 use Http\Client\Common\Plugin\HistoryPlugin;
+use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Ivory\GoogleMap\Service\Plugin\ErrorPlugin;
+use Ivory\GoogleMap\Service\Plugin\Scaler\ChainScaler;
+use Ivory\GoogleMap\Service\Plugin\Scaler\ScalerInterface;
+use Ivory\GoogleMap\Service\Plugin\ScalerPlugin;
 use Ivory\Tests\GoogleMap\Service\Utility\Journal;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -34,6 +38,11 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
      * @var Journal
      */
     protected static $journal;
+
+    /**
+     * @var ScalerInterface
+     */
+    private static $waiter;
 
     /**
      * @var HttpClient
@@ -58,6 +67,10 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
         if (self::$journal === null) {
             self::$journal = new Journal();
         }
+
+        if (self::$waiter === null) {
+            self::$waiter = ChainScaler::create();
+        }
     }
 
     /**
@@ -65,14 +78,12 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
-            sleep(2);
-        }
-
         $this->pool = new FilesystemAdapter('', 0, __DIR__.'/.cache');
         $this->messageFactory = new GuzzleMessageFactory();
 
         $this->client = new PluginClient(new Client(), [
+            new ScalerPlugin(self::$waiter),
+            new RetryPlugin(),
             new HttpErrorPlugin(),
             new ErrorPlugin(),
             new HistoryPlugin(self::$journal),
@@ -96,7 +107,7 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function getDateTime($key, $value = 'now')
     {
-        $item = $this->pool->getItem(sha1(get_class().'::'.$key));
+        $item = $this->pool->getItem(sha1(get_class($this).'::'.$key));
 
         if (!$item->isHit()) {
             $item->set(new \DateTime($value));

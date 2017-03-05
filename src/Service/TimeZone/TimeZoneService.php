@@ -25,6 +25,8 @@ use Ivory\Serializer\SerializerInterface;
  */
 class TimeZoneService extends AbstractSerializableService
 {
+    const URL = 'https://maps.googleapis.com/maps/api/timezone';
+
     /**
      * @param HttpClient               $client
      * @param MessageFactory           $messageFactory
@@ -35,7 +37,7 @@ class TimeZoneService extends AbstractSerializableService
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
     ) {
-        parent::__construct('https://maps.googleapis.com/maps/api/timezone', $client, $messageFactory, $serializer);
+        parent::__construct(self::URL, $client, $messageFactory, $serializer);
     }
 
     /**
