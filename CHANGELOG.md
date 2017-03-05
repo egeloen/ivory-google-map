@@ -2,6 +2,7 @@
 
 ### 2.0.1 (????-??-??)
 
+ * db5248a - [Service] Add an Httplug error plugin
  * e47c292 - [Travis] Fix the build
 
 ### 2.0.0 (2017-02-17)
