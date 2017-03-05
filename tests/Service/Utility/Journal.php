@@ -49,6 +49,6 @@ class Journal implements JournalInterface
      */
     public function addFailure(RequestInterface $request, Exception $exception)
     {
-        throw new \BadMethodCallException(sprintf('The method %s::%s is not supported.', __CLASS__, __METHOD__));
+        $this->data = [];
     }
 }

@@ -75,6 +75,22 @@ class PlaceDetailServiceTest extends AbstractPlaceSerializableServiceTest
     }
 
     /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     *
+     * @expectedException \Http\Client\Common\Exception\ClientErrorException
+     * @expectedExceptionMessage REQUEST_DENIED
+     */
+    public function testErrorRequest($format)
+    {
+        $this->service->setFormat($format);
+        $this->service->setKey('invalid');
+
+        $this->service->process($this->createRequest());
+    }
+
+    /**
      * @return PlaceDetailRequest
      */
     private function createRequest()

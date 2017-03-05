@@ -13,14 +13,14 @@ namespace Ivory\Tests\GoogleMap\Service;
 
 use Http\Adapter\Guzzle6\Client;
 use Http\Client\Common\Plugin\CachePlugin;
-use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Common\Plugin\ErrorPlugin as HttpErrorPlugin;
 use Http\Client\Common\Plugin\HistoryPlugin;
-use Http\Client\Common\Plugin\RedirectPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
+use Ivory\GoogleMap\Service\Plugin\ErrorPlugin;
 use Ivory\Tests\GoogleMap\Service\Utility\Journal;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -73,9 +73,9 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
         $this->messageFactory = new GuzzleMessageFactory();
 
         $this->client = new PluginClient(new Client(), [
+            new HttpErrorPlugin(),
             new ErrorPlugin(),
             new HistoryPlugin(self::$journal),
-            new RedirectPlugin(),
             new CachePlugin(
                 $this->pool,
                 new GuzzleStreamFactory(),
