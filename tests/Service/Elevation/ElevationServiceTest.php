@@ -50,10 +50,7 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
      */
     public function testProcessPositional($format)
     {
-        $request = new PositionalElevationRequest([
-            new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
-            new CoordinateLocation(new Coordinate(-34.397, 150.644)),
-        ]);
+        $request = $this->createRequest();
 
         $this->service->setFormat($format);
         $response = $this->service->process($request);
@@ -111,6 +108,33 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
         $response = $this->service->process($request);
 
         $this->assertElevationResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     *
+     * @expectedException \Http\Client\Common\Exception\ClientErrorException
+     * @expectedExceptionMessage REQUEST_DENIED
+     */
+    public function testErrorRequest($format)
+    {
+        $this->service->setFormat($format);
+        $this->service->setKey('invalid');
+
+        $this->service->process($this->createRequest());
+    }
+
+    /**
+     * @return PositionalElevationRequest
+     */
+    private function createRequest()
+    {
+        return new PositionalElevationRequest([
+            new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
+            new CoordinateLocation(new Coordinate(-34.397, 150.644)),
+        ]);
     }
 
     /**
