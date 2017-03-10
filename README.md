@@ -11,8 +11,26 @@
 [![Total Downloads](https://poser.pugx.org/egeloen/google-map/downloads.svg)](https://packagist.org/packages/egeloen/google-map)
 [![License](https://poser.pugx.org/egeloen/google-map/license.svg)](https://packagist.org/packages/egeloen/google-map)
 
+## Overview
+
 The Ivory Google Map project provides a Google Map integration for your PHP 5.6+ project. It allows you to manage map,
 controls, overlays, events & services through the Google Map API v3.
+
+``` php
+use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
+use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
+use Ivory\GoogleMap\Map;
+
+$map = new Map();
+
+$mapHelper = MapHelper::create()->build();
+$apiHelper = ApiHelperBuilder::create()
+    ->setKey('API_KEY')
+    ->build();
+
+echo $mapHelper->render($map);
+echo $apiHelper->render([$map]);
+```
 
 ## Documentation
 
