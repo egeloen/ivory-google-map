@@ -11,6 +11,12 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation;
 
+use Ivory\GoogleMap\Base\Coordinate;
+use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
+use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
+use Ivory\GoogleMap\Service\Elevation\Request\PathElevationRequest;
+use Ivory\GoogleMap\Service\Elevation\Request\PositionalElevationRequest;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -28,5 +34,73 @@ class ElevationServiceApiKeyTest extends ElevationServiceTest
         parent::setUp();
 
         $this->service->setKey($_SERVER['API_KEY']);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPositionalWithEncodedPolylines($format)
+    {
+        $request = new PositionalElevationRequest([
+            new EncodedPolylineLocation('gfo}EtohhU'),
+        ]);
+
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPath($format)
+    {
+        $request = new PathElevationRequest([
+            new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
+            new CoordinateLocation(new Coordinate(-34.397, 150.644)),
+        ], 3);
+
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessPathWithEncodedPolylines($format)
+    {
+        $request = new PathElevationRequest([
+            new EncodedPolylineLocation('gfo}EtohhUxD@bAxJmGF'),
+        ], 3);
+
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertElevationResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     *
+     * @expectedException \Http\Client\Common\Exception\ClientErrorException
+     * @expectedExceptionMessage REQUEST_DENIED
+     */
+    public function testErrorRequest($format)
+    {
+        $this->service->setFormat($format);
+        $this->service->setKey('invalid');
+
+        $this->service->process($this->createRequest());
     }
 }

@@ -23,6 +23,10 @@ use Ivory\Serializer\Naming\SnakeCaseNamingStrategy;
  */
 class PlaceSearchService extends AbstractPlaceSerializableService
 {
+    const NEARBY_URL = self::URL.'/nearbysearch';
+    const RADAR_URL = self::URL.'/radarsearch';
+    const TEXT_URL = self::URL.'/textsearch';
+
     /**
      * @param PlaceSearchRequestInterface $request
      *

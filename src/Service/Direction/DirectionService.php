@@ -25,6 +25,8 @@ use Ivory\Serializer\SerializerInterface;
  */
 class DirectionService extends AbstractSerializableService
 {
+    const URL = 'https://maps.googleapis.com/maps/api/directions';
+
     /**
      * @param HttpClient               $client
      * @param MessageFactory           $messageFactory
@@ -35,7 +37,7 @@ class DirectionService extends AbstractSerializableService
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
     ) {
-        parent::__construct('https://maps.googleapis.com/maps/api/directions', $client, $messageFactory, $serializer);
+        parent::__construct(self::URL, $client, $messageFactory, $serializer);
     }
 
     /**

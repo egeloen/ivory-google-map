@@ -22,6 +22,7 @@ as a better experience with the library. The following are the most interesting 
 
  - Http Error Plugin: Convert 4xx & 5xx responses to exceptions.
  - Google Error Plugin: Convert Google invalid responses to exceptions.
+ - Google Scaler Plugin: Scale requests in order to not trigger Google rate limits. 
  - Retry Plugin: Retry an error responses (exceptions).
  - Cache Plugin: Cache responses using a [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant cache system.
 
@@ -43,9 +44,11 @@ use Http\Client\Common\Plugin\ErrorPlugin as HttpErrorPlugin;
 use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Ivory\GoogleMap\Service\Plugin\ErrorPlugin as GoogleErrorPlugin;
+use Ivory\GoogleMap\Service\Plugin\ScalerPlugin;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 $service->setClient(new PluginClient(new Client(), [
+    new ScalerPlugin(),
     new RetryPlugin(),
     new HttpErrorPlugin(),
     new GoogleErrorPlugin(),

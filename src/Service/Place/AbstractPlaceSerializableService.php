@@ -21,6 +21,8 @@ use Ivory\Serializer\SerializerInterface;
  */
 abstract class AbstractPlaceSerializableService extends AbstractSerializableService
 {
+    const URL = 'https://maps.googleapis.com/maps/api/place';
+
     /**
      * @param HttpClient               $client
      * @param MessageFactory           $messageFactory
@@ -37,11 +39,6 @@ abstract class AbstractPlaceSerializableService extends AbstractSerializableServ
             $context = '/'.$context;
         }
 
-        parent::__construct(
-            'https://maps.googleapis.com/maps/api/place'.$context,
-            $client,
-            $messageFactory,
-            $serializer
-        );
+        parent::__construct(self::URL.$context, $client, $messageFactory, $serializer);
     }
 }

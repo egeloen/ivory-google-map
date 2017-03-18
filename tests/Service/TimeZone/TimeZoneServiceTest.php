@@ -55,41 +55,9 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     */
-    public function testProcessWithLanguage($format)
-    {
-        $request = $this->createRequest();
-        $request->setLanguage('fr');
-
-        $this->service->setFormat($format);
-        $response = $this->service->process($request);
-
-        $this->assertTimeZoneResponse($response, $request);
-    }
-
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
-    {
-        $this->service->setFormat($format);
-        $this->service->setKey('invalid');
-
-        $this->service->process($this->createRequest());
-    }
-
-    /**
      * @return TimeZoneRequest
      */
-    private function createRequest()
+    protected function createRequest()
     {
         return new TimeZoneRequest(
             new Coordinate(39.6034810, -119.6822510),
@@ -101,7 +69,7 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
      * @param TimeZoneResponse         $response
      * @param TimeZoneRequestInterface $request
      */
-    private function assertTimeZoneResponse($response, $request)
+    protected function assertTimeZoneResponse($response, $request)
     {
         $options = array_merge([
             'dstOffset'    => null,

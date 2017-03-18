@@ -25,6 +25,8 @@ use Ivory\Serializer\SerializerInterface;
  */
 class DistanceMatrixService extends AbstractSerializableService
 {
+    const URL = 'https://maps.googleapis.com/maps/api/distancematrix';
+
     /**
      * @param HttpClient               $client
      * @param MessageFactory           $messageFactory
@@ -35,12 +37,7 @@ class DistanceMatrixService extends AbstractSerializableService
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
     ) {
-        parent::__construct(
-            'https://maps.googleapis.com/maps/api/distancematrix',
-            $client,
-            $messageFactory,
-            $serializer
-        );
+        parent::__construct(self::URL, $client, $messageFactory, $serializer);
     }
 
     /**
