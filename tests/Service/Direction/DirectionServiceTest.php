@@ -183,6 +183,33 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
      *
      * @dataProvider formatProvider
      */
+    public function testRouteWithMultipleWaypoints($format)
+    {
+        $request = new DirectionRequest(
+            new AddressLocation('Adelaide,SA'),
+            new AddressLocation('Adelaide,SA')
+        );
+
+        $request->addWaypoints([
+            new DirectionRequestWaypoint(new AddressLocation('Barossa Valley,SA')),
+            new DirectionRequestWaypoint(new AddressLocation('Clare,SA')),
+            new DirectionRequestWaypoint(new AddressLocation('Connawarra,SA')),
+            new DirectionRequestWaypoint(new AddressLocation('McLaren+Vale,SA')),
+        ]);
+
+        $request->setOptimizeWaypoints(true);
+
+        $this->service->setFormat($format);
+        $response = $this->service->route($request);
+
+        $this->assertDirectionResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
     public function testRouteWithAvoid($format)
     {
         $request = $this->createRequest();
@@ -374,7 +401,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
             'summary'           => null,
             'fare'              => [],
             'warnings'          => [],
-            'waypoint_orders'   => [],
+            'waypoint_order'    => [],
         ], $options);
 
         $this->assertInstanceOf(DirectionRoute::class, $route);
@@ -382,7 +409,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertEquals($options['summary'], $route->getSummary());
         $this->assertSame($options['copyrights'], $route->getCopyrights());
         $this->assertSame($options['warnings'], $route->getWarnings());
-        $this->assertSame($options['waypoint_orders'], $route->getWaypointOrders());
+        $this->assertSame($options['waypoint_order'], $route->getWaypointOrders());
 
         $this->assertBound($route->getBound(), $options['bounds']);
         $this->assertEncodedPolyline($route->getOverviewPolyline(), $options['overview_polyline']);
