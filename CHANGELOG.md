@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.0.1 (????-??-??)
+### 2.0.1 (2017-03-20)
 
  * c05334e - [Service] Fix direction waypoint order deserialization
  * 9366e83 - [README] Add a section for new comers
