@@ -61,10 +61,11 @@
 
         <property
             name="waypointOrders"
+            alias="waypoint_order"
             type="array&lt;key=integer,value=integer&gt;"
             expose="true"
             xml-inline="true"
-            xml-entry="waypoint_order"
+            xml-entry="waypoint_index"
             xml-key-as-attribute="false"
         />
     </class>
