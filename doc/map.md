@@ -23,7 +23,7 @@ $map->setVariable('map');
 If you want to update the default html id (map_canvas) used for the map div container, you can use:
 
 ``` php
-$map->setHtmlContainerId('map_canvas');
+$map->setHtmlId('map_canvas');
 ```
 
 ## Configure center & zoom
