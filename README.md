@@ -23,7 +23,7 @@ use Ivory\GoogleMap\Map;
 
 $map = new Map();
 
-$mapHelper = MapHelper::create()->build();
+$mapHelper = MapHelperBuilder::create()->build();
 $apiHelper = ApiHelperBuilder::create()
     ->setKey('API_KEY')
     ->build();
