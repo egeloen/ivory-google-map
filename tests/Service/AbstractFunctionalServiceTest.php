@@ -80,9 +80,9 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
                 $this->pool,
                 new GuzzleStreamFactory(),
                 [
-                    'cache_lifetime'        => null,
-                    'default_ttl'           => null,
-                    'respect_cache_headers' => false,
+                    'cache_lifetime'                    => null,
+                    'default_ttl'                       => null,
+                    'respect_response_cache_directives' => false,
                 ]
             ),
         ]);

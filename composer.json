@@ -17,7 +17,7 @@
     "require-dev": {
         "egeloen/serializer": "^1.0",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "php-http/cache-plugin": "^1.2",
+        "php-http/cache-plugin": "^1.4",
         "php-http/guzzle6-adapter": "^1.0",
         "phpunit/phpunit": "^5.4",
         "phpunit/phpunit-selenium": "dev-master",
