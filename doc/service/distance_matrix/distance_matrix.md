@@ -62,7 +62,7 @@ $response = $distanceMatrix->process(new DistanceMatrixRequest(
 ));
 ```
 
-The distance matrix allows you to process a much more advanced request. If you want to lear more about it, you can read 
+The distance matrix allows you to process a much more advanced request. If you want to learn more about it, you can read 
 its [documentation](/doc/service/distance_matrix/distance_matrix_request.md).
 
 ## Response
