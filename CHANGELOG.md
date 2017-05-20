@@ -2,6 +2,9 @@
 
 ### 2.0.2 (????-??-??)
 
+ * 28b02ec - [Doc] Fix maker shape example
+ * f0ddba2 - [Doc] Fix typo in distance matrix
+ * fe542d4 - Fix wrong class name in readme
  * 6dab543 - [Tests] Fix Httplug deprecations
  * b308d7c - Small fix - right method name setHtmlId
  
