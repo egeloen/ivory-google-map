@@ -100,7 +100,7 @@ If you want to update the marker shape, you can use:
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\MarkerShapeType;
 
-$marker->setIcon(new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.1, 1.4]));
+$marker->setShape(new MarkerShape(MarkerShapeType::CIRCLE, [1.1, 2.1, 1.4]));
 ```
 
 If you want to learn more about marker shape, you can read its [documentation](/doc/overlay/marker_shape.md).
