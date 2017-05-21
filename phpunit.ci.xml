@@ -7,8 +7,8 @@
         </testsuite>
     </testsuites>
     <php>
-        <server name="API_KEY" value="AIzaSyBXc9gZ_r7xUgYrGhnOVg9kAIU8WXxbD-8" />
-        <server name="API_SECRET" value="CkwPAVnZOmPH_StIgTvBomzOW3k=" />
+        <server name="API_KEY" value="AIzaSyAABOMYDntxf7oGlhocBmaeJBB04hCuTAk" />
+        <server name="API_SECRET" value="zKAvb7nwW1TnJZtfXWC9Y_uUDU4=" />
         <server name="BROWSER_NAME" value="chrome" />
         <server name="RESET_CACHE" value="false" />
     </php>

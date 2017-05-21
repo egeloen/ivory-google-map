@@ -29,7 +29,7 @@ class TypeSubscriber implements EventSubscriberInterface
 
         if ($map->hasStaticOption('maptype')) {
             $type = $map->getStaticOption('maptype');
-        } elseif ($map->getMapOption('mapTypeId')) {
+        } elseif ($map->hasMapOption('mapTypeId')) {
             $type = $map->getMapOption('mapTypeId');
         }
 
@@ -43,6 +43,6 @@ class TypeSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return [StaticMapEvents::ZOOM => 'handleMap'];
+        return [StaticMapEvents::TYPE => 'handleMap'];
     }
 }

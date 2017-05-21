@@ -82,7 +82,7 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
                 [
                     'cache_lifetime'                    => null,
                     'default_ttl'                       => null,
-                    'respect_response_cache_directives' => false,
+                    'respect_response_cache_directives' => [],
                 ]
             ),
         ]);

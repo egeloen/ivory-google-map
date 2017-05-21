@@ -79,7 +79,7 @@ class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
                 [
                     'cache_lifetime'                    => null,
                     'default_ttl'                       => null,
-                    'respect_response_cache_directives' => false,
+                    'respect_response_cache_directives' => [],
                 ]
             ),
         ]);
@@ -125,7 +125,23 @@ class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithZoom()
     {
         $map = new Map();
-        $map->setStaticOption('zoom', 10);
+        $map->setMapOption('zoom', 10);
+
+        $this->renderMap($map);
+    }
+
+    public function testRenderWithCenterCoordinate()
+    {
+        $map = new Map();
+        $map->setCenter(new Coordinate(1, 1));
+
+        $this->renderMap($map);
+    }
+
+    public function testRenderWithCenterAddress()
+    {
+        $map = new Map();
+        $map->setStaticOption('center', 'Lille, France');
 
         $this->renderMap($map);
     }
