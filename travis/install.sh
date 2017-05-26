@@ -17,8 +17,8 @@ fi
 export DISPLAY=:99
 /sbin/start-stop-daemon -Sbmq -p /tmp/xvfb_99.pid -x /usr/bin/Xvfb -- ${DISPLAY} -ac -screen 0, 1600x1200x24
 
-curl https://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.0.jar > selenium.jar
-curl https://chromedriver.storage.googleapis.com/2.12/chromedriver_linux64.zip > chromedriver.zip
+curl https://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar > selenium.jar
+curl https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip > chromedriver.zip
 unzip chromedriver.zip
 
 java -jar selenium.jar -Dwebdriver.chrome.driver=./chromedriver > /dev/null 2>&1 &
