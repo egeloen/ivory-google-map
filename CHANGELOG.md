@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.0.2 (????-??-??)
+### 2.0.2 (2017-05-27)
 
  * 96adf7b - Minor static map improvements + Fix tests
  * 28b02ec - [Doc] Fix maker shape example
