@@ -21,6 +21,7 @@ final class StaticMapEvents
     const FORMAT = 'map.static.format';
     const SCALE = 'map.static.scale';
     const SIZE = 'map.static.size';
+    const STYLE = 'map.static.style';
     const TYPE = 'map.static.type';
     const ZOOM = 'map.static.zoom';
     const MARKER = 'map.static.marker';

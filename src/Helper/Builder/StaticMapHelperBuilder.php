@@ -28,6 +28,7 @@ use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineLocationRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\SizeRenderer;
+use Ivory\GoogleMap\Helper\Renderer\Image\StyleRenderer;
 use Ivory\GoogleMap\Helper\StaticMapHelper;
 use Ivory\GoogleMap\Helper\Subscriber\Image\CenterSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Image\EncodedPolylineSubscriber;
@@ -39,6 +40,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Image\PolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Image\ScaleSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Image\SizeSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Image\StaticSubscriber;
+use Ivory\GoogleMap\Helper\Subscriber\Image\StyleSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Image\TypeSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Image\ZoomSubscriber;
 
@@ -224,6 +226,7 @@ class StaticMapHelperBuilder extends AbstractHelperBuilder
         // Renderers
         $coordinateRenderer = new CoordinateRenderer();
         $sizeRenderer = new SizeRenderer();
+        $styleRenderer = new StyleRenderer();
         $encodedPolylineValueRenderer = new EncodedPolylineValueRenderer();
         $encodedPolylineStyleRenderer = new EncodedPolylineStyleRenderer();
         $encodedPolylineRenderer = new EncodedPolylineRenderer($encodedPolylineStyleRenderer, $encodedPolylineValueRenderer);
@@ -248,6 +251,7 @@ class StaticMapHelperBuilder extends AbstractHelperBuilder
             new PolylineSubscriber($polylineCollector, $polylineRenderer),
             new ScaleSubscriber(),
             new SizeSubscriber($sizeRenderer),
+            new StyleSubscriber($styleRenderer),
             new StaticSubscriber(),
             new TypeSubscriber(),
             new ZoomSubscriber(),

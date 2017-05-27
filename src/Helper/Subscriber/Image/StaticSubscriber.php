@@ -62,6 +62,7 @@ class StaticSubscriber implements DelegateSubscriberInterface
                 StaticMapEvents::FORMAT,
                 StaticMapEvents::SCALE,
                 StaticMapEvents::SIZE,
+                StaticMapEvents::STYLE,
                 StaticMapEvents::TYPE,
                 StaticMapEvents::EXTENDABLE,
                 StaticMapEvents::ZOOM,

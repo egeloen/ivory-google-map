@@ -150,6 +150,30 @@ class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
         $this->renderMap($map);
     }
 
+    public function testRenderWithStyles()
+    {
+        $map = new Map();
+        $map->setStaticOption('styles', [
+            [
+                'feature' => 'road.highway',
+                'element' => 'geometry',
+                'rules'   => [
+                    'color'      => '0xc280e9',
+                    'visibility' => 'simplified',
+                ],
+            ],
+            [
+                'feature' => 'transit.line',
+                'rules'   => [
+                    'visibility' => 'simplified',
+                    'color'      => '0xbababa',
+                ]
+            ],
+        ]);
+
+        $this->renderMap($map);
+    }
+
     public function testRenderWithMapType()
     {
         $map = new Map();
