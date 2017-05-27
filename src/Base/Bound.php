@@ -166,5 +166,6 @@ class Bound implements VariableAwareInterface
     public function removeExtendable(ExtendableInterface $extendable)
     {
         unset($this->extendables[array_search($extendable, $this->extendables, true)]);
+        $this->extendables = empty($this->extendables) ? [] : array_values($this->extendables);
     }
 }

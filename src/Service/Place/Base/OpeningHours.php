@@ -116,7 +116,7 @@ class OpeningHours
     public function removePeriod(Period $period)
     {
         unset($this->periods[array_search($period, $this->periods, true)]);
-        $this->periods = array_values($this->periods);
+        $this->periods = empty($this->periods) ? [] : array_values($this->periods);
     }
 
     /**
@@ -180,6 +180,6 @@ class OpeningHours
     public function removeWeekdayText($weekdayText)
     {
         unset($this->weekdayTexts[array_search($weekdayText, $this->weekdayTexts, true)]);
-        $this->weekdayTexts = array_values($this->weekdayTexts);
+        $this->weekdayTexts = empty($this->weekdayTexts) ? [] : array_values($this->weekdayTexts);
     }
 }

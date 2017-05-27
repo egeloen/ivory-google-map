@@ -256,6 +256,6 @@ class ControlManager
     public function removeCustomControl(CustomControl $customControl)
     {
         unset($this->customControls[array_search($customControl, $this->customControls, true)]);
-        $this->customControls = array_values($this->customControls);
+        $this->customControls = empty($this->customControls) ? [] : array_values($this->customControls);
     }
 }

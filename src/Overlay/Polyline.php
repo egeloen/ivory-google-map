@@ -110,6 +110,7 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     public function removeCoordinate(Coordinate $coordinate)
     {
         unset($this->coordinates[array_search($coordinate, $this->coordinates, true)]);
+        $this->coordinates = empty($this->coordinates) ? [] : array_values($this->coordinates);
     }
 
     /**
@@ -171,5 +172,6 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     public function removeIconSequence(IconSequence $iconSequence)
     {
         unset($this->iconSequences[array_search($iconSequence, $this->iconSequences, true)]);
+        $this->iconSequences = empty($this->iconSequences) ? [] : array_values($this->iconSequences);
     }
 }

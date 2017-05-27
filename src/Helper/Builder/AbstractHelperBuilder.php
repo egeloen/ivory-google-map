@@ -108,7 +108,7 @@ abstract class AbstractHelperBuilder
     public function removeSubscriber(EventSubscriberInterface $subscriber)
     {
         unset($this->subscribers[array_search($subscriber, $this->subscribers, true)]);
-        $this->subscribers = array_values($this->subscribers);
+        $this->subscribers = empty($this->subscribers) ? [] : array_values($this->subscribers);
 
         return $this;
     }

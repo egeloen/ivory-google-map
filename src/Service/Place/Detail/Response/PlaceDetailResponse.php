@@ -172,6 +172,6 @@ class PlaceDetailResponse
     public function removeHtmlAttribution($htmlAttribution)
     {
         unset($this->htmlAttributions[array_search($htmlAttribution, $this->htmlAttributions, true)]);
-        $this->htmlAttributions = array_values($this->htmlAttributions);
+        $this->htmlAttributions = empty($this->htmlAttributions) ? [] : array_values($this->htmlAttributions);
     }
 }

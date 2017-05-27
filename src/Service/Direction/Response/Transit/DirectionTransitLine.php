@@ -285,6 +285,6 @@ class DirectionTransitLine
     public function removeAgency(DirectionTransitAgency $agency)
     {
         unset($this->agencies[array_search($agency, $this->agencies, true)]);
-        $this->agencies = array_values($this->agencies);
+        $this->agencies = empty($this->agencies) ? [] : array_values($this->agencies);
     }
 }

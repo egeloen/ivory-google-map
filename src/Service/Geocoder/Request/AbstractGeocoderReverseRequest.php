@@ -89,7 +89,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
     public function removeResultType($resultType)
     {
         unset($this->resultTypes[array_search($resultType, $this->resultTypes, true)]);
-        $this->resultTypes = array_values($this->resultTypes);
+        $this->resultTypes = empty($this->resultTypes) ? [] : array_values($this->resultTypes);
     }
 
     /**
@@ -153,7 +153,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
     public function removeLocationType($locationType)
     {
         unset($this->locationTypes[array_search($locationType, $this->locationTypes, true)]);
-        $this->locationTypes = array_values($this->locationTypes);
+        $this->locationTypes = empty($this->locationTypes) ? [] : array_values($this->locationTypes);
     }
 
     /**

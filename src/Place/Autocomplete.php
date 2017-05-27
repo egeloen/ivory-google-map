@@ -185,6 +185,7 @@ class Autocomplete implements VariableAwareInterface
     public function removeType($type)
     {
         unset($this->types[array_search($type, $this->types, true)]);
+        $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
     /**
@@ -416,5 +417,6 @@ class Autocomplete implements VariableAwareInterface
     public function removeLibrary($library)
     {
         unset($this->libraries[array_search($library, $this->libraries, true)]);
+        $this->libraries = empty($this->libraries) ? [] : array_values($this->libraries);
     }
 }

@@ -246,6 +246,7 @@ class DirectionRequest implements DirectionRequestInterface
     public function removeWaypoint(DirectionWaypoint $waypoint)
     {
         unset($this->waypoints[array_search($waypoint, $this->waypoints, true)]);
+        $this->waypoints = empty($this->waypoints) ? [] : array_values($this->waypoints);
     }
 
     /**
@@ -429,7 +430,7 @@ class DirectionRequest implements DirectionRequestInterface
     public function removeTransitMode($transitMode)
     {
         unset($this->transitModes[array_search($transitMode, $this->transitModes, true)]);
-        $this->transitModes = array_values($this->transitModes);
+        $this->transitModes = empty($this->transitModes) ? [] : array_values($this->transitModes);
     }
 
     /**

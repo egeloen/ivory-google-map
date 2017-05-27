@@ -65,11 +65,11 @@ abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
+        if (isset($_SERVER['CACHE_RESET']) && $_SERVER['CACHE_RESET']) {
             sleep(2);
         }
 
-        $this->pool = new FilesystemAdapter('', 0, __DIR__.'/.cache');
+        $this->pool = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
         $this->messageFactory = new GuzzleMessageFactory();
 
         $this->client = new PluginClient(new Client(), [

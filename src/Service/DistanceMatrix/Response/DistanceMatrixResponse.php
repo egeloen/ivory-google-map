@@ -152,7 +152,7 @@ class DistanceMatrixResponse
     public function removeOrigin($origin)
     {
         unset($this->origins[array_search($origin, $this->origins, true)]);
-        $this->origins = array_values($this->origins);
+        $this->origins = empty($this->origins) ? [] : array_values($this->origins);
     }
 
     /**
@@ -216,7 +216,7 @@ class DistanceMatrixResponse
     public function removeDestination($destination)
     {
         unset($this->destinations[array_search($destination, $this->destinations, true)]);
-        $this->destinations = array_values($this->destinations);
+        $this->destinations = empty($this->destinations) ? [] : array_values($this->destinations);
     }
 
     /**
@@ -280,6 +280,6 @@ class DistanceMatrixResponse
     public function removeRow(DistanceMatrixRow $row)
     {
         unset($this->rows[array_search($row, $this->rows, true)]);
-        $this->rows = array_values($this->rows);
+        $this->rows = empty($this->rows) ? [] : array_values($this->rows);
     }
 }

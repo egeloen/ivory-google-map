@@ -171,7 +171,7 @@ class DirectionRoute
     public function removeLeg(DirectionLeg $leg)
     {
         unset($this->legs[array_search($leg, $this->legs, true)]);
-        $this->legs = array_values($this->legs);
+        $this->legs = empty($this->legs) ? [] : array_values($this->legs);
     }
 
     /**
@@ -307,6 +307,7 @@ class DirectionRoute
     public function removeWarning($warning)
     {
         unset($this->warnings[array_search($warning, $this->warnings, true)]);
+        $this->warnings = empty($this->warnings) ? [] : array_values($this->warnings);
     }
 
     /**

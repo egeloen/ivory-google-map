@@ -100,5 +100,6 @@ class Polygon implements ExtendableInterface, OptionsAwareInterface
     public function removeCoordinate(Coordinate $coordinate)
     {
         unset($this->coordinates[array_search($coordinate, $this->coordinates, true)]);
+        $this->coordinates = empty($this->coordinates) ? [] : array_values($this->coordinates);
     }
 }

@@ -92,7 +92,7 @@ class PositionalElevationRequest implements ElevationRequestInterface
     public function removeLocation(LocationInterface $location)
     {
         unset($this->locations[array_search($location, $this->locations, true)]);
-        $this->locations = array_values($this->locations);
+        $this->locations = empty($this->locations) ? [] : array_values($this->locations);
     }
 
     /**

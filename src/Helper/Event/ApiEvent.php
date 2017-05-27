@@ -146,7 +146,7 @@ class ApiEvent extends AbstractEvent
     public function removeSource($source)
     {
         unset($this->sources[array_search($source, $this->sources, true)]);
-        $this->sources = array_values($this->sources);
+        $this->sources = empty($this->sources) ? [] : array_values($this->sources);
     }
 
     /**
@@ -210,7 +210,7 @@ class ApiEvent extends AbstractEvent
     public function removeLibrary($library)
     {
         unset($this->libraries[array_search($library, $this->libraries, true)]);
-        $this->libraries = array_values($this->libraries);
+        $this->libraries = empty($this->libraries) ? [] : array_values($this->libraries);
     }
 
     /**

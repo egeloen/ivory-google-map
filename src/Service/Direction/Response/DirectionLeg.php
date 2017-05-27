@@ -355,6 +355,7 @@ class DirectionLeg
     public function removeStep(DirectionStep $step)
     {
         unset($this->steps[array_search($step, $this->steps, true)]);
+        $this->steps = empty($this->steps) ? [] : array_values($this->steps);
     }
 
     /**
@@ -418,5 +419,6 @@ class DirectionLeg
     public function removeViaWaypoint(DirectionWaypoint $viaWaypoint)
     {
         unset($this->viaWaypoints[array_search($viaWaypoint, $this->viaWaypoints, true)]);
+        $this->viaWaypoints = empty($this->viaWaypoints) ? [] : array_values($this->viaWaypoints);
     }
 }

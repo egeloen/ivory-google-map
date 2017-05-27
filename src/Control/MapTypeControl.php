@@ -111,6 +111,7 @@ class MapTypeControl
     public function removeId($id)
     {
         unset($this->ids[array_search($id, $this->ids, true)]);
+        $this->ids = empty($this->ids) ? [] : array_values($this->ids);
     }
 
     /**
