@@ -2,6 +2,7 @@
 
 ### 2.0.2 (????-??-??)
 
+ * 96adf7b - Minor static map improvements + Fix tests
  * 28b02ec - [Doc] Fix maker shape example
  * f0ddba2 - [Doc] Fix typo in distance matrix
  * fe542d4 - Fix wrong class name in readme
