@@ -140,6 +140,7 @@ want to override them, you can use the following ones:
  - width: The map width (default 300).
  - height: The map height (default 300).
  - maptype: The map type (default roadmap).
+ - styles: The map styles which override the default map rendering.
  - visible: The elements which should be visible which can be either a `Coordinate`, an address or an array of both 
    (default empty).
    
@@ -147,6 +148,29 @@ want to override them, you can use the following ones:
 use Ivory\GoogleMap\MapTypeId;
 
 $map->setStaticOption('maptype', MapTypeId::HYBRID);
+```
+
+The [Map styles](https://developers.google.com/maps/documentation/static-maps/styling) allows you to customize the 
+presentation of the standard Google map by applying your own styles. Here, an example showing you how to use it:
+
+``` php
+$map->setStaticOption('styles', [
+    [
+        'feature' => 'road.highway', // Optional
+        'element' => 'geometry',     // Optional
+        'rules'   => [               // Mandatory (at least one rule)
+            'color'      => '0xc280e9',
+            'visibility' => 'simplified',
+        ],
+    ],
+    [
+        'feature' => 'transit.line',
+        'rules'   => [
+            'visibility' => 'simplified',
+            'color'      => '0xbababa',
+        ]
+    ],
+]);
 ```
 
 ## Configure stylesheets
