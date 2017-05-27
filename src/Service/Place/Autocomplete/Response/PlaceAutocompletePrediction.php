@@ -150,7 +150,7 @@ class PlaceAutocompletePrediction
     public function removeType($type)
     {
         unset($this->types[array_search($type, $this->types, true)]);
-        $this->types = array_values($this->types);
+        $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
     /**
@@ -214,7 +214,7 @@ class PlaceAutocompletePrediction
     public function removeTerm(PlaceAutocompleteTerm $term)
     {
         unset($this->terms[array_search($term, $this->terms, true)]);
-        $this->terms = array_values($this->terms);
+        $this->terms = empty($this->terms) ? [] : array_values($this->terms);
     }
 
     /**
@@ -278,6 +278,6 @@ class PlaceAutocompletePrediction
     public function removeMatch(PlaceAutocompleteMatch $match)
     {
         unset($this->matches[array_search($match, $this->matches, true)]);
-        $this->matches = array_values($this->matches);
+        $this->matches = empty($this->matches) ? [] : array_values($this->matches);
     }
 }

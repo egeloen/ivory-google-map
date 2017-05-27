@@ -142,6 +142,6 @@ class PlaceAutocompleteResponse
     public function removePrediction(PlaceAutocompletePrediction $prediction)
     {
         unset($this->predictions[array_search($prediction, $this->predictions, true)]);
-        $this->predictions = array_values($this->predictions);
+        $this->predictions = empty($this->predictions) ? [] : array_values($this->predictions);
     }
 }

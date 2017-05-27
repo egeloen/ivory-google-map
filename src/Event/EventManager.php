@@ -99,6 +99,7 @@ class EventManager
     public function removeDomEvent(Event $domEvent)
     {
         unset($this->domEvents[array_search($domEvent, $this->domEvents, true)]);
+        $this->domEvents = empty($this->domEvents) ? [] : array_values($this->domEvents);
     }
 
     /**
@@ -162,6 +163,7 @@ class EventManager
     public function removeDomEventOnce(Event $domEventOnce)
     {
         unset($this->domEventsOnce[array_search($domEventOnce, $this->domEventsOnce, true)]);
+        $this->domEventsOnce = empty($this->domEventsOnce) ? [] : array_values($this->domEventsOnce);
     }
 
     /**
@@ -225,6 +227,7 @@ class EventManager
     public function removeEvent(Event $event)
     {
         unset($this->events[array_search($event, $this->events, true)]);
+        $this->events = empty($this->events) ? [] : array_values($this->events);
     }
 
     /**
@@ -286,5 +289,6 @@ class EventManager
     public function removeEventOnce(Event $eventOnce)
     {
         unset($this->eventsOnce[array_search($eventOnce, $this->eventsOnce, true)]);
+        $this->eventsOnce = empty($this->eventsOnce) ? [] : array_values($this->eventsOnce);
     }
 }

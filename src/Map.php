@@ -299,6 +299,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     public function removeLibrary($library)
     {
         unset($this->libraries[array_search($library, $this->libraries, true)]);
+        $this->libraries = empty($this->libraries) ? [] : array_values($this->libraries);
     }
 
     /**

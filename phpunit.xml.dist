@@ -7,11 +7,12 @@
         </testsuite>
     </testsuites>
     <php>
-        <server name="API_KEY" value="AIzaSyBXc9gZ_r7xUgYrGhnOVg9kAIU8WXxbD-8" />
-        <server name="API_SECRET" value="CkwPAVnZOmPH_StIgTvBomzOW3k=" />
+        <server name="API_KEY" value="AIzaSyAA1LyyGO3yNzntJkgXIFP7IogFncPbHcE" />
+        <server name="API_SECRET" value="Z4oGX_JTVJsJwKM9SmLLxLZpccI=" />
         <server name="BROWSER_NAME" value="chrome" />
         <server name="SELENIUM_HOST" value="selenium" />
-        <server name="RESET_CACHE" value="false" />
+        <server name="CACHE_PATH" value="tests/.cache" />
+        <server name="CACHE_RESET" value="false" />
     </php>
     <filter>
         <whitelist>

@@ -82,6 +82,6 @@ class DistanceMatrixRow
     public function removeElement(DistanceMatrixElement $element)
     {
         unset($this->elements[array_search($element, $this->elements, true)]);
-        $this->elements = array_values($this->elements);
+        $this->elements = empty($this->elements) ? [] : array_values($this->elements);
     }
 }

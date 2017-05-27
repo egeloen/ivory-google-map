@@ -128,7 +128,7 @@ class LayerManager
     public function removeGeoJsonLayer(GeoJsonLayer $geoJsonLayer)
     {
         unset($this->geoJsonLayers[array_search($geoJsonLayer, $this->geoJsonLayers, true)]);
-        $this->geoJsonLayers = array_values($this->geoJsonLayers);
+        $this->geoJsonLayers = empty($this->geoJsonLayers) ? [] : array_values($this->geoJsonLayers);
     }
 
     /**
@@ -197,7 +197,7 @@ class LayerManager
     public function removeHeatmapLayer(HeatmapLayer $heatmapLayer)
     {
         unset($this->heatmapLayers[array_search($heatmapLayer, $this->heatmapLayers, true)]);
-        $this->heatmapLayers = array_values($this->heatmapLayers);
+        $this->heatmapLayers = empty($this->heatmapLayers) ? [] : array_values($this->heatmapLayers);
         $this->removeExtendable($heatmapLayer);
     }
 
@@ -267,7 +267,7 @@ class LayerManager
     public function removeKmlLayer(KmlLayer $kmlLayer)
     {
         unset($this->kmlLayers[array_search($kmlLayer, $this->kmlLayers, true)]);
-        $this->kmlLayers = array_values($this->kmlLayers);
+        $this->kmlLayers = empty($this->kmlLayers) ? [] : array_values($this->kmlLayers);
         $this->removeExtendable($kmlLayer);
     }
 

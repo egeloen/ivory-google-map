@@ -47,7 +47,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
 
         parent::setUp();
 
-        if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
+        if (isset($_SERVER['CACHE_RESET']) && $_SERVER['CACHE_RESET']) {
             sleep(5);
         }
 
@@ -499,7 +499,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         foreach ($iterator as $key => $response) {
             $this->assertPlaceSearchResponse($response, $key === 0 ? $request : null);
 
-            if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
+            if (isset($_SERVER['CACHE_RESET']) && $_SERVER['CACHE_RESET']) {
                 sleep(5);
             }
         }

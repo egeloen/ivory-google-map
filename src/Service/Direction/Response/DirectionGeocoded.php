@@ -169,6 +169,6 @@ class DirectionGeocoded
     public function removeType($type)
     {
         unset($this->types[array_search($type, $this->types, true)]);
-        $this->types = array_values($this->types);
+        $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 }

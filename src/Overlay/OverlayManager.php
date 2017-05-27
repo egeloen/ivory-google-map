@@ -240,7 +240,7 @@ class OverlayManager
     public function removeInfoWindow(InfoWindow $infoWindow)
     {
         unset($this->infoWindows[array_search($infoWindow, $this->infoWindows, true)]);
-        $this->infoWindows = array_values($this->infoWindows);
+        $this->infoWindows = empty($this->infoWindows) ? [] : array_values($this->infoWindows);
         $this->removeExtendable($infoWindow);
     }
 
@@ -310,7 +310,7 @@ class OverlayManager
     public function removePolyline(Polyline $polyline)
     {
         unset($this->polylines[array_search($polyline, $this->polylines, true)]);
-        $this->polylines = array_values($this->polylines);
+        $this->polylines = empty($this->polylines) ? [] : array_values($this->polylines);
         $this->removeExtendable($polyline);
     }
 
@@ -380,7 +380,7 @@ class OverlayManager
     public function removeEncodedPolyline(EncodedPolyline $encodedPolyline)
     {
         unset($this->encodedPolylines[array_search($encodedPolyline, $this->encodedPolylines, true)]);
-        $this->encodedPolylines = array_values($this->encodedPolylines);
+        $this->encodedPolylines = empty($this->encodedPolylines) ? [] : array_values($this->encodedPolylines);
         $this->removeExtendable($encodedPolyline);
     }
 
@@ -450,7 +450,7 @@ class OverlayManager
     public function removePolygon(Polygon $polygon)
     {
         unset($this->polygons[array_search($polygon, $this->polygons, true)]);
-        $this->polygons = array_values($this->polygons);
+        $this->polygons = empty($this->polygons) ? [] : array_values($this->polygons);
         $this->removeExtendable($polygon);
     }
 
@@ -520,7 +520,7 @@ class OverlayManager
     public function removeRectangle(Rectangle $rectangle)
     {
         unset($this->rectangles[array_search($rectangle, $this->rectangles, true)]);
-        $this->rectangles = array_values($this->rectangles);
+        $this->rectangles = empty($this->rectangles) ? [] : array_values($this->rectangles);
         $this->removeExtendable($rectangle);
     }
 
@@ -590,7 +590,7 @@ class OverlayManager
     public function removeCircle(Circle $circle)
     {
         unset($this->circles[array_search($circle, $this->circles, true)]);
-        $this->circles = array_values($this->circles);
+        $this->circles = empty($this->circles) ? [] : array_values($this->circles);
         $this->removeExtendable($circle);
     }
 
@@ -660,7 +660,7 @@ class OverlayManager
     public function removeGroundOverlay(GroundOverlay $groundOverlay)
     {
         unset($this->groundOverlays[array_search($groundOverlay, $this->groundOverlays, true)]);
-        $this->groundOverlays = array_values($this->groundOverlays);
+        $this->groundOverlays = empty($this->groundOverlays) ? [] : array_values($this->groundOverlays);
         $this->removeExtendable($groundOverlay);
     }
 

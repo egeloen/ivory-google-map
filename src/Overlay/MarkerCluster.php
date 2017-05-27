@@ -149,7 +149,7 @@ class MarkerCluster implements OptionsAwareInterface, VariableAwareInterface
     public function removeMarker(Marker $marker)
     {
         unset($this->markers[array_search($marker, $this->markers, true)]);
-        $this->markers = array_values($this->markers);
+        $this->markers = empty($this->markers) ? [] : array_values($this->markers);
         $this->removeExtendable($marker);
     }
 

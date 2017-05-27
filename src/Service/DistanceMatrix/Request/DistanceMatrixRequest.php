@@ -151,7 +151,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     public function removeOrigin(LocationInterface $origin)
     {
         unset($this->origins[array_search($origin, $this->origins, true)]);
-        $this->origins = array_values($this->origins);
+        $this->origins = empty($this->origins) ? [] : array_values($this->origins);
     }
 
     /**
@@ -215,7 +215,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     public function removeDestination(LocationInterface $destination)
     {
         unset($this->destinations[array_search($destination, $this->destinations, true)]);
-        $this->destinations = array_values($this->destinations);
+        $this->destinations = empty($this->destinations) ? [] : array_values($this->destinations);
     }
 
     /**
@@ -399,7 +399,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     public function removeTransitMode($transitMode)
     {
         unset($this->transitModes[array_search($transitMode, $this->transitModes, true)]);
-        $this->transitModes = array_values($this->transitModes);
+        $this->transitModes = empty($this->transitModes) ? [] : array_values($this->transitModes);
     }
 
     /**

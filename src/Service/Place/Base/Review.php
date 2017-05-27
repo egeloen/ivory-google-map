@@ -256,6 +256,6 @@ class Review
     public function removeAspect(AspectRating $aspect)
     {
         unset($this->aspects[array_search($aspect, $this->aspects, true)]);
-        $this->aspects = array_values($this->aspects);
+        $this->aspects = empty($this->aspects) ? [] : array_values($this->aspects);
     }
 }

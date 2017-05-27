@@ -67,9 +67,13 @@ class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped();
         }
 
+        if (!isset($_SERVER['CACHE_PATH'])) {
+            $this->markTestSkipped();
+        }
+
         $this->staticMapHelper = $this->createStaticMapHelper();
 
-        $this->pool = new FilesystemAdapter('', 0, __DIR__.'/.cache');
+        $this->pool = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
         $this->messageFactory = new GuzzleMessageFactory();
 
         $this->client = new PluginClient(new Client(), [
@@ -79,7 +83,7 @@ class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
                 [
                     'cache_lifetime'                    => null,
                     'default_ttl'                       => null,
-                    'respect_response_cache_directives' => false,
+                    'respect_response_cache_directives' => [],
                 ]
             ),
         ]);
@@ -125,7 +129,23 @@ class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithZoom()
     {
         $map = new Map();
-        $map->setStaticOption('zoom', 10);
+        $map->setMapOption('zoom', 10);
+
+        $this->renderMap($map);
+    }
+
+    public function testRenderWithCenterCoordinate()
+    {
+        $map = new Map();
+        $map->setCenter(new Coordinate(1, 1));
+
+        $this->renderMap($map);
+    }
+
+    public function testRenderWithCenterAddress()
+    {
+        $map = new Map();
+        $map->setStaticOption('center', 'Lille, France');
 
         $this->renderMap($map);
     }

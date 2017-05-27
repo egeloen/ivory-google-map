@@ -592,7 +592,7 @@ class Place
     public function removeAddressComponent(AddressComponent $addressComponent)
     {
         unset($this->addressComponents[array_search($addressComponent, $this->addressComponents, true)]);
-        $this->addressComponents = array_values($this->addressComponents);
+        $this->addressComponents = empty($this->addressComponents) ? [] : array_values($this->addressComponents);
     }
 
     /**
@@ -656,7 +656,7 @@ class Place
     public function removePhoto(Photo $photo)
     {
         unset($this->photos[array_search($photo, $this->photos, true)]);
-        $this->photos = array_values($this->photos);
+        $this->photos = empty($this->photos) ? [] : array_values($this->photos);
     }
 
     /**
@@ -717,7 +717,7 @@ class Place
     public function removeAlternatePlaceId(AlternatePlaceId $alternatePlaceId)
     {
         unset($this->alternatePlaceIds[array_search($alternatePlaceId, $this->alternatePlaceIds, true)]);
-        $this->alternatePlaceIds = array_values($this->alternatePlaceIds);
+        $this->alternatePlaceIds = empty($this->alternatePlaceIds) ? [] : array_values($this->alternatePlaceIds);
     }
 
     /**
@@ -781,7 +781,7 @@ class Place
     public function removeReview(Review $review)
     {
         unset($this->reviews[array_search($review, $this->reviews, true)]);
-        $this->reviews = array_values($this->reviews);
+        $this->reviews = empty($this->reviews) ? [] : array_values($this->reviews);
     }
 
     /**
@@ -845,7 +845,7 @@ class Place
     public function removeType($type)
     {
         unset($this->types[array_search($type, $this->types, true)]);
-        $this->types = array_values($this->types);
+        $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
     /**

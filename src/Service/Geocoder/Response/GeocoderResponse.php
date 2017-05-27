@@ -142,6 +142,6 @@ class GeocoderResponse
     public function removeResult(GeocoderResult $result)
     {
         unset($this->results[array_search($result, $this->results, true)]);
-        $this->results = array_values($this->results);
+        $this->results = empty($this->results) ? [] : array_values($this->results);
     }
 }

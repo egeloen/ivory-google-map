@@ -159,7 +159,7 @@ class GeocoderResult
     public function removeAddressComponent(AddressComponent $addressComponent)
     {
         unset($this->addressComponents[array_search($addressComponent, $this->addressComponents, true)]);
-        $this->addressComponents = array_values($this->addressComponents);
+        $this->addressComponents = empty($this->addressComponents) ? [] : array_values($this->addressComponents);
     }
 
     /**
@@ -247,7 +247,7 @@ class GeocoderResult
     public function removePostcodeLocality($postcodeLocality)
     {
         unset($this->postcodeLocalities[array_search($postcodeLocality, $this->postcodeLocalities, true)]);
-        $this->postcodeLocalities = array_values($this->postcodeLocalities);
+        $this->postcodeLocalities = empty($this->postcodeLocalities) ? [] : array_values($this->postcodeLocalities);
     }
 
     /**
@@ -359,6 +359,6 @@ class GeocoderResult
     public function removeType($type)
     {
         unset($this->types[array_search($type, $this->types, true)]);
-        $this->types = array_values($this->types);
+        $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 }

@@ -85,7 +85,7 @@ class ControlManagerRenderer
     public function removeRenderer(ControlRendererInterface $renderer)
     {
         unset($this->renderers[array_search($renderer, $this->renderers, true)]);
-        $this->renderers = array_values($this->renderers);
+        $this->renderers = empty($this->renderers) ? [] : array_values($this->renderers);
     }
 
     /**

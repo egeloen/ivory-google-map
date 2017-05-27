@@ -152,7 +152,7 @@ class DirectionResponse
     public function removeRoute(DirectionRoute $route)
     {
         unset($this->routes[array_search($route, $this->routes, true)]);
-        $this->routes = array_values($this->routes);
+        $this->routes = empty($this->routes) ? [] : array_values($this->routes);
     }
 
     /**
@@ -216,7 +216,7 @@ class DirectionResponse
     public function removeGeocodedWaypoint(DirectionGeocoded $geocodedWaypoint)
     {
         unset($this->geocodedWaypoints[array_search($geocodedWaypoint, $this->geocodedWaypoints, true)]);
-        $this->geocodedWaypoints = array_values($this->geocodedWaypoints);
+        $this->geocodedWaypoints = empty($this->geocodedWaypoints) ? [] : array_values($this->geocodedWaypoints);
     }
 
     /**
@@ -280,6 +280,6 @@ class DirectionResponse
     public function removeAvailableTravelMode($availableTravelMode)
     {
         unset($this->availableTravelModes[array_search($availableTravelMode, $this->availableTravelModes, true)]);
-        $this->availableTravelModes = array_values($this->availableTravelModes);
+        $this->availableTravelModes = empty($this->availableTravelModes) ? [] : array_values($this->availableTravelModes);
     }
 }

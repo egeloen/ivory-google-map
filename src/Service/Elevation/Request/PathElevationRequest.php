@@ -99,7 +99,7 @@ class PathElevationRequest implements ElevationRequestInterface
     public function removePath(LocationInterface $path)
     {
         unset($this->paths[array_search($path, $this->paths, true)]);
-        $this->paths = array_values($this->paths);
+        $this->paths = empty($this->paths) ? [] : array_values($this->paths);
     }
 
     /**

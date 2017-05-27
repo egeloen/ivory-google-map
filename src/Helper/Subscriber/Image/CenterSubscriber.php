@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Subscriber\Image;
 
+use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Event\StaticMapEvent;
 use Ivory\GoogleMap\Helper\Event\StaticMapEvents;
 use Ivory\GoogleMap\Helper\Renderer\Image\Base\CoordinateRenderer;
@@ -44,10 +45,14 @@ class CenterSubscriber implements EventSubscriberInterface
         if ($map->hasStaticOption('center')) {
             $center = $map->getStaticOption('center');
         } elseif (!$map->isAutoZoom()) {
-            $center = $this->coordinateRenderer->render($map->getCenter());
+            $center = $map->getCenter();
         }
 
         if (isset($center)) {
+            if ($center instanceof Coordinate) {
+                $center = $this->coordinateRenderer->render($center);
+            }
+
             $event->setParameter('center', $center);
         }
     }

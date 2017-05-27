@@ -9,9 +9,12 @@
  * file that was distributed with this source code.
  */
 
-if (isset($_SERVER['RESET_CACHE']) && $_SERVER['RESET_CACHE']) {
-    exec(sprintf('rm -rf %s/Helper/Functional/.cache/*', __DIR__));
-    exec(sprintf('rm -rf %s/Service/.cache/*', __DIR__));
+if (isset($_SERVER['CACHE_PATH'])) {
+    $_SERVER['CACHE_PATH'] = __DIR__.'/../'.$_SERVER['CACHE_PATH'];
+
+    if (isset($_SERVER['CACHE_RESET']) && $_SERVER['CACHE_RESET']) {
+        exec('rm -rf '.$_SERVER['CACHE_PATH'].'/*');
+    }
 }
 
 require_once __DIR__.'/../vendor/autoload.php';
