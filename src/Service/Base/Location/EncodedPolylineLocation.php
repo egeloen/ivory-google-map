@@ -50,6 +50,6 @@ class EncodedPolylineLocation implements LocationInterface
      */
     public function buildQuery()
     {
-        return 'enc:'.$this->encodedPolyline;
+        return 'enc:'.$this->encodedPolyline . ':';
     }
 }
