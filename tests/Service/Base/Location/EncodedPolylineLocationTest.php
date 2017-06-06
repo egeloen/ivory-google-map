@@ -56,6 +56,6 @@ class EncodedPolylineLocationTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildQuery()
     {
-        $this->assertSame('enc:'.$this->encodedPolyline, $this->encodedPolylineLocation->buildQuery());
+        $this->assertSame('enc:' . $this->encodedPolyline . ':', $this->encodedPolylineLocation->buildQuery());
     }
 }
