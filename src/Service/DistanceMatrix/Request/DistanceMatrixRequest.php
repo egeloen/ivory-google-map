@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Service\DistanceMatrix\Request;
 
+use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 
 /**
@@ -504,7 +505,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     public function buildQuery()
     {
         $locationBuilder = function (LocationInterface $location) {
-            return $location->buildQuery();
+            return $location->buildQuery() . ($location instanceof EncodedPolylineLocation ? ':' : '');
         };
 
         $query = [

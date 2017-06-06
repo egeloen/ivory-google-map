@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix\Request;
 
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
+use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 use Ivory\GoogleMap\Service\Base\TrafficModel;
 use Ivory\GoogleMap\Service\Base\TransitMode;
@@ -440,7 +441,7 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
     private function assertBuild($actual, array $expected = [])
     {
         $locationBuilder = function (LocationInterface $location) {
-            return $location->buildQuery();
+            return $location->buildQuery() . ($location instanceof EncodedPolylineLocation ? ':' : '');
         };
 
         $this->assertSame(array_merge([
