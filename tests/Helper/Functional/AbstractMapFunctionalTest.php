@@ -65,14 +65,19 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     {
         $this->renderHtml(implode('', [$html, $this->mapHelper->render($map), $this->renderApi([$map])]));
 
-        $this->waitUntil(function () use ($map) {
-            try {
-                $this->assertObjectExists($map);
+        try {
+            $this->waitUntil(function () use ($map) {
+                try {
+                    $this->assertObjectExists($map);
 
-                return true;
-            } catch (\Exception $e) {
-            }
-        }, 5000);
+                    return true;
+                } catch (\Exception $e) {
+                }
+            }, 5000);
+        } catch (\Exception $e) {
+        }
+
+        $this->assertSame([], $this->log('browser'));
     }
 
     /**

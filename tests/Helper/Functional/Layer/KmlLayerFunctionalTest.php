@@ -31,16 +31,6 @@ class KmlLayerFunctionalTest extends AbstractMapFunctionalTest
         $this->assertMap($map);
     }
 
-    public function testRenderWithAutoZoom()
-    {
-        $map = new Map();
-        $map->setAutoZoom(true);
-        $map->getLayerManager()->addKmlLayer($this->createKmlLayer());
-
-        $this->renderMap($map);
-        $this->assertMap($map);
-    }
-
     /**
      * @return KmlLayer
      */

@@ -48,14 +48,19 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
             $this->renderApi([$autocomplete]),
         ]));
 
-        $this->waitUntil(function () use ($autocomplete) {
-            try {
-                $this->assertObjectExists($autocomplete);
+        try {
+            $this->waitUntil(function () use ($autocomplete) {
+                try {
+                    $this->assertObjectExists($autocomplete);
 
-                return true;
-            } catch (\Exception $e) {
-            }
-        }, 5000);
+                    return true;
+                } catch (\Exception $e) {
+                }
+            }, 5000);
+        } catch (\Exception $e) {
+        }
+
+        $this->assertSame([], $this->log('browser'));
     }
 
     /**

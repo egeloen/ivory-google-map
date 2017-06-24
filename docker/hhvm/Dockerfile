@@ -14,9 +14,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --in
 # Bash
 RUN chsh -s /bin/bash www-data
 
-# Permissions
-RUN chown www-data:www-data /var/www
-RUN mkdir /tmp/ivory-google-map && chmod 777 /tmp/ivory-google-map
+# Tests
+RUN mkdir -p /tmp/ivory-google-map && chmod 777 /tmp/ivory-google-map
+
+# Workspace
+RUN mkdir -p /tmp/ivory-google-map /var/www && chown www-data:www-data /tmp/ivory-google-map /var/www
 
 # Workdir
 WORKDIR /var/www/html

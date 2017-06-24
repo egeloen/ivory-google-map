@@ -16,7 +16,9 @@ services:
         <<: *php
         build: docker/hhvm
     selenium:
-        image: selenium/standalone-chrome:latest
+        build: docker/selenium
+        env_file:
+            - .env
         volumes:
             - tmp:/tmp/ivory-google-map
 

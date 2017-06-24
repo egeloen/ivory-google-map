@@ -75,15 +75,20 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
             $this->renderApi([$autocomplete, $map]),
         ]));
 
-        $this->waitUntil(function () use ($autocomplete, $map) {
-            try {
-                $this->assertObjectExists($autocomplete);
-                $this->assertObjectExists($map);
+        try {
+            $this->waitUntil(function () use ($autocomplete, $map) {
+                try {
+                    $this->assertObjectExists($autocomplete);
+                    $this->assertObjectExists($map);
 
-                return true;
-            } catch (\Exception $e) {
-            }
-        }, 5000);
+                    return true;
+                } catch (\Exception $e) {
+                }
+            }, 5000);
+        } catch (\Exception $e) {
+        }
+
+        $this->assertSame([], $this->log('browser'));
     }
 
     /**
