@@ -67,15 +67,31 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
      */
     protected function renderHtml($html)
     {
-        $name = tempnam(self::$directory, uniqid());
-        $file = fopen($name, 'w+');
-        fwrite($file, '<html><body>'.implode('', (array) $html).'</body></html>');
-        fflush($file);
+        if (($name = @tempnam(self::$directory, 'ivory-google-map')) === false) {
+            throw new \RuntimeException(sprintf('Unable to generate a unique file name in "%s".', self::$directory));
+        }
+
+        if (!is_resource($file = @fopen($name, 'w+'))) {
+            throw new \RuntimeException(sprintf('Unable to create the file "%s".', $name));
+        }
+
+        if (@fwrite($file, '<html><body>'.implode('', (array) $html).'</body></html>') === false) {
+            throw new \RuntimeException(sprintf('Unable to write in the file "%s".', $name));
+        }
+
+        if (@fflush($file) === false) {
+            throw new \RuntimeException(sprintf('Unable to flush the file "%s".', $name));
+        }
+
+        if (@fclose($file) === false) {
+            throw new\RuntimeException(sprintf('Unable to close the file "%s".', $name));
+        }
 
         $this->url(basename($name));
 
-        fclose($file);
-        unlink($name);
+        if (@unlink($name) === false) {
+            throw new \RuntimeException(sprintf('Unable to remove the file "%s".', $name));
+        }
     }
 
     /**
