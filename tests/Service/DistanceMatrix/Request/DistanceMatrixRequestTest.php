@@ -441,7 +441,13 @@ class DistanceMatrixRequestTest extends \PHPUnit_Framework_TestCase
     private function assertBuild($actual, array $expected = [])
     {
         $locationBuilder = function (LocationInterface $location) {
-            return $location->buildQuery() . ($location instanceof EncodedPolylineLocation ? ':' : '');
+            $result = $location->buildQuery();
+
+            if ($location instanceof EncodedPolylineLocation) {
+                $result .= ':';
+            }
+
+            return $result;
         };
 
         $this->assertSame(array_merge([

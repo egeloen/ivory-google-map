@@ -505,7 +505,13 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     public function buildQuery()
     {
         $locationBuilder = function (LocationInterface $location) {
-            return $location->buildQuery() . ($location instanceof EncodedPolylineLocation ? ':' : '');
+            $result = $location->buildQuery();
+
+            if ($location instanceof EncodedPolylineLocation) {
+                $result .= ':';
+            }
+
+            return $result;
         };
 
         $query = [
