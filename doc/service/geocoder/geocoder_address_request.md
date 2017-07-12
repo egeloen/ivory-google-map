@@ -32,7 +32,7 @@ If you want to provide component filtering, you can use:
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
 
 $request->setComponents([
-    GeocoderComponentType::POST_CODE => 59800,
+    GeocoderComponentType::POSTAL_CODE => 59800,
     GeocoderComponentType::COUNTRY   => 'fr',
 ]);
 ```
