@@ -64,7 +64,7 @@ A grouping of places to which you would like to restrict your results:
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 
 $request->setComponents([
-    AutocompleteComponentType::POST_CODE => 59800,
+    AutocompleteComponentType::POSTAL_CODE => 59800,
     AutocompleteComponentType::COUNTRY   => 'fr',
 ]);
 ```
