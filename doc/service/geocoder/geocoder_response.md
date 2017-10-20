@@ -25,7 +25,7 @@ Each result wraps the place id, a human readable address, some address & geometr
 some result types.
 
 ``` php
-foreach ($reponse->getResults() as $result) {
+foreach ($response->getResults() as $result) {
     // ...
 }
 ```
