@@ -77,11 +77,17 @@ abstract class AbstractHttpService extends AbstractService
 
     /**
      * @param RequestInterface $request
+     * @param string $type GET or POST
      *
      * @return PsrRequestInterface
      */
     protected function createRequest(RequestInterface $request)
     {
-        return $this->messageFactory->createRequest('GET', $this->createUrl($request));
+        return $this->messageFactory->createRequest(
+            $this->getMethod(),
+            $this->createUrl($request),
+            [],
+            $this->getMethod() == "POST" ? json_encode($request->buildQuery()) : null
+        );
     }
 }

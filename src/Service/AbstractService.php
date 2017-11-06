@@ -22,6 +22,11 @@ abstract class AbstractService
     private $url;
 
     /**
+    * @var string GET or POST
+    */
+    private $method = 'GET';
+
+    /**
      * @var string|null
      */
     private $key;
@@ -53,6 +58,22 @@ abstract class AbstractService
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
     }
 
     /**
@@ -110,7 +131,7 @@ abstract class AbstractService
      */
     protected function createUrl(RequestInterface $request)
     {
-        $query = $request->buildQuery();
+        $query = $this->method == 'GET' ? $request->buildQuery() : [];
 
         if ($this->hasKey()) {
             $query['key'] = $this->key;
