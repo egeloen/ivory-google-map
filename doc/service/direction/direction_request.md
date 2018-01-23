@@ -57,7 +57,7 @@ $request->setDepartureTime(new \DateTime());
 If you want to provide an arrival time, you can use:
 
 ``` php
-$request->setDepartureTime(new \DateTime());
+$request->setArrivalTime(new \DateTime());
 ```
 
 ## Configure waypoints
