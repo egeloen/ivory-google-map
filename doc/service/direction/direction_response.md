@@ -79,7 +79,7 @@ $types = $geocodedWaypoint->getTypes();
 A request can return many routes. The direction response wraps an array of `DirectionRoute`.
 
 ``` php
-$routes = $reponse->getRoutes();
+$routes = $response->getRoutes();
 ```
 
 ## Route
@@ -88,7 +88,7 @@ A direction route wraps a bound, a copyrights, legs, an overview polyline (encod
 order if you use it in your request.
 
 ``` php
-foreach ($reponse->getRoutes() as $route) {
+foreach ($response->getRoutes() as $route) {
     // ...
 }
 ```
