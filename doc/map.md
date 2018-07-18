@@ -178,7 +178,7 @@ $map->setStaticOption('styles', [
 If you want to configure map stylesheets, you can use:
 
 ``` php
-$map->setStylesheet('position', 'absolute');
+$map->setStylesheetOption('position', 'absolute');
 ```
 
 ## Configure html attributes
