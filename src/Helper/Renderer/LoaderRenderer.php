@@ -128,6 +128,6 @@ class LoaderRenderer extends AbstractJsonRenderer
      */
     public function renderSource($callback)
     {
-        return 'https://www.google.com/jsapi?callback='.$callback;
+        return 'https://www.google.com/jsapi?callback='.$callback.'&key='.$this->key;
     }
 }
