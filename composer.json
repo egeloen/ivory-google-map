@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "php": "^5.6|^7.0",
-        "egeloen/json-builder": "^2.0|^3.0",
-        "symfony/event-dispatcher": "^2.7|^3.0"
+        "php": "^5.6 || ^7.0",
+        "egeloen/json-builder": "^2.0 || ^3.0",
+        "symfony/event-dispatcher": "^2.7 || ^3.0 || ^4.0"
     },
     "require-dev": {
         "egeloen/serializer": "^1.0",
@@ -21,8 +21,8 @@
         "php-http/guzzle6-adapter": "^1.0",
         "phpunit/phpunit": "^5.4",
         "phpunit/phpunit-selenium": "dev-master",
-        "symfony/cache": "^3.2",
-        "symfony/phpunit-bridge": "^2.7|^3.0"
+        "symfony/cache": "^3.2 || ^4.0",
+        "symfony/phpunit-bridge": "^2.7 || ^3.0 || ^4.0"
     },
     "suggest": {
         "egeloen/serializer": "Allows to use http services",
