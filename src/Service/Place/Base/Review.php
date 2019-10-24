@@ -29,6 +29,11 @@ class Review
     /**
      * @var string|null
      */
+    private $profilePhotoUrl;
+
+    /**
+     * @var string|null
+     */
     private $text;
 
     /**
@@ -40,6 +45,11 @@ class Review
      * @var \DateTime|null
      */
     private $time;
+
+    /**
+     * @var string|null
+     */
+    private $relativeTimeDescription;
 
     /**
      * @var string|null
@@ -97,6 +107,30 @@ class Review
     public function setAuthorUrl($authorUrl)
     {
         $this->authorUrl = $authorUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasProfilePhotoUrl()
+    {
+        return $this->profilePhotoUrl !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProfilePhotoUrl()
+    {
+        return $this->profilePhotoUrl;
+    }
+
+    /**
+     * @param string|null $profilePhotoUrl
+     */
+    public function setProfilePhotoUrl($profilePhotoUrl)
+    {
+        $this->profilePhotoUrl = $profilePhotoUrl;
     }
 
     /**
@@ -169,6 +203,30 @@ class Review
     public function setTime(\DateTime $time = null)
     {
         $this->time = $time;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRelativeTimeDescription()
+    {
+        return $this->relativeTimeDescription !== null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelativeTimeDescription()
+    {
+        return $this->relativeTimeDescription;
+    }
+
+    /**
+     * @param string|null $relativeTimeDescription
+     */
+    public function setRelativeTimeDescription($relativeTimeDescription)
+    {
+        $this->relativeTimeDescription = $relativeTimeDescription;
     }
 
     /**

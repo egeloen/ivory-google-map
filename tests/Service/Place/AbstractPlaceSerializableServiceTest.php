@@ -57,6 +57,7 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
             'photos'                     => [],
             'alt_ids'                    => [],
             'reviews'                    => [],
+            'user_ratings_total'         => null,
             'types'                      => [],
             'permanently_close'          => null,
         ], $options);
@@ -79,6 +80,7 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertSame($options['types'], $place->getTypes());
         $this->assertSame($options['permanently_close'], $place->isPermanentlyClose());
         $this->assertSame(isset($options['rating']) ? (float) $options['rating'] : null, $place->getRating());
+        $this->assertSame(isset($options['user_ratings_total']) ? (int) $options['user_ratings_total'] : null, $place->getUserRatingsTotal());
 
         $this->assertGeometry($place->getGeometry(), $options['geometry']);
         $this->assertOpeningHours($place->getOpeningHours(), $options['opening_hours']);
@@ -200,22 +202,26 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         }
 
         $options = array_merge([
-            'author_name' => null,
-            'author_url'  => null,
-            'text'        => null,
-            'rating'      => null,
-            'time'        => null,
-            'language'    => null,
-            'aspects'     => [],
+            'author_name'               => null,
+            'author_url'                => null,
+            'profile_photo_url'         => null,
+            'text'                      => null,
+            'rating'                    => null,
+            'time'                      => null,
+            'relative_time_description' => null,
+            'language'                  => null,
+            'aspects'                   => [],
         ], $options);
 
         $this->assertInstanceOf(Review::class, $review);
 
         $this->assertSame($options['author_name'], $review->getAuthorName());
         $this->assertSame($options['author_url'], $review->getAuthorUrl());
+        $this->assertSame($options['profile_photo_url'], $review->getProfilePhotoUrl());
         $this->assertSame($options['text'], $review->getText());
         $this->assertSame((float) $options['rating'], $review->getRating());
         $this->assertSame((new \DateTime('@'.$options['time']))->getTimestamp(), $review->getTime()->getTimestamp());
+        $this->assertSame($options['relative_time_description'], $review->getRelativeTimeDescription());
         $this->assertSame($options['language'], $review->getLanguage());
 
         $this->assertCount(count($options['aspects']), $aspects = $review->getAspects());

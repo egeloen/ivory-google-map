@@ -120,6 +120,11 @@ class Place
     private $reviews = [];
 
     /**
+     * @var int|null
+     */
+    private $userRatingsTotal;
+
+    /**
      * @var string[]
      */
     private $types = [];
@@ -391,6 +396,30 @@ class Place
     public function setRating($rating)
     {
         $this->rating = $rating;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUserRatingsTotal()
+    {
+        return $this->userRatingsTotal !== null;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getUserRatingsTotal()
+    {
+        return $this->userRatingsTotal;
+    }
+
+    /**
+     * @param int|null $userRatingsTotal
+     */
+    public function setUserRatingsTotal($userRatingsTotal)
+    {
+        $this->userRatingsTotal = $userRatingsTotal;
     }
 
     /**

@@ -38,12 +38,16 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->review->getAuthorName());
         $this->assertFalse($this->review->hasAuthorUrl());
         $this->assertNull($this->review->getAuthorUrl());
+        $this->assertFalse($this->review->hasProfilePhotoUrl());
+        $this->assertNull($this->review->getProfilePhotoUrl());
         $this->assertFalse($this->review->hasText());
         $this->assertNull($this->review->getText());
         $this->assertFalse($this->review->hasRating());
         $this->assertNull($this->review->getRating());
         $this->assertFalse($this->review->hasTime());
         $this->assertNull($this->review->getTime());
+        $this->assertFalse($this->review->hasRelativeTimeDescription());
+        $this->assertNull($this->review->getRelativeTimeDescription());
         $this->assertFalse($this->review->hasLanguage());
         $this->assertNull($this->review->getLanguage());
         $this->assertFalse($this->review->hasAspects());
@@ -64,6 +68,14 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->review->hasAuthorUrl());
         $this->assertSame($authorUrl, $this->review->getAuthorUrl());
+    }
+
+    public function testProfilePhotoUrl()
+    {
+        $this->review->setProfilePhotoUrl($profilePhotoUrl = 'photo_url');
+
+        $this->assertTrue($this->review->hasProfilePhotoUrl());
+        $this->assertSame($profilePhotoUrl, $this->review->getProfilePhotoUrl());
     }
 
     public function testText()
@@ -88,6 +100,14 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->review->hasTime());
         $this->assertSame($time, $this->review->getTime());
+    }
+
+    public function testRelativeTimeDescription()
+    {
+        $this->review->setRelativeTimeDescription($time = "a month ago");
+
+        $this->assertTrue($this->review->hasRelativeTimeDescription());
+        $this->assertSame($time, $this->review->getRelativeTimeDescription());
     }
 
     public function testLanguage()
