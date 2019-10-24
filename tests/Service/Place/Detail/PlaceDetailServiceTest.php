@@ -78,6 +78,39 @@ class PlaceDetailServiceTest extends AbstractPlaceSerializableServiceTest
      * @param string $format
      *
      * @dataProvider formatProvider
+     */
+    public function testProcessWithRegion($format)
+    {
+        $request = $this->createRequest();
+        $request->setRegion('uk');
+
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertPlaceDetailResponse($response, $request);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
+     */
+    public function testProcessWithBasicFields($format)
+    {
+        $request = $this->createRequest()->withBasicFields();
+
+        $this->service->setFormat($format);
+        $response = $this->service->process($request);
+
+        $this->assertPlaceDetailResponse($response, $request);
+        $this->assertFalse($response->getResult()->hasReviews());
+        $this->assertTrue($response->getResult()->hasFormattedAddress());
+    }
+
+    /**
+     * @param string $format
+     *
+     * @dataProvider formatProvider
      *
      * @expectedException \Http\Client\Common\Exception\ClientErrorException
      * @expectedExceptionMessage REQUEST_DENIED

@@ -10,4 +10,10 @@
 
 # PHPUnit
 /phpunit.xml
+/phpunit.xml.dist
+/phpunit.ci.xml
 /build
+
+#PHPStorm folder
+/.idea
+

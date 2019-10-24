@@ -23,6 +23,12 @@
         />
 
         <property
+            name="profilePhotoUrl"
+            type="string"
+            expose="true"
+        />
+
+        <property
             name="text"
             type="string"
             expose="true"
@@ -31,6 +37,12 @@
         <property
             name="rating"
             type="float"
+            expose="true"
+        />
+
+        <property
+            name="relativeTimeDescription"
+            type="string"
             expose="true"
         />
 

@@ -2,12 +2,13 @@ FROM php:latest
 
 # APT packages
 RUN apt-get update && apt-get install -y \
-    zlib1g-dev \
+    zlib1g-dev libzip-dev zip\
     git \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP extensions
-RUN docker-php-ext-install zip
+RUN docker-php-ext-configure zip --with-libzip \
+    && docker-php-ext-install zip
 
 # XDebug extensions
 RUN pecl install xdebug \

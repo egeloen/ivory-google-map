@@ -64,6 +64,8 @@ class PlaceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->result->getPriceLevel());
         $this->assertFalse($this->result->hasRating());
         $this->assertNull($this->result->getRating());
+        $this->assertFalse($this->result->hasUserRatingsTotal());
+        $this->assertNull($this->result->getUserRatingsTotal());
         $this->assertFalse($this->result->hasUtcOffset());
         $this->assertNull($this->result->getUtcOffset());
         $this->assertFalse($this->result->hasVicinity());
@@ -174,6 +176,14 @@ class PlaceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->result->hasRating());
         $this->assertSame($rating, $this->result->getRating());
+    }
+
+    public function testUserRatingsTotal()
+    {
+        $this->result->setUserRatingsTotal($userRatingsTotal = 48);
+
+        $this->assertTrue($this->result->hasUserRatingsTotal());
+        $this->assertSame($userRatingsTotal, $this->result->getUserRatingsTotal());
     }
 
     public function testUtcOffset()
