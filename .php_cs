@@ -26,5 +26,7 @@ return Config::create()
         'array_syntax'           => ['syntax' => 'short'],
         'binary_operator_spaces' => ['align_double_arrow' => true],
         'ordered_imports'        => true,
+        'no_superfluous_phpdoc_tags' => false,
+        'concat_space' => ['spacing' => 'one'],
     ])
     ->setFinder($finder);

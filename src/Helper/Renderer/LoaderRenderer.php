@@ -19,6 +19,8 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class LoaderRenderer extends AbstractJsonRenderer
 {
+    const GOOGLE_URL = 'https://www.gstatic.com/charts/loader.js?callback=';
+
     /**
      * @var string
      */
@@ -33,7 +35,7 @@ class LoaderRenderer extends AbstractJsonRenderer
      * @param Formatter   $formatter
      * @param JsonBuilder $jsonBuilder
      * @param string      $language
-     * @param string|null $key
+     * @param null        $key
      */
     public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder, $language = 'en', $key = null)
     {
@@ -64,7 +66,7 @@ class LoaderRenderer extends AbstractJsonRenderer
      */
     public function hasKey()
     {
-        return $this->key !== null;
+        return null !== $this->key;
     }
 
     /**
@@ -91,13 +93,9 @@ class LoaderRenderer extends AbstractJsonRenderer
      *
      * @return string
      */
-    public function render(
-        $name,
-        $callback,
-        array $libraries = [],
-        $newLine = true
-    ) {
-        $formatter = $this->getFormatter();
+    public function render($name, $callback, array $libraries = [], $newLine = true)
+    {
+        $formatter   = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
 
         $parameters = ['language' => $this->language];
@@ -128,6 +126,6 @@ class LoaderRenderer extends AbstractJsonRenderer
      */
     public function renderSource($callback)
     {
-        return 'https://www.google.com/jsapi?callback='.$callback;
+        return self::GOOGLE_URL . $callback;
     }
 }
