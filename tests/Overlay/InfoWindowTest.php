@@ -19,11 +19,12 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\InfoWindowType;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class InfoWindowTest extends \PHPUnit_Framework_TestCase
+class InfoWindowTest extends TestCase
 {
     /**
      * @var InfoWindow

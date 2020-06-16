@@ -14,13 +14,13 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Image;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\EncodedPolylineRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\EncodedPolylineStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\EncodedPolylineValueRenderer;
-use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EncodedPolylineRendererTest extends \PHPUnit_Framework_TestCase
+class EncodedPolylineRendererTest extends TestCase
 {
     /**
      * @var EncodedPolylineRenderer

@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Service\Service\Base\Location;
 
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AddressLocationTest extends \PHPUnit_Framework_TestCase
+class AddressLocationTest extends TestCase
 {
     /**
      * @var AddressLocation

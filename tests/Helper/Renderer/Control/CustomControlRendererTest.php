@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\CustomControlRenderer;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CustomControlRendererTest extends \PHPUnit_Framework_TestCase
+class CustomControlRendererTest extends TestCase
 {
     /**
      * @var CustomControlRenderer

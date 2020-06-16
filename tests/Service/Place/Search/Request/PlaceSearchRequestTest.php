@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Service\Place\Base\PriceLevel;
 use Ivory\GoogleMap\Service\Place\Search\Request\AbstractPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceSearchRequestTest extends \PHPUnit_Framework_TestCase
+class PlaceSearchRequestTest extends TestCase
 {
     /**
      * @var AbstractPlaceSearchRequest|\PHPUnit_Framework_MockObject_MockObject

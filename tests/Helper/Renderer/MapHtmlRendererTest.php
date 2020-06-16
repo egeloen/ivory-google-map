@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapHtmlRenderer;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapHtmlRendererTest extends \PHPUnit_Framework_TestCase
+class MapHtmlRendererTest extends TestCase
 {
     /**
      * @var MapHtmlRenderer

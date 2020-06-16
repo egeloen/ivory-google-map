@@ -19,11 +19,12 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ControlRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlStyleRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlRendererTest extends \PHPUnit_Framework_TestCase
+class ZoomControlRendererTest extends TestCase
 {
     /**
      * @var ZoomControlRenderer

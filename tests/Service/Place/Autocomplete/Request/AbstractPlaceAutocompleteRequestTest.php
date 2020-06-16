@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Service\ContextualizedRequestInterface;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\AbstractPlaceAutocompleteRequest;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestInterface;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AbstractPlaceAutocompleteRequestTest extends \PHPUnit_Framework_TestCase
+class AbstractPlaceAutocompleteRequestTest extends TestCase
 {
     /**
      * @var AbstractPlaceAutocompleteRequest|\PHPUnit_Framework_MockObject_MockObject

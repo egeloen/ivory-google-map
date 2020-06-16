@@ -4,7 +4,6 @@
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/x981x6n27d0wpf0t/branch/master?svg=true)](https://ci.appveyor.com/project/egeloen/ivory-google-map/branch/master)
 [![Code Coverage](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/?branch=master)
-[![Dependency Status](http://www.versioneye.com/php/egeloen:google-map/badge.svg)](http://www.versioneye.com/php/egeloen:google-map)
 
 [![Latest Stable Version](https://poser.pugx.org/egeloen/google-map/v/stable.svg)](https://packagist.org/packages/egeloen/google-map)
 [![Latest Unstable Version](https://poser.pugx.org/egeloen/google-map/v/unstable.svg)](https://packagist.org/packages/egeloen/google-map)
@@ -13,8 +12,7 @@
 
 ## Overview
 
-The Ivory Google Map project provides a Google Map integration for your PHP 5.6+ project. It allows you to manage map,
-controls, overlays, events & services through the Google Map API v3.
+The Google Map project provides a Google Map integration for your PHP >= 7.0 project. It allows you to manage map, controls, overlays, events & services through the Google Map API v3.
 
 ``` php
 use Ivory\GoogleMap\Helper\Builder\ApiHelperBuilder;
@@ -33,9 +31,6 @@ echo $apiHelper->render([$map]);
 ```
 
 ## Documentation
-
-**You're currently browsing the 2.x documentation, if you're using the 1.x, read 
-[this documentation](https://github.com/egeloen/ivory-google-map/tree/1.4.1) instead.**
 
    - [Installation](/doc/installation.md)
    - [Usage](/doc/usage.md)

@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
 use Ivory\GoogleMap\Service\Place\Base\OpenClosePeriod;
 use Ivory\GoogleMap\Service\Place\Base\Period;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PeriodTest extends \PHPUnit_Framework_TestCase
+class PeriodTest extends TestCase
 {
     /**
      * @var Period

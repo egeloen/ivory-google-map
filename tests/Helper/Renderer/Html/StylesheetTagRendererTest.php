@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Helper\Renderer\Html\AbstractTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StylesheetTagRendererTest extends \PHPUnit_Framework_TestCase
+class StylesheetTagRendererTest extends TestCase
 {
     /**
      * @var StylesheetTagRenderer

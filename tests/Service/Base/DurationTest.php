@@ -12,11 +12,12 @@
 namespace Ivory\Tests\GoogleMap\Service\Base;
 
 use Ivory\GoogleMap\Service\Base\Duration;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DurationTest extends \PHPUnit_Framework_TestCase
+class DurationTest extends TestCase
 {
     /**
      * @var Duration

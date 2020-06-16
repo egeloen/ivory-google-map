@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Service\Base\Time;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitStop;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionTransitDetailsTest extends \PHPUnit_Framework_TestCase
+class DirectionTransitDetailsTest extends TestCase
 {
     /**
      * @var DirectionTransitDetails

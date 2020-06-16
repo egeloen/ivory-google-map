@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Html;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TagRendererTest extends \PHPUnit_Framework_TestCase
+class TagRendererTest extends TestCase
 {
     /**
      * @var TagRenderer

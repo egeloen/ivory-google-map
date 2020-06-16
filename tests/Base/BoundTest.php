@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class BoundTest extends \PHPUnit_Framework_TestCase
+class BoundTest extends TestCase
 {
     /**
      * @var Bound

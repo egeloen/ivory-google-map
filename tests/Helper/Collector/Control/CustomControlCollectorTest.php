@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Control\CustomControl;
 use Ivory\GoogleMap\Helper\Collector\Control\CustomControlCollector;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CustomControlCollectorTest extends \PHPUnit_Framework_TestCase
+class CustomControlCollectorTest extends TestCase
 {
     /**
      * @var CustomControlCollector

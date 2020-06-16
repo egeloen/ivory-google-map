@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 use Ivory\GoogleMap\Control\ZoomControlStyle;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlStyleRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlStyleRendererTest extends \PHPUnit_Framework_TestCase
+class ZoomControlStyleRendererTest extends TestCase
 {
     /**
      * @var ZoomControlStyleRenderer

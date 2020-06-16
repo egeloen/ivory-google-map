@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\EncodedPolylineRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EncodedPolylineRendererTest extends \PHPUnit_Framework_TestCase
+class EncodedPolylineRendererTest extends TestCase
 {
     /**
      * @var EncodedPolylineRenderer

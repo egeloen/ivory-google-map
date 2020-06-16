@@ -21,11 +21,12 @@ use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolylineRendererTest extends \PHPUnit_Framework_TestCase
+class PolylineRendererTest extends TestCase
 {
     /**
      * @var PolylineRenderer

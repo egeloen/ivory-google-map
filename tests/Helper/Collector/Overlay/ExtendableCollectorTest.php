@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Collector\Overlay;
 use Ivory\GoogleMap\Helper\Collector\Overlay\ExtendableCollector;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ExtendableCollectorTest extends \PHPUnit_Framework_TestCase
+class ExtendableCollectorTest extends TestCase
 {
     /**
      * @var ExtendableCollector

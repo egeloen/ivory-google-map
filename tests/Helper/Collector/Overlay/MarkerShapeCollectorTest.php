@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\MarkerShape;
 use Ivory\GoogleMap\Overlay\MarkerShapeType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerShapeCollectorTest extends \PHPUnit_Framework_TestCase
+class MarkerShapeCollectorTest extends TestCase
 {
     /**
      * @var MarkerShapeCollector

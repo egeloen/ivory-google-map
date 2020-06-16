@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Collector\Layer;
 use Ivory\GoogleMap\Helper\Collector\Layer\KmlLayerCollector;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class KmlLayerCollectorTest extends \PHPUnit_Framework_TestCase
+class KmlLayerCollectorTest extends TestCase
 {
     /**
      * @var KmlLayerCollector

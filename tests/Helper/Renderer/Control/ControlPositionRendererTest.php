@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ControlPositionRendererTest extends \PHPUnit_Framework_TestCase
+class ControlPositionRendererTest extends TestCase
 {
     /**
      * @var ControlPositionRenderer

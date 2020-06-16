@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\Serializer\SerializerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SerializableServiceTest extends \PHPUnit_Framework_TestCase
+class SerializableServiceTest extends TestCase
 {
     /**
      * @var AbstractSerializableService|\PHPUnit_Framework_MockObject_MockObject

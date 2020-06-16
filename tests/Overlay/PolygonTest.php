@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\Polygon;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolygonTest extends \PHPUnit_Framework_TestCase
+class PolygonTest extends TestCase
 {
     /**
      * @var Polygon

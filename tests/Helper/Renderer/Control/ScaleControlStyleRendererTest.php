@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Control\ScaleControlStyle;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ScaleControlStyleRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ScaleControlStyleRendererTest extends \PHPUnit_Framework_TestCase
+class ScaleControlStyleRendererTest extends TestCase
 {
     /**
      * @var ScaleControlStyleRenderer

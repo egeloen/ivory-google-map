@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\RectangleRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Rectangle;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RectangleRendererTest extends \PHPUnit_Framework_TestCase
+class RectangleRendererTest extends TestCase
 {
     /**
      * @var RectangleRenderer

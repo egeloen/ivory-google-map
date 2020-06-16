@@ -22,11 +22,12 @@ use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SymbolCollectorTest extends \PHPUnit_Framework_TestCase
+class SymbolCollectorTest extends TestCase
 {
     /**
      * @var SymbolCollector

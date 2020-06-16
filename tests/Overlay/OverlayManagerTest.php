@@ -23,11 +23,12 @@ use Ivory\GoogleMap\Overlay\OverlayManager;
 use Ivory\GoogleMap\Overlay\Polygon;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Rectangle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class OverlayManagerTest extends \PHPUnit_Framework_TestCase
+class OverlayManagerTest extends TestCase
 {
     /**
      * @var OverlayManager

@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixElement;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixElementStatus;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixElementTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixElementTest extends TestCase
 {
     /**
      * @var DistanceMatrixElement

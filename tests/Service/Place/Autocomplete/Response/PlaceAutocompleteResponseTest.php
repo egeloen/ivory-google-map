@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestI
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompletePrediction;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteResponse;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteStatus;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceAutocompleteResponseTest extends \PHPUnit_Framework_TestCase
+class PlaceAutocompleteResponseTest extends TestCase
 {
     /**
      * @var PlaceAutocompleteResponse

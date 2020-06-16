@@ -15,14 +15,14 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Helper\Renderer\Image\Base\PointRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\MarkerStyleRenderer;
-use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\Marker;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerStyleRendererTest extends \PHPUnit_Framework_TestCase
+class MarkerStyleRendererTest extends TestCase
 {
     /**
      * @var MarkerStyleRenderer

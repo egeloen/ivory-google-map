@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Photo\Request;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequest;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequestInterface;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlacePhotoRequestTest extends \PHPUnit_Framework_TestCase
+class PlacePhotoRequestTest extends TestCase
 {
     /**
      * @var PlacePhotoRequest

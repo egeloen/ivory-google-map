@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Place\AutocompleteContainerRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteContainerRendererTest extends \PHPUnit_Framework_TestCase
+class AutocompleteContainerRendererTest extends TestCase
 {
     /**
      * @var AutocompleteContainerRenderer

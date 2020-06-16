@@ -25,11 +25,12 @@ use Ivory\GoogleMap\Overlay\MarkerShapeType;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerRendererTest extends \PHPUnit_Framework_TestCase
+class MarkerRendererTest extends TestCase
 {
     /**
      * @var MarkerRenderer

@@ -16,13 +16,13 @@ use Ivory\GoogleMap\Helper\Renderer\Image\Base\CoordinateRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineLocationRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineStyleRenderer;
-use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Polyline;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolylineRendererTest extends \PHPUnit_Framework_TestCase
+class PolylineRendererTest extends TestCase
 {
     /**
      * @var PolylineRenderer

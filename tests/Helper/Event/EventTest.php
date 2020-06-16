@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Event;
 
 use Ivory\GoogleMap\Helper\Event\AbstractEvent;
 use Symfony\Component\EventDispatcher\Event;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EventTest extends \PHPUnit_Framework_TestCase
+class EventTest extends TestCase
 {
     /**
      * @var AbstractEvent

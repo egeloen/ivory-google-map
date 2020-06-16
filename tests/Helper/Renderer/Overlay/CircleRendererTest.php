@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\CircleRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Circle;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CircleRendererTest extends \PHPUnit_Framework_TestCase
+class CircleRendererTest extends TestCase
 {
     /**
      * @var CircleRenderer

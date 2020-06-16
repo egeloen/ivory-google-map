@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ExtendableRendererTest extends \PHPUnit_Framework_TestCase
+class ExtendableRendererTest extends TestCase
 {
     /**
      * @var ExtendableRenderer

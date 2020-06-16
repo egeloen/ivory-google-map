@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\GroundOverlay;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GroundOverlayTest extends \PHPUnit_Framework_TestCase
+class GroundOverlayTest extends TestCase
 {
     /**
      * @var GroundOverlay

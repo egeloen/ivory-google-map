@@ -32,11 +32,12 @@ use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\Polygon;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Rectangle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CoordinateCollectorTest extends \PHPUnit_Framework_TestCase
+class CoordinateCollectorTest extends TestCase
 {
     /**
      * @var CoordinateCollector

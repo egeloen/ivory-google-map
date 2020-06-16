@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class IconTest extends \PHPUnit_Framework_TestCase
+class IconTest extends TestCase
 {
     /**
      * @var Icon

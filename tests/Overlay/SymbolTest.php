@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SymbolTest extends \PHPUnit_Framework_TestCase
+class SymbolTest extends TestCase
 {
     /**
      * @var Symbol

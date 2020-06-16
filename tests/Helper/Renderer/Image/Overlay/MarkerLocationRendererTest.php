@@ -14,13 +14,13 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Image;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Renderer\Image\Base\CoordinateRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\MarkerLocationRenderer;
-use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Marker;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerLocationRendererTest extends \PHPUnit_Framework_TestCase
+class MarkerLocationRendererTest extends TestCase
 {
     /**
      * @var MarkerLocationRenderer

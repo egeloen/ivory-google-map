@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Control\StreetViewControlRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StreetViewControlRendererTest extends \PHPUnit_Framework_TestCase
+class StreetViewControlRendererTest extends TestCase
 {
     /**
      * @var StreetViewControlRenderer

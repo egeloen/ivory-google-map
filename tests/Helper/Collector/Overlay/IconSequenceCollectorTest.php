@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class IconSequenceCollectorTest extends \PHPUnit_Framework_TestCase
+class IconSequenceCollectorTest extends TestCase
 {
     /**
      * @var IconSequenceCollector

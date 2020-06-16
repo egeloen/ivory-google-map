@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\Html\AbstractTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\JavascriptTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class JavascriptTagRendererTest extends \PHPUnit_Framework_TestCase
+class JavascriptTagRendererTest extends TestCase
 {
     /**
      * @var JavascriptTagRenderer

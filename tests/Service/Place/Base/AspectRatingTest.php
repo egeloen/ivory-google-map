@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
 use Ivory\GoogleMap\Service\Place\Base\AspectRating;
 use Ivory\GoogleMap\Service\Place\Base\AspectRatingType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AspectRatingTest extends \PHPUnit_Framework_TestCase
+class AspectRatingTest extends TestCase
 {
     /**
      * @var AspectRating

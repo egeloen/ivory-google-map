@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Service\Service\Base\Location;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CoordinateLocationTest extends \PHPUnit_Framework_TestCase
+class CoordinateLocationTest extends TestCase
 {
     /**
      * @var CoordinateLocation

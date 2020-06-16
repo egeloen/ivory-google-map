@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Event;
 use Ivory\GoogleMap\Helper\Event\AbstractEvent;
 use Ivory\GoogleMap\Helper\Event\ApiEvent;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ApiEventTest extends \PHPUnit_Framework_TestCase
+class ApiEventTest extends TestCase
 {
     /**
      * @var ApiEvent
