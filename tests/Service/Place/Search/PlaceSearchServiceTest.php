@@ -350,6 +350,8 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
      * @param string $format
      *
      * @dataProvider formatProvider
+     *
+     * @group grain
      */
     public function testProcessWithTextRequestWithOpenNow($format)
     {

@@ -98,8 +98,8 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
 
         $this->assertInstanceOf(Coordinate::class, $coordinate);
 
-        $this->assertSame(round($options['lat'], 5), round($coordinate->getLatitude(), 5));
-        $this->assertSame(round($options['lng'], 5), round($coordinate->getLongitude(), 5));
+        $this->assertEqualsWithDelta($options['lat'], $coordinate->getLatitude(), 5);
+        $this->assertEqualsWithDelta($options['lng'], $coordinate->getLongitude(), 5);
     }
 
     /**
