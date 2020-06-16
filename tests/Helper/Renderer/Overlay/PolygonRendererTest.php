@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\PolygonRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Polygon;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolygonRendererTest extends \PHPUnit_Framework_TestCase
+class PolygonRendererTest extends TestCase
 {
     /**
      * @var PolygonRenderer

@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
 use Ivory\GoogleMap\Service\Place\Base\DayOfWeek;
 use Ivory\GoogleMap\Service\Place\Base\OpenClosePeriod;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class OpenClosePeriodTest extends \PHPUnit_Framework_TestCase
+class OpenClosePeriodTest extends TestCase
 {
     /**
      * @var OpenClosePeriod

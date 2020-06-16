@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Service\Place\Base\Place;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
 use Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailResponse;
 use Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailStatus;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceDetailResponseTest extends \PHPUnit_Framework_TestCase
+class PlaceDetailResponseTest extends TestCase
 {
     /**
      * @var PlaceDetailResponse

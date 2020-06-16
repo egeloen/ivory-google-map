@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Layer\HeatmapLayerRenderer;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
 use Ivory\GoogleMap\Map;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class HeatmapLayerRendererTest extends \PHPUnit_Framework_TestCase
+class HeatmapLayerRendererTest extends TestCase
 {
     /**
      * @var HeatmapLayerRenderer

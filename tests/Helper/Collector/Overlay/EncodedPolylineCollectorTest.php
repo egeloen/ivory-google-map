@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Collector\Overlay;
 use Ivory\GoogleMap\Helper\Collector\Overlay\EncodedPolylineCollector;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EncodedPolylineCollectorTest extends \PHPUnit_Framework_TestCase
+class EncodedPolylineCollectorTest extends TestCase
 {
     /**
      * @var EncodedPolylineCollector

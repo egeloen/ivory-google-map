@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Control\RotateControlRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RotateControlRendererTest extends \PHPUnit_Framework_TestCase
+class RotateControlRendererTest extends TestCase
 {
     /**
      * @var RotateControlRenderer

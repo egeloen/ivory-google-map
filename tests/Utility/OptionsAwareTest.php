@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Utility;
 
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class OptionsAwareTest extends \PHPUnit_Framework_TestCase
+class OptionsAwareTest extends TestCase
 {
     /**
      * @var OptionsAwareTrait

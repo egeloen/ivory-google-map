@@ -1,5 +1,4 @@
 # Composer
-/composer.lock
 /vendor
 
 # Docker
@@ -11,3 +10,6 @@
 # PHPUnit
 /phpunit.xml
 /build
+
+# PHPStorm
+/.idea

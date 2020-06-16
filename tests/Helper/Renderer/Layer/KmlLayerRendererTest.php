@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Renderer\Layer\KmlLayerRenderer;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Map;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class KmlLayerRendererTest extends \PHPUnit_Framework_TestCase
+class KmlLayerRendererTest extends TestCase
 {
     /**
      * @var KmlLayerRenderer

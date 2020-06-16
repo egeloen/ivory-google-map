@@ -31,11 +31,12 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapTypeIdRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ControlManagerRendererTest extends \PHPUnit_Framework_TestCase
+class ControlManagerRendererTest extends TestCase
 {
     /**
      * @var ControlManagerRenderer

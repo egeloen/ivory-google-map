@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterfac
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixRow;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixStatus;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DistanceMatrixResponseTest extends \PHPUnit_Framework_TestCase
+class DistanceMatrixResponseTest extends TestCase
 {
     /**
      * @var DistanceMatrixResponse

@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Event\AbstractEventRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AbstractEventRendererTest extends\PHPUnit_Framework_TestCase
+class AbstractEventRendererTest extends TestCase
 {
     /**
      * @var AbstractEventRenderer|\\PHPUnit_Framework_MockObject_MockObject

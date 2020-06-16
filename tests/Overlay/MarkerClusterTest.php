@@ -19,11 +19,12 @@ use Ivory\GoogleMap\Overlay\MarkerClusterType;
 use Ivory\GoogleMap\Overlay\OverlayManager;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerClusterTest extends \PHPUnit_Framework_TestCase
+class MarkerClusterTest extends TestCase
 {
     /**
      * @var MarkerCluster

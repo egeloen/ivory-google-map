@@ -19,11 +19,12 @@ use Ivory\GoogleMap\Control\RotateControl;
 use Ivory\GoogleMap\Control\ScaleControl;
 use Ivory\GoogleMap\Control\StreetViewControl;
 use Ivory\GoogleMap\Control\ZoomControl;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ControlManagerTest extends \PHPUnit_Framework_TestCase
+class ControlManagerTest extends TestCase
 {
     /**
      * @var ControlManager

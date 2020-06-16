@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Service\Place\Search\Request\PageTokenPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PageTokenPlaceSearchRequestTest extends \PHPUnit_Framework_TestCase
+class PageTokenPlaceSearchRequestTest extends TestCase
 {
     /**
      * @var PageTokenPlaceSearchRequest

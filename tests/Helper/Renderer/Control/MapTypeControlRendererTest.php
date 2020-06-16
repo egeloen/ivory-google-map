@@ -20,11 +20,12 @@ use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapTypeIdRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeControlRendererTest extends \PHPUnit_Framework_TestCase
+class MapTypeControlRendererTest extends TestCase
 {
     /**
      * @var MapTypeControlRenderer

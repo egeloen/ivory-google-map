@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 use Ivory\GoogleMap\Utility\StaticOptionsAwareInterface;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolylineTest extends \PHPUnit_Framework_TestCase
+class PolylineTest extends TestCase
 {
     /**
      * @var Polyline

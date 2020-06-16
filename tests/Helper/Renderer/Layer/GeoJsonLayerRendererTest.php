@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Renderer\Layer\GeoJsonLayerRenderer;
 use Ivory\GoogleMap\Layer\GeoJsonLayer;
 use Ivory\GoogleMap\Map;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeoJsonLayerRendererTest extends \PHPUnit_Framework_TestCase
+class GeoJsonLayerRendererTest extends TestCase
 {
     /**
      * @var GeoJsonLayerRenderer

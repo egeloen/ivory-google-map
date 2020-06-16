@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Fare;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionLeg;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionRoute;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionRouteTest extends \PHPUnit_Framework_TestCase
+class DirectionRouteTest extends TestCase
 {
     /**
      * @var DirectionRoute

@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\AbstractJavascriptHelperBuilder;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class JavascriptHelperBuilderTest extends \PHPUnit_Framework_TestCase
+class JavascriptHelperBuilderTest extends TestCase
 {
     /**
      * @var AbstractJavascriptHelperBuilder

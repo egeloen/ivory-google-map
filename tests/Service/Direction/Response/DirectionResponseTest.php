@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionResponse;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionRoute;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStatus;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionResponseTest extends \PHPUnit_Framework_TestCase
+class DirectionResponseTest extends TestCase
 {
     /**
      * @var DirectionResponse

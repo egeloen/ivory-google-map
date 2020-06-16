@@ -24,11 +24,12 @@ use Ivory\GoogleMap\Service\Plugin\ErrorPlugin;
 use Ivory\Tests\GoogleMap\Service\Utility\Journal;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractFunctionalServiceTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractFunctionalServiceTest extends TestCase
 {
     /**
      * @var Journal

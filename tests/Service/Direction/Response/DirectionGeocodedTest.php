@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocodedStatus;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocodedType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionGeocodedTest extends \PHPUnit_Framework_TestCase
+class DirectionGeocodedTest extends TestCase
 {
     /**
      * @var DirectionGeocoded

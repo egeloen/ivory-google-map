@@ -22,11 +22,12 @@ use Ivory\GoogleMap\Service\Direction\Request\DirectionRequest;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionWaypoint;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <gelon.eric@gmail.com>
  */
-class DirectionRequestTest extends \PHPUnit_Framework_TestCase
+class DirectionRequestTest extends TestCase
 {
     /**
      * @var DirectionRequest

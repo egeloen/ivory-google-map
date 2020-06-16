@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PathExtendableRenderer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PathExtendableRendererTest extends \PHPUnit_Framework_TestCase
+class PathExtendableRendererTest extends TestCase
 {
     /**
      * @var PathExtendableRenderer

@@ -15,11 +15,12 @@ use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\AbstractService;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class HttpServiceTest extends \PHPUnit_Framework_TestCase
+class HttpServiceTest extends TestCase
 {
     /**
      * @var AbstractHttpService|\PHPUnit_Framework_MockObject_MockObject

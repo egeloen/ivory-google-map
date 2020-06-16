@@ -13,11 +13,12 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
 use Ivory\GoogleMap\Service\Place\Base\OpeningHours;
 use Ivory\GoogleMap\Service\Place\Base\Period;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class OpeningHoursTest extends \PHPUnit_Framework_TestCase
+class OpeningHoursTest extends TestCase
 {
     /**
      * @var OpeningHours

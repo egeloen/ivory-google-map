@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Control;
 use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Control\ZoomControl;
 use Ivory\GoogleMap\Control\ZoomControlStyle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ZoomControlTest extends \PHPUnit_Framework_TestCase
+class ZoomControlTest extends TestCase
 {
     /**
      * @var ZoomControl

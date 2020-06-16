@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Helper\Renderer\Html\AbstractTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\TagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Place\AutocompleteHtmlRenderer;
 use Ivory\GoogleMap\Place\Autocomplete;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteHtmlRendererTest extends \PHPUnit_Framework_TestCase
+class AutocompleteHtmlRendererTest extends TestCase
 {
     /**
      * @var AutocompleteHtmlRenderer

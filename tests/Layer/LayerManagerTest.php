@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Layer\HeatmapLayer;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Layer\LayerManager;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class LayerManagerTest extends \PHPUnit_Framework_TestCase
+class LayerManagerTest extends TestCase
 {
     /**
      * @var LayerManager

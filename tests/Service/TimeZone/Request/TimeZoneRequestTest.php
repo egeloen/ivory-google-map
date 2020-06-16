@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\RequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TimeZoneRequestTest extends \PHPUnit_Framework_TestCase
+class TimeZoneRequestTest extends TestCase
 {
     /**
      * @var TimeZoneRequest

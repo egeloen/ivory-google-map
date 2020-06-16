@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Collector\Event;
 use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Helper\Collector\Event\DomEventCollector;
 use Ivory\GoogleMap\Map;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DomEventCollectorTest extends \PHPUnit_Framework_TestCase
+class DomEventCollectorTest extends TestCase
 {
     /**
      * @var DomEventCollector

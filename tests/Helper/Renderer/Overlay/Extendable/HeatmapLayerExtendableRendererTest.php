@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\HeatmapLayerExtendableRenderer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class HeatmapLayerExtendableRendererTest extends \PHPUnit_Framework_TestCase
+class HeatmapLayerExtendableRendererTest extends TestCase
 {
     /**
      * @var HeatmapLayerExtendableRenderer

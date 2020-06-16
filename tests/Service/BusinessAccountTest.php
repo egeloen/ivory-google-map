@@ -12,11 +12,12 @@
 namespace Ivory\Tests\GoogleMap\Service;
 
 use Ivory\GoogleMap\Service\BusinessAccount;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class BusinessAccountTest extends \PHPUnit_Framework_TestCase
+class BusinessAccountTest extends TestCase
 {
     /**
      * @var BusinessAccount

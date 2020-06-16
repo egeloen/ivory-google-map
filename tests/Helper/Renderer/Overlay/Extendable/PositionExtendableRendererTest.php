@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\PositionExtendableRenderer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PositionExtendableRendererTest extends \PHPUnit_Framework_TestCase
+class PositionExtendableRendererTest extends TestCase
 {
     /**
      * @var PositionExtendableRenderer

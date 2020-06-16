@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Collector\Overlay\RectangleCollector;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Rectangle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RectangleCollectorTest extends \PHPUnit_Framework_TestCase
+class RectangleCollectorTest extends TestCase
 {
     /**
      * @var RectangleCollector

@@ -30,13 +30,14 @@ use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  *
  * @group functional
  */
-class StaticMapFunctionalTest extends \PHPUnit_Framework_TestCase
+class StaticMapFunctionalTest extends TestCase
 {
     /**
      * @var StaticMapHelper

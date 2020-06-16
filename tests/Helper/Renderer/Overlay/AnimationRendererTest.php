@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\AnimationRenderer;
 use Ivory\GoogleMap\Overlay\Animation;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AnimationRendererTest extends \PHPUnit_Framework_TestCase
+class AnimationRendererTest extends TestCase
 {
     /**
      * @var AnimationRenderer

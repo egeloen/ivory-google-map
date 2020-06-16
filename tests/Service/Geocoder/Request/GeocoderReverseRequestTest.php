@@ -16,11 +16,12 @@ use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressType;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderReverseRequestTest extends \PHPUnit_Framework_TestCase
+class GeocoderReverseRequestTest extends TestCase
 {
     /**
      * @var AbstractGeocoderReverseRequest|\PHPUnit_Framework_MockObject_MockObject

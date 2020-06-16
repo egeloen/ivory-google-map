@@ -18,11 +18,12 @@ use Ivory\Serializer\SerializerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractUnitServiceTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractUnitServiceTest extends TestCase
 {
     /**
      * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject

@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\PositionalElevationRequest;
 use Ivory\GoogleMap\Service\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PositionalElevationRequestTest extends \PHPUnit_Framework_TestCase
+class PositionalElevationRequestTest extends TestCase
 {
     /**
      * @var PositionalElevationRequest

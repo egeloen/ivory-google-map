@@ -20,11 +20,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoWindowRendererInterface;
 use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\InfoWindowType;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class InfoWindowRendererTest extends \PHPUnit_Framework_TestCase
+class InfoWindowRendererTest extends TestCase
 {
     /**
      * @var AbstractInfoWindowRenderer|\PHPUnit_Framework_MockObject_MockObject

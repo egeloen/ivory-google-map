@@ -12,11 +12,12 @@
 namespace Ivory\Tests\GoogleMap\Service\Base;
 
 use Ivory\GoogleMap\Service\Base\Fare;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FareTest extends \PHPUnit_Framework_TestCase
+class FareTest extends TestCase
 {
     /**
      * @var Fare

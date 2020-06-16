@@ -17,11 +17,12 @@ use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\Marker;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class IconCollectorTest extends \PHPUnit_Framework_TestCase
+class IconCollectorTest extends TestCase
 {
     /**
      * @var IconCollector

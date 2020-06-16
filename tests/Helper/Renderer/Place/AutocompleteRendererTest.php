@@ -20,11 +20,12 @@ use Ivory\GoogleMap\Place\Autocomplete;
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
 use Ivory\JsonBuilder\JsonBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteRendererTest extends\PHPUnit_Framework_TestCase
+class AutocompleteRendererTest extends TestCase
 {
     /**
      * @var AutocompleteRenderer

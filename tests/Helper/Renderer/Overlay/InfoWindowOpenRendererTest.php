@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoWindowOpenRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Overlay\Marker;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class InfoWindowOpenRendererTest extends \PHPUnit_Framework_TestCase
+class InfoWindowOpenRendererTest extends TestCase
 {
     /**
      * @var InfoWindowOpenRenderer

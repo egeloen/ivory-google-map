@@ -14,13 +14,13 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer\Image;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Renderer\Image\Base\CoordinateRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Image\Overlay\PolylineLocationRenderer;
-use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Polyline;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PolylineLocationRendererTest extends \PHPUnit_Framework_TestCase
+class PolylineLocationRendererTest extends TestCase
 {
     /**
      * @var PolylineLocationRenderer

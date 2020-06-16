@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Base\SizeRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SizeRendererTest extends \PHPUnit_Framework_TestCase
+class SizeRendererTest extends TestCase
 {
     /**
      * @var SizeRenderer

@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Collector\Place\Base;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteBoundCollector;
 use Ivory\GoogleMap\Place\Autocomplete;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AutocompleteBoundCollectorTest extends \PHPUnit_Framework_TestCase
+class AutocompleteBoundCollectorTest extends TestCase
 {
     /**
      * @var AutocompleteBoundCollector

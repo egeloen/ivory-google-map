@@ -18,11 +18,12 @@ use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionStep;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DirectionStepTest extends \PHPUnit_Framework_TestCase
+class DirectionStepTest extends TestCase
 {
     /**
      * @var DirectionStep

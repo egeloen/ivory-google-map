@@ -12,11 +12,12 @@
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Image;
 
 use Ivory\GoogleMap\Helper\Renderer\Image\StyleRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StyleRendererTest extends \PHPUnit_Framework_TestCase
+class StyleRendererTest extends TestCase
 {
     /**
      * @var StyleRenderer

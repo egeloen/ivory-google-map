@@ -21,11 +21,12 @@ use Ivory\GoogleMap\Service\Place\Base\PlaceScope;
 use Ivory\GoogleMap\Service\Place\Base\PlaceType;
 use Ivory\GoogleMap\Service\Place\Base\PriceLevel;
 use Ivory\GoogleMap\Service\Place\Base\Review;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceTest extends \PHPUnit_Framework_TestCase
+class PlaceTest extends TestCase
 {
     /**
      * @var Place

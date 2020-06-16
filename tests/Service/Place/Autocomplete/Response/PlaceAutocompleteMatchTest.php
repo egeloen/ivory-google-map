@@ -12,11 +12,12 @@
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete\Response;
 
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteMatch;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceAutocompleteMatchTest extends\PHPUnit_Framework_TestCase
+class PlaceAutocompleteMatchTest extends TestCase
 {
     /**
      * @var PlaceAutocompleteMatch

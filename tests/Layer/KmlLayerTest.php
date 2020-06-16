@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Layer;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class KmlLayerTest extends \PHPUnit_Framework_TestCase
+class KmlLayerTest extends TestCase
 {
     /**
      * @var KmlLayer

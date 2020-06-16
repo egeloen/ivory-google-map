@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Control\MapTypeControlStyle;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlStyleRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapTypeControlStyleRendererTest extends \PHPUnit_Framework_TestCase
+class MapTypeControlStyleRendererTest extends TestCase
 {
     /**
      * @var MapTypeControlStyleRenderer

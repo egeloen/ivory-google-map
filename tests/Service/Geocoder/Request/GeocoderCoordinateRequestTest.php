@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class GeocoderCoordinateRequestTest extends \PHPUnit_Framework_TestCase
+class GeocoderCoordinateRequestTest extends TestCase
 {
     /**
      * @var GeocoderCoordinateRequest

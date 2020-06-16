@@ -14,11 +14,12 @@ namespace Ivory\Tests\GoogleMap\Helper\Renderer;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\ApiInitRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ApiInitRendererTest extends\PHPUnit_Framework_TestCase
+class ApiInitRendererTest extends TestCase
 {
     /**
      * @var ApiInitRenderer
@@ -85,7 +86,7 @@ EOF;
      */
     private function createCallbacks($object)
     {
-        $callbacks = new \SplObjectStorage();
+        $callbacks          = new \SplObjectStorage();
         $callbacks[$object] = 'main_callback';
 
         return $callbacks;
@@ -98,7 +99,7 @@ EOF;
      */
     private function createRequirements($object)
     {
-        $requirements = new \SplObjectStorage();
+        $requirements          = new \SplObjectStorage();
         $requirements[$object] = ['requirement1', 'requirement2'];
 
         return $requirements;

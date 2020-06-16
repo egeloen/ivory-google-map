@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Base\PointRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PointRendererTest extends \PHPUnit_Framework_TestCase
+class PointRendererTest extends TestCase
 {
     /**
      * @var PointRenderer

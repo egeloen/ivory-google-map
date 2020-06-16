@@ -15,11 +15,12 @@ use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Marker;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MarkerCollectorTest extends \PHPUnit_Framework_TestCase
+class MarkerCollectorTest extends TestCase
 {
     /**
      * @var MarkerCollector
