@@ -51,6 +51,11 @@ class SourceRenderer extends AbstractRenderer
                 $formatter->renderEscape(true),
                 true
             ),
+//            $formatter->renderAssignment(
+//                $formatter->renderProperty($variable, 'defer'),
+//                $formatter->renderEscape(true),
+//                true
+//            ),
             $formatter->renderAssignment(
                 $formatter->renderProperty($variable, 'src'),
                 $source,

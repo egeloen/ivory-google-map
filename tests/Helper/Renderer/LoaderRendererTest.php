@@ -128,7 +128,7 @@ EOF;
     public function testRenderSource()
     {
         $this->assertSame(
-            'https://maps.googleapis.com/maps/api/js?callback=callback',
+            'https://www.gstatic.com/charts/loader.js?callback=callback',
             $this->loaderRenderer->renderSource('callback')
         );
     }
