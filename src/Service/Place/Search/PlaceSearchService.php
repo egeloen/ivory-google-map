@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Service\Place\Search;
 
+use Http\Client\Exception;
 use Ivory\GoogleMap\Service\Place\AbstractPlaceSerializableService;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
@@ -31,8 +32,14 @@ class PlaceSearchService extends AbstractPlaceSerializableService
     public function process(PlaceSearchRequestInterface $request)
     {
         $httpRequest = $this->createRequest($request);
+
+//        print $httpRequest->getUri();
+
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
+//        file_put_contents('place.xml',(string)$httpResponse->getBody());
+
+        /** @var PlaceSearchResponse $response */
         $response = $this->deserialize(
             $httpResponse,
             PlaceSearchResponse::class,

@@ -20,6 +20,9 @@ use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementLoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\SourceRenderer;
 use Ivory\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use SplObjectStorage;
+use stdClass;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -44,6 +47,10 @@ class ApiRendererTest extends TestCase
             new SourceRenderer($formatter)
         );
     }
+
+    /*****************************************************************************/
+    /* Tests
+    /*****************************************************************************/
 
     public function testInheritance()
     {
@@ -79,12 +86,16 @@ class ApiRendererTest extends TestCase
         $this->assertSame($sourceRenderer, $this->apiRenderer->getSourceRenderer());
     }
 
+    //-----------------------------------------------------------------------------
+    // render
+    //-----------------------------------------------------------------------------
+
     public function testRender()
     {
         $this->assertSame(
-            'function ivory_google_map_load(){google.load("maps","3",{"other_params":"language=en&libraries=library1,library2","callback":ivory_google_map_init})};function ivory_google_map_init_source(src){var script=document.createElement("script");script.type="text/javascript";script.async=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};function ivory_google_map_init_requirement(c,r){if(r()){c();}else{var i=setInterval(function(){if(r()){clearInterval(i);c();}},100);}};function ivory_google_map_init(){ivory_google_map_init_source("source1");ivory_google_map_init_source("source2");ivory_google_map_init_requirement(main_callback,function(){return requirement1&&requirement2;});};ivory_google_map_init_source("https://www.google.com/jsapi?callback=ivory_google_map_load");',
+            'function ivory_google_map_init_source(src){var script=document.createElement("script");script.type="text/javascript";script.async=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};function ivory_google_map_init_requirement(c,r){if(r()){c();}else{var i=setInterval(function(){if(r()){clearInterval(i);c();}},100);}};function ivory_google_map_init(){ivory_google_map_init_source("source1");ivory_google_map_init_source("source2");ivory_google_map_init_requirement(main_callback,function(){return requirement1&&requirement2;});};ivory_google_map_init_source("https://maps.googleapis.com/maps/api/js?language=en&libraries=library1%2Clibrary2&callback=ivory_google_map_init");',
             $this->apiRenderer->render(
-                $this->createCallbacks($object = new \stdClass()),
+                $this->createCallbacks($object = new stdClass()),
                 $this->createRequirements($object),
                 ['source1', 'source2'],
                 ['library1', 'library2']
@@ -97,12 +108,6 @@ class ApiRendererTest extends TestCase
         $this->apiRenderer->getFormatter()->setDebug(true);
 
         $expected = <<<'EOF'
-function ivory_google_map_load () {
-    google.load("maps", "3", {
-        "other_params": "language=en&libraries=library1,library2",
-        "callback": ivory_google_map_init
-    })
-};
 function ivory_google_map_init_source (src) {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -129,25 +134,29 @@ function ivory_google_map_init () {
         return requirement1 && requirement2;
     });
 };
-ivory_google_map_init_source("https://www.google.com/jsapi?callback=ivory_google_map_load");
+ivory_google_map_init_source("https://maps.googleapis.com/maps/api/js?language=en&libraries=library1%2Clibrary2&callback=ivory_google_map_init");
 EOF;
 
         $this->assertSame($expected, $this->apiRenderer->render(
-            $this->createCallbacks($object = new \stdClass()),
+            $this->createCallbacks($object = new stdClass()),
             $this->createRequirements($object),
             ['source1', 'source2'],
             ['library1', 'library2']
         ));
     }
 
+    /*****************************************************************************/
+    /* Helpers
+    /*****************************************************************************/
+
     /**
      * @param object $object
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     private function createCallbacks($object)
     {
-        $callbacks = new \SplObjectStorage();
+        $callbacks = new SplObjectStorage();
         $callbacks[$object] = 'main_callback';
 
         return $callbacks;
@@ -156,18 +165,18 @@ EOF;
     /**
      * @param object $object
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     private function createRequirements($object)
     {
-        $requirements = new \SplObjectStorage();
+        $requirements = new SplObjectStorage();
         $requirements[$object] = ['requirement1', 'requirement2'];
 
         return $requirements;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ApiInitRenderer
+     * @return PHPUnit_Framework_MockObject_MockObject|ApiInitRenderer
      */
     private function createApiInitRendererMock()
     {
@@ -175,7 +184,7 @@ EOF;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|LoaderRenderer
+     * @return PHPUnit_Framework_MockObject_MockObject|LoaderRenderer
      */
     private function createLoaderRendererMock()
     {
@@ -183,7 +192,7 @@ EOF;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequirementLoaderRenderer
+     * @return PHPUnit_Framework_MockObject_MockObject|RequirementLoaderRenderer
      */
     private function createRequirementLoaderRendererMock()
     {
@@ -191,7 +200,7 @@ EOF;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SourceRenderer
+     * @return PHPUnit_Framework_MockObject_MockObject|SourceRenderer
      */
     private function createSourceRendererMock()
     {

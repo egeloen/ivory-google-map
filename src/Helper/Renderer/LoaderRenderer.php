@@ -19,21 +19,20 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class LoaderRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var string
-     */
+//    const GOOGLE_URL = 'https://www.gstatic.com/charts/loader.js?callback=';
+    const GOOGLE_URL = 'https://maps.googleapis.com/maps/api/js';
+
+    /** @var string */
     private $language;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $key;
 
     /**
      * @param Formatter   $formatter
      * @param JsonBuilder $jsonBuilder
      * @param string      $language
-     * @param string|null $key
+     * @param null        $key
      */
     public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder, $language = 'en', $key = null)
     {
@@ -64,7 +63,7 @@ class LoaderRenderer extends AbstractJsonRenderer
      */
     public function hasKey()
     {
-        return $this->key !== null;
+        return null !== $this->key;
     }
 
     /**
@@ -91,43 +90,38 @@ class LoaderRenderer extends AbstractJsonRenderer
      *
      * @return string
      */
-    public function render(
-        $name,
-        $callback,
-        array $libraries = [],
-        $newLine = true
-    ) {
-        $formatter = $this->getFormatter();
+    public function render($name, $callback, array $libraries = [], $newLine = true)
+    {
+        $formatter   = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
 
-        $parameters = ['language' => $this->language];
-
-        if ($this->hasKey()) {
-            $parameters['key'] = $this->key;
-        }
-
-        if (!empty($libraries)) {
-            $parameters['libraries'] = implode(',', $libraries);
-        }
-
         $jsonBuilder
-            ->setValue('[other_params]', urldecode(http_build_query($parameters, '', '&')))
             ->setValue('[callback]', $callback, false);
 
         return $formatter->renderClosure($formatter->renderCall($formatter->renderProperty('google', 'load'), [
-            $formatter->renderEscape('maps'),
-            $formatter->renderEscape('3'),
+            $formatter->renderEscape('current'),
             $jsonBuilder->build(),
         ]), [], $name, true, $newLine);
     }
 
     /**
-     * @param string $callback
+     * @param       $callback
+     * @param array $libraries
      *
      * @return string
      */
-    public function renderSource($callback)
+    public function renderSource($callback, array $libraries = [])
     {
-        return 'https://www.google.com/jsapi?callback='.$callback;
+        $queryParameters             = [];
+        $queryParameters['key']      = $this->key;
+        $queryParameters['language'] = $this->language;
+
+        if (count($libraries) > 0) {
+            $queryParameters['libraries'] = implode(',', $libraries);
+        }
+
+        $queryParameters['callback'] = $callback;
+
+        return self::GOOGLE_URL . '?' . http_build_query($queryParameters);
     }
 }

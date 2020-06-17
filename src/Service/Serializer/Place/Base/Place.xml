@@ -153,9 +153,30 @@
         />
 
         <property
-            name="permanentlyClose"
-            type="boolean"
-            expose="true"
+                name="permanentlyClose"
+                type="boolean"
+                expose="true"
         />
+
+        <property
+                name="businessStatus"
+                alias="business_status"
+                type="string"
+                expose="true"
+        />
+
+        <property
+                name="userRatingsTotal"
+                alias="user_ratings_total"
+                type="integer"
+                expose="true"
+        />
+
+        <property
+                name="plusCode"
+                type="Ivory\GoogleMap\Service\Place\Base\PlusCode"
+                expose="true"
+        />
+
     </class>
 </serializer>

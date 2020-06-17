@@ -1,15 +1,5 @@
 # README
 
-[![Travis Build Status](https://travis-ci.org/egeloen/ivory-google-map.svg?branch=master)](http://travis-ci.org/egeloen/ivory-google-map)
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/x981x6n27d0wpf0t/branch/master?svg=true)](https://ci.appveyor.com/project/egeloen/ivory-google-map/branch/master)
-[![Code Coverage](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-google-map/?branch=master)
-
-[![Latest Stable Version](https://poser.pugx.org/egeloen/google-map/v/stable.svg)](https://packagist.org/packages/egeloen/google-map)
-[![Latest Unstable Version](https://poser.pugx.org/egeloen/google-map/v/unstable.svg)](https://packagist.org/packages/egeloen/google-map)
-[![Total Downloads](https://poser.pugx.org/egeloen/google-map/downloads.svg)](https://packagist.org/packages/egeloen/google-map)
-[![License](https://poser.pugx.org/egeloen/google-map/license.svg)](https://packagist.org/packages/egeloen/google-map)
-
 ## Overview
 
 The Google Map project provides a Google Map integration for your PHP >= 7.0 project. It allows you to manage map, controls, overlays, events & services through the Google Map API v3.

@@ -35,6 +35,10 @@ class LoaderRendererTest extends TestCase
         $this->loaderRenderer = new LoaderRenderer(new Formatter(), new JsonBuilder());
     }
 
+    /*****************************************************************************/
+    /* Tests
+    /*****************************************************************************/
+
     public function testInheritance()
     {
         $this->assertInstanceOf(AbstractJsonRenderer::class, $this->loaderRenderer);
@@ -76,10 +80,14 @@ class LoaderRendererTest extends TestCase
         $this->assertSame($key, $this->loaderRenderer->getKey());
     }
 
+    //-----------------------------------------------------------------------------
+    // render
+    //-----------------------------------------------------------------------------
+
     public function testRender()
     {
         $this->assertSame(
-            'function name(){google.load("maps","3",{"other_params":"language=en&libraries=library1,library2","callback":callback})};',
+            'function name(){google.load("current",{"callback":callback})};',
             $this->loaderRenderer->render('name', 'callback', ['library1', 'library2'])
         );
     }
@@ -89,7 +97,7 @@ class LoaderRendererTest extends TestCase
         $this->loaderRenderer->setLanguage('fr');
 
         $this->assertSame(
-            'function name(){google.load("maps","3",{"other_params":"language=fr","callback":callback})};',
+            'function name(){google.load("current",{"callback":callback})};',
             $this->loaderRenderer->render('name', 'callback')
         );
     }
@@ -99,10 +107,13 @@ class LoaderRendererTest extends TestCase
         $this->loaderRenderer->setKey('key');
 
         $this->assertSame(
-            'function name(){google.load("maps","3",{"other_params":"language=en&key=key","callback":callback})};',
+            'function name(){google.load("current",{"callback":callback})};',
             $this->loaderRenderer->render('name', 'callback')
         );
     }
+
+
+
 
     public function testRenderWithDebug()
     {
@@ -110,8 +121,7 @@ class LoaderRendererTest extends TestCase
 
         $expected = <<<'EOF'
 function name () {
-    google.load("maps", "3", {
-        "other_params": "language=en&libraries=library1,library2",
+    google.load("current", {
         "callback": callback
     })
 };
@@ -125,11 +135,25 @@ EOF;
         ));
     }
 
-    public function testRenderSource()
+    //-----------------------------------------------------------------------------
+    // renderSource
+    //-----------------------------------------------------------------------------
+
+    /**
+     * @group source
+     */
+    public function test_render_source_without_libraries()
     {
-        $this->assertSame(
-            'https://www.google.com/jsapi?callback=callback',
-            $this->loaderRenderer->renderSource('callback')
-        );
+        $result = $this->loaderRenderer->renderSource('callback');
+        $this->assertSame('https://maps.googleapis.com/maps/api/js?language=en&callback=callback', $result);
+    }
+
+    /**
+     * @group source
+     */
+    public function test_render_source_with_libraries()
+    {
+        $result = $this->loaderRenderer->renderSource('init_google_map', ['places', 'charts']);
+        $this->assertSame(sprintf('https://maps.googleapis.com/maps/api/js?language=en&libraries=%s&callback=init_google_map', urlencode('places,charts')), $result);
     }
 }

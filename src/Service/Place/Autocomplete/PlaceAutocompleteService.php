@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Service\Place\Autocomplete;
 
+use Http\Client\Exception as HttpClientException;
 use Ivory\GoogleMap\Service\Place\AbstractPlaceSerializableService;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestInterface;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteResponse;
@@ -26,17 +27,16 @@ class PlaceAutocompleteService extends AbstractPlaceSerializableService
      * @param PlaceAutocompleteRequestInterface $request
      *
      * @return PlaceAutocompleteResponse
+     * @throws HttpClientException
      */
     public function process(PlaceAutocompleteRequestInterface $request)
     {
-        $httpRequest = $this->createRequest($request);
+        $httpRequest  = $this->createRequest($request);
+
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        $response = $this->deserialize(
-            $httpResponse,
-            PlaceAutocompleteResponse::class,
-            (new Context())->setNamingStrategy(new SnakeCaseNamingStrategy())
-        );
+        /** @var PlaceAutocompleteResponse $response */
+        $response = $this->deserialize($httpResponse, PlaceAutocompleteResponse::class, (new Context())->setNamingStrategy(new SnakeCaseNamingStrategy()));
 
         $response->setRequest($request);
 
