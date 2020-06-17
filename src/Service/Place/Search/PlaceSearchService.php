@@ -31,13 +31,19 @@ class PlaceSearchService extends AbstractPlaceSerializableService
      */
     public function process(PlaceSearchRequestInterface $request)
     {
+//        print 'PROCESS' . "\n\n";
+
         $httpRequest = $this->createRequest($request);
 
 //        print $httpRequest->getUri();
 
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-//        file_put_contents('place.xml',(string)$httpResponse->getBody());
+//        if($this->getFormat()==='json') {
+//            file_put_contents('place.json',(string)$httpResponse->getBody());
+//        } else {
+//            file_put_contents('place.xml',(string)$httpResponse->getBody());
+//        }
 
         /** @var PlaceSearchResponse $response */
         $response = $this->deserialize(

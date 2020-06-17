@@ -34,7 +34,8 @@ class DirectionService extends AbstractSerializableService
         HttpClient $client,
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
-    ) {
+    )
+    {
         parent::__construct('https://maps.googleapis.com/maps/api/directions', $client, $messageFactory, $serializer);
     }
 
@@ -45,7 +46,7 @@ class DirectionService extends AbstractSerializableService
      */
     public function route(DirectionRequestInterface $request)
     {
-        $httpRequest = $this->createRequest($request);
+        $httpRequest  = $this->createRequest($request);
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
         $response = $this->deserialize(

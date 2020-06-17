@@ -11,27 +11,20 @@
 
 namespace Ivory\GoogleMap\Service\Place\Search\Response;
 
+use Iterator;
 use Ivory\GoogleMap\Service\Place\Search\PlaceSearchService;
 use Ivory\GoogleMap\Service\Place\Search\Request\PageTokenPlaceSearchRequest;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PlaceSearchResponseIterator implements \Iterator
+class PlaceSearchResponseIterator implements Iterator
 {
-    /**
-     * @var PlaceSearchService
-     */
+    /** @var PlaceSearchService */
     private $service;
-
-    /**
-     * @var PlaceSearchResponse[]
-     */
+    /** @var PlaceSearchResponse[] */
     private $responses = [];
-
-    /**
-     * @var int
-     */
+    /** @var int */
     private $position = 0;
 
     /**
@@ -40,7 +33,7 @@ class PlaceSearchResponseIterator implements \Iterator
      */
     public function __construct(PlaceSearchService $service, PlaceSearchResponse $response)
     {
-        $this->service = $service;
+        $this->service     = $service;
         $this->responses[] = $response;
     }
 
@@ -75,7 +68,7 @@ class PlaceSearchResponseIterator implements \Iterator
             return;
         }
 
-        $request = new PageTokenPlaceSearchRequest($response);
+        $request           = new PageTokenPlaceSearchRequest($response);
         $this->responses[] = $this->service->process($request)->current();
     }
 

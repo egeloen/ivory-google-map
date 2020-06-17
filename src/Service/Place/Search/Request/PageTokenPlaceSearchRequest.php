@@ -18,9 +18,7 @@ use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
  */
 class PageTokenPlaceSearchRequest implements PlaceSearchRequestInterface
 {
-    /**
-     * @var PlaceSearchResponse
-     */
+    /** @var PlaceSearchResponse */
     private $response;
 
     /**
