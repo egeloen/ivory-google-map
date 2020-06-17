@@ -14,6 +14,7 @@ namespace Ivory\GoogleMap\Helper\Renderer;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementLoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\SourceRenderer;
+use SplObjectStorage;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -53,7 +54,8 @@ class ApiRenderer extends AbstractRenderer
         LoaderRenderer $loaderRenderer,
         RequirementLoaderRenderer $requirementLoaderRenderer,
         SourceRenderer $sourceRenderer
-    ) {
+    )
+    {
         parent::__construct($formatter);
 
         $this->setApiInitRenderer($apiInitRenderer);
@@ -127,28 +129,24 @@ class ApiRenderer extends AbstractRenderer
     }
 
     /**
-     * @param \SplObjectStorage $callbacks
-     * @param \SplObjectStorage $requirements
-     * @param string[]          $sources
-     * @param string[]          $libraries
+     * @param SplObjectStorage $callbacks
+     * @param SplObjectStorage $requirements
+     * @param string[]         $sources
+     * @param string[]         $libraries
      *
      * @return string
      */
-    public function render(
-        \SplObjectStorage $callbacks,
-        \SplObjectStorage $requirements,
-        array $sources = [],
-        array $libraries = []
-    ) {
+    public function render(SplObjectStorage $callbacks, SplObjectStorage $requirements, array $sources = [], array $libraries = [])
+    {
         $formatter = $this->getFormatter();
 
-        $loadCallback = $this->getCallbackName('load');
-        $initCallback = $this->getCallbackName('init');
-        $initSourceCallback = $this->getCallbackName('init_source');
+        $loadCallback            = $this->getCallbackName('load');
+        $initCallback            = $this->getCallbackName('init');
+        $initSourceCallback      = $this->getCallbackName('init_source');
         $initRequirementCallback = $this->getCallbackName('init_requirement');
 
         return $formatter->renderLines([
-            $this->loaderRenderer->render($loadCallback, $initCallback, $libraries, false),
+//            $this->loaderRenderer->render($loadCallback, $initCallback, $libraries, false),
             $this->sourceRenderer->render($initSourceCallback, null, null, false),
             $this->requirementLoaderRenderer->render($initRequirementCallback, null, null, null, 100, false),
             $this->apiInitRenderer->render(
@@ -161,7 +159,7 @@ class ApiRenderer extends AbstractRenderer
                 false
             ),
             $formatter->renderCall($initSourceCallback, [
-                $formatter->renderEscape($this->loaderRenderer->renderSource($loadCallback)),
+                $formatter->renderEscape($this->loaderRenderer->renderSource($initCallback, $libraries)),
             ], true),
         ], true, false);
     }
@@ -173,6 +171,6 @@ class ApiRenderer extends AbstractRenderer
      */
     private function getCallbackName($callback)
     {
-        return 'ivory_google_map_'.$callback;
+        return 'ivory_google_map_' . $callback;
     }
 }

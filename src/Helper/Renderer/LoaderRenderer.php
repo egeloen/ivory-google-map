@@ -19,16 +19,13 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class LoaderRenderer extends AbstractJsonRenderer
 {
-    const GOOGLE_URL = 'https://www.gstatic.com/charts/loader.js?callback=';
+//    const GOOGLE_URL = 'https://www.gstatic.com/charts/loader.js?callback=';
+    const GOOGLE_URL = 'https://maps.googleapis.com/maps/api/js';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $language;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $key;
 
     /**
@@ -98,34 +95,33 @@ class LoaderRenderer extends AbstractJsonRenderer
         $formatter   = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
 
-        $parameters = ['language' => $this->language];
-
-        if ($this->hasKey()) {
-            $parameters['key'] = $this->key;
-        }
-
-        if (!empty($libraries)) {
-            $parameters['libraries'] = implode(',', $libraries);
-        }
-
         $jsonBuilder
-            ->setValue('[other_params]', urldecode(http_build_query($parameters, '', '&')))
             ->setValue('[callback]', $callback, false);
 
         return $formatter->renderClosure($formatter->renderCall($formatter->renderProperty('google', 'load'), [
-            $formatter->renderEscape('maps'),
-            $formatter->renderEscape('3'),
+            $formatter->renderEscape('current'),
             $jsonBuilder->build(),
         ]), [], $name, true, $newLine);
     }
 
     /**
-     * @param string $callback
+     * @param       $callback
+     * @param array $libraries
      *
      * @return string
      */
-    public function renderSource($callback)
+    public function renderSource($callback, array $libraries = [])
     {
-        return self::GOOGLE_URL . $callback;
+        $queryParameters             = [];
+        $queryParameters['key']      = $this->key;
+        $queryParameters['language'] = $this->language;
+
+        if (count($libraries) > 0) {
+            $queryParameters['libraries'] = implode(',', $libraries);
+        }
+
+        $queryParameters['callback'] = $callback;
+
+        return self::GOOGLE_URL . '?' . http_build_query($queryParameters);
     }
 }
