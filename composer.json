@@ -1,6 +1,6 @@
 {
     "name": "validaide/google-map",
-    "description": "Google Map API v3 integration for PHP >= 7.0",
+    "description": "Google Map API v3 integration - PHP >= 7.0",
     "keywords": [
         "google",
         "map",
