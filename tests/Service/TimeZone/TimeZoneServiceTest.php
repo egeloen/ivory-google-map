@@ -34,9 +34,14 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
      */
     protected function setUp()
     {
+        if (!isset($_SERVER['API_KEY'])) {
+            $this->markTestSkipped();
+        }
+
         parent::setUp();
 
         $this->service = new TimeZoneService($this->client, $this->messageFactory);
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
     /**

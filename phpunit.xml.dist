@@ -13,6 +13,7 @@
         <server name="SELENIUM_HOST" value="selenium" />
         <server name="CACHE_PATH" value="tests/.cache" />
         <server name="CACHE_RESET" value="false" />
+        <ini name="memory_limit" value="256M" />
     </php>
     <filter>
         <whitelist>

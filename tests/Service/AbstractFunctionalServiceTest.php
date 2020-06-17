@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use DateTime;
 use Http\Adapter\Guzzle6\Client;
 use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin as HttpErrorPlugin;
@@ -22,9 +23,9 @@ use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Ivory\GoogleMap\Service\Plugin\ErrorPlugin;
 use Ivory\Tests\GoogleMap\Service\Utility\Journal;
+use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -70,7 +71,7 @@ abstract class AbstractFunctionalServiceTest extends TestCase
             sleep(2);
         }
 
-        $this->pool = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
+        $this->pool           = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
         $this->messageFactory = new GuzzleMessageFactory();
 
         $this->client = new PluginClient(new Client(), [
@@ -93,14 +94,14 @@ abstract class AbstractFunctionalServiceTest extends TestCase
      * @param string $key
      * @param string $value
      *
-     * @return \DateTime
+     * @return DateTime
      */
     protected function getDateTime($key, $value = 'now')
     {
-        $item = $this->pool->getItem(sha1(get_class().'::'.$key));
+        $item = $this->pool->getItem(sha1(get_class() . '::' . $key));
 
         if (!$item->isHit()) {
-            $item->set(new \DateTime($value));
+            $item->set(new DateTime($value));
             $this->pool->save($item);
         }
 

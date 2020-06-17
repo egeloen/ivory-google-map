@@ -890,7 +890,7 @@ class Place
     /**
      * @return string|null
      */
-    public function getBusinessStatus(): string
+    public function getBusinessStatus()
     {
         return $this->businessStatus;
     }
@@ -906,7 +906,7 @@ class Place
     /**
      * @return int|null
      */
-    public function getUserRatingsTotal(): int
+    public function getUserRatingsTotal()
     {
         return $this->userRatingsTotal;
     }
@@ -922,7 +922,7 @@ class Place
     /**
      * @return PlusCode|null
      */
-    public function getPlusCode(): PlusCode
+    public function getPlusCode()
     {
         return $this->plusCode;
     }

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place;
 
+use DateTime;
 use Ivory\GoogleMap\Service\Place\Base\AlternatePlaceId;
 use Ivory\GoogleMap\Service\Place\Base\AspectRating;
 use Ivory\GoogleMap\Service\Place\Base\OpenClosePeriod;
@@ -18,6 +19,7 @@ use Ivory\GoogleMap\Service\Place\Base\OpeningHours;
 use Ivory\GoogleMap\Service\Place\Base\Period;
 use Ivory\GoogleMap\Service\Place\Base\Photo;
 use Ivory\GoogleMap\Service\Place\Base\Place;
+use Ivory\GoogleMap\Service\Place\Base\PlusCode;
 use Ivory\GoogleMap\Service\Place\Base\Review;
 use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
 
@@ -33,7 +35,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertPlace($place, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($place);
+            $this->assertNull($place);
+
+            return;
         }
 
         $options = array_merge([
@@ -58,7 +62,10 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
             'alt_ids'                    => [],
             'reviews'                    => [],
             'types'                      => [],
+            'plus_code'                  => [],
             'permanently_close'          => null,
+            'business_status'            => null,
+            'user_ratings_total'         => null,
         ], $options);
 
         $this->assertInstanceOf(Place::class, $place);
@@ -78,10 +85,14 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertSame($options['website'], $place->getWebsite());
         $this->assertSame($options['types'], $place->getTypes());
         $this->assertSame($options['permanently_close'], $place->isPermanentlyClose());
-        $this->assertSame(isset($options['rating']) ? (float) $options['rating'] : null, $place->getRating());
+        $this->assertSame(isset($options['rating']) ? (float)$options['rating'] : null, $place->getRating());
+        $this->assertSame($options['business_status'], $place->getBusinessStatus());
+
+//        print $options['id'] . "\n";
 
         $this->assertGeometry($place->getGeometry(), $options['geometry']);
         $this->assertOpeningHours($place->getOpeningHours(), $options['opening_hours']);
+        $this->assertPlusCode($place->getPlusCode(), $options['plus_code']);
 
         $this->assertCount(count($options['address_components']), $addressComponents = $place->getAddressComponents());
 
@@ -121,8 +132,18 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
      */
     protected function assertOpeningHours($openingHours, array $options = [])
     {
+        // The opening hours can be missing completely, or be an empty tag
+
         if (empty($options)) {
-            return $this->assertNull($openingHours);
+            if ($openingHours instanceof OpeningHours) {
+                $this->assertNull($openingHours->isOpenNow());
+                $this->assertEmpty($openingHours->getPeriods());
+                $this->assertEmpty($openingHours->getWeekdayTexts());
+            } else {
+                $this->assertNull($openingHours);
+            }
+
+            return;
         }
 
         $options = array_merge([
@@ -151,7 +172,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertPhoto($photo, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($photo);
+            $this->assertNull($photo);
+
+            return;
         }
 
         $options = array_merge([
@@ -175,7 +198,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertAlternatePlaceId($alternatePlaceId, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($alternatePlaceId);
+            $this->assertNull($alternatePlaceId);
+
+            return;
         }
 
         $options = array_merge([
@@ -196,7 +221,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertReview($review, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($review);
+            $this->assertNull($review);
+
+            return;
         }
 
         $options = array_merge([
@@ -214,8 +241,8 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertSame($options['author_name'], $review->getAuthorName());
         $this->assertSame($options['author_url'], $review->getAuthorUrl());
         $this->assertSame($options['text'], $review->getText());
-        $this->assertSame((float) $options['rating'], $review->getRating());
-        $this->assertSame((new \DateTime('@'.$options['time']))->getTimestamp(), $review->getTime()->getTimestamp());
+        $this->assertSame((float)$options['rating'], $review->getRating());
+        $this->assertSame((new DateTime('@' . $options['time']))->getTimestamp(), $review->getTime()->getTimestamp());
         $this->assertSame($options['language'], $review->getLanguage());
 
         $this->assertCount(count($options['aspects']), $aspects = $review->getAspects());
@@ -233,7 +260,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertPeriod($period, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($period);
+            $this->assertNull($period);
+
+            return;
         }
 
         $options = array_merge([
@@ -254,7 +283,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertOpenClosePeriod($openClosePeriod, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($openClosePeriod);
+            $this->assertNull($openClosePeriod);
+
+            return;
         }
 
         $options = array_merge([
@@ -275,7 +306,9 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
     protected function assertAspectRating($aspectRating, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($aspectRating);
+            $this->assertNull($aspectRating);
+
+            return;
         }
 
         $options = array_merge([
@@ -286,6 +319,29 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertInstanceOf(AspectRating::class, $aspectRating);
 
         $this->assertSame($options['type'], $aspectRating->getType());
-        $this->assertSame((float) $options['rating'], $aspectRating->getRating());
+        $this->assertSame((float)$options['rating'], $aspectRating->getRating());
+    }
+
+    /**
+     * @param PlusCode $plusCode
+     * @param mixed[]  $options
+     */
+    protected function assertPlusCode($plusCode, array $options = [])
+    {
+        if (empty($options)) {
+            $this->assertNull($plusCode);
+
+            return;
+        }
+
+        $options = array_merge([
+            'global_code'   => null,
+            'compound_code' => null,
+        ], $options);
+
+        $this->assertInstanceOf(PlusCode::class, $plusCode);
+
+        $this->assertSame($options['global_code'], $plusCode->getGlobalCode());
+        $this->assertSame($options['compound_code'], $plusCode->getCompoundCode());
     }
 }

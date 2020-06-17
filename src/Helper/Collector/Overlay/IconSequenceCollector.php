@@ -20,9 +20,7 @@ use Ivory\GoogleMap\Overlay\IconSequence;
  */
 class IconSequenceCollector extends AbstractCollector
 {
-    /**
-     * @var PolylineCollector
-     */
+    /** @var PolylineCollector */
     private $polylineCollector;
 
     /**
@@ -59,7 +57,8 @@ class IconSequenceCollector extends AbstractCollector
     {
         foreach ($this->polylineCollector->collect($map) as $polyline) {
             if ($polyline->hasIconSequences()) {
-                $icons = $this->collectValues($polyline->getIconSequences());
+                // MB: Implemented a fix here for the IconSequenceHelper related to adding Ocean Steps
+                $icons = array_merge($icons, $this->collectValues($polyline->getIconSequences()));
             }
         }
 

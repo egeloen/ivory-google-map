@@ -1,0 +1,28 @@
+name: Build & Test Validaide/google-map
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@1.7.2
+        with:
+          php-version: '7.2'
+          tools: composer:1.9.3
+
+      - name: Update composer to version 1.9.3
+        run: sudo composer self-update 1.9.3 --snapshot
+
+      - name: Setup Access (composer)
+        run: composer config -g github-oauth.github.com ${{ secrets.PAT_GITHUB_ACTIONS }}
+
+      - name: Install PHP Dependencies (composer)
+        run: composer install --optimize-autoloader --prefer-dist --no-suggest --no-scripts
+        env:
+          SYMFONY_ENV: test
+
+      - name: PHPUnit
+        run: vendor/bin/phpunit

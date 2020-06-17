@@ -42,9 +42,14 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
      */
     protected function setUp()
     {
+        if (!isset($_SERVER['API_KEY'])) {
+            $this->markTestSkipped();
+        }
+
         parent::setUp();
 
         $this->service = new DistanceMatrixService($this->client, $this->messageFactory);
+        $this->service->setKey($_SERVER['API_KEY']);
     }
 
     /**
