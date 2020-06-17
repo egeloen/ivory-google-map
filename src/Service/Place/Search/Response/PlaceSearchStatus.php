@@ -16,11 +16,11 @@ namespace Ivory\GoogleMap\Service\Place\Search\Response;
  */
 final class PlaceSearchStatus
 {
-    const OK = 'OK';
-    const ZERO_RESULTS = 'ZERO_RESULTS';
+    const OK               = 'OK';
+    const ZERO_RESULTS     = 'ZERO_RESULTS';
     const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
-    const REQUEST_DENIED = 'REQUEST_DENIED';
-    const INVALID_REQUEST = 'INVALID_REQUEST';
+    const REQUEST_DENIED   = 'REQUEST_DENIED';
+    const INVALID_REQUEST  = 'INVALID_REQUEST';
 
     /**
      * @codeCoverageIgnore

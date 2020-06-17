@@ -130,6 +130,21 @@ class Place
     private $permanentlyClose;
 
     /**
+     * @var string|null
+     */
+    private $businessStatus;
+
+    /**
+     * @var int|null
+     */
+    private $userRatingsTotal;
+
+    /**
+     * @var PlusCode|null
+     */
+    private $plusCode;
+
+    /**
      * @return bool
      */
     public function hasId()
@@ -870,5 +885,53 @@ class Place
     public function setPermanentlyClose($permanentlyClose)
     {
         $this->permanentlyClose = $permanentlyClose;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBusinessStatus(): string
+    {
+        return $this->businessStatus;
+    }
+
+    /**
+     * @param string|null $businessStatus
+     */
+    public function setBusinessStatus(string $businessStatus)
+    {
+        $this->businessStatus = $businessStatus;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getUserRatingsTotal(): int
+    {
+        return $this->userRatingsTotal;
+    }
+
+    /**
+     * @param int|null $userRatingsTotal
+     */
+    public function setUserRatingsTotal(int $userRatingsTotal)
+    {
+        $this->userRatingsTotal = $userRatingsTotal;
+    }
+
+    /**
+     * @return PlusCode|null
+     */
+    public function getPlusCode(): PlusCode
+    {
+        return $this->plusCode;
+    }
+
+    /**
+     * @param PlusCode|null $plusCode
+     */
+    public function setPlusCode(PlusCode $plusCode)
+    {
+        $this->plusCode = $plusCode;
     }
 }
