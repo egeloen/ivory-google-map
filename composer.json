@@ -17,6 +17,12 @@
             "email": "mark.bijl@gmail.com"
         }
     ],
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2.13"
+        }
+    },
     "require": {
         "php": "^7.0",
         "egeloen/json-builder": "^3.0",
