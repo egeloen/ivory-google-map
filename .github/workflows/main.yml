@@ -23,5 +23,5 @@ jobs:
       - name: PHPUnit
         run: vendor/bin/phpunit
 
-      - name: Static Analysis (phpstan)
-        run: phpstan analyse --memory-limit=-1 --no-progress
+#      - name: Static Analysis (phpstan)
+#        run: phpstan analyse --memory-limit=-1 --no-progress
