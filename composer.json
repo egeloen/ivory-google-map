@@ -17,8 +17,14 @@
             "email": "mark.bijl@gmail.com"
         }
     ],
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4.13"
+        }
+    },
     "require": {
-        "php": "^7.0",
+        "php": "^7.4",
         "egeloen/json-builder": "^3.0",
         "symfony/event-dispatcher": "3.4.*",
         "ext-json": "*"
