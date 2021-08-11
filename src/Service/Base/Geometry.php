@@ -19,25 +19,13 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 class Geometry
 {
-    /**
-     * @var Coordinate|null
-     */
-    private $location;
+    private ?Coordinate $location = null;
 
-    /**
-     * @var string|null
-     */
-    private $locationType;
+    private ?string $locationType = null;
 
-    /**
-     * @var Bound|null
-     */
-    private $viewport;
+    private ?Bound $viewport = null;
 
-    /**
-     * @var Bound|null
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
     /**
      * @return bool

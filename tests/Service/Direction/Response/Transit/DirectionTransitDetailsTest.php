@@ -97,7 +97,7 @@ class DirectionTransitDetailsTest extends TestCase
 
     public function testHeadWay()
     {
-        $this->transitDetails->setHeadWay($headWay = 'headway');
+        $this->transitDetails->setHeadWay($headWay = 123);
 
         $this->assertTrue($this->transitDetails->hasHeadWay());
         $this->assertSame($headWay, $this->transitDetails->getHeadWay());

@@ -18,234 +18,138 @@ use Ivory\GoogleMap\Service\Base\Time;
  */
 class DirectionTransitDetails
 {
-    /**
-     * @var DirectionTransitStop|null
-     */
-    private $departureStop;
+    private ?DirectionTransitStop $departureStop = null;
 
-    /**
-     * @var DirectionTransitStop|null
-     */
-    private $arrivalStop;
+    private ?DirectionTransitStop $arrivalStop = null;
 
-    /**
-     * @var Time|null
-     */
-    private $departureTime;
+    private ?Time $departureTime = null;
 
-    /**
-     * @var Time|null
-     */
-    private $arrivalTime;
+    private ?Time $arrivalTime = null;
 
-    /**
-     * @var string|null
-     */
-    private $headSign;
+    private ?string $headSign = null;
 
-    /**
-     * @var int|null
-     */
-    private $headWay;
+    private ?int $headWay = null;
 
-    /**
-     * @var DirectionTransitLine|null
-     */
-    private $line;
+    private ?DirectionTransitLine $line = null;
 
-    /**
-     * @var int|null
-     */
-    private $numStops;
+    private ?int $numStops = null;
 
-    /**
-     * @return bool
-     */
-    public function hasDepartureStop()
+    public function hasDepartureStop(): bool
     {
         return $this->departureStop !== null;
     }
 
-    /**
-     * @return DirectionTransitStop|null
-     */
-    public function getDepartureStop()
+    public function getDepartureStop(): ?DirectionTransitStop
     {
         return $this->departureStop;
     }
 
-    /**
-     * @param DirectionTransitStop|null $departureStop
-     */
-    public function setDepartureStop(DirectionTransitStop $departureStop = null)
+    public function setDepartureStop(?DirectionTransitStop $departureStop = null): void
     {
         $this->departureStop = $departureStop;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasArrivalStop()
+    public function hasArrivalStop(): bool
     {
         return $this->arrivalStop !== null;
     }
 
-    /**
-     * @return DirectionTransitStop|null
-     */
-    public function getArrivalStop()
+    public function getArrivalStop(): ?DirectionTransitStop
     {
         return $this->arrivalStop;
     }
 
-    /**
-     * @param DirectionTransitStop|null $arrivalStop
-     */
-    public function setArrivalStop(DirectionTransitStop $arrivalStop = null)
+    public function setArrivalStop(?DirectionTransitStop $arrivalStop = null): void
     {
         $this->arrivalStop = $arrivalStop;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDepartureTime()
+    public function hasDepartureTime(): bool
     {
         return $this->departureTime !== null;
     }
 
-    /**
-     * @return Time|null
-     */
-    public function getDepartureTime()
+    public function getDepartureTime(): ?Time
     {
         return $this->departureTime;
     }
 
-    /**
-     * @param Time|null $departureTime
-     */
-    public function setDepartureTime(Time $departureTime = null)
+    public function setDepartureTime(?Time $departureTime = null): void
     {
         $this->departureTime = $departureTime;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasArrivalTime()
+    public function hasArrivalTime(): bool
     {
         return $this->arrivalTime !== null;
     }
 
-    /**
-     * @return Time|null
-     */
-    public function getArrivalTime()
+    public function getArrivalTime(): ?Time
     {
         return $this->arrivalTime;
     }
 
-    /**
-     * @param Time|null $arrivalTime
-     */
-    public function setArrivalTime(Time $arrivalTime = null)
+    public function setArrivalTime(?Time $arrivalTime = null): void
     {
         $this->arrivalTime = $arrivalTime;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHeadSign()
+    public function hasHeadSign(): bool
     {
         return $this->headSign !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getHeadSign()
+    public function getHeadSign(): ?string
     {
         return $this->headSign;
     }
 
-    /**
-     * @param string|null $headSign
-     */
-    public function setHeadSign($headSign)
+    public function setHeadSign(?string $headSign): void
     {
         $this->headSign = $headSign;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHeadWay()
+    public function hasHeadWay(): bool
     {
         return $this->headWay !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getHeadWay()
+    public function getHeadWay(): ?int
     {
         return $this->headWay;
     }
 
-    /**
-     * @param int|null $headWay
-     */
-    public function setHeadWay($headWay)
+    public function setHeadWay(?int $headWay): void
     {
         $this->headWay = $headWay;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLine()
+    public function hasLine(): bool
     {
         return $this->line !== null;
     }
 
-    /**
-     * @return DirectionTransitLine|null
-     */
-    public function getLine()
+    public function getLine(): ?DirectionTransitLine
     {
         return $this->line;
     }
 
-    /**
-     * @param DirectionTransitLine|null $line
-     */
-    public function setLine(DirectionTransitLine $line = null)
+    public function setLine(?DirectionTransitLine $line = null): void
     {
         $this->line = $line;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasNumStops()
+    public function hasNumStops(): bool
     {
         return $this->numStops !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getNumStops()
+    public function getNumStops(): ?int
     {
         return $this->numStops;
     }
 
-    /**
-     * @param int|null $numStops
-     */
-    public function setNumStops($numStops)
+    public function setNumStops(?int $numStops): void
     {
         $this->numStops = $numStops;
     }

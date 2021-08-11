@@ -14,7 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Detail;
 use Ivory\GoogleMap\Service\Place\Detail\PlaceDetailService;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
 use Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -82,8 +81,7 @@ class PlaceDetailServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(PlaceDetailResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createPlaceDetailResponseMock()));
 

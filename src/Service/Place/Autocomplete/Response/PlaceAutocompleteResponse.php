@@ -18,20 +18,14 @@ use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestI
  */
 class PlaceAutocompleteResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var PlaceAutocompleteRequestInterface|null
-     */
-    private $request;
+    private ?PlaceAutocompleteRequestInterface $request = null;
 
     /**
      * @var PlaceAutocompletePrediction[]
      */
-    private $predictions = [];
+    private array $predictions = [];
 
     /**
      * @return bool
@@ -92,7 +86,7 @@ class PlaceAutocompleteResponse
     /**
      * @return PlaceAutocompletePrediction[]
      */
-    public function getPredictions()
+    public function getPredictions(): array
     {
         return $this->predictions;
     }

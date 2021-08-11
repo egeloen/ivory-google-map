@@ -32,10 +32,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
  */
 class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
 {
-    /**
-     * @var DistanceMatrixService
-     */
-    protected $service;
+    protected ?DistanceMatrixService $service = null;
 
     /**
      * {@inheritdoc}
@@ -53,161 +50,131 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcess($format)
+    public function testProcess()
     {
         $request = $this->createRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithCoordinates($format)
+    public function testProcessWithCoordinates()
     {
         $request = new DistanceMatrixRequest(
             [new CoordinateLocation(new Coordinate(49.262428, -123.113136))],
             [new CoordinateLocation(new Coordinate(37.775328, -122.418938))]
         );
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithDepartureTime($format)
+    public function testProcessWithDepartureTime()
     {
         $request = $this->createRequest();
         $request->setDepartureTime($this->getDepartureTime());
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testRouteWithArrivalTime($format)
+    public function testRouteWithArrivalTime()
     {
         $request = $this->createRequest();
         $request->setArrivalTime($this->getArrivalTime());
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTravelMode($format)
+    public function testProcessWithTravelMode()
     {
         $request = $this->createRequest();
         $request->setTravelMode(TravelMode::BICYCLING);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAvoid($format)
+    public function testProcessWithAvoid()
     {
         $request = $this->createRequest();
         $request->setAvoid(Avoid::HIGHWAYS);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithRegion($format)
+    public function testProcessWithRegion()
     {
         $request = $this->createRequest();
         $request->setRegion('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithUnitSystem($format)
+    public function testProcessWithUnitSystem()
     {
         $request = $this->createRequest();
         $request->setUnitSystem(UnitSystem::IMPERIAL);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithLanguage($format)
+    public function testProcessWithLanguage()
     {
         $request = $this->createRequest();
         $request->setLanguage('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      *
      * @expectedException \Http\Client\Common\Exception\ClientErrorException
      * @expectedExceptionMessage REQUEST_DENIED
      */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());

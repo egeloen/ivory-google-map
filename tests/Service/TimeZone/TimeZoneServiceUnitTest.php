@@ -14,7 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\TimeZone;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
 use Ivory\GoogleMap\Service\TimeZone\TimeZoneService;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -82,8 +81,7 @@ class TimeZoneServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(TimeZoneResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createTimeZoneResponseMock()));
 

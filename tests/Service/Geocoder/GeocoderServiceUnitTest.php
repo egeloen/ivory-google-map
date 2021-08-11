@@ -14,7 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -82,8 +81,7 @@ class GeocoderServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(GeocoderResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createGeocoderResponseMock()));
 

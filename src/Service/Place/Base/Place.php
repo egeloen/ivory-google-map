@@ -22,7 +22,7 @@ class Place
     /**
      * @var string|null
      */
-    private $id;
+    private ?string $id = null;
 
     /**
      * @var string|null
@@ -235,7 +235,7 @@ class Place
     /**
      * @param string|null $formattedAddress
      */
-    public function setFormattedAddress($formattedAddress)
+    public function setFormattedAddress(?string $formattedAddress)
     {
         $this->formattedAddress = $formattedAddress;
     }

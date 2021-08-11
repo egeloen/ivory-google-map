@@ -14,7 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\Elevation;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixService;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -82,8 +81,7 @@ class DistanceMatrixServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(DistanceMatrixResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createDistanceMatrixResponseMock()));
 

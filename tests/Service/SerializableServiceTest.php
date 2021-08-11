@@ -16,8 +16,8 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\Serializer\SerializerInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -75,7 +75,6 @@ class SerializableServiceTest extends TestCase
         $this->assertSame($this->client, $this->service->getClient());
         $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
         $this->assertSame($this->serializer, $this->service->getSerializer());
-        $this->assertSame(AbstractSerializableService::FORMAT_JSON, $this->service->getFormat());
         $this->assertFalse($this->service->hasKey());
         $this->assertNull($this->service->getKey());
         $this->assertFalse($this->service->hasBusinessAccount());
@@ -106,13 +105,6 @@ class SerializableServiceTest extends TestCase
         $this->service->setSerializer($serializer = $this->createSerializerMock());
 
         $this->assertSame($serializer, $this->service->getSerializer());
-    }
-
-    public function testFormat()
-    {
-        $this->service->setFormat($format = AbstractSerializableService::FORMAT_XML);
-
-        $this->assertSame($format, $this->service->getFormat());
     }
 
     public function testKey()
@@ -166,11 +158,11 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SerializerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Serializer\SerializerInterface
      */
     private function createSerializerMock()
     {
-        return $this->createMock(SerializerInterface::class);
+        return $this->createMock(\Symfony\Component\Serializer\SerializerInterface::class);
     }
 
     /**

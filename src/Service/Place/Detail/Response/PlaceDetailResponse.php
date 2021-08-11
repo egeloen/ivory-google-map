@@ -90,7 +90,7 @@ class PlaceDetailResponse
     /**
      * @return bool
      */
-    public function hasResult()
+    public function hasResult(): bool
     {
         return $this->result !== null;
     }
@@ -98,7 +98,7 @@ class PlaceDetailResponse
     /**
      * @return Place|null
      */
-    public function getResult()
+    public function getResult(): ?Place
     {
         return $this->result;
     }

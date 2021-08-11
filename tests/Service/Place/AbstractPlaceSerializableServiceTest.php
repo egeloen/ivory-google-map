@@ -87,9 +87,6 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertSame($options['permanently_close'], $place->isPermanentlyClose());
         $this->assertSame(isset($options['rating']) ? (float)$options['rating'] : null, $place->getRating());
         $this->assertSame($options['business_status'], $place->getBusinessStatus());
-
-//        print $options['id'] . "\n";
-
         $this->assertGeometry($place->getGeometry(), $options['geometry']);
         $this->assertOpeningHours($place->getOpeningHours(), $options['opening_hours']);
         $this->assertPlusCode($place->getPlusCode(), $options['plus_code']);

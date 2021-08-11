@@ -23,10 +23,7 @@ use Ivory\Tests\GoogleMap\Service\Place\AbstractPlaceSerializableServiceTest;
  */
 class PlaceDetailServiceTest extends AbstractPlaceSerializableServiceTest
 {
-    /**
-     * @var PlaceDetailService
-     */
-    private $service;
+    private ?PlaceDetailService $service = null;
 
     /**
      * {@inheritdoc}
@@ -44,47 +41,37 @@ class PlaceDetailServiceTest extends AbstractPlaceSerializableServiceTest
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcess($format)
+    public function testProcess()
     {
         $request = $this->createRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceDetailResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithLanguage($format)
+    public function testProcessWithLanguage()
     {
         $request = $this->createRequest();
         $request->setLanguage('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceDetailResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      *
      * @expectedException \Http\Client\Common\Exception\ClientErrorException
      * @expectedExceptionMessage REQUEST_DENIED
      */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());

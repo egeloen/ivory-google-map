@@ -34,48 +34,39 @@ class DirectionServiceApiKeyTest extends DirectionServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testRouteWithPlaceId($format)
+    public function testRouteWithPlaceId()
     {
         $request = $this->createRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->route($request);
 
         $this->assertDirectionResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testRouteWithPlaceIdWaypoint($format)
+    public function testRouteWithPlaceIdWaypoint()
     {
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionWaypoint(new PlaceIdLocation('ChIJs5IGBuNv5kcRVOC-kOamBzw')));
         $request->setOptimizeWaypoints(true);
 
-        $this->service->setFormat($format);
         $response = $this->service->route($request);
 
         $this->assertDirectionResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testRouteWithStopoverPlaceIdWaypoint($format)
+    public function testRouteWithStopoverPlaceIdWaypoint()
     {
         $request = $this->createRequest();
         $request->addWaypoint(new DirectionWaypoint(new PlaceIdLocation('ChIJs5IGBuNv5kcRVOC-kOamBzw'), true));
 
-        $this->service->setFormat($format);
         $response = $this->service->route($request);
 
         $this->assertDirectionResponse($response, $request);

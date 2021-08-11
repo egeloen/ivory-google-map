@@ -16,25 +16,19 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
-use Ivory\Serializer\Context\Context;
-use Ivory\Serializer\Naming\SnakeCaseNamingStrategy;
-use Ivory\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DistanceMatrixService extends AbstractSerializableService
 {
-    /**
-     * @param HttpClient               $client
-     * @param MessageFactory           $messageFactory
-     * @param SerializerInterface|null $serializer
-     */
     public function __construct(
         HttpClient $client,
         MessageFactory $messageFactory,
         SerializerInterface $serializer = null
-    ) {
+    )
+    {
         parent::__construct(
             'https://maps.googleapis.com/maps/api/distancematrix',
             $client,
@@ -43,22 +37,13 @@ class DistanceMatrixService extends AbstractSerializableService
         );
     }
 
-    /**
-     * @param DistanceMatrixRequestInterface $request
-     *
-     * @return DistanceMatrixResponse
-     */
-    public function process(DistanceMatrixRequestInterface $request)
+    public function process(DistanceMatrixRequestInterface $request): DistanceMatrixResponse
     {
-        $httpRequest = $this->createRequest($request);
+        $httpRequest  = $this->createRequest($request);
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        $response = $this->deserialize(
-            $httpResponse,
-            DistanceMatrixResponse::class,
-            (new Context())->setNamingStrategy(new SnakeCaseNamingStrategy())
-        );
-
+        /** @var DistanceMatrixResponse $response */
+        $response = $this->deserialize($httpResponse, DistanceMatrixResponse::class, []);
         $response->setRequest($request);
 
         return $response;

@@ -18,33 +18,21 @@ use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
  */
 class ElevationResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var ElevationRequestInterface|null
-     */
-    private $request;
+    private ?ElevationRequestInterface $request = null;
 
     /**
      * @var ElevationResult[]
      */
-    private $results = [];
+    private array $results = [];
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -52,23 +40,17 @@ class ElevationResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return ElevationRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?ElevationRequestInterface
     {
         return $this->request;
     }
@@ -76,15 +58,12 @@ class ElevationResponse
     /**
      * @param ElevationRequestInterface|null $request
      */
-    public function setRequest(ElevationRequestInterface $request = null)
+    public function setRequest(ElevationRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasResults()
+    public function hasResults(): bool
     {
         return !empty($this->results);
     }
@@ -92,7 +71,7 @@ class ElevationResponse
     /**
      * @return ElevationResult[]
      */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }
@@ -100,7 +79,7 @@ class ElevationResponse
     /**
      * @param ElevationResult[] $results
      */
-    public function setResults(array $results)
+    public function setResults(array $results): void
     {
         $this->results = [];
         $this->addResults($results);
@@ -109,37 +88,26 @@ class ElevationResponse
     /**
      * @param ElevationResult[] $results
      */
-    public function addResults(array $results)
+    public function addResults(array $results): void
     {
         foreach ($results as $result) {
             $this->addResult($result);
         }
     }
 
-    /**
-     * @param ElevationResult $result
-     *
-     * @return bool
-     */
-    public function hasResult(ElevationResult $result)
+    public function hasResult(ElevationResult $result): bool
     {
         return in_array($result, $this->results, true);
     }
 
-    /**
-     * @param ElevationResult $result
-     */
-    public function addResult(ElevationResult $result)
+    public function addResult(ElevationResult $result): void
     {
         if (!$this->hasResult($result)) {
             $this->results[] = $result;
         }
     }
 
-    /**
-     * @param ElevationResult $result
-     */
-    public function removeResult(ElevationResult $result)
+    public function removeResult(ElevationResult $result): void
     {
         unset($this->results[array_search($result, $this->results, true)]);
         $this->results = empty($this->results) ? [] : array_values($this->results);

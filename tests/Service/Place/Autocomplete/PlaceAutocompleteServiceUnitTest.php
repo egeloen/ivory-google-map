@@ -14,7 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete;
 use Ivory\GoogleMap\Service\Place\Autocomplete\PlaceAutocompleteService;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestInterface;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -87,8 +86,7 @@ class PlaceAutocompleteServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(PlaceAutocompleteResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createPlaceAutocompleteResponseMock()));
 

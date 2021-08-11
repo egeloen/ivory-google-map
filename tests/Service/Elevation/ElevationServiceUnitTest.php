@@ -81,8 +81,7 @@ class ElevationServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(ElevationResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isNull()
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createElevationResponseMock()));
 

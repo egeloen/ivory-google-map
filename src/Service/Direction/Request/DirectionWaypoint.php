@@ -20,18 +20,11 @@ use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
  */
 class DirectionWaypoint
 {
-    /**
-     * @var LocationInterface
-     */
-    private $location;
+    private ?LocationInterface $location = null;
+
+    private ?bool $stopover = null;
 
     /**
-     * @var bool|null
-     */
-    private $stopover;
-
-    /**
-     * @param LocationInterface $location
      * @param bool|null         $stopover
      */
     public function __construct(LocationInterface $location, $stopover = null)
@@ -40,34 +33,22 @@ class DirectionWaypoint
         $this->setStopover($stopover);
     }
 
-    /**
-     * @return LocationInterface
-     */
-    public function getLocation()
+    public function getLocation(): LocationInterface
     {
         return $this->location;
     }
 
-    /**
-     * @param LocationInterface $location
-     */
-    public function setLocation(LocationInterface $location)
+    public function setLocation(LocationInterface $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasStopover()
+    public function hasStopover(): bool
     {
         return $this->stopover !== null;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function getStopover()
+    public function getStopover(): ?bool
     {
         return $this->stopover;
     }
@@ -75,7 +56,7 @@ class DirectionWaypoint
     /**
      * @param bool|null $stopover
      */
-    public function setStopover($stopover = null)
+    public function setStopover($stopover = null): void
     {
         $this->stopover = $stopover;
     }

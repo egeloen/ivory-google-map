@@ -14,7 +14,6 @@ namespace Ivory\Tests\GoogleMap\Service\Place\Search;
 use Ivory\GoogleMap\Service\Place\Search\PlaceSearchService;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -22,10 +21,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class PlaceSearchServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var PlaceSearchService
-     */
-    private $service;
+    private ?PlaceSearchService $service = null;
 
     /**
      * {@inheritdoc}
@@ -87,8 +83,7 @@ class PlaceSearchServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(PlaceSearchResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createPlaceSearchResponseMock()));
 

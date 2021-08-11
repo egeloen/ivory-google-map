@@ -16,33 +16,18 @@ namespace Ivory\GoogleMap\Service\Direction\Response\Transit;
  */
 class DirectionTransitAgency
 {
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string|null
-     */
-    private $phone;
+    private ?string $phone = null;
 
-    /**
-     * @var string|null
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * @return bool
-     */
-    public function hasName()
+    public function hasName(): bool
     {
         return $this->name !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -50,23 +35,17 @@ class DirectionTransitAgency
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPhone()
+    public function hasPhone(): bool
     {
         return $this->phone !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -74,23 +53,17 @@ class DirectionTransitAgency
     /**
      * @param string|null $phone
      */
-    public function setPhone($phone)
+    public function setPhone($phone): void
     {
         $this->phone = $phone;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasUrl()
+    public function hasUrl(): bool
     {
         return $this->url !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -98,7 +71,7 @@ class DirectionTransitAgency
     /**
      * @param string|null $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
