@@ -164,7 +164,7 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
             $event->getCode(),
             [],
             $this->renderCallback($event->getAutocomplete())
-        )));
+        ), ["defer" => "defer"]));
     }
 
     /**
