@@ -46,11 +46,11 @@ class SourceRenderer extends AbstractRenderer
                 $formatter->renderEscape('text/javascript'),
                 true
             ),
-            $formatter->renderAssignment(
-                $formatter->renderProperty($variable, 'async'),
-                $formatter->renderEscape(true),
-                true
-            ),
+//            $formatter->renderAssignment(
+//                $formatter->renderProperty($variable, 'async'),
+//                $formatter->renderEscape(true),
+//                true
+//            ),
             $formatter->renderAssignment(
                 $formatter->renderProperty($variable, 'crossorigin'),
                 $formatter->renderEscape('anonymous'),
