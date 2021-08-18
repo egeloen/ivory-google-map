@@ -48,7 +48,7 @@ class SourceRenderer extends AbstractRenderer
             ),
 //            $formatter->renderAssignment(
 //                $formatter->renderProperty($variable, 'async'),
-//                $formatter->renderEscape(true),
+//                null,
 //                true
 //            ),
             $formatter->renderAssignment(
@@ -58,7 +58,7 @@ class SourceRenderer extends AbstractRenderer
             ),
             $formatter->renderAssignment(
                 $formatter->renderProperty($variable, 'defer'),
-                $formatter->renderEscape(true),
+                null,
                 true
             ),
             $formatter->renderAssignment(
