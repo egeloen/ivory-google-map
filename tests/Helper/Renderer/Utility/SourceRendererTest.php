@@ -42,7 +42,7 @@ class SourceRendererTest extends TestCase
     public function testRender()
     {
         $this->assertSame(
-            'function name(src){var script=document.createElement("script");script.type="text/javascript";script.async=true;script.crossorigin="anonymous";script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};',
+            'function name(src){var script=document.createElement("script");script.type="text/javascript";script.async=true;script.crossorigin="anonymous";script.defer=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};',
             $this->sourceRenderer->render('name')
         );
     }
@@ -50,7 +50,7 @@ class SourceRendererTest extends TestCase
     public function testRenderWithVariables()
     {
         $this->assertSame(
-            'function name(source){var variable=document.createElement("script");variable.type="text/javascript";variable.async=true;variable.crossorigin="anonymous";variable.src=source;document.getElementsByTagName("head")[0].appendChild(variable);};',
+            'function name(source){var variable=document.createElement("script");variable.type="text/javascript";variable.async=true;variable.crossorigin="anonymous";variable.defer=true;variable.src=source;document.getElementsByTagName("head")[0].appendChild(variable);};',
             $this->sourceRenderer->render('name', 'source', 'variable')
         );
     }
@@ -60,7 +60,7 @@ class SourceRendererTest extends TestCase
         $this->sourceRenderer->getFormatter()->setDebug(true);
 
         $this->assertSame(
-            'function name (src) {'."\n".'    var script = document.createElement("script");'."\n".'    script.type = "text/javascript";'."\n".'    script.async = true;'."\n".'    script.crossorigin = "anonymous";'."\n".'    script.src = src;'."\n".'    document.getElementsByTagName("head")[0].appendChild(script);'."\n".'};'."\n",
+            'function name (src) {'."\n".'    var script = document.createElement("script");'."\n".'    script.type = "text/javascript";'."\n".'    script.async = true;'."\n".'    script.crossorigin = "anonymous";'."\n".'    script.defer = true;'."\n".'    script.src = src;'."\n".'    document.getElementsByTagName("head")[0].appendChild(script);'."\n".'};'."\n",
             $this->sourceRenderer->render('name')
         );
     }
