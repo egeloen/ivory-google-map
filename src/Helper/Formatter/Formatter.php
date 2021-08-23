@@ -292,15 +292,11 @@ class Formatter
      *
      * @return string
      */
-    public function renderAssignment($variable, $declaration = null, $semicolon = false, $newLine = false)
+    public function renderAssignment($variable, $declaration, $semicolon = false, $newLine = false)
     {
         $separator = $this->renderSeparator();
 
-        if (!empty($declaration)) {
-            return $this->renderCode($variable . $separator . '=' . $separator . $declaration, $semicolon, $newLine);
-        }
-
-        return $this->renderCode($variable, $semicolon, $newLine);
+        return $this->renderCode($variable.$separator.'='.$separator.$declaration, $semicolon, $newLine);
     }
 
     /**
