@@ -14,7 +14,7 @@ namespace Ivory\Tests\GoogleMap\Helper\Builder;
 use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\AbstractJavascriptHelperBuilder;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**

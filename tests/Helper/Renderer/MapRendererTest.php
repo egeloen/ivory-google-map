@@ -19,7 +19,7 @@ use Ivory\GoogleMap\Helper\Renderer\MapTypeIdRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\MapTypeId;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
