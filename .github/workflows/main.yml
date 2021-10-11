@@ -13,7 +13,7 @@ jobs:
           php-version: '7.4'
           tools: composer:v2,phpstan
         env:
-          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMPOSER_TOKEN: ${{ secrets.PAT_GITHUB_ACTIONS }}
 
       - name: Install PHP Dependencies (composer)
         run: composer install --optimize-autoloader --prefer-dist --no-suggest --no-scripts
