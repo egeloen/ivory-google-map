@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Map;
 class KmlLayerCollector extends AbstractCollector
 {
     /**
-     * @param Map        $map
      * @param KmlLayer[] $kmlLayers
-     *
      * @return KmlLayer[]
      */
-    public function collect(Map $map, array $kmlLayers = [])
+    public function collect(Map $map, array $kmlLayers = []): array
     {
         return $this->collectValues($map->getLayerManager()->getKmlLayers(), $kmlLayers);
     }

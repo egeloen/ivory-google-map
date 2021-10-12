@@ -19,15 +19,9 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 abstract class AbstractJavascriptHelperBuilder extends AbstractHelperBuilder
 {
-    /**
-     * @var Formatter
-     */
-    private $formatter;
+    private ?Formatter $formatter = null;
 
-    /**
-     * @var JsonBuilder
-     */
-    private $jsonBuilder;
+    private ?JsonBuilder $jsonBuilder = null;
 
     /**
      * @param Formatter|null   $formatter
@@ -39,40 +33,30 @@ abstract class AbstractJavascriptHelperBuilder extends AbstractHelperBuilder
         $this->setJsonBuilder($jsonBuilder ?: new JsonBuilder());
     }
 
-    /**
-     * @return Formatter
-     */
-    public function getFormatter()
+    public function getFormatter(): Formatter
     {
         return $this->formatter;
     }
 
     /**
-     * @param Formatter $formatter
-     *
      * @return $this
      */
-    public function setFormatter(Formatter $formatter)
+    public function setFormatter(Formatter $formatter): self
     {
         $this->formatter = $formatter;
 
         return $this;
     }
 
-    /**
-     * @return JsonBuilder
-     */
-    public function getJsonBuilder()
+    public function getJsonBuilder(): JsonBuilder
     {
         return $this->jsonBuilder;
     }
 
     /**
-     * @param JsonBuilder $jsonBuilder
-     *
      * @return $this
      */
-    public function setJsonBuilder(JsonBuilder $jsonBuilder)
+    public function setJsonBuilder(JsonBuilder $jsonBuilder): self
     {
         $this->jsonBuilder = $jsonBuilder;
 

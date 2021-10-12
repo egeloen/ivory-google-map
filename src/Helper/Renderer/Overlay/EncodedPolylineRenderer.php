@@ -23,16 +23,8 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class EncodedPolylineRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var EncodingRenderer
-     */
-    private $encodingRenderer;
+    private ?EncodingRenderer $encodingRenderer = null;
 
-    /**
-     * @param Formatter        $formatter
-     * @param JsonBuilder      $jsonBuilder
-     * @param EncodingRenderer $encodingRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -43,29 +35,17 @@ class EncodedPolylineRenderer extends AbstractJsonRenderer
         $this->setEncodingRenderer($encodingRenderer);
     }
 
-    /**
-     * @return EncodingRenderer
-     */
-    public function getEncodingRenderer()
+    public function getEncodingRenderer(): EncodingRenderer
     {
         return $this->encodingRenderer;
     }
 
-    /**
-     * @param EncodingRenderer $encodingRenderer
-     */
-    public function setEncodingRenderer(EncodingRenderer $encodingRenderer)
+    public function setEncodingRenderer(EncodingRenderer $encodingRenderer): void
     {
         $this->encodingRenderer = $encodingRenderer;
     }
 
-    /**
-     * @param EncodedPolyline $encodedPolyline
-     * @param Map             $map
-     *
-     * @return string
-     */
-    public function render(EncodedPolyline $encodedPolyline, Map $map)
+    public function render(EncodedPolyline $encodedPolyline, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()

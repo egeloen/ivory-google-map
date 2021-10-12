@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Map;
 class GeoJsonLayerCollector extends AbstractCollector
 {
     /**
-     * @param Map            $map
      * @param GeoJsonLayer[] $geoJsonLayers
-     *
      * @return GeoJsonLayer[]
      */
-    public function collect(Map $map, array $geoJsonLayers = [])
+    public function collect(Map $map, array $geoJsonLayers = []): array
     {
         return $this->collectValues($map->getLayerManager()->getGeoJsonLayers(), $geoJsonLayers);
     }

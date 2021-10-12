@@ -20,43 +20,22 @@ use Ivory\GoogleMap\Service\Base\Fare;
  */
 class DistanceMatrixElement
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var Distance|null
-     */
-    private $distance;
+    private ?Distance $distance = null;
 
-    /**
-     * @var Duration|null
-     */
-    private $duration;
+    private ?Duration $duration = null;
 
-    /**
-     * @var Duration|null
-     */
-    private $durationInTraffic;
+    private ?Duration $durationInTraffic = null;
 
-    /**
-     * @var Fare|null
-     */
-    private $fare;
+    private ?Fare $fare = null;
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return  $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -64,23 +43,17 @@ class DistanceMatrixElement
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDistance()
+    public function hasDistance(): bool
     {
         return $this->distance !== null;
     }
 
-    /**
-     * @return Distance|null
-     */
-    public function getDistance()
+    public function getDistance(): ?Distance
     {
         return $this->distance;
     }
@@ -88,23 +61,17 @@ class DistanceMatrixElement
     /**
      * @param Distance|null $distance
      */
-    public function setDistance(Distance $distance = null)
+    public function setDistance(Distance $distance = null): void
     {
         $this->distance = $distance;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDuration()
+    public function hasDuration(): bool
     {
         return $this->duration !== null;
     }
 
-    /**
-     * @return Duration|null
-     */
-    public function getDuration()
+    public function getDuration(): ?Duration
     {
         return $this->duration;
     }
@@ -112,23 +79,17 @@ class DistanceMatrixElement
     /**
      * @param Duration|null $duration
      */
-    public function setDuration(Duration $duration = null)
+    public function setDuration(Duration $duration = null): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDurationInTraffic()
+    public function hasDurationInTraffic(): bool
     {
         return $this->durationInTraffic !== null;
     }
 
-    /**
-     * @return Duration|null
-     */
-    public function getDurationInTraffic()
+    public function getDurationInTraffic(): ?Duration
     {
         return $this->durationInTraffic;
     }
@@ -136,23 +97,17 @@ class DistanceMatrixElement
     /**
      * @param Duration|null $durationInTraffic
      */
-    public function setDurationInTraffic(Duration $durationInTraffic = null)
+    public function setDurationInTraffic(Duration $durationInTraffic = null): void
     {
         $this->durationInTraffic = $durationInTraffic;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasFare()
+    public function hasFare(): bool
     {
         return $this->fare !== null;
     }
 
-    /**
-     * @return Fare|null
-     */
-    public function getFare()
+    public function getFare(): ?Fare
     {
         return $this->fare;
     }
@@ -160,7 +115,7 @@ class DistanceMatrixElement
     /**
      * @param Fare|null $fare
      */
-    public function setFare(Fare $fare = null)
+    public function setFare(Fare $fare = null): void
     {
         $this->fare = $fare;
     }

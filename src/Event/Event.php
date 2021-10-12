@@ -23,25 +23,13 @@ class Event implements VariableAwareInterface
 {
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $instance;
+    private ?string $instance = null;
 
-    /**
-     * @var string
-     */
-    private $trigger;
+    private ?string $trigger = null;
 
-    /**
-     * @var string
-     */
-    private $handle;
+    private ?string $handle = null;
 
-    /**
-     * @var bool
-     */
-    private $capture;
+    private ?bool $capture = null;
 
     /**
      * @param string $instance
@@ -57,10 +45,7 @@ class Event implements VariableAwareInterface
         $this->setCapture($capture);
     }
 
-    /**
-     * @return string
-     */
-    public function getInstance()
+    public function getInstance(): string
     {
         return $this->instance;
     }
@@ -68,15 +53,12 @@ class Event implements VariableAwareInterface
     /**
      * @param string $instance
      */
-    public function setInstance($instance)
+    public function setInstance($instance): void
     {
         $this->instance = $instance;
     }
 
-    /**
-     * @return string
-     */
-    public function getTrigger()
+    public function getTrigger(): string
     {
         return $this->trigger;
     }
@@ -84,15 +66,12 @@ class Event implements VariableAwareInterface
     /**
      * @param string $trigger
      */
-    public function setTrigger($trigger)
+    public function setTrigger($trigger): void
     {
         $this->trigger = $trigger;
     }
 
-    /**
-     * @return string
-     */
-    public function getHandle()
+    public function getHandle(): string
     {
         return $this->handle;
     }
@@ -100,15 +79,12 @@ class Event implements VariableAwareInterface
     /**
      * @param string $handle
      */
-    public function setHandle($handle)
+    public function setHandle($handle): void
     {
         $this->handle = $handle;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCapture()
+    public function isCapture(): bool
     {
         return $this->capture;
     }
@@ -116,7 +92,7 @@ class Event implements VariableAwareInterface
     /**
      * @param bool $capture
      */
-    public function setCapture($capture)
+    public function setCapture($capture): void
     {
         $this->capture = $capture;
     }

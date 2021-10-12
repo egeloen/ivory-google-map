@@ -19,12 +19,9 @@ class DistanceMatrixRow
     /**
      * @var DistanceMatrixElement[]
      */
-    private $elements = [];
+    private array $elements = [];
 
-    /**
-     * @return bool
-     */
-    public function hasElements()
+    public function hasElements(): bool
     {
         return !empty($this->elements);
     }
@@ -32,7 +29,7 @@ class DistanceMatrixRow
     /**
      * @return DistanceMatrixElement[]
      */
-    public function getElements()
+    public function getElements(): array
     {
         return $this->elements;
     }
@@ -40,7 +37,7 @@ class DistanceMatrixRow
     /**
      * @param DistanceMatrixElement[] $elements
      */
-    public function setElements(array $elements)
+    public function setElements(array $elements): void
     {
         $this->elements = [];
         $this->addElements($elements);
@@ -49,37 +46,26 @@ class DistanceMatrixRow
     /**
      * @param DistanceMatrixElement[] $elements
      */
-    public function addElements(array $elements)
+    public function addElements(array $elements): void
     {
         foreach ($elements as $element) {
             $this->addElement($element);
         }
     }
 
-    /**
-     * @param DistanceMatrixElement $element
-     *
-     * @return bool
-     */
-    public function hasElement(DistanceMatrixElement $element)
+    public function hasElement(DistanceMatrixElement $element): bool
     {
         return in_array($element, $this->elements, true);
     }
 
-    /**
-     * @param DistanceMatrixElement $element
-     */
-    public function addElement(DistanceMatrixElement $element)
+    public function addElement(DistanceMatrixElement $element): void
     {
         if (!$this->hasElement($element)) {
             $this->elements[] = $element;
         }
     }
 
-    /**
-     * @param DistanceMatrixElement $element
-     */
-    public function removeElement(DistanceMatrixElement $element)
+    public function removeElement(DistanceMatrixElement $element): void
     {
         unset($this->elements[array_search($element, $this->elements, true)]);
         $this->elements = empty($this->elements) ? [] : array_values($this->elements);

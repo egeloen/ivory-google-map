@@ -16,33 +16,24 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 class OpeningHours
 {
-    /**
-     * @var bool|null
-     */
-    private $openNow;
+    private ?bool $openNow = null;
 
     /**
      * @var Period[]
      */
-    private $periods = [];
+    private array $periods = [];
 
     /**
      * @var string[]
      */
-    private $weekdayTexts = [];
+    private array $weekdayTexts = [];
 
-    /**
-     * @return bool
-     */
-    public function hasOpenNow()
+    public function hasOpenNow(): bool
     {
         return $this->openNow !== null;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isOpenNow()
+    public function isOpenNow(): ?bool
     {
         return $this->openNow;
     }
@@ -50,15 +41,12 @@ class OpeningHours
     /**
      * @param bool|null $openNow
      */
-    public function setOpenNow($openNow)
+    public function setOpenNow($openNow): void
     {
         $this->openNow = $openNow;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPeriods()
+    public function hasPeriods(): bool
     {
         return !empty($this->periods);
     }
@@ -66,7 +54,7 @@ class OpeningHours
     /**
      * @return Period[]
      */
-    public function getPeriods()
+    public function getPeriods(): array
     {
         return $this->periods;
     }
@@ -74,7 +62,7 @@ class OpeningHours
     /**
      * @param Period[] $periods
      */
-    public function setPeriods(array $periods)
+    public function setPeriods(array $periods): void
     {
         $this->periods = [];
         $this->addPeriods($periods);
@@ -83,46 +71,32 @@ class OpeningHours
     /**
      * @param Period[] $periods
      */
-    public function addPeriods(array $periods)
+    public function addPeriods(array $periods): void
     {
         foreach ($periods as $period) {
             $this->addPeriod($period);
         }
     }
 
-    /**
-     * @param Period $period
-     *
-     * @return bool
-     */
-    public function hasPeriod(Period $period)
+    public function hasPeriod(Period $period): bool
     {
         return in_array($period, $this->periods, true);
     }
 
-    /**
-     * @param Period $period
-     */
-    public function addPeriod(Period $period)
+    public function addPeriod(Period $period): void
     {
         if (!$this->hasPeriod($period)) {
             $this->periods[] = $period;
         }
     }
 
-    /**
-     * @param Period $period
-     */
-    public function removePeriod(Period $period)
+    public function removePeriod(Period $period): void
     {
         unset($this->periods[array_search($period, $this->periods, true)]);
         $this->periods = empty($this->periods) ? [] : array_values($this->periods);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasWeekdayTexts()
+    public function hasWeekdayTexts(): bool
     {
         return !empty($this->weekdayTexts);
     }
@@ -130,7 +104,7 @@ class OpeningHours
     /**
      * @return \string[]
      */
-    public function getWeekdayTexts()
+    public function getWeekdayTexts(): array
     {
         return $this->weekdayTexts;
     }
@@ -138,7 +112,7 @@ class OpeningHours
     /**
      * @param string[] $weekdayTexts
      */
-    public function setWeekdayTexts(array $weekdayTexts)
+    public function setWeekdayTexts(array $weekdayTexts): void
     {
         $this->weekdayTexts = [];
         $this->addWeekdayTexts($weekdayTexts);
@@ -147,7 +121,7 @@ class OpeningHours
     /**
      * @param string[] $weekdayTexts
      */
-    public function addWeekdayTexts(array $weekdayTexts)
+    public function addWeekdayTexts(array $weekdayTexts): void
     {
         foreach ($weekdayTexts as $weekdayText) {
             $this->addWeekdayText($weekdayText);
@@ -156,10 +130,8 @@ class OpeningHours
 
     /**
      * @param string $weekdayText
-     *
-     * @return bool
      */
-    public function hasWeekdayText($weekdayText)
+    public function hasWeekdayText($weekdayText): bool
     {
         return in_array($weekdayText, $this->weekdayTexts, true);
     }
@@ -167,7 +139,7 @@ class OpeningHours
     /**
      * @param string $weekdayText
      */
-    public function addWeekdayText($weekdayText)
+    public function addWeekdayText($weekdayText): void
     {
         if (!$this->hasWeekdayText($weekdayText)) {
             $this->weekdayTexts[] = $weekdayText;
@@ -177,7 +149,7 @@ class OpeningHours
     /**
      * @param string $weekdayText
      */
-    public function removeWeekdayText($weekdayText)
+    public function removeWeekdayText($weekdayText): void
     {
         unset($this->weekdayTexts[array_search($weekdayText, $this->weekdayTexts, true)]);
         $this->weekdayTexts = empty($this->weekdayTexts) ? [] : array_values($this->weekdayTexts);

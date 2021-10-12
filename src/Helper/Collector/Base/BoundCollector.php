@@ -22,65 +22,41 @@ use Ivory\GoogleMap\Map;
  */
 class BoundCollector extends AbstractCollector
 {
-    /**
-     * @var GroundOverlayCollector
-     */
-    private $groundOverlayCollector;
+    private ?GroundOverlayCollector $groundOverlayCollector = null;
 
-    /**
-     * @var RectangleCollector
-     */
-    private $rectangleCollector;
+    private ?RectangleCollector $rectangleCollector = null;
 
-    /**
-     * @param GroundOverlayCollector $groundOverlayCollector
-     * @param RectangleCollector     $rectangleCollector
-     */
     public function __construct(GroundOverlayCollector $groundOverlayCollector, RectangleCollector $rectangleCollector)
     {
         $this->setGroundOverlayCollector($groundOverlayCollector);
         $this->setRectangleCollector($rectangleCollector);
     }
 
-    /**
-     * @return GroundOverlayCollector
-     */
-    public function getGroundOverlayCollector()
+    public function getGroundOverlayCollector(): GroundOverlayCollector
     {
         return $this->groundOverlayCollector;
     }
 
-    /**
-     * @param GroundOverlayCollector $groundOverlayCollector
-     */
-    public function setGroundOverlayCollector(GroundOverlayCollector $groundOverlayCollector)
+    public function setGroundOverlayCollector(GroundOverlayCollector $groundOverlayCollector): void
     {
         $this->groundOverlayCollector = $groundOverlayCollector;
     }
 
-    /**
-     * @return RectangleCollector
-     */
-    public function getRectangleCollector()
+    public function getRectangleCollector(): RectangleCollector
     {
         return $this->rectangleCollector;
     }
 
-    /**
-     * @param RectangleCollector $rectangleCollector
-     */
-    public function setRectangleCollector(RectangleCollector $rectangleCollector)
+    public function setRectangleCollector(RectangleCollector $rectangleCollector): void
     {
         $this->rectangleCollector = $rectangleCollector;
     }
 
     /**
-     * @param Map     $map
      * @param Bound[] $bounds
-     *
      * @return Bound[]
      */
-    public function collect(Map $map, array $bounds = [])
+    public function collect(Map $map, array $bounds = []): array
     {
         if ($map->isAutoZoom()) {
             $bounds = $this->collectValue($map->getBound(), $bounds);

@@ -20,13 +20,7 @@ use Ivory\GoogleMap\Map;
  */
 class HeatmapLayerRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param HeatmapLayer $heatmapLayer
-     * @param Map          $map
-     *
-     * @return string
-     */
-    public function render(HeatmapLayer $heatmapLayer, Map $map)
+    public function render(HeatmapLayer $heatmapLayer, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
@@ -44,10 +38,7 @@ class HeatmapLayerRenderer extends AbstractJsonRenderer
         ], $formatter->renderClass('visualization')));
     }
 
-    /**
-     * @return string
-     */
-    public function renderRequirement()
+    public function renderRequirement(): string
     {
         return $this->getFormatter()->renderClass('visualization');
     }

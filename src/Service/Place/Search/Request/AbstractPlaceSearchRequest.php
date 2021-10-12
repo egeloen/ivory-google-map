@@ -18,53 +18,26 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
 {
-    /**
-     * @var Coordinate|null
-     */
-    private $location;
+    private ?Coordinate $location = null;
 
-    /**
-     * @var float|null
-     */
-    private $radius;
+    private ?float $radius = null;
 
-    /**
-     * @var int|null
-     */
-    private $minPrice;
+    private ?int $minPrice = null;
 
-    /**
-     * @var int|null
-     */
-    private $maxPrice;
+    private ?int $maxPrice = null;
 
-    /**
-     * @var bool|null
-     */
-    private $openNow;
+    private ?bool $openNow = null;
 
-    /**
-     * @var string|null
-     */
-    private $type;
+    private ?string $type = null;
 
-    /**
-     * @var string|null
-     */
-    private $language;
+    private ?string $language = null;
 
-    /**
-     * @return bool
-     */
-    public function hasLocation()
+    public function hasLocation(): bool
     {
         return $this->location !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getLocation()
+    public function getLocation(): ?Coordinate
     {
         return $this->location;
     }
@@ -77,42 +50,27 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->location = $location;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRadius()
+    public function hasRadius(): bool
     {
         return $this->radius !== null;
     }
 
-    /**
-     * @return float
-     */
-    public function getRadius()
+    public function getRadius(): ?float
     {
         return $this->radius;
     }
 
-    /**
-     * @param float $radius
-     */
-    public function setRadius($radius)
+    public function setRadius(?float $radius): void
     {
         $this->radius = $radius;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMinPrice()
+    public function hasMinPrice(): bool
     {
         return $this->minPrice !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getMinPrice()
+    public function getMinPrice(): ?int
     {
         return $this->minPrice;
     }
@@ -125,18 +83,12 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->minPrice = $minPrice;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMaxPrice()
+    public function hasMaxPrice(): bool
     {
         return $this->maxPrice !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getMaxPrice()
+    public function getMaxPrice(): ?int
     {
         return $this->maxPrice;
     }
@@ -149,18 +101,12 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->maxPrice = $maxPrice;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOpenNow()
+    public function hasOpenNow(): bool
     {
         return $this->openNow !== null;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isOpenNow()
+    public function isOpenNow(): ?bool
     {
         return $this->openNow;
     }
@@ -173,18 +119,12 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->openNow = $openNow;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->type !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -197,18 +137,12 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -224,7 +158,7 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = [];
 
@@ -259,12 +193,7 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         return $query;
     }
 
-    /**
-     * @param Coordinate $place
-     *
-     * @return string
-     */
-    private function buildCoordinate(Coordinate $place)
+    private function buildCoordinate(Coordinate $place): string
     {
         return $place->getLatitude().','.$place->getLongitude();
     }

@@ -26,19 +26,12 @@ class GroundOverlay implements ExtendableInterface, OptionsAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * @var Bound
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
     /**
      * @param string  $url
-     * @param Bound   $bound
      * @param mixed[] $options
      */
     public function __construct($url, Bound $bound, array $options = [])
@@ -48,10 +41,7 @@ class GroundOverlay implements ExtendableInterface, OptionsAwareInterface
         $this->addOptions($options);
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -59,23 +49,17 @@ class GroundOverlay implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return Bound
-     */
-    public function getBound()
+    public function getBound(): Bound
     {
         return $this->bound;
     }
 
-    /**
-     * @param Bound $bound
-     */
-    public function setBound(Bound $bound)
+    public function setBound(Bound $bound): void
     {
         $this->bound = $bound;
     }

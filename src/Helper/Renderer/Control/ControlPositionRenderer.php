@@ -20,10 +20,8 @@ class ControlPositionRenderer extends AbstractRenderer
 {
     /**
      * @param string $position
-     *
-     * @return string
      */
-    public function render($position)
+    public function render($position): string
     {
         return $this->getFormatter()->renderConstant('ControlPosition', $position);
     }

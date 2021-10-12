@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\GroundOverlay;
 class GroundOverlayCollector extends AbstractCollector
 {
     /**
-     * @param Map             $map
      * @param GroundOverlay[] $groundOverlays
-     *
      * @return GroundOverlay[]
      */
-    public function collect(Map $map, array $groundOverlays = [])
+    public function collect(Map $map, array $groundOverlays = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getGroundOverlays(), $groundOverlays);
     }

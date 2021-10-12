@@ -20,16 +20,8 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class InfoBoxRenderer extends AbstractInfoWindowRenderer
 {
-    /**
-     * @var RequirementRenderer
-     */
-    private $requirementRenderer;
+    private ?RequirementRenderer $requirementRenderer = null;
 
-    /**
-     * @param Formatter           $formatter
-     * @param JsonBuilder         $jsonBuilder
-     * @param RequirementRenderer $requirementRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -40,34 +32,22 @@ class InfoBoxRenderer extends AbstractInfoWindowRenderer
         $this->setRequirementRenderer($requirementRenderer);
     }
 
-    /**
-     * @return RequirementRenderer
-     */
-    public function getRequirementRenderer()
+    public function getRequirementRenderer(): RequirementRenderer
     {
         return $this->requirementRenderer;
     }
 
-    /**
-     * @param RequirementRenderer $requirementRenderer
-     */
-    public function setRequirementRenderer(RequirementRenderer $requirementRenderer)
+    public function setRequirementRenderer(RequirementRenderer $requirementRenderer): void
     {
         $this->requirementRenderer = $requirementRenderer;
     }
 
-    /**
-     * @return string
-     */
-    public function renderSource()
+    public function renderSource(): string
     {
         return 'https://cdn.rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox_packed.js';
     }
 
-    /**
-     * @return string
-     */
-    public function renderRequirement()
+    public function renderRequirement(): string
     {
         return $this->requirementRenderer->render($this->getClass());
     }
@@ -75,7 +55,7 @@ class InfoBoxRenderer extends AbstractInfoWindowRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getClass()
+    protected function getClass(): string
     {
         return 'InfoBox';
     }
@@ -83,7 +63,7 @@ class InfoBoxRenderer extends AbstractInfoWindowRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getNamespace()
+    protected function getNamespace(): bool
     {
         return false;
     }

@@ -19,12 +19,7 @@ use Ivory\GoogleMap\Overlay\MarkerShape;
  */
 class MarkerShapeRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param MarkerShape $markerShape
-     *
-     * @return string
-     */
-    public function render(MarkerShape $markerShape)
+    public function render(MarkerShape $markerShape): string
     {
         $jsonBuilder = $this->getJsonBuilder()
             ->setValue('[type]', $markerShape->getType())

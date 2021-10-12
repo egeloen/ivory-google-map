@@ -19,12 +19,7 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
  */
 class InfoWindowCloseRenderer extends AbstractRenderer
 {
-    /**
-     * @param InfoWindow $infoWindow
-     *
-     * @return string
-     */
-    public function render(InfoWindow $infoWindow)
+    public function render(InfoWindow $infoWindow): string
     {
         return $this->getFormatter()->renderObjectCall($infoWindow, 'close');
     }

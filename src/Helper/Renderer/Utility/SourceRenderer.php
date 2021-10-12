@@ -23,10 +23,8 @@ class SourceRenderer extends AbstractRenderer
      * @param string      $source
      * @param string|null $variable
      * @param bool        $newLine
-     *
-     * @return string
      */
-    public function render($name, $source = null, $variable = null, $newLine = true)
+    public function render($name, $source = null, $variable = null, $newLine = true): string
     {
         $formatter = $this->getFormatter();
         $source = $source ?: 'src';

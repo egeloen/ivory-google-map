@@ -18,48 +18,24 @@ use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
  */
 class TimeZoneResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var TimeZoneRequestInterface|null
-     */
-    private $request;
+    private ?TimeZoneRequestInterface $request = null;
 
-    /**
-     * @var int|null
-     */
-    private $dstOffset;
+    private ?int $dstOffset = null;
 
-    /**
-     * @var int|null
-     */
-    private $rawOffset;
+    private ?int $rawOffset = null;
 
-    /**
-     * @var string|null
-     */
-    private $timeZoneId;
+    private ?string $timeZoneId = null;
 
-    /**
-     * @var string|null
-     */
-    private $timeZoneName;
+    private ?string $timeZoneName = null;
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -67,23 +43,17 @@ class TimeZoneResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return TimeZoneRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?TimeZoneRequestInterface
     {
         return $this->request;
     }
@@ -91,23 +61,17 @@ class TimeZoneResponse
     /**
      * @param TimeZoneRequestInterface|null $request
      */
-    public function setRequest(TimeZoneRequestInterface $request = null)
+    public function setRequest(TimeZoneRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDstOffset()
+    public function hasDstOffset(): bool
     {
         return $this->dstOffset !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getDstOffset()
+    public function getDstOffset(): ?int
     {
         return $this->dstOffset;
     }
@@ -115,23 +79,17 @@ class TimeZoneResponse
     /**
      * @param int|null $dstOffset
      */
-    public function setDstOffset($dstOffset)
+    public function setDstOffset($dstOffset): void
     {
         $this->dstOffset = $dstOffset;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRawOffset()
+    public function hasRawOffset(): bool
     {
         return $this->rawOffset !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getRawOffset()
+    public function getRawOffset(): ?int
     {
         return $this->rawOffset;
     }
@@ -139,23 +97,17 @@ class TimeZoneResponse
     /**
      * @param int|null $rawOffset
      */
-    public function setRawOffset($rawOffset)
+    public function setRawOffset($rawOffset): void
     {
         $this->rawOffset = $rawOffset;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTimeZoneId()
+    public function hasTimeZoneId(): bool
     {
         return $this->timeZoneId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTimeZoneId()
+    public function getTimeZoneId(): ?string
     {
         return $this->timeZoneId;
     }
@@ -163,23 +115,17 @@ class TimeZoneResponse
     /**
      * @param string|null $timeZoneId
      */
-    public function setTimeZoneId($timeZoneId)
+    public function setTimeZoneId($timeZoneId): void
     {
         $this->timeZoneId = $timeZoneId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTimeZoneName()
+    public function hasTimeZoneName(): bool
     {
         return $this->timeZoneName !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTimeZoneName()
+    public function getTimeZoneName(): ?string
     {
         return $this->timeZoneName;
     }
@@ -187,7 +133,7 @@ class TimeZoneResponse
     /**
      * @param string|null $timeZoneName
      */
-    public function setTimeZoneName($timeZoneName)
+    public function setTimeZoneName($timeZoneName): void
     {
         $this->timeZoneName = $timeZoneName;
     }

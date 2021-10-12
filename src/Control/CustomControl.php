@@ -16,15 +16,9 @@ namespace Ivory\GoogleMap\Control;
  */
 class CustomControl
 {
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
-    /**
-     * @var string
-     */
-    private $control;
+    private ?string $control = null;
 
     /**
      * @param string $position
@@ -36,10 +30,7 @@ class CustomControl
         $this->setControl($control);
     }
 
-    /**
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->position;
     }
@@ -47,15 +38,12 @@ class CustomControl
     /**
      * @param string $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return string
-     */
-    public function getControl()
+    public function getControl(): string
     {
         return $this->control;
     }
@@ -63,7 +51,7 @@ class CustomControl
     /**
      * @param string $control
      */
-    public function setControl($control)
+    public function setControl($control): void
     {
         $this->control = $control;
     }

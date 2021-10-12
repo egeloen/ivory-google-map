@@ -20,13 +20,7 @@ use Ivory\GoogleMap\Overlay\GroundOverlay;
  */
 class GroundOverlayRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param GroundOverlay $groundOverlay
-     * @param Map           $map
-     *
-     * @return string
-     */
-    public function render(GroundOverlay $groundOverlay, Map $map)
+    public function render(GroundOverlay $groundOverlay, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()

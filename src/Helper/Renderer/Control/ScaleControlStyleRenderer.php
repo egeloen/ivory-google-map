@@ -20,10 +20,8 @@ class ScaleControlStyleRenderer extends AbstractRenderer
 {
     /**
      * @param string $style
-     *
-     * @return string
      */
-    public function render($style)
+    public function render($style): string
     {
         return $this->getFormatter()->renderConstant('ScaleControlStyle', $style);
     }

@@ -19,7 +19,7 @@ class DomEventRenderer extends AbstractEventRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getMethod()
+    protected function getMethod(): string
     {
         return 'addDomListener';
     }

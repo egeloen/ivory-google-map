@@ -19,17 +19,14 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
     /**
      * @var string[]
      */
-    private $components = [];
+    private array $components = [];
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -37,7 +34,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -45,7 +42,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -54,7 +51,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -63,10 +60,8 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -74,7 +69,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -84,16 +79,13 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasComponents()
+    public function hasComponents(): bool
     {
         return !empty($this->components);
     }
@@ -101,7 +93,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @return string[]
      */
-    public function getComponents()
+    public function getComponents(): array
     {
         return $this->components;
     }
@@ -109,7 +101,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string[] $components
      */
-    public function setComponents(array $components)
+    public function setComponents(array $components): void
     {
         $this->components = [];
         $this->addComponents($components);
@@ -118,7 +110,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string[] $components
      */
-    public function addComponents(array $components)
+    public function addComponents(array $components): void
     {
         foreach ($components as $type => $value) {
             $this->setComponent($type, $value);
@@ -127,20 +119,16 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasComponent($type)
+    public function hasComponent($type): bool
     {
         return isset($this->components[$type]);
     }
 
     /**
      * @param string $type
-     *
-     * @return string
      */
-    public function getComponent($type)
+    public function getComponent($type): ?string
     {
         return $this->hasComponent($type) ? $this->components[$type] : null;
     }
@@ -149,7 +137,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
      * @param string $type
      * @param string $value
      */
-    public function setComponent($type, $value)
+    public function setComponent($type, $value): void
     {
         $this->components[$type] = $value;
     }
@@ -157,7 +145,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * @param string $type
      */
-    public function removeComponent($type)
+    public function removeComponent($type): void
     {
         unset($this->components[$type]);
     }
@@ -165,7 +153,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * {@inheritdoc}
      */
-    public function buildContext()
+    public function buildContext(): string
     {
         return 'autocomplete';
     }
@@ -173,7 +161,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
     /**
      * {@inheritdoc}
      */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = parent::buildQuery();
 
@@ -182,9 +170,7 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
         }
 
         if ($this->hasComponents()) {
-            $query['components'] = implode('|', array_map(function ($key, $value) {
-                return $key.':'.$value;
-            }, array_keys($this->components), array_values($this->components)));
+            $query['components'] = implode('|', array_map(fn($key, $value) => $key.':'.$value, array_keys($this->components), array_values($this->components)));
         }
 
         return $query;

@@ -22,16 +22,8 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class MarkerRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var AnimationRenderer
-     */
-    private $animationRenderer;
+    private ?AnimationRenderer $animationRenderer = null;
 
-    /**
-     * @param Formatter         $formatter
-     * @param JsonBuilder       $jsonBuilder
-     * @param AnimationRenderer $animationRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -42,29 +34,21 @@ class MarkerRenderer extends AbstractJsonRenderer
         $this->setAnimationRenderer($animationRenderer);
     }
 
-    /**
-     * @return AnimationRenderer
-     */
-    public function getAnimationRenderer()
+    public function getAnimationRenderer(): AnimationRenderer
     {
         return $this->animationRenderer;
     }
 
-    /**
-     * @param AnimationRenderer $animationRenderer
-     */
-    public function setAnimationRenderer(AnimationRenderer $animationRenderer)
+    public function setAnimationRenderer(AnimationRenderer $animationRenderer): void
     {
         $this->animationRenderer = $animationRenderer;
     }
 
     /**
-     * @param Marker   $marker
      * @param Map|null $map
      *
-     * @return string
      */
-    public function render(Marker $marker, Map $map = null)
+    public function render(Marker $marker, Map $map = null): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()

@@ -20,40 +20,28 @@ use Ivory\GoogleMap\Overlay\IconSequence;
  */
 class IconSequenceCollector extends AbstractCollector
 {
-    /** @var PolylineCollector */
-    private $polylineCollector;
+    private ?PolylineCollector $polylineCollector = null;
 
-    /**
-     * @param PolylineCollector $polylineCollector
-     */
     public function __construct(PolylineCollector $polylineCollector)
     {
         $this->setPolylineCollector($polylineCollector);
     }
 
-    /**
-     * @return PolylineCollector
-     */
-    public function getPolylineCollector()
+    public function getPolylineCollector(): PolylineCollector
     {
         return $this->polylineCollector;
     }
 
-    /**
-     * @param PolylineCollector $polylineCollector
-     */
-    public function setPolylineCollector(PolylineCollector $polylineCollector)
+    public function setPolylineCollector(PolylineCollector $polylineCollector): void
     {
         $this->polylineCollector = $polylineCollector;
     }
 
     /**
-     * @param Map            $map
      * @param IconSequence[] $icons
-     *
      * @return IconSequence[]
      */
-    public function collect(Map $map, array $icons = [])
+    public function collect(Map $map, array $icons = []): array
     {
         foreach ($this->polylineCollector->collect($map) as $polyline) {
             if ($polyline->hasIconSequences()) {

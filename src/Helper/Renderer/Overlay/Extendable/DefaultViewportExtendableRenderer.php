@@ -19,7 +19,7 @@ class DefaultViewportExtendableRenderer extends AbstractUnionExtendableRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getMethod()
+    protected function getMethod(): string
     {
         return 'getDefaultViewport';
     }

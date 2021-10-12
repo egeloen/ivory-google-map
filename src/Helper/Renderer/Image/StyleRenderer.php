@@ -18,10 +18,8 @@ class StyleRenderer
 {
     /**
      * @param mixed[] $style
-     *
-     * @return string
      */
-    public function render(array $style)
+    public function render(array $style): string
     {
         $result = [];
 
@@ -43,10 +41,8 @@ class StyleRenderer
     /**
      * @param string $name
      * @param string $value
-     *
-     * @return string
      */
-    private function renderStyle($name, $value)
+    private function renderStyle($name, $value): string
     {
         return $name.':'.$value;
     }

@@ -73,7 +73,7 @@ class PlaceSearchRequestTest extends TestCase
 
     public function testRadius()
     {
-        $this->request->setRadius($radius = 1234);
+        $this->request->setRadius($radius = 1234.0);
 
         $this->assertTrue($this->request->hasRadius());
         $this->assertSame($radius, $this->request->getRadius());
@@ -144,7 +144,7 @@ class PlaceSearchRequestTest extends TestCase
 
     public function testBuildQueryWithRadius()
     {
-        $this->request->setRadius($radius = 1234);
+        $this->request->setRadius($radius = 1234.0);
 
         $this->assertSame(['radius' => $radius], $this->request->buildQuery());
     }

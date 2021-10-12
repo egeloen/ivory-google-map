@@ -22,15 +22,8 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class AutocompleteHtmlSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var AutocompleteHtmlRenderer
-     */
-    private $htmlRenderer;
+    private ?AutocompleteHtmlRenderer $htmlRenderer = null;
 
-    /**
-     * @param Formatter                $formatter
-     * @param AutocompleteHtmlRenderer $htmlRenderer
-     */
     public function __construct(Formatter $formatter, AutocompleteHtmlRenderer $htmlRenderer)
     {
         parent::__construct($formatter);
@@ -38,26 +31,17 @@ class AutocompleteHtmlSubscriber extends AbstractSubscriber
         $this->setHtmlRenderer($htmlRenderer);
     }
 
-    /**
-     * @return AutocompleteHtmlRenderer
-     */
-    public function getHtmlRenderer()
+    public function getHtmlRenderer(): AutocompleteHtmlRenderer
     {
         return $this->htmlRenderer;
     }
 
-    /**
-     * @param AutocompleteHtmlRenderer $htmlRenderer
-     */
-    public function setHtmlRenderer(AutocompleteHtmlRenderer $htmlRenderer)
+    public function setHtmlRenderer(AutocompleteHtmlRenderer $htmlRenderer): void
     {
         $this->htmlRenderer = $htmlRenderer;
     }
 
-    /**
-     * @param PlaceAutocompleteEvent $event
-     */
-    public function handleAutocomplete(PlaceAutocompleteEvent $event)
+    public function handleAutocomplete(PlaceAutocompleteEvent $event): void
     {
         $event->addCode($this->htmlRenderer->render($event->getAutocomplete()));
     }
@@ -65,7 +49,7 @@ class AutocompleteHtmlSubscriber extends AbstractSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [PlaceAutocompleteEvents::HTML => 'handleAutocomplete'];
     }

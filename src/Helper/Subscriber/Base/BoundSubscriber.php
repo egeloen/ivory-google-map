@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class BoundSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var BoundCollector
-     */
-    private $boundCollector;
+    private ?BoundCollector $boundCollector = null;
 
-    /**
-     * @var BoundRenderer
-     */
-    private $boundRenderer;
+    private ?BoundRenderer $boundRenderer = null;
 
-    /**
-     * @param Formatter      $formatter
-     * @param BoundCollector $boundCollector
-     * @param BoundRenderer  $boundRenderer
-     */
     public function __construct(
         Formatter $formatter,
         BoundCollector $boundCollector,
@@ -49,42 +38,27 @@ class BoundSubscriber extends AbstractSubscriber
         $this->setBoundRenderer($boundRenderer);
     }
 
-    /**
-     * @return BoundCollector
-     */
-    public function getBoundCollector()
+    public function getBoundCollector(): BoundCollector
     {
         return $this->boundCollector;
     }
 
-    /**
-     * @param BoundCollector $boundCollector
-     */
-    public function setBoundCollector(BoundCollector $boundCollector)
+    public function setBoundCollector(BoundCollector $boundCollector): void
     {
         $this->boundCollector = $boundCollector;
     }
 
-    /**
-     * @return BoundRenderer
-     */
-    public function getBoundRenderer()
+    public function getBoundRenderer(): BoundRenderer
     {
         return $this->boundRenderer;
     }
 
-    /**
-     * @param BoundRenderer $boundRenderer
-     */
-    public function setBoundRenderer(BoundRenderer $boundRenderer)
+    public function setBoundRenderer(BoundRenderer $boundRenderer): void
     {
         $this->boundRenderer = $boundRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -102,7 +76,7 @@ class BoundSubscriber extends AbstractSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_BASE_BOUND => 'handleMap'];
     }

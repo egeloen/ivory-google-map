@@ -23,12 +23,10 @@ use Ivory\GoogleMap\Overlay\Polyline;
 class ExtendableCollector extends AbstractCollector
 {
     /**
-     * @param Map                   $map
      * @param ExtendableInterface[] $extendables
-     *
      * @return ExtendableInterface[]
      */
-    public function collect(Map $map, array $extendables = [])
+    public function collect(Map $map, array $extendables = []): array
     {
         foreach ($map->getBound()->getExtendables() as $extendable) {
             if ($extendable instanceof Marker || $extendable instanceof Polyline) {

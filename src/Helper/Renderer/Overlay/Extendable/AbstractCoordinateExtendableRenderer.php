@@ -23,7 +23,7 @@ abstract class AbstractCoordinateExtendableRenderer extends AbstractRenderer imp
     /**
      * {@inheritdoc}
      */
-    public function render(ExtendableInterface $extendable, Bound $bound)
+    public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $formatter = $this->getFormatter();
 
@@ -38,8 +38,5 @@ abstract class AbstractCoordinateExtendableRenderer extends AbstractRenderer imp
         );
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getMethod();
+    abstract protected function getMethod(): string;
 }

@@ -32,11 +32,11 @@ class PlaceAutocompletePredictionNormalizer extends Normalizer implements Denorm
         }
 
         foreach ($data[$termKey] as $termData) {
-            $prediction->addTerm($this->denormalizer->denormalize($termData, PlaceAutocompleteTerm::class), $format, $context);
+            $prediction->addTerm($this->denormalizer->denormalize($termData, PlaceAutocompleteTerm::class));
         }
 
         foreach ($data[$matchedSubStringKey] as $matchData) {
-            $prediction->addMatch($this->denormalizer->denormalize($matchData, PlaceAutocompleteMatch::class), $format, $context);
+            $prediction->addMatch($this->denormalizer->denormalize($matchData, PlaceAutocompleteMatch::class));
         }
 
         return $prediction;

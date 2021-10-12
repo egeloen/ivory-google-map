@@ -26,21 +26,10 @@ use Ivory\GoogleMap\Map;
  */
 class EncodedPolylineSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var EncodedPolylineCollector
-     */
-    private $encodedPolylineCollector;
+    private ?EncodedPolylineCollector $encodedPolylineCollector = null;
 
-    /**
-     * @var EncodedPolylineRenderer
-     */
-    private $encodedPolylineRenderer;
+    private ?EncodedPolylineRenderer $encodedPolylineRenderer = null;
 
-    /**
-     * @param Formatter                $formatter
-     * @param EncodedPolylineCollector $encodedPolylineCollector
-     * @param EncodedPolylineRenderer  $encodedPolylineRenderer
-     */
     public function __construct(
         Formatter $formatter,
         EncodedPolylineCollector $encodedPolylineCollector,
@@ -52,42 +41,27 @@ class EncodedPolylineSubscriber extends AbstractSubscriber
         $this->setEncodedPolylineRenderer($encodedPolylineRenderer);
     }
 
-    /**
-     * @return EncodedPolylineCollector
-     */
-    public function getEncodedPolylineCollector()
+    public function getEncodedPolylineCollector(): EncodedPolylineCollector
     {
         return $this->encodedPolylineCollector;
     }
 
-    /**
-     * @param EncodedPolylineCollector $encodedPolylineCollector
-     */
-    public function setEncodedPolylineCollector(EncodedPolylineCollector $encodedPolylineCollector)
+    public function setEncodedPolylineCollector(EncodedPolylineCollector $encodedPolylineCollector): void
     {
         $this->encodedPolylineCollector = $encodedPolylineCollector;
     }
 
-    /**
-     * @return EncodedPolylineRenderer
-     */
-    public function getEncodedPolylineRenderer()
+    public function getEncodedPolylineRenderer(): EncodedPolylineRenderer
     {
         return $this->encodedPolylineRenderer;
     }
 
-    /**
-     * @param EncodedPolylineRenderer $encodedPolylineRenderer
-     */
-    public function setEncodedPolylineRenderer(EncodedPolylineRenderer $encodedPolylineRenderer)
+    public function setEncodedPolylineRenderer(EncodedPolylineRenderer $encodedPolylineRenderer): void
     {
         $this->encodedPolylineRenderer = $encodedPolylineRenderer;
     }
 
-    /**
-     * @param ApiEvent $event
-     */
-    public function handleApi(ApiEvent $event)
+    public function handleApi(ApiEvent $event): void
     {
         foreach ($event->getObjects(Map::class) as $map) {
             $encodedPolylines = $this->encodedPolylineCollector->collect($map);
@@ -100,10 +74,7 @@ class EncodedPolylineSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -121,7 +92,7 @@ class EncodedPolylineSubscriber extends AbstractSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ApiEvents::JAVASCRIPT_MAP                      => 'handleApi',

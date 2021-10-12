@@ -2,6 +2,7 @@
 
 namespace Ivory\GoogleMap\Serializer\Normalizer\Place;
 
+use DateTime;
 use Ivory\GoogleMap\Service\Place\Base\Review;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -20,7 +21,7 @@ class ReviewNormalizer implements DenormalizerAwareInterface, DenormalizerInterf
         $place->setAuthorUrl($data['author_url']);
         $place->setLanguage($data['language']);
         $place->setRating(floatval($data['rating']));
-        $place->setTime(new \DateTime('@'.$data['time']));
+        $place->setTime(new DateTime('@'.$data['time']));
 
         return $place;
     }

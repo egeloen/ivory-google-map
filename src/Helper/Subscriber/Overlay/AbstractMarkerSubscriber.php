@@ -22,15 +22,8 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 abstract class AbstractMarkerSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private ?MarkerCollector $markerCollector = null;
 
-    /**
-     * @param Formatter       $formatter
-     * @param MarkerCollector $markerCollector
-     */
     public function __construct(Formatter $formatter, MarkerCollector $markerCollector)
     {
         parent::__construct($formatter);
@@ -38,17 +31,11 @@ abstract class AbstractMarkerSubscriber extends AbstractSubscriber
         $this->setMarkerCollector($markerCollector);
     }
 
-    /**
-     * @return MarkerCollector
-     */
-    public function getMarkerCollector()
+    public function getMarkerCollector(): MarkerCollector
     {
         return $this->markerCollector;
     }
 
-    /**
-     * @param MarkerCollector $markerCollector
-     */
     public function setMarkerCollector(MarkerCollector $markerCollector)
     {
         $this->markerCollector = $markerCollector;

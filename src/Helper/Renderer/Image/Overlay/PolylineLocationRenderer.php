@@ -20,25 +20,14 @@ use Ivory\GoogleMap\Overlay\Polyline;
  */
 class PolylineLocationRenderer
 {
-    /**
-     * @var CoordinateRenderer
-     */
-    private $coordinateRenderer;
+    private CoordinateRenderer $coordinateRenderer;
 
-    /**
-     * @param CoordinateRenderer $coordinateRenderer
-     */
     public function __construct(CoordinateRenderer $coordinateRenderer)
     {
         $this->coordinateRenderer = $coordinateRenderer;
     }
 
-    /**
-     * @param Polyline $polyline
-     *
-     * @return string
-     */
-    public function render(Polyline $polyline)
+    public function render(Polyline $polyline): string
     {
         if ($polyline->hasStaticOption('locations')) {
             $locations = $polyline->getStaticOption('locations');
@@ -46,8 +35,6 @@ class PolylineLocationRenderer
             $locations = $polyline->getCoordinates();
         }
 
-        return implode('|', array_map(function ($location) {
-            return $location instanceof Coordinate ? $this->coordinateRenderer->render($location) : $location;
-        }, $locations));
+        return implode('|', array_map(fn($location) => $location instanceof Coordinate ? $this->coordinateRenderer->render($location) : $location, $locations));
     }
 }

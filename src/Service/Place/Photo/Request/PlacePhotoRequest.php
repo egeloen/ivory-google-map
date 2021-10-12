@@ -16,20 +16,11 @@ namespace Ivory\GoogleMap\Service\Place\Photo\Request;
  */
 class PlacePhotoRequest implements PlacePhotoRequestInterface
 {
-    /**
-     * @var string
-     */
-    private $reference;
+    private ?string $reference = null;
 
-    /**
-     * @var int|null
-     */
-    private $maxWidth;
+    private ?int $maxWidth = null;
 
-    /**
-     * @var int|null
-     */
-    private $maxHeight;
+    private ?int $maxHeight = null;
 
     /**
      * @param string $reference
@@ -39,10 +30,7 @@ class PlacePhotoRequest implements PlacePhotoRequestInterface
         $this->setReference($reference);
     }
 
-    /**
-     * @return string
-     */
-    public function getReference()
+    public function getReference(): string
     {
         return $this->reference;
     }
@@ -50,23 +38,17 @@ class PlacePhotoRequest implements PlacePhotoRequestInterface
     /**
      * @param string $reference
      */
-    public function setReference($reference)
+    public function setReference($reference): void
     {
         $this->reference = $reference;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMaxWidth()
+    public function hasMaxWidth(): bool
     {
         return $this->maxWidth !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getMaxWidth()
+    public function getMaxWidth(): ?int
     {
         return $this->maxWidth;
     }
@@ -74,23 +56,17 @@ class PlacePhotoRequest implements PlacePhotoRequestInterface
     /**
      * @param int|null $maxWidth
      */
-    public function setMaxWidth($maxWidth)
+    public function setMaxWidth($maxWidth): void
     {
         $this->maxWidth = $maxWidth;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMaxHeight()
+    public function hasMaxHeight(): bool
     {
         return $this->maxHeight !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getMaxHeight()
+    public function getMaxHeight(): ?int
     {
         return $this->maxHeight;
     }
@@ -98,7 +74,7 @@ class PlacePhotoRequest implements PlacePhotoRequestInterface
     /**
      * @param int|null $maxHeight
      */
-    public function setMaxHeight($maxHeight)
+    public function setMaxHeight($maxHeight): void
     {
         $this->maxHeight = $maxHeight;
     }
@@ -106,7 +82,7 @@ class PlacePhotoRequest implements PlacePhotoRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = ['photoreference' => $this->reference];
 

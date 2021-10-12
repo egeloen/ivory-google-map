@@ -22,20 +22,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class EncodedPolylineSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EncodedPolylineCollector
-     */
-    private $encodedPolylineCollector;
+    private EncodedPolylineCollector $encodedPolylineCollector;
 
-    /**
-     * @var EncodedPolylineRenderer
-     */
-    private $encodedPolylineRenderer;
+    private EncodedPolylineRenderer $encodedPolylineRenderer;
 
-    /**
-     * @param EncodedPolylineCollector $encodedPolylineCollector
-     * @param EncodedPolylineRenderer  $encodedPolylineRenderer
-     */
     public function __construct(
         EncodedPolylineCollector $encodedPolylineCollector,
         EncodedPolylineRenderer $encodedPolylineRenderer
@@ -44,10 +34,7 @@ class EncodedPolylineSubscriber implements EventSubscriberInterface
         $this->encodedPolylineRenderer = $encodedPolylineRenderer;
     }
 
-    /**
-     * @param StaticMapEvent $event
-     */
-    public function handleMap(StaticMapEvent $event)
+    public function handleMap(StaticMapEvent $event): void
     {
         foreach ($this->encodedPolylineCollector->collect($event->getMap()) as $encodedPolylines) {
             $event->setParameter('path', $this->encodedPolylineRenderer->render($encodedPolylines));
@@ -57,7 +44,7 @@ class EncodedPolylineSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::ENCODED_POLYLINE => 'handleMap'];
     }

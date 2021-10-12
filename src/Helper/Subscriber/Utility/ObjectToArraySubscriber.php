@@ -22,15 +22,8 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class ObjectToArraySubscriber extends AbstractSubscriber
 {
-    /**
-     * @var ObjectToArrayRenderer
-     */
-    private $objectToArrayRenderer;
+    private ?ObjectToArrayRenderer $objectToArrayRenderer = null;
 
-    /**
-     * @param Formatter             $formatter
-     * @param ObjectToArrayRenderer $objectToArrayRenderer
-     */
     public function __construct(Formatter $formatter, ObjectToArrayRenderer $objectToArrayRenderer)
     {
         parent::__construct($formatter);
@@ -38,26 +31,17 @@ class ObjectToArraySubscriber extends AbstractSubscriber
         $this->setObjectToArrayRenderer($objectToArrayRenderer);
     }
 
-    /**
-     * @return ObjectToArrayRenderer
-     */
-    public function getObjectToArrayRenderer()
+    public function getObjectToArrayRenderer(): ObjectToArrayRenderer
     {
         return $this->objectToArrayRenderer;
     }
 
-    /**
-     * @param ObjectToArrayRenderer $objectToArrayRenderer
-     */
-    public function setObjectToArrayRenderer(ObjectToArrayRenderer $objectToArrayRenderer)
+    public function setObjectToArrayRenderer(ObjectToArrayRenderer $objectToArrayRenderer): void
     {
         $this->objectToArrayRenderer = $objectToArrayRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $event->addCode($this->getFormatter()->renderContainerAssignment(
             $event->getMap(),
@@ -69,7 +53,7 @@ class ObjectToArraySubscriber extends AbstractSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_INIT_FUNCTION => 'handleMap'];
     }

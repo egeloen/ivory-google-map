@@ -21,27 +21,24 @@ class EventManager
     /**
      * @var Event[]
      */
-    private $domEvents = [];
+    private array $domEvents = [];
 
     /**
      * @var Event[]
      */
-    private $domEventsOnce = [];
+    private array $domEventsOnce = [];
 
     /**
      * @var Event[]
      */
-    private $events = [];
+    private array $events = [];
 
     /**
      * @var Event[]
      */
-    private $eventsOnce = [];
+    private array $eventsOnce = [];
 
-    /**
-     * @return bool
-     */
-    public function hasDomEvents()
+    public function hasDomEvents(): bool
     {
         return !empty($this->domEvents);
     }
@@ -49,7 +46,7 @@ class EventManager
     /**
      * @return Event[]
      */
-    public function getDomEvents()
+    public function getDomEvents(): array
     {
         return $this->domEvents;
     }
@@ -57,7 +54,7 @@ class EventManager
     /**
      * @param Event[] $domEvents
      */
-    public function setDomEvents(array $domEvents)
+    public function setDomEvents(array $domEvents): void
     {
         $this->domEvents = [];
         $this->addDomEvents($domEvents);
@@ -66,46 +63,32 @@ class EventManager
     /**
      * @param Event[] $domEvents
      */
-    public function addDomEvents(array $domEvents)
+    public function addDomEvents(array $domEvents): void
     {
         foreach ($domEvents as $domEvent) {
             $this->addDomEvent($domEvent);
         }
     }
 
-    /**
-     * @param Event $domEvent
-     *
-     * @return bool
-     */
-    public function hasDomEvent(Event $domEvent)
+    public function hasDomEvent(Event $domEvent): bool
     {
         return in_array($domEvent, $this->domEvents, true);
     }
 
-    /**
-     * @param Event $domEvent
-     */
-    public function addDomEvent(Event $domEvent)
+    public function addDomEvent(Event $domEvent): void
     {
         if (!$this->hasDomEvent($domEvent)) {
             $this->domEvents[] = $domEvent;
         }
     }
 
-    /**
-     * @param Event $domEvent
-     */
-    public function removeDomEvent(Event $domEvent)
+    public function removeDomEvent(Event $domEvent): void
     {
         unset($this->domEvents[array_search($domEvent, $this->domEvents, true)]);
         $this->domEvents = empty($this->domEvents) ? [] : array_values($this->domEvents);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDomEventsOnce()
+    public function hasDomEventsOnce(): bool
     {
         return !empty($this->domEventsOnce);
     }
@@ -113,7 +96,7 @@ class EventManager
     /**
      * @return Event[]
      */
-    public function getDomEventsOnce()
+    public function getDomEventsOnce(): array
     {
         return $this->domEventsOnce;
     }
@@ -121,7 +104,7 @@ class EventManager
     /**
      * @param Event[] $domEventsOnce
      */
-    public function setDomEventsOnce(array $domEventsOnce)
+    public function setDomEventsOnce(array $domEventsOnce): void
     {
         $this->domEventsOnce = [];
         $this->addDomEventsOnce($domEventsOnce);
@@ -130,46 +113,32 @@ class EventManager
     /**
      * @param Event[] $domEventsOnce
      */
-    public function addDomEventsOnce(array $domEventsOnce)
+    public function addDomEventsOnce(array $domEventsOnce): void
     {
         foreach ($domEventsOnce as $domEventOnce) {
             $this->addDomEventOnce($domEventOnce);
         }
     }
 
-    /**
-     * @param Event $domEventOnce
-     *
-     * @return bool
-     */
-    public function hasDomEventOnce(Event $domEventOnce)
+    public function hasDomEventOnce(Event $domEventOnce): bool
     {
         return in_array($domEventOnce, $this->domEventsOnce, true);
     }
 
-    /**
-     * @param Event $domEventOnce
-     */
-    public function addDomEventOnce(Event $domEventOnce)
+    public function addDomEventOnce(Event $domEventOnce): void
     {
         if (!$this->hasDomEventOnce($domEventOnce)) {
             $this->domEventsOnce[] = $domEventOnce;
         }
     }
 
-    /**
-     * @param Event $domEventOnce
-     */
-    public function removeDomEventOnce(Event $domEventOnce)
+    public function removeDomEventOnce(Event $domEventOnce): void
     {
         unset($this->domEventsOnce[array_search($domEventOnce, $this->domEventsOnce, true)]);
         $this->domEventsOnce = empty($this->domEventsOnce) ? [] : array_values($this->domEventsOnce);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEvents()
+    public function hasEvents(): bool
     {
         return !empty($this->events);
     }
@@ -177,7 +146,7 @@ class EventManager
     /**
      * @return Event[]
      */
-    public function getEvents()
+    public function getEvents(): array
     {
         return $this->events;
     }
@@ -185,7 +154,7 @@ class EventManager
     /**
      * @param Event[] $events
      */
-    public function setEvents(array $events)
+    public function setEvents(array $events): void
     {
         $this->events = [];
         $this->addEvents($events);
@@ -194,46 +163,32 @@ class EventManager
     /**
      * @param Event[] $events
      */
-    public function addEvents(array $events)
+    public function addEvents(array $events): void
     {
         foreach ($events as $event) {
             $this->addEvent($event);
         }
     }
 
-    /**
-     * @param Event $event
-     *
-     * @return bool
-     */
-    public function hasEvent(Event $event)
+    public function hasEvent(Event $event): bool
     {
         return in_array($event, $this->events, true);
     }
 
-    /**
-     * @param Event $event
-     */
-    public function addEvent(Event $event)
+    public function addEvent(Event $event): void
     {
         if (!$this->hasEvent($event)) {
             $this->events[] = $event;
         }
     }
 
-    /**
-     * @param Event $event
-     */
-    public function removeEvent(Event $event)
+    public function removeEvent(Event $event): void
     {
         unset($this->events[array_search($event, $this->events, true)]);
         $this->events = empty($this->events) ? [] : array_values($this->events);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEventsOnce()
+    public function hasEventsOnce(): bool
     {
         return !empty($this->eventsOnce);
     }
@@ -241,7 +196,7 @@ class EventManager
     /**
      * @return Event[]
      */
-    public function getEventsOnce()
+    public function getEventsOnce(): array
     {
         return $this->eventsOnce;
     }
@@ -249,7 +204,7 @@ class EventManager
     /**
      * @param Event[] $eventsOnce
      */
-    public function setEventsOnce(array $eventsOnce)
+    public function setEventsOnce(array $eventsOnce): void
     {
         $this->eventsOnce = [];
         $this->addEventsOnce($eventsOnce);
@@ -258,35 +213,24 @@ class EventManager
     /**
      * @param Event[] $eventsOnce
      */
-    public function addEventsOnce(array $eventsOnce)
+    public function addEventsOnce(array $eventsOnce): void
     {
         foreach ($eventsOnce as $eventOnce) {
             $this->addEventOnce($eventOnce);
         }
     }
 
-    /**
-     * @param Event $eventOnce
-     *
-     * @return bool
-     */
-    public function hasEventOnce(Event $eventOnce)
+    public function hasEventOnce(Event $eventOnce): bool
     {
         return in_array($eventOnce, $this->eventsOnce, true);
     }
 
-    /**
-     * @param Event $eventOnce
-     */
-    public function addEventOnce(Event $eventOnce)
+    public function addEventOnce(Event $eventOnce): void
     {
         $this->eventsOnce[] = $eventOnce;
     }
 
-    /**
-     * @param Event $eventOnce
-     */
-    public function removeEventOnce(Event $eventOnce)
+    public function removeEventOnce(Event $eventOnce): void
     {
         unset($this->eventsOnce[array_search($eventOnce, $this->eventsOnce, true)]);
         $this->eventsOnce = empty($this->eventsOnce) ? [] : array_values($this->eventsOnce);

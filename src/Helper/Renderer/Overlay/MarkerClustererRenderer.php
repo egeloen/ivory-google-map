@@ -23,16 +23,8 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class MarkerClustererRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var RequirementRenderer
-     */
-    private $requirementRenderer;
+    private ?RequirementRenderer $requirementRenderer = null;
 
-    /**
-     * @param Formatter           $formatter
-     * @param JsonBuilder         $jsonBuilder
-     * @param RequirementRenderer $requirementRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -43,30 +35,21 @@ class MarkerClustererRenderer extends AbstractJsonRenderer
         $this->setRequirementRenderer($requirementRenderer);
     }
 
-    /**
-     * @return RequirementRenderer
-     */
-    public function getRequirementRenderer()
+    public function getRequirementRenderer(): RequirementRenderer
     {
         return $this->requirementRenderer;
     }
 
-    /**
-     * @param RequirementRenderer $requirementRenderer
-     */
-    public function setRequirementRenderer(RequirementRenderer $requirementRenderer)
+    public function setRequirementRenderer(RequirementRenderer $requirementRenderer): void
     {
         $this->requirementRenderer = $requirementRenderer;
     }
 
     /**
-     * @param MarkerCluster $markerCluster
-     * @param Map           $map
      * @param string        $markers
      *
-     * @return string
      */
-    public function render(MarkerCluster $markerCluster, Map $map, $markers)
+    public function render(MarkerCluster $markerCluster, Map $map, $markers): string
     {
         $options = $markerCluster->getOptions();
 
@@ -84,18 +67,12 @@ class MarkerClustererRenderer extends AbstractJsonRenderer
         ], false));
     }
 
-    /**
-     * @return string
-     */
-    public function renderSource()
+    public function renderSource(): string
     {
         return 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js';
     }
 
-    /**
-     * @return string
-     */
-    public function renderRequirement()
+    public function renderRequirement(): string
     {
         return $this->requirementRenderer->render('MarkerClusterer');
     }

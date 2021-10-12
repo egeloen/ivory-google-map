@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class CircleSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var CircleCollector
-     */
-    private $circleCollector;
+    private ?CircleCollector $circleCollector = null;
 
-    /**
-     * @var CircleRenderer
-     */
-    private $circleRenderer;
+    private ?CircleRenderer $circleRenderer = null;
 
-    /**
-     * @param Formatter       $formatter
-     * @param CircleCollector $circleCollector
-     * @param CircleRenderer  $circleRenderer
-     */
     public function __construct(
         Formatter $formatter,
         CircleCollector $circleCollector,
@@ -49,42 +38,27 @@ class CircleSubscriber extends AbstractSubscriber
         $this->setCircleRenderer($circleRenderer);
     }
 
-    /**
-     * @return CircleCollector
-     */
-    public function getCircleCollector()
+    public function getCircleCollector(): CircleCollector
     {
         return $this->circleCollector;
     }
 
-    /**
-     * @param CircleCollector $circleCollector
-     */
-    public function setCircleCollector(CircleCollector $circleCollector)
+    public function setCircleCollector(CircleCollector $circleCollector): void
     {
         $this->circleCollector = $circleCollector;
     }
 
-    /**
-     * @return CircleRenderer
-     */
-    public function getCircleRenderer()
+    public function getCircleRenderer(): CircleRenderer
     {
         return $this->circleRenderer;
     }
 
-    /**
-     * @param CircleRenderer $circleRenderer
-     */
-    public function setCircleRenderer(CircleRenderer $circleRenderer)
+    public function setCircleRenderer(CircleRenderer $circleRenderer): void
     {
         $this->circleRenderer = $circleRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -102,7 +76,7 @@ class CircleSubscriber extends AbstractSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_CIRCLE => 'handleMap'];
     }

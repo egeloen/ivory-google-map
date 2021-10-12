@@ -18,15 +18,9 @@ namespace Ivory\GoogleMap\Control;
  */
 class ZoomControl
 {
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
-    /**
-     * @var string
-     */
-    private $style;
+    private ?string $style = null;
 
     /**
      * @param string $position
@@ -38,10 +32,7 @@ class ZoomControl
         $this->setStyle($style);
     }
 
-    /**
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->position;
     }
@@ -49,15 +40,12 @@ class ZoomControl
     /**
      * @param string $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return string
-     */
-    public function getStyle()
+    public function getStyle(): string
     {
         return $this->style;
     }
@@ -65,7 +53,7 @@ class ZoomControl
     /**
      * @param string $style
      */
-    public function setStyle($style)
+    public function setStyle($style): void
     {
         $this->style = $style;
     }

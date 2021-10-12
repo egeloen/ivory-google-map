@@ -6,6 +6,7 @@ use Rector\Core\Configuration\Option;
 use Rector\Php74\Rector\Property\TypedPropertyRector;
 use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
+use Rector\TypeDeclaration\Rector\Property\CompleteVarDocTypePropertyRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -20,6 +21,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::PHP_74);
 
     $services = $containerConfigurator->services();
+    $services->set(CompleteVarDocTypePropertyRector::class);
     $services->set(TypedPropertyRector::class);
     $services->set(ReturnTypeDeclarationRector::class);
 };

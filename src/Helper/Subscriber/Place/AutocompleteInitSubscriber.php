@@ -22,7 +22,7 @@ class AutocompleteInitSubscriber extends AbstractDelegateSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getDelegatedSubscribedEvents()
+    public static function getDelegatedSubscribedEvents(): array
     {
         return [
             PlaceAutocompleteEvents::JAVASCRIPT_INIT => [

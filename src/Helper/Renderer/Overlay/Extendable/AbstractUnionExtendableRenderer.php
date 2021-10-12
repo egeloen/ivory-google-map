@@ -23,7 +23,7 @@ abstract class AbstractUnionExtendableRenderer extends AbstractRenderer implemen
     /**
      * {@inheritdoc}
      */
-    public function render(ExtendableInterface $extendable, Bound $bound)
+    public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $formatter = $this->getFormatter();
 

@@ -20,13 +20,7 @@ use Ivory\GoogleMap\Overlay\Circle;
  */
 class CircleRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param Circle $circle
-     * @param Map    $map
-     *
-     * @return string
-     */
-    public function render(Circle $circle, Map $map)
+    public function render(Circle $circle, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()

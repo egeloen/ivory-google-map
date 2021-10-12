@@ -19,7 +19,7 @@ class BoundsExtendableRenderer extends AbstractUnionExtendableRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getMethod()
+    protected function getMethod(): string
     {
         return 'getBounds';
     }

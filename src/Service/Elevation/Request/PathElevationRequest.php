@@ -85,7 +85,7 @@ class PathElevationRequest implements ElevationRequestInterface
         $this->paths = empty($this->paths) ? [] : array_values($this->paths);
     }
 
-    public function getSamples(): int
+    public function getSamples(): ?int
     {
         return $this->samples;
     }

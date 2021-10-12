@@ -29,8 +29,6 @@ abstract class AbstractSerializableService extends AbstractHttpService
 
     /**
      * @param string                   $url
-     * @param HttpClient               $client
-     * @param MessageFactory           $messageFactory
      * @param SerializerInterface|null $serializer
      */
     public function __construct(
@@ -58,7 +56,7 @@ abstract class AbstractSerializableService extends AbstractHttpService
     /**
      * {@inheritdoc}
      */
-    protected function createBaseUrl(RequestInterface $request)
+    protected function createBaseUrl(RequestInterface $request): string
     {
         return parent::createBaseUrl($request) . '/json';
     }

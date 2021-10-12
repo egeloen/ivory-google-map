@@ -29,27 +29,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
 {
-    /**
-     * @var AutocompleteRenderer
-     */
-    private $autocompleteRenderer;
+    private ?AutocompleteRenderer $autocompleteRenderer = null;
 
-    /**
-     * @var CallbackRenderer
-     */
-    private $callbackRenderer;
+    private ?CallbackRenderer $callbackRenderer = null;
 
-    /**
-     * @var JavascriptTagRenderer
-     */
-    private $javascriptTagRenderer;
+    private ?JavascriptTagRenderer $javascriptTagRenderer = null;
 
-    /**
-     * @param Formatter             $formatter
-     * @param AutocompleteRenderer  $autocompleteRenderer
-     * @param CallbackRenderer      $callbackRenderer
-     * @param JavascriptTagRenderer $javascriptTagRenderer
-     */
     public function __construct(
         Formatter $formatter,
         AutocompleteRenderer $autocompleteRenderer,
@@ -63,58 +48,37 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
         $this->setJavascriptTagRenderer($javascriptTagRenderer);
     }
 
-    /**
-     * @return AutocompleteRenderer
-     */
-    public function getAutocompleteRenderer()
+    public function getAutocompleteRenderer(): AutocompleteRenderer
     {
         return $this->autocompleteRenderer;
     }
 
-    /**
-     * @param AutocompleteRenderer $autocompleteRenderer
-     */
-    public function setAutocompleteRenderer(AutocompleteRenderer $autocompleteRenderer)
+    public function setAutocompleteRenderer(AutocompleteRenderer $autocompleteRenderer): void
     {
         $this->autocompleteRenderer = $autocompleteRenderer;
     }
 
-    /**
-     * @return CallbackRenderer
-     */
-    public function getCallbackRenderer()
+    public function getCallbackRenderer(): CallbackRenderer
     {
         return $this->callbackRenderer;
     }
 
-    /**
-     * @param CallbackRenderer $callbackRenderer
-     */
-    public function setCallbackRenderer(CallbackRenderer $callbackRenderer)
+    public function setCallbackRenderer(CallbackRenderer $callbackRenderer): void
     {
         $this->callbackRenderer = $callbackRenderer;
     }
 
-    /**
-     * @return JavascriptTagRenderer
-     */
-    public function getJavascriptTagRenderer()
+    public function getJavascriptTagRenderer(): JavascriptTagRenderer
     {
         return $this->javascriptTagRenderer;
     }
 
-    /**
-     * @param JavascriptTagRenderer $javascriptTagRenderer
-     */
-    public function setJavascriptTagRenderer(JavascriptTagRenderer $javascriptTagRenderer)
+    public function setJavascriptTagRenderer(JavascriptTagRenderer $javascriptTagRenderer): void
     {
         $this->javascriptTagRenderer = $javascriptTagRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function handle(Event $event, $eventName, EventDispatcherInterface $eventDispatcher)
+    public function handle(Event $event, string $eventName, EventDispatcherInterface $eventDispatcher): void
     {
         parent::handle($event, $eventName, $eventDispatcher);
 
@@ -125,10 +89,7 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getDelegatedSubscribedEvents()
+    public static function getDelegatedSubscribedEvents(): array
     {
         return [
             ApiEvents::JAVASCRIPT_AUTOCOMPLETE  => [],
@@ -141,10 +102,7 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
         ];
     }
 
-    /**
-     * @param ApiEvent $event
-     */
-    private function handleApi(ApiEvent $event)
+    private function handleApi(ApiEvent $event): void
     {
         foreach ($event->getObjects(Autocomplete::class) as $autocomplete) {
             $event->addLibraries(array_unique(array_merge($autocomplete->getLibraries(), ['places'])));
@@ -153,10 +111,7 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
         }
     }
 
-    /**
-     * @param PlaceAutocompleteEvent $event
-     */
-    private function handleAutocomplete(PlaceAutocompleteEvent $event)
+    private function handleAutocomplete(PlaceAutocompleteEvent $event): void
     {
         $formatter = $this->getFormatter();
 
@@ -167,12 +122,7 @@ class AutocompleteJavascriptSubscriber extends AbstractDelegateSubscriber
         )));
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     *
-     * @return string
-     */
-    private function renderCallback(Autocomplete $autocomplete)
+    private function renderCallback(Autocomplete $autocomplete): string
     {
         return $this->callbackRenderer->render($autocomplete->getVariable());
     }

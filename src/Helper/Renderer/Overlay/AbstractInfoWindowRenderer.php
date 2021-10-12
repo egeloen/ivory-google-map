@@ -22,7 +22,7 @@ abstract class AbstractInfoWindowRenderer extends AbstractJsonRenderer implement
     /**
      * {@inheritdoc}
      */
-    public function render(InfoWindow $infoWindow, $position = true)
+    public function render(InfoWindow $infoWindow, $position = true): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();

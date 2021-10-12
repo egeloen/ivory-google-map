@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable;
  */
 class PathExtendableRenderer extends AbstractCoordinateExtendableRenderer
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethod()
+    protected function getMethod(): string
     {
         return 'getPath';
     }

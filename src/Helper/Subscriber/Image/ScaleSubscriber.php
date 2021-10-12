@@ -20,10 +20,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ScaleSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param StaticMapEvent $event
-     */
-    public function handleMap(StaticMapEvent $event)
+    public function handleMap(StaticMapEvent $event): void
     {
         $map = $event->getMap();
 
@@ -35,7 +32,7 @@ class ScaleSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::SCALE => 'handleMap'];
     }

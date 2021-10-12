@@ -21,10 +21,8 @@ class StylesheetRenderer extends AbstractRenderer
     /**
      * @param string $stylesheet
      * @param string $value
-     *
-     * @return string
      */
-    public function render($stylesheet, $value)
+    public function render($stylesheet, $value): string
     {
         $formatter = $this->getFormatter();
 

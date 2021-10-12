@@ -23,18 +23,11 @@ class InfoWindowCollector extends AbstractCollector
     const STRATEGY_MAP = 1;
     const STRATEGY_MARKER = 2;
 
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private ?MarkerCollector $markerCollector = null;
+
+    private ?string $type = null;
 
     /**
-     * @var string|null
-     */
-    private $type;
-
-    /**
-     * @param MarkerCollector $markerCollector
      * @param string|null     $type
      */
     public function __construct(MarkerCollector $markerCollector, $type = null)
@@ -43,26 +36,17 @@ class InfoWindowCollector extends AbstractCollector
         $this->setType($type);
     }
 
-    /**
-     * @return MarkerCollector
-     */
-    public function getMarkerCollector()
+    public function getMarkerCollector(): MarkerCollector
     {
         return $this->markerCollector;
     }
 
-    /**
-     * @param MarkerCollector $markerCollector
-     */
     public function setMarkerCollector(MarkerCollector $markerCollector)
     {
         $this->markerCollector = $markerCollector;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -76,13 +60,11 @@ class InfoWindowCollector extends AbstractCollector
     }
 
     /**
-     * @param Map          $map
      * @param InfoWindow[] $infoWindows
      * @param int|null     $strategy
-     *
      * @return InfoWindow[]
      */
-    public function collect(Map $map, array $infoWindows = [], $strategy = null)
+    public function collect(Map $map, array $infoWindows = [], $strategy = null): array
     {
         if ($strategy === null) {
             $strategy = self::STRATEGY_MAP | self::STRATEGY_MARKER;
@@ -106,7 +88,7 @@ class InfoWindowCollector extends AbstractCollector
     /**
      * {@inheritdoc}
      */
-    protected function collectValue($value, array $defaults = [])
+    protected function collectValue($value, array $defaults = []): array
     {
         if ($this->type !== null && $value->getType() !== $this->type) {
             return $defaults;

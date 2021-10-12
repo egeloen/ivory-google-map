@@ -18,43 +18,31 @@ use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterfac
  */
 class DistanceMatrixResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var DistanceMatrixRequestInterface|null
-     */
-    private $request;
+    private ?DistanceMatrixRequestInterface $request = null;
 
     /**
      * @var string[]
      */
-    private $origins = [];
+    private array $origins = [];
 
     /**
      * @var string[]
      */
-    private $destinations = [];
+    private array $destinations = [];
 
     /**
      * @var DistanceMatrixRow[]
      */
-    private $rows = [];
+    private array $rows = [];
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -62,23 +50,17 @@ class DistanceMatrixResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return DistanceMatrixRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?DistanceMatrixRequestInterface
     {
         return $this->request;
     }
@@ -86,15 +68,12 @@ class DistanceMatrixResponse
     /**
      * @param DistanceMatrixRequestInterface|null $request
      */
-    public function setRequest(DistanceMatrixRequestInterface $request = null)
+    public function setRequest(DistanceMatrixRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOrigins()
+    public function hasOrigins(): bool
     {
         return !empty($this->origins);
     }
@@ -102,7 +81,7 @@ class DistanceMatrixResponse
     /**
      * @return string[]
      */
-    public function getOrigins()
+    public function getOrigins(): array
     {
         return $this->origins;
     }
@@ -110,7 +89,7 @@ class DistanceMatrixResponse
     /**
      * @param string[] $origins
      */
-    public function setOrigins(array $origins)
+    public function setOrigins(array $origins): void
     {
         $this->origins = [];
         $this->addOrigins($origins);
@@ -119,7 +98,7 @@ class DistanceMatrixResponse
     /**
      * @param string[] $origins
      */
-    public function addOrigins(array $origins)
+    public function addOrigins(array $origins): void
     {
         foreach ($origins as $origin) {
             $this->addOrigin($origin);
@@ -128,10 +107,8 @@ class DistanceMatrixResponse
 
     /**
      * @param string $origin
-     *
-     * @return bool
      */
-    public function hasOrigin($origin)
+    public function hasOrigin($origin): bool
     {
         return in_array($origin, $this->origins, true);
     }
@@ -139,7 +116,7 @@ class DistanceMatrixResponse
     /**
      * @param string $origin
      */
-    public function addOrigin($origin)
+    public function addOrigin($origin): void
     {
         if (!$this->hasOrigin($origin)) {
             $this->origins[] = $origin;
@@ -149,16 +126,13 @@ class DistanceMatrixResponse
     /**
      * @param string $origin
      */
-    public function removeOrigin($origin)
+    public function removeOrigin($origin): void
     {
         unset($this->origins[array_search($origin, $this->origins, true)]);
         $this->origins = empty($this->origins) ? [] : array_values($this->origins);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDestinations()
+    public function hasDestinations(): bool
     {
         return !empty($this->destinations);
     }
@@ -166,7 +140,7 @@ class DistanceMatrixResponse
     /**
      * @return string[]
      */
-    public function getDestinations()
+    public function getDestinations(): array
     {
         return $this->destinations;
     }
@@ -174,7 +148,7 @@ class DistanceMatrixResponse
     /**
      * @param string[] $destinations
      */
-    public function setDestinations(array $destinations)
+    public function setDestinations(array $destinations): void
     {
         $this->destinations = [];
         $this->addDestinations($destinations);
@@ -183,7 +157,7 @@ class DistanceMatrixResponse
     /**
      * @param string[] $destinations
      */
-    public function addDestinations(array $destinations)
+    public function addDestinations(array $destinations): void
     {
         foreach ($destinations as $destination) {
             $this->addDestination($destination);
@@ -192,10 +166,8 @@ class DistanceMatrixResponse
 
     /**
      * @param string $destination
-     *
-     * @return bool
      */
-    public function hasDestination($destination)
+    public function hasDestination($destination): bool
     {
         return in_array($destination, $this->destinations, true);
     }
@@ -203,7 +175,7 @@ class DistanceMatrixResponse
     /**
      * @param string $destination
      */
-    public function addDestination($destination)
+    public function addDestination($destination): void
     {
         if (!$this->hasDestination($destination)) {
             $this->destinations[] = $destination;
@@ -213,16 +185,13 @@ class DistanceMatrixResponse
     /**
      * @param string $destination
      */
-    public function removeDestination($destination)
+    public function removeDestination($destination): void
     {
         unset($this->destinations[array_search($destination, $this->destinations, true)]);
         $this->destinations = empty($this->destinations) ? [] : array_values($this->destinations);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRows()
+    public function hasRows(): bool
     {
         return !empty($this->rows);
     }
@@ -230,7 +199,7 @@ class DistanceMatrixResponse
     /**
      * @return DistanceMatrixRow[]
      */
-    public function getRows()
+    public function getRows(): array
     {
         return $this->rows;
     }
@@ -238,7 +207,7 @@ class DistanceMatrixResponse
     /**
      * @param DistanceMatrixRow[] $rows
      */
-    public function setRows(array $rows)
+    public function setRows(array $rows): void
     {
         $this->rows = [];
         $this->addRows($rows);
@@ -247,37 +216,26 @@ class DistanceMatrixResponse
     /**
      * @param DistanceMatrixRow[] $rows
      */
-    public function addRows(array $rows)
+    public function addRows(array $rows): void
     {
         foreach ($rows as $row) {
             $this->addRow($row);
         }
     }
 
-    /**
-     * @param DistanceMatrixRow $row
-     *
-     * @return bool
-     */
-    public function hasRow(DistanceMatrixRow $row)
+    public function hasRow(DistanceMatrixRow $row): bool
     {
         return in_array($row, $this->rows, true);
     }
 
-    /**
-     * @param DistanceMatrixRow $row
-     */
-    public function addRow(DistanceMatrixRow $row)
+    public function addRow(DistanceMatrixRow $row): void
     {
         if (!$this->hasRow($row)) {
             $this->rows[] = $row;
         }
     }
 
-    /**
-     * @param DistanceMatrixRow $row
-     */
-    public function removeRow(DistanceMatrixRow $row)
+    public function removeRow(DistanceMatrixRow $row): void
     {
         unset($this->rows[array_search($row, $this->rows, true)]);
         $this->rows = empty($this->rows) ? [] : array_values($this->rows);

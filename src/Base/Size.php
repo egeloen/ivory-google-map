@@ -36,7 +36,7 @@ class Size implements VariableAwareInterface
         $this->setHeightUnit($heightUnit);
     }
 
-    public function getWidth(): float
+    public function getWidth(): ?float
     {
         return $this->width;
     }
@@ -46,7 +46,7 @@ class Size implements VariableAwareInterface
         $this->width = $width;
     }
 
-    public function getHeight(): float
+    public function getHeight(): ?float
     {
         return $this->height;
     }

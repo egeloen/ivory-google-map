@@ -19,7 +19,7 @@ class EventOnceRenderer extends AbstractEventRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getMethod()
+    protected function getMethod(): string
     {
         return 'addListenerOnce';
     }
@@ -27,7 +27,7 @@ class EventOnceRenderer extends AbstractEventRenderer
     /**
      * {@inheritdoc}
      */
-    protected function hasCapture()
+    protected function hasCapture(): bool
     {
         return false;
     }

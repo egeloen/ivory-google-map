@@ -20,53 +20,31 @@ use Ivory\GoogleMap\Map;
  */
 class MapHelper extends AbstractHelper
 {
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function render(Map $map)
+    public function render(Map $map): string
     {
         return $this->renderHtml($map).$this->renderStylesheet($map).$this->renderJavascript($map);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function renderHtml(Map $map)
+    public function renderHtml(Map $map): string
     {
         return $this->doRender($map, MapEvents::HTML);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function renderStylesheet(Map $map)
+    public function renderStylesheet(Map $map): string
     {
         return $this->doRender($map, MapEvents::STYLESHEET);
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function renderJavascript(Map $map)
+    public function renderJavascript(Map $map): string
     {
         return $this->doRender($map, MapEvents::JAVASCRIPT);
     }
 
     /**
-     * @param Map    $map
      * @param string $eventName
      *
-     * @return string
      */
-    private function doRender(Map $map, $eventName)
+    private function doRender(Map $map, $eventName): ?string
     {
         $this->getEventDispatcher()->dispatch($eventName, $event = new MapEvent($map));
 

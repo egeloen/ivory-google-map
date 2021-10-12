@@ -23,95 +23,65 @@ class Autocomplete implements VariableAwareInterface
 {
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $inputId = 'place_input';
+    private string $inputId = 'place_input';
 
-    /**
-     * @var EventManager
-     */
-    private $eventManager;
+    private ?EventManager $eventManager = null;
 
-    /**
-     * @var Bound|null
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
     /**
      * @var mixed[]
      */
-    private $components = [];
+    private array $components = [];
 
-    /**
-     * @var string
-     */
-    private $value;
+    private ?string $value = null;
 
     /**
      * @var string[]
      */
-    private $inputAttributes = [];
+    private array $inputAttributes = [];
 
     /**
      * @var string[]
      */
-    private $libraries = [];
+    private array $libraries = [];
 
     public function __construct()
     {
         $this->setEventManager(new EventManager());
     }
 
-    /**
-     * @return string
-     */
-    public function getHtmlId()
+    public function getHtmlId(): string
     {
         return $this->inputId;
     }
 
-    /**
-     * @param string $inputId
-     */
-    public function setInputId($inputId)
+    public function setInputId(string $inputId): void
     {
         $this->inputId = $inputId;
     }
 
-    /**
-     * @return EventManager
-     */
-    public function getEventManager()
+    public function getEventManager(): EventManager
     {
         return $this->eventManager;
     }
 
-    /**
-     * @param EventManager $eventManager
-     */
-    public function setEventManager(EventManager $eventManager)
+    public function setEventManager(EventManager $eventManager): void
     {
         $this->eventManager = $eventManager;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBound()
+    public function hasBound(): bool
     {
         return $this->bound !== null;
     }
 
-    /**
-     * @return Bound|null
-     */
-    public function getBound()
+    public function getBound(): ?Bound
     {
         return $this->bound;
     }
@@ -119,15 +89,12 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param Bound|null $bound
      */
-    public function setBound(Bound $bound = null)
+    public function setBound(Bound $bound = null): void
     {
         $this->bound = $bound;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -135,7 +102,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -143,7 +110,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -152,7 +119,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -161,10 +128,8 @@ class Autocomplete implements VariableAwareInterface
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -172,7 +137,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -182,16 +147,13 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasComponents()
+    public function hasComponents(): bool
     {
         return !empty($this->components);
     }
@@ -199,7 +161,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @return mixed[]
      */
-    public function getComponents()
+    public function getComponents(): array
     {
         return $this->components;
     }
@@ -207,7 +169,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param mixed[] $components
      */
-    public function setComponents(array $components)
+    public function setComponents(array $components): void
     {
         $this->components = [];
         $this->addComponents($components);
@@ -216,7 +178,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param mixed[] $components
      */
-    public function addComponents(array $components)
+    public function addComponents(array $components): void
     {
         foreach ($components as $type => $value) {
             $this->setComponent($type, $value);
@@ -225,10 +187,8 @@ class Autocomplete implements VariableAwareInterface
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasComponent($type)
+    public function hasComponent($type): bool
     {
         return isset($this->components[$type]);
     }
@@ -247,7 +207,7 @@ class Autocomplete implements VariableAwareInterface
      * @param string $type
      * @param mixed  $value
      */
-    public function setComponent($type, $value)
+    public function setComponent($type, $value): void
     {
         $this->components[$type] = $value;
     }
@@ -255,39 +215,27 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string $type
      */
-    public function removeComponent($type)
+    public function removeComponent($type): void
     {
         unset($this->components[$type]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasValue()
+    public function hasValue(): bool
     {
         return $this->value !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    /**
-     * @param string|null $value
-     */
-    public function setValue($value = null)
+    public function setValue(?string $value = null): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasInputAttributes()
+    public function hasInputAttributes(): bool
     {
         return !empty($this->inputAttributes);
     }
@@ -295,7 +243,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @return string[]
      */
-    public function getInputAttributes()
+    public function getInputAttributes(): array
     {
         return $this->inputAttributes;
     }
@@ -303,7 +251,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string[] $inputAttributes
      */
-    public function setInputAttributes(array $inputAttributes)
+    public function setInputAttributes(array $inputAttributes): void
     {
         $this->inputAttributes = [];
         $this->addInputAttributes($inputAttributes);
@@ -312,7 +260,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string[] $inputAttributes
      */
-    public function addInputAttributes(array $inputAttributes)
+    public function addInputAttributes(array $inputAttributes): void
     {
         foreach ($inputAttributes as $name => $value) {
             $this->setInputAttribute($name, $value);
@@ -321,20 +269,16 @@ class Autocomplete implements VariableAwareInterface
 
     /**
      * @param string $name
-     *
-     * @return bool
      */
-    public function hasInputAttribute($name)
+    public function hasInputAttribute($name): bool
     {
         return isset($this->inputAttributes[$name]);
     }
 
     /**
      * @param string $name
-     *
-     * @return string|null
      */
-    public function getInputAttribute($name)
+    public function getInputAttribute($name): ?string
     {
         return $this->hasInputAttribute($name) ? $this->inputAttributes[$name] : null;
     }
@@ -343,7 +287,7 @@ class Autocomplete implements VariableAwareInterface
      * @param string $name
      * @param string $value
      */
-    public function setInputAttribute($name, $value)
+    public function setInputAttribute($name, $value): void
     {
         $this->inputAttributes[$name] = $value;
     }
@@ -351,15 +295,12 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string $name
      */
-    public function removeInputAttribute($name)
+    public function removeInputAttribute($name): void
     {
         unset($this->inputAttributes[$name]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLibraries()
+    public function hasLibraries(): bool
     {
         return !empty($this->libraries);
     }
@@ -367,7 +308,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @return string[]
      */
-    public function getLibraries()
+    public function getLibraries(): array
     {
         return $this->libraries;
     }
@@ -375,7 +316,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string[] $libraries
      */
-    public function setLibraries(array $libraries)
+    public function setLibraries(array $libraries): void
     {
         $this->libraries = [];
         $this->addLibraries($libraries);
@@ -384,7 +325,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string[] $libraries
      */
-    public function addLibraries(array $libraries)
+    public function addLibraries(array $libraries): void
     {
         foreach ($libraries as $library) {
             $this->addLibrary($library);
@@ -393,10 +334,8 @@ class Autocomplete implements VariableAwareInterface
 
     /**
      * @param string $library
-     *
-     * @return bool
      */
-    public function hasLibrary($library)
+    public function hasLibrary($library): bool
     {
         return in_array($library, $this->libraries, true);
     }
@@ -404,7 +343,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string $library
      */
-    public function addLibrary($library)
+    public function addLibrary($library): void
     {
         if (!$this->hasLibrary($library)) {
             $this->libraries[] = $library;
@@ -414,7 +353,7 @@ class Autocomplete implements VariableAwareInterface
     /**
      * @param string $library
      */
-    public function removeLibrary($library)
+    public function removeLibrary($library): void
     {
         unset($this->libraries[array_search($library, $this->libraries, true)]);
         $this->libraries = empty($this->libraries) ? [] : array_values($this->libraries);

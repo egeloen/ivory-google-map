@@ -22,30 +22,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class PolylineSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var PolylineCollector
-     */
-    private $polylineCollector;
+    private PolylineCollector $polylineCollector;
 
-    /**
-     * @var PolylineRenderer
-     */
-    private $polylineRenderer;
+    private PolylineRenderer $polylineRenderer;
 
-    /**
-     * @param PolylineCollector $polylineCollector
-     * @param PolylineRenderer  $polylineRenderer
-     */
     public function __construct(PolylineCollector $polylineCollector, PolylineRenderer $polylineRenderer)
     {
         $this->polylineCollector = $polylineCollector;
         $this->polylineRenderer = $polylineRenderer;
     }
 
-    /**
-     * @param StaticMapEvent $event
-     */
-    public function handleMap(StaticMapEvent $event)
+    public function handleMap(StaticMapEvent $event): void
     {
         $result = [];
 
@@ -61,7 +48,7 @@ class PolylineSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::POLYLINE => 'handleMap'];
     }

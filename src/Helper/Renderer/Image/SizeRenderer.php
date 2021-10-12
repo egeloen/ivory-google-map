@@ -18,23 +18,16 @@ use Ivory\GoogleMap\Map;
  */
 class SizeRenderer
 {
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function render(Map $map)
+    public function render(Map $map): string
     {
         return $this->getDimension($map, 'width').'x'.$this->getDimension($map, 'height');
     }
 
     /**
-     * @param Map    $map
      * @param string $side
      *
-     * @return string
      */
-    private function getDimension(Map $map, $side)
+    private function getDimension(Map $map, $side): string
     {
         return $map->hasStaticOption($side) ? $map->getStaticOption($side) : '300';
     }

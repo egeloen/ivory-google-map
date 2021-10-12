@@ -23,16 +23,8 @@ use Ivory\GoogleMap\Overlay\MarkerClusterType;
  */
 class MarkerSubscriber extends AbstractMarkerSubscriber
 {
-    /**
-     * @var MarkerRenderer
-     */
-    private $markerRenderer;
+    private ?MarkerRenderer $markerRenderer = null;
 
-    /**
-     * @param Formatter       $formatter
-     * @param MarkerCollector $markerCollector
-     * @param MarkerRenderer  $markerRenderer
-     */
     public function __construct(
         Formatter $formatter,
         MarkerCollector $markerCollector,
@@ -43,26 +35,17 @@ class MarkerSubscriber extends AbstractMarkerSubscriber
         $this->setMarkerRenderer($markerRenderer);
     }
 
-    /**
-     * @return MarkerRenderer
-     */
-    public function getMarkerRenderer()
+    public function getMarkerRenderer(): MarkerRenderer
     {
         return $this->markerRenderer;
     }
 
-    /**
-     * @param MarkerRenderer $markerRenderer
-     */
-    public function setMarkerRenderer(MarkerRenderer $markerRenderer)
+    public function setMarkerRenderer(MarkerRenderer $markerRenderer): void
     {
         $this->markerRenderer = $markerRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -85,7 +68,7 @@ class MarkerSubscriber extends AbstractMarkerSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_MARKER => 'handleMap'];
     }

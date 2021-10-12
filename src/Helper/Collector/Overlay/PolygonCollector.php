@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\Polygon;
 class PolygonCollector extends AbstractCollector
 {
     /**
-     * @param Map       $map
      * @param Polygon[] $polygons
-     *
      * @return Polygon[]
      */
-    public function collect(Map $map, array $polygons = [])
+    public function collect(Map $map, array $polygons = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getPolygons(), $polygons);
     }

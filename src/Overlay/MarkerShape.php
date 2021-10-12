@@ -23,15 +23,12 @@ class MarkerShape implements VariableAwareInterface
 {
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private ?string $type = null;
 
     /**
      * @var float[]
      */
-    private $coordinates = [];
+    private array $coordinates = [];
 
     /**
      * @param string  $type
@@ -43,10 +40,7 @@ class MarkerShape implements VariableAwareInterface
         $this->addCoordinates($coordinates);
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -54,15 +48,12 @@ class MarkerShape implements VariableAwareInterface
     /**
      * @param string $type
      */
-    public function setType($type)
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasCoordinates()
+    public function hasCoordinates(): bool
     {
         return !empty($this->coordinates);
     }
@@ -70,7 +61,7 @@ class MarkerShape implements VariableAwareInterface
     /**
      * @return float[]
      */
-    public function getCoordinates()
+    public function getCoordinates(): array
     {
         return $this->coordinates;
     }
@@ -78,7 +69,7 @@ class MarkerShape implements VariableAwareInterface
     /**
      * @param float[] $coordinates
      */
-    public function setCoordinates(array $coordinates)
+    public function setCoordinates(array $coordinates): void
     {
         $this->coordinates = [];
         $this->addCoordinates($coordinates);
@@ -87,7 +78,7 @@ class MarkerShape implements VariableAwareInterface
     /**
      * @param float[] $coordinates
      */
-    public function addCoordinates(array $coordinates)
+    public function addCoordinates(array $coordinates): void
     {
         foreach ($coordinates as $coordinate) {
             $this->addCoordinate($coordinate);
@@ -96,10 +87,8 @@ class MarkerShape implements VariableAwareInterface
 
     /**
      * @param float $coordinate
-     *
-     * @return bool
      */
-    public function hasCoordinate($coordinate)
+    public function hasCoordinate($coordinate): bool
     {
         return in_array($coordinate, $this->coordinates, true);
     }
@@ -107,7 +96,7 @@ class MarkerShape implements VariableAwareInterface
     /**
      * @param float $coordinate
      */
-    public function addCoordinate($coordinate)
+    public function addCoordinate($coordinate): void
     {
         $this->coordinates[] = $coordinate;
     }

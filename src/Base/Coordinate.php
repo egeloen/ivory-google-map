@@ -34,7 +34,7 @@ class Coordinate implements VariableAwareInterface
         $this->setNoWrap($noWrap);
     }
 
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -44,7 +44,7 @@ class Coordinate implements VariableAwareInterface
         $this->latitude = $latitude;
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -54,7 +54,7 @@ class Coordinate implements VariableAwareInterface
         $this->longitude = $longitude;
     }
 
-    public function isNoWrap(): bool
+    public function isNoWrap(): ?bool
     {
         return $this->noWrap;
     }

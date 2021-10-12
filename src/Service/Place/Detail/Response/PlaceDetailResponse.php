@@ -19,38 +19,23 @@ use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
  */
 class PlaceDetailResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var PlaceDetailRequestInterface|null
-     */
-    private $request;
+    private ?PlaceDetailRequestInterface $request = null;
 
-    /**
-     * @var Place|null
-     */
-    private $result;
+    private ?Place $result = null;
 
     /**
      * @var string[]
      */
-    private $htmlAttributions = [];
+    private array $htmlAttributions = [];
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -58,23 +43,17 @@ class PlaceDetailResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return PlaceDetailRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?PlaceDetailRequestInterface
     {
         return $this->request;
     }
@@ -82,22 +61,16 @@ class PlaceDetailResponse
     /**
      * @param PlaceDetailRequestInterface|null $request
      */
-    public function setRequest(PlaceDetailRequestInterface $request = null)
+    public function setRequest(PlaceDetailRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
     public function hasResult(): bool
     {
         return $this->result !== null;
     }
 
-    /**
-     * @return Place|null
-     */
     public function getResult(): ?Place
     {
         return $this->result;
@@ -106,15 +79,12 @@ class PlaceDetailResponse
     /**
      * @param Place|null $result
      */
-    public function setResult(Place $result = null)
+    public function setResult(Place $result = null): void
     {
         $this->result = $result;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHtmlAttributions()
+    public function hasHtmlAttributions(): bool
     {
         return !empty($this->htmlAttributions);
     }
@@ -122,7 +92,7 @@ class PlaceDetailResponse
     /**
      * @return string[]
      */
-    public function getHtmlAttributions()
+    public function getHtmlAttributions(): array
     {
         return $this->htmlAttributions;
     }
@@ -130,7 +100,7 @@ class PlaceDetailResponse
     /**
      * @param string[] $htmlAttributions
      */
-    public function setHtmlAttributions(array $htmlAttributions)
+    public function setHtmlAttributions(array $htmlAttributions): void
     {
         $this->htmlAttributions = [];
         $this->addHtmlAttributions($htmlAttributions);
@@ -139,7 +109,7 @@ class PlaceDetailResponse
     /**
      * @param string[] $htmlAttributions
      */
-    public function addHtmlAttributions(array $htmlAttributions)
+    public function addHtmlAttributions(array $htmlAttributions): void
     {
         foreach ($htmlAttributions as $htmlAttribution) {
             $this->addHtmlAttribution($htmlAttribution);
@@ -148,10 +118,8 @@ class PlaceDetailResponse
 
     /**
      * @param string $htmlAttribution
-     *
-     * @return bool
      */
-    public function hasHtmlAttribution($htmlAttribution)
+    public function hasHtmlAttribution($htmlAttribution): bool
     {
         return in_array($htmlAttribution, $this->htmlAttributions, true);
     }
@@ -159,7 +127,7 @@ class PlaceDetailResponse
     /**
      * @param string $htmlAttribution
      */
-    public function addHtmlAttribution($htmlAttribution)
+    public function addHtmlAttribution($htmlAttribution): void
     {
         if (!$this->hasHtmlAttribution($htmlAttribution)) {
             $this->htmlAttributions[] = $htmlAttribution;
@@ -169,7 +137,7 @@ class PlaceDetailResponse
     /**
      * @param string $htmlAttribution
      */
-    public function removeHtmlAttribution($htmlAttribution)
+    public function removeHtmlAttribution($htmlAttribution): void
     {
         unset($this->htmlAttributions[array_search($htmlAttribution, $this->htmlAttributions, true)]);
         $this->htmlAttributions = empty($this->htmlAttributions) ? [] : array_values($this->htmlAttributions);

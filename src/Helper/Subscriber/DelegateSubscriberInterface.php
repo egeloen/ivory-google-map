@@ -21,5 +21,5 @@ interface DelegateSubscriberInterface extends EventSubscriberInterface
     /**
      * @return string[][]
      */
-    public static function getDelegatedSubscribedEvents();
+    public static function getDelegatedSubscribedEvents(): array;
 }

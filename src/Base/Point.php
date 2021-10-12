@@ -33,7 +33,7 @@ class Point implements VariableAwareInterface
         $this->setY($y);
     }
 
-    public function getX(): float
+    public function getX(): ?float
     {
         return $this->x;
     }
@@ -43,7 +43,7 @@ class Point implements VariableAwareInterface
         $this->x = $x;
     }
 
-    public function getY(): float
+    public function getY(): ?float
     {
         return $this->y;
     }

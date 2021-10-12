@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Control\FullscreenControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -21,16 +22,8 @@ use Ivory\JsonBuilder\JsonBuilder;
  */
 class FullscreenControlRenderer extends AbstractJsonRenderer implements ControlRendererInterface
 {
-    /**
-     * @var ControlPositionRenderer
-     */
-    private $controlPositionRenderer;
+    private ?ControlPositionRenderer $controlPositionRenderer = null;
 
-    /**
-     * @param Formatter               $formatter
-     * @param JsonBuilder             $jsonBuilder
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -41,18 +34,12 @@ class FullscreenControlRenderer extends AbstractJsonRenderer implements ControlR
         $this->setControlPositionRenderer($controlPositionRenderer);
     }
 
-    /**
-     * @return ControlPositionRenderer
-     */
-    public function getControlPositionRenderer()
+    public function getControlPositionRenderer(): ControlPositionRenderer
     {
         return $this->controlPositionRenderer;
     }
 
-    /**
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
-    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer)
+    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer): void
     {
         $this->controlPositionRenderer = $controlPositionRenderer;
     }
@@ -60,10 +47,10 @@ class FullscreenControlRenderer extends AbstractJsonRenderer implements ControlR
     /**
      * {@inheritdoc}
      */
-    public function render($control)
+    public function render($control): string
     {
         if (!$control instanceof FullscreenControl) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Expected a "%s", got "%s".',
                 FullscreenControl::class,
                 is_object($control) ? get_class($control) : gettype($control)

@@ -16,15 +16,9 @@ namespace Ivory\GoogleMap\Service\Place\Detail\Request;
  */
 class PlaceDetailRequest implements PlaceDetailRequestInterface
 {
-    /**
-     * @var string
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
-    /**
-     * @var string|null
-     */
-    private $language;
+    private ?string $language = null;
 
     /**
      * @param string $placeId
@@ -34,10 +28,7 @@ class PlaceDetailRequest implements PlaceDetailRequestInterface
         $this->setPlaceId($placeId);
     }
 
-    /**
-     * @return string
-     */
-    public function getPlaceId()
+    public function getPlaceId(): string
     {
         return $this->placeId;
     }
@@ -45,23 +36,17 @@ class PlaceDetailRequest implements PlaceDetailRequestInterface
     /**
      * @param string $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -69,7 +54,7 @@ class PlaceDetailRequest implements PlaceDetailRequestInterface
     /**
      * @param string|null $language
      */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->language = $language;
     }
@@ -77,7 +62,7 @@ class PlaceDetailRequest implements PlaceDetailRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = ['placeid' => $this->placeId];
 

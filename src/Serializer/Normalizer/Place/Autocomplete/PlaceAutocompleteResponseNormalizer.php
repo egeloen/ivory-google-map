@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Ivory\GoogleMap\Serializer\Normalizer\Place\Autocomplete;
-
 
 use Ivory\GoogleMap\Serializer\Normalizer\Normalizer;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompletePrediction;
@@ -18,8 +16,6 @@ class PlaceAutocompleteResponseNormalizer extends Normalizer implements Denormal
     public function denormalize($data, $type, $format = null, array $context = []): PlaceAutocompleteResponse
     {
         $placeAutocompleteResponse = new PlaceAutocompleteResponse();
-
-        file_put_contents('place_autocomplete_response_' . $format . '.json', json_encode($data));
 
         $placeAutocompleteResponse->setStatus($data['status']);
         $predictionKey = $this->getFirstAvailableKey(['prediction', 'predictions'], $data);

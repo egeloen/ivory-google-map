@@ -28,10 +28,7 @@ class EncodedPolyline implements ExtendableInterface, OptionsAwareInterface, Sta
     use StaticOptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private ?string $value = null;
 
     /**
      * @param string  $value
@@ -43,10 +40,7 @@ class EncodedPolyline implements ExtendableInterface, OptionsAwareInterface, Sta
         $this->addOptions($options);
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -54,7 +48,7 @@ class EncodedPolyline implements ExtendableInterface, OptionsAwareInterface, Sta
     /**
      * @param string $value
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }

@@ -22,16 +22,8 @@ use Ivory\GoogleMap\Map;
  */
 class MapHtmlRenderer extends AbstractTagRenderer
 {
-    /**
-     * @var StylesheetRenderer
-     */
-    private $stylesheetRenderer;
+    private ?StylesheetRenderer $stylesheetRenderer = null;
 
-    /**
-     * @param Formatter          $formatter
-     * @param TagRenderer        $tagRenderer
-     * @param StylesheetRenderer $stylesheetRenderer
-     */
     public function __construct(Formatter $formatter, TagRenderer $tagRenderer, StylesheetRenderer $stylesheetRenderer)
     {
         parent::__construct($formatter, $tagRenderer);
@@ -39,28 +31,17 @@ class MapHtmlRenderer extends AbstractTagRenderer
         $this->setStylesheetRenderer($stylesheetRenderer);
     }
 
-    /**
-     * @return StylesheetRenderer
-     */
-    public function getStylesheetRenderer()
+    public function getStylesheetRenderer(): StylesheetRenderer
     {
         return $this->stylesheetRenderer;
     }
 
-    /**
-     * @param StylesheetRenderer $stylesheetRenderer
-     */
-    public function setStylesheetRenderer(StylesheetRenderer $stylesheetRenderer)
+    public function setStylesheetRenderer(StylesheetRenderer $stylesheetRenderer): void
     {
         $this->stylesheetRenderer = $stylesheetRenderer;
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function render(Map $map)
+    public function render(Map $map): string
     {
         $styles = [];
         $stylesheets = [

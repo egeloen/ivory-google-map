@@ -18,30 +18,15 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequestInterface
 {
-    /**
-     * @var string
-     */
-    private $input;
+    private ?string $input = null;
 
-    /**
-     * @var int|null
-     */
-    private $offset;
+    private ?int $offset = null;
 
-    /**
-     * @var Coordinate|null
-     */
-    private $location;
+    private ?Coordinate $location = null;
 
-    /**
-     * @var float|null
-     */
-    private $radius;
+    private ?float $radius = null;
 
-    /**
-     * @var string|null
-     */
-    private $language;
+    private ?string $language = null;
 
     /**
      * @param string $input
@@ -51,10 +36,7 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         $this->setInput($input);
     }
 
-    /**
-     * @return string
-     */
-    public function getInput()
+    public function getInput(): string
     {
         return $this->input;
     }
@@ -67,18 +49,12 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         $this->input = $input;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOffset()
+    public function hasOffset(): bool
     {
         return $this->offset !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getOffset()
+    public function getOffset(): ?int
     {
         return $this->offset;
     }
@@ -91,18 +67,12 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         $this->offset = $offset;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLocation()
+    public function hasLocation(): bool
     {
         return $this->location !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getLocation()
+    public function getLocation(): ?Coordinate
     {
         return $this->location;
     }
@@ -115,18 +85,12 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         $this->location = $location;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRadius()
+    public function hasRadius(): bool
     {
         return $this->radius !== null;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getRadius()
+    public function getRadius(): ?float
     {
         return $this->radius;
     }
@@ -139,18 +103,12 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         $this->radius = $radius;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -166,7 +124,7 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
     /**
      * {@inheritdoc}
      */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = ['input' => $this->input];
 
@@ -189,12 +147,7 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         return $query;
     }
 
-    /**
-     * @param Coordinate $coordinate
-     *
-     * @return string
-     */
-    private function buildCoordinate(Coordinate $coordinate)
+    private function buildCoordinate(Coordinate $coordinate): string
     {
         return $coordinate->getLatitude().','.$coordinate->getLongitude();
     }

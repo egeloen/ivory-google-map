@@ -21,23 +21,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class SizeSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var SizeRenderer
-     */
-    private $sizeRenderer;
+    private SizeRenderer $sizeRenderer;
 
-    /**
-     * @param SizeRenderer $sizeRenderer
-     */
     public function __construct(SizeRenderer $sizeRenderer)
     {
         $this->sizeRenderer = $sizeRenderer;
     }
 
-    /**
-     * @param StaticMapEvent $event
-     */
-    public function handleMap(StaticMapEvent $event)
+    public function handleMap(StaticMapEvent $event): void
     {
         $event->setParameter('size', $this->sizeRenderer->render($event->getMap()));
     }
@@ -45,7 +36,7 @@ class SizeSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::SIZE => 'handleMap'];
     }

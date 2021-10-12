@@ -21,15 +21,8 @@ use Ivory\GoogleMap\Helper\Renderer\MapRenderer;
  */
 class MapSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var MapRenderer
-     */
-    private $mapRenderer;
+    private ?MapRenderer $mapRenderer = null;
 
-    /**
-     * @param Formatter   $formatter
-     * @param MapRenderer $mapRenderer
-     */
     public function __construct(Formatter $formatter, MapRenderer $mapRenderer)
     {
         parent::__construct($formatter);
@@ -37,26 +30,17 @@ class MapSubscriber extends AbstractSubscriber
         $this->setMapRenderer($mapRenderer);
     }
 
-    /**
-     * @return MapRenderer
-     */
-    public function getMapRenderer()
+    public function getMapRenderer(): MapRenderer
     {
         return $this->mapRenderer;
     }
 
-    /**
-     * @param MapRenderer $mapRenderer
-     */
-    public function setMapRenderer(MapRenderer $mapRenderer)
+    public function setMapRenderer(MapRenderer $mapRenderer): void
     {
         $this->mapRenderer = $mapRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $map = $event->getMap();
 
@@ -70,7 +54,7 @@ class MapSubscriber extends AbstractSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_MAP => 'handleMap'];
     }

@@ -22,23 +22,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class StaticMapHelper extends AbstractHelper
 {
-    /**
-     * @var string|null
-     */
-    private $secret;
+    private ?string $secret;
+
+    private ?string $clientId;
+
+    private ?string $channel;
 
     /**
-     * @var string|null
-     */
-    private $clientId;
-
-    /**
-     * @var string|null
-     */
-    private $channel;
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
      * @param string|null              $secret
      * @param string|null              $clientId
      * @param string|null              $channel
@@ -56,18 +46,12 @@ class StaticMapHelper extends AbstractHelper
         $this->channel = $channel;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasSecret()
+    public function hasSecret(): bool
     {
         return $this->secret !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSecret()
+    public function getSecret(): ?string
     {
         return $this->secret;
     }
@@ -75,23 +59,17 @@ class StaticMapHelper extends AbstractHelper
     /**
      * @param string|null $secret
      */
-    public function setSecret($secret)
+    public function setSecret($secret): void
     {
         $this->secret = $secret;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasClientId()
+    public function hasClientId(): bool
     {
         return $this->clientId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getClientId()
+    public function getClientId(): ?string
     {
         return $this->clientId;
     }
@@ -99,23 +77,17 @@ class StaticMapHelper extends AbstractHelper
     /**
      * @param string|null $clientId
      */
-    public function setClientId($clientId)
+    public function setClientId($clientId): void
     {
         $this->clientId = $clientId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasChannel()
+    public function hasChannel(): bool
     {
         return $this->channel !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getChannel()
+    public function getChannel(): ?string
     {
         return $this->channel;
     }
@@ -123,17 +95,12 @@ class StaticMapHelper extends AbstractHelper
     /**
      * @param string|null $channel
      */
-    public function setChannel($channel)
+    public function setChannel($channel): void
     {
         $this->channel = $channel;
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function render(Map $map)
+    public function render(Map $map): string
     {
         $this->getEventDispatcher()->dispatch(StaticMapEvents::HTML, $event = new StaticMapEvent($map));
 

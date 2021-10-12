@@ -20,13 +20,7 @@ use Ivory\GoogleMap\Map;
  */
 class GeoJsonLayerRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param GeoJsonLayer $geoJsonLayer
-     * @param Map          $map
-     *
-     * @return string
-     */
-    public function render(GeoJsonLayer $geoJsonLayer, Map $map)
+    public function render(GeoJsonLayer $geoJsonLayer, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()->setValues($geoJsonLayer->getOptions());

@@ -22,7 +22,7 @@ class OverlaySubscriber extends AbstractDelegateSubscriber
     /**
      * {@inheritdoc}
      */
-    public static function getDelegatedSubscribedEvents()
+    public static function getDelegatedSubscribedEvents(): array
     {
         return [
             MapEvents::JAVASCRIPT_OVERLAY => [

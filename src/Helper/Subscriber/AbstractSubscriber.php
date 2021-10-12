@@ -19,30 +19,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 abstract class AbstractSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var Formatter
-     */
-    private $formatter;
+    private ?Formatter $formatter = null;
 
-    /**
-     * @param Formatter $formatter
-     */
     public function __construct(Formatter $formatter)
     {
         $this->setFormatter($formatter);
     }
 
-    /**
-     * @return Formatter
-     */
-    public function getFormatter()
+    public function getFormatter(): Formatter
     {
         return $this->formatter;
     }
 
-    /**
-     * @param Formatter $formatter
-     */
     public function setFormatter(Formatter $formatter)
     {
         $this->formatter = $formatter;

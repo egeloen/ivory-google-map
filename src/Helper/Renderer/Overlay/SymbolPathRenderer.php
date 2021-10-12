@@ -20,10 +20,8 @@ class SymbolPathRenderer extends AbstractRenderer
 {
     /**
      * @param string $path
-     *
-     * @return string
      */
-    public function render($path)
+    public function render($path): string
     {
         return $this->getFormatter()->renderConstant('SymbolPath', $path);
     }

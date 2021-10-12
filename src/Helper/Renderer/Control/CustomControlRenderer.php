@@ -21,15 +21,8 @@ use Ivory\GoogleMap\Map;
  */
 class CustomControlRenderer extends AbstractRenderer
 {
-    /**
-     * @var ControlPositionRenderer
-     */
-    private $controlPositionRenderer;
+    private ?ControlPositionRenderer $controlPositionRenderer = null;
 
-    /**
-     * @param Formatter               $formatter
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
     public function __construct(Formatter $formatter, ControlPositionRenderer $controlPositionRenderer)
     {
         parent::__construct($formatter);
@@ -37,29 +30,17 @@ class CustomControlRenderer extends AbstractRenderer
         $this->setControlPositionRenderer($controlPositionRenderer);
     }
 
-    /**
-     * @return ControlPositionRenderer
-     */
-    public function getControlPositionRenderer()
+    public function getControlPositionRenderer(): ControlPositionRenderer
     {
         return $this->controlPositionRenderer;
     }
 
-    /**
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
-    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer)
+    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer): void
     {
         $this->controlPositionRenderer = $controlPositionRenderer;
     }
 
-    /**
-     * @param CustomControl $customControl
-     * @param Map           $map
-     *
-     * @return string
-     */
-    public function render(CustomControl $customControl, Map $map)
+    public function render(CustomControl $customControl, Map $map): string
     {
         $formatter = $this->getFormatter();
 

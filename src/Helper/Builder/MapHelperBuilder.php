@@ -160,10 +160,7 @@ use Ivory\GoogleMap\Overlay\Rectangle;
  */
 class MapHelperBuilder extends AbstractJavascriptHelperBuilder
 {
-    /**
-     * @return MapHelper
-     */
-    public function build()
+    public function build(): MapHelper
     {
         return new MapHelper($this->createEventDispatcher());
     }
@@ -171,7 +168,7 @@ class MapHelperBuilder extends AbstractJavascriptHelperBuilder
     /**
      * {@inheritdoc}
      */
-    protected function createSubscribers()
+    protected function createSubscribers(): array
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();

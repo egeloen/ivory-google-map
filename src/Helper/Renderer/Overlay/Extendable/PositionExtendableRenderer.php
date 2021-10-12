@@ -23,7 +23,7 @@ class PositionExtendableRenderer extends AbstractRenderer implements ExtendableR
     /**
      * {@inheritdoc}
      */
-    public function render(ExtendableInterface $extendable, Bound $bound)
+    public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $formatter = $this->getFormatter();
 

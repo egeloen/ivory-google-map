@@ -26,50 +26,20 @@ use Ivory\GoogleMap\Map;
  */
 class CoordinateCollector extends AbstractCollector
 {
-    /**
-     * @var BoundCollector
-     */
-    private $boundCollector;
+    private ?BoundCollector $boundCollector = null;
 
-    /**
-     * @var CircleCollector
-     */
-    private $circleCollector;
+    private ?CircleCollector $circleCollector = null;
 
-    /**
-     * @var InfoWindowCollector
-     */
-    private $infoWindowCollector;
+    private ?InfoWindowCollector $infoWindowCollector = null;
 
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private ?MarkerCollector $markerCollector = null;
 
-    /**
-     * @var PolygonCollector
-     */
-    private $polygonCollector;
+    private ?PolygonCollector $polygonCollector = null;
 
-    /**
-     * @var PolylineCollector
-     */
-    private $polylineCollector;
+    private ?PolylineCollector $polylineCollector = null;
 
-    /**
-     * @var HeatmapLayerCollector
-     */
-    private $heatmapLayerCollector;
+    private ?HeatmapLayerCollector $heatmapLayerCollector = null;
 
-    /**
-     * @param BoundCollector        $boundCollector
-     * @param CircleCollector       $circleCollector
-     * @param InfoWindowCollector   $infoWindowCollector
-     * @param MarkerCollector       $markerCollector
-     * @param PolygonCollector      $polygonCollector
-     * @param PolylineCollector     $polylineCollector
-     * @param HeatmapLayerCollector $heatmapLayerCollector
-     */
     public function __construct(
         BoundCollector $boundCollector,
         CircleCollector $circleCollector,
@@ -88,125 +58,81 @@ class CoordinateCollector extends AbstractCollector
         $this->setHeatmapLayerCollector($heatmapLayerCollector);
     }
 
-    /**
-     * @return BoundCollector
-     */
-    public function getBoundCollector()
+    public function getBoundCollector(): BoundCollector
     {
         return $this->boundCollector;
     }
 
-    /**
-     * @param BoundCollector $boundCollector
-     */
-    public function setBoundCollector(BoundCollector $boundCollector)
+    public function setBoundCollector(BoundCollector $boundCollector): void
     {
         $this->boundCollector = $boundCollector;
     }
 
-    /**
-     * @return CircleCollector
-     */
-    public function getCircleCollector()
+    public function getCircleCollector(): CircleCollector
     {
         return $this->circleCollector;
     }
 
-    /**
-     * @param CircleCollector $circleCollector
-     */
-    public function setCircleCollector(CircleCollector $circleCollector)
+    public function setCircleCollector(CircleCollector $circleCollector): void
     {
         $this->circleCollector = $circleCollector;
     }
 
-    /**
-     * @return InfoWindowCollector
-     */
-    public function getInfoWindowCollector()
+    public function getInfoWindowCollector(): InfoWindowCollector
     {
         return $this->infoWindowCollector;
     }
 
-    /**
-     * @param InfoWindowCollector $infoWindowCollector
-     */
-    public function setInfoWindowCollector(InfoWindowCollector $infoWindowCollector)
+    public function setInfoWindowCollector(InfoWindowCollector $infoWindowCollector): void
     {
         $this->infoWindowCollector = $infoWindowCollector;
     }
 
-    /**
-     * @return MarkerCollector
-     */
-    public function getMarkerCollector()
+    public function getMarkerCollector(): MarkerCollector
     {
         return $this->markerCollector;
     }
 
-    /**
-     * @param MarkerCollector $markerCollector
-     */
-    public function setMarkerCollector(MarkerCollector $markerCollector)
+    public function setMarkerCollector(MarkerCollector $markerCollector): void
     {
         $this->markerCollector = $markerCollector;
     }
 
-    /**
-     * @return PolygonCollector
-     */
-    public function getPolygonCollector()
+    public function getPolygonCollector(): PolygonCollector
     {
         return $this->polygonCollector;
     }
 
-    /**
-     * @param PolygonCollector $polygonCollector
-     */
-    public function setPolygonCollector(PolygonCollector $polygonCollector)
+    public function setPolygonCollector(PolygonCollector $polygonCollector): void
     {
         $this->polygonCollector = $polygonCollector;
     }
 
-    /**
-     * @return PolylineCollector
-     */
-    public function getPolylineCollector()
+    public function getPolylineCollector(): PolylineCollector
     {
         return $this->polylineCollector;
     }
 
-    /**
-     * @param PolylineCollector $polylineCollector
-     */
-    public function setPolylineCollector(PolylineCollector $polylineCollector)
+    public function setPolylineCollector(PolylineCollector $polylineCollector): void
     {
         $this->polylineCollector = $polylineCollector;
     }
 
-    /**
-     * @return HeatmapLayerCollector
-     */
-    public function getHeatmapLayerCollector()
+    public function getHeatmapLayerCollector(): HeatmapLayerCollector
     {
         return $this->heatmapLayerCollector;
     }
 
-    /**
-     * @param HeatmapLayerCollector $heatmapLayerCollector
-     */
-    public function setHeatmapLayerCollector(HeatmapLayerCollector $heatmapLayerCollector)
+    public function setHeatmapLayerCollector(HeatmapLayerCollector $heatmapLayerCollector): void
     {
         $this->heatmapLayerCollector = $heatmapLayerCollector;
     }
 
     /**
-     * @param Map          $map
      * @param Coordinate[] $coordinates
-     *
      * @return Coordinate[]
      */
-    public function collect(Map $map, array $coordinates = [])
+    public function collect(Map $map, array $coordinates = []): array
     {
         if (!$map->isAutoZoom()) {
             $coordinates = $this->collectValue($map->getCenter(), $coordinates);

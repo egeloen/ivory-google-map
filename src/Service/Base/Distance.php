@@ -32,15 +32,12 @@ class Distance
         return $this->value;
     }
 
-    public function setValue(float $value)
+    public function setValue(float $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -48,7 +45,7 @@ class Distance
     /**
      * @param string $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }

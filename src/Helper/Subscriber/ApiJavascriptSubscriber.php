@@ -24,21 +24,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ApiJavascriptSubscriber extends AbstractDelegateSubscriber
 {
-    /**
-     * @var ApiRenderer
-     */
-    private $apiRenderer;
+    private ?ApiRenderer $apiRenderer = null;
 
-    /**
-     * @var JavascriptTagRenderer
-     */
-    private $javascriptTagRenderer;
+    private ?JavascriptTagRenderer $javascriptTagRenderer = null;
 
-    /**
-     * @param Formatter             $formatter
-     * @param ApiRenderer           $apiRenderer
-     * @param JavascriptTagRenderer $javascriptTagRenderer
-     */
     public function __construct(
         Formatter $formatter,
         ApiRenderer $apiRenderer,
@@ -50,42 +39,27 @@ class ApiJavascriptSubscriber extends AbstractDelegateSubscriber
         $this->setJavascriptTagRenderer($javascriptTagRenderer);
     }
 
-    /**
-     * @return ApiRenderer
-     */
-    public function getApiRenderer()
+    public function getApiRenderer(): ApiRenderer
     {
         return $this->apiRenderer;
     }
 
-    /**
-     * @param ApiRenderer $apiRenderer
-     */
-    public function setApiRenderer(ApiRenderer $apiRenderer)
+    public function setApiRenderer(ApiRenderer $apiRenderer): void
     {
         $this->apiRenderer = $apiRenderer;
     }
 
-    /**
-     * @return JavascriptTagRenderer
-     */
-    public function getJavascriptTagRenderer()
+    public function getJavascriptTagRenderer(): JavascriptTagRenderer
     {
         return $this->javascriptTagRenderer;
     }
 
-    /**
-     * @param JavascriptTagRenderer $javascriptTagRenderer
-     */
-    public function setJavascriptTagRenderer(JavascriptTagRenderer $javascriptTagRenderer)
+    public function setJavascriptTagRenderer(JavascriptTagRenderer $javascriptTagRenderer): void
     {
         $this->javascriptTagRenderer = $javascriptTagRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function handle(Event $event, $eventName, EventDispatcherInterface $eventDispatcher)
+    public function handle(Event $event, string $eventName, EventDispatcherInterface $eventDispatcher): void
     {
         parent::handle($event, $eventName, $eventDispatcher);
 
@@ -97,7 +71,7 @@ class ApiJavascriptSubscriber extends AbstractDelegateSubscriber
     /**
      * @return string[][]
      */
-    public static function getDelegatedSubscribedEvents()
+    public static function getDelegatedSubscribedEvents(): array
     {
         return [
             ApiEvents::JAVASCRIPT => [
@@ -107,10 +81,7 @@ class ApiJavascriptSubscriber extends AbstractDelegateSubscriber
         ];
     }
 
-    /**
-     * @param ApiEvent $event
-     */
-    private function handleApi(ApiEvent $event)
+    private function handleApi(ApiEvent $event): void
     {
         $event->setCode($this->getJavascriptTagRenderer()->render($this->getApiRenderer()->render(
             $event->getCallbacks(),

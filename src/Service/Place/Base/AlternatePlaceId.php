@@ -16,28 +16,16 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 class AlternatePlaceId
 {
-    /**
-     * @var string|null
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
-    /**
-     * @var string|null
-     */
-    private $scope;
+    private ?string $scope = null;
 
-    /**
-     * @return bool
-     */
-    public function hasPlaceId()
+    public function hasPlaceId(): bool
     {
         return $this->placeId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPlaceId()
+    public function getPlaceId(): ?string
     {
         return $this->placeId;
     }
@@ -45,23 +33,17 @@ class AlternatePlaceId
     /**
      * @param string|null $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasScope()
+    public function hasScope(): bool
     {
         return $this->scope !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
@@ -69,7 +51,7 @@ class AlternatePlaceId
     /**
      * @param string|null $scope
      */
-    public function setScope($scope)
+    public function setScope($scope): void
     {
         $this->scope = $scope;
     }
