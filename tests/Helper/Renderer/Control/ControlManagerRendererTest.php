@@ -30,7 +30,7 @@ use Ivory\GoogleMap\Helper\Renderer\Control\StreetViewControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ZoomControlStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapTypeIdRenderer;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**

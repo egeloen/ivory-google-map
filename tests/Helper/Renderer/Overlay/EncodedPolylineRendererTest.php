@@ -17,7 +17,7 @@ use Ivory\GoogleMap\Helper\Renderer\Geometry\EncodingRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\EncodedPolylineRenderer;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
