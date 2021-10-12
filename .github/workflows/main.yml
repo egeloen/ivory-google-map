@@ -18,6 +18,7 @@ jobs:
       - name: Install PHP Dependencies (composer)
         run: composer install --optimize-autoloader --prefer-dist --no-suggest --no-scripts
         env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{secrets.COMPOSER_GITHUB_ACTIONS }}"} }'
           SYMFONY_ENV: test
 
       - name: PHPUnit
