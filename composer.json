@@ -42,7 +42,6 @@
         "symfony/serializer": "^3.4"
     },
     "suggest": {
-        "egeloen/serializer": "Allows to use http services",
         "php-http/client-implementation": "Allows to use http services",
         "php-http/message": "Allows to use http services"
     },
