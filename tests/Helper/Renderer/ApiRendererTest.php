@@ -18,7 +18,7 @@ use Ivory\GoogleMap\Helper\Renderer\ApiRenderer;
 use Ivory\GoogleMap\Helper\Renderer\LoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementLoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\SourceRenderer;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use SplObjectStorage;
@@ -93,7 +93,7 @@ class ApiRendererTest extends TestCase
     public function testRender()
     {
         $this->assertSame(
-            'function ivory_google_map_init_source(src){var script=document.createElement("script");script.type="text/javascript";script.async=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};function ivory_google_map_init_requirement(c,r){if(r()){c();}else{var i=setInterval(function(){if(r()){clearInterval(i);c();}},100);}};function ivory_google_map_init(){ivory_google_map_init_source("source1");ivory_google_map_init_source("source2");ivory_google_map_init_requirement(main_callback,function(){return requirement1&&requirement2;});};ivory_google_map_init_source("https://maps.googleapis.com/maps/api/js?language=en&libraries=library1%2Clibrary2&callback=ivory_google_map_init");',
+            'function ivory_google_map_init_source(src){var script=document.createElement("script");script.type="text/javascript";script.crossorigin="anonymous";script.defer=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};function ivory_google_map_init_requirement(c,r){if(r()){c();}else{var i=setInterval(function(){if(r()){clearInterval(i);c();}},100);}};function ivory_google_map_init(){ivory_google_map_init_source("source1");ivory_google_map_init_source("source2");ivory_google_map_init_requirement(main_callback,function(){return requirement1&&requirement2;});};ivory_google_map_init_source("https://maps.googleapis.com/maps/api/js?language=en&libraries=library1%2Clibrary2&callback=ivory_google_map_init");',
             $this->apiRenderer->render(
                 $this->createCallbacks($object = new stdClass()),
                 $this->createRequirements($object),
@@ -111,7 +111,8 @@ class ApiRendererTest extends TestCase
 function ivory_google_map_init_source (src) {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.async = true;
+    script.crossorigin = "anonymous";
+    script.defer = true;
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
 };

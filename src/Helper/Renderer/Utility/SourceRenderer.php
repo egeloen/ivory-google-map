@@ -27,12 +27,12 @@ class SourceRenderer extends AbstractRenderer
     public function render($name, $source = null, $variable = null, $newLine = true): string
     {
         $formatter = $this->getFormatter();
-        $source = $source ?: 'src';
-        $variable = $variable ?: 'script';
+        $source    = $source ?: 'src';
+        $variable  = $variable ?: 'script';
 
         return $formatter->renderClosure($formatter->renderLines([
             $formatter->renderAssignment(
-                'var '.$variable,
+                'var ' . $variable,
                 $formatter->renderCall(
                     $formatter->renderProperty('document', 'createElement'),
                     [$formatter->renderEscape('script')]
@@ -44,16 +44,21 @@ class SourceRenderer extends AbstractRenderer
                 $formatter->renderEscape('text/javascript'),
                 true
             ),
+            //            $formatter->renderAssignment(
+            //                $formatter->renderProperty($variable, 'async'),
+            //            $formatter->renderEscape(true),
+            //                true
+            //            ),
             $formatter->renderAssignment(
-                $formatter->renderProperty($variable, 'async'),
+                $formatter->renderProperty($variable, 'crossorigin'),
+                $formatter->renderEscape('anonymous'),
+                true
+            ),
+            $formatter->renderAssignment(
+                $formatter->renderProperty($variable, 'defer'),
                 $formatter->renderEscape(true),
                 true
             ),
-//            $formatter->renderAssignment(
-//                $formatter->renderProperty($variable, 'defer'),
-//                $formatter->renderEscape(true),
-//                true
-//            ),
             $formatter->renderAssignment(
                 $formatter->renderProperty($variable, 'src'),
                 $source,
@@ -64,7 +69,7 @@ class SourceRenderer extends AbstractRenderer
                     $formatter->renderCall(
                         $formatter->renderProperty('document', 'getElementsByTagName'),
                         [$formatter->renderEscape('head')]
-                    ).'[0]',
+                    ) . '[0]',
                     'appendChild'
                 ),
                 [$variable],

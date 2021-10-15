@@ -15,7 +15,7 @@ use InvalidArgumentException;
 use Ivory\GoogleMap\Control\FullscreenControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

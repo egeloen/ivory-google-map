@@ -19,7 +19,7 @@ use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementRenderer;
 use Ivory\GoogleMap\Place\Autocomplete;
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
