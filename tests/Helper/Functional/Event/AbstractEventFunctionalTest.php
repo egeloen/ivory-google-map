@@ -25,10 +25,7 @@ abstract class AbstractEventFunctionalTest extends AbstractMapFunctionalTest
      */
     private $spyCount;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

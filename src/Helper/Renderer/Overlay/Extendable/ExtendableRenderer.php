@@ -89,9 +89,6 @@ class ExtendableRenderer implements ExtendableRendererInterface
         unset($this->renderers[$name]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $renderer = $this->getRenderer(get_class($extendable));

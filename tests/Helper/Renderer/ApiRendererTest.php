@@ -34,10 +34,7 @@ class ApiRendererTest extends TestCase
      */
     private $apiRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->apiRenderer = new ApiRenderer(
             $formatter = new Formatter(),

@@ -36,10 +36,7 @@ class MarkerShapeTest extends TestCase
      */
     private $coordinates;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerShape = new MarkerShape(
             $this->type = MarkerShapeType::CIRCLE,

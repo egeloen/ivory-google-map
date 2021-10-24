@@ -26,10 +26,7 @@ class MapHelperBuilderTest extends TestCase
      */
     private $mapHelperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapHelperBuilder = MapHelperBuilder::create();
     }

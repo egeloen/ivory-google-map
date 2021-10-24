@@ -30,10 +30,7 @@ class DirectionStepTest extends TestCase
      */
     private $step;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->step = new DirectionStep();
     }

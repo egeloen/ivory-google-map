@@ -22,7 +22,7 @@ class PlaceAutocompleteHelper extends AbstractHelper
 {
     public function render(Autocomplete $autocomplete): string
     {
-        return $this->renderHtml($autocomplete).$this->renderJavascript($autocomplete);
+        return $this->renderHtml($autocomplete) . $this->renderJavascript($autocomplete);
     }
 
     public function renderHtml(Autocomplete $autocomplete): string
@@ -36,12 +36,12 @@ class PlaceAutocompleteHelper extends AbstractHelper
     }
 
     /**
-     * @param string       $eventName
+     * @param string $eventName
      *
      */
     private function doRender(Autocomplete $autocomplete, $eventName): ?string
     {
-        $this->getEventDispatcher()->dispatch($eventName, $event = new PlaceAutocompleteEvent($autocomplete));
+        $this->getEventDispatcher()->dispatch($event = new PlaceAutocompleteEvent($autocomplete), $eventName);
 
         return $event->getCode();
     }

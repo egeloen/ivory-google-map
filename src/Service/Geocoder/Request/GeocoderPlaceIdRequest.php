@@ -41,9 +41,6 @@ class GeocoderPlaceIdRequest extends AbstractGeocoderReverseRequest
         $this->placeId = $placeId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         return array_merge(['place_id' => $this->placeId], parent::buildQuery());

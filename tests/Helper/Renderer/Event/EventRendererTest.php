@@ -27,10 +27,7 @@ class EventRendererTest extends TestCase
      */
     private $domEventRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->domEventRenderer = new EventRenderer(new Formatter());
     }

@@ -33,10 +33,7 @@ class SymbolTest extends TestCase
      */
     private $path;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->symbol = new Symbol($this->path = SymbolPath::CIRCLE);
     }

@@ -33,10 +33,7 @@ class PageTokenPlaceSearchRequestTest extends TestCase
      */
     private $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new PageTokenPlaceSearchRequest($this->response = $this->createResponseMock());
     }

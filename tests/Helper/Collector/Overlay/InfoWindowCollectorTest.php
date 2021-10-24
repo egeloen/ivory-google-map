@@ -30,10 +30,7 @@ class InfoWindowCollectorTest extends TestCase
      */
     private $infoWindowCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoWindowCollector = new InfoWindowCollector(new MarkerCollector());
     }

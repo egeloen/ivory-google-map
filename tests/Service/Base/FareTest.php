@@ -39,10 +39,7 @@ class FareTest extends TestCase
      */
     private $text;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fare = new Fare(
             $this->value = 123.4,

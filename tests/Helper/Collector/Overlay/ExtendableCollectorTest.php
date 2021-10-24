@@ -26,10 +26,7 @@ class ExtendableCollectorTest extends TestCase
      */
     private $extendableCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extendableCollector = new ExtendableCollector();
     }

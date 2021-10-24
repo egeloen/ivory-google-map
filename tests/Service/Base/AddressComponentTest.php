@@ -24,10 +24,7 @@ class AddressComponentTest extends TestCase
      */
     private $address;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->address = new AddressComponent();
     }

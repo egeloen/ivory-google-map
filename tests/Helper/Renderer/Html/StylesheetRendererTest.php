@@ -26,10 +26,7 @@ class StylesheetRendererTest extends TestCase
      */
     private $stylesheetRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->stylesheetRenderer = new StylesheetRenderer(new Formatter());
     }

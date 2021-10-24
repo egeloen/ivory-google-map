@@ -29,10 +29,7 @@ class HeatmapLayerExtendableRendererTest extends TestCase
      */
     private $heatmapLayerExtendableRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->heatmapLayerExtendableRenderer = new HeatmapLayerExtendableRenderer(new Formatter());
     }

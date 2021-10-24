@@ -73,9 +73,6 @@ class AutocompleteCoordinateSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [PlaceAutocompleteEvents::JAVASCRIPT_BASE_COORDINATE => 'handleAutocomplete'];

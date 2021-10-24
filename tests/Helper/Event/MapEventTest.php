@@ -31,10 +31,7 @@ class MapEventTest extends TestCase
      */
     private $map;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->map = $this->createMapMock();
         $this->mapEvent = new MapEvent($this->map);

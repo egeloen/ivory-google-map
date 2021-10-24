@@ -30,10 +30,7 @@ class AddressLocationTest extends TestCase
      */
     private $address;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->addressLocation = new AddressLocation($this->address = 'address');
     }

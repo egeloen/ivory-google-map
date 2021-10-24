@@ -31,10 +31,7 @@ class CoordinateLocationTest extends TestCase
      */
     private $coordinate;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinate = $this->createCoordinateMock();
         $this->coordinateLocation = new CoordinateLocation($this->coordinate);

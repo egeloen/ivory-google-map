@@ -26,10 +26,7 @@ class DirectionGeocodedTest extends TestCase
      */
     private $geocodedWaypoint;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geocodedWaypoint = new DirectionGeocoded();
     }

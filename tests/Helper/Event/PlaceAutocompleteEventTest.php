@@ -31,10 +31,7 @@ class PlaceAutocompleteEventTest extends TestCase
      */
     private $autocomplete;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocomplete = $this->createAutocompleteMock();
         $this->placeAutocompleteEvent = new PlaceAutocompleteEvent($this->autocomplete);

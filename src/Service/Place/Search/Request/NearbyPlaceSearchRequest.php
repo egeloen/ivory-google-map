@@ -44,17 +44,11 @@ class NearbyPlaceSearchRequest extends AbstractTextualPlaceSearchRequest
         $this->rankBy = $rankBy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildContext(): string
     {
         return 'nearbysearch';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = parent::buildQuery();

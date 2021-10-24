@@ -29,10 +29,7 @@ class BoundRendererTest extends TestCase
      */
     private $boundRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->boundRenderer = new BoundRenderer(new Formatter());
     }

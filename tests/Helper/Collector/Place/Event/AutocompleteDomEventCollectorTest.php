@@ -26,10 +26,7 @@ class AutocompleteDomEventCollectorTest extends TestCase
      */
     private $domEventCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->domEventCollector = new AutocompleteDomEventCollector();
     }

@@ -25,10 +25,7 @@ class FullscreenControlTest extends TestCase
      */
     private $fullscreenControl;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fullscreenControl = new FullscreenControl();
     }

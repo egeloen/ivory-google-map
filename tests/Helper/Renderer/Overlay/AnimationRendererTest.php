@@ -27,10 +27,7 @@ class AnimationRendererTest extends TestCase
      */
     private $animationRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->animationRenderer = new AnimationRenderer(new Formatter());
     }

@@ -33,10 +33,7 @@ class SizeCollectorTest extends TestCase
      */
     private $sizeCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sizeCollector = new SizeCollector(
             new InfoWindowCollector($markerCollector = new MarkerCollector()),

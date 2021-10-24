@@ -25,10 +25,7 @@ class DistanceMatrixRowTest extends TestCase
      */
     private $row;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->row = new DistanceMatrixRow();
     }

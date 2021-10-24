@@ -30,7 +30,7 @@ class ScaleControlRendererTest extends TestCase
 {
     private ?ScaleControlRenderer $scaleControlRenderer = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scaleControlRenderer = new ScaleControlRenderer(
             $formatter = new Formatter(),

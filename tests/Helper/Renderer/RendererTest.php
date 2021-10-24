@@ -30,10 +30,7 @@ class RendererTest extends TestCase
      */
     private $formatter;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->formatter = $this->createFormatterMock();
         $this->renderer = $this->createAbstractRendererMock($this->formatter);

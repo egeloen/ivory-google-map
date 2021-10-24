@@ -25,10 +25,7 @@ class EventManagerTest extends TestCase
      */
     private $eventManager;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventManager = new EventManager();
     }

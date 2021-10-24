@@ -32,10 +32,7 @@ class PositionalElevationRequestTest extends TestCase
      */
     private $locations;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->locations = [$this->createLocationMock('first'), $this->createLocationMock('second')];
 

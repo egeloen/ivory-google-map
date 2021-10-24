@@ -40,9 +40,6 @@ abstract class AbstractGeocoderRequest implements GeocoderRequestInterface
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = [];

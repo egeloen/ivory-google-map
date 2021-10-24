@@ -29,10 +29,7 @@ class DirectionResponseTest extends TestCase
      */
     private $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new DirectionResponse();
     }

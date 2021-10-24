@@ -30,10 +30,7 @@ class InfoWindowOpenRendererTest extends TestCase
      */
     private $infoWindowOpenRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoWindowOpenRenderer = new InfoWindowOpenRenderer(new Formatter());
     }

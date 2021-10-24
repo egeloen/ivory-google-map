@@ -20,9 +20,6 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
  */
 class PositionExtendableRenderer extends AbstractRenderer implements ExtendableRendererInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $formatter = $this->getFormatter();

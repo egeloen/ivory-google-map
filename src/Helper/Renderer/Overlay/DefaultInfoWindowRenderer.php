@@ -16,9 +16,6 @@ namespace Ivory\GoogleMap\Helper\Renderer\Overlay;
  */
 class DefaultInfoWindowRenderer extends AbstractInfoWindowRenderer
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getClass(): string
     {
         return 'InfoWindow';

@@ -27,10 +27,7 @@ class MapContainerRendererTest extends TestCase
      */
     private $mapContainerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapContainerRenderer = new MapContainerRenderer(new Formatter(), new JsonBuilder());
     }

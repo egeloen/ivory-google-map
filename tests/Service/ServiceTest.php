@@ -30,10 +30,7 @@ class ServiceTest extends TestCase
      */
     private $url;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = $this->getMockBuilder(AbstractService::class)
             ->setConstructorArgs([$this->url = 'https://foo'])

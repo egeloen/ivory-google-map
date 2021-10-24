@@ -113,9 +113,6 @@ class ApiHelperBuilder extends AbstractJavascriptHelperBuilder
         return new ApiHelper($this->createEventDispatcher());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createSubscribers(): array
     {
         $formatter = $this->getFormatter();

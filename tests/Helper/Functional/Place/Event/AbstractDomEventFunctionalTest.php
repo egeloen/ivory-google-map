@@ -24,27 +24,18 @@ abstract class AbstractDomEventFunctionalTest extends AbstractEventFunctionalTes
      */
     private $spyButton;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->spyButton = 'spy_button';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderAutocomplete(Autocomplete $autocomplete, $html = null)
     {
         return parent::renderAutocomplete($autocomplete, $html ?: '<button id="'.$this->spyButton.'">Button</button>');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createEvent($instance = null)
     {
         $event = parent::createEvent($instance ?: 'document.getElementById("'.$this->spyButton.'")');

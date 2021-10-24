@@ -25,10 +25,7 @@ class AlternatePlaceIdTest extends TestCase
      */
     private $alternatePlaceId;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->alternatePlaceId = new AlternatePlaceId();
     }

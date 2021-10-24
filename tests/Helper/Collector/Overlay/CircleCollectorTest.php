@@ -27,10 +27,7 @@ class CircleCollectorTest extends TestCase
      */
     private $circleCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->circleCollector = new CircleCollector();
     }

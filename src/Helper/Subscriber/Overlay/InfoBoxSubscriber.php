@@ -77,9 +77,6 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

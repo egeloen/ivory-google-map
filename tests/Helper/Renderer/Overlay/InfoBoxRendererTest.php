@@ -32,10 +32,7 @@ class InfoBoxRendererTest extends TestCase
      */
     private $infoBoxRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoBoxRenderer = new InfoBoxRenderer(
             $formatter = new Formatter(),

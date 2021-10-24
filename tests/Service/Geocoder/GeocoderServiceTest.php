@@ -30,10 +30,7 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
 {
     protected ?GeocoderService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();

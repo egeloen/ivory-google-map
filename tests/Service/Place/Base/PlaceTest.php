@@ -33,10 +33,7 @@ class PlaceTest extends TestCase
      */
     private $result;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->result = new Place();
     }

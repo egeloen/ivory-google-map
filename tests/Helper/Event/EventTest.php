@@ -25,10 +25,7 @@ class EventTest extends TestCase
      */
     private $event;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->event = $this->createAbstractEventMock();
     }

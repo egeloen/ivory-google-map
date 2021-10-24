@@ -33,10 +33,7 @@ class CircleTest extends TestCase
      */
     private $center;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->circle = new Circle($this->center = $this->createCoordinateMock());
     }

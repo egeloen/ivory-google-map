@@ -85,9 +85,6 @@ class InfoWindowCollector extends AbstractCollector
         return $infoWindows;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function collectValue($value, array $defaults = []): array
     {
         if ($this->type !== null && $value->getType() !== $this->type) {

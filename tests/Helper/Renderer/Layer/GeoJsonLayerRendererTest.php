@@ -29,10 +29,7 @@ class GeoJsonLayerRendererTest extends TestCase
      */
     private $geoJsonLayerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geoJsonLayerRenderer = new GeoJsonLayerRenderer(new Formatter(), new JsonBuilder());
     }

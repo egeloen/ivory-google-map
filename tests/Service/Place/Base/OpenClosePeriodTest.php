@@ -25,10 +25,7 @@ class OpenClosePeriodTest extends TestCase
      */
     private $openClosePeriod;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->openClosePeriod = new OpenClosePeriod();
     }

@@ -26,10 +26,7 @@ class GeoJsonLayerCollectorTest extends TestCase
      */
     private $geoJsonLayerCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geoJsonLayerCollector = new GeoJsonLayerCollector();
     }

@@ -27,10 +27,7 @@ class MapTypeControlTest extends TestCase
      */
     private $mapTypeControl;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapTypeControl = new MapTypeControl();
     }

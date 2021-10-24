@@ -25,10 +25,7 @@ class ReviewTest extends TestCase
      */
     private $review;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->review = new Review();
     }

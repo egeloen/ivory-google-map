@@ -29,10 +29,7 @@ class IconCollectorTest extends TestCase
      */
     private $iconCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->iconCollector = new IconCollector(new MarkerCollector());
     }

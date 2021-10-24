@@ -30,10 +30,7 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
 {
     protected ?ElevationService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();

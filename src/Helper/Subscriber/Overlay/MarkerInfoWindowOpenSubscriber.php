@@ -79,9 +79,6 @@ class MarkerInfoWindowOpenSubscriber extends AbstractMarkerSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_EVENT => 'handleMap'];

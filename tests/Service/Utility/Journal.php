@@ -34,9 +34,6 @@ class Journal implements JournalInterface
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addSuccess(RequestInterface $request, ResponseInterface $response)
     {
         if (substr($request->getUri()->getPath(), -5) === '/json') {
@@ -44,9 +41,6 @@ class Journal implements JournalInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addFailure(RequestInterface $request, Exception $exception)
     {
         $this->data = [];

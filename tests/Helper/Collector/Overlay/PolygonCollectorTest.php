@@ -26,10 +26,7 @@ class PolygonCollectorTest extends TestCase
      */
     private $polygonCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polygonCollector = new PolygonCollector();
     }

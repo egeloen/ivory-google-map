@@ -26,10 +26,7 @@ class AutocompleteBoundCollectorTest extends TestCase
      */
     private $autocompleteBoundCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteBoundCollector = new AutocompleteBoundCollector();
     }

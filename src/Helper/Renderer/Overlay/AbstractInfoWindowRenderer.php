@@ -19,9 +19,6 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
  */
 abstract class AbstractInfoWindowRenderer extends AbstractJsonRenderer implements InfoWindowRendererInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function render(InfoWindow $infoWindow, $position = true): string
     {
         $formatter = $this->getFormatter();

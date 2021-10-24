@@ -18,9 +18,6 @@ use Ivory\GoogleMap\Helper\Event\MapEvents;
  */
 class MapInitSubscriber extends AbstractDelegateSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getDelegatedSubscribedEvents(): array
     {
         return [

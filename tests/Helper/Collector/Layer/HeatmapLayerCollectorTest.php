@@ -26,10 +26,7 @@ class HeatmapLayerCollectorTest extends TestCase
      */
     private $heatmapLayerCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->heatmapLayerCollector = new HeatmapLayerCollector();
     }

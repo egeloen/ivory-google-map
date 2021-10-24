@@ -26,10 +26,7 @@ class PolylineCollectorTest extends TestCase
      */
     private $polylineCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polylineCollector = new PolylineCollector();
     }

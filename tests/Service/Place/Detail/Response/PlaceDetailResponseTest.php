@@ -27,10 +27,7 @@ class PlaceDetailResponseTest extends TestCase
      */
     private $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new PlaceDetailResponse();
     }

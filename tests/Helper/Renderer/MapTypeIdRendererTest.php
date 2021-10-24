@@ -26,10 +26,7 @@ class MapTypeIdRendererTest extends TestCase
      */
     private $mapTypeIdRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapTypeIdRenderer = new MapTypeIdRenderer(new Formatter());
     }

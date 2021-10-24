@@ -27,10 +27,7 @@ class GeometryTest extends TestCase
      */
     private $geometry;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geometry = new Geometry();
     }

@@ -28,10 +28,7 @@ class StylesheetTagRendererTest extends TestCase
      */
     private $stylesheetTagRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->stylesheetTagRenderer = new StylesheetTagRenderer(
             $formatter = new Formatter(),

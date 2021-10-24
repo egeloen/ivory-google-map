@@ -26,10 +26,7 @@ class DefaultInfoWindowCollectorTest extends TestCase
      */
     private $defaultInfoWindowCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->defaultInfoWindowCollector = new DefaultInfoWindowCollector(new MarkerCollector());
     }

@@ -25,10 +25,7 @@ class CoordinateTest extends TestCase
      */
     private $coordinate;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinate = new Coordinate();
     }

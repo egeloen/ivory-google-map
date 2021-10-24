@@ -27,10 +27,7 @@ class ControlPositionRendererTest extends TestCase
      */
     private $controlPositionRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->controlPositionRenderer = new ControlPositionRenderer(new Formatter());
     }

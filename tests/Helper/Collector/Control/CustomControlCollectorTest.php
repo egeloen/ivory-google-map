@@ -27,10 +27,7 @@ class CustomControlCollectorTest extends TestCase
      */
     private $customControlCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->customControlCollector = new CustomControlCollector();
     }

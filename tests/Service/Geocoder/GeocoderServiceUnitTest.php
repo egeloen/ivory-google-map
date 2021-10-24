@@ -26,10 +26,7 @@ class GeocoderServiceUnitTest extends AbstractUnitServiceTest
      */
     private $service;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -31,10 +31,7 @@ class PlacePhotoServiceTest extends TestCase
      */
     private $key;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = new PlacePhotoService();
         $this->service->setKey($this->key = 'foo');

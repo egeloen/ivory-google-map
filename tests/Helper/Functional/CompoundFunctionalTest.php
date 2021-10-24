@@ -37,10 +37,7 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
      */
     private $mapHelper;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

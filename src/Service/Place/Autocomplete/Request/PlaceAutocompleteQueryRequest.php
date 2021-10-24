@@ -16,9 +16,6 @@ namespace Ivory\GoogleMap\Service\Place\Autocomplete\Request;
  */
 class PlaceAutocompleteQueryRequest extends AbstractPlaceAutocompleteRequest
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildContext(): string
     {
         return 'queryautocomplete';

@@ -155,9 +155,6 @@ abstract class AbstractPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = [];

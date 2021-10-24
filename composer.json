@@ -26,20 +26,20 @@
     "require": {
         "php": "^7.4",
         "ext-json": "*",
-        "symfony/event-dispatcher": "^3.4",
-        "validaide/common": "dev-development",
-        "symfony/property-access": "^3.4",
-        "symfony/serializer": "^3.4"
+        "symfony/event-dispatcher": "^4.4",
+        "validaide/common": "dev-chore/symfony-4",
+        "symfony/property-access": "^4.4",
+        "symfony/serializer": "^4.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
         "php-http/cache-plugin": "^1.4",
         "php-http/guzzle6-adapter": "^1.0",
-        "phpunit/phpunit": "7.*",
-        "phpunit/phpunit-selenium": "7.*",
+        "phpunit/phpunit": "8.*",
+        "phpunit/phpunit-selenium": "8.*",
         "rector/rector": "^0.11",
-        "symfony/cache": "^3.4",
-        "symfony/phpunit-bridge": "^3.4"
+        "symfony/cache": "^4.4",
+        "symfony/phpunit-bridge": "^4.4"
     },
     "suggest": {
         "php-http/client-implementation": "Allows to use http services",

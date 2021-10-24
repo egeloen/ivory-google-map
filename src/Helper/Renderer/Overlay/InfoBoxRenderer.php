@@ -52,17 +52,11 @@ class InfoBoxRenderer extends AbstractInfoWindowRenderer
         return $this->requirementRenderer->render($this->getClass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getClass(): string
     {
         return 'InfoBox';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getNamespace(): bool
     {
         return false;

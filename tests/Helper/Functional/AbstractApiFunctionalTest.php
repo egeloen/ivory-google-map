@@ -30,10 +30,7 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
      */
     private $apiHelper;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

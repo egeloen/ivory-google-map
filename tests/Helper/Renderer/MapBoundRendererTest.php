@@ -27,10 +27,7 @@ class MapBoundRendererTest extends TestCase
      */
     private $mapBoundRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapBoundRenderer = new MapBoundRenderer(new Formatter());
     }

@@ -33,10 +33,7 @@ class EncodedPolylineTest extends TestCase
      */
     private $value;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->encodedPolyline = new EncodedPolyline($this->value = '_p~iF~ps|U_ulLnnqC_mqNvxq`@');
     }

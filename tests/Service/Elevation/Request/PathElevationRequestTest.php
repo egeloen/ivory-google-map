@@ -32,10 +32,7 @@ class PathElevationRequestTest extends TestCase
      */
     private $paths;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->paths = [$this->createLocationMock('first'), $this->createLocationMock('second')];
 

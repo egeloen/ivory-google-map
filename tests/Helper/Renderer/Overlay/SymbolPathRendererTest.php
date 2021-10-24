@@ -27,10 +27,7 @@ class SymbolPathRendererTest extends TestCase
      */
     private $symbolPathRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->symbolPathRenderer = new SymbolPathRenderer(new Formatter());
     }

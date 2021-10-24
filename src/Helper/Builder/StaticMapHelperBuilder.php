@@ -169,9 +169,6 @@ class StaticMapHelperBuilder extends AbstractHelperBuilder
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createSubscribers(): array
     {
         // Pre-loaded Renderers

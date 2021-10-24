@@ -41,9 +41,6 @@ class EncodedPolylineSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::ENCODED_POLYLINE => 'handleMap'];

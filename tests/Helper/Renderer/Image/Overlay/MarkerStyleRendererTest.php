@@ -29,10 +29,7 @@ class MarkerStyleRendererTest extends TestCase
      */
     private $markerStyleRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerStyleRenderer = new MarkerStyleRenderer(new PointRenderer());
     }

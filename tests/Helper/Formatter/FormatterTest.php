@@ -25,10 +25,7 @@ class FormatterTest extends TestCase
      */
     private $formatter;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new Formatter();
     }

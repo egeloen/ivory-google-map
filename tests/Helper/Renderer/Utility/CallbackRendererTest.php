@@ -26,10 +26,7 @@ class CallbackRendererTest extends TestCase
      */
     private $callbackRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->callbackRenderer = new CallbackRenderer(new Formatter());
     }

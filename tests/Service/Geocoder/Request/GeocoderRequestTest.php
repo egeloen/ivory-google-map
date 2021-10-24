@@ -26,10 +26,7 @@ class GeocoderRequestTest extends TestCase
      */
     private $request;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = $this->createAbstractRequestMock();
     }

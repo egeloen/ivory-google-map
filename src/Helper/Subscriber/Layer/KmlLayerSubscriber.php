@@ -73,9 +73,6 @@ class KmlLayerSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_LAYER_KML_LAYER => 'handleMap'];

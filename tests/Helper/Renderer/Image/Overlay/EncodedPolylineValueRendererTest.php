@@ -25,10 +25,7 @@ class EncodedPolylineValueRendererTest extends TestCase
      */
     private $encodedPolylineValueRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->encodedPolylineValueRenderer = new EncodedPolylineValueRenderer();
     }

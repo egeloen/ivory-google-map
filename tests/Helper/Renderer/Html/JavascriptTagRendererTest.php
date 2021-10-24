@@ -27,10 +27,7 @@ class JavascriptTagRendererTest extends TestCase
      */
     private $javascriptTagRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->javascriptTagRenderer = new JavascriptTagRenderer(
             $formatter = new Formatter(),

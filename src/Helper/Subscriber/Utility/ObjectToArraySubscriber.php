@@ -50,9 +50,6 @@ class ObjectToArraySubscriber extends AbstractSubscriber
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_INIT_FUNCTION => 'handleMap'];

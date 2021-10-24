@@ -27,10 +27,7 @@ class LoaderRendererTest extends TestCase
      */
     private $loaderRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->loaderRenderer = new LoaderRenderer(new Formatter(), new JsonBuilder());
     }

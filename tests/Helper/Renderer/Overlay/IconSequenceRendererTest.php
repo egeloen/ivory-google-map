@@ -30,10 +30,7 @@ class IconSequenceRendererTest extends TestCase
      */
     private $iconSequenceRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->iconSequenceRenderer = new IconSequenceRenderer(new Formatter(), new JsonBuilder());
     }

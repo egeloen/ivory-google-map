@@ -59,9 +59,6 @@ class PlaceDetailRequest implements PlaceDetailRequestInterface
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = ['placeid' => $this->placeId];

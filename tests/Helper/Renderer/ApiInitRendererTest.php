@@ -26,10 +26,7 @@ class ApiInitRendererTest extends TestCase
      */
     private $apiInitRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->apiInitRenderer = new ApiInitRenderer(new Formatter());
     }

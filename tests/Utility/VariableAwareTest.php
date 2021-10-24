@@ -25,10 +25,7 @@ class VariableAwareTest extends TestCase
      */
     private $variableAware;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->variableAware = new VariableAwareMock();
     }

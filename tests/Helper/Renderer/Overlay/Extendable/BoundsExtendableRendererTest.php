@@ -29,10 +29,7 @@ class BoundsExtendableRendererTest extends TestCase
      */
     private $boundsExtendableRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->boundsExtendableRenderer = new BoundsExtendableRenderer(new Formatter());
     }

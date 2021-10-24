@@ -35,17 +35,11 @@ class PageTokenPlaceSearchRequest implements PlaceSearchRequestInterface
         $this->response = $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildContext(): string
     {
         return $this->response->getRequest()->buildContext();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         return ['pagetoken' => $this->response->getNextPageToken()];

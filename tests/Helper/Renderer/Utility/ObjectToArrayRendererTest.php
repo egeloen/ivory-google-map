@@ -26,10 +26,7 @@ class ObjectToArrayRendererTest extends TestCase
      */
     private $objectToArrayRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectToArrayRenderer = new ObjectToArrayRenderer(new Formatter());
     }

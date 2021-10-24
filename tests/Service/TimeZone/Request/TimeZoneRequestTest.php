@@ -37,10 +37,7 @@ class TimeZoneRequestTest extends TestCase
      */
     private $date;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new TimeZoneRequest(
             $this->location = $this->createCoordinateMock(),

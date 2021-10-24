@@ -32,10 +32,7 @@ class AbstractTagRendererTest extends TestCase
      */
     private $innerTagRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->innerTagRenderer = $this->createTagRendererMock();
         $this->tagRenderer = $this->createAbstractTagRendererMock($this->innerTagRenderer);

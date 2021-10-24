@@ -73,9 +73,6 @@ class EventOnceSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_EVENT_EVENT_ONCE => 'handleMap'];

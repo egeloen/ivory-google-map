@@ -32,10 +32,7 @@ class AutocompleteRendererTest extends TestCase
      */
     private $autocompleteRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteRenderer = new AutocompleteRenderer(
             $formatter = new Formatter(),

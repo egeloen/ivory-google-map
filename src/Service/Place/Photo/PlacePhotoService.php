@@ -19,9 +19,6 @@ use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequestInterface;
  */
 class PlacePhotoService extends AbstractService
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         parent::__construct('https://maps.googleapis.com/maps/api/place/photo');

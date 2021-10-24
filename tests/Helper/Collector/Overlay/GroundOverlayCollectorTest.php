@@ -27,10 +27,7 @@ class GroundOverlayCollectorTest extends TestCase
      */
     private $groundOverlayCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->groundOverlayCollector = new GroundOverlayCollector();
     }

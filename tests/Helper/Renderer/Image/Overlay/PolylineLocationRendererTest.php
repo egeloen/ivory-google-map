@@ -27,10 +27,7 @@ class PolylineLocationRendererTest extends TestCase
      */
     private $polylineLocationRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polylineLocationRenderer = new PolylineLocationRenderer(new CoordinateRenderer());
     }

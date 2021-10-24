@@ -31,10 +31,7 @@ class DefaultInfoWindowRendererTest extends TestCase
      */
     private $defaultInfoWindowRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->defaultInfoWindowRenderer = new DefaultInfoWindowRenderer(new Formatter(), new JsonBuilder());
     }

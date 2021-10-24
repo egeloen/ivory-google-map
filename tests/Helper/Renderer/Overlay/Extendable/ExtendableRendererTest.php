@@ -27,10 +27,7 @@ class ExtendableRendererTest extends TestCase
      */
     private $extendableRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extendableRenderer = new ExtendableRenderer();
     }

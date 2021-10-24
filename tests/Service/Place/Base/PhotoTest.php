@@ -24,10 +24,7 @@ class PhotoTest extends TestCase
      */
     private $photo;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->photo = new Photo();
     }

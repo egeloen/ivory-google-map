@@ -45,9 +45,6 @@ class MapHtmlSubscriber extends AbstractSubscriber
         $event->addCode($this->mapHtmlRenderer->render($event->getMap()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::HTML => 'handleMap'];

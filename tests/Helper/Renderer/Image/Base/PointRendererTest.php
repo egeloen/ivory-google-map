@@ -25,10 +25,7 @@ class PointRendererTest extends TestCase
      */
     private $pointRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pointRenderer = new PointRenderer();
     }

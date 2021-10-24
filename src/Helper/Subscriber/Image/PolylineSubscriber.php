@@ -45,9 +45,6 @@ class PolylineSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::POLYLINE => 'handleMap'];

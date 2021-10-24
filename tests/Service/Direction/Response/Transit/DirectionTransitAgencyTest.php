@@ -24,10 +24,7 @@ class DirectionTransitAgencyTest extends TestCase
      */
     private $transitAgency;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->transitAgency = new DirectionTransitAgency();
     }

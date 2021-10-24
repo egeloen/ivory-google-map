@@ -26,10 +26,7 @@ class EventCollectorTest extends TestCase
      */
     private $eventCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventCollector = new EventCollector();
     }

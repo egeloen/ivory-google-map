@@ -11,10 +11,13 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
+use PHPUnit\Extensions\Selenium2TestCase;
+use RuntimeException;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
+abstract class AbstractFunctionalTest extends Selenium2TestCase
 {
     /**
      * @var string
@@ -26,10 +29,7 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
      */
     private static $hasDirectory;
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$directory = sys_get_temp_dir().'/ivory-google-map';
         self::$hasDirectory = is_dir(self::$directory);
@@ -39,20 +39,14 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         if (!self::$hasDirectory) {
             rmdir(self::$directory);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (isset($_SERVER['SELENIUM_HOST'])) {
             $this->setHost($_SERVER['SELENIUM_HOST']);
@@ -68,29 +62,29 @@ abstract class AbstractFunctionalTest extends \PHPUnit_Extensions_Selenium2TestC
     protected function renderHtml($html)
     {
         if (($name = @tempnam(self::$directory, 'ivory-google-map')) === false) {
-            throw new \RuntimeException(sprintf('Unable to generate a unique file name in "%s".', self::$directory));
+            throw new RuntimeException(sprintf('Unable to generate a unique file name in "%s".', self::$directory));
         }
 
         if (!is_resource($file = @fopen($name, 'w+'))) {
-            throw new \RuntimeException(sprintf('Unable to create the file "%s".', $name));
+            throw new RuntimeException(sprintf('Unable to create the file "%s".', $name));
         }
 
         if (@fwrite($file, '<html><body>'.implode('', (array) $html).'</body></html>') === false) {
-            throw new \RuntimeException(sprintf('Unable to write in the file "%s".', $name));
+            throw new RuntimeException(sprintf('Unable to write in the file "%s".', $name));
         }
 
         if (@fflush($file) === false) {
-            throw new \RuntimeException(sprintf('Unable to flush the file "%s".', $name));
+            throw new RuntimeException(sprintf('Unable to flush the file "%s".', $name));
         }
 
         if (@fclose($file) === false) {
-            throw new\RuntimeException(sprintf('Unable to close the file "%s".', $name));
+            throw new RuntimeException(sprintf('Unable to close the file "%s".', $name));
         }
 
         $this->url(basename($name));
 
         if (@unlink($name) === false) {
-            throw new \RuntimeException(sprintf('Unable to remove the file "%s".', $name));
+            throw new RuntimeException(sprintf('Unable to remove the file "%s".', $name));
         }
     }
 

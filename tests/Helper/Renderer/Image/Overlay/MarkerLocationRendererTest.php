@@ -27,10 +27,7 @@ class MarkerLocationRendererTest extends TestCase
      */
     private $markerLocationRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerLocationRenderer = new MarkerLocationRenderer(new CoordinateRenderer());
     }

@@ -44,10 +44,7 @@ class CoordinateCollectorTest extends TestCase
      */
     private $coordinateCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinateCollector = new CoordinateCollector(
             new BoundCollector(new GroundOverlayCollector(), new RectangleCollector()),

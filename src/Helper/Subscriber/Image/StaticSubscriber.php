@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class StaticSubscriber implements DelegateSubscriberInterface
 {
     /**
-     * @param string                   $eventName
+     * @param string $eventName
      */
     public function handle(Event $event, $eventName, EventDispatcherInterface $eventDispatcher): void
     {
@@ -30,14 +30,11 @@ class StaticSubscriber implements DelegateSubscriberInterface
 
         if (isset($delegates[$eventName])) {
             foreach ($delegates[$eventName] as $delegate) {
-                $eventDispatcher->dispatch($delegate, $event);
+                $eventDispatcher->dispatch($event, $delegate);
             }
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         $events = [];
@@ -49,9 +46,6 @@ class StaticSubscriber implements DelegateSubscriberInterface
         return $events;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDelegatedSubscribedEvents(): array
     {
         return [

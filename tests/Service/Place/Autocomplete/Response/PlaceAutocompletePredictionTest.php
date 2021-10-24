@@ -27,10 +27,7 @@ class PlaceAutocompletePredictionTest extends TestCase
      */
     private $prediction;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->prediction = new PlaceAutocompletePrediction();
     }

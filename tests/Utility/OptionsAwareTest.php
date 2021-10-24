@@ -25,10 +25,7 @@ class OptionsAwareTest extends TestCase
      */
     private $optionsAware;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->optionsAware = new OptionsAwareMock();
     }

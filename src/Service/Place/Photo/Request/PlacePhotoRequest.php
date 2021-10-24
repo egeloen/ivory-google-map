@@ -79,9 +79,6 @@ class PlacePhotoRequest implements PlacePhotoRequestInterface
         $this->maxHeight = $maxHeight;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = ['photoreference' => $this->reference];

@@ -150,17 +150,11 @@ class PlaceAutocompleteRequest extends AbstractPlaceAutocompleteRequest
         unset($this->components[$type]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildContext(): string
     {
         return 'autocomplete';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = parent::buildQuery();

@@ -30,10 +30,7 @@ class MarkerClustererRendererTest extends TestCase
      */
     private $markerClustererRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerClustererRenderer = new MarkerClustererRenderer(
             $formatter = new Formatter(),
