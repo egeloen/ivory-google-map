@@ -45,7 +45,9 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     protected function assertAddressComponent($addressComponent, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($addressComponent);
+            $this->assertNull($addressComponent);
+
+            return;
         }
 
         $options = array_merge([

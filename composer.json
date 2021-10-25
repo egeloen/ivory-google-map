@@ -1,6 +1,6 @@
 {
     "name": "validaide/google-map",
-    "description": "Google Map API v3 integration - PHP >= 7.0",
+    "description": "Google Map API v3 integration - PHP >= 7.4",
     "keywords": [
         "google",
         "map",
@@ -24,7 +24,7 @@
         }
     },
     "require": {
-        "php": "^7.4",
+        "php": "7.4.*",
         "ext-json": "*",
         "symfony/event-dispatcher": "^4.4",
         "validaide/common": "dev-chore/symfony-4",

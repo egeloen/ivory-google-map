@@ -55,7 +55,7 @@ abstract class AbstractHttpService extends AbstractService
         $this->messageFactory = $messageFactory;
     }
 
-    protected function createRequest(RequestInterface $request): \Psr\Http\Message\RequestInterface
+    protected function createRequest(RequestInterface $request): PsrRequestInterface
     {
         return $this->messageFactory->createRequest('GET', $this->createUrl($request));
     }
