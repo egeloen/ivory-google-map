@@ -20,7 +20,7 @@ use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Polyline;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**

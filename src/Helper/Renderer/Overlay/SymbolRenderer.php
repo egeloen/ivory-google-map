@@ -14,7 +14,7 @@ namespace Ivory\GoogleMap\Helper\Renderer\Overlay;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Overlay\Symbol;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

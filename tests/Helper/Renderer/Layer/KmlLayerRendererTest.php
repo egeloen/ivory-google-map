@@ -16,7 +16,7 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Layer\KmlLayerRenderer;
 use Ivory\GoogleMap\Layer\KmlLayer;
 use Ivory\GoogleMap\Map;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**

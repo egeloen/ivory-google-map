@@ -17,7 +17,7 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Control\RotateControlRenderer;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**

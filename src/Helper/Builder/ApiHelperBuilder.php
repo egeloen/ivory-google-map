@@ -42,7 +42,7 @@ use Ivory\GoogleMap\Helper\Subscriber\Overlay\EncodedPolylineSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\InfoBoxSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Overlay\MarkerClustererSubscriber;
 use Ivory\GoogleMap\Helper\Subscriber\Place\AutocompleteJavascriptSubscriber;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

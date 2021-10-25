@@ -18,7 +18,7 @@ use Ivory\GoogleMap\Helper\Renderer\ApiRenderer;
 use Ivory\GoogleMap\Helper\Renderer\LoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementLoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\SourceRenderer;
-use Ivory\JsonBuilder\JsonBuilder;
+use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use SplObjectStorage;
