@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
+use Exception;
 use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
@@ -68,10 +69,10 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
                     $this->assertObjectExists($map);
 
                     return true;
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                 }
             }, 5000);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         $this->assertSame([], $this->log('browser'));

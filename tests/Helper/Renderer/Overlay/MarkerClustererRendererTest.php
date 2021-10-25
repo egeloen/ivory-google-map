@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\MarkerClustererRenderer;
@@ -84,7 +85,7 @@ class MarkerClustererRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequirementRenderer
+     * @return MockObject|RequirementRenderer
      */
     private function createRequirementRendererMock()
     {

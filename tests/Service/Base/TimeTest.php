@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Base;
 
+use DateTime;
 use Ivory\GoogleMap\Service\Base\Time;
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +26,7 @@ class TimeTest extends TestCase
     private $time;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $value;
 
@@ -42,7 +43,7 @@ class TimeTest extends TestCase
     protected function setUp(): void
     {
         $this->time = new Time(
-            $this->value = new \DateTime(),
+            $this->value = new DateTime(),
             $this->timeZone = 'Europe/Paris',
             $this->text = 'text'
         );
@@ -57,7 +58,7 @@ class TimeTest extends TestCase
 
     public function testValue()
     {
-        $this->time->setValue($value = new \DateTime());
+        $this->time->setValue($value = new DateTime());
 
         $this->assertSame($value, $this->time->getValue());
     }

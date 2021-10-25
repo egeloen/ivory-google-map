@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Html;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\AbstractTagRenderer;
@@ -23,12 +24,12 @@ use PHPUnit\Framework\TestCase;
 class AbstractTagRendererTest extends TestCase
 {
     /**
-     * @var AbstractTagRenderer|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractTagRenderer|MockObject
      */
     private $tagRenderer;
 
     /**
-     * @var TagRenderer|\PHPUnit_Framework_MockObject_MockObject
+     * @var TagRenderer|MockObject
      */
     private $innerTagRenderer;
 
@@ -58,7 +59,7 @@ class AbstractTagRendererTest extends TestCase
     /**
      * @param TagRenderer|null $tagRenderer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractTagRenderer
+     * @return MockObject|AbstractTagRenderer
      */
     private function createAbstractTagRendererMock(TagRenderer $tagRenderer = null)
     {
@@ -68,7 +69,7 @@ class AbstractTagRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Formatter
+     * @return MockObject|Formatter
      */
     private function createFormatterMock()
     {
@@ -76,7 +77,7 @@ class AbstractTagRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TagRenderer
+     * @return MockObject|TagRenderer
      */
     private function createTagRendererMock()
     {

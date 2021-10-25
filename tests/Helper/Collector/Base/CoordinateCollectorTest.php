@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\Base\BoundCollector;
@@ -187,7 +188,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BoundCollector
+     * @return MockObject|BoundCollector
      */
     private function createBoundCollectorMock()
     {
@@ -195,7 +196,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CircleCollector
+     * @return MockObject|CircleCollector
      */
     private function createCircleCollectorMock()
     {
@@ -203,7 +204,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|InfoWindowCollector
+     * @return MockObject|InfoWindowCollector
      */
     private function createInfoWindowCollectorMock()
     {
@@ -211,7 +212,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerCollector
+     * @return MockObject|MarkerCollector
      */
     private function createMarkerCollectorMock()
     {
@@ -219,7 +220,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PolygonCollector
+     * @return MockObject|PolygonCollector
      */
     private function createPolygonCollectorMock()
     {
@@ -227,7 +228,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PolylineCollector
+     * @return MockObject|PolylineCollector
      */
     private function createPolylineCollectorMock()
     {
@@ -235,7 +236,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HeatmapLayerCollector
+     * @return MockObject|HeatmapLayerCollector
      */
     private function createHeatmapLayerCollector()
     {

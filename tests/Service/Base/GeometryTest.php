@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Geometry;
@@ -113,7 +114,7 @@ class GeometryTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -121,7 +122,7 @@ class GeometryTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

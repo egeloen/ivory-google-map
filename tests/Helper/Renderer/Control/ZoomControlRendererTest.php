@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Control\ZoomControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -72,11 +73,11 @@ class ZoomControlRendererTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected a "Ivory\GoogleMap\Control\ZoomControl", got "string".
      */
     public function testRenderWithInvalidControl()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a "Ivory\GoogleMap\Control\ZoomControl", got "string".');
         $this->zoomControlRenderer->render('foo');
     }
 

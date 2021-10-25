@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\GeometryLocationType;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
@@ -24,7 +25,7 @@ use PHPUnit\Framework\TestCase;
 class GeocoderReverseRequestTest extends TestCase
 {
     /**
-     * @var AbstractGeocoderReverseRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractGeocoderReverseRequest|MockObject
      */
     private $request;
 
@@ -152,7 +153,7 @@ class GeocoderReverseRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractGeocoderReverseRequest
+     * @return MockObject|AbstractGeocoderReverseRequest
      */
     private function createAbstractReverseRequestMock()
     {

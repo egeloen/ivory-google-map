@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -28,7 +29,7 @@ use PHPUnit\Framework\TestCase;
 class InfoWindowRendererTest extends TestCase
 {
     /**
-     * @var AbstractInfoWindowRenderer|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractInfoWindowRenderer|MockObject
      */
     private $infoWindowRenderer;
 
@@ -74,7 +75,7 @@ class InfoWindowRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractInfoWindowRenderer
+     * @return MockObject|AbstractInfoWindowRenderer
      */
     private function createAbstractInfoWindowRendererMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
@@ -189,7 +190,7 @@ class DirectionResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionRequestInterface
+     * @return MockObject|DirectionRequestInterface
      */
     private function createRequestMock()
     {
@@ -197,7 +198,7 @@ class DirectionResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionRoute
+     * @return MockObject|DirectionRoute
      */
     private function createRouteMock()
     {
@@ -205,7 +206,7 @@ class DirectionResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionGeocoded
+     * @return MockObject|DirectionGeocoded
      */
     private function createGeocodedWaypointMock()
     {

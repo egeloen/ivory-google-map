@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
@@ -137,14 +138,10 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
         $this->assertGeocoderResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->geocode($this->createAddressRequest());

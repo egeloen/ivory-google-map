@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Formatter;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Utility\VariableAwareInterface;
 use PHPUnit\Framework\TestCase;
@@ -759,7 +760,7 @@ class FormatterTest extends TestCase
     /**
      * @param string $variable
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|VariableAwareInterface
+     * @return MockObject|VariableAwareInterface
      */
     private function createVariableAwareMock($variable = 'variable')
     {

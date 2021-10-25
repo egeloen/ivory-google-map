@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use InvalidArgumentException;
 use Ivory\GoogleMap\Control\ScaleControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -21,7 +22,6 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ScaleControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ScaleControlStyleRenderer;
 use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -71,16 +71,16 @@ class ScaleControlRendererTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Expected a "Ivory\GoogleMap\Control\ScaleControl", got "string".
      */
     public function testRenderWithInvalidControl()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a "Ivory\GoogleMap\Control\ScaleControl", got "string".');
         $this->scaleControlRenderer->render('foo');
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ControlPositionRenderer
+     * @return MockObject|ControlPositionRenderer
      */
     private function createControlPositionRendererMock()
     {
@@ -88,7 +88,7 @@ class ScaleControlRendererTest extends TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ScaleControlStyleRenderer
+     * @return MockObject|ScaleControlStyleRenderer
      */
     private function createScaleControlStyleRendererMock()
     {

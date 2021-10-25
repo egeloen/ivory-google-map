@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\IconSequence;
@@ -146,7 +147,7 @@ class PolylineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -154,7 +155,7 @@ class PolylineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|IconSequence
+     * @return MockObject|IconSequence
      */
     private function createIconSequenceMock()
     {

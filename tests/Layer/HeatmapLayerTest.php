@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Layer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
@@ -97,7 +98,7 @@ class HeatmapLayerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

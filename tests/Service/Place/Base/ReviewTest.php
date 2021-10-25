@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
+use DateTime;
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Base\AspectRating;
 use Ivory\GoogleMap\Service\Place\Base\Review;
 use PHPUnit\Framework\TestCase;
@@ -82,7 +84,7 @@ class ReviewTest extends TestCase
 
     public function testTime()
     {
-        $this->review->setTime($time = new \DateTime());
+        $this->review->setTime($time = new DateTime());
 
         $this->assertTrue($this->review->hasTime());
         $this->assertSame($time, $this->review->getTime());
@@ -135,7 +137,7 @@ class ReviewTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AspectRating
+     * @return MockObject|AspectRating
      */
     private function createAspectRatingMock()
     {

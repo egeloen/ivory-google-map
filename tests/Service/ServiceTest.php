@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\AbstractService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class ServiceTest extends TestCase
 {
     /**
-     * @var AbstractService|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractService|MockObject
      */
     private $service;
 
@@ -86,7 +87,7 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return MockObject|BusinessAccount
      */
     private function createBusinessAccountMock()
     {

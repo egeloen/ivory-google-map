@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction;
 
+use Http\Client\Common\Exception\ClientErrorException;
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Avoid;
@@ -277,14 +279,10 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertDirectionResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->route($this->createRequest());
@@ -629,7 +627,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getDepartureTime()
     {
@@ -637,7 +635,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getArrivalTime()
     {

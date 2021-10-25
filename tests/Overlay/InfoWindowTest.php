@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Event\MouseEvent;
@@ -140,7 +141,7 @@ class InfoWindowTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -148,7 +149,7 @@ class InfoWindowTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Size
+     * @return MockObject|Size
      */
     private function createSizeMock()
     {

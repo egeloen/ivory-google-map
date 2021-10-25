@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\Circle;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
@@ -24,12 +25,12 @@ use PHPUnit\Framework\TestCase;
 class CircleTest extends TestCase
 {
     /**
-     * @var \Ivory\GoogleMap\Overlay\Circle
+     * @var Circle
      */
     private $circle;
 
     /**
-     * @var Coordinate|\PHPUnit_Framework_MockObject_MockObject
+     * @var Coordinate|MockObject
      */
     private $center;
 
@@ -78,7 +79,7 @@ class CircleTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Geometry\EncodingRenderer;
@@ -66,7 +67,7 @@ class EncodedPolylineRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EncodingRenderer
+     * @return MockObject|EncodingRenderer
      */
     private function createEncodingRendererMock()
     {

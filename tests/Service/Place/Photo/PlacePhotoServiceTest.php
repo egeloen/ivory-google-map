@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Photo;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Place\Photo\PlacePhotoService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequest;
@@ -86,7 +87,7 @@ class PlacePhotoServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return MockObject|BusinessAccount
      */
     private function createBusinessAccountMock()
     {

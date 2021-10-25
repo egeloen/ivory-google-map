@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\AddressComponent;
 use Ivory\GoogleMap\Service\Base\Geometry;
 use Ivory\GoogleMap\Service\Place\Base\AlternatePlaceId;
@@ -442,7 +443,7 @@ class PlaceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AddressComponent
+     * @return MockObject|AddressComponent
      */
     private function createAddressComponentMock()
     {
@@ -450,7 +451,7 @@ class PlaceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Geometry
+     * @return MockObject|Geometry
      */
     private function createGeometryMock()
     {
@@ -458,7 +459,7 @@ class PlaceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|OpeningHours
+     * @return MockObject|OpeningHours
      */
     private function createOpeningHoursMock()
     {
@@ -466,7 +467,7 @@ class PlaceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Photo
+     * @return MockObject|Photo
      */
     private function createPhotoMock()
     {
@@ -474,7 +475,7 @@ class PlaceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AlternatePlaceId
+     * @return MockObject|AlternatePlaceId
      */
     private function createAlternatePlaceIdMock()
     {
@@ -482,7 +483,7 @@ class PlaceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Review
+     * @return MockObject|Review
      */
     private function createReviewMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Place\Base\PlaceType;
 use Ivory\GoogleMap\Service\Place\Base\PriceLevel;
@@ -264,12 +265,10 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    /**
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createNearbyRequest());

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Place;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Place\Autocomplete;
@@ -256,7 +257,7 @@ class AutocompleteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EventManager
+     * @return MockObject|EventManager
      */
     private function createEventManagerMock()
     {
@@ -264,7 +265,7 @@ class AutocompleteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

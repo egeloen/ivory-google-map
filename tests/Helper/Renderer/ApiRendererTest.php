@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\ApiInitRenderer;
@@ -20,7 +21,6 @@ use Ivory\GoogleMap\Helper\Renderer\Utility\RequirementLoaderRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\SourceRenderer;
 use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use SplObjectStorage;
 use stdClass;
 
@@ -174,7 +174,7 @@ EOF;
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ApiInitRenderer
+     * @return MockObject|ApiInitRenderer
      */
     private function createApiInitRendererMock()
     {
@@ -182,7 +182,7 @@ EOF;
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|LoaderRenderer
+     * @return MockObject|LoaderRenderer
      */
     private function createLoaderRendererMock()
     {
@@ -190,7 +190,7 @@ EOF;
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|RequirementLoaderRenderer
+     * @return MockObject|RequirementLoaderRenderer
      */
     private function createRequirementLoaderRendererMock()
     {
@@ -198,7 +198,7 @@ EOF;
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|SourceRenderer
+     * @return MockObject|SourceRenderer
      */
     private function createSourceRendererMock()
     {

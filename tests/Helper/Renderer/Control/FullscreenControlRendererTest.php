@@ -11,12 +11,14 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Control\FullscreenControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlPositionRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\ControlRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Control\FullscreenControlRenderer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
@@ -61,17 +63,15 @@ class FullscreenControlRendererTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected a "Ivory\GoogleMap\Control\FullscreenControl", got "string".
-     */
     public function testRenderWithInvalidControl()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a "Ivory\GoogleMap\Control\FullscreenControl", got "string".');
         $this->fullscreenControlRenderer->render('foo');
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ControlPositionRenderer
+     * @return MockObject|ControlPositionRenderer
      */
     private function createControlPositionRendererMock()
     {

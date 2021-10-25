@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\AddressComponent;
 use Ivory\GoogleMap\Service\Base\Geometry;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
@@ -244,7 +245,7 @@ class GeocoderResultTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AddressComponent
+     * @return MockObject|AddressComponent
      */
     private function createAddressComponentMock()
     {
@@ -252,7 +253,7 @@ class GeocoderResultTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Geometry
+     * @return MockObject|Geometry
      */
     private function createGeometryMock()
     {

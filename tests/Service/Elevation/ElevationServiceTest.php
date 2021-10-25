@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
@@ -97,14 +98,10 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
         $this->assertElevationResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());

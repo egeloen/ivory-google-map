@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay\Extendable;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable\ExtendableRendererInterface;
@@ -101,16 +103,16 @@ class ExtendableRendererTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp  /The extendable renderer for ".*" could not be found\./
      */
     public function testRenderWithInvalidExtendable()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/The extendable renderer for ".*" could not be found\./');
         $this->extendableRenderer->render($this->createExtendableMock(), $this->createBoundMock());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ExtendableRendererInterface
+     * @return MockObject|ExtendableRendererInterface
      */
     private function createExtendableRendererMock()
     {
@@ -118,7 +120,7 @@ class ExtendableRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ExtendableInterface
+     * @return MockObject|ExtendableInterface
      */
     private function createExtendableMock()
     {
@@ -126,7 +128,7 @@ class ExtendableRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

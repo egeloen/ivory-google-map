@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response\Transit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitAgency;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle;
@@ -146,7 +147,7 @@ class DirectionTransitLineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitAgency
+     * @return MockObject|DirectionTransitAgency
      */
     private function createTransitAgencyMock()
     {
@@ -154,7 +155,7 @@ class DirectionTransitLineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitVehicle
+     * @return MockObject|DirectionTransitVehicle
      */
     private function createTransitVehicleMock()
     {

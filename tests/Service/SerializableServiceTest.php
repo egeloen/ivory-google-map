@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractHttpService;
@@ -25,7 +26,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class SerializableServiceTest extends TestCase
 {
     /**
-     * @var AbstractSerializableService|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractSerializableService|MockObject
      */
     private $service;
 
@@ -35,17 +36,17 @@ class SerializableServiceTest extends TestCase
     private $url;
 
     /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|MockObject
      */
     private $client;
 
     /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|MockObject
      */
     private $messageFactory;
 
     /**
-     * @var SerializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SerializerInterface|MockObject
      */
     private $serializer;
 
@@ -139,7 +140,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return MockObject|HttpClient
      */
     private function createHttpClientMock()
     {
@@ -147,7 +148,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return MockObject|MessageFactory
      */
     private function createMessageFactoryMock()
     {
@@ -155,15 +156,15 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Serializer\SerializerInterface
+     * @return MockObject|SerializerInterface
      */
     private function createSerializerMock()
     {
-        return $this->createMock(\Symfony\Component\Serializer\SerializerInterface::class);
+        return $this->createMock(SerializerInterface::class);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return MockObject|BusinessAccount
      */
     private function createBusinessAccountMock()
     {

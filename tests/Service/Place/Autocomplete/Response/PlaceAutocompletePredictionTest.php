@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Place\AutocompleteType;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteMatch;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompletePrediction;
@@ -177,7 +178,7 @@ class PlaceAutocompletePredictionTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceAutocompleteTerm
+     * @return MockObject|PlaceAutocompleteTerm
      */
     private function createTermMock()
     {
@@ -185,7 +186,7 @@ class PlaceAutocompletePredictionTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceAutocompleteMatch
+     * @return MockObject|PlaceAutocompleteMatch
      */
     private function createMatchMock()
     {

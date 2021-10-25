@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Marker;
@@ -32,17 +33,17 @@ class MarkerClusterTest extends TestCase
     private $markerCluster;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|OverlayManager
+     * @var MockObject|OverlayManager
      */
     private $overlayManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Map
+     * @var MockObject|Map
      */
     private $map;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @var MockObject|Bound
      */
     private $bound;
 
@@ -234,7 +235,7 @@ class MarkerClusterTest extends TestCase
     /**
      * @param Map|null $map
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|OverlayManager
+     * @return MockObject|OverlayManager
      */
     private function createOverlayManagerMock(Map $map = null)
     {
@@ -255,7 +256,7 @@ class MarkerClusterTest extends TestCase
     /**
      * @param Bound|null $bound
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
+     * @return MockObject|Map
      */
     private function createMapMock(Bound $bound = null)
     {
@@ -269,7 +270,7 @@ class MarkerClusterTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -277,7 +278,7 @@ class MarkerClusterTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Marker
+     * @return MockObject|Marker
      */
     private function createMarkerMock()
     {

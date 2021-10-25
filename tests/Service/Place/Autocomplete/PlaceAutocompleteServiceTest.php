@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
@@ -197,12 +198,10 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    /**
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createPlaceAutocompleteRequest());

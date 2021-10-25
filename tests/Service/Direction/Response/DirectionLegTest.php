@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
@@ -291,7 +292,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Duration
+     * @return MockObject|Duration
      */
     private function createDurationMock()
     {
@@ -299,7 +300,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Distance
+     * @return MockObject|Distance
      */
     private function createDistanceMock()
     {
@@ -307,7 +308,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -315,7 +316,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Time
+     * @return MockObject|Time
      */
     private function createTimeMock()
     {
@@ -323,7 +324,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionStep
+     * @return MockObject|DirectionStep
      */
     private function createStepMock()
     {
@@ -331,7 +332,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionWaypoint
+     * @return MockObject|DirectionWaypoint
      */
     private function createWaypointMock()
     {

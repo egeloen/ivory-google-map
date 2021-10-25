@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Event;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Event\EventManager;
 use PHPUnit\Framework\TestCase;
@@ -201,7 +202,7 @@ class EventManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Event
+     * @return MockObject|Event
      */
     private function createEventMock()
     {

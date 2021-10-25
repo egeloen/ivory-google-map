@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Event;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
@@ -49,7 +50,7 @@ class AbstractEventRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractEventRenderer
+     * @return MockObject|AbstractEventRenderer
      */
     private function createAbstractEventRendererMock()
     {

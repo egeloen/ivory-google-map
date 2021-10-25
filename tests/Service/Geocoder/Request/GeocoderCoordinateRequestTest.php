@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderReverseRequest;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderCoordinateRequest;
@@ -27,7 +28,7 @@ class GeocoderCoordinateRequestTest extends TestCase
     private $request;
 
     /**
-     * @var Coordinate|\PHPUnit_Framework_MockObject_MockObject
+     * @var Coordinate|MockObject
      */
     private $coordinate;
 
@@ -69,7 +70,7 @@ class GeocoderCoordinateRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

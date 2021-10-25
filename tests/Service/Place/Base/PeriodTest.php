@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Base\OpenClosePeriod;
 use Ivory\GoogleMap\Service\Place\Base\Period;
 use PHPUnit\Framework\TestCase;
@@ -55,7 +56,7 @@ class PeriodTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|OpenClosePeriod
+     * @return MockObject|OpenClosePeriod
      */
     private function createOpenClosePeriodMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Collector\Overlay\IconSequenceCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\PolylineCollector;
 use Ivory\GoogleMap\Map;
@@ -56,7 +57,7 @@ class IconSequenceCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PolylineCollector
+     * @return MockObject|PolylineCollector
      */
     private function createPolylineCollectorMock()
     {

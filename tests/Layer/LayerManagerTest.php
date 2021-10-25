@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Layer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Layer\GeoJsonLayer;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
@@ -30,12 +31,12 @@ class LayerManagerTest extends TestCase
     private $layerManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Map
+     * @var MockObject|Map
      */
     private $map;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @var MockObject|Bound
      */
     private $bound;
 
@@ -389,7 +390,7 @@ class LayerManagerTest extends TestCase
     /**
      * @param Bound|null $bound
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
+     * @return MockObject|Map
      */
     private function createMapMock(Bound $bound = null)
     {
@@ -403,7 +404,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -411,7 +412,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeoJsonLayer
+     * @return MockObject|GeoJsonLayer
      */
     private function createGeoJsonLayerMock()
     {
@@ -419,7 +420,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HeatmapLayer
+     * @return MockObject|HeatmapLayer
      */
     private function createHeatmapLayerMock()
     {
@@ -427,7 +428,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|KmlLayer
+     * @return MockObject|KmlLayer
      */
     private function createKmlLayerMock()
     {

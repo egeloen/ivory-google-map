@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Detail;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Service\Place\Detail\PlaceDetailService;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequest;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
@@ -61,14 +62,10 @@ class PlaceDetailServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertPlaceDetailResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());

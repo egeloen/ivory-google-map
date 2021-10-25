@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\Animation;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
@@ -35,7 +36,7 @@ class MarkerTest extends TestCase
     private $marker;
 
     /**
-     * @var Coordinate|\PHPUnit_Framework_MockObject_MockObject
+     * @var Coordinate|MockObject
      */
     private $position;
 
@@ -236,7 +237,7 @@ class MarkerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -244,7 +245,7 @@ class MarkerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Icon
+     * @return MockObject|Icon
      */
     private function createIconMock()
     {
@@ -252,7 +253,7 @@ class MarkerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerShape
+     * @return MockObject|MarkerShape
      */
     private function createMarkerShapeMock()
     {
@@ -260,7 +261,7 @@ class MarkerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|InfoWindow
+     * @return MockObject|InfoWindow
      */
     private function createInfoWindowMock()
     {
@@ -268,7 +269,7 @@ class MarkerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Symbol
+     * @return MockObject|Symbol
      */
     private function createSymbolMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Search\Request\AbstractPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Request\AbstractTextualPlaceSearchRequest;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class TextualPlaceSearchRequestTest extends TestCase
 {
     /**
-     * @var AbstractTextualPlaceSearchRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractTextualPlaceSearchRequest|MockObject
      */
     private $request;
 
@@ -62,7 +63,7 @@ class TextualPlaceSearchRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractTextualPlaceSearchRequest
+     * @return MockObject|AbstractTextualPlaceSearchRequest
      */
     private function createRequestMock()
     {

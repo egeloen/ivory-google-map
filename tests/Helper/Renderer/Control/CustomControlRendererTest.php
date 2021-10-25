@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Control\CustomControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -63,7 +64,7 @@ class CustomControlRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ControlPositionRenderer
+     * @return MockObject|ControlPositionRenderer
      */
     private function createControlPositionRendererMock()
     {

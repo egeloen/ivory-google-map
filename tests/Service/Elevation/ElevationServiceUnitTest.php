@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Elevation\ElevationService;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
@@ -100,7 +101,7 @@ class ElevationServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ElevationRequestInterface
+     * @return MockObject|ElevationRequestInterface
      */
     private function createElevationRequestMock()
     {
@@ -108,7 +109,7 @@ class ElevationServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ElevationResponse
+     * @return MockObject|ElevationResponse
      */
     private function createElevationResponseMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -97,7 +98,7 @@ class InfoBoxRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequirementRenderer
+     * @return MockObject|RequirementRenderer
      */
     private function createRequirementRendererMock()
     {

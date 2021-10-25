@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
+use Http\Client\Common\Exception\ClientErrorException;
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
@@ -164,14 +166,10 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());
@@ -256,7 +254,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getDepartureTime()
     {
@@ -264,7 +262,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getArrivalTime()
     {

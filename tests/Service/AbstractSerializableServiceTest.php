@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use DateTime;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
@@ -209,7 +210,7 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
 
         $this->assertInstanceOf(Time::class, $time);
 
-        $this->assertSame($time->getValue()->getTimestamp(), (new \DateTime('@' . $options['value']))->getTimestamp());
+        $this->assertSame($time->getValue()->getTimestamp(), (new DateTime('@' . $options['value']))->getTimestamp());
         $this->assertSame($time->getTimeZone(), $options['time_zone']);
         $this->assertSame($time->getText(), $options['text']);
     }

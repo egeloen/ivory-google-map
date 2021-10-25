@@ -32,7 +32,7 @@ class VariableAwareTest extends TestCase
 
     public function testDefaultState()
     {
-        $this->assertInternalType('string', $this->variableAware->getVariable());
+        $this->assertIsString($this->variableAware->getVariable());
         $this->assertRegExp('/^variableawaremock[a-z0-9]*$/', $this->variableAware->getVariable());
     }
 
