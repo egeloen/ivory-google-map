@@ -27,7 +27,7 @@
         "php": "^7.4",
         "ext-json": "*",
         "symfony/event-dispatcher": "^3.4",
-        "validaide/common": "dev-development",
+        "validaide/common": "dev-development as 4.4.0",
         "symfony/property-access": "^3.4",
         "symfony/serializer": "^3.4"
     },
