@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62ed0a3958235cf2a6668de914f0eaaf",
+    "content-hash": "3bfe1e9458c713b47cf04e74be5589ae",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -2279,16 +2279,16 @@
         },
         {
             "name": "validaide/common",
-            "version": "4.4.0",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/validaide/common.git",
-                "reference": "be03fbc57f60b23769caa423ece234b43d010224"
+                "reference": "5da68e49e6dab30c56976ee0fcda7bd91399a747"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/validaide/common/zipball/be03fbc57f60b23769caa423ece234b43d010224",
-                "reference": "be03fbc57f60b23769caa423ece234b43d010224",
+                "url": "https://api.github.com/repos/validaide/common/zipball/5da68e49e6dab30c56976ee0fcda7bd91399a747",
+                "reference": "5da68e49e6dab30c56976ee0fcda7bd91399a747",
                 "shasum": ""
             },
             "require": {
@@ -2305,7 +2305,8 @@
             "require-dev": {
                 "brianium/paratest": "^3.0",
                 "phpunit/phpunit": "^8.1",
-                "rector/rector": "^0.11.60"
+                "rector/rector": "^0.11.60",
+                "symplify/easy-coding-standard": "^9.4"
             },
             "type": "library",
             "autoload": {
@@ -2328,7 +2329,7 @@
                 }
             ],
             "description": "Common Library for Validaide projects",
-            "time": "2021-10-25T12:11:03+00:00"
+            "time": "2021-11-03T09:49:29+00:00"
         }
     ],
     "packages-dev": [
