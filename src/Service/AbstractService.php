@@ -22,10 +22,7 @@ abstract class AbstractService
 
     private ?BusinessAccount $businessAccount = null;
 
-    /**
-     * @param string $url
-     */
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->setUrl($url);
     }
@@ -35,10 +32,7 @@ abstract class AbstractService
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
@@ -53,10 +47,7 @@ abstract class AbstractService
         return $this->key;
     }
 
-    /**
-     * @param string|null $key
-     */
-    public function setKey($key)
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }

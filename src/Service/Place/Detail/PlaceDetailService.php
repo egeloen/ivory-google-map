@@ -23,11 +23,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class PlaceDetailService extends AbstractSerializableService
 {
-    public function __construct(
-        HttpClient $client,
-        MessageFactory $messageFactory,
-        SerializerInterface $serializer = null
-    )
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, SerializerInterface $serializer = null)
     {
         parent::__construct(
             'https://maps.googleapis.com/maps/api/place/details',
