@@ -21,12 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 abstract class AbstractPlaceSerializableService extends AbstractSerializableService
 {
-    public function __construct(
-        HttpClient $client,
-        MessageFactory $messageFactory,
-        SerializerInterface $serializer = null,
-        $context = null
-    )
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, SerializerInterface $serializer = null, ?string $context = null)
     {
         if ($context !== null) {
             $context = '/' . $context;

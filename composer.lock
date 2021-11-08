@@ -2279,12 +2279,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/validaide/common.git",
-                "reference": "dfe31c8b11e61a8f97e11274ca9d4e7e7b276e42"
+                "reference": "39131a23196829cad449c074205656072f6c06e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/validaide/common/zipball/dfe31c8b11e61a8f97e11274ca9d4e7e7b276e42",
-                "reference": "dfe31c8b11e61a8f97e11274ca9d4e7e7b276e42",
+                "url": "https://api.github.com/repos/validaide/common/zipball/39131a23196829cad449c074205656072f6c06e1",
+                "reference": "39131a23196829cad449c074205656072f6c06e1",
                 "shasum": ""
             },
             "require": {
@@ -2325,7 +2325,7 @@
                 }
             ],
             "description": "Common Library for Validaide projects",
-            "time": "2021-10-26T15:05:12+00:00"
+            "time": "2021-11-03T09:49:29+00:00"
         }
     ],
     "packages-dev": [

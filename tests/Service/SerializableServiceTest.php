@@ -17,6 +17,7 @@ use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -25,7 +26,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class SerializableServiceTest extends TestCase
 {
     /**
-     * @var AbstractSerializableService|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractSerializableService|PHPUnit_Framework_MockObject_MockObject
      */
     private $service;
 
@@ -35,17 +36,17 @@ class SerializableServiceTest extends TestCase
     private $url;
 
     /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|PHPUnit_Framework_MockObject_MockObject
      */
     private $client;
 
     /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|PHPUnit_Framework_MockObject_MockObject
      */
     private $messageFactory;
 
     /**
-     * @var SerializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SerializerInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $serializer;
 
@@ -142,7 +143,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return PHPUnit_Framework_MockObject_MockObject|HttpClient
      */
     private function createHttpClientMock()
     {
@@ -150,7 +151,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return PHPUnit_Framework_MockObject_MockObject|MessageFactory
      */
     private function createMessageFactoryMock()
     {
@@ -158,15 +159,15 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Serializer\SerializerInterface
+     * @return PHPUnit_Framework_MockObject_MockObject|SerializerInterface
      */
     private function createSerializerMock()
     {
-        return $this->createMock(\Symfony\Component\Serializer\SerializerInterface::class);
+        return $this->createMock(SerializerInterface::class);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return PHPUnit_Framework_MockObject_MockObject|BusinessAccount
      */
     private function createBusinessAccountMock()
     {
