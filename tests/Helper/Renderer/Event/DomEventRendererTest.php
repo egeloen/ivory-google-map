@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DomEventRendererTest extends TestCase
 {
-    /**
-     * @var DomEventRenderer
-     */
-    private $domEventRenderer;
+    private DomEventRenderer $domEventRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->domEventRenderer = new DomEventRenderer(new Formatter());
     }

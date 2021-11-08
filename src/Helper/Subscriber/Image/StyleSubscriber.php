@@ -47,9 +47,6 @@ class StyleSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::STYLE => 'handleMap'];

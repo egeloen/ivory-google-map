@@ -121,9 +121,6 @@ abstract class AbstractPlaceAutocompleteRequest implements PlaceAutocompleteRequ
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = ['input' => $this->input];

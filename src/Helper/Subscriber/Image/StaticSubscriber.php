@@ -35,9 +35,6 @@ class StaticSubscriber implements DelegateSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         $events = [];
@@ -49,9 +46,6 @@ class StaticSubscriber implements DelegateSubscriberInterface
         return $events;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDelegatedSubscribedEvents(): array
     {
         return [

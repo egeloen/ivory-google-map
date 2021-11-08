@@ -390,9 +390,6 @@ class DirectionRequest implements DirectionRequestInterface
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = [

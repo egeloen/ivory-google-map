@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Collector\Base\BoundCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\GroundOverlayCollector;
@@ -25,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class BoundCollectorTest extends TestCase
 {
-    /**
-     * @var BoundCollector
-     */
-    private $boundCollector;
+    private BoundCollector $boundCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->boundCollector = new BoundCollector(new GroundOverlayCollector(), new RectangleCollector());
     }
@@ -84,7 +79,7 @@ class BoundCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GroundOverlayCollector
+     * @return MockObject|GroundOverlayCollector
      */
     private function createGroundOverlayCollectorMock()
     {
@@ -92,7 +87,7 @@ class BoundCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RectangleCollector
+     * @return MockObject|RectangleCollector
      */
     private function createRectangleCollectorMock()
     {

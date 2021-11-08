@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\Overlay\IconSequenceCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
@@ -29,15 +30,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolCollectorTest extends TestCase
 {
-    /**
-     * @var SymbolCollector
-     */
-    private $symbolCollector;
+    private SymbolCollector $symbolCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->symbolCollector = new SymbolCollector(
             new MarkerCollector(),
@@ -78,7 +73,7 @@ class SymbolCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerCollector
+     * @return MockObject|MarkerCollector
      */
     private function createMarkerCollectorMock()
     {
@@ -86,7 +81,7 @@ class SymbolCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|IconSequenceCollector
+     * @return MockObject|IconSequenceCollector
      */
     private function createIconSequenceCollectorMock()
     {

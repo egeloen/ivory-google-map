@@ -155,9 +155,6 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
         $this->region = $region;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = ['address' => $this->address];

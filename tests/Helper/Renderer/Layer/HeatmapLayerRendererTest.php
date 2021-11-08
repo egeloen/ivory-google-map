@@ -25,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class HeatmapLayerRendererTest extends TestCase
 {
-    /**
-     * @var HeatmapLayerRenderer
-     */
-    private $heatmapLayerRenderer;
+    private HeatmapLayerRenderer $heatmapLayerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->heatmapLayerRenderer = new HeatmapLayerRenderer(new Formatter(), new JsonBuilder());
     }

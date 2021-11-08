@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\Base\BoundCollector;
@@ -39,15 +40,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateCollectorTest extends TestCase
 {
-    /**
-     * @var CoordinateCollector
-     */
-    private $coordinateCollector;
+    private CoordinateCollector $coordinateCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinateCollector = new CoordinateCollector(
             new BoundCollector(new GroundOverlayCollector(), new RectangleCollector()),
@@ -170,7 +165,7 @@ class CoordinateCollectorTest extends TestCase
         $map = new Map();
         $map->getOverlayManager()->addPolygon(new Polygon($coordinates = [new Coordinate()]));
 
-        $this->assertSame(array_merge([$map->getCenter()], $coordinates), $this->coordinateCollector->collect($map));
+        $this->assertSame([...[$map->getCenter()], ...$coordinates], $this->coordinateCollector->collect($map));
     }
 
     public function testPolyline()
@@ -178,7 +173,7 @@ class CoordinateCollectorTest extends TestCase
         $map = new Map();
         $map->getOverlayManager()->addPolyline(new Polyline($coordinates = [new Coordinate()]));
 
-        $this->assertSame(array_merge([$map->getCenter()], $coordinates), $this->coordinateCollector->collect($map));
+        $this->assertSame([...[$map->getCenter()], ...$coordinates], $this->coordinateCollector->collect($map));
     }
 
     public function testCollectHeatmapLayer()
@@ -186,11 +181,11 @@ class CoordinateCollectorTest extends TestCase
         $map = new Map();
         $map->getLayerManager()->addHeatmapLayer(new HeatmapLayer($coordinates = [new Coordinate()]));
 
-        $this->assertSame(array_merge([$map->getCenter()], $coordinates), $this->coordinateCollector->collect($map));
+        $this->assertSame([...[$map->getCenter()], ...$coordinates], $this->coordinateCollector->collect($map));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BoundCollector
+     * @return MockObject|BoundCollector
      */
     private function createBoundCollectorMock()
     {
@@ -198,7 +193,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CircleCollector
+     * @return MockObject|CircleCollector
      */
     private function createCircleCollectorMock()
     {
@@ -206,7 +201,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|InfoWindowCollector
+     * @return MockObject|InfoWindowCollector
      */
     private function createInfoWindowCollectorMock()
     {
@@ -214,7 +209,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerCollector
+     * @return MockObject|MarkerCollector
      */
     private function createMarkerCollectorMock()
     {
@@ -222,7 +217,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PolygonCollector
+     * @return MockObject|PolygonCollector
      */
     private function createPolygonCollectorMock()
     {
@@ -230,7 +225,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PolylineCollector
+     * @return MockObject|PolylineCollector
      */
     private function createPolylineCollectorMock()
     {
@@ -238,7 +233,7 @@ class CoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HeatmapLayerCollector
+     * @return MockObject|HeatmapLayerCollector
      */
     private function createHeatmapLayerCollector()
     {

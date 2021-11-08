@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Place\Base\PlaceType;
 use Ivory\GoogleMap\Service\Place\Base\PriceLevel;
@@ -32,10 +33,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
 {
     private ?PlaceSearchService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -267,12 +265,10 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    /**
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createNearbyRequest());
@@ -352,7 +348,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $expectedResults = $options['results'];
         $actualResults   = $response->getResults();
 
-        $this->assertCount(count($expectedResults), $actualResults);
+        $this->assertCount(is_countable($expectedResults) ? count($expectedResults) : 0, $actualResults);
 
         foreach ($expectedResults as $key => $expectedResult) {
             $this->assertArrayHasKey($key, $actualResults);

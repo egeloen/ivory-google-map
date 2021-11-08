@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Circle;
@@ -30,25 +31,19 @@ use PHPUnit\Framework\TestCase;
  */
 class OverlayManagerTest extends TestCase
 {
-    /**
-     * @var OverlayManager
-     */
-    private $overlayManager;
+    private OverlayManager $overlayManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Map
+     * @var MockObject|Map
      */
     private $map;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @var MockObject|Bound
      */
     private $bound;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bound = $this->createBoundMock();
         $this->map = $this->createMapMock($this->bound);
@@ -223,7 +218,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addInfoWindows($secondInfoWindows = [$this->createInfoWindowMock()]);
 
         $this->assertTrue($this->overlayManager->hasInfoWindows());
-        $this->assertSame(array_merge($firstInfoWindows, $secondInfoWindows), $this->overlayManager->getInfoWindows());
+        $this->assertSame([...$firstInfoWindows, ...$secondInfoWindows], $this->overlayManager->getInfoWindows());
     }
 
     public function testAddInfoWindowsWithAutoZoom()
@@ -245,7 +240,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addInfoWindows($secondInfoWindows = [$secondInfoWindow]);
 
         $this->assertTrue($this->overlayManager->hasInfoWindows());
-        $this->assertSame(array_merge($firstInfoWindows, $secondInfoWindows), $this->overlayManager->getInfoWindows());
+        $this->assertSame([...$firstInfoWindows, ...$secondInfoWindows], $this->overlayManager->getInfoWindows());
     }
 
     public function testAddInfoWindow()
@@ -352,7 +347,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addPolylines($secondPolylines = [$this->createPolylineMock()]);
 
         $this->assertTrue($this->overlayManager->hasPolylines());
-        $this->assertSame(array_merge($firstPolylines, $secondPolylines), $this->overlayManager->getPolylines());
+        $this->assertSame([...$firstPolylines, ...$secondPolylines], $this->overlayManager->getPolylines());
     }
 
     public function testAddPolylinesWithAutoZoom()
@@ -374,7 +369,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addPolylines($secondPolylines = [$secondPolyline]);
 
         $this->assertTrue($this->overlayManager->hasPolylines());
-        $this->assertSame(array_merge($firstPolylines, $secondPolylines), $this->overlayManager->getPolylines());
+        $this->assertSame([...$firstPolylines, ...$secondPolylines], $this->overlayManager->getPolylines());
     }
 
     public function testAddPolyline()
@@ -484,7 +479,7 @@ class OverlayManagerTest extends TestCase
 
         $this->assertTrue($this->overlayManager->hasEncodedPolylines());
         $this->assertSame(
-            array_merge($firstEncodedPolylines, $secondEncodedPolylines),
+            [...$firstEncodedPolylines, ...$secondEncodedPolylines],
             $this->overlayManager->getEncodedPolylines()
         );
     }
@@ -509,7 +504,7 @@ class OverlayManagerTest extends TestCase
 
         $this->assertTrue($this->overlayManager->hasEncodedPolylines());
         $this->assertSame(
-            array_merge($firstEncodedPolylines, $secondEncodedPolylines),
+            [...$firstEncodedPolylines, ...$secondEncodedPolylines],
             $this->overlayManager->getEncodedPolylines()
         );
     }
@@ -618,7 +613,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addPolygons($secondPolygons = [$this->createPolygonMock()]);
 
         $this->assertTrue($this->overlayManager->hasPolygons());
-        $this->assertSame(array_merge($firstPolygons, $secondPolygons), $this->overlayManager->getPolygons());
+        $this->assertSame([...$firstPolygons, ...$secondPolygons], $this->overlayManager->getPolygons());
     }
 
     public function testAddPolygonsWithAutoZoom()
@@ -640,7 +635,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addPolygons($secondPolygons = [$secondPolygon]);
 
         $this->assertTrue($this->overlayManager->hasPolygons());
-        $this->assertSame(array_merge($firstPolygons, $secondPolygons), $this->overlayManager->getPolygons());
+        $this->assertSame([...$firstPolygons, ...$secondPolygons], $this->overlayManager->getPolygons());
     }
 
     public function testAddPolygon()
@@ -747,7 +742,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addRectangles($secondRectangles = [$this->createRectangleMock()]);
 
         $this->assertTrue($this->overlayManager->hasRectangles());
-        $this->assertSame(array_merge($firstRectangles, $secondRectangles), $this->overlayManager->getRectangles());
+        $this->assertSame([...$firstRectangles, ...$secondRectangles], $this->overlayManager->getRectangles());
     }
 
     public function testAddRectanglesWithAutoZoom()
@@ -769,7 +764,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addRectangles($secondRectangles = [$secondRectangle]);
 
         $this->assertTrue($this->overlayManager->hasRectangles());
-        $this->assertSame(array_merge($firstRectangles, $secondRectangles), $this->overlayManager->getRectangles());
+        $this->assertSame([...$firstRectangles, ...$secondRectangles], $this->overlayManager->getRectangles());
     }
 
     public function testAddRectangle()
@@ -876,7 +871,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addCircles($secondCircles = [$this->createCircleMock()]);
 
         $this->assertTrue($this->overlayManager->hasCircles());
-        $this->assertSame(array_merge($firstCircles, $secondCircles), $this->overlayManager->getCircles());
+        $this->assertSame([...$firstCircles, ...$secondCircles], $this->overlayManager->getCircles());
     }
 
     public function testAddCirclesWithAutoZoom()
@@ -898,7 +893,7 @@ class OverlayManagerTest extends TestCase
         $this->overlayManager->addCircles($secondCircles = [$secondCircle]);
 
         $this->assertTrue($this->overlayManager->hasCircles());
-        $this->assertSame(array_merge($firstCircles, $secondCircles), $this->overlayManager->getCircles());
+        $this->assertSame([...$firstCircles, ...$secondCircles], $this->overlayManager->getCircles());
     }
 
     public function testAddCircle()
@@ -1006,7 +1001,7 @@ class OverlayManagerTest extends TestCase
 
         $this->assertTrue($this->overlayManager->hasGroundOverlays());
         $this->assertSame(
-            array_merge($firstGroundOverlays, $secondGroundOverlays),
+            [...$firstGroundOverlays, ...$secondGroundOverlays],
             $this->overlayManager->getGroundOverlays()
         );
     }
@@ -1031,7 +1026,7 @@ class OverlayManagerTest extends TestCase
 
         $this->assertTrue($this->overlayManager->hasGroundOverlays());
         $this->assertSame(
-            array_merge($firstGroundOverlays, $secondGroundOverlays),
+            [...$firstGroundOverlays, ...$secondGroundOverlays],
             $this->overlayManager->getGroundOverlays()
         );
     }
@@ -1102,7 +1097,7 @@ class OverlayManagerTest extends TestCase
     /**
      * @param Bound|null $bound
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
+     * @return MockObject|Map
      */
     private function createMapMock(Bound $bound = null)
     {
@@ -1116,7 +1111,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -1124,7 +1119,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerCluster
+     * @return MockObject|MarkerCluster
      */
     private function createMarkerClusterMock()
     {
@@ -1132,7 +1127,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Marker
+     * @return MockObject|Marker
      */
     private function createMarkerMock()
     {
@@ -1140,7 +1135,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|InfoWindow
+     * @return MockObject|InfoWindow
      */
     private function createInfoWindowMock()
     {
@@ -1148,7 +1143,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Polyline
+     * @return MockObject|Polyline
      */
     private function createPolylineMock()
     {
@@ -1156,7 +1151,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EncodedPolyline
+     * @return MockObject|EncodedPolyline
      */
     private function createEncodedPolylineMock()
     {
@@ -1164,7 +1159,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Polygon
+     * @return MockObject|Polygon
      */
     private function createPolygonMock()
     {
@@ -1172,7 +1167,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Rectangle
+     * @return MockObject|Rectangle
      */
     private function createRectangleMock()
     {
@@ -1180,7 +1175,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Circle
+     * @return MockObject|Circle
      */
     private function createCircleMock()
     {
@@ -1188,7 +1183,7 @@ class OverlayManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GroundOverlay
+     * @return MockObject|GroundOverlay
      */
     private function createGroundOverlayMock()
     {

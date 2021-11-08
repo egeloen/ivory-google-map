@@ -165,9 +165,6 @@ class MapHelperBuilder extends AbstractJavascriptHelperBuilder
         return new MapHelper($this->createEventDispatcher());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createSubscribers(): array
     {
         $formatter = $this->getFormatter();

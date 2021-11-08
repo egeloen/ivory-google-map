@@ -20,22 +20,16 @@ use PHPUnit\Framework\TestCase;
  */
 class VariableAwareTest extends TestCase
 {
-    /**
-     * @var VariableAwareTrait
-     */
-    private $variableAware;
+    private \Ivory\Tests\GoogleMap\Utility\VariableAwareMock $variableAware;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->variableAware = new VariableAwareMock();
     }
 
     public function testDefaultState()
     {
-        $this->assertInternalType('string', $this->variableAware->getVariable());
+        $this->assertIsString($this->variableAware->getVariable());
         $this->assertRegExp('/^variableawaremock[a-z0-9]*$/', $this->variableAware->getVariable());
     }
 

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix\Request;
 
+use DateTime;
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
@@ -30,25 +31,19 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceMatrixRequestTest extends TestCase
 {
-    /**
-     * @var DistanceMatrixRequest
-     */
-    private $request;
+    private DistanceMatrixRequest $request;
 
     /**
      * @var string[]
      */
-    private $origins;
+    private ?array $origins = null;
 
     /**
      * @var string[]
      */
-    private $destinations;
+    private ?array $destinations = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new DistanceMatrixRequest(
             $this->origins = [new AddressLocation('Paris')],
@@ -106,7 +101,7 @@ class DistanceMatrixRequestTest extends TestCase
         $this->request->addOrigins($secondOrigins = [new AddressLocation('Lille')]);
 
         $this->assertTrue($this->request->hasOrigins());
-        $this->assertSame(array_merge($firstOrigins, $secondOrigins), $this->request->getOrigins());
+        $this->assertSame([...$firstOrigins, ...$secondOrigins], $this->request->getOrigins());
     }
 
     public function testAddOrigin()
@@ -144,7 +139,7 @@ class DistanceMatrixRequestTest extends TestCase
         $this->request->addDestinations($secondDestinations = [new AddressLocation('Lille')]);
 
         $this->assertTrue($this->request->hasDestinations());
-        $this->assertSame(array_merge($firstDestinations, $secondDestinations), $this->request->getDestinations());
+        $this->assertSame([...$firstDestinations, ...$secondDestinations], $this->request->getDestinations());
     }
 
     public function testAddDestination()
@@ -168,7 +163,7 @@ class DistanceMatrixRequestTest extends TestCase
 
     public function testDepartureTime()
     {
-        $this->request->setDepartureTime($departureTime = new \DateTime());
+        $this->request->setDepartureTime($departureTime = new DateTime());
 
         $this->assertTrue($this->request->hasDepartureTime());
         $this->assertSame($departureTime, $this->request->getDepartureTime());
@@ -176,7 +171,7 @@ class DistanceMatrixRequestTest extends TestCase
 
     public function testResetDepartureTime()
     {
-        $this->request->setDepartureTime(new \DateTime());
+        $this->request->setDepartureTime(new DateTime());
         $this->request->setDepartureTime(null);
 
         $this->assertFalse($this->request->hasDepartureTime());
@@ -185,7 +180,7 @@ class DistanceMatrixRequestTest extends TestCase
 
     public function testArrivalTime()
     {
-        $this->request->setArrivalTime($arrivalTime = new \DateTime());
+        $this->request->setArrivalTime($arrivalTime = new DateTime());
 
         $this->assertTrue($this->request->hasArrivalTime());
         $this->assertSame($arrivalTime, $this->request->getArrivalTime());
@@ -193,7 +188,7 @@ class DistanceMatrixRequestTest extends TestCase
 
     public function testArrivalTimeWithNullValue()
     {
-        $this->request->setArrivalTime(new \DateTime());
+        $this->request->setArrivalTime(new DateTime());
         $this->request->setArrivalTime(null);
 
         $this->assertFalse($this->request->hasArrivalTime());
@@ -267,7 +262,7 @@ class DistanceMatrixRequestTest extends TestCase
         $this->request->addTransitModes($secondTransitModes = [TransitMode::SUBWAY]);
 
         $this->assertTrue($this->request->hasTransitModes());
-        $this->assertSame(array_merge($firstTransitModes, $secondTransitModes), $this->request->getTransitModes());
+        $this->assertSame([...$firstTransitModes, ...$secondTransitModes], $this->request->getTransitModes());
     }
 
     public function testAddTransitMode()
@@ -366,14 +361,14 @@ class DistanceMatrixRequestTest extends TestCase
 
     public function testBuildQueryWithDepartureTime()
     {
-        $this->request->setDepartureTime($departureTime = new \DateTime());
+        $this->request->setDepartureTime($departureTime = new DateTime());
 
         $this->assertBuild($this->request->buildQuery(), ['departure_time' => $departureTime->getTimestamp()]);
     }
 
     public function testBuildQueryWithArrivalTime()
     {
-        $this->request->setArrivalTime($arrivalTime = new \DateTime());
+        $this->request->setArrivalTime($arrivalTime = new DateTime());
 
         $this->assertBuild($this->request->buildQuery(), ['arrival_time' => $arrivalTime->getTimestamp()]);
     }

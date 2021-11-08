@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTypeIdRendererTest extends TestCase
 {
-    /**
-     * @var MapTypeIdRenderer
-     */
-    private $mapTypeIdRenderer;
+    private MapTypeIdRenderer $mapTypeIdRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapTypeIdRenderer = new MapTypeIdRenderer(new Formatter());
     }

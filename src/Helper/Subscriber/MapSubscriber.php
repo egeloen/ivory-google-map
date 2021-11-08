@@ -51,9 +51,6 @@ class MapSubscriber extends AbstractSubscriber
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_MAP => 'handleMap'];

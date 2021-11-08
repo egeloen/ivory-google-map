@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ObjectToArrayRendererTest extends TestCase
 {
-    /**
-     * @var ObjectToArrayRenderer
-     */
-    private $objectToArrayRenderer;
+    private ObjectToArrayRenderer $objectToArrayRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectToArrayRenderer = new ObjectToArrayRenderer(new Formatter());
     }

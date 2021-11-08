@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Request\PathElevationRequest;
@@ -22,20 +23,14 @@ use PHPUnit\Framework\TestCase;
  */
 class PathElevationRequestTest extends TestCase
 {
-    /**
-     * @var PathElevationRequest
-     */
-    private $request;
+    private PathElevationRequest $request;
 
     /**
-     * @var LocationInterface[]|\PHPUnit_Framework_MockObject_MockObject[]
+     * @var LocationInterface[]|MockObject[]
      */
-    private $paths;
+    private array $paths;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->paths = [$this->createLocationMock('first'), $this->createLocationMock('second')];
 
@@ -80,7 +75,7 @@ class PathElevationRequestTest extends TestCase
         $this->request->addPaths($secondPaths = [$this->createLocationMock()]);
 
         $this->assertTrue($this->request->hasPaths());
-        $this->assertSame(array_merge($firstPaths, $secondPaths), $this->request->getPaths());
+        $this->assertSame([...$firstPaths, ...$secondPaths], $this->request->getPaths());
     }
 
     public function testAddPath()
@@ -120,7 +115,7 @@ class PathElevationRequestTest extends TestCase
     /**
      * @param string $value
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|LocationInterface
+     * @return MockObject|LocationInterface
      */
     private function createLocationMock($value = 'value')
     {

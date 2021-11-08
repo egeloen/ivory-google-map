@@ -33,9 +33,6 @@ class SizeSubscriber implements EventSubscriberInterface
         $event->setParameter('size', $this->sizeRenderer->render($event->getMap()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::SIZE => 'handleMap'];

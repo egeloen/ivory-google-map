@@ -16,9 +16,6 @@ namespace Ivory\GoogleMap\Helper\Renderer\Event;
  */
 class DomEventOnceRenderer extends AbstractEventRenderer
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getMethod(): string
     {
         return 'addDomListenerOnce';

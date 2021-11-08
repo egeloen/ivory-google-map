@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Overlay\IconSequence;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Utility\OptionsAwareInterface;
@@ -22,20 +23,14 @@ use PHPUnit\Framework\TestCase;
  */
 class IconSequenceTest extends TestCase
 {
-    /**
-     * @var IconSequence
-     */
-    private $iconSequence;
+    private IconSequence $iconSequence;
 
     /**
-     * @var Symbol|\PHPUnit_Framework_MockObject_MockObject
+     * @var Symbol|MockObject
      */
     private $symbol;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->iconSequence = new IconSequence($this->symbol = $this->createSymbolMock());
     }
@@ -70,7 +65,7 @@ class IconSequenceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Symbol
+     * @return MockObject|Symbol
      */
     private function createSymbolMock()
     {

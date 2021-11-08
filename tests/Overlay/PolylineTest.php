@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\IconSequence;
@@ -25,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PolylineTest extends TestCase
 {
-    /**
-     * @var Polyline
-     */
-    private $polyline;
+    private Polyline $polyline;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polyline = new Polyline();
     }
@@ -88,7 +83,7 @@ class PolylineTest extends TestCase
         $this->polyline->addCoordinates($secondCoordinates = [$this->createCoordinateMock()]);
 
         $this->assertTrue($this->polyline->hasCoordinates());
-        $this->assertSame(array_merge($firstCoordinates, $secondCoordinates), $this->polyline->getCoordinates());
+        $this->assertSame([...$firstCoordinates, ...$secondCoordinates], $this->polyline->getCoordinates());
     }
 
     public function testAddCoordinate()
@@ -126,7 +121,7 @@ class PolylineTest extends TestCase
         $this->polyline->addIconSequences($secondIconSequences = [$this->createIconSequenceMock()]);
 
         $this->assertTrue($this->polyline->hasIconSequences());
-        $this->assertSame(array_merge($firstIconSequences, $secondIconSequences), $this->polyline->getIconSequences());
+        $this->assertSame([...$firstIconSequences, ...$secondIconSequences], $this->polyline->getIconSequences());
     }
 
     public function testAddIconSequence()
@@ -149,7 +144,7 @@ class PolylineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -157,7 +152,7 @@ class PolylineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|IconSequence
+     * @return MockObject|IconSequence
      */
     private function createIconSequenceMock()
     {

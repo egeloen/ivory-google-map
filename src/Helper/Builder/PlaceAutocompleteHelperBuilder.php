@@ -55,9 +55,6 @@ class PlaceAutocompleteHelperBuilder extends AbstractJavascriptHelperBuilder
         return new PlaceAutocompleteHelper($this->createEventDispatcher());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createSubscribers(): array
     {
         $formatter = $this->getFormatter();

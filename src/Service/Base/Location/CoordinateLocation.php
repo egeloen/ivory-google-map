@@ -35,9 +35,6 @@ class CoordinateLocation implements LocationInterface
         $this->coordinate = $coordinate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): string
     {
         return $this->coordinate->getLatitude().','.$this->coordinate->getLongitude();

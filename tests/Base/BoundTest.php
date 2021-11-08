@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class BoundTest extends TestCase
 {
-    /**
-     * @var Bound
-     */
-    private $bound;
+    private Bound $bound;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bound = new Bound();
     }
@@ -131,7 +126,7 @@ class BoundTest extends TestCase
         $this->bound->addExtendables($secondExtendables = [$this->createExtendableMock()]);
 
         $this->assertTrue($this->bound->hasExtendables());
-        $this->assertSame(array_merge($firstExtendables, $secondExtendables), $this->bound->getExtendables());
+        $this->assertSame([...$firstExtendables, ...$secondExtendables], $this->bound->getExtendables());
     }
 
     public function testAddExtendable()
@@ -154,7 +149,7 @@ class BoundTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -162,7 +157,7 @@ class BoundTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ExtendableInterface
+     * @return MockObject|ExtendableInterface
      */
     private function createExtendableMock()
     {

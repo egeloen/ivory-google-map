@@ -19,15 +19,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteTermTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteTerm
-     */
-    private $match;
+    private PlaceAutocompleteTerm $match;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->match = new PlaceAutocompleteTerm();
     }

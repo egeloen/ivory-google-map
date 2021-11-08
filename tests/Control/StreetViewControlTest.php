@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StreetViewControlTest extends TestCase
 {
-    /**
-     * @var StreetViewControl
-     */
-    private $streetViewControl;
+    private StreetViewControl $streetViewControl;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->streetViewControl = new StreetViewControl();
     }

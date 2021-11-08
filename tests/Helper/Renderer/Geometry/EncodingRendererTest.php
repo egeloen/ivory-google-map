@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodingRendererTest extends TestCase
 {
-    /**
-     * @var EncodingRenderer
-     */
-    private $encodingRenderer;
+    private EncodingRenderer $encodingRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->encodingRenderer = new EncodingRenderer(new Formatter());
     }

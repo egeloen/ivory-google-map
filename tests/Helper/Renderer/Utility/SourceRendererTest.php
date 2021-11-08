@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SourceRendererTest extends TestCase
 {
-    /**
-     * @var SourceRenderer
-     */
-    private $sourceRenderer;
+    private SourceRenderer $sourceRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sourceRenderer = new SourceRenderer(new Formatter());
     }

@@ -20,20 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class GeoJsonLayerTest extends TestCase
 {
-    /**
-     * @var GeoJsonLayer
-     */
-    private $geoJsonLayer;
+    private GeoJsonLayer $geoJsonLayer;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geoJsonLayer = new GeoJsonLayer($this->url = 'https://storage.googleapis.com/mapsdevsite/json/google.json');
     }

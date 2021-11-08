@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response\Transit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitAgency;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitVehicle;
@@ -21,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitLineTest extends TestCase
 {
-    /**
-     * @var DirectionTransitLine
-     */
-    private $transitLine;
+    private DirectionTransitLine $transitLine;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->transitLine = new DirectionTransitLine();
     }
@@ -126,7 +121,7 @@ class DirectionTransitLineTest extends TestCase
         $this->transitLine->addAgencies($secondAgencies = [$this->createTransitAgencyMock()]);
 
         $this->assertTrue($this->transitLine->hasAgencies());
-        $this->assertSame(array_merge($firstAgencies, $secondAgencies), $this->transitLine->getAgencies());
+        $this->assertSame([...$firstAgencies, ...$secondAgencies], $this->transitLine->getAgencies());
     }
 
     public function testAddAgency()
@@ -149,7 +144,7 @@ class DirectionTransitLineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitAgency
+     * @return MockObject|DirectionTransitAgency
      */
     private function createTransitAgencyMock()
     {
@@ -157,7 +152,7 @@ class DirectionTransitLineTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitVehicle
+     * @return MockObject|DirectionTransitVehicle
      */
     private function createTransitVehicleMock()
     {

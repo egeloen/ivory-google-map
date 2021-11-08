@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Detail\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Base\Place;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
 use Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailResponse;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceDetailResponseTest extends TestCase
 {
-    /**
-     * @var PlaceDetailResponse
-     */
-    private $response;
+    private PlaceDetailResponse $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new PlaceDetailResponse();
     }
@@ -88,7 +83,7 @@ class PlaceDetailResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasHtmlAttributions());
         $this->assertSame(
-            array_merge($firstHtmlAttributions, $secondHtmlAttributions),
+            [...$firstHtmlAttributions, ...$secondHtmlAttributions],
             $this->response->getHtmlAttributions()
         );
     }
@@ -113,7 +108,7 @@ class PlaceDetailResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceDetailRequestInterface
+     * @return MockObject|PlaceDetailRequestInterface
      */
     private function createRequestMock()
     {
@@ -121,7 +116,7 @@ class PlaceDetailResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Place
+     * @return MockObject|Place
      */
     private function createPlaceMock()
     {

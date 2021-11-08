@@ -73,9 +73,6 @@ class CoordinateSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_BASE_COORDINATE => 'handleMap'];

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\BusinessAccount;
@@ -26,24 +27,21 @@ use Symfony\Component\Serializer\SerializerInterface;
 abstract class AbstractUnitServiceTest extends TestCase
 {
     /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|MockObject
      */
     protected $client;
 
     /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|MockObject
      */
     protected $messageFactory;
 
     /**
-     * @var SerializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SerializerInterface|MockObject
      */
     protected $serializer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->client = $this->createHttpClientMock();
         $this->messageFactory = $this->createMessageFactoryMock();
@@ -51,7 +49,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return MockObject|HttpClient
      */
     protected function createHttpClientMock()
     {
@@ -59,7 +57,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return MockObject|MessageFactory
      */
     protected function createMessageFactoryMock()
     {
@@ -67,7 +65,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SerializerInterface
+     * @return MockObject|SerializerInterface
      */
     protected function createSerializerMock()
     {
@@ -75,7 +73,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequestInterface
+     * @return MockObject|RequestInterface
      */
     protected function createHttpRequestMock()
     {
@@ -83,7 +81,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResponseInterface
+     * @return MockObject|ResponseInterface
      */
     protected function createHttpResponseMock()
     {
@@ -91,7 +89,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|StreamInterface
+     * @return MockObject|StreamInterface
      */
     protected function createHttpStreamMock()
     {
@@ -99,7 +97,7 @@ abstract class AbstractUnitServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return MockObject|BusinessAccount
      */
     protected function createBusinessAccountMock()
     {

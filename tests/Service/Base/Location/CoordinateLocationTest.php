@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Service\Base\Location;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
@@ -21,20 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateLocationTest extends TestCase
 {
-    /**
-     * @var CoordinateLocation
-     */
-    private $coordinateLocation;
+    private CoordinateLocation $coordinateLocation;
 
     /**
-     * @var Coordinate|\PHPUnit_Framework_MockObject_MockObject
+     * @var Coordinate|MockObject
      */
     private $coordinate;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinate = $this->createCoordinateMock();
         $this->coordinateLocation = new CoordinateLocation($this->coordinate);
@@ -73,7 +68,7 @@ class CoordinateLocationTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

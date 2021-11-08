@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
@@ -30,10 +31,7 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
 {
     protected ?ElevationService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -100,14 +98,10 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
         $this->assertElevationResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());
@@ -137,7 +131,7 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
 
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
-        $this->assertCount(count($options['results']), $results = $response->getResults());
+        $this->assertCount(is_countable($options['results']) ? count($options['results']) : 0, $results = $response->getResults());
 
         foreach ($options['results'] as $key => $result) {
             $this->assertArrayHasKey($key, $results);

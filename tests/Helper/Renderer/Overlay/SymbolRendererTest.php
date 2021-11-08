@@ -26,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolRendererTest extends TestCase
 {
-    /**
-     * @var SymbolRenderer
-     */
-    private $symbolRenderer;
+    private SymbolRenderer $symbolRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->symbolRenderer = new SymbolRenderer(
             $formatter = new Formatter(),

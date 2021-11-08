@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GroundOverlayCollectorTest extends TestCase
 {
-    /**
-     * @var GroundOverlayCollector
-     */
-    private $groundOverlayCollector;
+    private GroundOverlayCollector $groundOverlayCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->groundOverlayCollector = new GroundOverlayCollector();
     }

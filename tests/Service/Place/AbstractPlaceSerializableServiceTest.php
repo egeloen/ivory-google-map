@@ -91,14 +91,14 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertOpeningHours($place->getOpeningHours(), $options['opening_hours']);
         $this->assertPlusCode($place->getPlusCode(), $options['plus_code']);
 
-        $this->assertCount(count($options['address_components']), $addressComponents = $place->getAddressComponents());
+        $this->assertCount(is_countable($options['address_components']) ? count($options['address_components']) : 0, $addressComponents = $place->getAddressComponents());
 
         foreach ($options['address_components'] as $key => $addressComponent) {
             $this->assertArrayHasKey($key, $addressComponents);
             $this->assertAddressComponent($addressComponents[$key], $addressComponent);
         }
 
-        $this->assertCount(count($options['photos']), $photos = $place->getPhotos());
+        $this->assertCount(is_countable($options['photos']) ? count($options['photos']) : 0, $photos = $place->getPhotos());
 
         foreach ($options['photos'] as $key => $photo) {
             $this->assertArrayHasKey($key, $photos);
@@ -106,7 +106,7 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         }
 
         $this->assertCount(
-            count($options['alt_ids']),
+            is_countable($options['alt_ids']) ? count($options['alt_ids']) : 0,
             $alternatePlaceIds = $place->getAlternatePlaceIds()
         );
 
@@ -115,7 +115,7 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
             $this->assertAlternatePlaceId($alternatePlaceIds[$key], $alternatePlaceId);
         }
 
-        $this->assertCount(count($options['reviews']), $reviews = $place->getReviews());
+        $this->assertCount(is_countable($options['reviews']) ? count($options['reviews']) : 0, $reviews = $place->getReviews());
 
         foreach ($options['reviews'] as $key => $review) {
             $this->assertArrayHasKey($key, $reviews);
@@ -154,7 +154,7 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertSame($options['open_now'], $openingHours->isOpenNow());
         $this->assertSame($options['weekday_text'], $openingHours->getWeekdayTexts());
 
-        $this->assertCount(count($options['periods']), $periods = $openingHours->getPeriods());
+        $this->assertCount(is_countable($options['periods']) ? count($options['periods']) : 0, $periods = $openingHours->getPeriods());
 
         foreach ($options['periods'] as $key => $period) {
             $this->assertArrayHasKey($key, $periods);
@@ -242,7 +242,7 @@ abstract class AbstractPlaceSerializableServiceTest extends AbstractSerializable
         $this->assertSame((new DateTime('@' . $options['time']))->getTimestamp(), $review->getTime()->getTimestamp());
         $this->assertSame($options['language'], $review->getLanguage());
 
-        $this->assertCount(count($options['aspects']), $aspects = $review->getAspects());
+        $this->assertCount(is_countable($options['aspects']) ? count($options['aspects']) : 0, $aspects = $review->getAspects());
 
         foreach ($options['aspects'] as $key => $aspect) {
             $this->assertArrayHasKey($key, $aspects);

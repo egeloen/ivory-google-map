@@ -26,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultInfoWindowRendererTest extends TestCase
 {
-    /**
-     * @var DefaultInfoWindowRenderer|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $defaultInfoWindowRenderer;
+    private DefaultInfoWindowRenderer $defaultInfoWindowRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->defaultInfoWindowRenderer = new DefaultInfoWindowRenderer(new Formatter(), new JsonBuilder());
     }

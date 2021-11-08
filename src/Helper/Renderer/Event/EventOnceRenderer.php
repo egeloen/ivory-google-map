@@ -16,17 +16,11 @@ namespace Ivory\GoogleMap\Helper\Renderer\Event;
  */
 class EventOnceRenderer extends AbstractEventRenderer
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getMethod(): string
     {
         return 'addListenerOnce';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function hasCapture(): bool
     {
         return false;

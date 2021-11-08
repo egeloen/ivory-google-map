@@ -16,9 +16,6 @@ namespace Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable;
  */
 class DefaultViewportExtendableRenderer extends AbstractUnionExtendableRenderer
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getMethod(): string
     {
         return 'getDefaultViewport';

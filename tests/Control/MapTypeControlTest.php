@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTypeControlTest extends TestCase
 {
-    /**
-     * @var MapTypeControl
-     */
-    private $mapTypeControl;
+    private MapTypeControl $mapTypeControl;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapTypeControl = new MapTypeControl();
     }
@@ -73,7 +67,7 @@ class MapTypeControlTest extends TestCase
         $this->mapTypeControl->addIds($secondIds = [MapTypeId::SATELLITE]);
 
         $this->assertTrue($this->mapTypeControl->hasIds());
-        $this->assertSame(array_merge($firstIds, $secondIds), $this->mapTypeControl->getIds());
+        $this->assertSame([...$firstIds, ...$secondIds], $this->mapTypeControl->getIds());
     }
 
     public function testAddId()

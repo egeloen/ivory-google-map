@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\TimeZone\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\RequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
@@ -22,29 +24,20 @@ use PHPUnit\Framework\TestCase;
  */
 class TimeZoneRequestTest extends TestCase
 {
-    /**
-     * @var TimeZoneRequest
-     */
-    private $request;
+    private TimeZoneRequest $request;
 
     /**
-     * @var Coordinate|\PHPUnit_Framework_MockObject_MockObject
+     * @var Coordinate|MockObject
      */
     private $location;
 
-    /**
-     * @var \DateTime
-     */
-    private $date;
+    private ?DateTime $date = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new TimeZoneRequest(
             $this->location = $this->createCoordinateMock(),
-            $this->date = new \DateTime()
+            $this->date = new DateTime()
         );
     }
 
@@ -71,7 +64,7 @@ class TimeZoneRequestTest extends TestCase
 
     public function testDate()
     {
-        $this->request->setDate($date = new \DateTime());
+        $this->request->setDate($date = new DateTime());
 
         $this->assertSame($date, $this->request->getDate());
     }
@@ -103,7 +96,7 @@ class TimeZoneRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerLocationRendererTest extends TestCase
 {
-    /**
-     * @var MarkerLocationRenderer
-     */
-    private $markerLocationRenderer;
+    private MarkerLocationRenderer $markerLocationRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerLocationRenderer = new MarkerLocationRenderer(new CoordinateRenderer());
     }

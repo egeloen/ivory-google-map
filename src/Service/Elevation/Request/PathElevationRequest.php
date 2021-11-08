@@ -98,9 +98,6 @@ class PathElevationRequest implements ElevationRequestInterface
         $this->samples = $samples;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         return [

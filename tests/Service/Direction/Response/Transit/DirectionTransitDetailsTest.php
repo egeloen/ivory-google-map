@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response\Transit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\Time;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
 use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitLine;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitDetailsTest extends TestCase
 {
-    /**
-     * @var DirectionTransitDetails
-     */
-    private $transitDetails;
+    private DirectionTransitDetails $transitDetails;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->transitDetails = new DirectionTransitDetails();
     }
@@ -120,7 +115,7 @@ class DirectionTransitDetailsTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitStop
+     * @return MockObject|DirectionTransitStop
      */
     private function createTransitStopMock()
     {
@@ -128,7 +123,7 @@ class DirectionTransitDetailsTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitLine
+     * @return MockObject|DirectionTransitLine
      */
     private function createTransitLineMock()
     {
@@ -136,7 +131,7 @@ class DirectionTransitDetailsTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Time
+     * @return MockObject|Time
      */
     private function createTimeMock()
     {

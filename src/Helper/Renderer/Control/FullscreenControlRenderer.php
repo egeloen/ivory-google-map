@@ -44,9 +44,6 @@ class FullscreenControlRenderer extends AbstractJsonRenderer implements ControlR
         $this->controlPositionRenderer = $controlPositionRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($control): string
     {
         if (!$control instanceof FullscreenControl) {

@@ -73,9 +73,6 @@ class AutocompleteDomEventSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [PlaceAutocompleteEvents::JAVASCRIPT_EVENT_DOM_EVENT => 'handleAutocomplete'];

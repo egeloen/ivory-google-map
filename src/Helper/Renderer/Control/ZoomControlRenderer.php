@@ -58,9 +58,6 @@ class ZoomControlRenderer extends AbstractJsonRenderer implements ControlRendere
         $this->zoomControlStyleRenderer = $zoomControlStyleRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($control): string
     {
         if (!$control instanceof ZoomControl) {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -32,15 +33,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerRendererTest extends TestCase
 {
-    /**
-     * @var MarkerRenderer
-     */
-    private $markerRenderer;
+    private MarkerRenderer $markerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerRenderer = new MarkerRenderer(
             $formatter = new Formatter(),
@@ -138,7 +133,7 @@ class MarkerRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AnimationRenderer
+     * @return MockObject|AnimationRenderer
      */
     private function createAnimationRendererMock()
     {

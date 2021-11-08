@@ -20,20 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class TextPlaceSearchRequestTest extends TestCase
 {
-    /**
-     * @var TextPlaceSearchRequest
-     */
-    private $request;
+    private TextPlaceSearchRequest $request;
 
-    /**
-     * @var string
-     */
-    private $query;
+    private ?string $query = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new TextPlaceSearchRequest($this->query = 'foo');
     }

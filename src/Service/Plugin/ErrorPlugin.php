@@ -45,9 +45,6 @@ class ErrorPlugin implements Plugin
         '<status>%s</status>',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         return $next($request)->then(function (ResponseInterface $response) use ($request) {

@@ -31,9 +31,6 @@ class PlaceSearchResponseIterator implements Iterator
         $this->responses[] = $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function current()
     {
         if ($this->valid()) {
@@ -41,9 +38,6 @@ class PlaceSearchResponseIterator implements Iterator
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function next(): void
     {
         if (!$this->valid()) {
@@ -66,25 +60,16 @@ class PlaceSearchResponseIterator implements Iterator
         $this->responses[] = $this->service->process($request)->current();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function valid(): bool
     {
         return $this->position < count($this->responses);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rewind(): void
     {
         $this->position = 0;

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Autocomplete\PlaceAutocompleteService;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestInterface;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Response\PlaceAutocompleteResponse;
@@ -21,15 +22,9 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class PlaceAutocompleteServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var PlaceAutocompleteService
-     */
-    private $service;
+    private PlaceAutocompleteService $service;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -108,7 +103,7 @@ class PlaceAutocompleteServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceAutocompleteRequestInterface
+     * @return MockObject|PlaceAutocompleteRequestInterface
      */
     private function createPlaceAutocompleteRequestMock()
     {
@@ -116,7 +111,7 @@ class PlaceAutocompleteServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceAutocompleteResponse
+     * @return MockObject|PlaceAutocompleteResponse
      */
     private function createPlaceAutocompleteResponseMock()
     {

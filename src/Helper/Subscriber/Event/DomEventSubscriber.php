@@ -73,9 +73,6 @@ class DomEventSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_EVENT_DOM_EVENT => 'handleMap'];

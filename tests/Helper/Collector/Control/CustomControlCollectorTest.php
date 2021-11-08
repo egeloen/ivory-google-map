@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomControlCollectorTest extends TestCase
 {
-    /**
-     * @var CustomControlCollector
-     */
-    private $customControlCollector;
+    private CustomControlCollector $customControlCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->customControlCollector = new CustomControlCollector();
     }

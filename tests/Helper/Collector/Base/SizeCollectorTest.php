@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Helper\Collector\Base\SizeCollector;
@@ -28,15 +29,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SizeCollectorTest extends TestCase
 {
-    /**
-     * @var SizeCollector
-     */
-    private $sizeCollector;
+    private SizeCollector $sizeCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sizeCollector = new SizeCollector(
             new InfoWindowCollector($markerCollector = new MarkerCollector()),
@@ -90,7 +85,7 @@ class SizeCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|InfoWindowCollector
+     * @return MockObject|InfoWindowCollector
      */
     private function createInfoWindowCollectorMock()
     {
@@ -98,7 +93,7 @@ class SizeCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|IconCollector
+     * @return MockObject|IconCollector
      */
     private function createIconCollectorMock()
     {

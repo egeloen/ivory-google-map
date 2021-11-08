@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Distance;
@@ -25,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionStepTest extends TestCase
 {
-    /**
-     * @var DirectionStep
-     */
-    private $step;
+    private DirectionStep $step;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->step = new DirectionStep();
     }
@@ -195,7 +190,7 @@ class DirectionStepTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Distance
+     * @return MockObject|Distance
      */
     private function createDistanceMock()
     {
@@ -203,7 +198,7 @@ class DirectionStepTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Duration
+     * @return MockObject|Duration
      */
     private function createDurationMock()
     {
@@ -211,7 +206,7 @@ class DirectionStepTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -219,7 +214,7 @@ class DirectionStepTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EncodedPolyline
+     * @return MockObject|EncodedPolyline
      */
     private function createEncodedPolylineMock()
     {
@@ -227,7 +222,7 @@ class DirectionStepTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionTransitDetails
+     * @return MockObject|DirectionTransitDetails
      */
     private function createTransitDetailsMock()
     {

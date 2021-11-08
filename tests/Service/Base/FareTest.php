@@ -19,30 +19,15 @@ use PHPUnit\Framework\TestCase;
  */
 class FareTest extends TestCase
 {
-    /**
-     * @var Fare
-     */
-    private $fare;
+    private Fare $fare;
 
-    /**
-     * @var float
-     */
-    private $value;
+    private ?float $value = null;
 
-    /**
-     * @var string
-     */
-    private $currency;
+    private ?string $currency = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fare = new Fare(
             $this->value = 123.4,

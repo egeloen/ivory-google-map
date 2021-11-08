@@ -386,9 +386,6 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $locationBuilder = function (LocationInterface $location) {

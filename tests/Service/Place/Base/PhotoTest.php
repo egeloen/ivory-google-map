@@ -19,15 +19,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PhotoTest extends TestCase
 {
-    /**
-     * @var Photo
-     */
-    private $photo;
+    private Photo $photo;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->photo = new Photo();
     }
@@ -85,7 +79,7 @@ class PhotoTest extends TestCase
 
         $this->assertTrue($this->photo->hasHtmlAttributions());
         $this->assertSame(
-            array_merge($firstHtmlAttributions, $secondHtmlAttributions),
+            [...$firstHtmlAttributions, ...$secondHtmlAttributions],
             $this->photo->getHtmlAttributions()
         );
     }

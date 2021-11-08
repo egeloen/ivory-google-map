@@ -19,9 +19,6 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractDelegateSubscriber;
  */
 class AutocompleteInitSubscriber extends AbstractDelegateSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getDelegatedSubscribedEvents(): array
     {
         return [

@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DomEventCollectorTest extends TestCase
 {
-    /**
-     * @var DomEventCollector
-     */
-    private $domEventCollector;
+    private DomEventCollector $domEventCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->domEventCollector = new DomEventCollector();
     }

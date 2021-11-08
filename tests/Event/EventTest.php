@@ -21,30 +21,15 @@ use PHPUnit\Framework\TestCase;
  */
 class EventTest extends TestCase
 {
-    /**
-     * @var Event
-     */
-    private $event;
+    private Event $event;
 
-    /**
-     * @var string
-     */
-    private $instance;
+    private ?string $instance = null;
 
-    /**
-     * @var string
-     */
-    private $trigger;
+    private ?string $trigger = null;
 
-    /**
-     * @var string
-     */
-    private $handle;
+    private ?string $handle = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->event = new Event(
             $this->instance = 'instance',

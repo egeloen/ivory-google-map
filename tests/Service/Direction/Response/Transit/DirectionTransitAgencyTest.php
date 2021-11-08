@@ -19,15 +19,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitAgencyTest extends TestCase
 {
-    /**
-     * @var DirectionTransitAgency
-     */
-    private $transitAgency;
+    private DirectionTransitAgency $transitAgency;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->transitAgency = new DirectionTransitAgency();
     }

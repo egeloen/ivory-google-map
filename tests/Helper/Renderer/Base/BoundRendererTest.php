@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -24,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class BoundRendererTest extends TestCase
 {
-    /**
-     * @var BoundRenderer
-     */
-    private $boundRenderer;
+    private BoundRenderer $boundRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->boundRenderer = new BoundRenderer(new Formatter());
     }
@@ -83,7 +78,7 @@ class BoundRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ExtendableInterface
+     * @return MockObject|ExtendableInterface
      */
     private function createExtendableMock()
     {

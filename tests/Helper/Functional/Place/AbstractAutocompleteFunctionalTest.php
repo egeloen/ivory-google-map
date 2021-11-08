@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional\Place;
 
+use Exception;
 use Ivory\GoogleMap\Helper\Builder\PlaceAutocompleteHelperBuilder;
 use Ivory\GoogleMap\Helper\PlaceAutocompleteHelper;
 use Ivory\GoogleMap\Place\Autocomplete;
@@ -21,15 +22,9 @@ use Ivory\Tests\GoogleMap\Helper\Functional\AbstractApiFunctionalTest;
  */
 abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalTest
 {
-    /**
-     * @var PlaceAutocompleteHelper
-     */
-    private $placeAutocompleteHelper;
+    private PlaceAutocompleteHelper $placeAutocompleteHelper;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +32,6 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
     }
 
     /**
-     * @param Autocomplete $autocomplete
      * @param string|null  $html
      */
     protected function renderAutocomplete(Autocomplete $autocomplete, $html = null)
@@ -54,18 +48,15 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
                     $this->assertObjectExists($autocomplete);
 
                     return true;
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                 }
             }, 5000);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         $this->assertSame([], $this->log('browser'));
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     */
     protected function assertAutocomplete(Autocomplete $autocomplete)
     {
         $this->assertContainer($autocomplete);
@@ -80,12 +71,9 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
         }
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     */
     protected function assertAutocompleteHtml(Autocomplete $autocomplete)
     {
-        $html = $this->byId($autocomplete->getHtmlId());
+        $html = $this->byId();
 
         foreach ($autocomplete->getInputAttributes() as $attribute => $value) {
             $this->assertSame($value, $html->attribute($attribute));
@@ -94,9 +82,6 @@ abstract class AbstractAutocompleteFunctionalTest extends AbstractApiFunctionalT
         $this->assertSame((string) $autocomplete->getValue(), $html->value());
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     */
     protected function assertContainer(Autocomplete $autocomplete)
     {
         foreach ($this->getContainerPropertyPaths() as $propertyPath) {

@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\TimeZone;
 
+use Http\Client\Common\Exception\ClientErrorException;
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequest;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
@@ -26,10 +28,7 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
 {
     protected ?TimeZoneService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -66,14 +65,10 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
         $this->assertTimeZoneResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());
@@ -86,7 +81,7 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
     {
         return new TimeZoneRequest(
             new Coordinate(39.6034810, -119.6822510),
-            new \DateTime('@1331161200')
+            new DateTime('@1331161200')
         );
     }
 

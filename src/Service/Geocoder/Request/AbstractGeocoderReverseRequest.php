@@ -146,9 +146,6 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
         $this->locationTypes = empty($this->locationTypes) ? [] : array_values($this->locationTypes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = [];

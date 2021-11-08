@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CallbackRendererTest extends TestCase
 {
-    /**
-     * @var CallbackRenderer
-     */
-    private $callbackRenderer;
+    private CallbackRenderer $callbackRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->callbackRenderer = new CallbackRenderer(new Formatter());
     }

@@ -39,17 +39,11 @@ class TextPlaceSearchRequest extends AbstractPlaceSearchRequest
         $this->query = $query;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildContext(): string
     {
         return 'textsearch';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = parent::buildQuery();

@@ -25,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class RectangleRendererTest extends TestCase
 {
-    /**
-     * @var RectangleRenderer
-     */
-    private $rectangleRenderer;
+    private RectangleRenderer $rectangleRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rectangleRenderer = new RectangleRenderer(new Formatter(), new JsonBuilder());
     }

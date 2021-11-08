@@ -73,9 +73,6 @@ class AutocompleteBoundSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [PlaceAutocompleteEvents::JAVASCRIPT_BASE_BOUND => 'handleAutocomplete'];

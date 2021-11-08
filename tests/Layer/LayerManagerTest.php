@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Layer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Layer\GeoJsonLayer;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
@@ -24,25 +25,19 @@ use PHPUnit\Framework\TestCase;
  */
 class LayerManagerTest extends TestCase
 {
-    /**
-     * @var LayerManager
-     */
-    private $layerManager;
+    private LayerManager $layerManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Map
+     * @var MockObject|Map
      */
     private $map;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @var MockObject|Bound
      */
     private $bound;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bound = $this->createBoundMock();
         $this->map = $this->createMapMock($this->bound);
@@ -101,7 +96,7 @@ class LayerManagerTest extends TestCase
 
         $this->assertTrue($this->layerManager->hasGeoJsonLayers());
         $this->assertSame(
-            array_merge($firstGeoJsonLayers, $secondGeoJsonLayers),
+            [...$firstGeoJsonLayers, ...$secondGeoJsonLayers],
             $this->layerManager->getGeoJsonLayers()
         );
     }
@@ -167,7 +162,7 @@ class LayerManagerTest extends TestCase
 
         $this->assertTrue($this->layerManager->hasHeatmapLayers());
         $this->assertSame(
-            array_merge($firstHeatmapLayers, $secondHeatmapLayers),
+            [...$firstHeatmapLayers, ...$secondHeatmapLayers],
             $this->layerManager->getHeatmapLayers()
         );
     }
@@ -192,7 +187,7 @@ class LayerManagerTest extends TestCase
 
         $this->assertTrue($this->layerManager->hasHeatmapLayers());
         $this->assertSame(
-            array_merge($firstHeatmapLayers, $secondHeatmapLayers),
+            [...$firstHeatmapLayers, ...$secondHeatmapLayers],
             $this->layerManager->getHeatmapLayers()
         );
     }
@@ -301,7 +296,7 @@ class LayerManagerTest extends TestCase
         $this->layerManager->addKmlLayers($secondKmlLayers = [$this->createKmlLayerMock()]);
 
         $this->assertTrue($this->layerManager->hasKmlLayers());
-        $this->assertSame(array_merge($firstKmlLayers, $secondKmlLayers), $this->layerManager->getKmlLayers());
+        $this->assertSame([...$firstKmlLayers, ...$secondKmlLayers], $this->layerManager->getKmlLayers());
     }
 
     public function testAddKmlLayersWithAutoZoom()
@@ -323,7 +318,7 @@ class LayerManagerTest extends TestCase
         $this->layerManager->addKmlLayers($secondKmlLayers = [$secondKmlLayer]);
 
         $this->assertTrue($this->layerManager->hasKmlLayers());
-        $this->assertSame(array_merge($firstKmlLayers, $secondKmlLayers), $this->layerManager->getKmlLayers());
+        $this->assertSame([...$firstKmlLayers, ...$secondKmlLayers], $this->layerManager->getKmlLayers());
     }
 
     public function testAddKmlLayer()
@@ -392,7 +387,7 @@ class LayerManagerTest extends TestCase
     /**
      * @param Bound|null $bound
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
+     * @return MockObject|Map
      */
     private function createMapMock(Bound $bound = null)
     {
@@ -406,7 +401,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -414,7 +409,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeoJsonLayer
+     * @return MockObject|GeoJsonLayer
      */
     private function createGeoJsonLayerMock()
     {
@@ -422,7 +417,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HeatmapLayer
+     * @return MockObject|HeatmapLayer
      */
     private function createHeatmapLayerMock()
     {
@@ -430,7 +425,7 @@ class LayerManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|KmlLayer
+     * @return MockObject|KmlLayer
      */
     private function createKmlLayerMock()
     {

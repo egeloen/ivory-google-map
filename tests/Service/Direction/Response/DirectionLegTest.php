@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
@@ -25,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionLegTest extends TestCase
 {
-    /**
-     * @var DirectionLeg
-     */
-    private $leg;
+    private DirectionLeg $leg;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->leg = new DirectionLeg();
     }
@@ -233,7 +228,7 @@ class DirectionLegTest extends TestCase
         $this->leg->addSteps($secondSteps = [$this->createStepMock()]);
 
         $this->assertTrue($this->leg->hasSteps());
-        $this->assertSame(array_merge($firstSteps, $secondSteps), $this->leg->getSteps());
+        $this->assertSame([...$firstSteps, ...$secondSteps], $this->leg->getSteps());
     }
 
     public function testAddStep()
@@ -271,7 +266,7 @@ class DirectionLegTest extends TestCase
         $this->leg->addViaWaypoints($secondViaWaypoints = [$this->createWaypointMock()]);
 
         $this->assertTrue($this->leg->hasViaWaypoints());
-        $this->assertSame(array_merge($firstViaWaypoints, $secondViaWaypoints), $this->leg->getViaWaypoints());
+        $this->assertSame([...$firstViaWaypoints, ...$secondViaWaypoints], $this->leg->getViaWaypoints());
     }
 
     public function testAddWaypoint()
@@ -294,7 +289,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Duration
+     * @return MockObject|Duration
      */
     private function createDurationMock()
     {
@@ -302,7 +297,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Distance
+     * @return MockObject|Distance
      */
     private function createDistanceMock()
     {
@@ -310,7 +305,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -318,7 +313,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Time
+     * @return MockObject|Time
      */
     private function createTimeMock()
     {
@@ -326,7 +321,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionStep
+     * @return MockObject|DirectionStep
      */
     private function createStepMock()
     {
@@ -334,7 +329,7 @@ class DirectionLegTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionWaypoint
+     * @return MockObject|DirectionWaypoint
      */
     private function createWaypointMock()
     {

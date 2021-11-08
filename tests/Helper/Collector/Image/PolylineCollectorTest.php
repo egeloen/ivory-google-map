@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PolylineCollectorTest extends TestCase
 {
-    /**
-     * @var PolylineCollector
-     */
-    private $polylineCollector;
+    private PolylineCollector $polylineCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polylineCollector = new PolylineCollector();
     }

@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
+use Http\Client\Common\Exception\ClientErrorException;
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
@@ -34,10 +36,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
 {
     protected ?DistanceMatrixService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -167,14 +166,10 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
-    /**
-     *
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
     public function testErrorRequest()
     {
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());
@@ -210,7 +205,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['origin_addresses'], $response->getOrigins());
         $this->assertSame($options['destination_addresses'], $response->getDestinations());
-        $this->assertCount(count($options['rows']), $rows = $response->getRows());
+        $this->assertCount(is_countable($options['rows']) ? count($options['rows']) : 0, $rows = $response->getRows());
 
         foreach ($options['rows'] as $key => $row) {
             $this->assertArrayHasKey($key, $rows);
@@ -227,7 +222,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $options = array_merge(['elements' => []], $options);
 
         $this->assertInstanceOf(DistanceMatrixRow::class, $row);
-        $this->assertCount(count($options['elements']), $elements = $row->getElements());
+        $this->assertCount(is_countable($options['elements']) ? count($options['elements']) : 0, $elements = $row->getElements());
 
         foreach ($options['elements'] as $key => $element) {
             $this->assertArrayHasKey($key, $elements);
@@ -259,7 +254,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getDepartureTime()
     {
@@ -267,7 +262,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getArrivalTime()
     {

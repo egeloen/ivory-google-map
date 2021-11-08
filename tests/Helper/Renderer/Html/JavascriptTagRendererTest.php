@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class JavascriptTagRendererTest extends TestCase
 {
-    /**
-     * @var JavascriptTagRenderer
-     */
-    private $javascriptTagRenderer;
+    private JavascriptTagRenderer $javascriptTagRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->javascriptTagRenderer = new JavascriptTagRenderer(
             $formatter = new Formatter(),

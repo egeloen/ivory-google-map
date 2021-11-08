@@ -46,10 +46,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
 {
     protected ?DirectionService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -341,7 +338,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
         $this->assertSame($options['available_travel_modes'], $response->getAvailableTravelModes());
-        $this->assertCount(count($options['routes']), $routes = $response->getRoutes());
+        $this->assertCount(is_countable($options['routes']) ? count($options['routes']) : 0, $routes = $response->getRoutes());
 
         foreach ($options['routes'] as $key => $route) {
             $this->assertArrayHasKey($key, $routes);
@@ -349,7 +346,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         }
 
         $this->assertCount(
-            count($options['geocoded_waypoints']),
+            is_countable($options['geocoded_waypoints']) ? count($options['geocoded_waypoints']) : 0,
             $geocodedWaypoints = $response->getGeocodedWaypoints()
         );
 
@@ -385,7 +382,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertBound($route->getBound(), $options['bounds']);
         $this->assertEncodedPolyline($route->getOverviewPolyline(), $options['overview_polyline']);
         $this->assertFare($route->getFare(), $options['fare']);
-        $this->assertCount(count($options['legs']), $legs = $route->getLegs());
+        $this->assertCount($options['legs'] === null ? 0 : count($options['legs']), $legs = $route->getLegs());
 
         foreach ($options['legs'] as $key => $leg) {
             $this->assertArrayHasKey($key, $legs);
@@ -424,14 +421,14 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertCoordinate($leg->getEndLocation(), $options['end_location']);
         $this->assertCoordinate($leg->getStartLocation(), $options['start_location']);
 
-        $this->assertCount(count($options['via_waypoint']), $viaWaypoints = $leg->getViaWaypoints());
+        $this->assertCount($options['via_waypoint'] === null ? 0 : count($options['via_waypoint']), $viaWaypoints = $leg->getViaWaypoints());
 
         foreach ($options['via_waypoint'] as $key => $viaWaypoint) {
             $this->assertArrayHasKey($key, $viaWaypoints);
             $this->assertDirectionWaypoint($viaWaypoints[$key], $viaWaypoint);
         }
 
-        $this->assertCount(count($options['steps']), $steps = $leg->getSteps());
+        $this->assertCount($options['steps'] === null ? 0 : count($options['steps']), $steps = $leg->getSteps());
 
         foreach ($options['steps'] as $key => $step) {
             $this->assertArrayHasKey($key, $steps);
@@ -587,7 +584,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($options['icon'], $line->getIcon());
         $this->assertSame($options['text_color'], $line->getTextColor());
         $this->assertDirectionTransitVehicle($line->getVehicle(), $options['vehicle']);
-        $this->assertCount(count($options['agencies']), $agencies = $line->getAgencies());
+        $this->assertCount($options['agencies'] === null ? 0 : count($options['agencies']), $agencies = $line->getAgencies());
 
         foreach ($options['agencies'] as $key => $agency) {
             $this->assertArrayHasKey($key, $agencies);

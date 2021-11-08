@@ -49,9 +49,6 @@ abstract class AbstractSerializableService extends AbstractHttpService
         $this->serializer = $serializer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createBaseUrl(RequestInterface $request): string
     {
         return parent::createBaseUrl($request) . '/json';

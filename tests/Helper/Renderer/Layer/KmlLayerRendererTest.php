@@ -24,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class KmlLayerRendererTest extends TestCase
 {
-    /**
-     * @var KmlLayerRenderer
-     */
-    private $kmlLayerRenderer;
+    private KmlLayerRenderer $kmlLayerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kmlLayerRenderer = new KmlLayerRenderer(new Formatter(), new JsonBuilder());
     }

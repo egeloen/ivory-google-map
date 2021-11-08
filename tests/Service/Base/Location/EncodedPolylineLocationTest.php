@@ -20,20 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodedPolylineLocationTest extends TestCase
 {
-    /**
-     * @var EncodedPolylineLocation
-     */
-    private $encodedPolylineLocation;
+    private EncodedPolylineLocation $encodedPolylineLocation;
 
-    /**
-     * @var string
-     */
-    private $encodedPolyline;
+    private ?string $encodedPolyline = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->encodedPolylineLocation = new EncodedPolylineLocation($this->encodedPolyline = 'value');
     }

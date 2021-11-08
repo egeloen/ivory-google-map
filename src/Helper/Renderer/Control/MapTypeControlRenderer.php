@@ -73,9 +73,6 @@ class MapTypeControlRenderer extends AbstractJsonRenderer implements ControlRend
         $this->mapTypeControlStyleRenderer = $mapTypeControlStyleRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($control): string
     {
         if (!$control instanceof MapTypeControl) {

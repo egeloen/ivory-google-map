@@ -36,9 +36,6 @@ abstract class AbstractTextualPlaceSearchRequest extends AbstractPlaceSearchRequ
         $this->keyword = $keyword;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         $query = parent::buildQuery();

@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use DateTime;
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 use Ivory\GoogleMap\Service\Base\TrafficModel;
@@ -29,25 +31,19 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionRequestTest extends TestCase
 {
-    /**
-     * @var DirectionRequest
-     */
-    private $request;
+    private DirectionRequest $request;
 
     /**
-     * @var LocationInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var LocationInterface|MockObject
      */
     private $origin;
 
     /**
-     * @var LocationInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var LocationInterface|MockObject
      */
     private $destination;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new DirectionRequest(
             $this->origin = $this->createLocationMock('origin'),
@@ -109,7 +105,7 @@ class DirectionRequestTest extends TestCase
 
     public function testDepartureTime()
     {
-        $this->request->setDepartureTime($departureTime = new \DateTime());
+        $this->request->setDepartureTime($departureTime = new DateTime());
 
         $this->assertTrue($this->request->hasDepartureTime());
         $this->assertSame($departureTime, $this->request->getDepartureTime());
@@ -117,7 +113,7 @@ class DirectionRequestTest extends TestCase
 
     public function testResetDepartureTime()
     {
-        $this->request->setDepartureTime(new \DateTime());
+        $this->request->setDepartureTime(new DateTime());
         $this->request->setDepartureTime(null);
 
         $this->assertFalse($this->request->hasDepartureTime());
@@ -126,7 +122,7 @@ class DirectionRequestTest extends TestCase
 
     public function testArrivalTime()
     {
-        $this->request->setArrivalTime($arrivalTime = new \DateTime());
+        $this->request->setArrivalTime($arrivalTime = new DateTime());
 
         $this->assertTrue($this->request->hasArrivalTime());
         $this->assertSame($arrivalTime, $this->request->getArrivalTime());
@@ -134,7 +130,7 @@ class DirectionRequestTest extends TestCase
 
     public function testResetArrivalTime()
     {
-        $this->request->setArrivalTime(new \DateTime());
+        $this->request->setArrivalTime(new DateTime());
         $this->request->setArrivalTime(null);
 
         $this->assertFalse($this->request->hasArrivalTime());
@@ -157,7 +153,7 @@ class DirectionRequestTest extends TestCase
         $this->request->addWaypoints($secondWaypoints = [$this->createWaypointMock()]);
 
         $this->assertTrue($this->request->hasWaypoints());
-        $this->assertSame(array_merge($firstWaypoints, $secondWaypoints), $this->request->getWaypoints());
+        $this->assertSame([...$firstWaypoints, ...$secondWaypoints], $this->request->getWaypoints());
     }
 
     public function testAddWaypoint()
@@ -280,7 +276,7 @@ class DirectionRequestTest extends TestCase
         $this->request->addTransitModes($secondTransitModes = [TransitMode::SUBWAY]);
 
         $this->assertTrue($this->request->hasTransitModes());
-        $this->assertSame(array_merge($firstTransitModes, $secondTransitModes), $this->request->getTransitModes());
+        $this->assertSame([...$firstTransitModes, ...$secondTransitModes], $this->request->getTransitModes());
     }
 
     public function testAddTransitMode()
@@ -379,14 +375,14 @@ class DirectionRequestTest extends TestCase
 
     public function testBuildQueryWithDepartureTime()
     {
-        $this->request->setDepartureTime($departureTime = new \DateTime());
+        $this->request->setDepartureTime($departureTime = new DateTime());
 
         $this->assertBuild($this->request->buildQuery(), ['departure_time' => $departureTime->getTimestamp()]);
     }
 
     public function testBuildQueryWithArrivalTime()
     {
-        $this->request->setArrivalTime($arrivalTime = new \DateTime());
+        $this->request->setArrivalTime($arrivalTime = new DateTime());
 
         $this->assertBuild($this->request->buildQuery(), ['arrival_time' => $arrivalTime->getTimestamp()]);
     }
@@ -518,7 +514,7 @@ class DirectionRequestTest extends TestCase
     /**
      * @param string $value
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|LocationInterface
+     * @return MockObject|LocationInterface
      */
     private function createLocationMock($value = 'value')
     {
@@ -532,7 +528,7 @@ class DirectionRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionWaypoint
+     * @return MockObject|DirectionWaypoint
      */
     private function createWaypointMock()
     {

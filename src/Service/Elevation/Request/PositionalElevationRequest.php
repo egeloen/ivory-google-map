@@ -81,9 +81,6 @@ class PositionalElevationRequest implements ElevationRequestInterface
         $this->locations = empty($this->locations) ? [] : array_values($this->locations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(): array
     {
         return ['locations' => implode('|', array_map(fn(LocationInterface $location) => $location->buildQuery(), $this->locations))];
