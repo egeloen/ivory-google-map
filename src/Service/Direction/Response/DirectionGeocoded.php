@@ -37,10 +37,7 @@ class DirectionGeocoded
         return $this->status;
     }
 
-    /**
-     * @param string|null $status
-     */
-    public function setStatus($status): void
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }
@@ -55,10 +52,7 @@ class DirectionGeocoded
         return $this->partialMatch;
     }
 
-    /**
-     * @param bool|null $partialMatch
-     */
-    public function setPartialMatch($partialMatch): void
+    public function setPartialMatch(?bool $partialMatch): void
     {
         $this->partialMatch = $partialMatch;
     }
@@ -73,10 +67,7 @@ class DirectionGeocoded
         return $this->placeId;
     }
 
-    /**
-     * @param string|null $placeId
-     */
-    public function setPlaceId($placeId): void
+    public function setPlaceId(?string $placeId): void
     {
         $this->placeId = $placeId;
     }
@@ -95,9 +86,9 @@ class DirectionGeocoded
     }
 
     /**
-     * @param string[] $types
+     * @param null|string[] $types
      */
-    public function setTypes(array $types): void
+    public function setTypes(?array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
