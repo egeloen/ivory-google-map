@@ -13,3 +13,4 @@
 
 # PHPStorm
 /.idea
+/.phpunit.result.cache
