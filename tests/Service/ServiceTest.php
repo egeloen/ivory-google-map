@@ -21,20 +21,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ServiceTest extends TestCase
 {
-    /**
-     * @var AbstractService|MockObject
-     */
-    private $service;
-
-    /**
-     * @var string
-     */
-    private $url;
+    /** @var MockObject|AbstractService  */
+    private MockObject $service;
 
     protected function setUp(): void
     {
         $this->service = $this->getMockBuilder(AbstractService::class)
-            ->setConstructorArgs([$this->url = 'https://foo'])
+            ->setConstructorArgs(['https://foo'])
             ->getMockForAbstractClass();
     }
 

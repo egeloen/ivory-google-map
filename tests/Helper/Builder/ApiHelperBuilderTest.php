@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiHelperBuilderTest extends TestCase
 {
-    /**
-     * @var ApiHelperBuilder
-     */
-    private $apiHelperBuilder;
+    private ApiHelperBuilder $apiHelperBuilder;
 
     protected function setUp(): void
     {

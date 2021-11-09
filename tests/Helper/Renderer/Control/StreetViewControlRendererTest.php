@@ -27,10 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StreetViewControlRendererTest extends TestCase
 {
-    /**
-     * @var StreetViewControlRenderer
-     */
-    private $streetViewControlRenderer;
+    private StreetViewControlRenderer $streetViewControlRenderer;
 
     protected function setUp(): void
     {

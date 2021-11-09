@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ReviewTest extends TestCase
 {
-    /**
-     * @var Review
-     */
-    private $review;
+    private Review $review;
 
     protected function setUp(): void
     {
@@ -114,7 +111,7 @@ class ReviewTest extends TestCase
         $this->review->addAspects($secondAspects = [$this->createAspectRatingMock()]);
 
         $this->assertTrue($this->review->hasAspects());
-        $this->assertSame(array_merge($firstAspects, $secondAspects), $this->review->getAspects());
+        $this->assertSame([...$firstAspects, ...$secondAspects], $this->review->getAspects());
     }
 
     public function testAddAspect()

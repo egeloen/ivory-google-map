@@ -12,6 +12,7 @@
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Control\MapTypeControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -20,7 +21,6 @@ use Ivory\GoogleMap\Helper\Renderer\Control\ControlRendererInterface;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Control\MapTypeControlStyleRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapTypeIdRenderer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Validaide\Common\JsonBuilder\JsonBuilder;
 use PHPUnit\Framework\TestCase;
 
@@ -83,8 +83,6 @@ class MapTypeControlRendererTest extends TestCase
         );
     }
 
-    /**
-     */
     public function testRenderWithInvalidControl()
     {
         $this->expectException(InvalidArgumentException::class);

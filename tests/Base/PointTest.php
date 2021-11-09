@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PointTest extends TestCase
 {
-    /**
-     * @var Point
-     */
-    private $point;
+    private Point $point;
 
     protected function setUp(): void
     {

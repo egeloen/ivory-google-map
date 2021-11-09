@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class KmlLayerTest extends TestCase
 {
-    /**
-     * @var KmlLayer
-     */
-    private $kmlLayer;
+    private KmlLayer $kmlLayer;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     protected function setUp(): void
     {

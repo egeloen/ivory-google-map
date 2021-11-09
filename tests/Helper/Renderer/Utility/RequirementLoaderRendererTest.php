@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RequirementLoaderRendererTest extends TestCase
 {
-    /**
-     * @var RequirementLoaderRenderer
-     */
-    private $requirementLoaderRenderer;
+    private RequirementLoaderRenderer $requirementLoaderRenderer;
 
     protected function setUp(): void
     {

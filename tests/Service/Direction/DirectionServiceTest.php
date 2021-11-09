@@ -11,8 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction;
 
-use Http\Client\Common\Exception\ClientErrorException;
 use DateTime;
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Avoid;
@@ -83,6 +83,21 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $response = $this->service->route($request);
 
         $this->assertDirectionResponse($response, $request);
+    }
+
+    /**
+     * @group grain
+     */
+    public function testRouteWithCoordinatesFromDifferentContinents()
+    {
+        $request = new DirectionRequest(
+            new CoordinateLocation(new Coordinate(25.7616798,-80.1917902)),
+            new CoordinateLocation(new Coordinate(50.89717,4.483602))
+        );
+
+        $response = $this->service->route($request);
+
+        $this->assertDirectionResponse($response, $request, DirectionStatus::ZERO_RESULTS);
     }
 
     /**
@@ -279,19 +294,24 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertDirectionResponse($response, $request);
     }
 
+    /**
+     *
+     */
     public function testErrorRequest()
     {
         $this->expectException(ClientErrorException::class);
         $this->expectExceptionMessage('REQUEST_DENIED');
+
         $this->service->setKey('invalid');
 
         $this->service->route($this->createRequest());
     }
 
-    /**
-     * @return DirectionRequest
-     */
-    protected function createRequest()
+    /*****************************************************************************/
+    /* Helpers
+    /*****************************************************************************/
+
+    protected function createRequest(): DirectionRequest
     {
         return new DirectionRequest(
             new AddressLocation('Place Charles de Gaulle, Paris'),
@@ -299,11 +319,11 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         );
     }
 
-    /**
-     * @param DirectionResponse         $response
-     * @param DirectionRequestInterface $request
-     */
-    protected function assertDirectionResponse($response, $request)
+    /*****************************************************************************/
+    /* Helpers: Assertions
+    /*****************************************************************************/
+
+    protected function assertDirectionResponse(DirectionResponse $response, DirectionRequestInterface $request, string $status = DirectionStatus::OK): void
     {
         $options = array_merge([
             'routes'                 => [],
@@ -311,14 +331,14 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
             'available_travel_modes' => [],
         ], self::$journal->getData());
 
-        $options['status'] = DirectionStatus::OK;
+        $options['status'] = $status;
 
         $this->assertInstanceOf(DirectionResponse::class, $response);
 
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
         $this->assertSame($options['available_travel_modes'], $response->getAvailableTravelModes());
-        $this->assertCount(count($options['routes']), $routes = $response->getRoutes());
+        $this->assertCount(is_countable($options['routes']) ? count($options['routes']) : 0, $routes = $response->getRoutes());
 
         foreach ($options['routes'] as $key => $route) {
             $this->assertArrayHasKey($key, $routes);
@@ -326,7 +346,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         }
 
         $this->assertCount(
-            count($options['geocoded_waypoints']),
+            is_countable($options['geocoded_waypoints']) ? count($options['geocoded_waypoints']) : 0,
             $geocodedWaypoints = $response->getGeocodedWaypoints()
         );
 
@@ -337,10 +357,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionRoute $route
-     * @param mixed[]        $options
+     * @param string[] $options
      */
-    private function assertDirectionRoute($route, array $options = [])
+    private function assertDirectionRoute(DirectionRoute $route, array $options = []): void
     {
         $options = array_merge([
             'bounds'            => [],
@@ -363,7 +382,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertBound($route->getBound(), $options['bounds']);
         $this->assertEncodedPolyline($route->getOverviewPolyline(), $options['overview_polyline']);
         $this->assertFare($route->getFare(), $options['fare']);
-        $this->assertCount(count($options['legs']), $legs = $route->getLegs());
+        $this->assertCount($options['legs'] === null ? 0 : count($options['legs']), $legs = $route->getLegs());
 
         foreach ($options['legs'] as $key => $leg) {
             $this->assertArrayHasKey($key, $legs);
@@ -372,10 +391,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionLeg $leg
-     * @param mixed[]      $options
+     * @param string[] $options
      */
-    private function assertDirectionLeg($leg, array $options = [])
+    private function assertDirectionLeg(DirectionLeg $leg, array $options = []): void
     {
         $options = array_merge([
             'distance'            => [],
@@ -403,14 +421,14 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertCoordinate($leg->getEndLocation(), $options['end_location']);
         $this->assertCoordinate($leg->getStartLocation(), $options['start_location']);
 
-        $this->assertCount(count($options['via_waypoint']), $viaWaypoints = $leg->getViaWaypoints());
+        $this->assertCount($options['via_waypoint'] === null ? 0 : count($options['via_waypoint']), $viaWaypoints = $leg->getViaWaypoints());
 
         foreach ($options['via_waypoint'] as $key => $viaWaypoint) {
             $this->assertArrayHasKey($key, $viaWaypoints);
             $this->assertDirectionWaypoint($viaWaypoints[$key], $viaWaypoint);
         }
 
-        $this->assertCount(count($options['steps']), $steps = $leg->getSteps());
+        $this->assertCount($options['steps'] === null ? 0 : count($options['steps']), $steps = $leg->getSteps());
 
         foreach ($options['steps'] as $key => $step) {
             $this->assertArrayHasKey($key, $steps);
@@ -419,10 +437,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionStep $step
-     * @param mixed[]       $options
+     * @param string[] $options
      */
-    private function assertDirectionStep($step, array $options = [])
+    private function assertDirectionStep(DirectionStep $step, array $options = []): void
     {
         $options = array_merge([
             'distance'          => [],
@@ -449,18 +466,21 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionGeocoded $geocoded
-     * @param mixed[]           $options
+     * @param string[] $options
      */
-    private function assertDirectionGeocoded($geocoded, array $options = [])
+    private function assertDirectionGeocoded(DirectionGeocoded $geocoded, array $options = []): void
     {
+        if(empty($options)) {
+            $options['status'] = null;
+        } else {
+            $options['status'] = DirectionGeocodedStatus::OK;
+        }
+
         $options = array_merge([
             'partial_match' => null,
             'place_id'      => null,
             'types'         => [],
         ], $options);
-
-        $options['status'] = DirectionGeocodedStatus::OK;
 
         $this->assertInstanceOf(DirectionGeocoded::class, $geocoded);
 
@@ -471,10 +491,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionResponseWaypoint $waypoint
-     * @param mixed[]                   $options
+     * @param string[] $options
      */
-    private function assertDirectionWaypoint($waypoint, array $options = [])
+    private function assertDirectionWaypoint(DirectionResponseWaypoint $waypoint, array $options = []): void
     {
         $options = array_merge([
             'location'           => [],
@@ -490,13 +509,14 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionTransitDetails $details
-     * @param mixed[]                 $options
+     * @param string[] $options
      */
-    private function assertDirectionTransitDetails($details, array $options = [])
+    private function assertDirectionTransitDetails(?DirectionTransitDetails $details, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($details);
+            $this->assertNull($details);
+
+            return;
         }
 
         $options = array_merge([
@@ -524,10 +544,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionTransitStop $stop
-     * @param mixed[]              $options
+     * @param string[] $options
      */
-    private function assertDirectionTransitStop($stop, array $options = [])
+    private function assertDirectionTransitStop(DirectionTransitStop $stop, array $options = []): void
     {
         $options = array_merge([
             'name'     => null,
@@ -541,10 +560,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionTransitLine $line
-     * @param mixed[]              $options
+     * @param string[] $options
      */
-    private function assertDirectionTransitLine($line, array $options = [])
+    private function assertDirectionTransitLine(DirectionTransitLine $line, array $options = []): void
     {
         $options = array_merge([
             'name'       => null,
@@ -566,7 +584,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($options['icon'], $line->getIcon());
         $this->assertSame($options['text_color'], $line->getTextColor());
         $this->assertDirectionTransitVehicle($line->getVehicle(), $options['vehicle']);
-        $this->assertCount(count($options['agencies']), $agencies = $line->getAgencies());
+        $this->assertCount($options['agencies'] === null ? 0 : count($options['agencies']), $agencies = $line->getAgencies());
 
         foreach ($options['agencies'] as $key => $agency) {
             $this->assertArrayHasKey($key, $agencies);
@@ -575,10 +593,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionTransitVehicle $vehicle
-     * @param mixed[]                 $options
+     * @param string[] $options
      */
-    private function assertDirectionTransitVehicle($vehicle, array $options = [])
+    private function assertDirectionTransitVehicle(DirectionTransitVehicle $vehicle, array $options = []): void
     {
         $options = array_merge([
             'name'       => null,
@@ -596,10 +613,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param DirectionTransitAgency $agency
-     * @param mixed[]                $options
+     * @param string[] $options
      */
-    private function assertDirectionTransitAgency($agency, array $options = [])
+    private function assertDirectionTransitAgency(DirectionTransitAgency $agency, array $options = []): void
     {
         $options = array_merge([
             'name'  => null,
@@ -615,10 +631,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param EncodedPolyline $encodedPolyline
-     * @param mixed[]         $options
+     * @param string[]         $options
      */
-    private function assertEncodedPolyline($encodedPolyline, array $options = [])
+    private function assertEncodedPolyline(EncodedPolyline $encodedPolyline, array $options = []): void
     {
         $options = array_merge(['points' => null], $options);
 
@@ -626,18 +641,12 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($options['points'], $encodedPolyline->getValue());
     }
 
-    /**
-     * @return DateTime
-     */
-    private function getDepartureTime()
+    private function getDepartureTime(): DateTime
     {
         return $this->getDateTime('departure', '+1 hour');
     }
 
-    /**
-     * @return DateTime
-     */
-    private function getArrivalTime()
+    private function getArrivalTime(): DateTime
     {
         return $this->getDateTime('arrival', '+4 hours');
     }

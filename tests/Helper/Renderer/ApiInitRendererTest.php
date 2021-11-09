@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiInitRendererTest extends TestCase
 {
-    /**
-     * @var ApiInitRenderer
-     */
-    private $apiInitRenderer;
+    private ApiInitRenderer $apiInitRenderer;
 
     protected function setUp(): void
     {

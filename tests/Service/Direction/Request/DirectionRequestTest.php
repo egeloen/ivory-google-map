@@ -31,10 +31,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionRequestTest extends TestCase
 {
-    /**
-     * @var DirectionRequest
-     */
-    private $request;
+    private DirectionRequest $request;
 
     /**
      * @var LocationInterface|MockObject
@@ -156,7 +153,7 @@ class DirectionRequestTest extends TestCase
         $this->request->addWaypoints($secondWaypoints = [$this->createWaypointMock()]);
 
         $this->assertTrue($this->request->hasWaypoints());
-        $this->assertSame(array_merge($firstWaypoints, $secondWaypoints), $this->request->getWaypoints());
+        $this->assertSame([...$firstWaypoints, ...$secondWaypoints], $this->request->getWaypoints());
     }
 
     public function testAddWaypoint()
@@ -279,7 +276,7 @@ class DirectionRequestTest extends TestCase
         $this->request->addTransitModes($secondTransitModes = [TransitMode::SUBWAY]);
 
         $this->assertTrue($this->request->hasTransitModes());
-        $this->assertSame(array_merge($firstTransitModes, $secondTransitModes), $this->request->getTransitModes());
+        $this->assertSame([...$firstTransitModes, ...$secondTransitModes], $this->request->getTransitModes());
     }
 
     public function testAddTransitMode()

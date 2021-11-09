@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocoderCoordinateRequestTest extends TestCase
 {
-    /**
-     * @var GeocoderCoordinateRequest
-     */
-    private $request;
+    private GeocoderCoordinateRequest $request;
 
     /**
      * @var Coordinate|MockObject

@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PageTokenPlaceSearchRequestTest extends TestCase
 {
-    /**
-     * @var PageTokenPlaceSearchRequest
-     */
-    private $request;
+    private PageTokenPlaceSearchRequest $request;
 
     /**
      * @var PlaceSearchResponse|MockObject

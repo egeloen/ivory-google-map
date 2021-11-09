@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolPathRendererTest extends TestCase
 {
-    /**
-     * @var SymbolPathRenderer
-     */
-    private $symbolPathRenderer;
+    private SymbolPathRenderer $symbolPathRenderer;
 
     protected function setUp(): void
     {

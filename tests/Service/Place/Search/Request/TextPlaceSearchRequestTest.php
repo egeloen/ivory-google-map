@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class TextPlaceSearchRequestTest extends TestCase
 {
-    /**
-     * @var TextPlaceSearchRequest
-     */
-    private $request;
+    private TextPlaceSearchRequest $request;
 
-    /**
-     * @var string
-     */
-    private $query;
+    private ?string $query = null;
 
     protected function setUp(): void
     {

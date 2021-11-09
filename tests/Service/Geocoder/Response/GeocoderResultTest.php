@@ -77,7 +77,7 @@ class GeocoderResultTest extends TestCase
 
         $this->assertTrue($this->result->hasAddressComponents());
         $this->assertSame(
-            array_merge($firstAddressComponents, $secondAddressComponents),
+            [...$firstAddressComponents, ...$secondAddressComponents],
             $this->result->getAddressComponents()
         );
     }
@@ -150,7 +150,7 @@ class GeocoderResultTest extends TestCase
         $this->result->addPostcodeLocalities($secondPostcodeLocalities = ['62000']);
 
         $this->assertTrue($this->result->hasPostcodeLocalities());
-        $this->assertSame(array_merge($firstPostcodeLocalities, $secondPostcodeLocalities), $this->result->getPostcodeLocalities());
+        $this->assertSame([...$firstPostcodeLocalities, ...$secondPostcodeLocalities], $this->result->getPostcodeLocalities());
     }
 
     public function testAddPostcodeLocality()
@@ -222,7 +222,7 @@ class GeocoderResultTest extends TestCase
         $this->result->addTypes($secondTypes = ['bar']);
 
         $this->assertTrue($this->result->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->result->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->result->getTypes());
     }
 
     public function testAddType()

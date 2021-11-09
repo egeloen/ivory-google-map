@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BoundTest extends TestCase
 {
-    /**
-     * @var Bound
-     */
-    private $bound;
+    private Bound $bound;
 
     protected function setUp(): void
     {
@@ -129,7 +126,7 @@ class BoundTest extends TestCase
         $this->bound->addExtendables($secondExtendables = [$this->createExtendableMock()]);
 
         $this->assertTrue($this->bound->hasExtendables());
-        $this->assertSame(array_merge($firstExtendables, $secondExtendables), $this->bound->getExtendables());
+        $this->assertSame([...$firstExtendables, ...$secondExtendables], $this->bound->getExtendables());
     }
 
     public function testAddExtendable()

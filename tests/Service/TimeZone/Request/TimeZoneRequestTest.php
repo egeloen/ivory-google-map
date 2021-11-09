@@ -24,20 +24,14 @@ use PHPUnit\Framework\TestCase;
  */
 class TimeZoneRequestTest extends TestCase
 {
-    /**
-     * @var TimeZoneRequest
-     */
-    private $request;
+    private TimeZoneRequest $request;
 
     /**
      * @var Coordinate|MockObject
      */
     private $location;
 
-    /**
-     * @var DateTime
-     */
-    private $date;
+    private ?DateTime $date = null;
 
     protected function setUp(): void
     {

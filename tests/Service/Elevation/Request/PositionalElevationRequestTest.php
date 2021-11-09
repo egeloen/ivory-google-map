@@ -23,15 +23,12 @@ use PHPUnit\Framework\TestCase;
  */
 class PositionalElevationRequestTest extends TestCase
 {
-    /**
-     * @var PositionalElevationRequest
-     */
-    private $request;
+    private PositionalElevationRequest $request;
 
     /**
      * @var LocationInterface[]|MockObject[]
      */
-    private $locations;
+    private array $locations;
 
     protected function setUp(): void
     {
@@ -68,7 +65,7 @@ class PositionalElevationRequestTest extends TestCase
         $this->request->addLocations($secondLocations = [$this->createLocationMock()]);
 
         $this->assertTrue($this->request->hasLocations());
-        $this->assertSame(array_merge($firstLocations, $secondLocations), $this->request->getLocations());
+        $this->assertSame([...$firstLocations, ...$secondLocations], $this->request->getLocations());
     }
 
     public function testAddLocation()

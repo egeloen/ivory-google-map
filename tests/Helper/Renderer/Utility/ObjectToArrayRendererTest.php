@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ObjectToArrayRendererTest extends TestCase
 {
-    /**
-     * @var ObjectToArrayRenderer
-     */
-    private $objectToArrayRenderer;
+    private ObjectToArrayRenderer $objectToArrayRenderer;
 
     protected function setUp(): void
     {

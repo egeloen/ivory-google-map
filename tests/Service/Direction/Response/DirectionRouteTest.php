@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionRouteTest extends TestCase
 {
-    /**
-     * @var DirectionRoute
-     */
-    private $route;
+    private DirectionRoute $route;
 
     protected function setUp(): void
     {
@@ -104,7 +101,7 @@ class DirectionRouteTest extends TestCase
         $this->route->addLegs($secondLegs = [$this->createLegMock()]);
 
         $this->assertTrue($this->route->hasLegs());
-        $this->assertSame(array_merge($firstLegs, $secondLegs), $this->route->getLegs());
+        $this->assertSame([...$firstLegs, ...$secondLegs], $this->route->getLegs());
     }
 
     public function testAddLeg()
@@ -193,7 +190,7 @@ class DirectionRouteTest extends TestCase
         $this->route->addWarnings($secondWarnings = ['second_warning']);
 
         $this->assertTrue($this->route->hasWarnings());
-        $this->assertSame(array_merge($firstWarnings, $secondWarnings), $this->route->getWarnings());
+        $this->assertSame([...$firstWarnings, ...$secondWarnings], $this->route->getWarnings());
     }
 
     public function testAddWarning()

@@ -24,10 +24,7 @@ abstract class AbstractHttpService extends AbstractService
 
     private ?MessageFactory $messageFactory = null;
 
-    /**
-     * @param string         $url
-     */
-    public function __construct($url, HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(string $url, HttpClient $client, MessageFactory $messageFactory)
     {
         parent::__construct($url);
 

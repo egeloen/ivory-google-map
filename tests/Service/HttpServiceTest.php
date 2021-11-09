@@ -23,20 +23,13 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpServiceTest extends TestCase
 {
-    /**
-     * @var AbstractHttpService|MockObject
-     */
-    private $service;
-
-    /**
-     * @var string
-     */
-    private $url;
+    /** @var MockObject|AbstractHttpService  */
+    private MockObject $service;
 
     /**
      * @var HttpClient|MockObject
      */
-    private $client;
+    private MockObject $client;
 
     /**
      * @var MessageFactory|MockObject
@@ -47,7 +40,7 @@ class HttpServiceTest extends TestCase
     {
         $this->service = $this->getMockBuilder(AbstractHttpService::class)
             ->setConstructorArgs([
-                $this->url = 'https://foo',
+                'https://foo',
                 $this->client = $this->createHttpClientMock(),
                 $this->messageFactory = $this->createMessageFactoryMock(),
             ])

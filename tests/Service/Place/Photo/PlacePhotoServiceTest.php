@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlacePhotoServiceTest extends TestCase
 {
-    /**
-     * @var PlacePhotoService
-     */
-    private $service;
+    private PlacePhotoService $service;
 
-    /**
-     * @var string
-     */
-    private $key;
+    private ?string $key = null;
 
     protected function setUp(): void
     {

@@ -30,10 +30,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolCollectorTest extends TestCase
 {
-    /**
-     * @var SymbolCollector
-     */
-    private $symbolCollector;
+    private SymbolCollector $symbolCollector;
 
     protected function setUp(): void
     {

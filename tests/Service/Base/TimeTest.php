@@ -20,25 +20,13 @@ use PHPUnit\Framework\TestCase;
  */
 class TimeTest extends TestCase
 {
-    /**
-     * @var Time
-     */
-    private $time;
+    private Time $time;
 
-    /**
-     * @var DateTime
-     */
-    private $value;
+    private ?DateTime $value = null;
 
-    /**
-     * @var string
-     */
-    private $timeZone;
+    private ?string $timeZone = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
     protected function setUp(): void
     {

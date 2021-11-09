@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PathExtendableRendererTest extends TestCase
 {
-    /**
-     * @var PathExtendableRenderer
-     */
-    private $pathExtendableRenderer;
+    private PathExtendableRenderer $pathExtendableRenderer;
 
     protected function setUp(): void
     {

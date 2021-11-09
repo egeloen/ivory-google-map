@@ -63,7 +63,7 @@ class HelperBuilderTest extends TestCase
         );
 
         $this->assertTrue($this->helperBuilder->hasSubscribers());
-        $this->assertSame(array_merge($firstSubscribers, $secondSubscribers), $this->helperBuilder->getSubscribers());
+        $this->assertSame([...$firstSubscribers, ...$secondSubscribers], $this->helperBuilder->getSubscribers());
     }
 
     public function testAddSubscriber()

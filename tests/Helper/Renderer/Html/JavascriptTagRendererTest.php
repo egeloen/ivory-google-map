@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class JavascriptTagRendererTest extends TestCase
 {
-    /**
-     * @var JavascriptTagRenderer
-     */
-    private $javascriptTagRenderer;
+    private JavascriptTagRenderer $javascriptTagRenderer;
 
     protected function setUp(): void
     {

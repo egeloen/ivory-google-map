@@ -23,20 +23,14 @@ use PHPUnit\Framework\TestCase;
  */
 class NearbyPlaceSearchRequestTest extends TestCase
 {
-    /**
-     * @var NearbyPlaceSearchRequest
-     */
-    private $request;
+    private NearbyPlaceSearchRequest $request;
 
     /**
      * @var Coordinate|MockObject
      */
     private $location;
 
-    /**
-     * @var string
-     */
-    private $rankBy;
+    private ?string $rankBy = null;
 
     protected function setUp(): void
     {

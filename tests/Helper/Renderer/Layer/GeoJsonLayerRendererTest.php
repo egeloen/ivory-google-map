@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GeoJsonLayerRendererTest extends TestCase
 {
-    /**
-     * @var GeoJsonLayerRenderer
-     */
-    private $geoJsonLayerRenderer;
+    private GeoJsonLayerRenderer $geoJsonLayerRenderer;
 
     protected function setUp(): void
     {

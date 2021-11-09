@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolylineTest extends TestCase
 {
-    /**
-     * @var Polyline
-     */
-    private $polyline;
+    private Polyline $polyline;
 
     protected function setUp(): void
     {
@@ -86,7 +83,7 @@ class PolylineTest extends TestCase
         $this->polyline->addCoordinates($secondCoordinates = [$this->createCoordinateMock()]);
 
         $this->assertTrue($this->polyline->hasCoordinates());
-        $this->assertSame(array_merge($firstCoordinates, $secondCoordinates), $this->polyline->getCoordinates());
+        $this->assertSame([...$firstCoordinates, ...$secondCoordinates], $this->polyline->getCoordinates());
     }
 
     public function testAddCoordinate()
@@ -124,7 +121,7 @@ class PolylineTest extends TestCase
         $this->polyline->addIconSequences($secondIconSequences = [$this->createIconSequenceMock()]);
 
         $this->assertTrue($this->polyline->hasIconSequences());
-        $this->assertSame(array_merge($firstIconSequences, $secondIconSequences), $this->polyline->getIconSequences());
+        $this->assertSame([...$firstIconSequences, ...$secondIconSequences], $this->polyline->getIconSequences());
     }
 
     public function testAddIconSequence()

@@ -19,10 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AddressComponentTest extends TestCase
 {
-    /**
-     * @var AddressComponent
-     */
-    private $address;
+    private AddressComponent $address;
 
     protected function setUp(): void
     {
@@ -89,7 +86,7 @@ class AddressComponentTest extends TestCase
         $this->address->addTypes($secondTypes = ['second_type']);
 
         $this->assertTrue($this->address->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->address->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->address->getTypes());
     }
 
     public function testAddType()

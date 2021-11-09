@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StylesheetTagRendererTest extends TestCase
 {
-    /**
-     * @var StylesheetTagRenderer
-     */
-    private $stylesheetTagRenderer;
+    private StylesheetTagRenderer $stylesheetTagRenderer;
 
     protected function setUp(): void
     {

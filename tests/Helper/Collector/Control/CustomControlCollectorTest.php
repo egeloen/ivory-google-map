@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomControlCollectorTest extends TestCase
 {
-    /**
-     * @var CustomControlCollector
-     */
-    private $customControlCollector;
+    private CustomControlCollector $customControlCollector;
 
     protected function setUp(): void
     {

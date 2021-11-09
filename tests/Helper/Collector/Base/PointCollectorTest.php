@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PointCollectorTest extends TestCase
 {
-    /**
-     * @var PointCollector
-     */
-    private $pointCollector;
+    private PointCollector $pointCollector;
 
     protected function setUp(): void
     {

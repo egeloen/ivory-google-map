@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SizeTest extends TestCase
 {
-    /**
-     * @var Size
-     */
-    private $size;
+    private Size $size;
 
     protected function setUp(): void
     {

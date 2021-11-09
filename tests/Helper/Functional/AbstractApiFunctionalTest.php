@@ -25,10 +25,7 @@ use Ivory\GoogleMap\Utility\VariableAwareInterface;
  */
 abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
 {
-    /**
-     * @var ApiHelper
-     */
-    private $apiHelper;
+    private ApiHelper $apiHelper;
 
     protected function setUp(): void
     {
@@ -58,8 +55,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface $object
-     * @param Bound                  $bound
      * @param string|null            $expected
      */
     protected function assertBound(VariableAwareInterface $object, Bound $bound, $expected = null)
@@ -70,9 +65,7 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
             $bound,
             $expected,
             function ($expected, $variable) {
-                $formatter = function ($expected, $variable, $method) {
-                    return $expected.'.contains('.$variable.'.'.$method.'())';
-                };
+                $formatter = fn($expected, $variable, $method) => $expected.'.contains('.$variable.'.'.$method.'())';
 
                 return implode(' && ', [
                     call_user_func($formatter, $expected, $variable, 'getSouthWest'),
@@ -95,8 +88,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface $object
-     * @param Coordinate             $coordinate
      * @param string|null            $expected
      */
     protected function assertCoordinate(VariableAwareInterface $object, Coordinate $coordinate, $expected = null)
@@ -107,8 +98,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface $object
-     * @param Point                  $point
      * @param string|null            $expected
      */
     protected function assertPoint(VariableAwareInterface $object, Point $point, $expected = null)
@@ -119,8 +108,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface $object
-     * @param Size                   $size
      * @param string|null            $expected
      */
     protected function assertSize(VariableAwareInterface $object, Size $size, $expected = null)
@@ -130,9 +117,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
         $this->assertSameVariable($size->getVariable().'.height', $size->getHeight());
     }
 
-    /**
-     * @param OptionsAwareInterface $object
-     */
     protected function assertOptions(OptionsAwareInterface $object)
     {
         foreach ($object->getOptions() as $option => $value) {
@@ -143,7 +127,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface $root
      * @param string|null            $propertyPath
      */
     protected function assertContainerVariableExists(VariableAwareInterface $root, $propertyPath = null)
@@ -152,7 +135,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface      $root
      * @param string                      $propertyPath
      * @param VariableAwareInterface|null $object
      * @param string|null                 $expected
@@ -172,9 +154,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
         }
     }
 
-    /**
-     * @param VariableAwareInterface $object
-     */
     protected function assertObjectExists(VariableAwareInterface $object)
     {
         $this->assertVariableExists($object->getVariable());
@@ -182,7 +161,6 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
 
     /**
      * @param string                 $expected
-     * @param VariableAwareInterface $object
      * @param callable|null          $formatter
      */
     protected function assertSameObject($expected, VariableAwareInterface $object, $formatter = null)
@@ -199,10 +177,8 @@ abstract class AbstractApiFunctionalTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param VariableAwareInterface      $root
      * @param string|null                 $propertyPath
      * @param VariableAwareInterface|null $object
-     *
      * @return string
      */
     private function getContainer(

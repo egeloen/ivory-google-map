@@ -19,15 +19,9 @@ use RuntimeException;
  */
 abstract class AbstractFunctionalTest extends Selenium2TestCase
 {
-    /**
-     * @var string
-     */
-    private static $directory;
+    private static string $directory;
 
-    /**
-     * @var bool
-     */
-    private static $hasDirectory;
+    private static bool $hasDirectory;
 
     public static function setUpBeforeClass(): void
     {
@@ -52,7 +46,7 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
             $this->setHost($_SERVER['SELENIUM_HOST']);
         }
 
-        $this->setBrowser(isset($_SERVER['BROWSER_NAME']) ? $_SERVER['BROWSER_NAME'] : 'chrome');
+        $this->setBrowser($_SERVER['BROWSER_NAME'] ?? 'chrome');
         $this->setBrowserUrl('file://'.self::$directory);
     }
 
@@ -81,7 +75,7 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
             throw new RuntimeException(sprintf('Unable to close the file "%s".', $name));
         }
 
-        $this->url(basename($name));
+        $this->url();
 
         if (@unlink($name) === false) {
             throw new RuntimeException(sprintf('Unable to remove the file "%s".', $name));
@@ -103,9 +97,7 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
      */
     protected function assertSameVariable($expected, $variable, $formatter = null)
     {
-        $defaultFormatter = function ($expected, $variable) {
-            return $expected.' === '.$variable;
-        };
+        $defaultFormatter = fn($expected, $variable) => $expected.' === '.$variable;
 
         $formatter = $formatter ?: $defaultFormatter;
 
@@ -118,13 +110,11 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
     }
 
     /**
-     * @param string  $script
-     * @param mixed[] $args
      *
      * @return mixed
      */
-    private function executeJavascript($script, array $args = [])
+    private function executeJavascript()
     {
-        return $this->execute(['script' => 'return ('.$script.')', 'args' => $args]);
+        return $this->execute();
     }
 }

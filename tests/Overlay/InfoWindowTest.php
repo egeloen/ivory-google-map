@@ -27,15 +27,9 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowTest extends TestCase
 {
-    /**
-     * @var InfoWindow
-     */
-    private $infoWindow;
+    private InfoWindow $infoWindow;
 
-    /**
-     * @var string
-     */
-    private $content;
+    private ?string $content = null;
 
     protected function setUp(): void
     {

@@ -131,7 +131,7 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
 
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
-        $this->assertCount(count($options['results']), $results = $response->getResults());
+        $this->assertCount(is_countable($options['results']) ? count($options['results']) : 0, $results = $response->getResults());
 
         foreach ($options['results'] as $key => $result) {
             $this->assertArrayHasKey($key, $results);

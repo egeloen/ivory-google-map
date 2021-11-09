@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MapContainerRendererTest extends TestCase
 {
-    /**
-     * @var MapContainerRenderer
-     */
-    private $mapContainerRenderer;
+    private MapContainerRenderer $mapContainerRenderer;
 
     protected function setUp(): void
     {

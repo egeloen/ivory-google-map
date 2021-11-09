@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GroundOverlayCollectorTest extends TestCase
 {
-    /**
-     * @var GroundOverlayCollector
-     */
-    private $groundOverlayCollector;
+    private GroundOverlayCollector $groundOverlayCollector;
 
     protected function setUp(): void
     {

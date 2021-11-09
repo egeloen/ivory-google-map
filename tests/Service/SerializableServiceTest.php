@@ -25,15 +25,10 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class SerializableServiceTest extends TestCase
 {
-    /**
-     * @var AbstractSerializableService|MockObject
-     */
-    private $service;
+    /** @var MockObject|AbstractSerializableService  */
+    private MockObject $service;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     /**
      * @var HttpClient|MockObject

@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GeometryTest extends TestCase
 {
-    /**
-     * @var Geometry
-     */
-    private $geometry;
+    private Geometry $geometry;
 
     protected function setUp(): void
     {

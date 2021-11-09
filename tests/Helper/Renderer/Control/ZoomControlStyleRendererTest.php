@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ZoomControlStyleRendererTest extends TestCase
 {
-    /**
-     * @var ZoomControlStyleRenderer
-     */
-    private $zoomControlStyleRenderer;
+    private ZoomControlStyleRenderer $zoomControlStyleRenderer;
 
     protected function setUp(): void
     {

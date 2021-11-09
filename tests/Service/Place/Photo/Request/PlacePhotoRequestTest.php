@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlacePhotoRequestTest extends TestCase
 {
-    /**
-     * @var PlacePhotoRequest
-     */
-    private $request;
+    private PlacePhotoRequest $request;
 
-    /**
-     * @var string
-     */
-    private $reference;
+    private ?string $reference = null;
 
     protected function setUp(): void
     {

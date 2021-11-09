@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AlternatePlaceIdTest extends TestCase
 {
-    /**
-     * @var AlternatePlaceId
-     */
-    private $alternatePlaceId;
+    private AlternatePlaceId $alternatePlaceId;
 
     protected function setUp(): void
     {

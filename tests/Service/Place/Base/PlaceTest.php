@@ -234,7 +234,7 @@ class PlaceTest extends TestCase
 
         $this->assertTrue($this->result->hasAddressComponents());
         $this->assertSame(
-            array_merge($firstAddressComponents, $secondAddressComponents),
+            [...$firstAddressComponents, ...$secondAddressComponents],
             $this->result->getAddressComponents()
         );
     }
@@ -290,7 +290,7 @@ class PlaceTest extends TestCase
         $this->result->addPhotos($secondPhotos = [$this->createPhotoMock()]);
 
         $this->assertTrue($this->result->hasPhotos());
-        $this->assertSame(array_merge($firstPhotos, $secondPhotos), $this->result->getPhotos());
+        $this->assertSame([...$firstPhotos, ...$secondPhotos], $this->result->getPhotos());
     }
 
     public function testAddPhoto()
@@ -331,7 +331,7 @@ class PlaceTest extends TestCase
 
         $this->assertTrue($this->result->hasAlternatePlaceIds());
         $this->assertSame(
-            array_merge($firstAlternatePlaceIds, $secondAlternatePlaceIds),
+            [...$firstAlternatePlaceIds, ...$secondAlternatePlaceIds],
             $this->result->getAlternatePlaceIds()
         );
     }
@@ -372,7 +372,7 @@ class PlaceTest extends TestCase
 
         $this->assertTrue($this->result->hasReviews());
         $this->assertSame(
-            array_merge($firstReviews, $secondReviews),
+            [...$firstReviews, ...$secondReviews],
             $this->result->getReviews()
         );
     }
@@ -412,7 +412,7 @@ class PlaceTest extends TestCase
         $this->result->addTypes($secondTypes = [PlaceType::ART_GALLERY]);
 
         $this->assertTrue($this->result->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->result->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->result->getTypes());
     }
 
     public function testAddType()

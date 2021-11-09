@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ScaleControlStyleRendererTest extends TestCase
 {
-    /**
-     * @var ScaleControlStyleRenderer
-     */
-    private $scaleControlStyleRenderer;
+    private ScaleControlStyleRenderer $scaleControlStyleRenderer;
 
     protected function setUp(): void
     {

@@ -27,10 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ControlManagerTest extends TestCase
 {
-    /**
-     * @var ControlManager
-     */
-    private $controlManager;
+    private ControlManager $controlManager;
 
     protected function setUp(): void
     {
@@ -174,7 +171,7 @@ class ControlManagerTest extends TestCase
 
         $this->assertTrue($this->controlManager->hasCustomControls());
         $this->assertSame(
-            array_merge($firstCustomControls, $secondCustomControls),
+            [...$firstCustomControls, ...$secondCustomControls],
             $this->controlManager->getCustomControls()
         );
     }

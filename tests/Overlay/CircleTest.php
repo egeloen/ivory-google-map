@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CircleTest extends TestCase
 {
-    /**
-     * @var Circle
-     */
-    private $circle;
+    private Circle $circle;
 
     /**
      * @var Coordinate|MockObject

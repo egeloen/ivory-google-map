@@ -19,20 +19,11 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationTest extends TestCase
 {
-    /**
-     * @var Duration
-     */
-    private $duration;
+    private Duration $duration;
 
-    /**
-     * @var float
-     */
-    private $value;
+    private ?float $value = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
     protected function setUp(): void
     {

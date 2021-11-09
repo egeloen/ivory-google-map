@@ -22,10 +22,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class GeocoderServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var GeocoderService
-     */
-    private $service;
+    private GeocoderService $service;
 
     protected function setUp(): void
     {

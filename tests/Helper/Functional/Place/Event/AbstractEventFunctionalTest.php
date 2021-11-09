@@ -20,10 +20,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Keys;
  */
 abstract class AbstractEventFunctionalTest extends AbstractAutocompleteFunctionalTest
 {
-    /**
-     * @var string
-     */
-    private $spyCount;
+    private string $spyCount;
 
     protected function setUp(): void
     {

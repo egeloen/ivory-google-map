@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowCloseRendererTest extends TestCase
 {
-    /**
-     * @var InfoWindowCloseRenderer
-     */
-    private $infoWindowCloseRenderer;
+    private InfoWindowCloseRenderer $infoWindowCloseRenderer;
 
     protected function setUp(): void
     {

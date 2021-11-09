@@ -28,10 +28,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MapRendererTest extends TestCase
 {
-    /**
-     * @var MapRenderer
-     */
-    private $mapRenderer;
+    private MapRenderer $mapRenderer;
 
     protected function setUp(): void
     {

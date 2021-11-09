@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteBoundCollectorTest extends TestCase
 {
-    /**
-     * @var AutocompleteBoundCollector
-     */
-    private $autocompleteBoundCollector;
+    private AutocompleteBoundCollector $autocompleteBoundCollector;
 
     protected function setUp(): void
     {

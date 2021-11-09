@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PositionExtendableRendererTest extends TestCase
 {
-    /**
-     * @var PositionExtendableRenderer
-     */
-    private $positionExtendableRenderer;
+    private PositionExtendableRenderer $positionExtendableRenderer;
 
     protected function setUp(): void
     {

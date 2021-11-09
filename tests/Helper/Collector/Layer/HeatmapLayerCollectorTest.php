@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HeatmapLayerCollectorTest extends TestCase
 {
-    /**
-     * @var HeatmapLayerCollector
-     */
-    private $heatmapLayerCollector;
+    private HeatmapLayerCollector $heatmapLayerCollector;
 
     protected function setUp(): void
     {

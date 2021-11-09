@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolygonRendererTest extends TestCase
 {
-    /**
-     * @var PolygonRenderer
-     */
-    private $polygonRenderer;
+    private PolygonRenderer $polygonRenderer;
 
     protected function setUp(): void
     {

@@ -205,7 +205,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['origin_addresses'], $response->getOrigins());
         $this->assertSame($options['destination_addresses'], $response->getDestinations());
-        $this->assertCount(count($options['rows']), $rows = $response->getRows());
+        $this->assertCount(is_countable($options['rows']) ? count($options['rows']) : 0, $rows = $response->getRows());
 
         foreach ($options['rows'] as $key => $row) {
             $this->assertArrayHasKey($key, $rows);
@@ -222,7 +222,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $options = array_merge(['elements' => []], $options);
 
         $this->assertInstanceOf(DistanceMatrixRow::class, $row);
-        $this->assertCount(count($options['elements']), $elements = $row->getElements());
+        $this->assertCount(is_countable($options['elements']) ? count($options['elements']) : 0, $elements = $row->getElements());
 
         foreach ($options['elements'] as $key => $element) {
             $this->assertArrayHasKey($key, $elements);

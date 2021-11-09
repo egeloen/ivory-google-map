@@ -39,10 +39,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ControlManagerRendererTest extends TestCase
 {
-    /**
-     * @var ControlManagerRenderer
-     */
-    private $controlManagerRenderer;
+    private ControlManagerRenderer $controlManagerRenderer;
 
     protected function setUp(): void
     {
@@ -72,7 +69,7 @@ class ControlManagerRendererTest extends TestCase
 
         $this->assertTrue($this->controlManagerRenderer->hasRenderers());
         $this->assertSame(
-            array_merge($firstRenderers, $secondRenderers),
+            [...$firstRenderers, ...$secondRenderers],
             $this->controlManagerRenderer->getRenderers()
         );
     }

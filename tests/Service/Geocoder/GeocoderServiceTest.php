@@ -176,7 +176,7 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
 
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
-        $this->assertCount(count($options['results']), $results = $response->getResults());
+        $this->assertCount(is_countable($options['results']) ? count($options['results']) : 0, $results = $response->getResults());
 
         foreach ($options['results'] as $key => $result) {
             $this->assertArrayHasKey($key, $results);
@@ -208,7 +208,7 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($options['types'], $result->getTypes());
 
         $this->assertCount(
-            count($options['address_components']),
+            is_countable($options['address_components']) ? count($options['address_components']) : 0,
             $addressComponents = $result->getAddressComponents()
         );
 

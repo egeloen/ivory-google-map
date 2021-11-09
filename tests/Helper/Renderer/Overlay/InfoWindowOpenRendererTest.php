@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowOpenRendererTest extends TestCase
 {
-    /**
-     * @var InfoWindowOpenRenderer
-     */
-    private $infoWindowOpenRenderer;
+    private InfoWindowOpenRenderer $infoWindowOpenRenderer;
 
     protected function setUp(): void
     {

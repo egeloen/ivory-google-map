@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PeriodTest extends TestCase
 {
-    /**
-     * @var Period
-     */
-    private $period;
+    private Period $period;
 
     protected function setUp(): void
     {

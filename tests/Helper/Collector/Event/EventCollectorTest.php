@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EventCollectorTest extends TestCase
 {
-    /**
-     * @var EventCollector
-     */
-    private $eventCollector;
+    private EventCollector $eventCollector;
 
     protected function setUp(): void
     {

@@ -22,15 +22,12 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiEventTest extends TestCase
 {
-    /**
-     * @var ApiEvent
-     */
-    private $apiEvent;
+    private ApiEvent $apiEvent;
 
     /**
      * @var object[]
      */
-    private $objects;
+    private array $objects;
 
     protected function setUp(): void
     {
@@ -82,7 +79,7 @@ class ApiEventTest extends TestCase
         $this->apiEvent->addSources($secondSources = ['source2']);
 
         $this->assertTrue($this->apiEvent->hasSources());
-        $this->assertSame(array_merge($firstSources, $secondSources), $this->apiEvent->getSources());
+        $this->assertSame([...$firstSources, ...$secondSources], $this->apiEvent->getSources());
     }
 
     public function testAddSource()
@@ -120,7 +117,7 @@ class ApiEventTest extends TestCase
         $this->apiEvent->addLibraries($secondLibraries = ['library2']);
 
         $this->assertTrue($this->apiEvent->hasLibraries());
-        $this->assertSame(array_merge($firstLibraries, $secondLibraries), $this->apiEvent->getLibraries());
+        $this->assertSame([...$firstLibraries, ...$secondLibraries], $this->apiEvent->getLibraries());
     }
 
     public function testAddLibrary()
@@ -191,7 +188,7 @@ class ApiEventTest extends TestCase
         $this->assertTrue($this->apiEvent->hasRequirements($object));
         $this->assertTrue($this->apiEvent->hasRequirement($object));
         $this->assertSame(
-            array_merge($firstRequirements, $secondRequirements),
+            [...$firstRequirements, ...$secondRequirements],
             $this->apiEvent->getRequirementsObject($object)
         );
     }

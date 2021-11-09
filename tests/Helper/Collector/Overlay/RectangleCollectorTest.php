@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RectangleCollectorTest extends TestCase
 {
-    /**
-     * @var RectangleCollector
-     */
-    private $rectangleCollector;
+    private RectangleCollector $rectangleCollector;
 
     protected function setUp(): void
     {

@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GeoJsonLayerTest extends TestCase
 {
-    /**
-     * @var GeoJsonLayer
-     */
-    private $geoJsonLayer;
+    private GeoJsonLayer $geoJsonLayer;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     protected function setUp(): void
     {

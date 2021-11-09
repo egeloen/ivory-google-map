@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IconCollectorTest extends TestCase
 {
-    /**
-     * @var IconCollector
-     */
-    private $iconCollector;
+    private IconCollector $iconCollector;
 
     protected function setUp(): void
     {

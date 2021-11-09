@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodedPolylineCollectorTest extends TestCase
 {
-    /**
-     * @var EncodedPolylineCollector
-     */
-    private $encodedPolylineCollector;
+    private EncodedPolylineCollector $encodedPolylineCollector;
 
     protected function setUp(): void
     {

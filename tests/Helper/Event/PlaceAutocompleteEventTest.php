@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteEventTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteEvent
-     */
-    private $placeAutocompleteEvent;
+    private PlaceAutocompleteEvent $placeAutocompleteEvent;
 
     /**
      * @var Autocomplete|MockObject

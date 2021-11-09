@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SizeRendererTest extends TestCase
 {
-    /**
-     * @var SizeRenderer
-     */
-    private $sizeRenderer;
+    private SizeRenderer $sizeRenderer;
 
     protected function setUp(): void
     {

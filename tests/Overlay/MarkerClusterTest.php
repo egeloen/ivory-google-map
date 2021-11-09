@@ -27,10 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerClusterTest extends TestCase
 {
-    /**
-     * @var MarkerCluster
-     */
-    private $markerCluster;
+    private MarkerCluster $markerCluster;
 
     /**
      * @var MockObject|OverlayManager
@@ -144,7 +141,7 @@ class MarkerClusterTest extends TestCase
         $this->markerCluster->addMarkers($secondMarkers = [$this->createMarkerMock()]);
 
         $this->assertTrue($this->markerCluster->hasMarkers());
-        $this->assertSame(array_merge($firstMarkers, $secondMarkers), $this->markerCluster->getMarkers());
+        $this->assertSame([...$firstMarkers, ...$secondMarkers], $this->markerCluster->getMarkers());
     }
 
     public function testAddMarkersWithAutoZoom()
@@ -166,7 +163,7 @@ class MarkerClusterTest extends TestCase
         $this->markerCluster->addMarkers($secondMarkers = [$secondMarker]);
 
         $this->assertTrue($this->markerCluster->hasMarkers());
-        $this->assertSame(array_merge($firstMarkers, $secondMarkers), $this->markerCluster->getMarkers());
+        $this->assertSame([...$firstMarkers, ...$secondMarkers], $this->markerCluster->getMarkers());
     }
 
     public function testAddMarker()

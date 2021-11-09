@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceMatrixRowTest extends TestCase
 {
-    /**
-     * @var DistanceMatrixRow
-     */
-    private $row;
+    private DistanceMatrixRow $row;
 
     protected function setUp(): void
     {
@@ -53,7 +50,7 @@ class DistanceMatrixRowTest extends TestCase
         $this->row->addElements($secondElements = [$this->createElementMock()]);
 
         $this->assertTrue($this->row->hasElements());
-        $this->assertSame(array_merge($firstElements, $secondElements), $this->row->getElements());
+        $this->assertSame([...$firstElements, ...$secondElements], $this->row->getElements());
     }
 
     public function testAddElement()

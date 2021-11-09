@@ -19,10 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StyleRendererTest extends TestCase
 {
-    /**
-     * @var StyleRenderer
-     */
-    private $styleRenderer;
+    private StyleRenderer $styleRenderer;
 
     protected function setUp(): void
     {

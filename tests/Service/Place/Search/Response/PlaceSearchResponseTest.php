@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceSearchResponseTest extends TestCase
 {
-    /**
-     * @var PlaceSearchResponse
-     */
-    private $response;
+    private PlaceSearchResponse $response;
 
     protected function setUp(): void
     {
@@ -79,7 +76,7 @@ class PlaceSearchResponseTest extends TestCase
         $this->response->addResults($secondResults = [$this->createResultMock()]);
 
         $this->assertTrue($this->response->hasResults());
-        $this->assertSame(array_merge($firstResults, $secondResults), $this->response->getResults());
+        $this->assertSame([...$firstResults, ...$secondResults], $this->response->getResults());
     }
 
     public function testAddResult()
@@ -126,7 +123,7 @@ class PlaceSearchResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasHtmlAttributions());
         $this->assertSame(
-            array_merge($firstHtmlAttributions, $secondHtmlAttributions),
+            [...$firstHtmlAttributions, ...$secondHtmlAttributions],
             $this->response->getHtmlAttributions()
         );
     }

@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomControlRendererTest extends TestCase
 {
-    /**
-     * @var CustomControlRenderer
-     */
-    private $customControlRenderer;
+    private CustomControlRenderer $customControlRenderer;
 
     protected function setUp(): void
     {

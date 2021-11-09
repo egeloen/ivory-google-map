@@ -28,10 +28,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTest extends TestCase
 {
-    /**
-     * @var Map
-     */
-    private $map;
+    private Map $map;
 
     protected function setUp(): void
     {
@@ -159,7 +156,7 @@ class MapTest extends TestCase
         $this->map->addLibraries($secondLibraries = ['places']);
 
         $this->assertTrue($this->map->hasLibraries());
-        $this->assertSame(array_merge($firstLibraries, $secondLibraries), $this->map->getLibraries());
+        $this->assertSame([...$firstLibraries, ...$secondLibraries], $this->map->getLibraries());
     }
 
     public function testAddLibrary()

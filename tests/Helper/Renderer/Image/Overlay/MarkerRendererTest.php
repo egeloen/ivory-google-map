@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerRendererTest extends TestCase
 {
-    /**
-     * @var MarkerRenderer
-     */
-    private $markerRenderer;
+    private MarkerRenderer $markerRenderer;
 
     protected function setUp(): void
     {

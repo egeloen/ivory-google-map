@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RectangleRendererTest extends TestCase
 {
-    /**
-     * @var RectangleRenderer
-     */
-    private $rectangleRenderer;
+    private RectangleRenderer $rectangleRenderer;
 
     protected function setUp(): void
     {

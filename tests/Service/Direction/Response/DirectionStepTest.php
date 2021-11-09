@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionStepTest extends TestCase
 {
-    /**
-     * @var DirectionStep
-     */
-    private $step;
+    private DirectionStep $step;
 
     protected function setUp(): void
     {

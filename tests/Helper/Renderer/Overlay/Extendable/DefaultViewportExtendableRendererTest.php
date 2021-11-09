@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultViewportExtendableRendererTest extends TestCase
 {
-    /**
-     * @var DefaultViewportExtendableRenderer
-     */
-    private $defaultViewportExtendableRenderer;
+    private DefaultViewportExtendableRenderer $defaultViewportExtendableRenderer;
 
     protected function setUp(): void
     {

@@ -22,10 +22,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class TimeZoneServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var TimeZoneService
-     */
-    private $service;
+    private TimeZoneService $service;
 
     protected function setUp(): void
     {

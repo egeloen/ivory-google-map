@@ -24,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GroundOverlayTest extends TestCase
 {
-    /**
-     * @var GroundOverlay
-     */
-    private $groundOverlay;
+    private GroundOverlay $groundOverlay;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     /**
      * @var Bound

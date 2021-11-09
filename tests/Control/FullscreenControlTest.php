@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FullscreenControlTest extends TestCase
 {
-    /**
-     * @var FullscreenControl
-     */
-    private $fullscreenControl;
+    private FullscreenControl $fullscreenControl;
 
     protected function setUp(): void
     {

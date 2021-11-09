@@ -23,15 +23,12 @@ use PHPUnit\Framework\TestCase;
  */
 class PathElevationRequestTest extends TestCase
 {
-    /**
-     * @var PathElevationRequest
-     */
-    private $request;
+    private PathElevationRequest $request;
 
     /**
      * @var LocationInterface[]|MockObject[]
      */
-    private $paths;
+    private array $paths;
 
     protected function setUp(): void
     {
@@ -78,7 +75,7 @@ class PathElevationRequestTest extends TestCase
         $this->request->addPaths($secondPaths = [$this->createLocationMock()]);
 
         $this->assertTrue($this->request->hasPaths());
-        $this->assertSame(array_merge($firstPaths, $secondPaths), $this->request->getPaths());
+        $this->assertSame([...$firstPaths, ...$secondPaths], $this->request->getPaths());
     }
 
     public function testAddPath()

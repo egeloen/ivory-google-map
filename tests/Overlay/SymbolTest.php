@@ -24,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolTest extends TestCase
 {
-    /**
-     * @var Symbol
-     */
-    private $symbol;
+    private Symbol $symbol;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private ?string $path = null;
 
     protected function setUp(): void
     {

@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CallbackRendererTest extends TestCase
 {
-    /**
-     * @var CallbackRenderer
-     */
-    private $callbackRenderer;
+    private CallbackRenderer $callbackRenderer;
 
     protected function setUp(): void
     {

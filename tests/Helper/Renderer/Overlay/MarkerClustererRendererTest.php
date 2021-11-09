@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerClustererRendererTest extends TestCase
 {
-    /**
-     * @var MarkerClustererRenderer
-     */
-    private $markerClustererRenderer;
+    private MarkerClustererRenderer $markerClustererRenderer;
 
     protected function setUp(): void
     {

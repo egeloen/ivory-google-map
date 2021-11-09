@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimeZoneResponseTest extends TestCase
 {
-    /**
-     * @var TimeZoneResponse
-     */
-    private $response;
+    private TimeZoneResponse $response;
 
     protected function setUp(): void
     {

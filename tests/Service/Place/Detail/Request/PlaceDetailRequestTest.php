@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceDetailRequestTest extends TestCase
 {
-    /**
-     * @var PlaceDetailRequest
-     */
-    private $request;
+    private PlaceDetailRequest $request;
 
-    /**
-     * @var string
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
     protected function setUp(): void
     {

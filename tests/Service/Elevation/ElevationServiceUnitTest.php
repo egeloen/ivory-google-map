@@ -22,10 +22,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class ElevationServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var ElevationService
-     */
-    private $service;
+    private ElevationService $service;
 
     protected function setUp(): void
     {

@@ -24,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocoderAddressRequestTest extends TestCase
 {
-    /**
-     * @var GeocoderAddressRequest
-     */
-    private $request;
+    private GeocoderAddressRequest $request;
 
-    /**
-     * @var string
-     */
-    private $address;
+    private ?string $address = null;
 
     protected function setUp(): void
     {

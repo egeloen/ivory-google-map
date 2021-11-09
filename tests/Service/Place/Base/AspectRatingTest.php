@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AspectRatingTest extends TestCase
 {
-    /**
-     * @var AspectRating
-     */
-    private $aspectRating;
+    private AspectRating $aspectRating;
 
     protected function setUp(): void
     {

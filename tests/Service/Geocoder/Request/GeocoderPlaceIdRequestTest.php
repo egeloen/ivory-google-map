@@ -20,15 +20,12 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocoderPlaceIdRequestTest extends TestCase
 {
-    /**
-     * @var GeocoderPlaceIdRequest
-     */
-    private $request;
+    private GeocoderPlaceIdRequest $request;
 
     /**
      * @var
      */
-    private $placeId;
+    private ?string $placeId = null;
 
     protected function setUp(): void
     {

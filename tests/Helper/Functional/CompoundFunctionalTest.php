@@ -28,15 +28,9 @@ use Ivory\GoogleMap\Place\Autocomplete;
  */
 class CompoundFunctionalTest extends AbstractApiFunctionalTest
 {
-    /**
-     * @var PlaceAutocompleteHelper
-     */
-    private $placeAutocompleteHelper;
+    private PlaceAutocompleteHelper $placeAutocompleteHelper;
 
-    /**
-     * @var MapHelper
-     */
-    private $mapHelper;
+    private MapHelper $mapHelper;
 
     protected function setUp(): void
     {
@@ -61,10 +55,6 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
         $this->render($autocomplete, $map);
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     * @param Map          $map
-     */
     private function render(Autocomplete $autocomplete, Map $map)
     {
         $this->renderHtml(implode('', [

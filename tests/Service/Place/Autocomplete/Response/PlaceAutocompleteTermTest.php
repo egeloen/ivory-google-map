@@ -19,10 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteTermTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteTerm
-     */
-    private $match;
+    private PlaceAutocompleteTerm $match;
 
     protected function setUp(): void
     {

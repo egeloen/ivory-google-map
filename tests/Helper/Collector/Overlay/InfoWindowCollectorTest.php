@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowCollectorTest extends TestCase
 {
-    /**
-     * @var InfoWindowCollector
-     */
-    private $infoWindowCollector;
+    private InfoWindowCollector $infoWindowCollector;
 
     protected function setUp(): void
     {
@@ -52,10 +49,8 @@ class InfoWindowCollectorTest extends TestCase
 
     /**
      * @param InfoWindow[] $expected
-     * @param Map          $map
      * @param int          $strategy
      * @param string|null  $type
-     *
      * @dataProvider collectProvider
      */
     public function testCollect(array $expected, Map $map, $strategy, $type = null)

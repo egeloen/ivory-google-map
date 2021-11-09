@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteContainerRendererTest extends TestCase
 {
-    /**
-     * @var AutocompleteContainerRenderer
-     */
-    private $autocompleteContainerRenderer;
+    private AutocompleteContainerRenderer $autocompleteContainerRenderer;
 
     protected function setUp(): void
     {

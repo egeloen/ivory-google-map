@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class KmlLayerRendererTest extends TestCase
 {
-    /**
-     * @var KmlLayerRenderer
-     */
-    private $kmlLayerRenderer;
+    private KmlLayerRenderer $kmlLayerRenderer;
 
     protected function setUp(): void
     {

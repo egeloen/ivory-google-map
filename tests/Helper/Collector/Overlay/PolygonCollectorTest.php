@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolygonCollectorTest extends TestCase
 {
-    /**
-     * @var PolygonCollector
-     */
-    private $polygonCollector;
+    private PolygonCollector $polygonCollector;
 
     protected function setUp(): void
     {

@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodedPolylineRendererTest extends TestCase
 {
-    /**
-     * @var EncodedPolylineRenderer
-     */
-    private $encodedPolylineRenderer;
+    private EncodedPolylineRenderer $encodedPolylineRenderer;
 
     protected function setUp(): void
     {

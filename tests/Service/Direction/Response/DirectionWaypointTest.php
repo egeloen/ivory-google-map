@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionWaypointTest extends TestCase
 {
-    /**
-     * @var DirectionWaypoint
-     */
-    private $waypoint;
+    private DirectionWaypoint $waypoint;
 
     protected function setUp(): void
     {

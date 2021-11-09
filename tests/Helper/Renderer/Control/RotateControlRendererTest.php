@@ -27,10 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RotateControlRendererTest extends TestCase
 {
-    /**
-     * @var RotateControlRenderer
-     */
-    private $rotateControlRenderer;
+    private RotateControlRenderer $rotateControlRenderer;
 
     protected function setUp(): void
     {
@@ -63,8 +60,6 @@ class RotateControlRendererTest extends TestCase
         );
     }
 
-    /**
-     */
     public function testRenderWithInvalidControl()
     {
         $this->expectException(InvalidArgumentException::class);

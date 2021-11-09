@@ -27,10 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultInfoWindowRendererTest extends TestCase
 {
-    /**
-     * @var DefaultInfoWindowRenderer|MockObject
-     */
-    private $defaultInfoWindowRenderer;
+    private DefaultInfoWindowRenderer $defaultInfoWindowRenderer;
 
     protected function setUp(): void
     {

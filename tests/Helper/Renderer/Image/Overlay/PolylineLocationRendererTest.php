@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolylineLocationRendererTest extends TestCase
 {
-    /**
-     * @var PolylineLocationRenderer
-     */
-    private $polylineLocationRenderer;
+    private PolylineLocationRenderer $polylineLocationRenderer;
 
     protected function setUp(): void
     {

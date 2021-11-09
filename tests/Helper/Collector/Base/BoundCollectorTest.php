@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BoundCollectorTest extends TestCase
 {
-    /**
-     * @var BoundCollector
-     */
-    private $boundCollector;
+    private BoundCollector $boundCollector;
 
     protected function setUp(): void
     {

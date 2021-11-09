@@ -29,10 +29,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SizeCollectorTest extends TestCase
 {
-    /**
-     * @var SizeCollector
-     */
-    private $sizeCollector;
+    private SizeCollector $sizeCollector;
 
     protected function setUp(): void
     {

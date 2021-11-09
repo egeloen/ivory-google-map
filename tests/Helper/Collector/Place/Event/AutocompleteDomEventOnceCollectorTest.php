@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteDomEventOnceCollectorTest extends TestCase
 {
-    /**
-     * @var AutocompleteDomEventOnceCollector
-     */
-    private $domEventOnceCollector;
+    private AutocompleteDomEventOnceCollector $domEventOnceCollector;
 
     protected function setUp(): void
     {

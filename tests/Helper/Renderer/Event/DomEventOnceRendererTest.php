@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DomEventOnceRendererTest extends TestCase
 {
-    /**
-     * @var DomEventOnceRenderer
-     */
-    private $domEventOnceRenderer;
+    private DomEventOnceRenderer $domEventOnceRenderer;
 
     protected function setUp(): void
     {

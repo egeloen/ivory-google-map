@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PointRendererTest extends TestCase
 {
-    /**
-     * @var PointRenderer
-     */
-    private $pointRenderer;
+    private PointRenderer $pointRenderer;
 
     protected function setUp(): void
     {

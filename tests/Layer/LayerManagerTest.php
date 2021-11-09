@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LayerManagerTest extends TestCase
 {
-    /**
-     * @var LayerManager
-     */
-    private $layerManager;
+    private LayerManager $layerManager;
 
     /**
      * @var MockObject|Map
@@ -99,7 +96,7 @@ class LayerManagerTest extends TestCase
 
         $this->assertTrue($this->layerManager->hasGeoJsonLayers());
         $this->assertSame(
-            array_merge($firstGeoJsonLayers, $secondGeoJsonLayers),
+            [...$firstGeoJsonLayers, ...$secondGeoJsonLayers],
             $this->layerManager->getGeoJsonLayers()
         );
     }
@@ -165,7 +162,7 @@ class LayerManagerTest extends TestCase
 
         $this->assertTrue($this->layerManager->hasHeatmapLayers());
         $this->assertSame(
-            array_merge($firstHeatmapLayers, $secondHeatmapLayers),
+            [...$firstHeatmapLayers, ...$secondHeatmapLayers],
             $this->layerManager->getHeatmapLayers()
         );
     }
@@ -190,7 +187,7 @@ class LayerManagerTest extends TestCase
 
         $this->assertTrue($this->layerManager->hasHeatmapLayers());
         $this->assertSame(
-            array_merge($firstHeatmapLayers, $secondHeatmapLayers),
+            [...$firstHeatmapLayers, ...$secondHeatmapLayers],
             $this->layerManager->getHeatmapLayers()
         );
     }
@@ -299,7 +296,7 @@ class LayerManagerTest extends TestCase
         $this->layerManager->addKmlLayers($secondKmlLayers = [$this->createKmlLayerMock()]);
 
         $this->assertTrue($this->layerManager->hasKmlLayers());
-        $this->assertSame(array_merge($firstKmlLayers, $secondKmlLayers), $this->layerManager->getKmlLayers());
+        $this->assertSame([...$firstKmlLayers, ...$secondKmlLayers], $this->layerManager->getKmlLayers());
     }
 
     public function testAddKmlLayersWithAutoZoom()
@@ -321,7 +318,7 @@ class LayerManagerTest extends TestCase
         $this->layerManager->addKmlLayers($secondKmlLayers = [$secondKmlLayer]);
 
         $this->assertTrue($this->layerManager->hasKmlLayers());
-        $this->assertSame(array_merge($firstKmlLayers, $secondKmlLayers), $this->layerManager->getKmlLayers());
+        $this->assertSame([...$firstKmlLayers, ...$secondKmlLayers], $this->layerManager->getKmlLayers());
     }
 
     public function testAddKmlLayer()

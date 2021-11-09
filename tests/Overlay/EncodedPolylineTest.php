@@ -23,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodedPolylineTest extends TestCase
 {
-    /**
-     * @var EncodedPolyline
-     */
-    private $encodedPolyline;
+    private EncodedPolyline $encodedPolyline;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private ?string $value = null;
 
     protected function setUp(): void
     {

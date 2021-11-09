@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolylineStyleRendererTest extends TestCase
 {
-    /**
-     * @var PolylineStyleRenderer
-     */
-    private $polylineStyleRenderer;
+    private PolylineStyleRenderer $polylineStyleRenderer;
 
     protected function setUp(): void
     {

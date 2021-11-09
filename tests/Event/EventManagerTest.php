@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EventManagerTest extends TestCase
 {
-    /**
-     * @var EventManager
-     */
-    private $eventManager;
+    private EventManager $eventManager;
 
     protected function setUp(): void
     {
@@ -59,7 +56,7 @@ class EventManagerTest extends TestCase
         $this->eventManager->addDomEvents($secondDomEvents = [$this->createEventMock()]);
 
         $this->assertTrue($this->eventManager->hasDomEvents());
-        $this->assertSame(array_merge($firstDomEvents, $secondDomEvents), $this->eventManager->getDomEvents());
+        $this->assertSame([...$firstDomEvents, ...$secondDomEvents], $this->eventManager->getDomEvents());
     }
 
     public function testAddDomEvent()
@@ -98,7 +95,7 @@ class EventManagerTest extends TestCase
 
         $this->assertTrue($this->eventManager->hasDomEventsOnce());
         $this->assertSame(
-            array_merge($firstDomEventsOnce, $secondDomEventsOnce),
+            [...$firstDomEventsOnce, ...$secondDomEventsOnce],
             $this->eventManager->getDomEventsOnce()
         );
     }
@@ -138,7 +135,7 @@ class EventManagerTest extends TestCase
         $this->eventManager->addEvents($secondEvents = [$this->createEventMock()]);
 
         $this->assertTrue($this->eventManager->hasEvents());
-        $this->assertSame(array_merge($firstEvents, $secondEvents), $this->eventManager->getEvents());
+        $this->assertSame([...$firstEvents, ...$secondEvents], $this->eventManager->getEvents());
     }
 
     public function testAddEvent()
@@ -177,7 +174,7 @@ class EventManagerTest extends TestCase
 
         $this->assertTrue($this->eventManager->hasEventsOnce());
         $this->assertSame(
-            array_merge($firstEventsOnce, $secondEventsOnce),
+            [...$firstEventsOnce, ...$secondEventsOnce],
             $this->eventManager->getEventsOnce()
         );
     }

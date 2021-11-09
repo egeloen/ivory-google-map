@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionLegTest extends TestCase
 {
-    /**
-     * @var DirectionLeg
-     */
-    private $leg;
+    private DirectionLeg $leg;
 
     protected function setUp(): void
     {
@@ -231,7 +228,7 @@ class DirectionLegTest extends TestCase
         $this->leg->addSteps($secondSteps = [$this->createStepMock()]);
 
         $this->assertTrue($this->leg->hasSteps());
-        $this->assertSame(array_merge($firstSteps, $secondSteps), $this->leg->getSteps());
+        $this->assertSame([...$firstSteps, ...$secondSteps], $this->leg->getSteps());
     }
 
     public function testAddStep()
@@ -269,7 +266,7 @@ class DirectionLegTest extends TestCase
         $this->leg->addViaWaypoints($secondViaWaypoints = [$this->createWaypointMock()]);
 
         $this->assertTrue($this->leg->hasViaWaypoints());
-        $this->assertSame(array_merge($firstViaWaypoints, $secondViaWaypoints), $this->leg->getViaWaypoints());
+        $this->assertSame([...$firstViaWaypoints, ...$secondViaWaypoints], $this->leg->getViaWaypoints());
     }
 
     public function testAddWaypoint()

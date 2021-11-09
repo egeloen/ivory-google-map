@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteQueryRequestTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteQueryRequest
-     */
-    private $request;
+    private PlaceAutocompleteQueryRequest $request;
 
-    /**
-     * @var string
-     */
-    private $input;
+    private ?string $input = null;
 
     protected function setUp(): void
     {

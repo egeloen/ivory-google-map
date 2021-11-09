@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateTest extends TestCase
 {
-    /**
-     * @var Coordinate
-     */
-    private $coordinate;
+    private Coordinate $coordinate;
 
     protected function setUp(): void
     {

@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GeoJsonLayerCollectorTest extends TestCase
 {
-    /**
-     * @var GeoJsonLayerCollector
-     */
-    private $geoJsonLayerCollector;
+    private GeoJsonLayerCollector $geoJsonLayerCollector;
 
     protected function setUp(): void
     {

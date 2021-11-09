@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExtendableCollectorTest extends TestCase
 {
-    /**
-     * @var ExtendableCollector
-     */
-    private $extendableCollector;
+    private ExtendableCollector $extendableCollector;
 
     protected function setUp(): void
     {

@@ -28,10 +28,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolylineRendererTest extends TestCase
 {
-    /**
-     * @var PolylineRenderer
-     */
-    private $polylineRenderer;
+    private PolylineRenderer $polylineRenderer;
 
     protected function setUp(): void
     {

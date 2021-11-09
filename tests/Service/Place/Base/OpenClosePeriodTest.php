@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class OpenClosePeriodTest extends TestCase
 {
-    /**
-     * @var OpenClosePeriod
-     */
-    private $openClosePeriod;
+    private OpenClosePeriod $openClosePeriod;
 
     protected function setUp(): void
     {

@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TagRendererTest extends TestCase
 {
-    /**
-     * @var TagRenderer
-     */
-    private $tagRenderer;
+    private TagRenderer $tagRenderer;
 
     protected function setUp(): void
     {

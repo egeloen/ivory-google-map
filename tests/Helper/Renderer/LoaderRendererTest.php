@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LoaderRendererTest extends TestCase
 {
-    /**
-     * @var LoaderRenderer
-     */
-    private $loaderRenderer;
+    private LoaderRenderer $loaderRenderer;
 
     protected function setUp(): void
     {

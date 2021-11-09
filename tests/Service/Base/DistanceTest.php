@@ -19,20 +19,11 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceTest extends TestCase
 {
-    /**
-     * @var Distance
-     */
-    private $distance;
+    private Distance $distance;
 
-    /**
-     * @var float
-     */
-    private $value;
+    private ?float $value = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
     protected function setUp(): void
     {

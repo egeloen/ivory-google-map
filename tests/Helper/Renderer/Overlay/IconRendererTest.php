@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IconRendererTest extends TestCase
 {
-    /**
-     * @var IconRenderer
-     */
-    private $iconRenderer;
+    private IconRenderer $iconRenderer;
 
     protected function setUp(): void
     {

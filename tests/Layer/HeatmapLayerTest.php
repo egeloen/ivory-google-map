@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HeatmapLayerTest extends TestCase
 {
-    /**
-     * @var HeatmapLayer
-     */
-    private $heatmapLayer;
+    private HeatmapLayer $heatmapLayer;
 
     protected function setUp(): void
     {
@@ -75,7 +72,7 @@ class HeatmapLayerTest extends TestCase
         $this->heatmapLayer->addCoordinates($secondCoordinates = [$this->createCoordinateMock()]);
 
         $this->assertTrue($this->heatmapLayer->hasCoordinates());
-        $this->assertSame(array_merge($firstCoordinates, $secondCoordinates), $this->heatmapLayer->getCoordinates());
+        $this->assertSame([...$firstCoordinates, ...$secondCoordinates], $this->heatmapLayer->getCoordinates());
     }
 
     public function testAddCoordinate()

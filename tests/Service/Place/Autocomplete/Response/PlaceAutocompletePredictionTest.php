@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompletePredictionTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompletePrediction
-     */
-    private $prediction;
+    private PlaceAutocompletePrediction $prediction;
 
     protected function setUp(): void
     {
@@ -79,7 +76,7 @@ class PlaceAutocompletePredictionTest extends TestCase
         $this->prediction->addTypes($secondTypes = [AutocompleteType::CITIES]);
 
         $this->assertTrue($this->prediction->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->prediction->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->prediction->getTypes());
     }
 
     public function testAddType()
@@ -117,7 +114,7 @@ class PlaceAutocompletePredictionTest extends TestCase
         $this->prediction->addTerms($secondTerms = [$this->createTermMock()]);
 
         $this->assertTrue($this->prediction->hasTerms());
-        $this->assertSame(array_merge($firstTerms, $secondTerms), $this->prediction->getTerms());
+        $this->assertSame([...$firstTerms, ...$secondTerms], $this->prediction->getTerms());
     }
 
     public function testAddTerm()
@@ -155,7 +152,7 @@ class PlaceAutocompletePredictionTest extends TestCase
         $this->prediction->addMatches($secondMatches = [$this->createMatchMock()]);
 
         $this->assertTrue($this->prediction->hasMatches());
-        $this->assertSame(array_merge($firstMatches, $secondMatches), $this->prediction->getMatches());
+        $this->assertSame([...$firstMatches, ...$secondMatches], $this->prediction->getMatches());
     }
 
     public function testAddMatch()

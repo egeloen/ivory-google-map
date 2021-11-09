@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ScaleControlTest extends TestCase
 {
-    /**
-     * @var ScaleControl
-     */
-    private $scaleControl;
+    private ScaleControl $scaleControl;
 
     protected function setUp(): void
     {

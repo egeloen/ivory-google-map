@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoBoxCollectorTest extends TestCase
 {
-    /**
-     * @var InfoBoxCollector
-     */
-    private $infoBoxCollector;
+    private InfoBoxCollector $infoBoxCollector;
 
     protected function setUp(): void
     {

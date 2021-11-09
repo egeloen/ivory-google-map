@@ -70,11 +70,9 @@ class ScaleControlRendererTest extends TestCase
         );
     }
 
-    /**
-     */
     public function testRenderWithInvalidControl()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected a "Ivory\GoogleMap\Control\ScaleControl", got "string".');
         $this->scaleControlRenderer->render('foo');
     }

@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FormatterTest extends TestCase
 {
-    /**
-     * @var Formatter
-     */
-    private $formatter;
+    private Formatter $formatter;
 
     protected function setUp(): void
     {
@@ -115,13 +112,11 @@ class FormatterTest extends TestCase
 
     /**
      * @param string                 $expected
-     * @param VariableAwareInterface $object
      * @param string                 $method
      * @param string[]               $arguments
      * @param bool                   $semicolon
      * @param bool                   $newLine
      * @param bool                   $debug
-     *
      * @dataProvider objectCallProvider
      */
     public function testRenderObjectCall(
@@ -205,12 +200,10 @@ class FormatterTest extends TestCase
 
     /**
      * @param string                 $expected
-     * @param VariableAwareInterface $object
      * @param string                 $declaration
      * @param bool                   $semicolon
      * @param bool                   $newLine
      * @param bool                   $debug
-     *
      * @dataProvider objectAssignmentProvider
      */
     public function testRenderObjectAssignment(
@@ -233,14 +226,12 @@ class FormatterTest extends TestCase
 
     /**
      * @param string                      $expected
-     * @param VariableAwareInterface      $root
      * @param string                      $declaration
      * @param string|null                 $propertyPath
      * @param VariableAwareInterface|null $object
      * @param bool                        $semicolon
      * @param bool                        $newLine
      * @param bool                        $debug
-     *
      * @dataProvider  containerAssignmentProvider
      */
     public function testRenderContainerAssignment(
@@ -267,11 +258,9 @@ class FormatterTest extends TestCase
 
     /**
      * @param string                      $expected
-     * @param VariableAwareInterface      $root
      * @param string|null                 $propertyPath
      * @param VariableAwareInterface|null $object
      * @param bool                        $debug
-     *
      * @dataProvider containerVariableProvider
      */
     public function testRenderContainerVariable(

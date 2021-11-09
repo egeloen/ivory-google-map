@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultInfoWindowCollectorTest extends TestCase
 {
-    /**
-     * @var DefaultInfoWindowCollector
-     */
-    private $defaultInfoWindowCollector;
+    private DefaultInfoWindowCollector $defaultInfoWindowCollector;
 
     protected function setUp(): void
     {

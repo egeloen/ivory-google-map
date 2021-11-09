@@ -21,20 +21,14 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerShapeTest extends TestCase
 {
-    /**
-     * @var MarkerShape
-     */
-    private $markerShape;
+    private MarkerShape $markerShape;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private ?string $type = null;
 
     /**
      * @var float[]
      */
-    private $coordinates;
+    private ?array $coordinates = null;
 
     protected function setUp(): void
     {

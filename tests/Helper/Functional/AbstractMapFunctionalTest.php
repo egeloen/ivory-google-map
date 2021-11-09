@@ -43,10 +43,7 @@ use Ivory\GoogleMap\Overlay\SymbolPath;
  */
 abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
 {
-    /**
-     * @var MapHelper
-     */
-    private $mapHelper;
+    private MapHelper $mapHelper;
 
     protected function setUp(): void
     {
@@ -56,7 +53,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @param Map         $map
      * @param string|null $html
      */
     protected function renderMap(Map $map, $html = null)
@@ -78,9 +74,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertSame([], $this->log('browser'));
     }
 
-    /**
-     * @param Map $map
-     */
     protected function assertMap(Map $map)
     {
         $this->assertContainer($map);
@@ -101,18 +94,11 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
     }
 
-    /**
-     * @param Map $map
-     */
     protected function assertMapHtml(Map $map)
     {
-        $this->byId($map->getHtmlId());
+        $this->byId();
     }
 
-    /**
-     * @param Map          $map
-     * @param EventManager $eventManager
-     */
     protected function assertEventManager(Map $map, EventManager $eventManager)
     {
         foreach ($eventManager->getDomEvents() as $domEvent) {
@@ -132,46 +118,26 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
     }
 
-    /**
-     * @param Map   $map
-     * @param Event $event
-     */
     protected function assertDomEvent(Map $map, Event $event)
     {
         $this->assertSameContainerVariable($map, 'events.dom_events', $event);
     }
 
-    /**
-     * @param Map   $map
-     * @param Event $event
-     */
     protected function assertDomEventOnce(Map $map, Event $event)
     {
         $this->assertSameContainerVariable($map, 'events.dom_events_once', $event);
     }
 
-    /**
-     * @param Map   $map
-     * @param Event $event
-     */
     protected function assertEvent(Map $map, Event $event)
     {
         $this->assertSameContainerVariable($map, 'events.events', $event);
     }
 
-    /**
-     * @param Map   $map
-     * @param Event $event
-     */
     protected function assertEventOnce(Map $map, Event $event)
     {
         $this->assertSameContainerVariable($map, 'events.events_once', $event);
     }
 
-    /**
-     * @param Map          $map
-     * @param LayerManager $layerManager
-     */
     public function assertLayerManager(Map $map, LayerManager $layerManager)
     {
         foreach ($layerManager->getGeoJsonLayers() as $geoJsonLayer) {
@@ -187,18 +153,10 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
     }
 
-    /**
-     * @param Map          $map
-     * @param GeoJsonLayer $geoJsonLayer
-     */
     protected function assertGeoJsonLayer(Map $map, GeoJsonLayer $geoJsonLayer)
     {
     }
 
-    /**
-     * @param Map          $map
-     * @param HeatmapLayer $heatmapLayer
-     */
     protected function assertHeatmapLayer(Map $map, HeatmapLayer $heatmapLayer)
     {
         $this->assertSameContainerVariable(
@@ -210,10 +168,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         );
     }
 
-    /**
-     * @param Map      $map
-     * @param KmlLayer $kmlLayer
-     */
     protected function assertKmlLayer(Map $map, KmlLayer $kmlLayer)
     {
         $this->assertSameContainerVariable(
@@ -225,10 +179,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         );
     }
 
-    /**
-     * @param Map            $map
-     * @param OverlayManager $overlayManager
-     */
     protected function assertOverlayManager(Map $map, OverlayManager $overlayManager)
     {
         foreach ($overlayManager->getCircles() as $circle) {
@@ -264,10 +214,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         }
     }
 
-    /**
-     * @param Map    $map
-     * @param Circle $circle
-     */
     protected function assertCircle(Map $map, Circle $circle)
     {
         $this->assertSameContainerVariable(
@@ -283,10 +229,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($circle);
     }
 
-    /**
-     * @param Map             $map
-     * @param EncodedPolyline $encodedPolyline
-     */
     protected function assertEncodedPolyline(Map $map, EncodedPolyline $encodedPolyline)
     {
         $this->assertSameContainerVariable(
@@ -300,10 +242,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($encodedPolyline);
     }
 
-    /**
-     * @param Map           $map
-     * @param GroundOverlay $groundOverlay
-     */
     protected function assertGroundOverlay(Map $map, GroundOverlay $groundOverlay)
     {
         $this->assertSameContainerVariable(
@@ -319,10 +257,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($groundOverlay);
     }
 
-    /**
-     * @param Map        $map
-     * @param InfoWindow $infoWindow
-     */
     protected function assertInfoWindow(Map $map, InfoWindow $infoWindow)
     {
         $this->assertSameContainerVariable(
@@ -350,10 +284,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($infoWindow);
     }
 
-    /**
-     * @param Map    $map
-     * @param Marker $marker
-     */
     protected function assertMarker(Map $map, Marker $marker)
     {
         $variable = $map->getOverlayManager()->getMarkerCluster()->getType() !== MarkerClusterType::MARKER_CLUSTERER
@@ -397,8 +327,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @param Map    $map
-     * @param Icon   $icon
      * @param string $expected
      */
     protected function assertIcon(Map $map, Icon $icon, $expected)
@@ -431,8 +359,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @param Map          $map
-     * @param IconSequence $iconSequence
      * @param string       $expected
      */
     protected function assertIconSequence(Map $map, IconSequence $iconSequence, $expected)
@@ -450,8 +376,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @param Map         $map
-     * @param MarkerShape $markerShape
      * @param string      $expected
      */
     protected function assertMarkerShape(Map $map, MarkerShape $markerShape, $expected)
@@ -466,15 +390,11 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
 
         $this->assertSameVariable('"'.$markerShape->getType().'"', $markerShape->getVariable().'.type');
         $this->assertSameVariable(
-            json_encode($markerShape->getCoordinates()).'.toString()',
+            json_encode($markerShape->getCoordinates(), JSON_THROW_ON_ERROR).'.toString()',
             $markerShape->getVariable().'.coords.toString()'
         );
     }
 
-    /**
-     * @param Map     $map
-     * @param Polygon $polygon
-     */
     protected function assertPolygon(Map $map, Polygon $polygon)
     {
         $this->assertSameContainerVariable(
@@ -492,10 +412,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($polygon);
     }
 
-    /**
-     * @param Map      $map
-     * @param Polyline $polyline
-     */
     protected function assertPolyline(Map $map, Polyline $polyline)
     {
         $this->assertSameContainerVariable(
@@ -517,10 +433,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($polyline);
     }
 
-    /**
-     * @param Map       $map
-     * @param Rectangle $rectangle
-     */
     protected function assertRectangle(Map $map, Rectangle $rectangle)
     {
         $this->assertSameContainerVariable(
@@ -536,8 +448,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
     }
 
     /**
-     * @param Map    $map
-     * @param Symbol $symbol
      * @param string $expected
      */
     protected function assertSymbol(Map $map, Symbol $symbol, $expected)
@@ -574,9 +484,6 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
         $this->assertOptions($symbol);
     }
 
-    /**
-     * @param Map $map
-     */
     protected function assertContainer(Map $map)
     {
         foreach ($this->getContainerPropertyPaths() as $propertyPath) {
@@ -599,9 +506,7 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
      */
     private function getMapFormatter()
     {
-        return function ($expected, $variable, $formatter) {
-            return call_user_func($formatter, $expected, $variable.'.getMap()', $formatter);
-        };
+        return fn($expected, $variable, $formatter) => call_user_func($formatter, $expected, $variable.'.getMap()', $formatter);
     }
 
     /**
@@ -609,9 +514,7 @@ abstract class AbstractMapFunctionalTest extends AbstractApiFunctionalTest
      */
     private function getJsonFormatter()
     {
-        return function ($expected, $variable, $formatter) {
-            return call_user_func($formatter, $expected.'.toString()', $variable.'.toString()');
-        };
+        return fn($expected, $variable, $formatter) => call_user_func($formatter, $expected.'.toString()', $variable.'.toString()');
     }
 
     /**

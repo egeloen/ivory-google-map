@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodingRendererTest extends TestCase
 {
-    /**
-     * @var EncodingRenderer
-     */
-    private $encodingRenderer;
+    private EncodingRenderer $encodingRenderer;
 
     protected function setUp(): void
     {

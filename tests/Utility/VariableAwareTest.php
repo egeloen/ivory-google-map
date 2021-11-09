@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class VariableAwareTest extends TestCase
 {
-    /**
-     * @var VariableAwareTrait
-     */
-    private $variableAware;
+    private \Ivory\Tests\GoogleMap\Utility\VariableAwareMock $variableAware;
 
     protected function setUp(): void
     {

@@ -40,10 +40,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateCollectorTest extends TestCase
 {
-    /**
-     * @var CoordinateCollector
-     */
-    private $coordinateCollector;
+    private CoordinateCollector $coordinateCollector;
 
     protected function setUp(): void
     {
@@ -168,7 +165,7 @@ class CoordinateCollectorTest extends TestCase
         $map = new Map();
         $map->getOverlayManager()->addPolygon(new Polygon($coordinates = [new Coordinate()]));
 
-        $this->assertSame(array_merge([$map->getCenter()], $coordinates), $this->coordinateCollector->collect($map));
+        $this->assertSame([...[$map->getCenter()], ...$coordinates], $this->coordinateCollector->collect($map));
     }
 
     public function testPolyline()
@@ -176,7 +173,7 @@ class CoordinateCollectorTest extends TestCase
         $map = new Map();
         $map->getOverlayManager()->addPolyline(new Polyline($coordinates = [new Coordinate()]));
 
-        $this->assertSame(array_merge([$map->getCenter()], $coordinates), $this->coordinateCollector->collect($map));
+        $this->assertSame([...[$map->getCenter()], ...$coordinates], $this->coordinateCollector->collect($map));
     }
 
     public function testCollectHeatmapLayer()
@@ -184,7 +181,7 @@ class CoordinateCollectorTest extends TestCase
         $map = new Map();
         $map->getLayerManager()->addHeatmapLayer(new HeatmapLayer($coordinates = [new Coordinate()]));
 
-        $this->assertSame(array_merge([$map->getCenter()], $coordinates), $this->coordinateCollector->collect($map));
+        $this->assertSame([...[$map->getCenter()], ...$coordinates], $this->coordinateCollector->collect($map));
     }
 
     /**

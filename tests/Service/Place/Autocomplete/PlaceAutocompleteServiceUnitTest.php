@@ -22,10 +22,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class PlaceAutocompleteServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var PlaceAutocompleteService
-     */
-    private $service;
+    private PlaceAutocompleteService $service;
 
     protected function setUp(): void
     {

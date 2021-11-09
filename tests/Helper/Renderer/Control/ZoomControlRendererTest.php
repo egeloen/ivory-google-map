@@ -27,10 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ZoomControlRendererTest extends TestCase
 {
-    /**
-     * @var ZoomControlRenderer
-     */
-    private $zoomControlRenderer;
+    private ZoomControlRenderer $zoomControlRenderer;
 
     protected function setUp(): void
     {
@@ -72,8 +69,6 @@ class ZoomControlRendererTest extends TestCase
         );
     }
 
-    /**
-     */
     public function testRenderWithInvalidControl()
     {
         $this->expectException(InvalidArgumentException::class);

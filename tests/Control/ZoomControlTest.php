@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ZoomControlTest extends TestCase
 {
-    /**
-     * @var ZoomControl
-     */
-    private $zoomControl;
+    private ZoomControl $zoomControl;
 
     protected function setUp(): void
     {

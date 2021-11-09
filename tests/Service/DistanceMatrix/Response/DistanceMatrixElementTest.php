@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceMatrixElementTest extends TestCase
 {
-    /**
-     * @var DistanceMatrixElement
-     */
-    private $element;
+    private DistanceMatrixElement $element;
 
     protected function setUp(): void
     {

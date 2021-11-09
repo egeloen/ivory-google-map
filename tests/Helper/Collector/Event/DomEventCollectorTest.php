@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DomEventCollectorTest extends TestCase
 {
-    /**
-     * @var DomEventCollector
-     */
-    private $domEventCollector;
+    private DomEventCollector $domEventCollector;
 
     protected function setUp(): void
     {

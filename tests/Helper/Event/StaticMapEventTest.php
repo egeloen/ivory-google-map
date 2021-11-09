@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StaticMapEventTest extends TestCase
 {
-    /**
-     * @var StaticMapEvent
-     */
-    private $staticMapEvent;
+    private StaticMapEvent $staticMapEvent;
 
     /**
      * @var Map|MockObject

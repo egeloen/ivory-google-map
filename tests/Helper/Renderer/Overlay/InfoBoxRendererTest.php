@@ -28,10 +28,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoBoxRendererTest extends TestCase
 {
-    /**
-     * @var InfoBoxRenderer
-     */
-    private $infoBoxRenderer;
+    private InfoBoxRenderer $infoBoxRenderer;
 
     protected function setUp(): void
     {

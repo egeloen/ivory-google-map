@@ -28,10 +28,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteRendererTest extends TestCase
 {
-    /**
-     * @var AutocompleteRenderer
-     */
-    private $autocompleteRenderer;
+    private AutocompleteRenderer $autocompleteRenderer;
 
     protected function setUp(): void
     {

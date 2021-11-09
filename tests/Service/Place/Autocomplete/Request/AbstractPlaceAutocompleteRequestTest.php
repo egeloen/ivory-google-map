@@ -24,15 +24,10 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractPlaceAutocompleteRequestTest extends TestCase
 {
-    /**
-     * @var AbstractPlaceAutocompleteRequest|MockObject
-     */
-    private $request;
+    /** @var AbstractPlaceAutocompleteRequest|MockObject */
+    private MockObject $request;
 
-    /**
-     * @var string
-     */
-    private $input;
+    private ?string $input = null;
 
     protected function setUp(): void
     {

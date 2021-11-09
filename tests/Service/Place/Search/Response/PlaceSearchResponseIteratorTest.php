@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceSearchResponseIteratorTest extends TestCase
 {
-    /**
-     * @var PlaceSearchResponseIterator
-     */
-    private $iterator;
+    private PlaceSearchResponseIterator $iterator;
 
     /**
      * @var PlaceSearchService|MockObject
@@ -63,9 +60,7 @@ class PlaceSearchResponseIteratorTest extends TestCase
         $this->service
             ->expects($this->once())
             ->method('process')
-            ->with($this->callback(function ($request) {
-                return $request instanceof PageTokenPlaceSearchRequest && $request->getResponse() === $this->response;
-            }))
+            ->with($this->callback(fn($request) => $request instanceof PageTokenPlaceSearchRequest && $request->getResponse() === $this->response))
             ->will($this->returnValue(new PlaceSearchResponseIterator(
                 $this->service,
                 $response = $this->createResponseMock()

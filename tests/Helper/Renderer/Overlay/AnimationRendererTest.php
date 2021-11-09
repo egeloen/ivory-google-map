@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AnimationRendererTest extends TestCase
 {
-    /**
-     * @var AnimationRenderer
-     */
-    private $animationRenderer;
+    private AnimationRenderer $animationRenderer;
 
     protected function setUp(): void
     {

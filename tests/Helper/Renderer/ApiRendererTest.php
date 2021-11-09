@@ -29,10 +29,7 @@ use stdClass;
  */
 class ApiRendererTest extends TestCase
 {
-    /**
-     * @var ApiRenderer
-     */
-    private $apiRenderer;
+    private ApiRenderer $apiRenderer;
 
     protected function setUp(): void
     {

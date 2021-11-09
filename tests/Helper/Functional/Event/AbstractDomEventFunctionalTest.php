@@ -18,10 +18,7 @@ use Ivory\GoogleMap\Map;
  */
 abstract class AbstractDomEventFunctionalTest extends AbstractEventFunctionalTest
 {
-    /**
-     * @var string
-     */
-    private $spyButton;
+    private string $spyButton;
 
     protected function setUp(): void
     {
@@ -42,6 +39,6 @@ abstract class AbstractDomEventFunctionalTest extends AbstractEventFunctionalTes
 
     protected function clickSpyButton()
     {
-        $this->byId($this->spyButton)->click();
+        $this->byId()->click();
     }
 }

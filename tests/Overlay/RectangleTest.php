@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RectangleTest extends TestCase
 {
-    /**
-     * @var Rectangle
-     */
-    private $rectangle;
+    private Rectangle $rectangle;
 
     /**
      * @var Bound

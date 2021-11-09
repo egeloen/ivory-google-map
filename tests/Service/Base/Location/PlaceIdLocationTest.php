@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceIdLocationTest extends TestCase
 {
-    /**
-     * @var PlaceIdLocation
-     */
-    private $placeIdLocation;
+    private PlaceIdLocation $placeIdLocation;
 
-    /**
-     * @var string
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
     protected function setUp(): void
     {

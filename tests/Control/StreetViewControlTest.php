@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StreetViewControlTest extends TestCase
 {
-    /**
-     * @var StreetViewControl
-     */
-    private $streetViewControl;
+    private StreetViewControl $streetViewControl;
 
     protected function setUp(): void
     {

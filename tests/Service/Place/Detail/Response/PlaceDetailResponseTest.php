@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceDetailResponseTest extends TestCase
 {
-    /**
-     * @var PlaceDetailResponse
-     */
-    private $response;
+    private PlaceDetailResponse $response;
 
     protected function setUp(): void
     {
@@ -86,7 +83,7 @@ class PlaceDetailResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasHtmlAttributions());
         $this->assertSame(
-            array_merge($firstHtmlAttributions, $secondHtmlAttributions),
+            [...$firstHtmlAttributions, ...$secondHtmlAttributions],
             $this->response->getHtmlAttributions()
         );
     }

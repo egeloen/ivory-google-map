@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteCoordinateCollectorTest extends TestCase
 {
-    /**
-     * @var AutocompleteCoordinateCollector
-     */
-    private $autocompleteCoordinateCollector;
+    private AutocompleteCoordinateCollector $autocompleteCoordinateCollector;
 
     protected function setUp(): void
     {

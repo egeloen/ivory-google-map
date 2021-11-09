@@ -20,20 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomControlTest extends TestCase
 {
-    /**
-     * @var CustomControl
-     */
-    private $customControl;
+    private CustomControl $customControl;
 
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
-    /**
-     * @var string
-     */
-    private $control;
+    private ?string $control = null;
 
     protected function setUp(): void
     {

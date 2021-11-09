@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateLocationTest extends TestCase
 {
-    /**
-     * @var CoordinateLocation
-     */
-    private $coordinateLocation;
+    private CoordinateLocation $coordinateLocation;
 
     /**
      * @var Coordinate|MockObject

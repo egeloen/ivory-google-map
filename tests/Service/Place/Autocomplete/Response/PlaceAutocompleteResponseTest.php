@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteResponseTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteResponse
-     */
-    private $response;
+    private PlaceAutocompleteResponse $response;
 
     protected function setUp(): void
     {
@@ -75,7 +72,7 @@ class PlaceAutocompleteResponseTest extends TestCase
         $this->response->addPredictions($secondPredictions = [$this->createPredictionMock()]);
 
         $this->assertTrue($this->response->hasPredictions());
-        $this->assertSame(array_merge($firstPredictions, $secondPredictions), $this->response->getPredictions());
+        $this->assertSame([...$firstPredictions, ...$secondPredictions], $this->response->getPredictions());
     }
 
     public function testAddPrediction()

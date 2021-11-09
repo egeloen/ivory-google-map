@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteHtmlRendererTest extends TestCase
 {
-    /**
-     * @var AutocompleteHtmlRenderer
-     */
-    private $autocompleteHtmlRenderer;
+    private AutocompleteHtmlRenderer $autocompleteHtmlRenderer;
 
     protected function setUp(): void
     {

@@ -19,10 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitAgencyTest extends TestCase
 {
-    /**
-     * @var DirectionTransitAgency
-     */
-    private $transitAgency;
+    private DirectionTransitAgency $transitAgency;
 
     protected function setUp(): void
     {

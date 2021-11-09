@@ -22,10 +22,7 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class DistanceMatrixServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var DistanceMatrixService
-     */
-    private $service;
+    private DistanceMatrixService $service;
 
     protected function setUp(): void
     {

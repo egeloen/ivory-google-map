@@ -20,10 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RotateControlTest extends TestCase
 {
-    /**
-     * @var RotateControl
-     */
-    private $rotateControl;
+    private RotateControl $rotateControl;
 
     protected function setUp(): void
     {

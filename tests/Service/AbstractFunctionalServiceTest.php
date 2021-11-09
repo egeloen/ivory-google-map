@@ -32,25 +32,13 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
  */
 abstract class AbstractFunctionalServiceTest extends TestCase
 {
-    /**
-     * @var Journal
-     */
-    protected static $journal;
+    protected static ?Journal $journal = null;
 
-    /**
-     * @var HttpClient
-     */
-    protected $client;
+    protected PluginClient $client;
 
-    /**
-     * @var MessageFactory
-     */
-    protected $messageFactory;
+    protected GuzzleMessageFactory $messageFactory;
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    protected $pool;
+    protected FilesystemAdapter $pool;
 
     public static function setUpBeforeClass(): void
     {

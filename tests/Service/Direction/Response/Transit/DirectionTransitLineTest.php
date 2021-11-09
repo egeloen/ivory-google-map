@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitLineTest extends TestCase
 {
-    /**
-     * @var DirectionTransitLine
-     */
-    private $transitLine;
+    private DirectionTransitLine $transitLine;
 
     protected function setUp(): void
     {
@@ -124,7 +121,7 @@ class DirectionTransitLineTest extends TestCase
         $this->transitLine->addAgencies($secondAgencies = [$this->createTransitAgencyMock()]);
 
         $this->assertTrue($this->transitLine->hasAgencies());
-        $this->assertSame(array_merge($firstAgencies, $secondAgencies), $this->transitLine->getAgencies());
+        $this->assertSame([...$firstAgencies, ...$secondAgencies], $this->transitLine->getAgencies());
     }
 
     public function testAddAgency()

@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExtendableRendererTest extends TestCase
 {
-    /**
-     * @var ExtendableRenderer
-     */
-    private $extendableRenderer;
+    private ExtendableRenderer $extendableRenderer;
 
     protected function setUp(): void
     {
@@ -102,8 +99,6 @@ class ExtendableRendererTest extends TestCase
         $this->assertSame($result, $this->extendableRenderer->render($extendable, $bound));
     }
 
-    /**
-     */
     public function testRenderWithInvalidExtendable()
     {
         $this->expectException(InvalidArgumentException::class);

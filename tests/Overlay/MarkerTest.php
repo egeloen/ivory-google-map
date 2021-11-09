@@ -30,10 +30,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerTest extends TestCase
 {
-    /**
-     * @var Marker
-     */
-    private $marker;
+    private Marker $marker;
 
     /**
      * @var Coordinate|MockObject

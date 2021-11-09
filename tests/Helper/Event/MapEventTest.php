@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MapEventTest extends TestCase
 {
-    /**
-     * @var MapEvent
-     */
-    private $mapEvent;
+    private MapEvent $mapEvent;
 
     /**
      * @var Map|MockObject

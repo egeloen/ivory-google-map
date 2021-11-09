@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerLocationRendererTest extends TestCase
 {
-    /**
-     * @var MarkerLocationRenderer
-     */
-    private $markerLocationRenderer;
+    private MarkerLocationRenderer $markerLocationRenderer;
 
     protected function setUp(): void
     {

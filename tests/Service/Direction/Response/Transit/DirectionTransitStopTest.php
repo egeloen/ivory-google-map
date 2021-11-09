@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitStopTest extends TestCase
 {
-    /**
-     * @var DirectionTransitStop
-     */
-    private $transitStop;
+    private DirectionTransitStop $transitStop;
 
     protected function setUp(): void
     {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e0c5f26bbd34e6f95d1aec52b6bae7d",
+    "content-hash": "ed8f086d6e6dc301be0938cf9a6b63ab",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -996,16 +996,16 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "4ce4712e6dc84a156176a0fbbb11954a25c93103"
+                "reference": "5e7bdbbfe9811c06e1f745d1c166647d5c47d6ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/4ce4712e6dc84a156176a0fbbb11954a25c93103",
-                "reference": "4ce4712e6dc84a156176a0fbbb11954a25c93103",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/5e7bdbbfe9811c06e1f745d1c166647d5c47d6ee",
+                "reference": "5e7bdbbfe9811c06e1f745d1c166647d5c47d6ee",
                 "shasum": ""
             },
             "require": {
@@ -1077,9 +1077,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/2.2.2"
+                "source": "https://github.com/doctrine/persistence/tree/2.2.3"
             },
-            "time": "2021-08-10T19:01:29+00:00"
+            "time": "2021-10-25T19:59:10+00:00"
         },
         {
             "name": "psr/cache",
@@ -1132,20 +1132,20 @@
         },
         {
             "name": "psr/container",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
             "type": "library",
             "autoload": {
@@ -1174,22 +1174,22 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.1"
+                "source": "https://github.com/php-fig/container/tree/1.1.2"
             },
-            "time": "2021-03-05T17:36:06+00:00"
+            "time": "2021-11-05T16:50:12+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v4.4.30",
+            "version": "v4.4.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "a3f7189a0665ee33b50e9e228c46f50f5acbed22"
+                "reference": "8dbd23ef7a8884051482183ddee8d9061b5feed0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/a3f7189a0665ee33b50e9e228c46f50f5acbed22",
-                "reference": "a3f7189a0665ee33b50e9e228c46f50f5acbed22",
+                "url": "https://api.github.com/repos/symfony/console/zipball/8dbd23ef7a8884051482183ddee8d9061b5feed0",
+                "reference": "8dbd23ef7a8884051482183ddee8d9061b5feed0",
                 "shasum": ""
             },
             "require": {
@@ -1250,7 +1250,7 @@
             "description": "Eases the creation of beautiful and testable command line interfaces",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/console/tree/v4.4.30"
+                "source": "https://github.com/symfony/console/tree/v4.4.33"
             },
             "funding": [
                 {
@@ -1266,7 +1266,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-25T19:27:26+00:00"
+            "time": "2021-10-25T16:36:08+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -2453,16 +2453,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v4.4.31",
+            "version": "v4.4.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "a10b610f75349dbee1d3ad05c7a2cbf4f1872e34"
+                "reference": "5cb0dc3028e0f32888fed2d467b7762824fef843"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/a10b610f75349dbee1d3ad05c7a2cbf4f1872e34",
-                "reference": "a10b610f75349dbee1d3ad05c7a2cbf4f1872e34",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/5cb0dc3028e0f32888fed2d467b7762824fef843",
+                "reference": "5cb0dc3028e0f32888fed2d467b7762824fef843",
                 "shasum": ""
             },
             "require": {
@@ -2527,7 +2527,7 @@
             "description": "Handles serializing and deserializing data structures, including object graphs, into array structures or other formats like XML and JSON.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/serializer/tree/v4.4.31"
+                "source": "https://github.com/symfony/serializer/tree/v4.4.33"
             },
             "funding": [
                 {
@@ -2543,7 +2543,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-17T08:50:49+00:00"
+            "time": "2021-09-27T18:46:41+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -2626,16 +2626,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.3.7",
+            "version": "v5.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "8d224396e28d30f81969f083a58763b8b9ceb0a5"
+                "reference": "d70c35bb20bbca71fc4ab7921e3c6bda1a82a60c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/8d224396e28d30f81969f083a58763b8b9ceb0a5",
-                "reference": "8d224396e28d30f81969f083a58763b8b9ceb0a5",
+                "url": "https://api.github.com/repos/symfony/string/zipball/d70c35bb20bbca71fc4ab7921e3c6bda1a82a60c",
+                "reference": "d70c35bb20bbca71fc4ab7921e3c6bda1a82a60c",
                 "shasum": ""
             },
             "require": {
@@ -2689,7 +2689,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.3.7"
+                "source": "https://github.com/symfony/string/tree/v5.3.10"
             },
             "funding": [
                 {
@@ -2705,7 +2705,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-26T08:00:08+00:00"
+            "time": "2021-10-27T18:21:46+00:00"
         },
         {
             "name": "validaide/common",
@@ -2713,12 +2713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/validaide/common.git",
-                "reference": "f722a0f71591b2b7c43a63449b0b29972f983843"
+                "reference": "356eed781aacd2fae58dc2a7285558f84dfc1011"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/validaide/common/zipball/f722a0f71591b2b7c43a63449b0b29972f983843",
-                "reference": "f722a0f71591b2b7c43a63449b0b29972f983843",
+                "url": "https://api.github.com/repos/validaide/common/zipball/356eed781aacd2fae58dc2a7285558f84dfc1011",
+                "reference": "356eed781aacd2fae58dc2a7285558f84dfc1011",
                 "shasum": ""
             },
             "require": {
@@ -2735,7 +2735,8 @@
             "require-dev": {
                 "brianium/paratest": "^4.0",
                 "phpunit/phpunit": "^9.1",
-                "rector/rector": "^0.11.60"
+                "rector/rector": "^0.11.60",
+                "symplify/easy-coding-standard": "^9.4"
             },
             "type": "library",
             "autoload": {
@@ -2758,7 +2759,7 @@
                 }
             ],
             "description": "Common Library for Validaide projects",
-            "time": "2021-10-23T14:52:46+00:00"
+            "time": "2021-11-06T22:44:25+00:00"
         }
     ],
     "packages-dev": [
@@ -3573,16 +3574,16 @@
         },
         {
             "name": "php-http/cache-plugin",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/cache-plugin.git",
-                "reference": "922409f10541b0d581b8ffe5cd810f4efc9e9e32"
+                "reference": "6a55c651585756f282760b7d374599ed5dabea81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/922409f10541b0d581b8ffe5cd810f4efc9e9e32",
-                "reference": "922409f10541b0d581b8ffe5cd810f4efc9e9e32",
+                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/6a55c651585756f282760b7d374599ed5dabea81",
+                "reference": "6a55c651585756f282760b7d374599ed5dabea81",
                 "shasum": ""
             },
             "require": {
@@ -3626,9 +3627,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/cache-plugin/issues",
-                "source": "https://github.com/php-http/cache-plugin/tree/1.7.2"
+                "source": "https://github.com/php-http/cache-plugin/tree/1.7.3"
             },
-            "time": "2021-04-14T06:06:08+00:00"
+            "time": "2021-11-03T07:26:41+00:00"
         },
         {
             "name": "php-http/client-common",
@@ -5706,16 +5707,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v4.4.31",
+            "version": "v4.4.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "4d9074f2777dfde2b78c5c60affa66c5e7518117"
+                "reference": "7342bf4f6f433cc1ee7fc6ec0a627951da5d92f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/4d9074f2777dfde2b78c5c60affa66c5e7518117",
-                "reference": "4d9074f2777dfde2b78c5c60affa66c5e7518117",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/7342bf4f6f433cc1ee7fc6ec0a627951da5d92f5",
+                "reference": "7342bf4f6f433cc1ee7fc6ec0a627951da5d92f5",
                 "shasum": ""
             },
             "require": {
@@ -5781,7 +5782,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v4.4.31"
+                "source": "https://github.com/symfony/cache/tree/v4.4.33"
             },
             "funding": [
                 {
@@ -5797,7 +5798,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-25T11:31:41+00:00"
+            "time": "2021-10-25T16:36:08+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -6011,16 +6012,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v4.4.31",
+            "version": "v4.4.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "254590a0bd928fad5d271f81ec474f58ba6994ba"
+                "reference": "87aa6bd620145070f148fe79d79e03d710bbe3a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/254590a0bd928fad5d271f81ec474f58ba6994ba",
-                "reference": "254590a0bd928fad5d271f81ec474f58ba6994ba",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/87aa6bd620145070f148fe79d79e03d710bbe3a9",
+                "reference": "87aa6bd620145070f148fe79d79e03d710bbe3a9",
                 "shasum": ""
             },
             "require": {
@@ -6073,7 +6074,7 @@
             "description": "Provides utilities for PHPUnit, especially user deprecation notices management",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/phpunit-bridge/tree/v4.4.31"
+                "source": "https://github.com/symfony/phpunit-bridge/tree/v4.4.33"
             },
             "funding": [
                 {
@@ -6089,7 +6090,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-14T13:34:30+00:00"
+            "time": "2021-10-28T13:06:20+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
@@ -6552,7 +6553,14 @@
             "time": "2021-03-09T10:59:23+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "validaide/common",
+            "version": "dev-chore/symfony-4",
+            "alias": "4.5.0",
+            "alias_normalized": "4.5.0.0"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "validaide/common": 20

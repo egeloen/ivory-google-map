@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CircleCollectorTest extends TestCase
 {
-    /**
-     * @var CircleCollector
-     */
-    private $circleCollector;
+    private CircleCollector $circleCollector;
 
     protected function setUp(): void
     {

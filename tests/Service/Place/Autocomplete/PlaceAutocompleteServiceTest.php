@@ -31,10 +31,7 @@ use Ivory\Tests\GoogleMap\Service\Place\AbstractPlaceSerializableServiceTest;
  */
 class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
 {
-    /**
-     * @var PlaceAutocompleteService
-     */
-    private $service;
+    private PlaceAutocompleteService $service;
 
     protected function setUp(): void
     {
@@ -231,7 +228,7 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertInstanceOf(PlaceAutocompleteResponse::class, $response);
 
         $this->assertSame($request, $response->getRequest());
-        $this->assertCount(count($options['predictions']), $predictions = $response->getPredictions(), sprintf("Difference in number of predictions"));
+        $this->assertCount(is_countable($options['predictions']) ? count($options['predictions']) : 0, $predictions = $response->getPredictions(), sprintf("Difference in number of predictions"));
 
         foreach ($options['predictions'] as $key => $prediction) {
             $this->assertArrayHasKey($key, $predictions);
@@ -259,14 +256,14 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertSame($options['description'], $prediction->getDescription());
         $this->assertSame($options['types'], $prediction->getTypes());
 
-        $this->assertCount(count($options['terms']), $terms = $prediction->getTerms());
+        $this->assertCount(is_countable($options['terms']) ? count($options['terms']) : 0, $terms = $prediction->getTerms());
 
         foreach ($options['terms'] as $key => $term) {
             $this->assertArrayHasKey($key, $terms);
             $this->assertPlaceAutocompleteTerm($terms[$key], $term);
         }
 
-        $this->assertCount(count($options['matched_substrings']), $matches = $prediction->getMatches());
+        $this->assertCount(is_countable($options['matched_substrings']) ? count($options['matched_substrings']) : 0, $matches = $prediction->getMatches());
 
         foreach ($options['matched_substrings'] as $key => $match) {
             $this->assertArrayHasKey($key, $matches);

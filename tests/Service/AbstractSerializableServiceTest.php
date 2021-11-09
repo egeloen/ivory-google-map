@@ -106,7 +106,6 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     }
 
     /**
-     * @param Distance $distance
      * @param mixed[]  $options
      */
     protected function assertDistance(Distance $distance, array $options = [])

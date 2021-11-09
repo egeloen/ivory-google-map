@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ElevationResponseTest extends TestCase
 {
-    /**
-     * @var ElevationResponse
-     */
-    private $response;
+    private ElevationResponse $response;
 
     protected function setUp(): void
     {
@@ -75,7 +72,7 @@ class ElevationResponseTest extends TestCase
         $this->response->addResults($secondResults = [$this->createResultMock()]);
 
         $this->assertTrue($this->response->hasResults());
-        $this->assertSame(array_merge($firstResults, $secondResults), $this->response->getResults());
+        $this->assertSame([...$firstResults, ...$secondResults], $this->response->getResults());
     }
 
     public function testAddResult()

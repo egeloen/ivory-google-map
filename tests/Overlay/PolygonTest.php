@@ -24,10 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PolygonTest extends TestCase
 {
-    /**
-     * @var Polygon
-     */
-    private $polygon;
+    private Polygon $polygon;
 
     protected function setUp(): void
     {
@@ -79,7 +76,7 @@ class PolygonTest extends TestCase
         $this->polygon->addCoordinates($secondCoordinates = [$this->createCoordinateMock()]);
 
         $this->assertTrue($this->polygon->hasCoordinates());
-        $this->assertSame(array_merge($firstCoordinates, $secondCoordinates), $this->polygon->getCoordinates());
+        $this->assertSame([...$firstCoordinates, ...$secondCoordinates], $this->polygon->getCoordinates());
     }
 
     public function testAddCoordinate()

@@ -31,20 +31,17 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceMatrixRequestTest extends TestCase
 {
-    /**
-     * @var DistanceMatrixRequest
-     */
-    private $request;
+    private DistanceMatrixRequest $request;
 
     /**
      * @var string[]
      */
-    private $origins;
+    private ?array $origins = null;
 
     /**
      * @var string[]
      */
-    private $destinations;
+    private ?array $destinations = null;
 
     protected function setUp(): void
     {
@@ -104,7 +101,7 @@ class DistanceMatrixRequestTest extends TestCase
         $this->request->addOrigins($secondOrigins = [new AddressLocation('Lille')]);
 
         $this->assertTrue($this->request->hasOrigins());
-        $this->assertSame(array_merge($firstOrigins, $secondOrigins), $this->request->getOrigins());
+        $this->assertSame([...$firstOrigins, ...$secondOrigins], $this->request->getOrigins());
     }
 
     public function testAddOrigin()
@@ -142,7 +139,7 @@ class DistanceMatrixRequestTest extends TestCase
         $this->request->addDestinations($secondDestinations = [new AddressLocation('Lille')]);
 
         $this->assertTrue($this->request->hasDestinations());
-        $this->assertSame(array_merge($firstDestinations, $secondDestinations), $this->request->getDestinations());
+        $this->assertSame([...$firstDestinations, ...$secondDestinations], $this->request->getDestinations());
     }
 
     public function testAddDestination()
@@ -265,7 +262,7 @@ class DistanceMatrixRequestTest extends TestCase
         $this->request->addTransitModes($secondTransitModes = [TransitMode::SUBWAY]);
 
         $this->assertTrue($this->request->hasTransitModes());
-        $this->assertSame(array_merge($firstTransitModes, $secondTransitModes), $this->request->getTransitModes());
+        $this->assertSame([...$firstTransitModes, ...$secondTransitModes], $this->request->getTransitModes());
     }
 
     public function testAddTransitMode()

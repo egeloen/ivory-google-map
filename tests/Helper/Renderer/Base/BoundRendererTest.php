@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BoundRendererTest extends TestCase
 {
-    /**
-     * @var BoundRenderer
-     */
-    private $boundRenderer;
+    private BoundRenderer $boundRenderer;
 
     protected function setUp(): void
     {

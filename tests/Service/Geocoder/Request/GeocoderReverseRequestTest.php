@@ -65,7 +65,7 @@ class GeocoderReverseRequestTest extends TestCase
 
         $this->assertTrue($this->request->hasResultTypes());
         $this->assertSame(
-            array_merge($firstResultTypes, $secondResultTypes),
+            [...$firstResultTypes, ...$secondResultTypes],
             $this->request->getResultTypes()
         );
     }
@@ -108,7 +108,7 @@ class GeocoderReverseRequestTest extends TestCase
 
         $this->assertTrue($this->request->hasLocationTypes());
         $this->assertSame(
-            array_merge($firstLocationTypes, $secondLocationTypes),
+            [...$firstLocationTypes, ...$secondLocationTypes],
             $this->request->getLocationTypes()
         );
     }

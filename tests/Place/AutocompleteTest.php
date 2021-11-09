@@ -25,10 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteTest extends TestCase
 {
-    /**
-     * @var Autocomplete
-     */
-    private $autocomplete;
+    private Autocomplete $autocomplete;
 
     protected function setUp(): void
     {
@@ -106,7 +103,7 @@ class AutocompleteTest extends TestCase
         $this->autocomplete->addTypes($secondTypes = [AutocompleteType::CITIES]);
 
         $this->assertTrue($this->autocomplete->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->autocomplete->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->autocomplete->getTypes());
     }
 
     public function testAddType()
@@ -234,7 +231,7 @@ class AutocompleteTest extends TestCase
         $this->autocomplete->addLibraries($secondLibraries = ['places']);
 
         $this->assertTrue($this->autocomplete->hasLibraries());
-        $this->assertSame(array_merge($firstLibraries, $secondLibraries), $this->autocomplete->getLibraries());
+        $this->assertSame([...$firstLibraries, ...$secondLibraries], $this->autocomplete->getLibraries());
     }
 
     public function testAddLibrary()

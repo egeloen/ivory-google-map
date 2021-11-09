@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StaticMapHelperBuilderTest extends TestCase
 {
-    /**
-     * @var StaticMapHelperBuilder
-     */
-    private $staticMapHelperBuilder;
+    private StaticMapHelperBuilder $staticMapHelperBuilder;
 
     protected function setUp(): void
     {

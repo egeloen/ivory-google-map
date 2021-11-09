@@ -26,10 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerShapeCollectorTest extends TestCase
 {
-    /**
-     * @var MarkerShapeCollector
-     */
-    private $markerShapeCollector;
+    private MarkerShapeCollector $markerShapeCollector;
 
     protected function setUp(): void
     {

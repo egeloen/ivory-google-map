@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceMatrixResponseTest extends TestCase
 {
-    /**
-     * @var DistanceMatrixResponse
-     */
-    private $response;
+    private DistanceMatrixResponse $response;
 
     protected function setUp(): void
     {
@@ -88,7 +85,7 @@ class DistanceMatrixResponseTest extends TestCase
         $this->response->addOrigins($secondOrigins = ['Lille']);
 
         $this->assertTrue($this->response->hasOrigins());
-        $this->assertSame(array_merge($firstOrigins, $secondOrigins), $this->response->getOrigins());
+        $this->assertSame([...$firstOrigins, ...$secondOrigins], $this->response->getOrigins());
     }
 
     public function testAddOrigin()
@@ -126,7 +123,7 @@ class DistanceMatrixResponseTest extends TestCase
         $this->response->addDestinations($secondDestinations = ['Lille']);
 
         $this->assertTrue($this->response->hasDestinations());
-        $this->assertSame(array_merge($firstDestinations, $secondDestinations), $this->response->getDestinations());
+        $this->assertSame([...$firstDestinations, ...$secondDestinations], $this->response->getDestinations());
     }
 
     public function testAddDestination()
@@ -164,7 +161,7 @@ class DistanceMatrixResponseTest extends TestCase
         $this->response->addRows($secondRows = [$this->createRowMock()]);
 
         $this->assertTrue($this->response->hasRows());
-        $this->assertSame(array_merge($firstRows, $secondRows), $this->response->getRows());
+        $this->assertSame([...$firstRows, ...$secondRows], $this->response->getRows());
     }
 
     public function testAddRow()

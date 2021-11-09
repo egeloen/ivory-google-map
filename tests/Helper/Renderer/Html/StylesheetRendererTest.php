@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StylesheetRendererTest extends TestCase
 {
-    /**
-     * @var StylesheetRenderer
-     */
-    private $stylesheetRenderer;
+    private StylesheetRenderer $stylesheetRenderer;
 
     protected function setUp(): void
     {

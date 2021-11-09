@@ -19,10 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PhotoTest extends TestCase
 {
-    /**
-     * @var Photo
-     */
-    private $photo;
+    private Photo $photo;
 
     protected function setUp(): void
     {
@@ -82,7 +79,7 @@ class PhotoTest extends TestCase
 
         $this->assertTrue($this->photo->hasHtmlAttributions());
         $this->assertSame(
-            array_merge($firstHtmlAttributions, $secondHtmlAttributions),
+            [...$firstHtmlAttributions, ...$secondHtmlAttributions],
             $this->photo->getHtmlAttributions()
         );
     }

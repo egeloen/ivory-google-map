@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IconTest extends TestCase
 {
-    /**
-     * @var Icon
-     */
-    private $icon;
+    private Icon $icon;
 
     protected function setUp(): void
     {

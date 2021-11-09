@@ -348,7 +348,7 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $expectedResults = $options['results'];
         $actualResults   = $response->getResults();
 
-        $this->assertCount(count($expectedResults), $actualResults);
+        $this->assertCount(is_countable($expectedResults) ? count($expectedResults) : 0, $actualResults);
 
         foreach ($expectedResults as $key => $expectedResult) {
             $this->assertArrayHasKey($key, $actualResults);

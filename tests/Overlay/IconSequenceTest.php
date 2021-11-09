@@ -23,10 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IconSequenceTest extends TestCase
 {
-    /**
-     * @var IconSequence
-     */
-    private $iconSequence;
+    private IconSequence $iconSequence;
 
     /**
      * @var Symbol|MockObject
