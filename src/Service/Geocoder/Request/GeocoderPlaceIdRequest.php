@@ -18,10 +18,7 @@ namespace Ivory\GoogleMap\Service\Geocoder\Request;
  */
 class GeocoderPlaceIdRequest extends AbstractGeocoderReverseRequest
 {
-    /**
-     * @var string
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
     /**
      * @param string $placeId
@@ -31,10 +28,7 @@ class GeocoderPlaceIdRequest extends AbstractGeocoderReverseRequest
         $this->setPlaceId($placeId);
     }
 
-    /**
-     * @return string
-     */
-    public function getPlaceId()
+    public function getPlaceId(): string
     {
         return $this->placeId;
     }
@@ -42,15 +36,12 @@ class GeocoderPlaceIdRequest extends AbstractGeocoderReverseRequest
     /**
      * @param string $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         return array_merge(['place_id' => $this->placeId], parent::buildQuery());
     }

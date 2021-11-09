@@ -19,15 +19,8 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
  */
 class AbstractTagRenderer extends AbstractRenderer
 {
-    /**
-     * @var TagRenderer
-     */
-    private $tagRenderer;
+    private ?TagRenderer $tagRenderer = null;
 
-    /**
-     * @param Formatter   $formatter
-     * @param TagRenderer $tagRenderer
-     */
     public function __construct(Formatter $formatter, TagRenderer $tagRenderer)
     {
         parent::__construct($formatter);
@@ -35,17 +28,11 @@ class AbstractTagRenderer extends AbstractRenderer
         $this->setTagRenderer($tagRenderer);
     }
 
-    /**
-     * @return TagRenderer
-     */
-    public function getTagRenderer()
+    public function getTagRenderer(): TagRenderer
     {
         return $this->tagRenderer;
     }
 
-    /**
-     * @param TagRenderer $tagRenderer
-     */
     public function setTagRenderer(TagRenderer $tagRenderer)
     {
         $this->tagRenderer = $tagRenderer;

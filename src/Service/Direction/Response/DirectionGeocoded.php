@@ -16,102 +16,63 @@ namespace Ivory\GoogleMap\Service\Direction\Response;
  */
 class DirectionGeocoded
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var bool|null
-     */
-    private $partialMatch;
+    private ?bool $partialMatch = null;
 
-    /**
-     * @var string|null
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string|null $status
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPartialMatch()
+    public function hasPartialMatch(): bool
     {
         return $this->partialMatch !== null;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isPartialMatch()
+    public function isPartialMatch(): ?bool
     {
         return $this->partialMatch;
     }
 
-    /**
-     * @param bool|null $partialMatch
-     */
-    public function setPartialMatch($partialMatch)
+    public function setPartialMatch(?bool $partialMatch): void
     {
         $this->partialMatch = $partialMatch;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPlaceId()
+    public function hasPlaceId(): bool
     {
         return $this->placeId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPlaceId()
+    public function getPlaceId(): ?string
     {
         return $this->placeId;
     }
 
-    /**
-     * @param string|null $placeId
-     */
-    public function setPlaceId($placeId)
+    public function setPlaceId(?string $placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -119,15 +80,15 @@ class DirectionGeocoded
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
 
     /**
-     * @param string[] $types
+     * @param null|string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(?array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -136,7 +97,7 @@ class DirectionGeocoded
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -145,10 +106,8 @@ class DirectionGeocoded
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -156,7 +115,7 @@ class DirectionGeocoded
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -166,7 +125,7 @@ class DirectionGeocoded
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);

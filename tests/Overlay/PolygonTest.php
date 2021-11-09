@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\Polygon;
@@ -23,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PolygonTest extends TestCase
 {
-    /**
-     * @var Polygon
-     */
-    private $polygon;
+    private Polygon $polygon;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polygon = new Polygon();
     }
@@ -81,7 +76,7 @@ class PolygonTest extends TestCase
         $this->polygon->addCoordinates($secondCoordinates = [$this->createCoordinateMock()]);
 
         $this->assertTrue($this->polygon->hasCoordinates());
-        $this->assertSame(array_merge($firstCoordinates, $secondCoordinates), $this->polygon->getCoordinates());
+        $this->assertSame([...$firstCoordinates, ...$secondCoordinates], $this->polygon->getCoordinates());
     }
 
     public function testAddCoordinate()
@@ -104,7 +99,7 @@ class PolygonTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

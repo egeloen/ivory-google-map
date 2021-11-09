@@ -18,32 +18,20 @@ use Ivory\GoogleMap\Map;
  */
 abstract class AbstractDomEventFunctionalTest extends AbstractEventFunctionalTest
 {
-    /**
-     * @var string
-     */
-    private $spyButton;
+    private string $spyButton;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->spyButton = 'spy_button';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderMap(Map $map, $html = null)
     {
         return parent::renderMap($map, $html ?: '<button id="'.$this->spyButton.'">Button</button>');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createEvent($instance = null)
     {
         return parent::createEvent($instance ?: 'document.getElementById("'.$this->spyButton.'")');
@@ -51,6 +39,6 @@ abstract class AbstractDomEventFunctionalTest extends AbstractEventFunctionalTes
 
     protected function clickSpyButton()
     {
-        $this->byId($this->spyButton)->click();
+        $this->byId()->click();
     }
 }

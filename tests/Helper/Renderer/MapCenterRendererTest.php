@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapCenterRendererTest extends TestCase
 {
-    /**
-     * @var MapCenterRenderer
-     */
-    private $mapCenterRenderer;
+    private MapCenterRenderer $mapCenterRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapCenterRenderer = new MapCenterRenderer(new Formatter());
     }

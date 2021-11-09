@@ -24,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerShapeRendererTest extends TestCase
 {
-    /**
-     * @var MarkerShapeRenderer
-     */
-    private $markerShapeRenderer;
+    private MarkerShapeRenderer $markerShapeRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerShapeRenderer = new MarkerShapeRenderer(new Formatter(), new JsonBuilder());
     }

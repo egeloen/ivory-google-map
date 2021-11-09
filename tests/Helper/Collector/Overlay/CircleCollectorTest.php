@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CircleCollectorTest extends TestCase
 {
-    /**
-     * @var CircleCollector
-     */
-    private $circleCollector;
+    private CircleCollector $circleCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->circleCollector = new CircleCollector();
     }

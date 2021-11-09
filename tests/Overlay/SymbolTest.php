@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Overlay\Symbol;
 use Ivory\GoogleMap\Overlay\SymbolPath;
@@ -23,20 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolTest extends TestCase
 {
-    /**
-     * @var Symbol
-     */
-    private $symbol;
+    private Symbol $symbol;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private ?string $path = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->symbol = new Symbol($this->path = SymbolPath::CIRCLE);
     }
@@ -114,7 +106,7 @@ class SymbolTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Point
+     * @return MockObject|Point
      */
     private function createPointMock()
     {

@@ -24,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GeoJsonLayerRendererTest extends TestCase
 {
-    /**
-     * @var GeoJsonLayerRenderer
-     */
-    private $geoJsonLayerRenderer;
+    private GeoJsonLayerRenderer $geoJsonLayerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geoJsonLayerRenderer = new GeoJsonLayerRenderer(new Formatter(), new JsonBuilder());
     }

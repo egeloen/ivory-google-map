@@ -21,16 +21,8 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class SymbolRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var SymbolPathRenderer
-     */
-    private $symbolPathRenderer;
+    private ?SymbolPathRenderer $symbolPathRenderer = null;
 
-    /**
-     * @param Formatter          $formatter
-     * @param JsonBuilder        $jsonBuilder
-     * @param SymbolPathRenderer $symbolPathRenderer
-     */
     public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder, SymbolPathRenderer $symbolPathRenderer)
     {
         parent::__construct($formatter, $jsonBuilder);
@@ -38,28 +30,17 @@ class SymbolRenderer extends AbstractJsonRenderer
         $this->setSymbolPathRenderer($symbolPathRenderer);
     }
 
-    /**
-     * @return SymbolPathRenderer
-     */
-    public function getSymbolPathRenderer()
+    public function getSymbolPathRenderer(): SymbolPathRenderer
     {
         return $this->symbolPathRenderer;
     }
 
-    /**
-     * @param SymbolPathRenderer $symbolPathRenderer
-     */
-    public function setSymbolPathRenderer(SymbolPathRenderer $symbolPathRenderer)
+    public function setSymbolPathRenderer(SymbolPathRenderer $symbolPathRenderer): void
     {
         $this->symbolPathRenderer = $symbolPathRenderer;
     }
 
-    /**
-     * @param Symbol $symbol
-     *
-     * @return string
-     */
-    public function render(Symbol $symbol)
+    public function render(Symbol $symbol): string
     {
         $jsonBuilder = $this->getJsonBuilder()
             ->setValue('[path]', $this->symbolPathRenderer->render($symbol->getPath()), false);

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
@@ -28,15 +29,9 @@ use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
  */
 class GeocoderServiceTest extends AbstractSerializableServiceTest
 {
-    /**
-     * @var GeocoderService
-     */
-    protected $service;
+    protected ?GeocoderService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -49,26 +44,21 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodeAddress($format)
+    public function testGeocodeAddress()
     {
         $request = $this->createAddressRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodeAddressWithComponents($format)
+    public function testGeocodeAddressWithComponents()
     {
         $request = new GeocoderAddressRequest('Grand place');
         $request->setComponents([
@@ -76,18 +66,15 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
             GeocoderComponentType::POSTAL_CODE => 59800,
         ]);
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodeAddressWithBound($format)
+    public function testGeocodeAddressWithBound()
     {
         $request = $this->createAddressRequest();
         $request->setBound(new Bound(
@@ -95,86 +82,66 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
             new Coordinate(48.9021449, 2.4699208)
         ));
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodeAddressWithRegion($format)
+    public function testGeocodeAddressWithRegion()
     {
         $request = $this->createAddressRequest();
         $request->setRegion('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodeAddressWithLanguage($format)
+    public function testGeocodeAddressWithLanguage()
     {
         $request = $this->createAddressRequest();
         $request->setLanguage('pl');
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocoderCoordinate($format)
+    public function testGeocoderCoordinate()
     {
         $request = $this->createCoordinateRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocoderCoordinateWithLanguage($format)
+    public function testGeocoderCoordinateWithLanguage()
     {
         $request = $this->createCoordinateRequest();
         $request->setLanguage('pl');
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->geocode($this->createAddressRequest());
@@ -209,7 +176,7 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
 
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
-        $this->assertCount(count($options['results']), $results = $response->getResults());
+        $this->assertCount(is_countable($options['results']) ? count($options['results']) : 0, $results = $response->getResults());
 
         foreach ($options['results'] as $key => $result) {
             $this->assertArrayHasKey($key, $results);
@@ -241,7 +208,7 @@ class GeocoderServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($options['types'], $result->getTypes());
 
         $this->assertCount(
-            count($options['address_components']),
+            is_countable($options['address_components']) ? count($options['address_components']) : 0,
             $addressComponents = $result->getAddressComponents()
         );
 

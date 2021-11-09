@@ -20,9 +20,6 @@ use Ivory\GoogleMap\Overlay\InfoWindowType;
  */
 class MarkerInfoBoxFunctionalTest extends AbstractMarkerInfoWindowFunctionalTest
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function createInfoWindowMarker()
     {
         $infoWindow = parent::createInfoWindowMarker();

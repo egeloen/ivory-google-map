@@ -20,10 +20,8 @@ class CallbackRenderer extends AbstractRenderer
 {
     /**
      * @param string $name
-     *
-     * @return string
      */
-    public function render($name)
+    public function render($name): string
     {
         return 'ivory_google_map_'.$name;
     }

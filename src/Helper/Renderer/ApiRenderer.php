@@ -21,33 +21,14 @@ use SplObjectStorage;
  */
 class ApiRenderer extends AbstractRenderer
 {
-    /**
-     * @var ApiInitRenderer
-     */
-    private $apiInitRenderer;
+    private ?ApiInitRenderer $apiInitRenderer = null;
 
-    /**
-     * @var LoaderRenderer
-     */
-    private $loaderRenderer;
+    private ?LoaderRenderer $loaderRenderer = null;
 
-    /**
-     * @var RequirementLoaderRenderer
-     */
-    private $requirementLoaderRenderer;
+    private ?RequirementLoaderRenderer $requirementLoaderRenderer = null;
 
-    /**
-     * @var SourceRenderer
-     */
-    private $sourceRenderer;
+    private ?SourceRenderer $sourceRenderer = null;
 
-    /**
-     * @param Formatter                 $formatter
-     * @param ApiInitRenderer           $apiInitRenderer
-     * @param LoaderRenderer            $loaderRenderer
-     * @param RequirementLoaderRenderer $requirementLoaderRenderer
-     * @param SourceRenderer            $sourceRenderer
-     */
     public function __construct(
         Formatter $formatter,
         ApiInitRenderer $apiInitRenderer,
@@ -64,83 +45,56 @@ class ApiRenderer extends AbstractRenderer
         $this->setSourceRenderer($sourceRenderer);
     }
 
-    /**
-     * @return ApiInitRenderer
-     */
-    public function getApiInitRenderer()
+    public function getApiInitRenderer(): ApiInitRenderer
     {
         return $this->apiInitRenderer;
     }
 
-    /**
-     * @param ApiInitRenderer $apiInitRenderer
-     */
-    public function setApiInitRenderer(ApiInitRenderer $apiInitRenderer)
+    public function setApiInitRenderer(ApiInitRenderer $apiInitRenderer): void
     {
         $this->apiInitRenderer = $apiInitRenderer;
     }
 
-    /**
-     * @return LoaderRenderer
-     */
-    public function getLoaderRenderer()
+    public function getLoaderRenderer(): LoaderRenderer
     {
         return $this->loaderRenderer;
     }
 
-    /**
-     * @param LoaderRenderer $loaderRenderer
-     */
-    public function setLoaderRenderer(LoaderRenderer $loaderRenderer)
+    public function setLoaderRenderer(LoaderRenderer $loaderRenderer): void
     {
         $this->loaderRenderer = $loaderRenderer;
     }
 
-    /**
-     * @return RequirementLoaderRenderer
-     */
-    public function getRequirementLoaderRenderer()
+    public function getRequirementLoaderRenderer(): RequirementLoaderRenderer
     {
         return $this->requirementLoaderRenderer;
     }
 
-    /**
-     * @param RequirementLoaderRenderer $requirementLoaderRenderer
-     */
-    public function setRequirementLoaderRenderer(RequirementLoaderRenderer $requirementLoaderRenderer)
+    public function setRequirementLoaderRenderer(RequirementLoaderRenderer $requirementLoaderRenderer): void
     {
         $this->requirementLoaderRenderer = $requirementLoaderRenderer;
     }
 
-    /**
-     * @return SourceRenderer
-     */
-    public function getSourceRenderer()
+    public function getSourceRenderer(): SourceRenderer
     {
         return $this->sourceRenderer;
     }
 
-    /**
-     * @param SourceRenderer $sourceRenderer
-     */
-    public function setSourceRenderer(SourceRenderer $sourceRenderer)
+    public function setSourceRenderer(SourceRenderer $sourceRenderer): void
     {
         $this->sourceRenderer = $sourceRenderer;
     }
 
     /**
-     * @param SplObjectStorage $callbacks
-     * @param SplObjectStorage $requirements
      * @param string[]         $sources
      * @param string[]         $libraries
      *
-     * @return string
      */
-    public function render(SplObjectStorage $callbacks, SplObjectStorage $requirements, array $sources = [], array $libraries = [])
+    public function render(SplObjectStorage $callbacks, SplObjectStorage $requirements, array $sources = [], array $libraries = []): string
     {
         $formatter = $this->getFormatter();
 
-        $loadCallback            = $this->getCallbackName('load');
+        $this->getCallbackName('load');
         $initCallback            = $this->getCallbackName('init');
         $initSourceCallback      = $this->getCallbackName('init_source');
         $initRequirementCallback = $this->getCallbackName('init_requirement');
@@ -166,10 +120,8 @@ class ApiRenderer extends AbstractRenderer
 
     /**
      * @param string $callback
-     *
-     * @return string
      */
-    private function getCallbackName($callback)
+    private function getCallbackName($callback): string
     {
         return 'ivory_google_map_' . $callback;
     }

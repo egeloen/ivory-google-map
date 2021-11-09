@@ -28,7 +28,7 @@ class AutocompleteEventFunctionalTest extends AbstractEventFunctionalTest
         $this->renderAutocomplete($autocomplete);
         $this->assertAutocomplete($autocomplete);
 
-        $element = $this->byId($autocomplete->getHtmlId());
+        $element = $this->byId();
 
         $element->value('Lille, France');
         $this->selectAutocomplete();

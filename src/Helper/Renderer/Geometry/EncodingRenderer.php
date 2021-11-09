@@ -22,10 +22,8 @@ class EncodingRenderer extends AbstractRenderer
 {
     /**
      * @param string $encodedPath
-     *
-     * @return string
      */
-    public function renderDecodePath($encodedPath)
+    public function renderDecodePath($encodedPath): string
     {
         $formatter = $this->getFormatter();
 

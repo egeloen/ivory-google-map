@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Overlay\Extendable;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
@@ -24,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class HeatmapLayerExtendableRendererTest extends TestCase
 {
-    /**
-     * @var HeatmapLayerExtendableRenderer
-     */
-    private $heatmapLayerExtendableRenderer;
+    private HeatmapLayerExtendableRenderer $heatmapLayerExtendableRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->heatmapLayerExtendableRenderer = new HeatmapLayerExtendableRenderer(new Formatter());
     }
@@ -64,7 +59,7 @@ class HeatmapLayerExtendableRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ExtendableInterface
+     * @return MockObject|ExtendableInterface
      */
     private function createExtendableMock()
     {
@@ -72,7 +67,7 @@ class HeatmapLayerExtendableRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionWaypoint;
 use PHPUnit\Framework\TestCase;
@@ -20,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionWaypointTest extends TestCase
 {
-    /**
-     * @var DirectionWaypoint
-     */
-    private $waypoint;
+    private DirectionWaypoint $waypoint;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->waypoint = new DirectionWaypoint();
     }
@@ -70,7 +65,7 @@ class DirectionWaypointTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

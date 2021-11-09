@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Control\ScaleControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -21,22 +22,10 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class ScaleControlRenderer extends AbstractJsonRenderer implements ControlRendererInterface
 {
-    /**
-     * @var ControlPositionRenderer
-     */
-    private $controlPositionRenderer;
+    private ?ControlPositionRenderer $controlPositionRenderer = null;
 
-    /**
-     * @var ScaleControlStyleRenderer
-     */
-    private $scaleControlStyleRenderer;
+    private ?ScaleControlStyleRenderer $scaleControlStyleRenderer = null;
 
-    /**
-     * @param Formatter                 $formatter
-     * @param JsonBuilder               $jsonBuilder
-     * @param ControlPositionRenderer   $controlPositionRenderer
-     * @param ScaleControlStyleRenderer $scaleControlStyleRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -49,52 +38,39 @@ class ScaleControlRenderer extends AbstractJsonRenderer implements ControlRender
         $this->setScaleControlStyleRenderer($scaleControlStyleRenderer);
     }
 
-    /**
-     * @return ControlPositionRenderer
-     */
-    public function getControlPositionRenderer()
+    public function getControlPositionRenderer(): ControlPositionRenderer
     {
         return $this->controlPositionRenderer;
     }
 
-    /**
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
-    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer)
+    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer): void
     {
         $this->controlPositionRenderer = $controlPositionRenderer;
     }
 
-    /**
-     * @return ScaleControlStyleRenderer
-     */
-    public function getScaleControlStyleRenderer()
+    public function getScaleControlStyleRenderer(): ScaleControlStyleRenderer
     {
         return $this->scaleControlStyleRenderer;
     }
 
-    /**
-     * @param ScaleControlStyleRenderer $scaleControlStyleRenderer
-     */
-    public function setScaleControlStyleRenderer(ScaleControlStyleRenderer $scaleControlStyleRenderer)
+    public function setScaleControlStyleRenderer(ScaleControlStyleRenderer $scaleControlStyleRenderer): void
     {
         $this->scaleControlStyleRenderer = $scaleControlStyleRenderer;
     }
 
     /**
      * @param ScaleControl $control
-     *
-     * @return string
      */
-    public function render($control)
+    public function render($control): string
     {
         if (!$control instanceof ScaleControl) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Expected a "%s", got "%s".',
                 ScaleControl::class,
                 is_object($control) ? get_class($control) : gettype($control)
             ));
         }
+
 
         return $this->getJsonBuilder()
             ->setValue('[position]', $this->controlPositionRenderer->render($control->getPosition()), false)

@@ -18,20 +18,10 @@ use Ivory\GoogleMap\Overlay\Polyline;
  */
 class PolylineRenderer
 {
-    /**
-     * @var PolylineStyleRenderer
-     */
-    private $polylineStyleRenderer;
+    private PolylineStyleRenderer $polylineStyleRenderer;
 
-    /**
-     * @var PolylineLocationRenderer
-     */
-    private $polylineLocationRenderer;
+    private PolylineLocationRenderer $polylineLocationRenderer;
 
-    /**
-     * @param PolylineStyleRenderer    $polylineStyleRenderer
-     * @param PolylineLocationRenderer $polylineLocationRenderer
-     */
     public function __construct(
         PolylineStyleRenderer $polylineStyleRenderer,
         PolylineLocationRenderer $polylineLocationRenderer
@@ -40,12 +30,7 @@ class PolylineRenderer
         $this->polylineLocationRenderer = $polylineLocationRenderer;
     }
 
-    /**
-     * @param Polyline $polyline
-     *
-     * @return string
-     */
-    public function render(Polyline $polyline)
+    public function render(Polyline $polyline): string
     {
         $result = [];
         $style = $this->polylineStyleRenderer->render($polyline);

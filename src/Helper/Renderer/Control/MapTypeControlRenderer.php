@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Control\MapTypeControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -22,28 +23,12 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class MapTypeControlRenderer extends AbstractJsonRenderer implements ControlRendererInterface
 {
-    /**
-     * @var MapTypeIdRenderer
-     */
-    private $mapTypeIdRenderer;
+    private ?MapTypeIdRenderer $mapTypeIdRenderer = null;
 
-    /**
-     * @var ControlPositionRenderer
-     */
-    private $controlPositionRenderer;
+    private ?ControlPositionRenderer $controlPositionRenderer = null;
 
-    /**
-     * @var MapTypeControlStyleRenderer
-     */
-    private $mapTypeControlStyleRenderer;
+    private ?MapTypeControlStyleRenderer $mapTypeControlStyleRenderer = null;
 
-    /**
-     * @param Formatter                   $formatter
-     * @param JsonBuilder                 $jsonBuilder
-     * @param MapTypeIdRenderer           $mapTypeIdRenderer
-     * @param ControlPositionRenderer     $controlPositionRenderer
-     * @param MapTypeControlStyleRenderer $mapTypeControlStyleRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -58,61 +43,40 @@ class MapTypeControlRenderer extends AbstractJsonRenderer implements ControlRend
         $this->setMapTypeControlStyleRenderer($mapTypeControlStyleRenderer);
     }
 
-    /**
-     * @return MapTypeIdRenderer
-     */
-    public function getMapTypeIdRenderer()
+    public function getMapTypeIdRenderer(): MapTypeIdRenderer
     {
         return $this->mapTypeIdRenderer;
     }
 
-    /**
-     * @param MapTypeIdRenderer $mapTypeIdRenderer
-     */
-    public function setMapTypeIdRenderer(MapTypeIdRenderer $mapTypeIdRenderer)
+    public function setMapTypeIdRenderer(MapTypeIdRenderer $mapTypeIdRenderer): void
     {
         $this->mapTypeIdRenderer = $mapTypeIdRenderer;
     }
 
-    /**
-     * @return ControlPositionRenderer
-     */
-    public function getControlPositionRenderer()
+    public function getControlPositionRenderer(): ControlPositionRenderer
     {
         return $this->controlPositionRenderer;
     }
 
-    /**
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
-    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer)
+    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer): void
     {
         $this->controlPositionRenderer = $controlPositionRenderer;
     }
 
-    /**
-     * @return MapTypeControlStyleRenderer
-     */
-    public function getMapTypeControlStyleRenderer()
+    public function getMapTypeControlStyleRenderer(): MapTypeControlStyleRenderer
     {
         return $this->mapTypeControlStyleRenderer;
     }
 
-    /**
-     * @param MapTypeControlStyleRenderer $mapTypeControlStyleRenderer
-     */
-    public function setMapTypeControlStyleRenderer(MapTypeControlStyleRenderer $mapTypeControlStyleRenderer)
+    public function setMapTypeControlStyleRenderer(MapTypeControlStyleRenderer $mapTypeControlStyleRenderer): void
     {
         $this->mapTypeControlStyleRenderer = $mapTypeControlStyleRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function render($control)
+    public function render($control): string
     {
         if (!$control instanceof MapTypeControl) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Expected a "%s", got "%s".',
                 MapTypeControl::class,
                 is_object($control) ? get_class($control) : gettype($control)

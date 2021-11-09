@@ -16,38 +16,23 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 class Photo
 {
-    /**
-     * @var string|null
-     */
-    private $reference;
+    private ?string $reference = null;
 
-    /**
-     * @var int|null
-     */
-    private $width;
+    private ?int $width = null;
 
-    /**
-     * @var int|null
-     */
-    private $height;
+    private ?int $height = null;
 
     /**
      * @var string[]
      */
-    private $htmlAttributions = [];
+    private array $htmlAttributions = [];
 
-    /**
-     * @return bool
-     */
-    public function hasReference()
+    public function hasReference(): bool
     {
         return $this->reference !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getReference()
+    public function getReference(): ?string
     {
         return $this->reference;
     }
@@ -55,23 +40,17 @@ class Photo
     /**
      * @param string|null $reference
      */
-    public function setReference($reference)
+    public function setReference($reference): void
     {
         $this->reference = $reference;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasWidth()
+    public function hasWidth(): bool
     {
         return $this->width !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getWidth()
+    public function getWidth(): ?int
     {
         return $this->width;
     }
@@ -79,23 +58,17 @@ class Photo
     /**
      * @param int|null $width
      */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
         $this->width = $width;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHeight()
+    public function hasHeight(): bool
     {
         return $this->height !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getHeight()
+    public function getHeight(): ?int
     {
         return $this->height;
     }
@@ -103,15 +76,12 @@ class Photo
     /**
      * @param int|null $height
      */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
         $this->height = $height;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHtmlAttributions()
+    public function hasHtmlAttributions(): bool
     {
         return !empty($this->htmlAttributions);
     }
@@ -119,7 +89,7 @@ class Photo
     /**
      * @return string[]
      */
-    public function getHtmlAttributions()
+    public function getHtmlAttributions(): array
     {
         return $this->htmlAttributions;
     }
@@ -127,7 +97,7 @@ class Photo
     /**
      * @param string[] $htmlAttributions
      */
-    public function setHtmlAttributions(array $htmlAttributions)
+    public function setHtmlAttributions(array $htmlAttributions): void
     {
         $this->htmlAttributions = [];
         $this->addHtmlAttributions($htmlAttributions);
@@ -136,7 +106,7 @@ class Photo
     /**
      * @param string[] $htmlAttributions
      */
-    public function addHtmlAttributions(array $htmlAttributions)
+    public function addHtmlAttributions(array $htmlAttributions): void
     {
         foreach ($htmlAttributions as $htmlAttribution) {
             $this->addHtmlAttribution($htmlAttribution);
@@ -145,10 +115,8 @@ class Photo
 
     /**
      * @param string $htmlAttribution
-     *
-     * @return bool
      */
-    public function hasHtmlAttribution($htmlAttribution)
+    public function hasHtmlAttribution($htmlAttribution): bool
     {
         return in_array($htmlAttribution, $this->htmlAttributions, true);
     }
@@ -156,7 +124,7 @@ class Photo
     /**
      * @param string $htmlAttribution
      */
-    public function addHtmlAttribution($htmlAttribution)
+    public function addHtmlAttribution($htmlAttribution): void
     {
         if (!$this->hasHtmlAttribution($htmlAttribution)) {
             $this->htmlAttributions[] = $htmlAttribution;
@@ -166,7 +134,7 @@ class Photo
     /**
      * @param string $htmlAttribution
      */
-    public function removeHtmlAttribution($htmlAttribution)
+    public function removeHtmlAttribution($htmlAttribution): void
     {
         unset($this->htmlAttributions[array_search($htmlAttribution, $this->htmlAttributions, true)]);
         $this->htmlAttributions = empty($this->htmlAttributions) ? [] : array_values($this->htmlAttributions);

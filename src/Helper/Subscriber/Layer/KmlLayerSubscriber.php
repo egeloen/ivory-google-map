@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class KmlLayerSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var KmlLayerCollector
-     */
-    private $kmlLayerCollector;
+    private ?KmlLayerCollector $kmlLayerCollector = null;
 
-    /**
-     * @var KmlLayerRenderer
-     */
-    private $kmlLayerRenderer;
+    private ?KmlLayerRenderer $kmlLayerRenderer = null;
 
-    /**
-     * @param Formatter         $formatter
-     * @param KmlLayerCollector $kmlLayerCollector
-     * @param KmlLayerRenderer  $kmlLayerRenderer
-     */
     public function __construct(
         Formatter $formatter,
         KmlLayerCollector $kmlLayerCollector,
@@ -49,42 +38,27 @@ class KmlLayerSubscriber extends AbstractSubscriber
         $this->setKmlLayerRenderer($kmlLayerRenderer);
     }
 
-    /**
-     * @return KmlLayerCollector
-     */
-    public function getKmlLayerCollector()
+    public function getKmlLayerCollector(): KmlLayerCollector
     {
         return $this->kmlLayerCollector;
     }
 
-    /**
-     * @param KmlLayerCollector $kmlLayerCollector
-     */
-    public function setKmlLayerCollector(KmlLayerCollector $kmlLayerCollector)
+    public function setKmlLayerCollector(KmlLayerCollector $kmlLayerCollector): void
     {
         $this->kmlLayerCollector = $kmlLayerCollector;
     }
 
-    /**
-     * @return KmlLayerRenderer
-     */
-    public function getKmlLayerRenderer()
+    public function getKmlLayerRenderer(): KmlLayerRenderer
     {
         return $this->kmlLayerRenderer;
     }
 
-    /**
-     * @param KmlLayerRenderer $kmlLayerRenderer
-     */
-    public function setKmlLayerRenderer(KmlLayerRenderer $kmlLayerRenderer)
+    public function setKmlLayerRenderer(KmlLayerRenderer $kmlLayerRenderer): void
     {
         $this->kmlLayerRenderer = $kmlLayerRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class KmlLayerSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_LAYER_KML_LAYER => 'handleMap'];
     }

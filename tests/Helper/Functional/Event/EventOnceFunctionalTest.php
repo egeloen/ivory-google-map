@@ -28,10 +28,10 @@ class EventOnceFunctionalTest extends AbstractEventFunctionalTest
         $this->renderMap($map);
         $this->assertMap($map);
 
-        $this->byId($map->getHtmlId())->click();
+        $this->byId()->click();
         $this->assertSpyCount(1);
 
-        $this->byId($map->getHtmlId())->click();
+        $this->byId()->click();
         $this->assertSpyCount(1);
     }
 }

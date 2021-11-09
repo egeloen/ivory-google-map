@@ -20,25 +20,13 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomControlTest extends TestCase
 {
-    /**
-     * @var CustomControl
-     */
-    private $customControl;
+    private CustomControl $customControl;
 
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
-    /**
-     * @var string
-     */
-    private $control;
+    private ?string $control = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->customControl = new CustomControl(
             $this->position = ControlPosition::TOP_CENTER,

@@ -11,58 +11,35 @@
 
 namespace Ivory\GoogleMap\Service\Place\Base;
 
+use DateTime;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Review
 {
-    /**
-     * @var string|null
-     */
-    private $authorName;
+    private ?string $authorName = null;
 
-    /**
-     * @var string|null
-     */
-    private $authorUrl;
+    private ?string $authorUrl = null;
 
-    /**
-     * @var string|null
-     */
-    private $text;
+    private ?string $text = null;
 
-    /**
-     * @var float|null
-     */
-    private $rating;
+    private ?float $rating = null;
 
-    /**
-     * @var \DateTime|null
-     */
-    private $time;
+    private ?DateTime $time = null;
 
-    /**
-     * @var string|null
-     */
-    private $language;
+    private ?string $language = null;
 
     /**
      * @var AspectRating[]
      */
-    private $aspects = [];
+    private array $aspects = [];
 
-    /**
-     * @return bool
-     */
-    public function hasAuthorName()
+    public function hasAuthorName(): bool
     {
         return $this->authorName !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getAuthorName()
+    public function getAuthorName(): ?string
     {
         return $this->authorName;
     }
@@ -70,23 +47,17 @@ class Review
     /**
      * @param string|null $authorName
      */
-    public function setAuthorName($authorName)
+    public function setAuthorName($authorName): void
     {
         $this->authorName = $authorName;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAuthorUrl()
+    public function hasAuthorUrl(): bool
     {
         return $this->authorUrl !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getAuthorUrl()
+    public function getAuthorUrl(): ?string
     {
         return $this->authorUrl;
     }
@@ -94,23 +65,17 @@ class Review
     /**
      * @param string|null $authorUrl
      */
-    public function setAuthorUrl($authorUrl)
+    public function setAuthorUrl($authorUrl): void
     {
         $this->authorUrl = $authorUrl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasText()
+    public function hasText(): bool
     {
         return $this->text !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -118,23 +83,17 @@ class Review
     /**
      * @param string|null $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRating()
+    public function hasRating(): bool
     {
         return $this->rating !== null;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getRating()
+    public function getRating(): ?float
     {
         return $this->rating;
     }
@@ -142,47 +101,35 @@ class Review
     /**
      * @param float|null $rating
      */
-    public function setRating($rating)
+    public function setRating($rating): void
     {
         $this->rating = $rating;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTime()
+    public function hasTime(): bool
     {
         return $this->time !== null;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getTime()
+    public function getTime(): ?DateTime
     {
         return $this->time;
     }
 
     /**
-     * @param \DateTime|null $time
+     * @param DateTime|null $time
      */
-    public function setTime(\DateTime $time = null)
+    public function setTime(DateTime $time = null): void
     {
         $this->time = $time;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -190,15 +137,12 @@ class Review
     /**
      * @param string|null $language
      */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->language = $language;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAspects()
+    public function hasAspects(): bool
     {
         return !empty($this->aspects);
     }
@@ -206,7 +150,7 @@ class Review
     /**
      * @return AspectRating[]
      */
-    public function getAspects()
+    public function getAspects(): array
     {
         return $this->aspects;
     }
@@ -214,7 +158,7 @@ class Review
     /**
      * @param AspectRating[] $aspects
      */
-    public function setAspects(array $aspects)
+    public function setAspects(array $aspects): void
     {
         $this->aspects = [];
         $this->addAspects($aspects);
@@ -223,37 +167,26 @@ class Review
     /**
      * @param AspectRating[] $aspects
      */
-    public function addAspects(array $aspects)
+    public function addAspects(array $aspects): void
     {
         foreach ($aspects as $aspect) {
             $this->addAspect($aspect);
         }
     }
 
-    /**
-     * @param AspectRating $aspect
-     *
-     * @return bool
-     */
-    public function hasAspect(AspectRating $aspect)
+    public function hasAspect(AspectRating $aspect): bool
     {
         return in_array($aspect, $this->aspects, true);
     }
 
-    /**
-     * @param AspectRating $aspect
-     */
-    public function addAspect(AspectRating $aspect)
+    public function addAspect(AspectRating $aspect): void
     {
         if (!$this->hasAspect($aspect)) {
             $this->aspects[] = $aspect;
         }
     }
 
-    /**
-     * @param AspectRating $aspect
-     */
-    public function removeAspect(AspectRating $aspect)
+    public function removeAspect(AspectRating $aspect): void
     {
         unset($this->aspects[array_search($aspect, $this->aspects, true)]);
         $this->aspects = empty($this->aspects) ? [] : array_values($this->aspects);

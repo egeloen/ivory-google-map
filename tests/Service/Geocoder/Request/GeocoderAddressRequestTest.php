@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
@@ -23,20 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocoderAddressRequestTest extends TestCase
 {
-    /**
-     * @var GeocoderAddressRequest
-     */
-    private $request;
+    private GeocoderAddressRequest $request;
 
-    /**
-     * @var string
-     */
-    private $address;
+    private ?string $address = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new GeocoderAddressRequest($this->address = 'Lille');
     }
@@ -214,7 +206,7 @@ class GeocoderAddressRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -222,7 +214,7 @@ class GeocoderAddressRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

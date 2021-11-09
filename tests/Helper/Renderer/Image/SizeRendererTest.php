@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SizeRendererTest extends TestCase
 {
-    /**
-     * @var SizeRenderer
-     */
-    private $sizeRenderer;
+    private SizeRenderer $sizeRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sizeRenderer = new SizeRenderer();
     }

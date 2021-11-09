@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\TravelMode;
 use Ivory\GoogleMap\Service\Direction\Request\DirectionRequestInterface;
 use Ivory\GoogleMap\Service\Direction\Response\DirectionGeocoded;
@@ -24,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionResponseTest extends TestCase
 {
-    /**
-     * @var DirectionResponse
-     */
-    private $response;
+    private DirectionResponse $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new DirectionResponse();
     }
@@ -83,7 +78,7 @@ class DirectionResponseTest extends TestCase
         $this->response->addRoutes($secondRoutes = [$this->createRouteMock()]);
 
         $this->assertTrue($this->response->hasRoutes());
-        $this->assertSame(array_merge($firstRoutes, $secondRoutes), $this->response->getRoutes());
+        $this->assertSame([...$firstRoutes, ...$secondRoutes], $this->response->getRoutes());
     }
 
     public function testAddRoute()
@@ -124,7 +119,7 @@ class DirectionResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasGeocodedWaypoints());
         $this->assertSame(
-            array_merge($firstGeocodedWaypoints, $secondGeocodedWaypoints),
+            [...$firstGeocodedWaypoints, ...$secondGeocodedWaypoints],
             $this->response->getGeocodedWaypoints()
         );
     }
@@ -167,7 +162,7 @@ class DirectionResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasAvailableTravelModes());
         $this->assertSame(
-            array_merge($firstAvailableTravelModes, $secondAvailableTravelModes),
+            [...$firstAvailableTravelModes, ...$secondAvailableTravelModes],
             $this->response->getAvailableTravelModes()
         );
     }
@@ -192,7 +187,7 @@ class DirectionResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionRequestInterface
+     * @return MockObject|DirectionRequestInterface
      */
     private function createRequestMock()
     {
@@ -200,7 +195,7 @@ class DirectionResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionRoute
+     * @return MockObject|DirectionRoute
      */
     private function createRouteMock()
     {
@@ -208,7 +203,7 @@ class DirectionResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionGeocoded
+     * @return MockObject|DirectionGeocoded
      */
     private function createGeocodedWaypointMock()
     {

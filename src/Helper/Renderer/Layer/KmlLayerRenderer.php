@@ -20,13 +20,7 @@ use Ivory\GoogleMap\Map;
  */
 class KmlLayerRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param KmlLayer $kmlLayer
-     * @param Map      $map
-     *
-     * @return string
-     */
-    public function render(KmlLayer $kmlLayer, Map $map)
+    public function render(KmlLayer $kmlLayer, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()

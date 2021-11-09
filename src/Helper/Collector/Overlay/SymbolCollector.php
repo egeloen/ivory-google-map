@@ -20,65 +20,41 @@ use Ivory\GoogleMap\Overlay\Symbol;
  */
 class SymbolCollector extends AbstractCollector
 {
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private ?MarkerCollector $markerCollector = null;
 
-    /**
-     * @var IconSequenceCollector
-     */
-    private $iconSequenceCollector;
+    private ?IconSequenceCollector $iconSequenceCollector = null;
 
-    /**
-     * @param MarkerCollector       $markerCollector
-     * @param IconSequenceCollector $iconSequenceCollector
-     */
     public function __construct(MarkerCollector $markerCollector, IconSequenceCollector $iconSequenceCollector)
     {
         $this->setMarkerCollector($markerCollector);
         $this->setIconSequenceCollector($iconSequenceCollector);
     }
 
-    /**
-     * @return MarkerCollector
-     */
-    public function getMarkerCollector()
+    public function getMarkerCollector(): MarkerCollector
     {
         return $this->markerCollector;
     }
 
-    /**
-     * @param MarkerCollector $markerCollector
-     */
-    public function setMarkerCollector(MarkerCollector $markerCollector)
+    public function setMarkerCollector(MarkerCollector $markerCollector): void
     {
         $this->markerCollector = $markerCollector;
     }
 
-    /**
-     * @return IconSequenceCollector
-     */
-    public function getIconSequenceCollector()
+    public function getIconSequenceCollector(): IconSequenceCollector
     {
         return $this->iconSequenceCollector;
     }
 
-    /**
-     * @param IconSequenceCollector $iconSequenceCollector
-     */
-    public function setIconSequenceCollector(IconSequenceCollector $iconSequenceCollector)
+    public function setIconSequenceCollector(IconSequenceCollector $iconSequenceCollector): void
     {
         $this->iconSequenceCollector = $iconSequenceCollector;
     }
 
     /**
-     * @param Map      $map
      * @param Symbol[] $symbols
-     *
      * @return Symbol[]
      */
-    public function collect(Map $map, array $symbols = [])
+    public function collect(Map $map, array $symbols = []): array
     {
         foreach ($this->markerCollector->collect($map) as $marker) {
             if ($marker->hasSymbol()) {

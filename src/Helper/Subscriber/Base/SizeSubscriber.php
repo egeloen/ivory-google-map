@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class SizeSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var SizeCollector
-     */
-    private $sizeCollector;
+    private ?SizeCollector $sizeCollector = null;
 
-    /**
-     * @var SizeRenderer
-     */
-    private $sizeRenderer;
+    private ?SizeRenderer $sizeRenderer = null;
 
-    /**
-     * @param Formatter     $formatter
-     * @param SizeCollector $sizeCollector
-     * @param SizeRenderer  $sizeRenderer
-     */
     public function __construct(
         Formatter $formatter,
         SizeCollector $sizeCollector,
@@ -49,42 +38,27 @@ class SizeSubscriber extends AbstractSubscriber
         $this->setSizeRenderer($sizeRenderer);
     }
 
-    /**
-     * @return SizeCollector
-     */
-    public function getSizeCollector()
+    public function getSizeCollector(): SizeCollector
     {
         return $this->sizeCollector;
     }
 
-    /**
-     * @param SizeCollector $sizeCollector
-     */
-    public function setSizeCollector(SizeCollector $sizeCollector)
+    public function setSizeCollector(SizeCollector $sizeCollector): void
     {
         $this->sizeCollector = $sizeCollector;
     }
 
-    /**
-     * @return SizeRenderer
-     */
-    public function getSizeRenderer()
+    public function getSizeRenderer(): SizeRenderer
     {
         return $this->sizeRenderer;
     }
 
-    /**
-     * @param SizeRenderer $sizeRenderer
-     */
-    public function setSizeRenderer(SizeRenderer $sizeRenderer)
+    public function setSizeRenderer(SizeRenderer $sizeRenderer): void
     {
         $this->sizeRenderer = $sizeRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class SizeSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_BASE_SIZE => 'handleMap'];
     }

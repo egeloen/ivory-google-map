@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ElevationResponseTest extends TestCase
 {
-    /**
-     * @var ElevationResponse
-     */
-    private $response;
+    private ElevationResponse $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new ElevationResponse();
     }
@@ -77,7 +72,7 @@ class ElevationResponseTest extends TestCase
         $this->response->addResults($secondResults = [$this->createResultMock()]);
 
         $this->assertTrue($this->response->hasResults());
-        $this->assertSame(array_merge($firstResults, $secondResults), $this->response->getResults());
+        $this->assertSame([...$firstResults, ...$secondResults], $this->response->getResults());
     }
 
     public function testAddResult()
@@ -100,7 +95,7 @@ class ElevationResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ElevationRequestInterface
+     * @return MockObject|ElevationRequestInterface
      */
     private function createRequestMock()
     {
@@ -108,7 +103,7 @@ class ElevationResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ElevationResult
+     * @return MockObject|ElevationResult
      */
     private function createResultMock()
     {

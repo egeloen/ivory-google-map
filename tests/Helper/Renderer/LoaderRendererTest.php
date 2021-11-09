@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class LoaderRendererTest extends TestCase
 {
-    /**
-     * @var LoaderRenderer
-     */
-    private $loaderRenderer;
+    private LoaderRenderer $loaderRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->loaderRenderer = new LoaderRenderer(new Formatter(), new JsonBuilder());
     }

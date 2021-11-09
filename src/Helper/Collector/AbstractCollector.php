@@ -16,13 +16,7 @@ namespace Ivory\GoogleMap\Helper\Collector;
  */
 abstract class AbstractCollector
 {
-    /**
-     * @param mixed[] $values
-     * @param mixed[] $defaults
-     *
-     * @return mixed[]
-     */
-    protected function collectValues(array $values, array $defaults = [])
+    protected function collectValues(array $values, array $defaults = []): array
     {
         foreach ($values as $value) {
             $defaults = $this->collectValue($value, $defaults);
@@ -37,7 +31,7 @@ abstract class AbstractCollector
      *
      * @return object[]
      */
-    protected function collectValue($value, array $defaults = [])
+    protected function collectValue($value, array $defaults = []): array
     {
         if (!in_array($value, $defaults, true)) {
             $defaults[] = $value;

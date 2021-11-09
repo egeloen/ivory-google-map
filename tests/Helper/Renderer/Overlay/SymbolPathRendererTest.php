@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SymbolPathRendererTest extends TestCase
 {
-    /**
-     * @var SymbolPathRenderer
-     */
-    private $symbolPathRenderer;
+    private SymbolPathRenderer $symbolPathRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->symbolPathRenderer = new SymbolPathRenderer(new Formatter());
     }

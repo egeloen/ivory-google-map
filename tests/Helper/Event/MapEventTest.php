@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Event;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Event\AbstractEvent;
 use Ivory\GoogleMap\Helper\Event\MapEvent;
 use Ivory\GoogleMap\Map;
@@ -21,20 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 class MapEventTest extends TestCase
 {
-    /**
-     * @var MapEvent
-     */
-    private $mapEvent;
+    private MapEvent $mapEvent;
 
     /**
-     * @var Map|\PHPUnit_Framework_MockObject_MockObject
+     * @var Map|MockObject
      */
     private $map;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->map = $this->createMapMock();
         $this->mapEvent = new MapEvent($this->map);
@@ -51,7 +46,7 @@ class MapEventTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
+     * @return MockObject|Map
      */
     private function createMapMock()
     {

@@ -18,33 +18,21 @@ use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
  */
 class GeocoderResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var GeocoderRequestInterface|null
-     */
-    private $request;
+    private ?GeocoderRequestInterface $request = null;
 
     /**
      * @var GeocoderResult[]
      */
-    private $results = [];
+    private array $results = [];
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -52,23 +40,17 @@ class GeocoderResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status = null)
+    public function setStatus($status = null): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return GeocoderRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?GeocoderRequestInterface
     {
         return $this->request;
     }
@@ -76,15 +58,12 @@ class GeocoderResponse
     /**
      * @param GeocoderRequestInterface|null $request
      */
-    public function setRequest(GeocoderRequestInterface $request = null)
+    public function setRequest(GeocoderRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasResults()
+    public function hasResults(): bool
     {
         return !empty($this->results);
     }
@@ -92,7 +71,7 @@ class GeocoderResponse
     /**
      * @return GeocoderResult[]
      */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }
@@ -100,7 +79,7 @@ class GeocoderResponse
     /**
      * @param GeocoderResult[] $results
      */
-    public function setResults(array $results)
+    public function setResults(array $results): void
     {
         $this->results = [];
         $this->addResults($results);
@@ -109,37 +88,26 @@ class GeocoderResponse
     /**
      * @param GeocoderResult[] $results
      */
-    public function addResults(array $results)
+    public function addResults(array $results): void
     {
         foreach ($results as $result) {
             $this->addResult($result);
         }
     }
 
-    /**
-     * @param GeocoderResult $result
-     *
-     * @return bool
-     */
-    public function hasResult(GeocoderResult $result)
+    public function hasResult(GeocoderResult $result): bool
     {
         return in_array($result, $this->results, true);
     }
 
-    /**
-     * @param GeocoderResult $result
-     */
-    public function addResult(GeocoderResult $result)
+    public function addResult(GeocoderResult $result): void
     {
         if (!$this->hasResult($result)) {
             $this->results[] = $result;
         }
     }
 
-    /**
-     * @param GeocoderResult $result
-     */
-    public function removeResult(GeocoderResult $result)
+    public function removeResult(GeocoderResult $result): void
     {
         unset($this->results[array_search($result, $this->results, true)]);
         $this->results = empty($this->results) ? [] : array_values($this->results);

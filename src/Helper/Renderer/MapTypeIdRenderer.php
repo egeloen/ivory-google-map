@@ -18,10 +18,8 @@ class MapTypeIdRenderer extends AbstractRenderer
 {
     /**
      * @param string $id
-     *
-     * @return string
      */
-    public function render($id)
+    public function render($id): string
     {
         return $this->getFormatter()->renderConstant('MapTypeId', $id);
     }

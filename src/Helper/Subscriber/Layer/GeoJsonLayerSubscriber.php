@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class GeoJsonLayerSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var GeoJsonLayerCollector
-     */
-    private $geoJsonLayerCollector;
+    private ?GeoJsonLayerCollector $geoJsonLayerCollector = null;
 
-    /**
-     * @var GeoJsonLayerRenderer
-     */
-    private $geoJsonLayerRenderer;
+    private ?GeoJsonLayerRenderer $geoJsonLayerRenderer = null;
 
-    /**
-     * @param Formatter             $formatter
-     * @param GeoJsonLayerCollector $geoJsonLayerCollector
-     * @param GeoJsonLayerRenderer  $geoJsonLayerRenderer
-     */
     public function __construct(
         Formatter $formatter,
         GeoJsonLayerCollector $geoJsonLayerCollector,
@@ -49,42 +38,27 @@ class GeoJsonLayerSubscriber extends AbstractSubscriber
         $this->setGeoJsonLayerRenderer($geoJsonLayerRenderer);
     }
 
-    /**
-     * @return GeoJsonLayerCollector
-     */
-    public function getGeoJsonLayerCollector()
+    public function getGeoJsonLayerCollector(): GeoJsonLayerCollector
     {
         return $this->geoJsonLayerCollector;
     }
 
-    /**
-     * @param GeoJsonLayerCollector $geoJsonLayerCollector
-     */
-    public function setGeoJsonLayerCollector(GeoJsonLayerCollector $geoJsonLayerCollector)
+    public function setGeoJsonLayerCollector(GeoJsonLayerCollector $geoJsonLayerCollector): void
     {
         $this->geoJsonLayerCollector = $geoJsonLayerCollector;
     }
 
-    /**
-     * @return GeoJsonLayerRenderer
-     */
-    public function getGeoJsonLayerRenderer()
+    public function getGeoJsonLayerRenderer(): GeoJsonLayerRenderer
     {
         return $this->geoJsonLayerRenderer;
     }
 
-    /**
-     * @param GeoJsonLayerRenderer $geoJsonLayerRenderer
-     */
-    public function setGeoJsonLayerRenderer(GeoJsonLayerRenderer $geoJsonLayerRenderer)
+    public function setGeoJsonLayerRenderer(GeoJsonLayerRenderer $geoJsonLayerRenderer): void
     {
         $this->geoJsonLayerRenderer = $geoJsonLayerRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -94,10 +68,7 @@ class GeoJsonLayerSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_LAYER_GEO_JSON_LAYER => 'handleMap'];
     }

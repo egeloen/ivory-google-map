@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class RectangleCollectorTest extends TestCase
 {
-    /**
-     * @var RectangleCollector
-     */
-    private $rectangleCollector;
+    private RectangleCollector $rectangleCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rectangleCollector = new RectangleCollector();
     }

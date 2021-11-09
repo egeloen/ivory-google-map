@@ -26,13 +26,9 @@ class IconSequence implements OptionsAwareInterface, VariableAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var Symbol
-     */
-    private $symbol;
+    private ?Symbol $symbol = null;
 
     /**
-     * @param Symbol  $symbol
      * @param mixed[] $options
      */
     public function __construct(Symbol $symbol, array $options = [])
@@ -41,18 +37,12 @@ class IconSequence implements OptionsAwareInterface, VariableAwareInterface
         $this->setOptions($options);
     }
 
-    /**
-     * @return Symbol
-     */
-    public function getSymbol()
+    public function getSymbol(): Symbol
     {
         return $this->symbol;
     }
 
-    /**
-     * @param Symbol $symbol
-     */
-    public function setSymbol(Symbol $symbol)
+    public function setSymbol(Symbol $symbol): void
     {
         $this->symbol = $symbol;
     }

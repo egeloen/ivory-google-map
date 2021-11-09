@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\DistanceMatrix\DistanceMatrixService;
 use Ivory\GoogleMap\Service\DistanceMatrix\Request\DistanceMatrixRequestInterface;
 use Ivory\GoogleMap\Service\DistanceMatrix\Response\DistanceMatrixResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -22,15 +22,9 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class DistanceMatrixServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var DistanceMatrixService
-     */
-    private $service;
+    private DistanceMatrixService $service;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -82,8 +76,7 @@ class DistanceMatrixServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(DistanceMatrixResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createDistanceMatrixResponseMock()));
 
@@ -105,7 +98,7 @@ class DistanceMatrixServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DistanceMatrixRequestInterface
+     * @return MockObject|DistanceMatrixRequestInterface
      */
     private function createDistanceMatrixRequestMock()
     {
@@ -113,7 +106,7 @@ class DistanceMatrixServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DistanceMatrixResponse
+     * @return MockObject|DistanceMatrixResponse
      */
     private function createDistanceMatrixResponseMock()
     {

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Builder;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
 use Ivory\GoogleMap\Helper\Builder\AbstractJavascriptHelperBuilder;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
@@ -27,10 +28,7 @@ class JavascriptHelperBuilderTest extends TestCase
      */
     private $helperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->helperBuilder = $this->createAbstractJavascriptHelperBuilder();
     }
@@ -81,7 +79,7 @@ class JavascriptHelperBuilderTest extends TestCase
      * @param Formatter|null   $formatter
      * @param JsonBuilder|null $jsonBuilder
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractJavascriptHelperBuilder
+     * @return MockObject|AbstractJavascriptHelperBuilder
      */
     private function createAbstractJavascriptHelperBuilder(Formatter $formatter = null, JsonBuilder $jsonBuilder = null)
     {
@@ -91,7 +89,7 @@ class JavascriptHelperBuilderTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Formatter
+     * @return MockObject|Formatter
      */
     private function createFormatterMock()
     {
@@ -99,7 +97,7 @@ class JavascriptHelperBuilderTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|JsonBuilder
+     * @return MockObject|JsonBuilder
      */
     private function createJsonBuilderMock()
     {

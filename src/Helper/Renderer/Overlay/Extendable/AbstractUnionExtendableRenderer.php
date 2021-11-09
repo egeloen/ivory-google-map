@@ -20,10 +20,7 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
  */
 abstract class AbstractUnionExtendableRenderer extends AbstractRenderer implements ExtendableRendererInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function render(ExtendableInterface $extendable, Bound $bound)
+    public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $formatter = $this->getFormatter();
 

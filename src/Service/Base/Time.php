@@ -11,58 +11,40 @@
 
 namespace Ivory\GoogleMap\Service\Base;
 
+use DateTime;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Time
 {
-    /**
-     * @var \DateTime
-     */
-    private $value;
+    private ?DateTime $value = null;
+
+    private ?string $timeZone = null;
+
+    private ?string $text = null;
 
     /**
-     * @var string
-     */
-    private $timeZone;
-
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @param \DateTime $value
      * @param string    $timeZone
      * @param string    $text
      */
-    public function __construct(\DateTime $value, $timeZone, $text)
+    public function __construct(DateTime $value, $timeZone, $text)
     {
         $this->setValue($value);
         $this->setTimeZone($timeZone);
         $this->setText($text);
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getValue()
+    public function getValue(): DateTime
     {
         return $this->value;
     }
 
-    /**
-     * @param \DateTime $value
-     */
-    public function setValue(\DateTime $value)
+    public function setValue(DateTime $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getTimeZone()
+    public function getTimeZone(): string
     {
         return $this->timeZone;
     }
@@ -70,15 +52,12 @@ class Time
     /**
      * @param string $timeZone
      */
-    public function setTimeZone($timeZone)
+    public function setTimeZone($timeZone): void
     {
         $this->timeZone = $timeZone;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -86,7 +65,7 @@ class Time
     /**
      * @param string $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }

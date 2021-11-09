@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class SizeTest extends TestCase
 {
-    /**
-     * @var Size
-     */
-    private $size;
+    private Size $size;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->size = new Size();
     }

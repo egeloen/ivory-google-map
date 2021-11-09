@@ -26,18 +26,11 @@ class Circle implements ExtendableInterface, OptionsAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var Coordinate
-     */
-    private $center;
+    private ?Coordinate $center = null;
+
+    private ?float $radius = null;
 
     /**
-     * @var float
-     */
-    private $radius;
-
-    /**
-     * @param Coordinate $center
      * @param float      $radius
      * @param mixed[]    $options
      */
@@ -48,26 +41,17 @@ class Circle implements ExtendableInterface, OptionsAwareInterface
         $this->addOptions($options);
     }
 
-    /**
-     * @return Coordinate
-     */
-    public function getCenter()
+    public function getCenter(): Coordinate
     {
         return $this->center;
     }
 
-    /**
-     * @param Coordinate $center
-     */
-    public function setCenter(Coordinate $center)
+    public function setCenter(Coordinate $center): void
     {
         $this->center = $center;
     }
 
-    /**
-     * @return float
-     */
-    public function getRadius()
+    public function getRadius(): float
     {
         return $this->radius;
     }
@@ -75,7 +59,7 @@ class Circle implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param float $radius
      */
-    public function setRadius($radius)
+    public function setRadius($radius): void
     {
         $this->radius = $radius;
     }

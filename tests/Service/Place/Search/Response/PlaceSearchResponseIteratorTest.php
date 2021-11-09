@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Search\PlaceSearchService;
 use Ivory\GoogleMap\Service\Place\Search\Request\PageTokenPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
@@ -22,25 +23,19 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceSearchResponseIteratorTest extends TestCase
 {
-    /**
-     * @var PlaceSearchResponseIterator
-     */
-    private $iterator;
+    private PlaceSearchResponseIterator $iterator;
 
     /**
-     * @var PlaceSearchService|\PHPUnit_Framework_MockObject_MockObject
+     * @var PlaceSearchService|MockObject
      */
     private $service;
 
     /**
-     * @var PlaceSearchResponse|\PHPUnit_Framework_MockObject_MockObject
+     * @var PlaceSearchResponse|MockObject
      */
     private $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->iterator = new PlaceSearchResponseIterator(
             $this->service = $this->createServiceMock(),
@@ -65,9 +60,7 @@ class PlaceSearchResponseIteratorTest extends TestCase
         $this->service
             ->expects($this->once())
             ->method('process')
-            ->with($this->callback(function ($request) {
-                return $request instanceof PageTokenPlaceSearchRequest && $request->getResponse() === $this->response;
-            }))
+            ->with($this->callback(fn($request) => $request instanceof PageTokenPlaceSearchRequest && $request->getResponse() === $this->response))
             ->will($this->returnValue(new PlaceSearchResponseIterator(
                 $this->service,
                 $response = $this->createResponseMock()
@@ -110,7 +103,7 @@ class PlaceSearchResponseIteratorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchService
+     * @return MockObject|PlaceSearchService
      */
     private function createServiceMock()
     {
@@ -118,7 +111,7 @@ class PlaceSearchResponseIteratorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchResponse
+     * @return MockObject|PlaceSearchResponse
      */
     private function createResponseMock()
     {

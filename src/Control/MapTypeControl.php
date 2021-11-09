@@ -23,17 +23,11 @@ class MapTypeControl
     /**
      * @var string[]
      */
-    private $ids = [];
+    private array $ids = [];
 
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
-    /**
-     * @var string
-     */
-    private $style;
+    private ?string $style = null;
 
     /**
      * @param string[] $ids
@@ -50,10 +44,7 @@ class MapTypeControl
         $this->setStyle($style);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIds()
+    public function hasIds(): bool
     {
         return !empty($this->ids);
     }
@@ -61,7 +52,7 @@ class MapTypeControl
     /**
      * @return string[]
      */
-    public function getIds()
+    public function getIds(): array
     {
         return $this->ids;
     }
@@ -69,7 +60,7 @@ class MapTypeControl
     /**
      * @param string[] $ids
      */
-    public function setIds(array $ids)
+    public function setIds(array $ids): void
     {
         $this->ids = [];
         $this->addIds($ids);
@@ -78,7 +69,7 @@ class MapTypeControl
     /**
      * @param string[] $ids
      */
-    public function addIds(array $ids)
+    public function addIds(array $ids): void
     {
         foreach ($ids as $mapTypeId) {
             $this->addId($mapTypeId);
@@ -87,10 +78,8 @@ class MapTypeControl
 
     /**
      * @param string $id
-     *
-     * @return bool
      */
-    public function hasId($id)
+    public function hasId($id): bool
     {
         return in_array($id, $this->ids, true);
     }
@@ -98,7 +87,7 @@ class MapTypeControl
     /**
      * @param string $id
      */
-    public function addId($id)
+    public function addId($id): void
     {
         if (!$this->hasId($id)) {
             $this->ids[] = $id;
@@ -108,16 +97,13 @@ class MapTypeControl
     /**
      * @param string $id
      */
-    public function removeId($id)
+    public function removeId($id): void
     {
         unset($this->ids[array_search($id, $this->ids, true)]);
         $this->ids = empty($this->ids) ? [] : array_values($this->ids);
     }
 
-    /**
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->position;
     }
@@ -125,15 +111,12 @@ class MapTypeControl
     /**
      * @param string $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return string
-     */
-    public function getStyle()
+    public function getStyle(): string
     {
         return $this->style;
     }
@@ -141,7 +124,7 @@ class MapTypeControl
     /**
      * @param string $style
      */
-    public function setStyle($style)
+    public function setStyle($style): void
     {
         $this->style = $style;
     }

@@ -21,26 +21,12 @@ use Ivory\GoogleMap\Overlay\Polyline;
  */
 class ExtendableRenderer
 {
-    /**
-     * @var CoordinateRenderer
-     */
-    private $coordinateRenderer;
+    private CoordinateRenderer $coordinateRenderer;
 
-    /**
-     * @var MarkerLocationRenderer
-     */
-    private $markerLocationRenderer;
+    private MarkerLocationRenderer $markerLocationRenderer;
 
-    /**
-     * @var PolylineLocationRenderer
-     */
-    private $polylineLocationRenderer;
+    private PolylineLocationRenderer $polylineLocationRenderer;
 
-    /**
-     * @param CoordinateRenderer       $coordinateRenderer
-     * @param MarkerLocationRenderer   $markerLocationRenderer
-     * @param PolylineLocationRenderer $polylineLocationRenderer
-     */
     public function __construct(
         CoordinateRenderer $coordinateRenderer,
         MarkerLocationRenderer $markerLocationRenderer,
@@ -53,10 +39,8 @@ class ExtendableRenderer
 
     /**
      * @param mixed[] $extendables
-     *
-     * @return string
      */
-    public function render(array $extendables)
+    public function render(array $extendables): string
     {
         $result = [];
 

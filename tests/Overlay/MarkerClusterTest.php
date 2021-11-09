@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Map;
 use Ivory\GoogleMap\Overlay\Marker;
@@ -26,30 +27,24 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerClusterTest extends TestCase
 {
-    /**
-     * @var MarkerCluster
-     */
-    private $markerCluster;
+    private MarkerCluster $markerCluster;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|OverlayManager
+     * @var MockObject|OverlayManager
      */
     private $overlayManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Map
+     * @var MockObject|Map
      */
     private $map;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @var MockObject|Bound
      */
     private $bound;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bound = $this->createBoundMock();
         $this->map = $this->createMapMock($this->bound);
@@ -146,7 +141,7 @@ class MarkerClusterTest extends TestCase
         $this->markerCluster->addMarkers($secondMarkers = [$this->createMarkerMock()]);
 
         $this->assertTrue($this->markerCluster->hasMarkers());
-        $this->assertSame(array_merge($firstMarkers, $secondMarkers), $this->markerCluster->getMarkers());
+        $this->assertSame([...$firstMarkers, ...$secondMarkers], $this->markerCluster->getMarkers());
     }
 
     public function testAddMarkersWithAutoZoom()
@@ -168,7 +163,7 @@ class MarkerClusterTest extends TestCase
         $this->markerCluster->addMarkers($secondMarkers = [$secondMarker]);
 
         $this->assertTrue($this->markerCluster->hasMarkers());
-        $this->assertSame(array_merge($firstMarkers, $secondMarkers), $this->markerCluster->getMarkers());
+        $this->assertSame([...$firstMarkers, ...$secondMarkers], $this->markerCluster->getMarkers());
     }
 
     public function testAddMarker()
@@ -237,7 +232,7 @@ class MarkerClusterTest extends TestCase
     /**
      * @param Map|null $map
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|OverlayManager
+     * @return MockObject|OverlayManager
      */
     private function createOverlayManagerMock(Map $map = null)
     {
@@ -258,7 +253,7 @@ class MarkerClusterTest extends TestCase
     /**
      * @param Bound|null $bound
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|Map
+     * @return MockObject|Map
      */
     private function createMapMock(Bound $bound = null)
     {
@@ -272,7 +267,7 @@ class MarkerClusterTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -280,7 +275,7 @@ class MarkerClusterTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Marker
+     * @return MockObject|Marker
      */
     private function createMarkerMock()
     {

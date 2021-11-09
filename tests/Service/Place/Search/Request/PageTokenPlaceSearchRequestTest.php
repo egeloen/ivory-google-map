@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\ContextualizedRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Request\PageTokenPlaceSearchRequest;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
@@ -23,20 +24,14 @@ use PHPUnit\Framework\TestCase;
  */
 class PageTokenPlaceSearchRequestTest extends TestCase
 {
-    /**
-     * @var PageTokenPlaceSearchRequest
-     */
-    private $request;
+    private PageTokenPlaceSearchRequest $request;
 
     /**
-     * @var PlaceSearchResponse|\PHPUnit_Framework_MockObject_MockObject
+     * @var PlaceSearchResponse|MockObject
      */
     private $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new PageTokenPlaceSearchRequest($this->response = $this->createResponseMock());
     }
@@ -86,7 +81,7 @@ class PageTokenPlaceSearchRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchResponse
+     * @return MockObject|PlaceSearchResponse
      */
     private function createResponseMock()
     {
@@ -94,7 +89,7 @@ class PageTokenPlaceSearchRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchRequestInterface
+     * @return MockObject|PlaceSearchRequestInterface
      */
     private function createRequestMock()
     {

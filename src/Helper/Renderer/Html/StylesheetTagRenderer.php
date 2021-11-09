@@ -18,16 +18,8 @@ use Ivory\GoogleMap\Helper\Formatter\Formatter;
  */
 class StylesheetTagRenderer extends AbstractTagRenderer
 {
-    /**
-     * @var StylesheetRenderer
-     */
-    private $stylesheetRenderer;
+    private ?StylesheetRenderer $stylesheetRenderer = null;
 
-    /**
-     * @param Formatter          $formatter
-     * @param TagRenderer        $tagRenderer
-     * @param StylesheetRenderer $stylesheetRenderer
-     */
     public function __construct(Formatter $formatter, TagRenderer $tagRenderer, StylesheetRenderer $stylesheetRenderer)
     {
         parent::__construct($formatter, $tagRenderer);
@@ -35,18 +27,12 @@ class StylesheetTagRenderer extends AbstractTagRenderer
         $this->setStylesheetRenderer($stylesheetRenderer);
     }
 
-    /**
-     * @return StylesheetRenderer
-     */
-    public function getStylesheetRenderer()
+    public function getStylesheetRenderer(): StylesheetRenderer
     {
         return $this->stylesheetRenderer;
     }
 
-    /**
-     * @param StylesheetRenderer $stylesheetRenderer
-     */
-    public function setStylesheetRenderer(StylesheetRenderer $stylesheetRenderer)
+    public function setStylesheetRenderer(StylesheetRenderer $stylesheetRenderer): void
     {
         $this->stylesheetRenderer = $stylesheetRenderer;
     }
@@ -56,10 +42,8 @@ class StylesheetTagRenderer extends AbstractTagRenderer
      * @param string[] $stylesheets
      * @param string[] $attributes
      * @param bool     $newLine
-     *
-     * @return string
      */
-    public function render($name, array $stylesheets, array $attributes = [], $newLine = true)
+    public function render($name, array $stylesheets, array $attributes = [], $newLine = true): string
     {
         $formatter = $this->getFormatter();
 

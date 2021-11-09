@@ -27,16 +27,8 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
  */
 class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
 {
-    /**
-     * @var InfoBoxRenderer
-     */
-    private $infoBoxRenderer;
+    private ?InfoBoxRenderer $infoBoxRenderer = null;
 
-    /**
-     * @param Formatter        $formatter
-     * @param InfoBoxCollector $infoBoxCollector
-     * @param InfoBoxRenderer  $infoBoxRenderer
-     */
     public function __construct(
         Formatter $formatter,
         InfoBoxCollector $infoBoxCollector,
@@ -47,26 +39,17 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
         $this->setInfoBoxRenderer($infoBoxRenderer);
     }
 
-    /**
-     * @return InfoBoxRenderer
-     */
-    public function getInfoBoxRenderer()
+    public function getInfoBoxRenderer(): InfoBoxRenderer
     {
         return $this->infoBoxRenderer;
     }
 
-    /**
-     * @param InfoBoxRenderer $infoBoxRenderer
-     */
-    public function setInfoBoxRenderer(InfoBoxRenderer $infoBoxRenderer)
+    public function setInfoBoxRenderer(InfoBoxRenderer $infoBoxRenderer): void
     {
         $this->infoBoxRenderer = $infoBoxRenderer;
     }
 
-    /**
-     * @param ApiEvent $event
-     */
-    public function handleApi(ApiEvent $event)
+    public function handleApi(ApiEvent $event): void
     {
         foreach ($event->getObjects(Map::class) as $map) {
             $infoBoxes = $this->getInfoWindowCollector()->collect($map);
@@ -80,10 +63,7 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
         }
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $map = $event->getMap();
         $collector = $this->getInfoWindowCollector();
@@ -97,10 +77,7 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ApiEvents::JAVASCRIPT_MAP                 => 'handleApi',
@@ -109,13 +86,10 @@ class InfoBoxSubscriber extends AbstractInfoWindowSubscriber
     }
 
     /**
-     * @param Map        $map
-     * @param InfoWindow $infoWindow
      * @param bool       $position
      *
-     * @return string
      */
-    private function renderInfoBox(Map $map, InfoWindow $infoWindow, $position = true)
+    private function renderInfoBox(Map $map, InfoWindow $infoWindow, $position = true): string
     {
         return $this->getFormatter()->renderContainerAssignment(
             $map,

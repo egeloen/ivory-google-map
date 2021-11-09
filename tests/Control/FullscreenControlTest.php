@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class FullscreenControlTest extends TestCase
 {
-    /**
-     * @var FullscreenControl
-     */
-    private $fullscreenControl;
+    private FullscreenControl $fullscreenControl;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fullscreenControl = new FullscreenControl();
     }

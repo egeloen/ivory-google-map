@@ -18,15 +18,9 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 class Duration
 {
-    /**
-     * @var float
-     */
-    private $value;
+    private ?float $value = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
     /**
      * @param float  $value
@@ -38,10 +32,7 @@ class Duration
         $this->setText($text);
     }
 
-    /**
-     * @return float
-     */
-    public function getValue()
+    public function getValue(): float
     {
         return $this->value;
     }
@@ -49,15 +40,12 @@ class Duration
     /**
      * @param float $value
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -65,7 +53,7 @@ class Duration
     /**
      * @param string $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }

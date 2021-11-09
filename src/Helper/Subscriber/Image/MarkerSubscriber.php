@@ -22,30 +22,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MarkerSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private MarkerCollector $markerCollector;
 
-    /**
-     * @var MarkerRenderer
-     */
-    private $markerRenderer;
+    private MarkerRenderer $markerRenderer;
 
-    /**
-     * @param MarkerCollector $markerCollector
-     * @param MarkerRenderer  $markerRenderer
-     */
     public function __construct(MarkerCollector $markerCollector, MarkerRenderer $markerRenderer)
     {
         $this->markerCollector = $markerCollector;
         $this->markerRenderer = $markerRenderer;
     }
 
-    /**
-     * @param StaticMapEvent $event
-     */
-    public function handleMap(StaticMapEvent $event)
+    public function handleMap(StaticMapEvent $event): void
     {
         $result = [];
 
@@ -58,10 +45,7 @@ class MarkerSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::MARKER => 'handleMap'];
     }

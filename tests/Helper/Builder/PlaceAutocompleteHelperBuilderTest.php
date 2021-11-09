@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteHelperBuilderTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteHelperBuilder
-     */
-    private $placeAutocompleteHelperBuilder;
+    private PlaceAutocompleteHelperBuilder $placeAutocompleteHelperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->placeAutocompleteHelperBuilder = PlaceAutocompleteHelperBuilder::create();
     }

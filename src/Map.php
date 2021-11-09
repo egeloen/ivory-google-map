@@ -32,65 +32,41 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     use StaticOptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $htmlId = 'map_canvas';
+    private string $htmlId = 'map_canvas';
 
-    /**
-     * @var bool
-     */
-    private $autoZoom = false;
+    private bool $autoZoom = false;
 
-    /**
-     * @var Coordinate
-     */
-    private $center;
+    private ?Coordinate $center = null;
 
-    /**
-     * @var Bound
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
-    /**
-     * @var ControlManager
-     */
-    private $controlManager;
+    private ?ControlManager $controlManager = null;
 
-    /**
-     * @var EventManager
-     */
-    private $eventManager;
+    private ?EventManager $eventManager = null;
 
-    /**
-     * @var LayerManager
-     */
-    private $layerManager;
+    private ?LayerManager $layerManager = null;
 
-    /**
-     * @var OverlayManager
-     */
-    private $overlayManager;
+    private ?OverlayManager $overlayManager = null;
 
     /**
      * @var string[]
      */
-    private $libraries = [];
+    private array $libraries = [];
 
     /**
      * @var mixed[]
      */
-    private $mapOptions = [];
+    private array $mapOptions = [];
 
     /**
      * @var string[]
      */
-    private $stylesheetOptions = [];
+    private array $stylesheetOptions = [];
 
     /**
      * @var string[]
      */
-    private $htmlAttributes = [];
+    private array $htmlAttributes = [];
 
     public function __construct()
     {
@@ -102,10 +78,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
         $this->setLayerManager(new LayerManager());
     }
 
-    /**
-     * @return string
-     */
-    public function getHtmlId()
+    public function getHtmlId(): string
     {
         return $this->htmlId;
     }
@@ -113,15 +86,12 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string $htmlId
      */
-    public function setHtmlId($htmlId)
+    public function setHtmlId($htmlId): void
     {
         $this->htmlId = $htmlId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAutoZoom()
+    public function isAutoZoom(): bool
     {
         return $this->autoZoom;
     }
@@ -129,87 +99,57 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param bool $autoZoom
      */
-    public function setAutoZoom($autoZoom)
+    public function setAutoZoom($autoZoom): void
     {
         $this->autoZoom = $autoZoom;
     }
 
-    /**
-     * @return Coordinate
-     */
-    public function getCenter()
+    public function getCenter(): Coordinate
     {
         return $this->center;
     }
 
-    /**
-     * @param Coordinate $center
-     */
-    public function setCenter(Coordinate $center)
+    public function setCenter(Coordinate $center): void
     {
         $this->center = $center;
     }
 
-    /**
-     * @return Bound
-     */
-    public function getBound()
+    public function getBound(): Bound
     {
         return $this->bound;
     }
 
-    /**
-     * @param Bound $bound
-     */
-    public function setBound(Bound $bound)
+    public function setBound(Bound $bound): void
     {
         $this->bound = $bound;
     }
 
-    /**
-     * @return ControlManager
-     */
-    public function getControlManager()
+    public function getControlManager(): ControlManager
     {
         return $this->controlManager;
     }
 
-    /**
-     * @param ControlManager $controlManager
-     */
-    public function setControlManager(ControlManager $controlManager)
+    public function setControlManager(ControlManager $controlManager): void
     {
         $this->controlManager = $controlManager;
     }
 
-    /**
-     * @return EventManager
-     */
-    public function getEventManager()
+    public function getEventManager(): EventManager
     {
         return $this->eventManager;
     }
 
-    /**
-     * @param EventManager $eventManager
-     */
-    public function setEventManager(EventManager $eventManager)
+    public function setEventManager(EventManager $eventManager): void
     {
         $this->eventManager = $eventManager;
     }
 
-    /**
-     * @return LayerManager
-     */
-    public function getLayerManager()
+    public function getLayerManager(): ?LayerManager
     {
         return $this->layerManager;
     }
 
-    /**
-     * @param LayerManager $layerManager
-     */
-    public function setLayerManager(LayerManager $layerManager)
+    public function setLayerManager(LayerManager $layerManager): void
     {
         $this->layerManager = $layerManager;
 
@@ -218,18 +158,12 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
         }
     }
 
-    /**
-     * @return OverlayManager
-     */
-    public function getOverlayManager()
+    public function getOverlayManager(): ?OverlayManager
     {
         return $this->overlayManager;
     }
 
-    /**
-     * @param OverlayManager $overlayManager
-     */
-    public function setOverlayManager(OverlayManager $overlayManager)
+    public function setOverlayManager(OverlayManager $overlayManager): void
     {
         $this->overlayManager = $overlayManager;
 
@@ -238,10 +172,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLibraries()
+    public function hasLibraries(): bool
     {
         return !empty($this->libraries);
     }
@@ -249,7 +180,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @return string[]
      */
-    public function getLibraries()
+    public function getLibraries(): array
     {
         return $this->libraries;
     }
@@ -257,7 +188,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string[] $libraries
      */
-    public function setLibraries(array $libraries)
+    public function setLibraries(array $libraries): void
     {
         $this->libraries = [];
         $this->addLibraries($libraries);
@@ -266,7 +197,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string[] $libraries
      */
-    public function addLibraries(array $libraries)
+    public function addLibraries(array $libraries): void
     {
         foreach ($libraries as $library) {
             $this->addLibrary($library);
@@ -275,10 +206,8 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
 
     /**
      * @param string $library
-     *
-     * @return bool
      */
-    public function hasLibrary($library)
+    public function hasLibrary($library): bool
     {
         return in_array($library, $this->libraries, true);
     }
@@ -286,7 +215,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string $library
      */
-    public function addLibrary($library)
+    public function addLibrary($library): void
     {
         if (!$this->hasLibrary($library)) {
             $this->libraries[] = $library;
@@ -296,16 +225,13 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string $library
      */
-    public function removeLibrary($library)
+    public function removeLibrary($library): void
     {
         unset($this->libraries[array_search($library, $this->libraries, true)]);
         $this->libraries = empty($this->libraries) ? [] : array_values($this->libraries);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMapOptions()
+    public function hasMapOptions(): bool
     {
         return !empty($this->mapOptions);
     }
@@ -313,7 +239,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @return mixed[]
      */
-    public function getMapOptions()
+    public function getMapOptions(): array
     {
         return $this->mapOptions;
     }
@@ -321,7 +247,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param mixed[] $mapOptions
      */
-    public function setMapOptions(array $mapOptions)
+    public function setMapOptions(array $mapOptions): void
     {
         $this->mapOptions = [];
         $this->addMapOptions($mapOptions);
@@ -330,7 +256,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param mixed[] $mapOptions
      */
-    public function addMapOptions(array $mapOptions)
+    public function addMapOptions(array $mapOptions): void
     {
         foreach ($mapOptions as $mapOption => $value) {
             $this->setMapOption($mapOption, $value);
@@ -339,10 +265,8 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
 
     /**
      * @param string $mapOption
-     *
-     * @return bool
      */
-    public function hasMapOption($mapOption)
+    public function hasMapOption($mapOption): bool
     {
         return isset($this->mapOptions[$mapOption]);
     }
@@ -361,7 +285,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
      * @param string $mapOption
      * @param mixed  $value
      */
-    public function setMapOption($mapOption, $value)
+    public function setMapOption($mapOption, $value): void
     {
         $this->mapOptions[$mapOption] = $value;
     }
@@ -369,15 +293,12 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string $mapOption
      */
-    public function removeMapOption($mapOption)
+    public function removeMapOption($mapOption): void
     {
         unset($this->mapOptions[$mapOption]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasStylesheetOptions()
+    public function hasStylesheetOptions(): bool
     {
         return !empty($this->stylesheetOptions);
     }
@@ -385,7 +306,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @return string[]
      */
-    public function getStylesheetOptions()
+    public function getStylesheetOptions(): array
     {
         return $this->stylesheetOptions;
     }
@@ -393,7 +314,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string[] $stylesheetOptions
      */
-    public function setStylesheetOptions(array $stylesheetOptions)
+    public function setStylesheetOptions(array $stylesheetOptions): void
     {
         $this->stylesheetOptions = [];
         $this->addStylesheetOptions($stylesheetOptions);
@@ -402,7 +323,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string[] $stylesheetOptions
      */
-    public function addStylesheetOptions(array $stylesheetOptions)
+    public function addStylesheetOptions(array $stylesheetOptions): void
     {
         foreach ($stylesheetOptions as $stylesheetOption => $value) {
             $this->setStylesheetOption($stylesheetOption, $value);
@@ -411,20 +332,16 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
 
     /**
      * @param string $stylesheetOption
-     *
-     * @return bool
      */
-    public function hasStylesheetOption($stylesheetOption)
+    public function hasStylesheetOption($stylesheetOption): bool
     {
         return isset($this->stylesheetOptions[$stylesheetOption]);
     }
 
     /**
      * @param string $stylesheetOption
-     *
-     * @return string|null
      */
-    public function getStylesheetOption($stylesheetOption)
+    public function getStylesheetOption($stylesheetOption): ?string
     {
         return $this->hasStylesheetOption($stylesheetOption) ? $this->stylesheetOptions[$stylesheetOption] : null;
     }
@@ -433,7 +350,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
      * @param string $stylesheetOption
      * @param string $value
      */
-    public function setStylesheetOption($stylesheetOption, $value)
+    public function setStylesheetOption($stylesheetOption, $value): void
     {
         $this->stylesheetOptions[$stylesheetOption] = $value;
     }
@@ -441,15 +358,12 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string $stylesheetOption
      */
-    public function removeStylesheetOption($stylesheetOption)
+    public function removeStylesheetOption($stylesheetOption): void
     {
         unset($this->stylesheetOptions[$stylesheetOption]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHtmlAttributes()
+    public function hasHtmlAttributes(): bool
     {
         return !empty($this->htmlAttributes);
     }
@@ -457,7 +371,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @return string[]
      */
-    public function getHtmlAttributes()
+    public function getHtmlAttributes(): array
     {
         return $this->htmlAttributes;
     }
@@ -465,7 +379,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string[] $htmlAttributes
      */
-    public function setHtmlAttributes(array $htmlAttributes)
+    public function setHtmlAttributes(array $htmlAttributes): void
     {
         $this->htmlAttributes = [];
         $this->addHtmlAttributes($htmlAttributes);
@@ -474,7 +388,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string[] $htmlAttributes
      */
-    public function addHtmlAttributes(array $htmlAttributes)
+    public function addHtmlAttributes(array $htmlAttributes): void
     {
         foreach ($htmlAttributes as $htmlAttribute => $value) {
             $this->setHtmlAttribute($htmlAttribute, $value);
@@ -483,20 +397,16 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
 
     /**
      * @param string $htmlAttribute
-     *
-     * @return bool
      */
-    public function hasHtmlAttribute($htmlAttribute)
+    public function hasHtmlAttribute($htmlAttribute): bool
     {
         return isset($this->htmlAttributes[$htmlAttribute]);
     }
 
     /**
      * @param string $htmlAttribute
-     *
-     * @return string|null
      */
-    public function getHtmlAttribute($htmlAttribute)
+    public function getHtmlAttribute($htmlAttribute): ?string
     {
         return $this->hasHtmlAttribute($htmlAttribute) ? $this->htmlAttributes[$htmlAttribute] : null;
     }
@@ -505,7 +415,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
      * @param string $htmlAttribute
      * @param string $value
      */
-    public function setHtmlAttribute($htmlAttribute, $value)
+    public function setHtmlAttribute($htmlAttribute, $value): void
     {
         $this->htmlAttributes[$htmlAttribute] = $value;
     }
@@ -513,7 +423,7 @@ class Map implements VariableAwareInterface, StaticOptionsAwareInterface
     /**
      * @param string $htmlAttribute
      */
-    public function removeHtmlAttribute($htmlAttribute)
+    public function removeHtmlAttribute($htmlAttribute): void
     {
         unset($this->htmlAttributes[$htmlAttribute]);
     }

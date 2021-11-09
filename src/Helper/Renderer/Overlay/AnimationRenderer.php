@@ -20,10 +20,8 @@ class AnimationRenderer extends AbstractRenderer
 {
     /**
      * @param string $animation
-     *
-     * @return string
      */
-    public function render($animation)
+    public function render($animation): string
     {
         return $this->getFormatter()->renderConstant('Animation', $animation);
     }

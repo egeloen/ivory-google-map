@@ -21,20 +21,11 @@ use PHPUnit\Framework\TestCase;
  */
 class KmlLayerTest extends TestCase
 {
-    /**
-     * @var KmlLayer
-     */
-    private $kmlLayer;
+    private KmlLayer $kmlLayer;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kmlLayer = new KmlLayer($this->url = 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml');
     }

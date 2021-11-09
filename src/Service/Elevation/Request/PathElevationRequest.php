@@ -21,12 +21,9 @@ class PathElevationRequest implements ElevationRequestInterface
     /**
      * @var LocationInterface[]
      */
-    private $paths = [];
+    private array $paths = [];
 
-    /**
-     * @var int
-     */
-    private $samples;
+    private ?int $samples = null;
 
     /**
      * @param LocationInterface[] $paths
@@ -38,10 +35,7 @@ class PathElevationRequest implements ElevationRequestInterface
         $this->setSamples($samples);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPaths()
+    public function hasPaths(): bool
     {
         return !empty($this->paths);
     }
@@ -49,7 +43,7 @@ class PathElevationRequest implements ElevationRequestInterface
     /**
      * @return LocationInterface[]
      */
-    public function getPaths()
+    public function getPaths(): array
     {
         return $this->paths;
     }
@@ -57,7 +51,7 @@ class PathElevationRequest implements ElevationRequestInterface
     /**
      * @param LocationInterface[] $paths
      */
-    public function setPaths(array $paths)
+    public function setPaths(array $paths): void
     {
         $this->paths = [];
         $this->addPaths($paths);
@@ -66,46 +60,32 @@ class PathElevationRequest implements ElevationRequestInterface
     /**
      * @param LocationInterface[] $paths
      */
-    public function addPaths(array $paths)
+    public function addPaths(array $paths): void
     {
         foreach ($paths as $path) {
             $this->addPath($path);
         }
     }
 
-    /**
-     * @param LocationInterface $path
-     *
-     * @return bool
-     */
-    public function hasPath(LocationInterface $path)
+    public function hasPath(LocationInterface $path): bool
     {
         return in_array($path, $this->paths, true);
     }
 
-    /**
-     * @param LocationInterface $path
-     */
-    public function addPath(LocationInterface $path)
+    public function addPath(LocationInterface $path): void
     {
         if (!$this->hasPath($path)) {
             $this->paths[] = $path;
         }
     }
 
-    /**
-     * @param LocationInterface $path
-     */
-    public function removePath(LocationInterface $path)
+    public function removePath(LocationInterface $path): void
     {
         unset($this->paths[array_search($path, $this->paths, true)]);
         $this->paths = empty($this->paths) ? [] : array_values($this->paths);
     }
 
-    /**
-     * @return int
-     */
-    public function getSamples()
+    public function getSamples(): ?int
     {
         return $this->samples;
     }
@@ -113,20 +93,15 @@ class PathElevationRequest implements ElevationRequestInterface
     /**
      * @param int $samples
      */
-    public function setSamples($samples)
+    public function setSamples($samples): void
     {
         $this->samples = $samples;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         return [
-            'path' => implode('|', array_map(function (LocationInterface $path) {
-                return $path->buildQuery();
-            }, $this->paths)),
+            'path' => implode('|', array_map(fn(LocationInterface $path) => $path->buildQuery(), $this->paths)),
             'samples' => $this->samples,
         ];
     }

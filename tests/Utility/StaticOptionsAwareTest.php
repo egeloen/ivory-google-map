@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StaticOptionsAwareTest extends TestCase
 {
-    /**
-     * @var StaticOptionsAwareTrait
-     */
-    private $staticOptionsAware;
+    private \Ivory\Tests\GoogleMap\Utility\StaticOptionsAwareMock $staticOptionsAware;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->staticOptionsAware = new StaticOptionsAwareMock();
     }

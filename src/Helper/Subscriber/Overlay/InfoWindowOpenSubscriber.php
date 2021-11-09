@@ -22,16 +22,8 @@ use Ivory\GoogleMap\Helper\Renderer\Overlay\InfoWindowOpenRenderer;
  */
 class InfoWindowOpenSubscriber extends AbstractInfoWindowSubscriber
 {
-    /**
-     * @var InfoWindowOpenRenderer
-     */
-    private $infoWindowOpenRenderer;
+    private ?InfoWindowOpenRenderer $infoWindowOpenRenderer = null;
 
-    /**
-     * @param Formatter              $formatter
-     * @param InfoWindowCollector    $infoWindowCollector
-     * @param InfoWindowOpenRenderer $infoWindowOpenRenderer
-     */
     public function __construct(
         Formatter $formatter,
         InfoWindowCollector $infoWindowCollector,
@@ -42,26 +34,17 @@ class InfoWindowOpenSubscriber extends AbstractInfoWindowSubscriber
         $this->setInfoWindowOpenRenderer($infoWindowOpenRenderer);
     }
 
-    /**
-     * @return InfoWindowOpenRenderer
-     */
-    public function getInfoWindowOpenRenderer()
+    public function getInfoWindowOpenRenderer(): InfoWindowOpenRenderer
     {
         return $this->infoWindowOpenRenderer;
     }
 
-    /**
-     * @param InfoWindowOpenRenderer $infoWindowOpenRenderer
-     */
-    public function setInfoWindowOpenRenderer(InfoWindowOpenRenderer $infoWindowOpenRenderer)
+    public function setInfoWindowOpenRenderer(InfoWindowOpenRenderer $infoWindowOpenRenderer): void
     {
         $this->infoWindowOpenRenderer = $infoWindowOpenRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -73,10 +56,7 @@ class InfoWindowOpenSubscriber extends AbstractInfoWindowSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_FINISH => 'handleMap'];
     }

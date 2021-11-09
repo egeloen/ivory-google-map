@@ -22,16 +22,8 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class AutocompleteRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var RequirementRenderer
-     */
-    private $requirementRenderer;
+    private ?RequirementRenderer $requirementRenderer = null;
 
-    /**
-     * @param Formatter           $formatter
-     * @param JsonBuilder         $jsonBuilder
-     * @param RequirementRenderer $requirementRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -42,28 +34,17 @@ class AutocompleteRenderer extends AbstractJsonRenderer
         $this->setRequirementRenderer($requirementRenderer);
     }
 
-    /**
-     * @return RequirementRenderer
-     */
-    public function getRequirementRenderer()
+    public function getRequirementRenderer(): RequirementRenderer
     {
         return $this->requirementRenderer;
     }
 
-    /**
-     * @param RequirementRenderer $requirementRenderer
-     */
-    public function setRequirementRenderer(RequirementRenderer $requirementRenderer)
+    public function setRequirementRenderer(RequirementRenderer $requirementRenderer): void
     {
         $this->requirementRenderer = $requirementRenderer;
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     *
-     * @return string
-     */
-    public function render(Autocomplete $autocomplete)
+    public function render(Autocomplete $autocomplete): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
@@ -92,10 +73,7 @@ class AutocompleteRenderer extends AbstractJsonRenderer
         ], $formatter->renderClass('places')));
     }
 
-    /**
-     * @return string
-     */
-    public function renderRequirement()
+    public function renderRequirement(): string
     {
         return $this->requirementRenderer->render($this->getFormatter()->renderClass('places'));
     }

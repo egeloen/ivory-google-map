@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\Rectangle;
@@ -23,20 +24,14 @@ use PHPUnit\Framework\TestCase;
  */
 class RectangleTest extends TestCase
 {
-    /**
-     * @var Rectangle
-     */
-    private $rectangle;
+    private Rectangle $rectangle;
 
     /**
      * @var Bound
      */
     private $bound;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rectangle = new Rectangle($this->bound = $this->createBoundMock());
     }
@@ -72,7 +67,7 @@ class RectangleTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

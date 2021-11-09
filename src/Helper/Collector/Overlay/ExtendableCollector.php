@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\ExtendableInterface;
 class ExtendableCollector extends AbstractCollector
 {
     /**
-     * @param Map                   $map
      * @param ExtendableInterface[] $extendables
-     *
      * @return ExtendableInterface[]
      */
-    public function collect(Map $map, array $extendables = [])
+    public function collect(Map $map, array $extendables = []): array
     {
         return $this->collectValues($map->getBound()->getExtendables(), $extendables);
     }

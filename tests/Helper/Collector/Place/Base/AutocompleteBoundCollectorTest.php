@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteBoundCollectorTest extends TestCase
 {
-    /**
-     * @var AutocompleteBoundCollector
-     */
-    private $autocompleteBoundCollector;
+    private AutocompleteBoundCollector $autocompleteBoundCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteBoundCollector = new AutocompleteBoundCollector();
     }

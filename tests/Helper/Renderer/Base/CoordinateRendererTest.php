@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateRendererTest extends TestCase
 {
-    /**
-     * @var CoordinateRenderer
-     */
-    private $coordinateRenderer;
+    private CoordinateRenderer $coordinateRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinateRenderer = new CoordinateRenderer(new Formatter());
     }

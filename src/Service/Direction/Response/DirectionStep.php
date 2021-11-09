@@ -24,58 +24,28 @@ use Ivory\GoogleMap\Service\Direction\Response\Transit\DirectionTransitDetails;
  */
 class DirectionStep
 {
-    /**
-     * @var Distance|null
-     */
-    private $distance;
+    private ?Distance $distance = null;
 
-    /**
-     * @var Duration|null
-     */
-    private $duration;
+    private ?Duration $duration = null;
 
-    /**
-     * @var Coordinate|null
-     */
-    private $endLocation;
+    private ?Coordinate $startLocation = null;
 
-    /**
-     * @var string|null
-     */
-    private $instructions;
+    private ?Coordinate $endLocation = null;
 
-    /**
-     * @var EncodedPolyline|null
-     */
-    private $encodedPolyline;
+    private ?string $instructions = null;
 
-    /**
-     * @var Coordinate|null
-     */
-    private $startLocation;
+    private ?EncodedPolyline $encodedPolyline = null;
 
-    /**
-     * @var string|null
-     */
-    private $travelMode;
+    private ?string $travelMode = null;
 
-    /**
-     * @var DirectionTransitDetails|null
-     */
-    private $transitDetails;
+    private ?DirectionTransitDetails $transitDetails = null;
 
-    /**
-     * @return bool
-     */
-    public function hasDistance()
+    public function hasDistance(): bool
     {
         return $this->distance !== null;
     }
 
-    /**
-     * @return Distance|null
-     */
-    public function getDistance()
+    public function getDistance(): ?Distance
     {
         return $this->distance;
     }
@@ -83,23 +53,17 @@ class DirectionStep
     /**
      * @param Distance|null $distance
      */
-    public function setDistance(Distance $distance = null)
+    public function setDistance(Distance $distance = null): void
     {
         $this->distance = $distance;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDuration()
+    public function hasDuration(): bool
     {
         return $this->duration !== null;
     }
 
-    /**
-     * @return Duration|null
-     */
-    public function getDuration()
+    public function getDuration(): ?Duration
     {
         return $this->duration;
     }
@@ -107,23 +71,17 @@ class DirectionStep
     /**
      * @param Duration|null $duration
      */
-    public function setDuration(Duration $duration = null)
+    public function setDuration(Duration $duration = null): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEndLocation()
+    public function hasEndLocation(): bool
     {
         return $this->endLocation !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getEndLocation()
+    public function getEndLocation(): ?Coordinate
     {
         return $this->endLocation;
     }
@@ -131,23 +89,17 @@ class DirectionStep
     /**
      * @param Coordinate|null $endLocation
      */
-    public function setEndLocation(Coordinate $endLocation = null)
+    public function setEndLocation(Coordinate $endLocation = null): void
     {
         $this->endLocation = $endLocation;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasInstructions()
+    public function hasInstructions(): bool
     {
         return $this->instructions !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getInstructions()
+    public function getInstructions(): ?string
     {
         return $this->instructions;
     }
@@ -155,23 +107,17 @@ class DirectionStep
     /**
      * @param string|null $instructions
      */
-    public function setInstructions($instructions = null)
+    public function setInstructions($instructions = null): void
     {
         $this->instructions = $instructions;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEncodedPolyline()
+    public function hasEncodedPolyline(): bool
     {
         return $this->encodedPolyline !== null;
     }
 
-    /**
-     * @return EncodedPolyline|null
-     */
-    public function getEncodedPolyline()
+    public function getEncodedPolyline(): ?EncodedPolyline
     {
         return $this->encodedPolyline;
     }
@@ -179,23 +125,17 @@ class DirectionStep
     /**
      * @param EncodedPolyline|null $encodedPolyline
      */
-    public function setEncodedPolyline(EncodedPolyline $encodedPolyline = null)
+    public function setEncodedPolyline(EncodedPolyline $encodedPolyline = null): void
     {
         $this->encodedPolyline = $encodedPolyline;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasStartLocation()
+    public function hasStartLocation(): bool
     {
         return $this->startLocation !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getStartLocation()
+    public function getStartLocation(): ?Coordinate
     {
         return $this->startLocation;
     }
@@ -203,23 +143,17 @@ class DirectionStep
     /**
      * @param Coordinate|null $startLocation
      */
-    public function setStartLocation(Coordinate $startLocation = null)
+    public function setStartLocation(Coordinate $startLocation = null): void
     {
         $this->startLocation = $startLocation;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTravelMode()
+    public function hasTravelMode(): bool
     {
         return $this->travelMode !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTravelMode()
+    public function getTravelMode(): ?string
     {
         return $this->travelMode;
     }
@@ -227,23 +161,17 @@ class DirectionStep
     /**
      * @param string|null $travelMode
      */
-    public function setTravelMode($travelMode = null)
+    public function setTravelMode($travelMode = null): void
     {
         $this->travelMode = $travelMode;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTransitDetails()
+    public function hasTransitDetails(): bool
     {
         return $this->transitDetails !== null;
     }
 
-    /**
-     * @return DirectionTransitDetails|null
-     */
-    public function getTransitDetails()
+    public function getTransitDetails(): ?DirectionTransitDetails
     {
         return $this->transitDetails;
     }
@@ -251,7 +179,7 @@ class DirectionStep
     /**
      * @param DirectionTransitDetails|null $transitDetails
      */
-    public function setTransitDetails(DirectionTransitDetails $transitDetails = null)
+    public function setTransitDetails(DirectionTransitDetails $transitDetails = null): void
     {
         $this->transitDetails = $transitDetails;
     }

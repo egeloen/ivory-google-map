@@ -20,16 +20,13 @@ class ApiInitRenderer extends AbstractRenderer
 {
     /**
      * @param string           $name
-     * @param SplObjectStorage $callbacks
-     * @param SplObjectStorage $requirements
      * @param string[]         $sources
      * @param string           $sourceCallback
      * @param string           $requirementCallback
      * @param bool             $newLine
      *
-     * @return string
      */
-    public function render($name, SplObjectStorage $callbacks, SplObjectStorage $requirements, array $sources, $sourceCallback, $requirementCallback, $newLine = true)
+    public function render($name, SplObjectStorage $callbacks, SplObjectStorage $requirements, array $sources, $sourceCallback, $requirementCallback, $newLine = true): string
     {
         $formatter = $this->getFormatter();
         $separator = $formatter->renderSeparator();
@@ -45,7 +42,7 @@ class ApiInitRenderer extends AbstractRenderer
                 $formatter->renderClosure($formatter->renderCode(
                     'return ' . implode(
                         $separator . '&&' . $separator,
-                        isset($requirements[$object]) ? $requirements[$object] : []
+                        $requirements[$object] ?? []
                     ),
                     true,
                     false

@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Map;
 class EventOnceCollector extends AbstractCollector
 {
     /**
-     * @param Map     $map
      * @param Event[] $eventsOnce
-     *
      * @return Event[]
      */
-    public function collect(Map $map, array $eventsOnce = [])
+    public function collect(Map $map, array $eventsOnce = []): array
     {
         return $this->collectValues($map->getEventManager()->getEventsOnce(), $eventsOnce);
     }

@@ -18,31 +18,19 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class AbstractEvent extends Event
 {
-    /**
-     * @var string
-     */
-    private $code = '';
+    private string $code = '';
 
-    /**
-     * @return bool
-     */
-    public function hasCode()
+    public function hasCode(): bool
     {
         return !empty($this->code);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * @param string $code
-     */
-    public function setCode($code)
+    public function setCode(string $code)
     {
         $this->code = $code;
     }

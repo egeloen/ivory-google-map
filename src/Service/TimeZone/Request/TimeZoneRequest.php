@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Service\TimeZone\Request;
 
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 
 /**
@@ -18,75 +19,47 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 class TimeZoneRequest implements TimeZoneRequestInterface
 {
-    /**
-     * @var Coordinate
-     */
-    private $location;
+    private ?Coordinate $location = null;
+
+    private ?DateTime $date = null;
+
+    private ?string $language = null;
 
     /**
-     * @var \DateTime
+     * @param DateTime|null $date
      */
-    private $date;
-
-    /**
-     * @var string|null
-     */
-    private $language;
-
-    /**
-     * @param Coordinate     $location
-     * @param \DateTime|null $date
-     */
-    public function __construct(Coordinate $location, \DateTime $date = null)
+    public function __construct(Coordinate $location, DateTime $date = null)
     {
         $this->setLocation($location);
         $this->setDate($date);
     }
 
-    /**
-     * @return Coordinate
-     */
-    public function getLocation()
+    public function getLocation(): Coordinate
     {
         return $this->location;
     }
 
-    /**
-     * @param Coordinate $location
-     */
-    public function setLocation(Coordinate $location)
+    public function setLocation(Coordinate $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -94,7 +67,7 @@ class TimeZoneRequest implements TimeZoneRequestInterface
     /**
      * @param string|null $language
      */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->language = $language;
     }
@@ -102,7 +75,7 @@ class TimeZoneRequest implements TimeZoneRequestInterface
     /**
      * @return mixed[]
      */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = [
             'location'  => $this->buildCoordinate($this->location),
@@ -116,12 +89,7 @@ class TimeZoneRequest implements TimeZoneRequestInterface
         return $query;
     }
 
-    /**
-     * @param Coordinate $coordinate
-     *
-     * @return string
-     */
-    private function buildCoordinate(Coordinate $coordinate)
+    private function buildCoordinate(Coordinate $coordinate): string
     {
         return $coordinate->getLatitude().','.$coordinate->getLongitude();
     }

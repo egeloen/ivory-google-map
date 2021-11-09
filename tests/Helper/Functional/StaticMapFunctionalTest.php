@@ -39,30 +39,15 @@ use PHPUnit\Framework\TestCase;
  */
 class StaticMapFunctionalTest extends TestCase
 {
-    /**
-     * @var StaticMapHelper
-     */
-    private $staticMapHelper;
+    private StaticMapHelper $staticMapHelper;
 
-    /**
-     * @var HttpClient
-     */
-    private $client;
+    private PluginClient $client;
 
-    /**
-     * @var MessageFactory
-     */
-    private $messageFactory;
+    private GuzzleMessageFactory $messageFactory;
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    protected $pool;
+    protected FilesystemAdapter $pool;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -419,9 +404,6 @@ class StaticMapFunctionalTest extends TestCase
         return new EncodedPolyline('yv_tHizrQiGsR`HcP');
     }
 
-    /**
-     * @param Map $map
-     */
     private function renderMap(Map $map)
     {
         $request = $this->messageFactory->createRequest('GET', $this->staticMapHelper->render($map));

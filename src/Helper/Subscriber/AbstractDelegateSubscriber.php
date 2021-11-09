@@ -19,12 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 abstract class AbstractDelegateSubscriber extends AbstractSubscriber implements DelegateSubscriberInterface
 {
-    /**
-     * @param Event                    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function handle(Event $event, $eventName, EventDispatcherInterface $eventDispatcher)
+    public function handle(Event $event, string $eventName, EventDispatcherInterface $eventDispatcher)
     {
         $delegates = static::getDelegatedSubscribedEvents();
 
@@ -35,10 +30,7 @@ abstract class AbstractDelegateSubscriber extends AbstractSubscriber implements 
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         $events = [];
 

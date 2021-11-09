@@ -22,20 +22,11 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceAutocompleteRequestTest extends TestCase
 {
-    /**
-     * @var PlaceAutocompleteRequest
-     */
-    private $request;
+    private PlaceAutocompleteRequest $request;
 
-    /**
-     * @var string
-     */
-    private $input;
+    private ?string $input = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = new PlaceAutocompleteRequest($this->input = 'input');
     }
@@ -78,7 +69,7 @@ class PlaceAutocompleteRequestTest extends TestCase
         $this->request->addTypes($secondTypes = [AutocompleteType::CITIES]);
 
         $this->assertTrue($this->request->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->request->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->request->getTypes());
     }
 
     public function testAddType()

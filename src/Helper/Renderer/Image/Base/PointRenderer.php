@@ -18,12 +18,7 @@ use Ivory\GoogleMap\Base\Point;
  */
 class PointRenderer
 {
-    /**
-     * @param Point $point
-     *
-     * @return string
-     */
-    public function render(Point $point)
+    public function render(Point $point): string
     {
         return $point->getX().','.$point->getY();
     }

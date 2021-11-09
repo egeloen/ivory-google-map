@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Overlay\Icon;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class IconTest extends TestCase
 {
-    /**
-     * @var Icon
-     */
-    private $icon;
+    private Icon $icon;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->icon = new Icon();
     }
@@ -148,7 +143,7 @@ class IconTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Point
+     * @return MockObject|Point
      */
     private function createPointMock()
     {
@@ -156,7 +151,7 @@ class IconTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Size
+     * @return MockObject|Size
      */
     private function createSizeMock()
     {

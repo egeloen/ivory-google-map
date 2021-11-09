@@ -16,37 +16,23 @@ use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\Elevation\Request\ElevationRequestInterface;
 use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
-use Ivory\Serializer\SerializerInterface;
-
+use Symfony\Component\Serializer\SerializerInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ElevationService extends AbstractSerializableService
 {
-    /**
-     * @param HttpClient               $client
-     * @param MessageFactory           $messageFactory
-     * @param SerializerInterface|null $serializer
-     */
-    public function __construct(
-        HttpClient $client,
-        MessageFactory $messageFactory,
-        SerializerInterface $serializer = null
-    ) {
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, SerializerInterface $serializer = null) {
         parent::__construct('https://maps.googleapis.com/maps/api/elevation', $client, $messageFactory, $serializer);
     }
 
-    /**
-     * @param ElevationRequestInterface $request
-     *
-     * @return ElevationResponse
-     */
-    public function process(ElevationRequestInterface $request)
+    public function process(ElevationRequestInterface $request): ElevationResponse
     {
         $httpRequest = $this->createRequest($request);
         $httpResponse = $this->getClient()->sendRequest($httpRequest);
 
-        $response = $this->deserialize($httpResponse, ElevationResponse::class);
+        /** @var ElevationResponse $response */
+        $response = $this->deserialize($httpResponse, ElevationResponse::class, []);
         $response->setRequest($request);
 
         return $response;

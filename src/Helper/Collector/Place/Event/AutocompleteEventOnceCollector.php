@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Place\Autocomplete;
 class AutocompleteEventOnceCollector extends AbstractCollector
 {
     /**
-     * @param Autocomplete $autocomplete
      * @param Event[]      $eventsOnce
-     *
      * @return Event[]
      */
-    public function collect(Autocomplete $autocomplete, array $eventsOnce = [])
+    public function collect(Autocomplete $autocomplete, array $eventsOnce = []): array
     {
         return $this->collectValues($autocomplete->getEventManager()->getEventsOnce(), $eventsOnce);
     }

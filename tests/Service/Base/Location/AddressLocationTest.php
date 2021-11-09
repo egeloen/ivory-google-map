@@ -20,20 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class AddressLocationTest extends TestCase
 {
-    /**
-     * @var AddressLocation
-     */
-    private $addressLocation;
+    private AddressLocation $addressLocation;
 
-    /**
-     * @var string
-     */
-    private $address;
+    private ?string $address = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->addressLocation = new AddressLocation($this->address = 'address');
     }

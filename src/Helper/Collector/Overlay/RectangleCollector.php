@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\Rectangle;
 class RectangleCollector extends AbstractCollector
 {
     /**
-     * @param Map         $map
      * @param Rectangle[] $rectangles
-     *
      * @return Rectangle[]
      */
-    public function collect(Map $map, array $rectangles = [])
+    public function collect(Map $map, array $rectangles = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getRectangles(), $rectangles);
     }

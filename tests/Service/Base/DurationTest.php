@@ -19,25 +19,13 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationTest extends TestCase
 {
-    /**
-     * @var Duration
-     */
-    private $duration;
+    private Duration $duration;
 
-    /**
-     * @var float
-     */
-    private $value;
+    private ?float $value = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->duration = new Duration($this->value = 2.3, $this->text = 'foo');
     }

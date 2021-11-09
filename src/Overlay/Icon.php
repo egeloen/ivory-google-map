@@ -27,30 +27,15 @@ class Icon implements VariableAwareInterface
 
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * @var Point|null
-     */
-    private $anchor;
+    private ?Point $anchor = null;
 
-    /**
-     * @var Point|null
-     */
-    private $origin;
+    private ?Point $origin = null;
 
-    /**
-     * @var Size|null
-     */
-    private $scaledSize;
+    private ?Size $scaledSize = null;
 
-    /**
-     * @var Size|null
-     */
-    private $size;
+    private ?Size $size = null;
 
     /**
      * @param string     $url
@@ -73,10 +58,7 @@ class Icon implements VariableAwareInterface
         $this->setSize($size);
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -84,23 +66,17 @@ class Icon implements VariableAwareInterface
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAnchor()
+    public function hasAnchor(): bool
     {
         return $this->anchor !== null;
     }
 
-    /**
-     * @return Point|null
-     */
-    public function getAnchor()
+    public function getAnchor(): ?Point
     {
         return $this->anchor;
     }
@@ -108,23 +84,17 @@ class Icon implements VariableAwareInterface
     /**
      * @param Point|null $anchor
      */
-    public function setAnchor(Point $anchor = null)
+    public function setAnchor(Point $anchor = null): void
     {
         $this->anchor = $anchor;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOrigin()
+    public function hasOrigin(): bool
     {
         return $this->origin !== null;
     }
 
-    /**
-     * @return Point|null
-     */
-    public function getOrigin()
+    public function getOrigin(): ?Point
     {
         return $this->origin;
     }
@@ -132,23 +102,17 @@ class Icon implements VariableAwareInterface
     /**
      * @param Point|null $origin
      */
-    public function setOrigin(Point $origin = null)
+    public function setOrigin(Point $origin = null): void
     {
         $this->origin = $origin;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasScaledSize()
+    public function hasScaledSize(): bool
     {
         return $this->scaledSize !== null;
     }
 
-    /**
-     * @return Size|null
-     */
-    public function getScaledSize()
+    public function getScaledSize(): ?Size
     {
         return $this->scaledSize;
     }
@@ -156,23 +120,17 @@ class Icon implements VariableAwareInterface
     /**
      * @param Size|null $scaledSize
      */
-    public function setScaledSize(Size $scaledSize = null)
+    public function setScaledSize(Size $scaledSize = null): void
     {
         $this->scaledSize = $scaledSize;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasSize()
+    public function hasSize(): bool
     {
         return $this->size !== null;
     }
 
-    /**
-     * @return Size|null
-     */
-    public function getSize()
+    public function getSize(): ?Size
     {
         return $this->size;
     }
@@ -180,7 +138,7 @@ class Icon implements VariableAwareInterface
     /**
      * @param Size|null $size
      */
-    public function setSize(Size $size = null)
+    public function setSize(Size $size = null): void
     {
         $this->size = $size;
     }

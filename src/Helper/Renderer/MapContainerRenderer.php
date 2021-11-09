@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Helper\Renderer;
  */
 class MapContainerRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         return $this->getJsonBuilder()
             ->setValue('[base][coordinates]', [])

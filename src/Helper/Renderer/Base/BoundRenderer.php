@@ -19,12 +19,7 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
  */
 class BoundRenderer extends AbstractRenderer
 {
-    /**
-     * @param Bound $bound
-     *
-     * @return string
-     */
-    public function render(Bound $bound)
+    public function render(Bound $bound): string
     {
         $arguments = [];
         $formatter = $this->getFormatter();

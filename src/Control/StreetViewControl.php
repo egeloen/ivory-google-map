@@ -18,10 +18,7 @@ namespace Ivory\GoogleMap\Control;
  */
 class StreetViewControl
 {
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
     /**
      * @param string $position
@@ -31,10 +28,7 @@ class StreetViewControl
         $this->setPosition($position);
     }
 
-    /**
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->position;
     }
@@ -42,7 +36,7 @@ class StreetViewControl
     /**
      * @param string $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

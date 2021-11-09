@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class EventOnceSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var EventOnceCollector
-     */
-    private $eventOnceCollector;
+    private ?EventOnceCollector $eventOnceCollector = null;
 
-    /**
-     * @var EventOnceRenderer
-     */
-    private $eventOnceRenderer;
+    private ?EventOnceRenderer $eventOnceRenderer = null;
 
-    /**
-     * @param Formatter          $formatter
-     * @param EventOnceCollector $eventOnceCollector
-     * @param EventOnceRenderer  $eventOnceRenderer
-     */
     public function __construct(
         Formatter $formatter,
         EventOnceCollector $eventOnceCollector,
@@ -49,42 +38,27 @@ class EventOnceSubscriber extends AbstractSubscriber
         $this->setEventOnceRenderer($eventOnceRenderer);
     }
 
-    /**
-     * @return EventOnceCollector
-     */
-    public function getEventOnceCollector()
+    public function getEventOnceCollector(): EventOnceCollector
     {
         return $this->eventOnceCollector;
     }
 
-    /**
-     * @param EventOnceCollector $eventOnceCollector
-     */
-    public function setEventOnceCollector(EventOnceCollector $eventOnceCollector)
+    public function setEventOnceCollector(EventOnceCollector $eventOnceCollector): void
     {
         $this->eventOnceCollector = $eventOnceCollector;
     }
 
-    /**
-     * @return EventOnceRenderer
-     */
-    public function getEventOnceRenderer()
+    public function getEventOnceRenderer(): EventOnceRenderer
     {
         return $this->eventOnceRenderer;
     }
 
-    /**
-     * @param EventOnceRenderer $eventOnceRenderer
-     */
-    public function setEventOnceRenderer(EventOnceRenderer $eventOnceRenderer)
+    public function setEventOnceRenderer(EventOnceRenderer $eventOnceRenderer): void
     {
         $this->eventOnceRenderer = $eventOnceRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class EventOnceSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_EVENT_EVENT_ONCE => 'handleMap'];
     }

@@ -16,43 +16,31 @@ namespace Ivory\GoogleMap\Service\Place\Autocomplete\Response;
  */
 class PlaceAutocompletePrediction
 {
-    /**
-     * @var string|null
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
-    /**
-     * @var string|null
-     */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
     /**
      * @var PlaceAutocompleteTerm[]
      */
-    private $terms = [];
+    private array $terms = [];
 
     /**
      * @var PlaceAutocompleteMatch[]
      */
-    private $matches = [];
+    private array $matches = [];
 
-    /**
-     * @return bool
-     */
-    public function hasPlaceId()
+    public function hasPlaceId(): bool
     {
         return $this->placeId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPlaceId()
+    public function getPlaceId(): ?string
     {
         return $this->placeId;
     }
@@ -60,23 +48,17 @@ class PlaceAutocompletePrediction
     /**
      * @param string|null $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDescription()
+    public function hasDescription(): bool
     {
         return $this->description !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -84,15 +66,12 @@ class PlaceAutocompletePrediction
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -100,7 +79,7 @@ class PlaceAutocompletePrediction
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -108,7 +87,7 @@ class PlaceAutocompletePrediction
     /**
      * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -117,7 +96,7 @@ class PlaceAutocompletePrediction
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -126,10 +105,8 @@ class PlaceAutocompletePrediction
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -137,7 +114,7 @@ class PlaceAutocompletePrediction
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -147,16 +124,13 @@ class PlaceAutocompletePrediction
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTerms()
+    public function hasTerms(): bool
     {
         return !empty($this->terms);
     }
@@ -164,7 +138,7 @@ class PlaceAutocompletePrediction
     /**
      * @return PlaceAutocompleteTerm[]
      */
-    public function getTerms()
+    public function getTerms(): array
     {
         return $this->terms;
     }
@@ -172,7 +146,7 @@ class PlaceAutocompletePrediction
     /**
      * @param PlaceAutocompleteTerm[] $terms
      */
-    public function setTerms(array $terms)
+    public function setTerms(array $terms): void
     {
         $this->terms = [];
         $this->addTerms($terms);
@@ -181,46 +155,32 @@ class PlaceAutocompletePrediction
     /**
      * @param PlaceAutocompleteTerm[] $terms
      */
-    public function addTerms(array $terms)
+    public function addTerms(array $terms): void
     {
         foreach ($terms as $term) {
             $this->addTerm($term);
         }
     }
 
-    /**
-     * @param PlaceAutocompleteTerm $term
-     *
-     * @return bool
-     */
-    public function hasTerm(PlaceAutocompleteTerm $term)
+    public function hasTerm(PlaceAutocompleteTerm $term): bool
     {
         return in_array($term, $this->terms, true);
     }
 
-    /**
-     * @param PlaceAutocompleteTerm $term
-     */
-    public function addTerm(PlaceAutocompleteTerm $term)
+    public function addTerm(PlaceAutocompleteTerm $term): void
     {
         if (!$this->hasTerm($term)) {
             $this->terms[] = $term;
         }
     }
 
-    /**
-     * @param PlaceAutocompleteTerm $term
-     */
-    public function removeTerm(PlaceAutocompleteTerm $term)
+    public function removeTerm(PlaceAutocompleteTerm $term): void
     {
         unset($this->terms[array_search($term, $this->terms, true)]);
         $this->terms = empty($this->terms) ? [] : array_values($this->terms);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMatches()
+    public function hasMatches(): bool
     {
         return !empty($this->matches);
     }
@@ -228,7 +188,7 @@ class PlaceAutocompletePrediction
     /**
      * @return PlaceAutocompleteMatch[]
      */
-    public function getMatches()
+    public function getMatches(): array
     {
         return $this->matches;
     }
@@ -236,7 +196,7 @@ class PlaceAutocompletePrediction
     /**
      * @param PlaceAutocompleteMatch[] $matches
      */
-    public function setMatches(array $matches)
+    public function setMatches(array $matches): void
     {
         $this->matches = [];
         $this->addMatches($matches);
@@ -245,37 +205,26 @@ class PlaceAutocompletePrediction
     /**
      * @param PlaceAutocompleteMatch[] $matches
      */
-    public function addMatches(array $matches)
+    public function addMatches(array $matches): void
     {
         foreach ($matches as $match) {
             $this->addMatch($match);
         }
     }
 
-    /**
-     * @param PlaceAutocompleteMatch $match
-     *
-     * @return bool
-     */
-    public function hasMatch(PlaceAutocompleteMatch $match)
+    public function hasMatch(PlaceAutocompleteMatch $match): bool
     {
         return in_array($match, $this->matches, true);
     }
 
-    /**
-     * @param PlaceAutocompleteMatch $match
-     */
-    public function addMatch(PlaceAutocompleteMatch $match)
+    public function addMatch(PlaceAutocompleteMatch $match): void
     {
         if (!$this->hasMatch($match)) {
             $this->matches[] = $match;
         }
     }
 
-    /**
-     * @param PlaceAutocompleteMatch $match
-     */
-    public function removeMatch(PlaceAutocompleteMatch $match)
+    public function removeMatch(PlaceAutocompleteMatch $match): void
     {
         unset($this->matches[array_search($match, $this->matches, true)]);
         $this->matches = empty($this->matches) ? [] : array_values($this->matches);

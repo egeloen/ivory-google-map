@@ -20,43 +20,26 @@ use Ivory\GoogleMap\Place\Autocomplete;
  */
 class PlaceAutocompleteHelper extends AbstractHelper
 {
-    /**
-     * @param Autocomplete $autocomplete
-     *
-     * @return string
-     */
-    public function render(Autocomplete $autocomplete)
+    public function render(Autocomplete $autocomplete): string
     {
         return $this->renderHtml($autocomplete).$this->renderJavascript($autocomplete);
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     *
-     * @return string
-     */
-    public function renderHtml(Autocomplete $autocomplete)
+    public function renderHtml(Autocomplete $autocomplete): string
     {
         return $this->doRender($autocomplete, PlaceAutocompleteEvents::HTML);
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     *
-     * @return string
-     */
-    public function renderJavascript(Autocomplete $autocomplete)
+    public function renderJavascript(Autocomplete $autocomplete): string
     {
         return $this->doRender($autocomplete, PlaceAutocompleteEvents::JAVASCRIPT);
     }
 
     /**
-     * @param Autocomplete $autocomplete
      * @param string       $eventName
      *
-     * @return string
      */
-    private function doRender(Autocomplete $autocomplete, $eventName)
+    private function doRender(Autocomplete $autocomplete, $eventName): ?string
     {
         $this->getEventDispatcher()->dispatch($eventName, $event = new PlaceAutocompleteEvent($autocomplete));
 

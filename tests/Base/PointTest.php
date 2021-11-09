@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PointTest extends TestCase
 {
-    /**
-     * @var Point
-     */
-    private $point;
+    private Point $point;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->point = new Point();
     }

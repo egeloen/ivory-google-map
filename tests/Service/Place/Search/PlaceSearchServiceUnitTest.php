@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Search\PlaceSearchService;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
-use Ivory\Serializer\Context\Context;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
 
 /**
@@ -22,15 +22,9 @@ use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
  */
 class PlaceSearchServiceUnitTest extends AbstractUnitServiceTest
 {
-    /**
-     * @var PlaceSearchService
-     */
-    private $service;
+    private ?PlaceSearchService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -87,8 +81,7 @@ class PlaceSearchServiceUnitTest extends AbstractUnitServiceTest
             ->with(
                 $this->identicalTo($result),
                 $this->identicalTo(PlaceSearchResponse::class),
-                $this->identicalTo($this->service->getFormat()),
-                $this->isInstanceOf(Context::class)
+                $this->identicalTo('json')
             )
             ->will($this->returnValue($response = $this->createPlaceSearchResponseMock()));
 
@@ -110,7 +103,7 @@ class PlaceSearchServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchRequestInterface
+     * @return MockObject|PlaceSearchRequestInterface
      */
     private function createPlaceSearchRequestMock()
     {
@@ -118,7 +111,7 @@ class PlaceSearchServiceUnitTest extends AbstractUnitServiceTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchResponse
+     * @return MockObject|PlaceSearchResponse
      */
     private function createPlaceSearchResponseMock()
     {

@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class PolylineSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var PolylineCollector
-     */
-    private $polylineCollector;
+    private ?PolylineCollector $polylineCollector = null;
 
-    /**
-     * @var PolylineRenderer
-     */
-    private $polylineRenderer;
+    private ?PolylineRenderer $polylineRenderer = null;
 
-    /**
-     * @param Formatter         $formatter
-     * @param PolylineCollector $polylineCollector
-     * @param PolylineRenderer  $polylineRenderer
-     */
     public function __construct(
         Formatter $formatter,
         PolylineCollector $polylineCollector,
@@ -49,42 +38,27 @@ class PolylineSubscriber extends AbstractSubscriber
         $this->setPolylineRenderer($polylineRenderer);
     }
 
-    /**
-     * @return PolylineCollector
-     */
-    public function getPolylineCollector()
+    public function getPolylineCollector(): PolylineCollector
     {
         return $this->polylineCollector;
     }
 
-    /**
-     * @param PolylineCollector $polylineCollector
-     */
-    public function setPolylineCollector(PolylineCollector $polylineCollector)
+    public function setPolylineCollector(PolylineCollector $polylineCollector): void
     {
         $this->polylineCollector = $polylineCollector;
     }
 
-    /**
-     * @return PolylineRenderer
-     */
-    public function getPolylineRenderer()
+    public function getPolylineRenderer(): PolylineRenderer
     {
         return $this->polylineRenderer;
     }
 
-    /**
-     * @param PolylineRenderer $polylineRenderer
-     */
-    public function setPolylineRenderer(PolylineRenderer $polylineRenderer)
+    public function setPolylineRenderer(PolylineRenderer $polylineRenderer): void
     {
         $this->polylineRenderer = $polylineRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class PolylineSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_POLYLINE => 'handleMap'];
     }

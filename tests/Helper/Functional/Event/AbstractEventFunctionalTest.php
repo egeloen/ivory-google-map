@@ -20,15 +20,9 @@ use Ivory\Tests\GoogleMap\Helper\Functional\AbstractMapFunctionalTest;
  */
 abstract class AbstractEventFunctionalTest extends AbstractMapFunctionalTest
 {
-    /**
-     * @var string
-     */
-    private $spyCount;
+    private string $spyCount;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

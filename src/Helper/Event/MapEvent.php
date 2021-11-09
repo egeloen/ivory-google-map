@@ -18,23 +18,14 @@ use Ivory\GoogleMap\Map;
  */
 class MapEvent extends AbstractEvent
 {
-    /**
-     * @var Map
-     */
-    private $map;
+    private Map $map;
 
-    /**
-     * @param Map $map
-     */
     public function __construct(Map $map)
     {
         $this->map = $map;
     }
 
-    /**
-     * @return Map
-     */
-    public function getMap()
+    public function getMap(): Map
     {
         return $this->map;
     }

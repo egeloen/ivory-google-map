@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AnimationRendererTest extends TestCase
 {
-    /**
-     * @var AnimationRenderer
-     */
-    private $animationRenderer;
+    private AnimationRenderer $animationRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->animationRenderer = new AnimationRenderer(new Formatter());
     }

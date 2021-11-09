@@ -22,65 +22,41 @@ use Ivory\GoogleMap\Map;
  */
 class SizeCollector extends AbstractCollector
 {
-    /**
-     * @var InfoWindowCollector
-     */
-    private $infoWindowCollector;
+    private ?InfoWindowCollector $infoWindowCollector = null;
 
-    /**
-     * @var IconCollector
-     */
-    private $iconCollector;
+    private ?IconCollector $iconCollector = null;
 
-    /**
-     * @param InfoWindowCollector $infoWindowCollector
-     * @param IconCollector       $iconCollector
-     */
     public function __construct(InfoWindowCollector $infoWindowCollector, IconCollector $iconCollector)
     {
         $this->setInfoWindowCollector($infoWindowCollector);
         $this->setIconCollector($iconCollector);
     }
 
-    /**
-     * @return InfoWindowCollector
-     */
-    public function getInfoWindowCollector()
+    public function getInfoWindowCollector(): InfoWindowCollector
     {
         return $this->infoWindowCollector;
     }
 
-    /**
-     * @param InfoWindowCollector $infoWindowCollector
-     */
-    public function setInfoWindowCollector(InfoWindowCollector $infoWindowCollector)
+    public function setInfoWindowCollector(InfoWindowCollector $infoWindowCollector): void
     {
         $this->infoWindowCollector = $infoWindowCollector;
     }
 
-    /**
-     * @return IconCollector
-     */
-    public function getIconCollector()
+    public function getIconCollector(): IconCollector
     {
         return $this->iconCollector;
     }
 
-    /**
-     * @param IconCollector $iconCollector
-     */
-    public function setIconCollector(IconCollector $iconCollector)
+    public function setIconCollector(IconCollector $iconCollector): void
     {
         $this->iconCollector = $iconCollector;
     }
 
     /**
-     * @param Map    $map
      * @param Size[] $sizes
-     *
      * @return Size[]
      */
-    public function collect(Map $map, array $sizes = [])
+    public function collect(Map $map, array $sizes = []): array
     {
         foreach ($this->infoWindowCollector->collect($map) as $infoWindow) {
             if ($infoWindow->hasPixelOffset()) {

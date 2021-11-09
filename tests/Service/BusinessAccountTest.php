@@ -19,25 +19,13 @@ use PHPUnit\Framework\TestCase;
  */
 class BusinessAccountTest extends TestCase
 {
-    /**
-     * @var BusinessAccount
-     */
-    private $businessAccount;
+    private BusinessAccount $businessAccount;
 
-    /**
-     * @var string
-     */
-    private $clientId;
+    private ?string $clientId = null;
 
-    /**
-     * @var string
-     */
-    private $secret;
+    private ?string $secret = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->businessAccount = new BusinessAccount(
             $this->clientId = 'client_id',

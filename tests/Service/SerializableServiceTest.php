@@ -11,48 +11,40 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractHttpService;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\BusinessAccount;
-use Ivory\Serializer\SerializerInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class SerializableServiceTest extends TestCase
 {
-    /**
-     * @var AbstractSerializableService|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $service;
+    private MockObject $service;
+
+    private ?string $url = null;
 
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|MockObject
      */
     private $client;
 
     /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|MockObject
      */
     private $messageFactory;
 
     /**
-     * @var SerializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SerializerInterface|MockObject
      */
     private $serializer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = $this->getMockBuilder(AbstractSerializableService::class)
             ->setConstructorArgs([
@@ -75,7 +67,6 @@ class SerializableServiceTest extends TestCase
         $this->assertSame($this->client, $this->service->getClient());
         $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
         $this->assertSame($this->serializer, $this->service->getSerializer());
-        $this->assertSame(AbstractSerializableService::FORMAT_JSON, $this->service->getFormat());
         $this->assertFalse($this->service->hasKey());
         $this->assertNull($this->service->getKey());
         $this->assertFalse($this->service->hasBusinessAccount());
@@ -106,13 +97,6 @@ class SerializableServiceTest extends TestCase
         $this->service->setSerializer($serializer = $this->createSerializerMock());
 
         $this->assertSame($serializer, $this->service->getSerializer());
-    }
-
-    public function testFormat()
-    {
-        $this->service->setFormat($format = AbstractSerializableService::FORMAT_XML);
-
-        $this->assertSame($format, $this->service->getFormat());
     }
 
     public function testKey()
@@ -150,7 +134,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return MockObject|HttpClient
      */
     private function createHttpClientMock()
     {
@@ -158,7 +142,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return MockObject|MessageFactory
      */
     private function createMessageFactoryMock()
     {
@@ -166,7 +150,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SerializerInterface
+     * @return MockObject|SerializerInterface
      */
     private function createSerializerMock()
     {
@@ -174,7 +158,7 @@ class SerializableServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return MockObject|BusinessAccount
      */
     private function createBusinessAccountMock()
     {

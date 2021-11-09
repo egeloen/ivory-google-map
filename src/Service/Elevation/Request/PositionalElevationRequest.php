@@ -21,7 +21,7 @@ class PositionalElevationRequest implements ElevationRequestInterface
     /**
      * @var LocationInterface[]
      */
-    private $locations = [];
+    private array $locations = [];
 
     /**
      * @param LocationInterface[] $locations
@@ -31,10 +31,7 @@ class PositionalElevationRequest implements ElevationRequestInterface
         $this->setLocations($locations);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLocations()
+    public function hasLocations(): bool
     {
         return !empty($this->locations);
     }
@@ -42,7 +39,7 @@ class PositionalElevationRequest implements ElevationRequestInterface
     /**
      * @return LocationInterface[]
      */
-    public function getLocations()
+    public function getLocations(): array
     {
         return $this->locations;
     }
@@ -50,7 +47,7 @@ class PositionalElevationRequest implements ElevationRequestInterface
     /**
      * @param LocationInterface[] $locations
      */
-    public function setLocations(array $locations)
+    public function setLocations(array $locations): void
     {
         $this->locations = [];
         $this->addLocations($locations);
@@ -59,49 +56,33 @@ class PositionalElevationRequest implements ElevationRequestInterface
     /**
      * @param LocationInterface[] $locations
      */
-    public function addLocations(array $locations)
+    public function addLocations(array $locations): void
     {
         foreach ($locations as $location) {
             $this->addLocation($location);
         }
     }
 
-    /**
-     * @param LocationInterface $location
-     *
-     * @return bool
-     */
-    public function hasLocation(LocationInterface $location)
+    public function hasLocation(LocationInterface $location): bool
     {
         return in_array($location, $this->locations, true);
     }
 
-    /**
-     * @param LocationInterface $location
-     */
-    public function addLocation(LocationInterface $location)
+    public function addLocation(LocationInterface $location): void
     {
         if (!$this->hasLocation($location)) {
             $this->locations[] = $location;
         }
     }
 
-    /**
-     * @param LocationInterface $location
-     */
-    public function removeLocation(LocationInterface $location)
+    public function removeLocation(LocationInterface $location): void
     {
         unset($this->locations[array_search($location, $this->locations, true)]);
         $this->locations = empty($this->locations) ? [] : array_values($this->locations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
-        return ['locations' => implode('|', array_map(function (LocationInterface $location) {
-            return $location->buildQuery();
-        }, $this->locations))];
+        return ['locations' => implode('|', array_map(fn(LocationInterface $location) => $location->buildQuery(), $this->locations))];
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Control\ControlManager;
@@ -27,15 +28,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTest extends TestCase
 {
-    /**
-     * @var Map
-     */
-    private $map;
+    private Map $map;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->map = new Map();
     }
@@ -161,7 +156,7 @@ class MapTest extends TestCase
         $this->map->addLibraries($secondLibraries = ['places']);
 
         $this->assertTrue($this->map->hasLibraries());
-        $this->assertSame(array_merge($firstLibraries, $secondLibraries), $this->map->getLibraries());
+        $this->assertSame([...$firstLibraries, ...$secondLibraries], $this->map->getLibraries());
     }
 
     public function testAddLibrary()
@@ -318,7 +313,7 @@ class MapTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -326,7 +321,7 @@ class MapTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -334,7 +329,7 @@ class MapTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ControlManager
+     * @return MockObject|ControlManager
      */
     private function createControlManagerMock()
     {
@@ -342,7 +337,7 @@ class MapTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EventManager
+     * @return MockObject|EventManager
      */
     private function createEventManagerMock()
     {
@@ -350,7 +345,7 @@ class MapTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|LayerManager
+     * @return MockObject|LayerManager
      */
     private function createLayerManagerMock()
     {
@@ -358,7 +353,7 @@ class MapTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|OverlayManager
+     * @return MockObject|OverlayManager
      */
     private function createOverlayManagerMock()
     {

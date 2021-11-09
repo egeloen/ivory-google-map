@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class AutocompleteSimpleEventSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var AutocompleteEventCollector
-     */
-    private $eventCollector;
+    private ?AutocompleteEventCollector $eventCollector = null;
 
-    /**
-     * @var EventRenderer
-     */
-    private $eventRenderer;
+    private ?EventRenderer $eventRenderer = null;
 
-    /**
-     * @param Formatter                  $formatter
-     * @param AutocompleteEventCollector $eventCollector
-     * @param EventRenderer              $eventRenderer
-     */
     public function __construct(
         Formatter $formatter,
         AutocompleteEventCollector $eventCollector,
@@ -49,42 +38,27 @@ class AutocompleteSimpleEventSubscriber extends AbstractSubscriber
         $this->setEventRenderer($eventRenderer);
     }
 
-    /**
-     * @return AutocompleteEventCollector
-     */
-    public function getEventCollector()
+    public function getEventCollector(): AutocompleteEventCollector
     {
         return $this->eventCollector;
     }
 
-    /**
-     * @param AutocompleteEventCollector $eventCollector
-     */
-    public function setEventCollector(AutocompleteEventCollector $eventCollector)
+    public function setEventCollector(AutocompleteEventCollector $eventCollector): void
     {
         $this->eventCollector = $eventCollector;
     }
 
-    /**
-     * @return EventRenderer
-     */
-    public function getEventRenderer()
+    public function getEventRenderer(): EventRenderer
     {
         return $this->eventRenderer;
     }
 
-    /**
-     * @param EventRenderer $eventRenderer
-     */
-    public function setEventRenderer(EventRenderer $eventRenderer)
+    public function setEventRenderer(EventRenderer $eventRenderer): void
     {
         $this->eventRenderer = $eventRenderer;
     }
 
-    /**
-     * @param PlaceAutocompleteEvent $event
-     */
-    public function handleAutocomplete(PlaceAutocompleteEvent $event)
+    public function handleAutocomplete(PlaceAutocompleteEvent $event): void
     {
         $formatter = $this->getFormatter();
         $autocomplete = $event->getAutocomplete();
@@ -99,10 +73,7 @@ class AutocompleteSimpleEventSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [PlaceAutocompleteEvents::JAVASCRIPT_EVENT_EVENT => 'handleAutocomplete'];
     }

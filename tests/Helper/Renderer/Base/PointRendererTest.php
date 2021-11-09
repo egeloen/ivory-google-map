@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PointRendererTest extends TestCase
 {
-    /**
-     * @var PointRenderer
-     */
-    private $pointRenderer;
+    private PointRenderer $pointRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pointRenderer = new PointRenderer(new Formatter());
     }

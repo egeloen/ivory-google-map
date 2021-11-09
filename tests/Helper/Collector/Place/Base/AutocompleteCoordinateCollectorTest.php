@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Place\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\Place\Base\AutocompleteBoundCollector;
@@ -23,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteCoordinateCollectorTest extends TestCase
 {
-    /**
-     * @var AutocompleteCoordinateCollector
-     */
-    private $autocompleteCoordinateCollector;
+    private AutocompleteCoordinateCollector $autocompleteCoordinateCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteCoordinateCollector = new AutocompleteCoordinateCollector(new AutocompleteBoundCollector());
     }
@@ -61,7 +56,7 @@ class AutocompleteCoordinateCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AutocompleteBoundCollector
+     * @return MockObject|AutocompleteBoundCollector
      */
     private function createAutocompleteBoundCollectorMock()
     {

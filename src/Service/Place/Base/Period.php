@@ -16,28 +16,16 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 class Period
 {
-    /**
-     * @var OpenClosePeriod|null
-     */
-    private $open;
+    private ?OpenClosePeriod $open = null;
 
-    /**
-     * @var OpenClosePeriod|null
-     */
-    private $close;
+    private ?OpenClosePeriod $close = null;
 
-    /**
-     * @return bool
-     */
-    public function hasOpen()
+    public function hasOpen(): bool
     {
         return $this->open !== null;
     }
 
-    /**
-     * @return OpenClosePeriod|null
-     */
-    public function getOpen()
+    public function getOpen(): ?OpenClosePeriod
     {
         return $this->open;
     }
@@ -45,23 +33,17 @@ class Period
     /**
      * @param OpenClosePeriod|null $open
      */
-    public function setOpen(OpenClosePeriod $open = null)
+    public function setOpen(OpenClosePeriod $open = null): void
     {
         $this->open = $open;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasClose()
+    public function hasClose(): bool
     {
         return $this->close !== null;
     }
 
-    /**
-     * @return OpenClosePeriod|null
-     */
-    public function getClose()
+    public function getClose(): ?OpenClosePeriod
     {
         return $this->close;
     }
@@ -69,7 +51,7 @@ class Period
     /**
      * @param OpenClosePeriod|null $close
      */
-    public function setClose(OpenClosePeriod $close = null)
+    public function setClose(OpenClosePeriod $close = null): void
     {
         $this->close = $close;
     }

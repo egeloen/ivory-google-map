@@ -28,11 +28,11 @@ class AutocompleteEventOnceFunctionalTest extends AbstractEventFunctionalTest
         $this->renderAutocomplete($autocomplete);
         $this->assertAutocomplete($autocomplete);
 
-        $this->byId($autocomplete->getHtmlId())->value('Lille, France');
+        $this->byId()->value('Lille, France');
         $this->selectAutocomplete();
         $this->assertSpyCount(1);
 
-        $this->byId($autocomplete->getHtmlId())->value('Paris, France');
+        $this->byId()->value('Paris, France');
         $this->selectAutocomplete();
         $this->assertSpyCount(1);
     }

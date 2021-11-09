@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Direction\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Service\Base\Fare;
@@ -23,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionRouteTest extends TestCase
 {
-    /**
-     * @var DirectionRoute
-     */
-    private $route;
+    private DirectionRoute $route;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->route = new DirectionRoute();
     }
@@ -106,7 +101,7 @@ class DirectionRouteTest extends TestCase
         $this->route->addLegs($secondLegs = [$this->createLegMock()]);
 
         $this->assertTrue($this->route->hasLegs());
-        $this->assertSame(array_merge($firstLegs, $secondLegs), $this->route->getLegs());
+        $this->assertSame([...$firstLegs, ...$secondLegs], $this->route->getLegs());
     }
 
     public function testAddLeg()
@@ -195,7 +190,7 @@ class DirectionRouteTest extends TestCase
         $this->route->addWarnings($secondWarnings = ['second_warning']);
 
         $this->assertTrue($this->route->hasWarnings());
-        $this->assertSame(array_merge($firstWarnings, $secondWarnings), $this->route->getWarnings());
+        $this->assertSame([...$firstWarnings, ...$secondWarnings], $this->route->getWarnings());
     }
 
     public function testAddWarning()
@@ -237,7 +232,7 @@ class DirectionRouteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {
@@ -245,7 +240,7 @@ class DirectionRouteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DirectionLeg
+     * @return MockObject|DirectionLeg
      */
     private function createLegMock()
     {
@@ -253,7 +248,7 @@ class DirectionRouteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Fare
+     * @return MockObject|Fare
      */
     private function createFareMock()
     {
@@ -261,7 +256,7 @@ class DirectionRouteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EncodedPolyline
+     * @return MockObject|EncodedPolyline
      */
     private function createEncodedPolylineMock()
     {

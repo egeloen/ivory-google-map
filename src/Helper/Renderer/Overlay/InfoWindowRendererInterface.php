@@ -19,9 +19,7 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
 interface InfoWindowRendererInterface
 {
     /**
-     * @param InfoWindow $infoWindow
      * @param bool       $position
-     *
      * @return string
      */
     public function render(InfoWindow $infoWindow, $position = true);

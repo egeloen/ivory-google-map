@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteDomEventCollectorTest extends TestCase
 {
-    /**
-     * @var AutocompleteDomEventCollector
-     */
-    private $domEventCollector;
+    private AutocompleteDomEventCollector $domEventCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->domEventCollector = new AutocompleteDomEventCollector();
     }

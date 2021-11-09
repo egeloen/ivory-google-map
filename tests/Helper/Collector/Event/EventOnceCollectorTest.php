@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class EventOnceCollectorTest extends TestCase
 {
-    /**
-     * @var EventOnceCollector
-     */
-    private $eventOnceCollector;
+    private EventOnceCollector $eventOnceCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventOnceCollector = new EventOnceCollector();
     }

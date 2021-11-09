@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Html;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\Html\AbstractTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetRenderer;
@@ -23,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StylesheetTagRendererTest extends TestCase
 {
-    /**
-     * @var StylesheetTagRenderer
-     */
-    private $stylesheetTagRenderer;
+    private StylesheetTagRenderer $stylesheetTagRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->stylesheetTagRenderer = new StylesheetTagRenderer(
             $formatter = new Formatter(),
@@ -99,7 +94,7 @@ class StylesheetTagRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|StylesheetRenderer
+     * @return MockObject|StylesheetRenderer
      */
     private function createStylesheetRendererMock()
     {

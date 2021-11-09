@@ -21,25 +21,14 @@ use Ivory\GoogleMap\Overlay\Marker;
  */
 class MarkerStyleRenderer extends AbstractStyleRenderer
 {
-    /**
-     * @var PointRenderer
-     */
-    private $pointRenderer;
+    private PointRenderer $pointRenderer;
 
-    /**
-     * @param PointRenderer $pointRenderer
-     */
     public function __construct(PointRenderer $pointRenderer)
     {
         $this->pointRenderer = $pointRenderer;
     }
 
-    /**
-     * @param Marker $marker
-     *
-     * @return string
-     */
-    public function render(Marker $marker)
+    public function render(Marker $marker): ?string
     {
         $options = $marker->hasStaticOption('styles') ? $marker->getStaticOption('styles') : [];
 

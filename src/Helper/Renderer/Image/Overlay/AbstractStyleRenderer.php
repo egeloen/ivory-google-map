@@ -21,10 +21,10 @@ abstract class AbstractStyleRenderer
      *
      * @return string
      */
-    public function renderStyle(array $styles)
+    public function renderStyle(array $styles):?string
     {
         if (empty($styles)) {
-            return;
+            return null;
         }
 
         $result = [];

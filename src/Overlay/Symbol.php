@@ -27,26 +27,16 @@ class Symbol implements OptionsAwareInterface, VariableAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private ?string $path = null;
 
-    /**
-     * @var Point|null
-     */
-    private $anchor;
+    private ?Point $anchor = null;
 
-    /**
-     * @var Point|null
-     */
-    private $labelOrigin;
+    private ?Point $labelOrigin = null;
 
     /**
      * @param string     $path
      * @param Point|null $anchor
      * @param Point|null $labelOrigin
-     * @param array      $options
      */
     public function __construct($path, Point $anchor = null, Point $labelOrigin = null, array $options = [])
     {
@@ -56,10 +46,7 @@ class Symbol implements OptionsAwareInterface, VariableAwareInterface
         $this->setOptions($options);
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -67,23 +54,17 @@ class Symbol implements OptionsAwareInterface, VariableAwareInterface
     /**
      * @param string $path
      */
-    public function setPath($path)
+    public function setPath($path): void
     {
         $this->path = $path;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAnchor()
+    public function hasAnchor(): bool
     {
         return $this->anchor !== null;
     }
 
-    /**
-     * @return Point|null
-     */
-    public function getAnchor()
+    public function getAnchor(): ?Point
     {
         return $this->anchor;
     }
@@ -91,23 +72,17 @@ class Symbol implements OptionsAwareInterface, VariableAwareInterface
     /**
      * @param Point|null $anchor
      */
-    public function setAnchor(Point $anchor = null)
+    public function setAnchor(Point $anchor = null): void
     {
         $this->anchor = $anchor;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLabelOrigin()
+    public function hasLabelOrigin(): bool
     {
         return $this->labelOrigin !== null;
     }
 
-    /**
-     * @return Point|null
-     */
-    public function getLabelOrigin()
+    public function getLabelOrigin(): ?Point
     {
         return $this->labelOrigin;
     }
@@ -115,7 +90,7 @@ class Symbol implements OptionsAwareInterface, VariableAwareInterface
     /**
      * @param Point|null $labelOrigin
      */
-    public function setLabelOrigin(Point $labelOrigin = null)
+    public function setLabelOrigin(Point $labelOrigin = null): void
     {
         $this->labelOrigin = $labelOrigin;
     }

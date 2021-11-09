@@ -19,38 +19,20 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 class Geometry
 {
-    /**
-     * @var Coordinate|null
-     */
-    private $location;
+    private ?Coordinate $location = null;
 
-    /**
-     * @var string|null
-     */
-    private $locationType;
+    private ?string $locationType = null;
 
-    /**
-     * @var Bound|null
-     */
-    private $viewport;
+    private ?Bound $viewport = null;
 
-    /**
-     * @var Bound|null
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
-    /**
-     * @return bool
-     */
-    public function hasLocation()
+    public function hasLocation(): bool
     {
         return $this->location !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getLocation()
+    public function getLocation(): ?Coordinate
     {
         return $this->location;
     }
@@ -58,23 +40,17 @@ class Geometry
     /**
      * @param Coordinate|null $location
      */
-    public function setLocation(Coordinate $location = null)
+    public function setLocation(Coordinate $location = null): void
     {
         $this->location = $location;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLocationType()
+    public function hasLocationType(): bool
     {
         return $this->locationType !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLocationType()
+    public function getLocationType(): ?string
     {
         return $this->locationType;
     }
@@ -82,23 +58,17 @@ class Geometry
     /**
      * @param string|null $locationType
      */
-    public function setLocationType($locationType = null)
+    public function setLocationType($locationType = null): void
     {
         $this->locationType = $locationType;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasViewport()
+    public function hasViewport(): bool
     {
         return $this->viewport !== null;
     }
 
-    /**
-     * @return Bound|null
-     */
-    public function getViewport()
+    public function getViewport(): ?Bound
     {
         return $this->viewport;
     }
@@ -106,23 +76,17 @@ class Geometry
     /**
      * @param Bound|null $viewport
      */
-    public function setViewport(Bound $viewport = null)
+    public function setViewport(Bound $viewport = null): void
     {
         $this->viewport = $viewport;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBound()
+    public function hasBound(): bool
     {
         return $this->bound !== null;
     }
 
-    /**
-     * @return Bound|null
-     */
-    public function getBound()
+    public function getBound(): ?Bound
     {
         return $this->bound;
     }
@@ -130,7 +94,7 @@ class Geometry
     /**
      * @param Bound|null $bound
      */
-    public function setBound(Bound $bound = null)
+    public function setBound(Bound $bound = null): void
     {
         $this->bound = $bound;
     }

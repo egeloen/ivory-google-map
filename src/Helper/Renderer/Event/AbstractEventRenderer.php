@@ -19,12 +19,7 @@ use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
  */
 abstract class AbstractEventRenderer extends AbstractRenderer
 {
-    /**
-     * @param Event $event
-     *
-     * @return string
-     */
-    public function render(Event $event)
+    public function render(Event $event): string
     {
         $formatter = $this->getFormatter();
 
@@ -49,10 +44,7 @@ abstract class AbstractEventRenderer extends AbstractRenderer
      */
     abstract protected function getMethod();
 
-    /**
-     * @return bool
-     */
-    protected function hasCapture()
+    protected function hasCapture(): bool
     {
         return true;
     }

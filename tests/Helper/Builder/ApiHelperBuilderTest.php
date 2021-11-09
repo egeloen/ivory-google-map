@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiHelperBuilderTest extends TestCase
 {
-    /**
-     * @var ApiHelperBuilder
-     */
-    private $apiHelperBuilder;
+    private ApiHelperBuilder $apiHelperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->apiHelperBuilder = ApiHelperBuilder::create();
     }

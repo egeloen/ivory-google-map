@@ -19,15 +19,8 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 abstract class AbstractJsonRenderer extends AbstractRenderer
 {
-    /**
-     * @var JsonBuilder
-     */
-    private $jsonBuilder;
+    private ?JsonBuilder $jsonBuilder = null;
 
-    /**
-     * @param Formatter   $formatter
-     * @param JsonBuilder $jsonBuilder
-     */
     public function __construct(Formatter $formatter, JsonBuilder $jsonBuilder)
     {
         parent::__construct($formatter);
@@ -35,10 +28,7 @@ abstract class AbstractJsonRenderer extends AbstractRenderer
         $this->setJsonBuilder($jsonBuilder);
     }
 
-    /**
-     * @return JsonBuilder
-     */
-    public function getJsonBuilder()
+    public function getJsonBuilder(): JsonBuilder
     {
         $jsonEncodeOptions = $this->jsonBuilder->getJsonEncodeOptions();
 
@@ -53,9 +43,6 @@ abstract class AbstractJsonRenderer extends AbstractRenderer
             ->setJsonEncodeOptions($jsonEncodeOptions);
     }
 
-    /**
-     * @param JsonBuilder $jsonBuilder
-     */
     public function setJsonBuilder(JsonBuilder $jsonBuilder)
     {
         $this->jsonBuilder = $jsonBuilder;

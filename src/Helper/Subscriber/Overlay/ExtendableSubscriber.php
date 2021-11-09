@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class ExtendableSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var ExtendableCollector
-     */
-    private $extendableCollector;
+    private ?ExtendableCollector $extendableCollector = null;
 
-    /**
-     * @var ExtendableRenderer
-     */
-    private $extendableRenderer;
+    private ?ExtendableRenderer $extendableRenderer = null;
 
-    /**
-     * @param Formatter           $formatter
-     * @param ExtendableCollector $extendableCollector
-     * @param ExtendableRenderer  $extendableRenderer
-     */
     public function __construct(
         Formatter $formatter,
         ExtendableCollector $extendableCollector,
@@ -49,42 +38,27 @@ class ExtendableSubscriber extends AbstractSubscriber
         $this->setExtendableRenderer($extendableRenderer);
     }
 
-    /**
-     * @return ExtendableCollector
-     */
-    public function getExtendableCollector()
+    public function getExtendableCollector(): ExtendableCollector
     {
         return $this->extendableCollector;
     }
 
-    /**
-     * @param ExtendableCollector $extendableCollector
-     */
-    public function setExtendableCollector(ExtendableCollector $extendableCollector)
+    public function setExtendableCollector(ExtendableCollector $extendableCollector): void
     {
         $this->extendableCollector = $extendableCollector;
     }
 
-    /**
-     * @return ExtendableRenderer
-     */
-    public function getExtendableRenderer()
+    public function getExtendableRenderer(): ExtendableRenderer
     {
         return $this->extendableRenderer;
     }
 
-    /**
-     * @param ExtendableRenderer $extendableRenderer
-     */
-    public function setExtendableRenderer(ExtendableRenderer $extendableRenderer)
+    public function setExtendableRenderer(ExtendableRenderer $extendableRenderer): void
     {
         $this->extendableRenderer = $extendableRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -94,10 +68,7 @@ class ExtendableSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_FINISH => 'handleMap'];
     }

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Base\OpeningHours;
 use Ivory\GoogleMap\Service\Place\Base\Period;
 use PHPUnit\Framework\TestCase;
@@ -20,15 +21,12 @@ use PHPUnit\Framework\TestCase;
  */
 class OpeningHoursTest extends TestCase
 {
-    /**
-     * @var OpeningHours
-     */
-    private $openingHours;
+    private OpeningHours $openingHours;
 
     /**
      * @inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->openingHours = new OpeningHours();
     }
@@ -67,7 +65,7 @@ class OpeningHoursTest extends TestCase
         $this->openingHours->addPeriods($secondPeriods = [$this->createPeriodMock()]);
 
         $this->assertTrue($this->openingHours->hasPeriods());
-        $this->assertSame(array_merge($firstPeriods, $secondPeriods), $this->openingHours->getPeriods());
+        $this->assertSame([...$firstPeriods, ...$secondPeriods], $this->openingHours->getPeriods());
     }
 
     public function testAddPeriod()
@@ -105,7 +103,7 @@ class OpeningHoursTest extends TestCase
         $this->openingHours->addWeekdayTexts($secondWeekdayTexts = ['bar']);
 
         $this->assertTrue($this->openingHours->hasWeekdayTexts());
-        $this->assertSame(array_merge($firstWeekdayTexts, $secondWeekdayTexts), $this->openingHours->getWeekdayTexts());
+        $this->assertSame([...$firstWeekdayTexts, ...$secondWeekdayTexts], $this->openingHours->getWeekdayTexts());
     }
 
     public function testAddWeekdayText()
@@ -128,7 +126,7 @@ class OpeningHoursTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Period
+     * @return MockObject|Period
      */
     private function createPeriodMock()
     {

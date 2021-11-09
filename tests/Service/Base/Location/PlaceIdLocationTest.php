@@ -20,20 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceIdLocationTest extends TestCase
 {
-    /**
-     * @var PlaceIdLocation
-     */
-    private $placeIdLocation;
+    private PlaceIdLocation $placeIdLocation;
 
-    /**
-     * @var string
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->placeIdLocation = new PlaceIdLocation($this->placeId = 'place');
     }

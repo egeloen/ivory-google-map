@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Renderer\Overlay\Extendable;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 
@@ -22,12 +23,9 @@ class ExtendableRenderer implements ExtendableRendererInterface
     /**
      * @var ExtendableRendererInterface[]
      */
-    private $renderers = [];
+    private array $renderers = [];
 
-    /**
-     * @return bool
-     */
-    public function hasRenderers()
+    public function hasRenderers(): bool
     {
         return !empty($this->renderers);
     }
@@ -35,7 +33,7 @@ class ExtendableRenderer implements ExtendableRendererInterface
     /**
      * @return ExtendableRendererInterface[]
      */
-    public function getRenderers()
+    public function getRenderers(): array
     {
         return $this->renderers;
     }
@@ -43,7 +41,7 @@ class ExtendableRenderer implements ExtendableRendererInterface
     /**
      * @param ExtendableRendererInterface[] $renderers
      */
-    public function setRenderers(array $renderers)
+    public function setRenderers(array $renderers): void
     {
         $this->renderers = [];
         $this->addRenderers($renderers);
@@ -52,7 +50,7 @@ class ExtendableRenderer implements ExtendableRendererInterface
     /**
      * @param ExtendableRendererInterface[] $renderers
      */
-    public function addRenderers(array $renderers)
+    public function addRenderers(array $renderers): void
     {
         foreach ($renderers as $name => $renderer) {
             $this->setRenderer($name, $renderer);
@@ -61,29 +59,24 @@ class ExtendableRenderer implements ExtendableRendererInterface
 
     /**
      * @param string $name
-     *
-     * @return bool
      */
-    public function hasRenderer($name)
+    public function hasRenderer($name): bool
     {
         return isset($this->renderers[$name]);
     }
 
     /**
      * @param string $name
-     *
-     * @return ExtendableRendererInterface|null
      */
-    public function getRenderer($name)
+    public function getRenderer($name): ?ExtendableRendererInterface
     {
         return $this->hasRenderer($name) ? $this->renderers[$name] : null;
     }
 
     /**
      * @param string                      $name
-     * @param ExtendableRendererInterface $renderer
      */
-    public function setRenderer($name, ExtendableRendererInterface $renderer)
+    public function setRenderer($name, ExtendableRendererInterface $renderer): void
     {
         $this->renderers[$name] = $renderer;
     }
@@ -91,20 +84,17 @@ class ExtendableRenderer implements ExtendableRendererInterface
     /**
      * @param string $name
      */
-    public function removeRenderer($name)
+    public function removeRenderer($name): void
     {
         unset($this->renderers[$name]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function render(ExtendableInterface $extendable, Bound $bound)
+    public function render(ExtendableInterface $extendable, Bound $bound): string
     {
         $renderer = $this->getRenderer(get_class($extendable));
 
         if ($renderer === null) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'The extendable renderer for "%s" could not be found.',
                 get_class($extendable)
             ));

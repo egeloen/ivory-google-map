@@ -19,25 +19,14 @@ use Ivory\GoogleMap\Overlay\Marker;
  */
 class MarkerLocationRenderer
 {
-    /**
-     * @var CoordinateRenderer
-     */
-    private $coordinateRenderer;
+    private CoordinateRenderer $coordinateRenderer;
 
-    /**
-     * @param CoordinateRenderer $coordinateRenderer
-     */
     public function __construct(CoordinateRenderer $coordinateRenderer)
     {
         $this->coordinateRenderer = $coordinateRenderer;
     }
 
-    /**
-     * @param Marker $marker
-     *
-     * @return string
-     */
-    public function render(Marker $marker)
+    public function render(Marker $marker): string
     {
         return $marker->hasStaticOption('location')
             ? $marker->getStaticOption('location')

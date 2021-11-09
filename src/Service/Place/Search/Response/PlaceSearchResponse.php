@@ -19,43 +19,28 @@ use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
  */
 class PlaceSearchResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var PlaceSearchRequestInterface|null
-     */
-    private $request;
+    private ?PlaceSearchRequestInterface $request = null;
 
     /**
      * @var Place[]
      */
-    private $results = [];
+    private array $results = [];
 
     /**
      * @var string[]
      */
-    private $htmlAttributions = [];
+    private array $htmlAttributions = [];
 
-    /**
-     * @var string|null
-     */
-    private $nextPageToken;
+    private ?string $nextPageToken = null;
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -63,23 +48,17 @@ class PlaceSearchResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return PlaceSearchRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?PlaceSearchRequestInterface
     {
         return $this->request;
     }
@@ -87,15 +66,12 @@ class PlaceSearchResponse
     /**
      * @param PlaceSearchRequestInterface|null $request
      */
-    public function setRequest(PlaceSearchRequestInterface $request = null)
+    public function setRequest(PlaceSearchRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasResults()
+    public function hasResults(): bool
     {
         return !empty($this->results);
     }
@@ -103,7 +79,7 @@ class PlaceSearchResponse
     /**
      * @return Place[]
      */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }
@@ -111,7 +87,7 @@ class PlaceSearchResponse
     /**
      * @param Place[] $results
      */
-    public function setResults(array $results)
+    public function setResults(array $results): void
     {
         $this->results = [];
         $this->addResults($results);
@@ -120,46 +96,32 @@ class PlaceSearchResponse
     /**
      * @param Place[] $results
      */
-    public function addResults(array $results)
+    public function addResults(array $results): void
     {
         foreach ($results as $result) {
             $this->addResult($result);
         }
     }
 
-    /**
-     * @param Place $result
-     *
-     * @return bool
-     */
-    public function hasResult(Place $result)
+    public function hasResult(Place $result): bool
     {
         return in_array($result, $this->results, true);
     }
 
-    /**
-     * @param Place $result
-     */
-    public function addResult(Place $result)
+    public function addResult(Place $result): void
     {
         if (!$this->hasResult($result)) {
             $this->results[] = $result;
         }
     }
 
-    /**
-     * @param Place $result
-     */
-    public function removeResult(Place $result)
+    public function removeResult(Place $result): void
     {
         unset($this->results[array_search($result, $this->results, true)]);
         $this->results = empty($this->results) ? [] : array_values($this->results);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasHtmlAttributions()
+    public function hasHtmlAttributions(): bool
     {
         return !empty($this->htmlAttributions);
     }
@@ -167,7 +129,7 @@ class PlaceSearchResponse
     /**
      * @return string[]
      */
-    public function getHtmlAttributions()
+    public function getHtmlAttributions(): array
     {
         return $this->htmlAttributions;
     }
@@ -175,7 +137,7 @@ class PlaceSearchResponse
     /**
      * @param string[] $htmlAttributions
      */
-    public function setHtmlAttributions(array $htmlAttributions)
+    public function setHtmlAttributions(array $htmlAttributions): void
     {
         $this->htmlAttributions = [];
         $this->addHtmlAttributions($htmlAttributions);
@@ -184,7 +146,7 @@ class PlaceSearchResponse
     /**
      * @param string[] $htmlAttributions
      */
-    public function addHtmlAttributions(array $htmlAttributions)
+    public function addHtmlAttributions(array $htmlAttributions): void
     {
         foreach ($htmlAttributions as $htmlAttribution) {
             $this->addHtmlAttribution($htmlAttribution);
@@ -193,10 +155,8 @@ class PlaceSearchResponse
 
     /**
      * @param string $htmlAttribution
-     *
-     * @return bool
      */
-    public function hasHtmlAttribution($htmlAttribution)
+    public function hasHtmlAttribution($htmlAttribution): bool
     {
         return in_array($htmlAttribution, $this->htmlAttributions, true);
     }
@@ -204,7 +164,7 @@ class PlaceSearchResponse
     /**
      * @param string $htmlAttribution
      */
-    public function addHtmlAttribution($htmlAttribution)
+    public function addHtmlAttribution($htmlAttribution): void
     {
         if (!$this->hasHtmlAttribution($htmlAttribution)) {
             $this->htmlAttributions[] = $htmlAttribution;
@@ -214,24 +174,18 @@ class PlaceSearchResponse
     /**
      * @param string $htmlAttribution
      */
-    public function removeHtmlAttribution($htmlAttribution)
+    public function removeHtmlAttribution($htmlAttribution): void
     {
         unset($this->htmlAttributions[array_search($htmlAttribution, $this->htmlAttributions, true)]);
         $this->htmlAttributions = empty($this->htmlAttributions) ? [] : array_values($this->htmlAttributions);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasNextPageToken()
+    public function hasNextPageToken(): bool
     {
         return $this->nextPageToken !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getNextPageToken()
+    public function getNextPageToken(): ?string
     {
         return $this->nextPageToken;
     }
@@ -239,7 +193,7 @@ class PlaceSearchResponse
     /**
      * @param string|null $nextPageToken
      */
-    public function setNextPageToken($nextPageToken)
+    public function setNextPageToken($nextPageToken): void
     {
         $this->nextPageToken = $nextPageToken;
     }

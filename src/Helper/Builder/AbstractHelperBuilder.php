@@ -23,7 +23,7 @@ abstract class AbstractHelperBuilder
     /**
      * @var EventSubscriberInterface[]
      */
-    private $subscribers = [];
+    private array $subscribers = [];
 
     /**
      * @return static
@@ -33,10 +33,7 @@ abstract class AbstractHelperBuilder
         return new static();
     }
 
-    /**
-     * @return bool
-     */
-    public function hasSubscribers()
+    public function hasSubscribers(): bool
     {
         return !empty($this->subscribers);
     }
@@ -44,7 +41,7 @@ abstract class AbstractHelperBuilder
     /**
      * @return EventSubscriberInterface[]
      */
-    public function getSubscribers()
+    public function getSubscribers(): array
     {
         return $this->subscribers;
     }
@@ -54,7 +51,7 @@ abstract class AbstractHelperBuilder
      *
      * @return $this
      */
-    public function setSubscribers(array $subscribers)
+    public function setSubscribers(array $subscribers): self
     {
         $this->subscribers = [];
         $this->addSubscribers($subscribers);
@@ -67,7 +64,7 @@ abstract class AbstractHelperBuilder
      *
      * @return $this
      */
-    public function addSubscribers(array $subscribers)
+    public function addSubscribers(array $subscribers): self
     {
         foreach ($subscribers as $subscriber) {
             $this->addSubscriber($subscriber);
@@ -76,22 +73,15 @@ abstract class AbstractHelperBuilder
         return $this;
     }
 
-    /**
-     * @param EventSubscriberInterface $subscriber
-     *
-     * @return bool
-     */
-    public function hasSubscriber(EventSubscriberInterface $subscriber)
+    public function hasSubscriber(EventSubscriberInterface $subscriber): bool
     {
         return in_array($subscriber, $this->subscribers, true);
     }
 
     /**
-     * @param EventSubscriberInterface $subscriber
-     *
      * @return $this
      */
-    public function addSubscriber(EventSubscriberInterface $subscriber)
+    public function addSubscriber(EventSubscriberInterface $subscriber): self
     {
         if (!$this->hasSubscriber($subscriber)) {
             $this->subscribers[] = $subscriber;
@@ -101,11 +91,9 @@ abstract class AbstractHelperBuilder
     }
 
     /**
-     * @param EventSubscriberInterface $subscriber
-     *
      * @return $this
      */
-    public function removeSubscriber(EventSubscriberInterface $subscriber)
+    public function removeSubscriber(EventSubscriberInterface $subscriber): self
     {
         unset($this->subscribers[array_search($subscriber, $this->subscribers, true)]);
         $this->subscribers = empty($this->subscribers) ? [] : array_values($this->subscribers);
@@ -113,10 +101,7 @@ abstract class AbstractHelperBuilder
         return $this;
     }
 
-    /**
-     * @return EventDispatcherInterface
-     */
-    protected function createEventDispatcher()
+    protected function createEventDispatcher(): EventDispatcher
     {
         $eventDispatcher = new EventDispatcher();
 
@@ -130,7 +115,7 @@ abstract class AbstractHelperBuilder
     /**
      * @return EventSubscriberInterface[]
      */
-    protected function createSubscribers()
+    protected function createSubscribers(): array
     {
         return $this->subscribers;
     }

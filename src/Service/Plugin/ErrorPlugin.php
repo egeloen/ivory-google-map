@@ -25,7 +25,7 @@ class ErrorPlugin implements Plugin
     /**
      * @var string[]
      */
-    private static $errors = [
+    private static array $errors = [
         'ERROR'                   => ServerErrorException::class,
         'INVALID_REQUEST'         => ClientErrorException::class,
         'MAX_DIMENSIONS_EXCEEDED' => ClientErrorException::class,
@@ -40,14 +40,11 @@ class ErrorPlugin implements Plugin
     /**
      * @var string[]
      */
-    private static $placeholders = [
+    private static array $placeholders = [
         '"status" : "%s"',
         '<status>%s</status>',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         return $next($request)->then(function (ResponseInterface $response) use ($request) {

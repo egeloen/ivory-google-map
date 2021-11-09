@@ -50,18 +50,12 @@ use Ivory\GoogleMap\Helper\Subscriber\Place\Event\AutocompleteSimpleEventSubscri
  */
 class PlaceAutocompleteHelperBuilder extends AbstractJavascriptHelperBuilder
 {
-    /**
-     * @return PlaceAutocompleteHelper
-     */
-    public function build()
+    public function build(): PlaceAutocompleteHelper
     {
         return new PlaceAutocompleteHelper($this->createEventDispatcher());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function createSubscribers()
+    protected function createSubscribers(): array
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();

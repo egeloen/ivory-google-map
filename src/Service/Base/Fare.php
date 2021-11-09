@@ -16,20 +16,11 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 class Fare
 {
-    /**
-     * @var float
-     */
-    private $value;
+    private ?float $value = null;
 
-    /**
-     * @var string
-     */
-    private $currency;
+    private ?string $currency = null;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $text = null;
 
     /**
      * @param float  $value
@@ -43,10 +34,7 @@ class Fare
         $this->setText($text);
     }
 
-    /**
-     * @return float
-     */
-    public function getValue()
+    public function getValue(): float
     {
         return $this->value;
     }
@@ -54,15 +42,12 @@ class Fare
     /**
      * @param float $value
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
@@ -70,15 +55,12 @@ class Fare
     /**
      * @param string $currency
      */
-    public function setCurrency($currency)
+    public function setCurrency($currency): void
     {
         $this->currency = $currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -86,7 +68,7 @@ class Fare
     /**
      * @param string $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }
