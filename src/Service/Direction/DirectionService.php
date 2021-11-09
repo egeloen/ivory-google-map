@@ -23,9 +23,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class DirectionService extends AbstractSerializableService
 {
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, SerializerInterface $serializer = null)
+    public function __construct(HttpClient $client, SerializerInterface $serializer = null)
     {
-        parent::__construct('https://maps.googleapis.com/maps/api/directions', $client, $messageFactory, $serializer);
+        parent::__construct('https://maps.googleapis.com/maps/api/directions', $client, $serializer);
     }
 
     public function route(DirectionRequestInterface $request): DirectionResponse

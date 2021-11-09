@@ -31,18 +31,12 @@ class HttpServiceTest extends TestCase
      */
     private MockObject $client;
 
-    /**
-     * @var MessageFactory|MockObject
-     */
-    private $messageFactory;
-
     protected function setUp(): void
     {
         $this->service = $this->getMockBuilder(AbstractHttpService::class)
             ->setConstructorArgs([
                 'https://foo',
                 $this->client = $this->createHttpClientMock(),
-                $this->messageFactory = $this->createMessageFactoryMock(),
             ])
             ->getMockForAbstractClass();
     }
@@ -52,7 +46,6 @@ class HttpServiceTest extends TestCase
         $this->assertInstanceOf(AbstractService::class, $this->service);
         $this->assertSame('https://foo', $this->service->getUrl());
         $this->assertSame($this->client, $this->service->getClient());
-        $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
     }
 
     public function testClient()
@@ -62,26 +55,11 @@ class HttpServiceTest extends TestCase
         $this->assertSame($client, $this->service->getClient());
     }
 
-    public function testMessageFactory()
-    {
-        $this->service->setMessageFactory($messageFactory = $this->createMessageFactoryMock());
-
-        $this->assertSame($messageFactory, $this->service->getMessageFactory());
-    }
-
     /**
      * @return MockObject|HttpClient
      */
     private function createHttpClientMock()
     {
         return $this->createMock(HttpClient::class);
-    }
-
-    /**
-     * @return MockObject|MessageFactory
-     */
-    private function createMessageFactoryMock()
-    {
-        return $this->createMock(MessageFactory::class);
     }
 }

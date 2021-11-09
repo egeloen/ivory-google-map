@@ -11,11 +11,11 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
 use Ivory\GoogleMap\Service\Geocoder\Request\AbstractGeocoderRequest;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
 use Ivory\Tests\GoogleMap\Service\AbstractUnitServiceTest;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -28,11 +28,7 @@ class GeocoderServiceUnitTest extends AbstractUnitServiceTest
     {
         parent::setUp();
 
-        $this->service = new GeocoderService(
-            $this->client,
-            $this->messageFactory,
-            $this->serializer
-        );
+        $this->service = new GeocoderService($this->client, $this->serializer);
     }
 
     public function testGeocodeWithBusinessAccount()
@@ -45,19 +41,9 @@ class GeocoderServiceUnitTest extends AbstractUnitServiceTest
 
         $url = 'https://maps.googleapis.com/maps/api/geocode/json?foo=bar&signature=signature';
 
-        $this->messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo($url)
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
         $this->client
             ->expects($this->once())
             ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
             ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
 
         $httpResponse

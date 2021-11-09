@@ -70,7 +70,9 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     protected function assertBound($bound, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($bound);
+            $this->assertNull($bound);
+
+            return;
         }
 
         $options = array_merge([
@@ -91,7 +93,9 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     protected function assertCoordinate($coordinate, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($coordinate);
+            $this->assertNull($coordinate);
+
+            return;
         }
 
         $options = array_merge([
@@ -106,7 +110,7 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     }
 
     /**
-     * @param mixed[]  $options
+     * @param mixed[] $options
      */
     protected function assertDistance(Distance $distance, array $options = [])
     {
@@ -134,7 +138,9 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     protected function assertDuration($duration, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($duration);
+            $this->assertNull($duration);
+
+            return;
         }
 
         $options = array_merge([
@@ -156,7 +162,9 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     protected function assertFare($fare, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($fare);
+            $this->assertNull($fare);
+
+            return;
         }
 
         $options = array_merge([
@@ -200,7 +208,9 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     protected function assertTime($time, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($time);
+            $this->assertNull($time);
+
+            return;
         }
 
         $options = array_merge([

@@ -12,7 +12,6 @@
 namespace Ivory\GoogleMap\Service\TimeZone;
 
 use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\TimeZone\Request\TimeZoneRequestInterface;
 use Ivory\GoogleMap\Service\TimeZone\Response\TimeZoneResponse;
@@ -23,9 +22,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class TimeZoneService extends AbstractSerializableService
 {
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, SerializerInterface $serializer = null)
+    public function __construct(HttpClient $client, SerializerInterface $serializer = null)
     {
-        parent::__construct('https://maps.googleapis.com/maps/api/timezone', $client, $messageFactory, $serializer);
+        parent::__construct('https://maps.googleapis.com/maps/api/timezone', $client, $serializer);
     }
 
     public function process(TimeZoneRequestInterface $request): TimeZoneResponse

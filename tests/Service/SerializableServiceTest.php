@@ -51,7 +51,6 @@ class SerializableServiceTest extends TestCase
             ->setConstructorArgs([
                 $this->url = 'https://foo',
                 $this->client = $this->createHttpClientMock(),
-                $this->messageFactory = $this->createMessageFactoryMock(),
                 $this->serializer = $this->createSerializerMock(),
             ])
             ->getMockForAbstractClass();
@@ -66,7 +65,6 @@ class SerializableServiceTest extends TestCase
     {
         $this->assertSame('https://foo', $this->service->getUrl());
         $this->assertSame($this->client, $this->service->getClient());
-        $this->assertSame($this->messageFactory, $this->service->getMessageFactory());
         $this->assertSame($this->serializer, $this->service->getSerializer());
         $this->assertFalse($this->service->hasKey());
         $this->assertNull($this->service->getKey());
@@ -84,13 +82,6 @@ class SerializableServiceTest extends TestCase
         $this->service->setClient($client = $this->createHttpClientMock());
 
         $this->assertSame($client, $this->service->getClient());
-    }
-
-    public function testMessageFactory()
-    {
-        $this->service->setMessageFactory($messageFactory = $this->createMessageFactoryMock());
-
-        $this->assertSame($messageFactory, $this->service->getMessageFactory());
     }
 
     public function testSerializer()
@@ -141,15 +132,6 @@ class SerializableServiceTest extends TestCase
     {
         return $this->createMock(HttpClient::class);
     }
-
-    /**
-     * @return MockObject|MessageFactory
-     */
-    private function createMessageFactoryMock()
-    {
-        return $this->createMock(MessageFactory::class);
-    }
-
     /**
      * @return MockObject|SerializerInterface
      */
