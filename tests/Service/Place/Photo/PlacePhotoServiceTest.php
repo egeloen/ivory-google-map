@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Photo;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Ivory\GoogleMap\Service\Place\Photo\PlacePhotoService;
 use Ivory\GoogleMap\Service\Place\Photo\Request\PlacePhotoRequest;
@@ -21,20 +22,11 @@ use PHPUnit\Framework\TestCase;
  */
 class PlacePhotoServiceTest extends TestCase
 {
-    /**
-     * @var PlacePhotoService
-     */
-    private $service;
+    private PlacePhotoService $service;
 
-    /**
-     * @var string
-     */
-    private $key;
+    private ?string $key = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = new PlacePhotoService();
         $this->service->setKey($this->key = 'foo');
@@ -89,7 +81,7 @@ class PlacePhotoServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BusinessAccount
+     * @return MockObject|BusinessAccount
      */
     private function createBusinessAccountMock()
     {

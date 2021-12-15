@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StaticMapHelperBuilderTest extends TestCase
 {
-    /**
-     * @var StaticMapHelperBuilder
-     */
-    private $staticMapHelperBuilder;
+    private StaticMapHelperBuilder $staticMapHelperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->staticMapHelperBuilder = StaticMapHelperBuilder::create();
     }

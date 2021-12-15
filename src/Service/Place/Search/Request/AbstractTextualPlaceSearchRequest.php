@@ -16,23 +16,14 @@ namespace Ivory\GoogleMap\Service\Place\Search\Request;
  */
 abstract class AbstractTextualPlaceSearchRequest extends AbstractPlaceSearchRequest
 {
-    /**
-     * @var string|null
-     */
-    private $keyword;
+    private ?string $keyword = null;
 
-    /**
-     * @return bool
-     */
-    public function hasKeyword()
+    public function hasKeyword(): bool
     {
         return $this->keyword !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getKeyword()
+    public function getKeyword(): ?string
     {
         return $this->keyword;
     }
@@ -45,10 +36,7 @@ abstract class AbstractTextualPlaceSearchRequest extends AbstractPlaceSearchRequ
         $this->keyword = $keyword;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = parent::buildQuery();
 

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
+use Exception;
 use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Control\CustomControl;
 use Ivory\GoogleMap\Helper\Builder\MapHelperBuilder;
@@ -27,20 +28,11 @@ use Ivory\GoogleMap\Place\Autocomplete;
  */
 class CompoundFunctionalTest extends AbstractApiFunctionalTest
 {
-    /**
-     * @var PlaceAutocompleteHelper
-     */
-    private $placeAutocompleteHelper;
+    private PlaceAutocompleteHelper $placeAutocompleteHelper;
 
-    /**
-     * @var MapHelper
-     */
-    private $mapHelper;
+    private MapHelper $mapHelper;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -63,10 +55,6 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
         $this->render($autocomplete, $map);
     }
 
-    /**
-     * @param Autocomplete $autocomplete
-     * @param Map          $map
-     */
     private function render(Autocomplete $autocomplete, Map $map)
     {
         $this->renderHtml(implode('', [
@@ -82,10 +70,10 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
                     $this->assertObjectExists($map);
 
                     return true;
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                 }
             }, 5000);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         $this->assertSame([], $this->log('browser'));

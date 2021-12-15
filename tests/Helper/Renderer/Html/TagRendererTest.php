@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class TagRendererTest extends TestCase
 {
-    /**
-     * @var TagRenderer
-     */
-    private $tagRenderer;
+    private TagRenderer $tagRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tagRenderer = new TagRenderer(new Formatter());
     }

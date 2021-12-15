@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class RectangleSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var RectangleCollector
-     */
-    private $rectangleCollector;
+    private ?RectangleCollector $rectangleCollector = null;
 
-    /**
-     * @var RectangleRenderer
-     */
-    private $rectangleRenderer;
+    private ?RectangleRenderer $rectangleRenderer = null;
 
-    /**
-     * @param Formatter          $formatter
-     * @param RectangleCollector $rectangleCollector
-     * @param RectangleRenderer  $rectangleRenderer
-     */
     public function __construct(
         Formatter $formatter,
         RectangleCollector $rectangleCollector,
@@ -49,42 +38,27 @@ class RectangleSubscriber extends AbstractSubscriber
         $this->setRectangleRenderer($rectangleRenderer);
     }
 
-    /**
-     * @return RectangleCollector
-     */
-    public function getRectangleCollector()
+    public function getRectangleCollector(): RectangleCollector
     {
         return $this->rectangleCollector;
     }
 
-    /**
-     * @param RectangleCollector $rectangleCollector
-     */
-    public function setRectangleCollector(RectangleCollector $rectangleCollector)
+    public function setRectangleCollector(RectangleCollector $rectangleCollector): void
     {
         $this->rectangleCollector = $rectangleCollector;
     }
 
-    /**
-     * @return RectangleRenderer
-     */
-    public function getRectangleRenderer()
+    public function getRectangleRenderer(): RectangleRenderer
     {
         return $this->rectangleRenderer;
     }
 
-    /**
-     * @param RectangleRenderer $rectangleRenderer
-     */
-    public function setRectangleRenderer(RectangleRenderer $rectangleRenderer)
+    public function setRectangleRenderer(RectangleRenderer $rectangleRenderer): void
     {
         $this->rectangleRenderer = $rectangleRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class RectangleSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_RECTANGLE => 'handleMap'];
     }

@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Place\Autocomplete;
 class AutocompleteBoundCollector extends AbstractCollector
 {
     /**
-     * @param Autocomplete $autocomplete
      * @param Bound[]      $bounds
-     *
      * @return Bound[]
      */
-    public function collect(Autocomplete $autocomplete, array $bounds = [])
+    public function collect(Autocomplete $autocomplete, array $bounds = []): array
     {
         if ($autocomplete->hasBound()) {
             $bounds = $this->collectValue($autocomplete->getBound(), $bounds);

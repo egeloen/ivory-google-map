@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Map;
 class DomEventCollector extends AbstractCollector
 {
     /**
-     * @param Map     $map
      * @param Event[] $domEvents
-     *
      * @return Event[]
      */
-    public function collect(Map $map, array $domEvents = [])
+    public function collect(Map $map, array $domEvents = []): array
     {
         return $this->collectValues($map->getEventManager()->getDomEvents(), $domEvents);
     }

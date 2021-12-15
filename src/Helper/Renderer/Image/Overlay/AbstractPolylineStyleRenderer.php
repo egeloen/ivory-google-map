@@ -19,12 +19,9 @@ use Ivory\GoogleMap\Utility\OptionsAwareInterface;
 abstract class AbstractPolylineStyleRenderer extends AbstractStyleRenderer
 {
     /**
-     * @param mixed[]               $styles
-     * @param OptionsAwareInterface $polyline
-     *
-     * @return string
+     * @param mixed[] $styles
      */
-    public function renderPolylineStyle(array $styles, OptionsAwareInterface $polyline)
+    public function renderPolylineStyle(array $styles, OptionsAwareInterface $polyline): ?string
     {
         if (!isset($styles['geodesic']) && $polyline->hasOption('geodisc')) {
             $styles['geodesic'] = $polyline->getOption('geodisc');

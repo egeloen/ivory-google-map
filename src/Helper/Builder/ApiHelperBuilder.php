@@ -49,15 +49,9 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class ApiHelperBuilder extends AbstractJavascriptHelperBuilder
 {
-    /**
-     * @var string
-     */
-    private $language;
+    private ?string $language = null;
 
-    /**
-     * @var string|null
-     */
-    private $key;
+    private ?string $key = null;
 
     /**
      * @param Formatter|null   $formatter
@@ -68,18 +62,14 @@ class ApiHelperBuilder extends AbstractJavascriptHelperBuilder
     public function __construct(
         Formatter $formatter = null,
         JsonBuilder $jsonBuilder = null,
-        $language = 'en',
-        $key = null
+        $language = 'en'
     ) {
         parent::__construct($formatter, $jsonBuilder);
 
         $this->setLanguage($language);
     }
 
-    /**
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -89,25 +79,19 @@ class ApiHelperBuilder extends AbstractJavascriptHelperBuilder
      *
      * @return $this
      */
-    public function setLanguage($language)
+    public function setLanguage($language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasKey()
+    public function hasKey(): bool
     {
         return $this->key !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -117,25 +101,19 @@ class ApiHelperBuilder extends AbstractJavascriptHelperBuilder
      *
      * @return $this
      */
-    public function setKey($key)
+    public function setKey($key): self
     {
         $this->key = $key;
 
         return $this;
     }
 
-    /**
-     * @return ApiHelper
-     */
-    public function build()
+    public function build(): ApiHelper
     {
         return new ApiHelper($this->createEventDispatcher());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function createSubscribers()
+    protected function createSubscribers(): array
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();

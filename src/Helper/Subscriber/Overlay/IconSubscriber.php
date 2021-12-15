@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class IconSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var IconCollector
-     */
-    private $iconCollector;
+    private ?IconCollector $iconCollector = null;
 
-    /**
-     * @var IconRenderer
-     */
-    private $iconRenderer;
+    private ?IconRenderer $iconRenderer = null;
 
-    /**
-     * @param Formatter     $formatter
-     * @param IconCollector $iconCollector
-     * @param IconRenderer  $iconRenderer
-     */
     public function __construct(
         Formatter $formatter,
         IconCollector $iconCollector,
@@ -49,42 +38,27 @@ class IconSubscriber extends AbstractSubscriber
         $this->setIconRenderer($iconRenderer);
     }
 
-    /**
-     * @return IconCollector
-     */
-    public function getIconCollector()
+    public function getIconCollector(): IconCollector
     {
         return $this->iconCollector;
     }
 
-    /**
-     * @param IconCollector $iconCollector
-     */
-    public function setIconCollector(IconCollector $iconCollector)
+    public function setIconCollector(IconCollector $iconCollector): void
     {
         $this->iconCollector = $iconCollector;
     }
 
-    /**
-     * @return IconRenderer
-     */
-    public function getIconRenderer()
+    public function getIconRenderer(): IconRenderer
     {
         return $this->iconRenderer;
     }
 
-    /**
-     * @param IconRenderer $iconRenderer
-     */
-    public function setIconRenderer(IconRenderer $iconRenderer)
+    public function setIconRenderer(IconRenderer $iconRenderer): void
     {
         $this->iconRenderer = $iconRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class IconSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_ICON => 'handleMap'];
     }

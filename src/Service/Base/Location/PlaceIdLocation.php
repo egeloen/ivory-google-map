@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Service\Base\Location;
  */
 class PlaceIdLocation implements LocationInterface
 {
-    /**
-     * @var string
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
     /**
      * @param string $placeId
@@ -29,10 +26,7 @@ class PlaceIdLocation implements LocationInterface
         $this->setPlaceId($placeId);
     }
 
-    /**
-     * @return string
-     */
-    public function getPlaceId()
+    public function getPlaceId(): string
     {
         return $this->placeId;
     }
@@ -40,15 +34,12 @@ class PlaceIdLocation implements LocationInterface
     /**
      * @param string $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): string
     {
         return 'place_id:'.$this->placeId;
     }

@@ -25,16 +25,8 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
  */
 class DefaultInfoWindowSubscriber extends AbstractInfoWindowSubscriber
 {
-    /**
-     * @var DefaultInfoWindowRenderer
-     */
-    private $infoWindowRenderer;
+    private ?DefaultInfoWindowRenderer $infoWindowRenderer = null;
 
-    /**
-     * @param Formatter                  $formatter
-     * @param DefaultInfoWindowCollector $infoWindowCollector
-     * @param DefaultInfoWindowRenderer  $infoWindowRenderer
-     */
     public function __construct(
         Formatter $formatter,
         DefaultInfoWindowCollector $infoWindowCollector,
@@ -45,26 +37,17 @@ class DefaultInfoWindowSubscriber extends AbstractInfoWindowSubscriber
         $this->setInfoWindowRenderer($infoWindowRenderer);
     }
 
-    /**
-     * @return DefaultInfoWindowRenderer
-     */
-    public function getInfoWindowRenderer()
+    public function getInfoWindowRenderer(): DefaultInfoWindowRenderer
     {
         return $this->infoWindowRenderer;
     }
 
-    /**
-     * @param DefaultInfoWindowRenderer $infoWindowRenderer
-     */
-    public function setInfoWindowRenderer(DefaultInfoWindowRenderer $infoWindowRenderer)
+    public function setInfoWindowRenderer(DefaultInfoWindowRenderer $infoWindowRenderer): void
     {
         $this->infoWindowRenderer = $infoWindowRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $map = $event->getMap();
         $collector = $this->getInfoWindowCollector();
@@ -78,22 +61,16 @@ class DefaultInfoWindowSubscriber extends AbstractInfoWindowSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_INFO_WINDOW => 'handleMap'];
     }
 
     /**
-     * @param Map        $map
-     * @param InfoWindow $infoWindow
      * @param bool       $position
      *
-     * @return string
      */
-    private function renderInfoWindow(Map $map, InfoWindow $infoWindow, $position = true)
+    private function renderInfoWindow(Map $map, InfoWindow $infoWindow, $position = true): string
     {
         return $this->getFormatter()->renderContainerAssignment(
             $map,

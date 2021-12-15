@@ -20,10 +20,8 @@ class RequirementRenderer extends AbstractRenderer
 {
     /**
      * @param string $class
-     *
-     * @return string
      */
-    public function render($class)
+    public function render($class): string
     {
         $separator = $this->getFormatter()->renderSeparator();
 

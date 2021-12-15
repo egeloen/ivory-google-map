@@ -23,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteHtmlRendererTest extends TestCase
 {
-    /**
-     * @var AutocompleteHtmlRenderer
-     */
-    private $autocompleteHtmlRenderer;
+    private AutocompleteHtmlRenderer $autocompleteHtmlRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteHtmlRenderer = new AutocompleteHtmlRenderer(
             $formatter = new Formatter(),

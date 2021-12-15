@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapHelperBuilderTest extends TestCase
 {
-    /**
-     * @var MapHelperBuilder
-     */
-    private $mapHelperBuilder;
+    private MapHelperBuilder $mapHelperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapHelperBuilder = MapHelperBuilder::create();
     }

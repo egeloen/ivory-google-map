@@ -19,10 +19,7 @@ use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderPlaceIdRequest;
  */
 class GeocoderServiceApiKeyTest extends GeocoderServiceTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -34,31 +31,25 @@ class GeocoderServiceApiKeyTest extends GeocoderServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodePlaceId($format)
+    public function testGeocodePlaceId()
     {
         $request = new GeocoderPlaceIdRequest('ChIJLU7jZClu5kcR4PcOOO6p3I0');
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testGeocodeWithResultType($format)
+    public function testGeocodeWithResultType()
     {
         $request = $this->createCoordinateRequest();
         $request->setResultTypes([GeocoderAddressType::POSTAL_CODE]);
 
-        $this->service->setFormat($format);
         $response = $this->service->geocode($request);
 
         $this->assertGeocoderResponse($response, $request);

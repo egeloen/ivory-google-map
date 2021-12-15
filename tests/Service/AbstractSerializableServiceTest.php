@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use DateTime;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
@@ -27,7 +28,7 @@ use Ivory\GoogleMap\Service\Base\Time;
 abstract class AbstractSerializableServiceTest extends AbstractFunctionalServiceTest
 {
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function formatProvider()
     {
@@ -103,13 +104,14 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
     }
 
     /**
-     * @param Distance $distance
      * @param mixed[]  $options
      */
-    protected function assertDistance($distance, array $options = [])
+    protected function assertDistance(Distance $distance, array $options = [])
     {
         if (empty($options)) {
-            return $this->assertNull($distance);
+            $this->assertNull($distance);
+
+            return;
         }
 
         $options = array_merge([
@@ -119,7 +121,7 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
 
         $this->assertInstanceOf(Distance::class, $distance);
 
-        $this->assertSame($options['value'], $distance->getValue());
+        $this->assertEquals($options['value'], $distance->getValue());
         $this->assertSame($options['text'], $distance->getText());
     }
 
@@ -207,7 +209,7 @@ abstract class AbstractSerializableServiceTest extends AbstractFunctionalService
 
         $this->assertInstanceOf(Time::class, $time);
 
-        $this->assertSame($time->getValue()->getTimestamp(), (new \DateTime('@'.$options['value']))->getTimestamp());
+        $this->assertSame($time->getValue()->getTimestamp(), (new DateTime('@' . $options['value']))->getTimestamp());
         $this->assertSame($time->getTimeZone(), $options['time_zone']);
         $this->assertSame($time->getText(), $options['text']);
     }

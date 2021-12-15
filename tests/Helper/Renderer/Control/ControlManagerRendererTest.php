@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Control\ControlManager;
 use Ivory\GoogleMap\Control\MapTypeControl;
 use Ivory\GoogleMap\Control\RotateControl;
@@ -38,15 +39,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ControlManagerRendererTest extends TestCase
 {
-    /**
-     * @var ControlManagerRenderer
-     */
-    private $controlManagerRenderer;
+    private ControlManagerRenderer $controlManagerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->controlManagerRenderer = new ControlManagerRenderer();
     }
@@ -74,7 +69,7 @@ class ControlManagerRendererTest extends TestCase
 
         $this->assertTrue($this->controlManagerRenderer->hasRenderers());
         $this->assertSame(
-            array_merge($firstRenderers, $secondRenderers),
+            [...$firstRenderers, ...$secondRenderers],
             $this->controlManagerRenderer->getRenderers()
         );
     }
@@ -147,7 +142,7 @@ class ControlManagerRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ControlRendererInterface
+     * @return MockObject|ControlRendererInterface
      */
     private function createControlRendererMock()
     {

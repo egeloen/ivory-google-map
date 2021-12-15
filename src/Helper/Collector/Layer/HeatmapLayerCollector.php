@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Map;
 class HeatmapLayerCollector extends AbstractCollector
 {
     /**
-     * @param Map            $map
      * @param HeatmapLayer[] $heatmapLayers
-     *
      * @return HeatmapLayer[]
      */
-    public function collect(Map $map, array $heatmapLayers = [])
+    public function collect(Map $map, array $heatmapLayers = []): array
     {
         return $this->collectValues($map->getLayerManager()->getHeatmapLayers(), $heatmapLayers);
     }

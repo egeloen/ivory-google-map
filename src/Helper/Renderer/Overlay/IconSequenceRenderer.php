@@ -20,12 +20,7 @@ use Ivory\GoogleMap\Overlay\IconSequence;
  */
 class IconSequenceRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param IconSequence $icon
-     *
-     * @return string
-     */
-    public function render(IconSequence $icon)
+    public function render(IconSequence $icon): string
     {
         $jsonBuilder = $this->getJsonBuilder()
             ->setValue('[icon]', $icon->getSymbol()->getVariable(), false)

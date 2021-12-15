@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ControlPositionRendererTest extends TestCase
 {
-    /**
-     * @var ControlPositionRenderer
-     */
-    private $controlPositionRenderer;
+    private ControlPositionRenderer $controlPositionRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->controlPositionRenderer = new ControlPositionRenderer(new Formatter());
     }

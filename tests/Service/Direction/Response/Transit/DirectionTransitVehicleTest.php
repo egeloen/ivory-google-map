@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionTransitVehicleTest extends TestCase
 {
-    /**
-     * @var DirectionTransitVehicle
-     */
-    private $transitVehicle;
+    private DirectionTransitVehicle $transitVehicle;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->transitVehicle = new DirectionTransitVehicle();
     }

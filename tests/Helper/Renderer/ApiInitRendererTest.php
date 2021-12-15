@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer;
 
+use stdClass;
+use SplObjectStorage;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractRenderer;
 use Ivory\GoogleMap\Helper\Renderer\ApiInitRenderer;
@@ -21,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiInitRendererTest extends TestCase
 {
-    /**
-     * @var ApiInitRenderer
-     */
-    private $apiInitRenderer;
+    private ApiInitRenderer $apiInitRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->apiInitRenderer = new ApiInitRenderer(new Formatter());
     }
@@ -45,7 +41,7 @@ class ApiInitRendererTest extends TestCase
             'function name(){source_callback("source1");source_callback("source2");requirement_callback(main_callback,function(){return requirement1&&requirement2;});};',
             $this->apiInitRenderer->render(
                 'name',
-                $this->createCallbacks($object = new \stdClass()),
+                $this->createCallbacks($object = new stdClass()),
                 $this->createRequirements($object),
                 ['source1', 'source2'],
                 'source_callback',
@@ -71,7 +67,7 @@ EOF;
 
         $this->assertSame($expected, $this->apiInitRenderer->render(
             'name',
-            $this->createCallbacks($object = new \stdClass()),
+            $this->createCallbacks($object = new stdClass()),
             $this->createRequirements($object),
             ['source1', 'source2'],
             'source_callback',
@@ -82,11 +78,11 @@ EOF;
     /**
      * @param object $object
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     private function createCallbacks($object)
     {
-        $callbacks          = new \SplObjectStorage();
+        $callbacks          = new SplObjectStorage();
         $callbacks[$object] = 'main_callback';
 
         return $callbacks;
@@ -95,11 +91,11 @@ EOF;
     /**
      * @param object $object
      *
-     * @return \SplObjectStorage
+     * @return SplObjectStorage
      */
     private function createRequirements($object)
     {
-        $requirements          = new \SplObjectStorage();
+        $requirements          = new SplObjectStorage();
         $requirements[$object] = ['requirement1', 'requirement2'];
 
         return $requirements;

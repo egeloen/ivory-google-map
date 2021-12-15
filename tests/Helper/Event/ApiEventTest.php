@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Event;
 
+use stdClass;
 use Ivory\GoogleMap\Helper\Event\AbstractEvent;
 use Ivory\GoogleMap\Helper\Event\ApiEvent;
 use Ivory\GoogleMap\Map;
@@ -21,22 +22,16 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiEventTest extends TestCase
 {
-    /**
-     * @var ApiEvent
-     */
-    private $apiEvent;
+    private ApiEvent $apiEvent;
 
     /**
      * @var object[]
      */
-    private $objects;
+    private array $objects;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->objects = [new \stdClass(), new \stdClass()];
+        $this->objects = [new stdClass(), new stdClass()];
         $this->apiEvent = new ApiEvent($this->objects);
     }
 
@@ -61,8 +56,8 @@ class ApiEventTest extends TestCase
 
     public function testObjects()
     {
-        $this->assertTrue($this->apiEvent->hasObjects(\stdClass::class));
-        $this->assertSame($this->objects, $this->apiEvent->getObjects(\stdClass::class));
+        $this->assertTrue($this->apiEvent->hasObjects(stdClass::class));
+        $this->assertSame($this->objects, $this->apiEvent->getObjects(stdClass::class));
 
         $this->assertFalse($this->apiEvent->hasObjects(Map::class));
         $this->assertEmpty($this->apiEvent->getObjects(Map::class));
@@ -84,7 +79,7 @@ class ApiEventTest extends TestCase
         $this->apiEvent->addSources($secondSources = ['source2']);
 
         $this->assertTrue($this->apiEvent->hasSources());
-        $this->assertSame(array_merge($firstSources, $secondSources), $this->apiEvent->getSources());
+        $this->assertSame([...$firstSources, ...$secondSources], $this->apiEvent->getSources());
     }
 
     public function testAddSource()
@@ -122,7 +117,7 @@ class ApiEventTest extends TestCase
         $this->apiEvent->addLibraries($secondLibraries = ['library2']);
 
         $this->assertTrue($this->apiEvent->hasLibraries());
-        $this->assertSame(array_merge($firstLibraries, $secondLibraries), $this->apiEvent->getLibraries());
+        $this->assertSame([...$firstLibraries, ...$secondLibraries], $this->apiEvent->getLibraries());
     }
 
     public function testAddLibrary()
@@ -146,8 +141,8 @@ class ApiEventTest extends TestCase
 
     public function testAddCallback()
     {
-        $this->apiEvent->addCallback(new \stdClass(), 'callback1');
-        $this->apiEvent->addCallback($object = new \stdClass(), $callback = 'callback2');
+        $this->apiEvent->addCallback(new stdClass(), 'callback1');
+        $this->apiEvent->addCallback($object = new stdClass(), $callback = 'callback2');
 
         $this->assertTrue($this->apiEvent->hasCallbacks());
         $this->assertTrue($this->apiEvent->hasCallback($callback));
@@ -160,7 +155,7 @@ class ApiEventTest extends TestCase
 
     public function testRemoveCallback()
     {
-        $this->apiEvent->addCallback($object = new \stdClass(), $callback = 'callback');
+        $this->apiEvent->addCallback($object = new stdClass(), $callback = 'callback');
         $this->apiEvent->removeCallback($callback);
 
         $this->assertFalse($this->apiEvent->hasCallbacks());
@@ -174,7 +169,7 @@ class ApiEventTest extends TestCase
 
     public function testSetRequirements()
     {
-        $this->apiEvent->setRequirements($object = new \stdClass(), $requirements = [$requirement = 'requirement']);
+        $this->apiEvent->setRequirements($object = new stdClass(), $requirements = [$requirement = 'requirement']);
         $this->apiEvent->setRequirements($object, $requirements);
 
         $this->assertTrue($this->apiEvent->hasRequirements());
@@ -186,21 +181,21 @@ class ApiEventTest extends TestCase
 
     public function testAddRequirements()
     {
-        $this->apiEvent->setRequirements($object = new \stdClass(), $firstRequirements = ['requirement1']);
+        $this->apiEvent->setRequirements($object = new stdClass(), $firstRequirements = ['requirement1']);
         $this->apiEvent->addRequirements($object, $secondRequirements = ['requirement2']);
 
         $this->assertTrue($this->apiEvent->hasRequirements());
         $this->assertTrue($this->apiEvent->hasRequirements($object));
         $this->assertTrue($this->apiEvent->hasRequirement($object));
         $this->assertSame(
-            array_merge($firstRequirements, $secondRequirements),
+            [...$firstRequirements, ...$secondRequirements],
             $this->apiEvent->getRequirementsObject($object)
         );
     }
 
     public function testAddRequirement()
     {
-        $this->apiEvent->addRequirement($object = new \stdClass(), $requirement = 'requirement');
+        $this->apiEvent->addRequirement($object = new stdClass(), $requirement = 'requirement');
 
         $this->assertTrue($this->apiEvent->hasRequirements());
         $this->assertTrue($this->apiEvent->hasRequirements($object));
@@ -211,7 +206,7 @@ class ApiEventTest extends TestCase
 
     public function testRemoveRequirement()
     {
-        $this->apiEvent->addRequirement($object = new \stdClass(), $requirement1 = 'requirement1');
+        $this->apiEvent->addRequirement($object = new stdClass(), $requirement1 = 'requirement1');
         $this->apiEvent->addRequirement($object, $requirement2 = 'requirement2');
         $this->apiEvent->removeRequirement($object, $requirement2);
 

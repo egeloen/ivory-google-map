@@ -8,20 +8,11 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 final class PlusCode
 {
-    /**
-     * @var string|null
-     */
-    private $globalCode;
+    private ?string $globalCode = null;
 
-    /**
-     * @var string|null
-     */
-    private $compoundCode;
+    private ?string $compoundCode = null;
 
-    /**
-     * @return string|null
-     */
-    public function getGlobalCode(): string
+    public function getGlobalCode(): ?string
     {
         return $this->globalCode;
     }
@@ -29,15 +20,12 @@ final class PlusCode
     /**
      * @param string|null $globalCode
      */
-    public function setGlobalCode(string $globalCode)
+    public function setGlobalCode(string $globalCode): void
     {
         $this->globalCode = $globalCode;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCompoundCode(): string
+    public function getCompoundCode(): ?string
     {
         return $this->compoundCode;
     }
@@ -45,7 +33,7 @@ final class PlusCode
     /**
      * @param string|null $compoundCode
      */
-    public function setCompoundCode(string $compoundCode)
+    public function setCompoundCode(string $compoundCode): void
     {
         $this->compoundCode = $compoundCode;
     }

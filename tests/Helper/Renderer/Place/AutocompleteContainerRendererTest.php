@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteContainerRendererTest extends TestCase
 {
-    /**
-     * @var AutocompleteContainerRenderer
-     */
-    private $autocompleteContainerRenderer;
+    private AutocompleteContainerRenderer $autocompleteContainerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteContainerRenderer = new AutocompleteContainerRenderer(new Formatter(), new JsonBuilder());
     }

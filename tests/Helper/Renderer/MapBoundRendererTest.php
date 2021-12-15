@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapBoundRendererTest extends TestCase
 {
-    /**
-     * @var MapBoundRenderer
-     */
-    private $mapBoundRenderer;
+    private MapBoundRenderer $mapBoundRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapBoundRenderer = new MapBoundRenderer(new Formatter());
     }

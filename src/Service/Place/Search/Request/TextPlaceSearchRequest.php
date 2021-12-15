@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Service\Place\Search\Request;
  */
 class TextPlaceSearchRequest extends AbstractPlaceSearchRequest
 {
-    /**
-     * @var string
-     */
-    private $query;
+    private ?string $query = null;
 
     /**
      * @param string $query
@@ -29,10 +26,7 @@ class TextPlaceSearchRequest extends AbstractPlaceSearchRequest
         $this->setQuery($query);
     }
 
-    /**
-     * @return string
-     */
-    public function getQuery()
+    public function getQuery(): string
     {
         return $this->query;
     }
@@ -40,23 +34,17 @@ class TextPlaceSearchRequest extends AbstractPlaceSearchRequest
     /**
      * @param string $query
      */
-    public function setQuery($query)
+    public function setQuery($query): void
     {
         $this->query = $query;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildContext()
+    public function buildContext(): string
     {
         return 'textsearch';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = parent::buildQuery();
         $query['query'] = $this->query;

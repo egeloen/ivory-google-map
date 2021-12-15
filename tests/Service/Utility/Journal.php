@@ -34,19 +34,13 @@ class Journal implements JournalInterface
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addSuccess(RequestInterface $request, ResponseInterface $response)
     {
         if (substr($request->getUri()->getPath(), -5) === '/json') {
-            $this->data = json_decode((string) $response->getBody(), true);
+            $this->data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addFailure(RequestInterface $request, Exception $exception)
     {
         $this->data = [];

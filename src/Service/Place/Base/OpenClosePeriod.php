@@ -16,28 +16,16 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 class OpenClosePeriod
 {
-    /**
-     * @var int|null
-     */
-    private $day;
+    private ?int $day = null;
 
-    /**
-     * @var string|null
-     */
-    private $time;
+    private ?string $time = null;
 
-    /**
-     * @return bool
-     */
-    public function hasDay()
+    public function hasDay(): bool
     {
         return $this->day !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getDay()
+    public function getDay(): ?int
     {
         return $this->day;
     }
@@ -45,23 +33,17 @@ class OpenClosePeriod
     /**
      * @param int|null $day
      */
-    public function setDay($day)
+    public function setDay($day): void
     {
         $this->day = $day;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTime()
+    public function hasTime(): bool
     {
         return $this->time !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTime()
+    public function getTime(): ?string
     {
         return $this->time;
     }
@@ -69,7 +51,7 @@ class OpenClosePeriod
     /**
      * @param string $time
      */
-    public function setTime($time)
+    public function setTime($time): void
     {
         $this->time = $time;
     }

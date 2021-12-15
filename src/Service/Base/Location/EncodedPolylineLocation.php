@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Service\Base\Location;
  */
 class EncodedPolylineLocation implements LocationInterface
 {
-    /**
-     * @var string
-     */
-    private $encodedPolyline;
+    private ?string $encodedPolyline = null;
 
     /**
      * @param string $encodedPolyline
@@ -29,10 +26,7 @@ class EncodedPolylineLocation implements LocationInterface
         $this->setEncodedPolyline($encodedPolyline);
     }
 
-    /**
-     * @return string
-     */
-    public function getEncodedPolyline()
+    public function getEncodedPolyline(): string
     {
         return $this->encodedPolyline;
     }
@@ -40,15 +34,12 @@ class EncodedPolylineLocation implements LocationInterface
     /**
      * @param string $encodedPolyline
      */
-    public function setEncodedPolyline($encodedPolyline)
+    public function setEncodedPolyline($encodedPolyline): void
     {
         $this->encodedPolyline = $encodedPolyline;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): string
     {
         return 'enc:'.$this->encodedPolyline;
     }

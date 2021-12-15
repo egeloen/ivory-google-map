@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix;
 
+use Http\Client\Common\Exception\ClientErrorException;
+use DateTime;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Avoid;
 use Ivory\GoogleMap\Service\Base\Location\AddressLocation;
@@ -32,15 +34,9 @@ use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
  */
 class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
 {
-    /**
-     * @var DistanceMatrixService
-     */
-    protected $service;
+    protected ?DistanceMatrixService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -53,161 +49,127 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcess($format)
+    public function testProcess()
     {
         $request = $this->createRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithCoordinates($format)
+    public function testProcessWithCoordinates()
     {
         $request = new DistanceMatrixRequest(
             [new CoordinateLocation(new Coordinate(49.262428, -123.113136))],
             [new CoordinateLocation(new Coordinate(37.775328, -122.418938))]
         );
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithDepartureTime($format)
+    public function testProcessWithDepartureTime()
     {
         $request = $this->createRequest();
         $request->setDepartureTime($this->getDepartureTime());
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testRouteWithArrivalTime($format)
+    public function testRouteWithArrivalTime()
     {
         $request = $this->createRequest();
         $request->setArrivalTime($this->getArrivalTime());
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTravelMode($format)
+    public function testProcessWithTravelMode()
     {
         $request = $this->createRequest();
         $request->setTravelMode(TravelMode::BICYCLING);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAvoid($format)
+    public function testProcessWithAvoid()
     {
         $request = $this->createRequest();
         $request->setAvoid(Avoid::HIGHWAYS);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithRegion($format)
+    public function testProcessWithRegion()
     {
         $request = $this->createRequest();
         $request->setRegion('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithUnitSystem($format)
+    public function testProcessWithUnitSystem()
     {
         $request = $this->createRequest();
         $request->setUnitSystem(UnitSystem::IMPERIAL);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithLanguage($format)
+    public function testProcessWithLanguage()
     {
         $request = $this->createRequest();
         $request->setLanguage('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertDistanceMatrixResponse($response, $request);
     }
 
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());
@@ -243,7 +205,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['origin_addresses'], $response->getOrigins());
         $this->assertSame($options['destination_addresses'], $response->getDestinations());
-        $this->assertCount(count($options['rows']), $rows = $response->getRows());
+        $this->assertCount(is_countable($options['rows']) ? count($options['rows']) : 0, $rows = $response->getRows());
 
         foreach ($options['rows'] as $key => $row) {
             $this->assertArrayHasKey($key, $rows);
@@ -260,7 +222,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
         $options = array_merge(['elements' => []], $options);
 
         $this->assertInstanceOf(DistanceMatrixRow::class, $row);
-        $this->assertCount(count($options['elements']), $elements = $row->getElements());
+        $this->assertCount(is_countable($options['elements']) ? count($options['elements']) : 0, $elements = $row->getElements());
 
         foreach ($options['elements'] as $key => $element) {
             $this->assertArrayHasKey($key, $elements);
@@ -292,7 +254,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getDepartureTime()
     {
@@ -300,7 +262,7 @@ class DistanceMatrixServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     private function getArrivalTime()
     {

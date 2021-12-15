@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete\Request;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\ContextualizedRequestInterface;
 use Ivory\GoogleMap\Service\Place\Autocomplete\Request\AbstractPlaceAutocompleteRequest;
@@ -23,20 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractPlaceAutocompleteRequestTest extends TestCase
 {
-    /**
-     * @var AbstractPlaceAutocompleteRequest|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $request;
+    private MockObject $request;
 
-    /**
-     * @var string
-     */
-    private $input;
+    private ?string $input = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request = $this->getMockBuilder(AbstractPlaceAutocompleteRequest::class)
             ->setConstructorArgs([$this->input = 'input'])
@@ -159,7 +151,7 @@ class AbstractPlaceAutocompleteRequestTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

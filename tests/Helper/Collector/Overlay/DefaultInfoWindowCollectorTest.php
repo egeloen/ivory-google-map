@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultInfoWindowCollectorTest extends TestCase
 {
-    /**
-     * @var DefaultInfoWindowCollector
-     */
-    private $defaultInfoWindowCollector;
+    private DefaultInfoWindowCollector $defaultInfoWindowCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->defaultInfoWindowCollector = new DefaultInfoWindowCollector(new MarkerCollector());
     }

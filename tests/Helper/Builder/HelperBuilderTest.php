@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Builder;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Builder\AbstractHelperBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,10 +26,7 @@ class HelperBuilderTest extends TestCase
      */
     private $helperBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->helperBuilder = $this->createAbstractHelperBuilder();
     }
@@ -65,7 +63,7 @@ class HelperBuilderTest extends TestCase
         );
 
         $this->assertTrue($this->helperBuilder->hasSubscribers());
-        $this->assertSame(array_merge($firstSubscribers, $secondSubscribers), $this->helperBuilder->getSubscribers());
+        $this->assertSame([...$firstSubscribers, ...$secondSubscribers], $this->helperBuilder->getSubscribers());
     }
 
     public function testAddSubscriber()
@@ -94,7 +92,7 @@ class HelperBuilderTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractHelperBuilder
+     * @return MockObject|AbstractHelperBuilder
      */
     private function createAbstractHelperBuilder()
     {
@@ -102,7 +100,7 @@ class HelperBuilderTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EventSubscriberInterface
+     * @return MockObject|EventSubscriberInterface
      */
     private function createEventSubscriberMock()
     {

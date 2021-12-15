@@ -23,10 +23,8 @@ class TagRenderer extends AbstractRenderer
      * @param string|null $code
      * @param string[]    $attributes
      * @param bool        $newLine
-     *
-     * @return string
      */
-    public function render($name, $code = null, array $attributes = [], $newLine = true)
+    public function render($name, $code = null, array $attributes = [], $newLine = true): string
     {
         $formatter = $this->getFormatter();
 

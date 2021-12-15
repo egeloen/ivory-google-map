@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Place;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Event\EventManager;
 use Ivory\GoogleMap\Place\Autocomplete;
@@ -24,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteTest extends TestCase
 {
-    /**
-     * @var Autocomplete
-     */
-    private $autocomplete;
+    private Autocomplete $autocomplete;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocomplete = new Autocomplete();
     }
@@ -108,7 +103,7 @@ class AutocompleteTest extends TestCase
         $this->autocomplete->addTypes($secondTypes = [AutocompleteType::CITIES]);
 
         $this->assertTrue($this->autocomplete->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->autocomplete->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->autocomplete->getTypes());
     }
 
     public function testAddType()
@@ -236,7 +231,7 @@ class AutocompleteTest extends TestCase
         $this->autocomplete->addLibraries($secondLibraries = ['places']);
 
         $this->assertTrue($this->autocomplete->hasLibraries());
-        $this->assertSame(array_merge($firstLibraries, $secondLibraries), $this->autocomplete->getLibraries());
+        $this->assertSame([...$firstLibraries, ...$secondLibraries], $this->autocomplete->getLibraries());
     }
 
     public function testAddLibrary()
@@ -259,7 +254,7 @@ class AutocompleteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EventManager
+     * @return MockObject|EventManager
      */
     private function createEventManagerMock()
     {
@@ -267,7 +262,7 @@ class AutocompleteTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

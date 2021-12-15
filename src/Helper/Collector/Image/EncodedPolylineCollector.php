@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\EncodedPolyline;
 class EncodedPolylineCollector extends AbstractCollector
 {
     /**
-     * @param Map               $map
      * @param EncodedPolyline[] $encodedPolylines
-     *
      * @return EncodedPolyline[][]
      */
-    public function collect(Map $map, array $encodedPolylines = [])
+    public function collect(Map $map, array $encodedPolylines = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getEncodedPolylines(), $encodedPolylines);
     }

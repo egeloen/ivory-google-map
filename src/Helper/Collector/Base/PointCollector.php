@@ -21,42 +21,28 @@ use Ivory\GoogleMap\Map;
  */
 class PointCollector extends AbstractCollector
 {
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private ?MarkerCollector $markerCollector = null;
 
-    /**
-     * @param MarkerCollector $markerCollector
-     */
     public function __construct(MarkerCollector $markerCollector)
     {
         $this->setMarkerCollector($markerCollector);
     }
 
-    /**
-     * @return MarkerCollector
-     */
-    public function getMarkerCollector()
+    public function getMarkerCollector(): MarkerCollector
     {
         return $this->markerCollector;
     }
 
-    /**
-     * @param MarkerCollector $markerCollector
-     */
-    public function setMarkerCollector(MarkerCollector $markerCollector)
+    public function setMarkerCollector(MarkerCollector $markerCollector): void
     {
         $this->markerCollector = $markerCollector;
     }
 
     /**
-     * @param Map     $map
      * @param Point[] $points
-     *
      * @return Point[]
      */
-    public function collect(Map $map, array $points = [])
+    public function collect(Map $map, array $points = []): array
     {
         foreach ($this->markerCollector->collect($map) as $marker) {
             if ($marker->hasIcon()) {

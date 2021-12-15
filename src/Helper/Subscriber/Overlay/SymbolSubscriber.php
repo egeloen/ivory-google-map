@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class SymbolSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var SymbolCollector
-     */
-    private $symbolCollector;
+    private ?SymbolCollector $symbolCollector = null;
 
-    /**
-     * @var SymbolRenderer
-     */
-    private $symbolRenderer;
+    private ?SymbolRenderer $symbolRenderer = null;
 
-    /**
-     * @param Formatter       $formatter
-     * @param SymbolCollector $symbolCollector
-     * @param SymbolRenderer  $symbolRenderer
-     */
     public function __construct(
         Formatter $formatter,
         SymbolCollector $symbolCollector,
@@ -49,42 +38,27 @@ class SymbolSubscriber extends AbstractSubscriber
         $this->setSymbolRenderer($symbolRenderer);
     }
 
-    /**
-     * @return SymbolCollector
-     */
-    public function getSymbolCollector()
+    public function getSymbolCollector(): SymbolCollector
     {
         return $this->symbolCollector;
     }
 
-    /**
-     * @param SymbolCollector $symbolCollector
-     */
-    public function setSymbolCollector(SymbolCollector $symbolCollector)
+    public function setSymbolCollector(SymbolCollector $symbolCollector): void
     {
         $this->symbolCollector = $symbolCollector;
     }
 
-    /**
-     * @return SymbolRenderer
-     */
-    public function getSymbolRenderer()
+    public function getSymbolRenderer(): SymbolRenderer
     {
         return $this->symbolRenderer;
     }
 
-    /**
-     * @param SymbolRenderer $symbolRenderer
-     */
-    public function setSymbolRenderer(SymbolRenderer $symbolRenderer)
+    public function setSymbolRenderer(SymbolRenderer $symbolRenderer): void
     {
         $this->symbolRenderer = $symbolRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class SymbolSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_SYMBOL => 'handleMap'];
     }

@@ -18,20 +18,10 @@ use Ivory\GoogleMap\Overlay\Marker;
  */
 class MarkerRenderer
 {
-    /**
-     * @var MarkerStyleRenderer
-     */
-    private $markerStyleRenderer;
+    private MarkerStyleRenderer $markerStyleRenderer;
 
-    /**
-     * @var MarkerLocationRenderer
-     */
-    private $markerLocationRenderer;
+    private MarkerLocationRenderer $markerLocationRenderer;
 
-    /**
-     * @param MarkerStyleRenderer    $markerStyleRenderer
-     * @param MarkerLocationRenderer $markerLocationRenderer
-     */
     public function __construct(
         MarkerStyleRenderer $markerStyleRenderer,
         MarkerLocationRenderer $markerLocationRenderer
@@ -42,10 +32,8 @@ class MarkerRenderer
 
     /**
      * @param Marker[] $markers
-     *
-     * @return string
      */
-    public function render(array $markers)
+    public function render(array $markers): string
     {
         $result = [];
         $marker = current($markers);

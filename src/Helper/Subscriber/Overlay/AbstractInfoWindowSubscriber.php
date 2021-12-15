@@ -20,15 +20,8 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 abstract class AbstractInfoWindowSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var InfoWindowCollector
-     */
-    private $infoWindowCollector;
+    private ?InfoWindowCollector $infoWindowCollector = null;
 
-    /**
-     * @param Formatter           $formatter
-     * @param InfoWindowCollector $infoWindowCollector
-     */
     public function __construct(Formatter $formatter, InfoWindowCollector $infoWindowCollector)
     {
         parent::__construct($formatter);
@@ -36,17 +29,11 @@ abstract class AbstractInfoWindowSubscriber extends AbstractSubscriber
         $this->setInfoWindowCollector($infoWindowCollector);
     }
 
-    /**
-     * @return InfoWindowCollector
-     */
-    public function getInfoWindowCollector()
+    public function getInfoWindowCollector(): InfoWindowCollector
     {
         return $this->infoWindowCollector;
     }
 
-    /**
-     * @param InfoWindowCollector $infoWindowCollector
-     */
     public function setInfoWindowCollector(InfoWindowCollector $infoWindowCollector)
     {
         $this->infoWindowCollector = $infoWindowCollector;

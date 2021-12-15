@@ -19,10 +19,7 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractDelegateSubscriber;
  */
 class LayerSubscriber extends AbstractDelegateSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function getDelegatedSubscribedEvents()
+    public static function getDelegatedSubscribedEvents(): array
     {
         return [
             MapEvents::JAVASCRIPT_LAYER => [

@@ -19,18 +19,14 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class StaticMapEvent extends Event
 {
-    /**
-     * @var Map
-     */
-    private $map;
+    private Map $map;
 
     /**
      * @var mixed[]
      */
-    private $parameters = [];
+    private array $parameters = [];
 
     /**
-     * @param Map     $map
      * @param mixed[] $parameters
      */
     public function __construct(Map $map, array $parameters = [])
@@ -39,18 +35,12 @@ class StaticMapEvent extends Event
         $this->setParameters($parameters);
     }
 
-    /**
-     * @return Map
-     */
-    public function getMap()
+    public function getMap(): Map
     {
         return $this->map;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasParameters()
+    public function hasParameters(): bool
     {
         return !empty($this->parameters);
     }
@@ -58,7 +48,7 @@ class StaticMapEvent extends Event
     /**
      * @return mixed[]
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
@@ -66,7 +56,7 @@ class StaticMapEvent extends Event
     /**
      * @param mixed[] $parameters
      */
-    public function setParameters(array $parameters)
+    public function setParameters(array $parameters): void
     {
         $this->parameters = [];
         $this->addParameters($parameters);
@@ -75,7 +65,7 @@ class StaticMapEvent extends Event
     /**
      * @param mixed[] $parameters
      */
-    public function addParameters(array $parameters)
+    public function addParameters(array $parameters): void
     {
         foreach ($parameters as $parameter => $value) {
             $this->setParameter($parameter, $value);
@@ -84,10 +74,8 @@ class StaticMapEvent extends Event
 
     /**
      * @param string $parameter
-     *
-     * @return bool
      */
-    public function hasParameter($parameter)
+    public function hasParameter($parameter): bool
     {
         return isset($this->parameters[$parameter]);
     }
@@ -106,7 +94,7 @@ class StaticMapEvent extends Event
      * @param string $parameter
      * @param mixed  $value
      */
-    public function setParameter($parameter, $value)
+    public function setParameter($parameter, $value): void
     {
         $this->parameters[$parameter] = $value;
     }
@@ -114,7 +102,7 @@ class StaticMapEvent extends Event
     /**
      * @param string $parameter
      */
-    public function removeParameter($parameter)
+    public function removeParameter($parameter): void
     {
         unset($this->parameters[$parameter]);
     }

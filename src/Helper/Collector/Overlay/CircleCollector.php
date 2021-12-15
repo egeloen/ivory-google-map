@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\Circle;
 class CircleCollector extends AbstractCollector
 {
     /**
-     * @param Map      $map
      * @param Circle[] $circles
-     *
      * @return Circle[]
      */
-    public function collect(Map $map, array $circles = [])
+    public function collect(Map $map, array $circles = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getCircles(), $circles);
     }

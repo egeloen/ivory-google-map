@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Place\Base\PlaceType;
 use Ivory\GoogleMap\Service\Place\Base\PriceLevel;
@@ -30,15 +31,9 @@ use Ivory\Tests\GoogleMap\Service\Place\AbstractPlaceSerializableServiceTest;
  */
 class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
 {
-    /**
-     * @var PlaceSearchService
-     */
-    private $service;
+    private ?PlaceSearchService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -55,239 +50,194 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequest($format)
+    public function testProcessWithNearbyRequest()
     {
         $request = $this->createNearbyRequest();
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequestAndKeyword($format)
+    public function testProcessWithNearbyRequestAndKeyword()
     {
         $request = $this->createNearbyRequest(300);
         $request->setKeyword('Bank');
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequestAndMinPrice($format)
+    public function testProcessWithNearbyRequestAndMinPrice()
     {
         $request = $this->createNearbyRequest(100);
         $request->setMinPrice(PriceLevel::FREE);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequestAndMaxPrice($format)
+    public function testProcessWithNearbyRequestAndMaxPrice()
     {
         $request = $this->createNearbyRequest(100);
         $request->setMaxPrice(PriceLevel::MODERATE);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequestAndOpenNow($format)
+    public function testProcessWithNearbyRequestAndOpenNow()
     {
         $request = $this->createNearbyRequest(20);
         $request->setOpenNow(true);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequestAndType($format)
+    public function testProcessWithNearbyRequestAndType()
     {
         $request = $this->createNearbyRequest(500);
         $request->setType(PlaceType::BANK);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithNearbyRequestAndLanguage($format)
+    public function testProcessWithNearbyRequestAndLanguage()
     {
         $request = $this->createNearbyRequest();
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequest($format)
+    public function testProcessWithTextRequest()
     {
         $request = $this->createTextRequest();
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithLocation($format)
+    public function testProcessWithTextRequestWithLocation()
     {
         $request = $this->createTextRequest();
         $request->setLocation(new Coordinate(50.637133, 3.063657));
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithRadius($format)
+    public function testProcessWithTextRequestWithRadius()
     {
         $request = $this->createTextRequest();
         $request->setLocation(new Coordinate(50.637133, 3.063657));
         $request->setRadius(1000);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithMinPrice($format)
+    public function testProcessWithTextRequestWithMinPrice()
     {
         $request = $this->createTextRequest('Restaurants in Lille');
         $request->setMinPrice(PriceLevel::EXPENSIVE);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithMaxPrice($format)
+    public function testProcessWithTextRequestWithMaxPrice()
     {
-        $this->markTestSkipped('Unable to get this working with multiple pages: JSON is 3 pages, XML first page asserting against JSON last page');
+//        $this->markTestSkipped('Unable to get this working with multiple pages: JSON is 3 pages, XML first page asserting against JSON last page');
 
         $request = $this->createTextRequest('Pizza in Lille');
         $request->setMaxPrice(PriceLevel::MODERATE);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithOpenNow($format)
+    public function testProcessWithTextRequestWithOpenNow()
     {
         $request = $this->createTextRequest();
         $request->setOpenNow(true);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithType($format)
+    public function testProcessWithTextRequestWithType()
     {
         $request = $this->createTextRequest();
         $request->setType(PlaceType::CASINO);
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithTextRequestWithLanguage($format)
+    public function testProcessWithTextRequestWithLanguage()
     {
         $request = $this->createTextRequest();
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
@@ -304,32 +254,21 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testIteratorWithTextRequest($format)
+    public function testIteratorWithTextRequest()
     {
-        $this->markTestSkipped('Unable to get this working with multiple pages: JSON is 3 pages, XML first page asserting against JSON last page');
         $request = $this->createTextRequest('Church in Lille');
 
-        $this->service->setFormat($format);
         $iterator = $this->service->process($request);
 
         $this->assertPlaceSearchIterator($iterator, $request);
     }
 
-    /**
-     * @param string $format
-     *
-     * @dataProvider             formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createNearbyRequest());
@@ -409,11 +348,9 @@ class PlaceSearchServiceTest extends AbstractPlaceSerializableServiceTest
         $expectedResults = $options['results'];
         $actualResults   = $response->getResults();
 
-        $this->assertCount(count($expectedResults), $actualResults);
+        $this->assertCount(is_countable($expectedResults) ? count($expectedResults) : 0, $actualResults);
 
         foreach ($expectedResults as $key => $expectedResult) {
-//            print sprintf('expected ID [%s] vs actual ID [%s]' . "\n", $expectedResult['id'], $actualResults[$key]->getId());
-
             $this->assertArrayHasKey($key, $actualResults);
             $this->assertPlace($actualResults[$key], $expectedResult);
         }

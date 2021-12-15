@@ -25,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PolygonRendererTest extends TestCase
 {
-    /**
-     * @var PolygonRenderer
-     */
-    private $polygonRenderer;
+    private PolygonRenderer $polygonRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->polygonRenderer = new PolygonRenderer(new Formatter(), new JsonBuilder());
     }

@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AspectRatingTest extends TestCase
 {
-    /**
-     * @var AspectRating
-     */
-    private $aspectRating;
+    private AspectRating $aspectRating;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->aspectRating = new AspectRating();
     }

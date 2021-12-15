@@ -21,10 +21,8 @@ class UrlSigner
      * @param string      $secret
      * @param string|null $clientId
      * @param string|null $channel
-     *
-     * @return string
      */
-    public static function sign($url, $secret, $clientId = null, $channel = null)
+    public static function sign($url, $secret, $clientId = null, $channel = null): string
     {
         if ($clientId !== null) {
             $url .= '&client=gme-'.$clientId;

@@ -23,28 +23,12 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class MapRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @var MapTypeIdRenderer
-     */
-    private $mapTypeIdRenderer;
+    private ?MapTypeIdRenderer $mapTypeIdRenderer = null;
 
-    /**
-     * @var ControlManagerRenderer
-     */
-    private $controlManagerRenderer;
+    private ?ControlManagerRenderer $controlManagerRenderer = null;
 
-    /**
-     * @var RequirementRenderer
-     */
-    private $requirementRenderer;
+    private ?RequirementRenderer $requirementRenderer = null;
 
-    /**
-     * @param Formatter              $formatter
-     * @param JsonBuilder            $jsonBuilder
-     * @param MapTypeIdRenderer      $mapTypeIdRenderer
-     * @param ControlManagerRenderer $controlManagerRenderer
-     * @param RequirementRenderer    $requirementRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -59,42 +43,27 @@ class MapRenderer extends AbstractJsonRenderer
         $this->setRequirementRenderer($requirementRenderer);
     }
 
-    /**
-     * @return MapTypeIdRenderer
-     */
-    public function getMapTypeIdRenderer()
+    public function getMapTypeIdRenderer(): MapTypeIdRenderer
     {
         return $this->mapTypeIdRenderer;
     }
 
-    /**
-     * @param MapTypeIdRenderer $mapTypeIdRenderer
-     */
-    public function setMapTypeIdRenderer(MapTypeIdRenderer $mapTypeIdRenderer)
+    public function setMapTypeIdRenderer(MapTypeIdRenderer $mapTypeIdRenderer): void
     {
         $this->mapTypeIdRenderer = $mapTypeIdRenderer;
     }
 
-    /**
-     * @return ControlManagerRenderer
-     */
-    public function getControlManagerRenderer()
+    public function getControlManagerRenderer(): ControlManagerRenderer
     {
         return $this->controlManagerRenderer;
     }
 
-    /**
-     * @param ControlManagerRenderer $controlManagerRenderer
-     */
-    public function setControlManagerRenderer(ControlManagerRenderer $controlManagerRenderer)
+    public function setControlManagerRenderer(ControlManagerRenderer $controlManagerRenderer): void
     {
         $this->controlManagerRenderer = $controlManagerRenderer;
     }
 
-    /**
-     * @return RequirementRenderer
-     */
-    public function getRequirementRenderer()
+    public function getRequirementRenderer(): RequirementRenderer
     {
         return $this->requirementRenderer;
     }
@@ -102,17 +71,12 @@ class MapRenderer extends AbstractJsonRenderer
     /**
      * @param RequirementRenderer $requirementRenderer
      */
-    public function setRequirementRenderer($requirementRenderer)
+    public function setRequirementRenderer($requirementRenderer): void
     {
         $this->requirementRenderer = $requirementRenderer;
     }
 
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function render(Map $map)
+    public function render(Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
@@ -147,10 +111,7 @@ class MapRenderer extends AbstractJsonRenderer
         ]));
     }
 
-    /**
-     * @return string
-     */
-    public function renderRequirement()
+    public function renderRequirement(): string
     {
         return $this->requirementRenderer->render($this->getFormatter()->renderClass());
     }

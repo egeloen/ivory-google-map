@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DirectionGeocodedTest extends TestCase
 {
-    /**
-     * @var DirectionGeocoded
-     */
-    private $geocodedWaypoint;
+    private DirectionGeocoded $geocodedWaypoint;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geocodedWaypoint = new DirectionGeocoded();
     }
@@ -86,7 +80,7 @@ class DirectionGeocodedTest extends TestCase
         $this->geocodedWaypoint->addTypes($secondTypes = [DirectionGeocodedType::COUNTRY]);
 
         $this->assertTrue($this->geocodedWaypoint->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->geocodedWaypoint->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->geocodedWaypoint->getTypes());
     }
 
     public function testAddType()

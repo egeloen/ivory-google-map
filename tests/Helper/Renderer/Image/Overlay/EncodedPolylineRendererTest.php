@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodedPolylineRendererTest extends TestCase
 {
-    /**
-     * @var EncodedPolylineRenderer
-     */
-    private $encodedPolylineRenderer;
+    private EncodedPolylineRenderer $encodedPolylineRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->encodedPolylineRenderer = new EncodedPolylineRenderer(
             new EncodedPolylineStyleRenderer(),

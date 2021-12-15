@@ -25,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class IconRendererTest extends TestCase
 {
-    /**
-     * @var IconRenderer
-     */
-    private $iconRenderer;
+    private IconRenderer $iconRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->iconRenderer = new IconRenderer(new Formatter(), new JsonBuilder());
     }

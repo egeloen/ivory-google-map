@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Point;
 use Ivory\GoogleMap\Helper\Collector\Base\PointCollector;
@@ -25,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PointCollectorTest extends TestCase
 {
-    /**
-     * @var PointCollector
-     */
-    private $pointCollector;
+    private PointCollector $pointCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pointCollector = new PointCollector(new MarkerCollector());
     }
@@ -77,7 +72,7 @@ class PointCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerCollector
+     * @return MockObject|MarkerCollector
      */
     private function createMarkerCollectorMock()
     {

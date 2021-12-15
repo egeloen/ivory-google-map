@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
 use Ivory\GoogleMap\Control\ZoomControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -21,22 +22,10 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
  */
 class ZoomControlRenderer extends AbstractJsonRenderer implements ControlRendererInterface
 {
-    /**
-     * @var ControlPositionRenderer
-     */
-    private $controlPositionRenderer;
+    private ?ControlPositionRenderer $controlPositionRenderer = null;
 
-    /**
-     * @var ZoomControlStyleRenderer
-     */
-    private $zoomControlStyleRenderer;
+    private ?ZoomControlStyleRenderer $zoomControlStyleRenderer = null;
 
-    /**
-     * @param Formatter                $formatter
-     * @param JsonBuilder              $jsonBuilder
-     * @param ControlPositionRenderer  $controlPositionRenderer
-     * @param ZoomControlStyleRenderer $zoomControlStyleRenderer
-     */
     public function __construct(
         Formatter $formatter,
         JsonBuilder $jsonBuilder,
@@ -49,45 +38,30 @@ class ZoomControlRenderer extends AbstractJsonRenderer implements ControlRendere
         $this->setZoomControlStyleRenderer($zoomControlStyleRenderer);
     }
 
-    /**
-     * @return ControlPositionRenderer
-     */
-    public function getControlPositionRenderer()
+    public function getControlPositionRenderer(): ControlPositionRenderer
     {
         return $this->controlPositionRenderer;
     }
 
-    /**
-     * @param ControlPositionRenderer $controlPositionRenderer
-     */
-    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer)
+    public function setControlPositionRenderer(ControlPositionRenderer $controlPositionRenderer): void
     {
         $this->controlPositionRenderer = $controlPositionRenderer;
     }
 
-    /**
-     * @return ZoomControlStyleRenderer
-     */
-    public function getZoomControlStyleRenderer()
+    public function getZoomControlStyleRenderer(): ZoomControlStyleRenderer
     {
         return $this->zoomControlStyleRenderer;
     }
 
-    /**
-     * @param ZoomControlStyleRenderer $zoomControlStyleRenderer
-     */
-    public function setZoomControlStyleRenderer(ZoomControlStyleRenderer $zoomControlStyleRenderer)
+    public function setZoomControlStyleRenderer(ZoomControlStyleRenderer $zoomControlStyleRenderer): void
     {
         $this->zoomControlStyleRenderer = $zoomControlStyleRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function render($control)
+    public function render($control): string
     {
         if (!$control instanceof ZoomControl) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Expected a "%s", got "%s".',
                 ZoomControl::class,
                 is_object($control) ? get_class($control) : gettype($control)

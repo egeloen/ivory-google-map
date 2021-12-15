@@ -22,23 +22,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class CenterSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var CoordinateRenderer
-     */
-    private $coordinateRenderer;
+    private CoordinateRenderer $coordinateRenderer;
 
-    /**
-     * @param CoordinateRenderer $coordinateRenderer
-     */
     public function __construct(CoordinateRenderer $coordinateRenderer)
     {
         $this->coordinateRenderer = $coordinateRenderer;
     }
 
-    /**
-     * @param StaticMapEvent $event
-     */
-    public function handleMap(StaticMapEvent $event)
+    public function handleMap(StaticMapEvent $event): void
     {
         $map = $event->getMap();
 
@@ -57,10 +48,7 @@ class CenterSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [StaticMapEvents::CENTER => 'handleMap'];
     }

@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ScaleControlTest extends TestCase
 {
-    /**
-     * @var ScaleControl
-     */
-    private $scaleControl;
+    private ScaleControl $scaleControl;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scaleControl = new ScaleControl();
     }

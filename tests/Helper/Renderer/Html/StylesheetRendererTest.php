@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StylesheetRendererTest extends TestCase
 {
-    /**
-     * @var StylesheetRenderer
-     */
-    private $stylesheetRenderer;
+    private StylesheetRenderer $stylesheetRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->stylesheetRenderer = new StylesheetRenderer(new Formatter());
     }

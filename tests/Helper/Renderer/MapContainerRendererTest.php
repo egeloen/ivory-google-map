@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapContainerRendererTest extends TestCase
 {
-    /**
-     * @var MapContainerRenderer
-     */
-    private $mapContainerRenderer;
+    private MapContainerRenderer $mapContainerRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapContainerRenderer = new MapContainerRenderer(new Formatter(), new JsonBuilder());
     }

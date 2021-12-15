@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Service\Base\Location;
  */
 class AddressLocation implements LocationInterface
 {
-    /**
-     * @var string
-     */
-    private $address;
+    private ?string $address = null;
 
     /**
      * @param string $address
@@ -29,10 +26,7 @@ class AddressLocation implements LocationInterface
         $this->setAddress($address);
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -40,15 +34,12 @@ class AddressLocation implements LocationInterface
     /**
      * @param string $address
      */
-    public function setAddress($address)
+    public function setAddress($address): void
     {
         $this->address = $address;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): string
     {
         return $this->address;
     }

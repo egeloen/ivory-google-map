@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class CoordinateSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var CoordinateCollector
-     */
-    private $coordinateCollector;
+    private ?CoordinateCollector $coordinateCollector = null;
 
-    /**
-     * @var CoordinateRenderer
-     */
-    private $coordinateRenderer;
+    private ?CoordinateRenderer $coordinateRenderer = null;
 
-    /**
-     * @param Formatter           $formatter
-     * @param CoordinateCollector $coordinateCollector
-     * @param CoordinateRenderer  $coordinateRenderer
-     */
     public function __construct(
         Formatter $formatter,
         CoordinateCollector $coordinateCollector,
@@ -49,42 +38,27 @@ class CoordinateSubscriber extends AbstractSubscriber
         $this->setCoordinateRenderer($coordinateRenderer);
     }
 
-    /**
-     * @return CoordinateCollector
-     */
-    public function getCoordinateCollector()
+    public function getCoordinateCollector(): CoordinateCollector
     {
         return $this->coordinateCollector;
     }
 
-    /**
-     * @param CoordinateCollector $coordinateCollector
-     */
-    public function setCoordinateCollector(CoordinateCollector $coordinateCollector)
+    public function setCoordinateCollector(CoordinateCollector $coordinateCollector): void
     {
         $this->coordinateCollector = $coordinateCollector;
     }
 
-    /**
-     * @return CoordinateRenderer
-     */
-    public function getCoordinateRenderer()
+    public function getCoordinateRenderer(): CoordinateRenderer
     {
         return $this->coordinateRenderer;
     }
 
-    /**
-     * @param CoordinateRenderer $coordinateRenderer
-     */
-    public function setCoordinateRenderer(CoordinateRenderer $coordinateRenderer)
+    public function setCoordinateRenderer(CoordinateRenderer $coordinateRenderer): void
     {
         $this->coordinateRenderer = $coordinateRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class CoordinateSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_BASE_COORDINATE => 'handleMap'];
     }

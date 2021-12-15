@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CoordinateTest extends TestCase
 {
-    /**
-     * @var Coordinate
-     */
-    private $coordinate;
+    private Coordinate $coordinate;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->coordinate = new Coordinate();
     }

@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Service\DistanceMatrix\Request;
 
+use DateTime;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
 use Ivory\GoogleMap\Service\Base\Location\LocationInterface;
 
@@ -24,62 +25,35 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @var LocationInterface[]
      */
-    private $origins = [];
+    private array $origins = [];
 
     /**
      * @var LocationInterface[]
      */
-    private $destinations = [];
+    private array $destinations = [];
 
-    /**
-     * @var \DateTime|null
-     */
-    private $departureTime;
+    private ?DateTime $departureTime = null;
 
-    /**
-     * @var \DateTime|null
-     */
-    private $arrivalTime;
+    private ?DateTime $arrivalTime = null;
 
-    /**
-     * @var string|null
-     */
-    private $travelMode;
+    private ?string $travelMode = null;
 
-    /**
-     * @var string|null
-     */
-    private $avoid;
+    private ?string $avoid = null;
 
-    /**
-     * @var string|null
-     */
-    private $trafficModel;
+    private ?string $trafficModel = null;
 
     /**
      * @var string[]
      */
-    private $transitModes = [];
+    private array $transitModes = [];
 
-    /**
-     * @var string|null
-     */
-    private $transitRoutingPreference;
+    private ?string $transitRoutingPreference = null;
 
-    /**
-     * @var string|null
-     */
-    private $region;
+    private ?string $region = null;
 
-    /**
-     * @var string|null
-     */
-    private $unitSystem;
+    private ?string $unitSystem = null;
 
-    /**
-     * @var string|null
-     */
-    private $language;
+    private ?string $language = null;
 
     /**
      * @param LocationInterface[] $origins
@@ -91,10 +65,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
         $this->setDestinations($destinations);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOrigins()
+    public function hasOrigins(): bool
     {
         return !empty($this->origins);
     }
@@ -102,7 +73,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @return LocationInterface[]
      */
-    public function getOrigins()
+    public function getOrigins(): array
     {
         return $this->origins;
     }
@@ -110,7 +81,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param LocationInterface[] $origins
      */
-    public function setOrigins(array $origins)
+    public function setOrigins(array $origins): void
     {
         $this->origins = [];
         $this->addOrigins($origins);
@@ -119,46 +90,32 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param LocationInterface[] $origins
      */
-    public function addOrigins(array $origins)
+    public function addOrigins(array $origins): void
     {
         foreach ($origins as $origin) {
             $this->addOrigin($origin);
         }
     }
 
-    /**
-     * @param LocationInterface $origin
-     *
-     * @return bool
-     */
-    public function hasOrigin(LocationInterface $origin)
+    public function hasOrigin(LocationInterface $origin): bool
     {
         return in_array($origin, $this->origins, true);
     }
 
-    /**
-     * @param LocationInterface $origin
-     */
-    public function addOrigin(LocationInterface $origin)
+    public function addOrigin(LocationInterface $origin): void
     {
         if (!$this->hasOrigin($origin)) {
             $this->origins[] = $origin;
         }
     }
 
-    /**
-     * @param LocationInterface $origin
-     */
-    public function removeOrigin(LocationInterface $origin)
+    public function removeOrigin(LocationInterface $origin): void
     {
         unset($this->origins[array_search($origin, $this->origins, true)]);
         $this->origins = empty($this->origins) ? [] : array_values($this->origins);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDestinations()
+    public function hasDestinations(): bool
     {
         return !empty($this->destinations);
     }
@@ -166,7 +123,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @return LocationInterface[]
      */
-    public function getDestinations()
+    public function getDestinations(): array
     {
         return $this->destinations;
     }
@@ -174,7 +131,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param LocationInterface[] $destinations
      */
-    public function setDestinations(array $destinations)
+    public function setDestinations(array $destinations): void
     {
         $this->destinations = [];
         $this->addDestinations($destinations);
@@ -183,102 +140,73 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param LocationInterface[] $destinations
      */
-    public function addDestinations(array $destinations)
+    public function addDestinations(array $destinations): void
     {
         foreach ($destinations as $destination) {
             $this->addDestination($destination);
         }
     }
 
-    /**
-     * @param LocationInterface $destination
-     *
-     * @return bool
-     */
-    public function hasDestination(LocationInterface $destination)
+    public function hasDestination(LocationInterface $destination): bool
     {
         return in_array($destination, $this->destinations, true);
     }
 
-    /**
-     * @param LocationInterface $destination
-     */
-    public function addDestination(LocationInterface $destination)
+    public function addDestination(LocationInterface $destination): void
     {
         if (!$this->hasDestination($destination)) {
             $this->destinations[] = $destination;
         }
     }
 
-    /**
-     * @param LocationInterface $destination
-     */
-    public function removeDestination(LocationInterface $destination)
+    public function removeDestination(LocationInterface $destination): void
     {
         unset($this->destinations[array_search($destination, $this->destinations, true)]);
         $this->destinations = empty($this->destinations) ? [] : array_values($this->destinations);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDepartureTime()
+    public function hasDepartureTime(): bool
     {
         return $this->departureTime !== null;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getDepartureTime()
+    public function getDepartureTime(): ?DateTime
     {
         return $this->departureTime;
     }
 
     /**
-     * @param \DateTime|null $departureTime
+     * @param DateTime|null $departureTime
      */
-    public function setDepartureTime(\DateTime $departureTime = null)
+    public function setDepartureTime(DateTime $departureTime = null): void
     {
         $this->departureTime = $departureTime;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasArrivalTime()
+    public function hasArrivalTime(): bool
     {
         return $this->arrivalTime !== null;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getArrivalTime()
+    public function getArrivalTime(): ?DateTime
     {
         return $this->arrivalTime;
     }
 
     /**
-     * @param \DateTime|null $arrivalTime
+     * @param DateTime|null $arrivalTime
      */
-    public function setArrivalTime(\DateTime $arrivalTime = null)
+    public function setArrivalTime(DateTime $arrivalTime = null): void
     {
         $this->arrivalTime = $arrivalTime;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTravelMode()
+    public function hasTravelMode(): bool
     {
         return $this->travelMode !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTravelMode()
+    public function getTravelMode(): ?string
     {
         return $this->travelMode;
     }
@@ -286,23 +214,17 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $travelMode
      */
-    public function setTravelMode($travelMode = null)
+    public function setTravelMode($travelMode = null): void
     {
         $this->travelMode = $travelMode;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAvoid()
+    public function hasAvoid(): bool
     {
         return $this->avoid !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getAvoid()
+    public function getAvoid(): ?string
     {
         return $this->avoid;
     }
@@ -310,23 +232,17 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $avoid
      */
-    public function setAvoid($avoid = null)
+    public function setAvoid($avoid = null): void
     {
         $this->avoid = $avoid;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTrafficModel()
+    public function hasTrafficModel(): bool
     {
         return $this->trafficModel !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTrafficModel()
+    public function getTrafficModel(): ?string
     {
         return $this->trafficModel;
     }
@@ -334,15 +250,12 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $trafficModel
      */
-    public function setTrafficModel($trafficModel)
+    public function setTrafficModel($trafficModel): void
     {
         $this->trafficModel = $trafficModel;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTransitModes()
+    public function hasTransitModes(): bool
     {
         return !empty($this->transitModes);
     }
@@ -350,7 +263,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @return string[]
      */
-    public function getTransitModes()
+    public function getTransitModes(): array
     {
         return $this->transitModes;
     }
@@ -358,7 +271,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string[] $transitModes
      */
-    public function setTransitModes(array $transitModes)
+    public function setTransitModes(array $transitModes): void
     {
         $this->transitModes = [];
         $this->addTransitModes($transitModes);
@@ -367,7 +280,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string[] $transitModes
      */
-    public function addTransitModes(array $transitModes)
+    public function addTransitModes(array $transitModes): void
     {
         foreach ($transitModes as $transitMode) {
             $this->addTransitMode($transitMode);
@@ -376,10 +289,8 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
 
     /**
      * @param string $transitMode
-     *
-     * @return bool
      */
-    public function hasTransitMode($transitMode)
+    public function hasTransitMode($transitMode): bool
     {
         return in_array($transitMode, $this->transitModes, true);
     }
@@ -387,7 +298,7 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string $transitMode
      */
-    public function addTransitMode($transitMode)
+    public function addTransitMode($transitMode): void
     {
         if (!$this->hasTransitMode($transitMode)) {
             $this->transitModes[] = $transitMode;
@@ -397,24 +308,18 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string $transitMode
      */
-    public function removeTransitMode($transitMode)
+    public function removeTransitMode($transitMode): void
     {
         unset($this->transitModes[array_search($transitMode, $this->transitModes, true)]);
         $this->transitModes = empty($this->transitModes) ? [] : array_values($this->transitModes);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTransitRoutingPreference()
+    public function hasTransitRoutingPreference(): bool
     {
         return $this->transitRoutingPreference !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTransitRoutingPreference()
+    public function getTransitRoutingPreference(): ?string
     {
         return $this->transitRoutingPreference;
     }
@@ -422,23 +327,17 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $transitRoutingPreference
      */
-    public function setTransitRoutingPreference($transitRoutingPreference)
+    public function setTransitRoutingPreference($transitRoutingPreference): void
     {
         $this->transitRoutingPreference = $transitRoutingPreference;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRegion()
+    public function hasRegion(): bool
     {
         return $this->region !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRegion()
+    public function getRegion(): ?string
     {
         return $this->region;
     }
@@ -446,23 +345,17 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $region
      */
-    public function setRegion($region = null)
+    public function setRegion($region = null): void
     {
         $this->region = $region;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasUnitSystem()
+    public function hasUnitSystem(): bool
     {
         return $this->unitSystem !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUnitSystem()
+    public function getUnitSystem(): ?string
     {
         return $this->unitSystem;
     }
@@ -470,23 +363,17 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $unitSystem
      */
-    public function setUnitSystem($unitSystem = null)
+    public function setUnitSystem($unitSystem = null): void
     {
         $this->unitSystem = $unitSystem;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -494,15 +381,12 @@ class DistanceMatrixRequest implements DistanceMatrixRequestInterface
     /**
      * @param string|null $language
      */
-    public function setLanguage($language = null)
+    public function setLanguage($language = null): void
     {
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $locationBuilder = function (LocationInterface $location) {
             $result = $location->buildQuery();

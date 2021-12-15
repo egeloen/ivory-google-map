@@ -16,38 +16,20 @@ namespace Ivory\GoogleMap\Service\Direction\Response\Transit;
  */
 class DirectionTransitVehicle
 {
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string|null
-     */
-    private $icon;
+    private ?string $icon = null;
 
-    /**
-     * @var string|null
-     */
-    private $type;
+    private ?string $type = null;
 
-    /**
-     * @var string|null
-     */
-    private $localIcon;
+    private ?string $localIcon = null;
 
-    /**
-     * @return bool
-     */
-    public function hasName()
+    public function hasName(): bool
     {
         return $this->name !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -55,23 +37,17 @@ class DirectionTransitVehicle
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIcon()
+    public function hasIcon(): bool
     {
         return $this->icon !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
@@ -79,23 +55,17 @@ class DirectionTransitVehicle
     /**
      * @param string|null $icon
      */
-    public function setIcon($icon)
+    public function setIcon($icon): void
     {
         $this->icon = $icon;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->type !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -103,23 +73,17 @@ class DirectionTransitVehicle
     /**
      * @param string|null $type
      */
-    public function setType($type)
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLocalIcon()
+    public function hasLocalIcon(): bool
     {
         return $this->localIcon !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLocalIcon()
+    public function getLocalIcon(): ?string
     {
         return $this->localIcon;
     }
@@ -127,7 +91,7 @@ class DirectionTransitVehicle
     /**
      * @param string|null $localIcon
      */
-    public function setLocalIcon($localIcon)
+    public function setLocalIcon($localIcon): void
     {
         $this->localIcon = $localIcon;
     }

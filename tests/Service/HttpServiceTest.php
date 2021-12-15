@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractHttpService;
@@ -22,34 +23,23 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpServiceTest extends TestCase
 {
-    /**
-     * @var AbstractHttpService|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $service;
+    private MockObject $service;
 
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|MockObject
      */
     private $client;
 
     /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|MockObject
      */
     private $messageFactory;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = $this->getMockBuilder(AbstractHttpService::class)
             ->setConstructorArgs([
-                $this->url = 'https://foo',
+                'https://foo',
                 $this->client = $this->createHttpClientMock(),
                 $this->messageFactory = $this->createMessageFactoryMock(),
             ])
@@ -79,7 +69,7 @@ class HttpServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return MockObject|HttpClient
      */
     private function createHttpClientMock()
     {
@@ -87,7 +77,7 @@ class HttpServiceTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return MockObject|MessageFactory
      */
     private function createMessageFactoryMock()
     {

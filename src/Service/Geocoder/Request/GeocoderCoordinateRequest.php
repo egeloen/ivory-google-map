@@ -20,39 +20,24 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 class GeocoderCoordinateRequest extends AbstractGeocoderReverseRequest
 {
-    /**
-     * @var Coordinate
-     */
-    private $coordinate;
+    private ?Coordinate $coordinate = null;
 
-    /**
-     * @param Coordinate $coordinate
-     */
     public function __construct(Coordinate $coordinate)
     {
         $this->setCoordinate($coordinate);
     }
 
-    /**
-     * @return Coordinate
-     */
-    public function getCoordinate()
+    public function getCoordinate(): Coordinate
     {
         return $this->coordinate;
     }
 
-    /**
-     * @param Coordinate $coordinate
-     */
-    public function setCoordinate(Coordinate $coordinate)
+    public function setCoordinate(Coordinate $coordinate): void
     {
         $this->coordinate = $coordinate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         return array_merge(['latlng' => $this->buildCoordinate($this->coordinate)], parent::buildQuery());
     }

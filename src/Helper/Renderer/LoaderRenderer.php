@@ -22,15 +22,11 @@ class LoaderRenderer extends AbstractJsonRenderer
 //    const GOOGLE_URL = 'https://www.gstatic.com/charts/loader.js?callback=';
     const GOOGLE_URL = 'https://maps.googleapis.com/maps/api/js';
 
-    /** @var string */
-    private $language;
+    private ?string $language = null;
 
-    /** @var string|null */
-    private $key;
+    private ?string $key = null;
 
     /**
-     * @param Formatter   $formatter
-     * @param JsonBuilder $jsonBuilder
      * @param string      $language
      * @param null        $key
      */
@@ -42,10 +38,7 @@ class LoaderRenderer extends AbstractJsonRenderer
         $this->setKey($key);
     }
 
-    /**
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -53,23 +46,17 @@ class LoaderRenderer extends AbstractJsonRenderer
     /**
      * @param string $language
      */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->language = $language;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasKey()
+    public function hasKey(): bool
     {
         return null !== $this->key;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -77,7 +64,7 @@ class LoaderRenderer extends AbstractJsonRenderer
     /**
      * @param string|null $key
      */
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = $key;
     }
@@ -87,10 +74,8 @@ class LoaderRenderer extends AbstractJsonRenderer
      * @param string   $callback
      * @param string[] $libraries
      * @param bool     $newLine
-     *
-     * @return string
      */
-    public function render($name, $callback, array $libraries = [], $newLine = true)
+    public function render($name, $callback, array $libraries = [], $newLine = true): string
     {
         $formatter   = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder();
@@ -106,11 +91,9 @@ class LoaderRenderer extends AbstractJsonRenderer
 
     /**
      * @param       $callback
-     * @param array $libraries
      *
-     * @return string
      */
-    public function renderSource($callback, array $libraries = [])
+    public function renderSource($callback, array $libraries = []): string
     {
         $queryParameters             = [];
         $queryParameters['key']      = $this->key;

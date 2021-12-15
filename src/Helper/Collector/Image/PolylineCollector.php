@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\Polyline;
 class PolylineCollector extends AbstractCollector
 {
     /**
-     * @param Map        $map
      * @param Polyline[] $polylines
-     *
      * @return Polyline[]
      */
-    public function collect(Map $map, array $polylines = [])
+    public function collect(Map $map, array $polylines = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getPolylines(), $polylines);
     }

@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\DistanceMatrix\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\Distance;
 use Ivory\GoogleMap\Service\Base\Duration;
 use Ivory\GoogleMap\Service\Base\Fare;
@@ -23,15 +24,9 @@ use PHPUnit\Framework\TestCase;
  */
 class DistanceMatrixElementTest extends TestCase
 {
-    /**
-     * @var DistanceMatrixElement
-     */
-    private $element;
+    private DistanceMatrixElement $element;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->element = new DistanceMatrixElement();
     }
@@ -136,7 +131,7 @@ class DistanceMatrixElementTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Distance
+     * @return MockObject|Distance
      */
     private function createDistanceMock()
     {
@@ -144,7 +139,7 @@ class DistanceMatrixElementTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Duration
+     * @return MockObject|Duration
      */
     private function createDurationMock()
     {
@@ -152,7 +147,7 @@ class DistanceMatrixElementTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Fare
+     * @return MockObject|Fare
      */
     private function createFareMock()
     {

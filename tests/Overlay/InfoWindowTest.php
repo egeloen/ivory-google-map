@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Size;
 use Ivory\GoogleMap\Event\MouseEvent;
@@ -26,20 +27,11 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowTest extends TestCase
 {
-    /**
-     * @var InfoWindow
-     */
-    private $infoWindow;
+    private InfoWindow $infoWindow;
 
-    /**
-     * @var string
-     */
-    private $content;
+    private ?string $content = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoWindow = new InfoWindow($this->content = '<p>content</p>');
     }
@@ -143,7 +135,7 @@ class InfoWindowTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {
@@ -151,7 +143,7 @@ class InfoWindowTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Size
+     * @return MockObject|Size
      */
     private function createSizeMock()
     {

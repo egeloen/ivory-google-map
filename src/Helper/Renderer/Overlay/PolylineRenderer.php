@@ -20,13 +20,7 @@ use Ivory\GoogleMap\Overlay\Polyline;
  */
 class PolylineRenderer extends AbstractJsonRenderer
 {
-    /**
-     * @param Polyline $polyline
-     * @param Map      $map
-     *
-     * @return string
-     */
-    public function render(Polyline $polyline, Map $map)
+    public function render(Polyline $polyline, Map $map): string
     {
         $formatter = $this->getFormatter();
         $jsonBuilder = $this->getJsonBuilder()

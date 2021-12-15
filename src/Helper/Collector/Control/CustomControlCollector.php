@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Map;
 class CustomControlCollector extends AbstractCollector
 {
     /**
-     * @param Map             $map
      * @param CustomControl[] $customControls
-     *
      * @return CustomControl[]
      */
-    public function collect(Map $map, array $customControls = [])
+    public function collect(Map $map, array $customControls = []): array
     {
         return $this->collectValues($map->getControlManager()->getCustomControls(), $customControls);
     }

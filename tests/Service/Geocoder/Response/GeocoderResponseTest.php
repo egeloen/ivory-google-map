@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocoderResponseTest extends TestCase
 {
-    /**
-     * @var GeocoderResponse
-     */
-    private $response;
+    private GeocoderResponse $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new GeocoderResponse();
     }
@@ -77,7 +72,7 @@ class GeocoderResponseTest extends TestCase
         $this->response->addResults($secondResults = [$this->createResultMock()]);
 
         $this->assertTrue($this->response->hasResults());
-        $this->assertSame(array_merge($firstResults, $secondResults), $this->response->getResults());
+        $this->assertSame([...$firstResults, ...$secondResults], $this->response->getResults());
     }
 
     public function testAddResult()
@@ -100,7 +95,7 @@ class GeocoderResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeocoderRequestInterface
+     * @return MockObject|GeocoderRequestInterface
      */
     private function createRequestMock()
     {
@@ -108,7 +103,7 @@ class GeocoderResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeocoderResult
+     * @return MockObject|GeocoderResult
      */
     private function createResultMock()
     {

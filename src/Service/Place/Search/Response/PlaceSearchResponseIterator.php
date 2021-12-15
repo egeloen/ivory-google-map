@@ -20,26 +20,17 @@ use Ivory\GoogleMap\Service\Place\Search\Request\PageTokenPlaceSearchRequest;
  */
 class PlaceSearchResponseIterator implements Iterator
 {
-    /** @var PlaceSearchService */
-    private $service;
+    private PlaceSearchService $service;
     /** @var PlaceSearchResponse[] */
-    private $responses = [];
-    /** @var int */
-    private $position = 0;
+    private array $responses = [];
+    private int $position = 0;
 
-    /**
-     * @param PlaceSearchService  $service
-     * @param PlaceSearchResponse $response
-     */
     public function __construct(PlaceSearchService $service, PlaceSearchResponse $response)
     {
         $this->service     = $service;
         $this->responses[] = $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function current()
     {
         if ($this->valid()) {
@@ -47,10 +38,7 @@ class PlaceSearchResponseIterator implements Iterator
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function next()
+    public function next(): void
     {
         if (!$this->valid()) {
             return;
@@ -72,26 +60,17 @@ class PlaceSearchResponseIterator implements Iterator
         $this->responses[] = $this->service->process($request)->current();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function valid()
+    public function valid(): bool
     {
         return $this->position < count($this->responses);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }

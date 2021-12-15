@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AlternatePlaceIdTest extends TestCase
 {
-    /**
-     * @var AlternatePlaceId
-     */
-    private $alternatePlaceId;
+    private AlternatePlaceId $alternatePlaceId;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->alternatePlaceId = new AlternatePlaceId();
     }

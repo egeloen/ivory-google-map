@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowCloseRendererTest extends TestCase
 {
-    /**
-     * @var InfoWindowCloseRenderer
-     */
-    private $infoWindowCloseRenderer;
+    private InfoWindowCloseRenderer $infoWindowCloseRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoWindowCloseRenderer = new InfoWindowCloseRenderer(new Formatter());
     }

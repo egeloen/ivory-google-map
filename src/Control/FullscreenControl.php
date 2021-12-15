@@ -16,10 +16,7 @@ namespace Ivory\GoogleMap\Control;
  */
 class FullscreenControl
 {
-    /**
-     * @var string
-     */
-    private $position;
+    private ?string $position = null;
 
     /**
      * @param string $position
@@ -29,10 +26,7 @@ class FullscreenControl
         $this->setPosition($position);
     }
 
-    /**
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->position;
     }
@@ -40,7 +34,7 @@ class FullscreenControl
     /**
      * @param string $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

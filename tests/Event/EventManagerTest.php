@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Event;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Event\Event;
 use Ivory\GoogleMap\Event\EventManager;
 use PHPUnit\Framework\TestCase;
@@ -20,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class EventManagerTest extends TestCase
 {
-    /**
-     * @var EventManager
-     */
-    private $eventManager;
+    private EventManager $eventManager;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventManager = new EventManager();
     }
@@ -61,7 +56,7 @@ class EventManagerTest extends TestCase
         $this->eventManager->addDomEvents($secondDomEvents = [$this->createEventMock()]);
 
         $this->assertTrue($this->eventManager->hasDomEvents());
-        $this->assertSame(array_merge($firstDomEvents, $secondDomEvents), $this->eventManager->getDomEvents());
+        $this->assertSame([...$firstDomEvents, ...$secondDomEvents], $this->eventManager->getDomEvents());
     }
 
     public function testAddDomEvent()
@@ -100,7 +95,7 @@ class EventManagerTest extends TestCase
 
         $this->assertTrue($this->eventManager->hasDomEventsOnce());
         $this->assertSame(
-            array_merge($firstDomEventsOnce, $secondDomEventsOnce),
+            [...$firstDomEventsOnce, ...$secondDomEventsOnce],
             $this->eventManager->getDomEventsOnce()
         );
     }
@@ -140,7 +135,7 @@ class EventManagerTest extends TestCase
         $this->eventManager->addEvents($secondEvents = [$this->createEventMock()]);
 
         $this->assertTrue($this->eventManager->hasEvents());
-        $this->assertSame(array_merge($firstEvents, $secondEvents), $this->eventManager->getEvents());
+        $this->assertSame([...$firstEvents, ...$secondEvents], $this->eventManager->getEvents());
     }
 
     public function testAddEvent()
@@ -179,7 +174,7 @@ class EventManagerTest extends TestCase
 
         $this->assertTrue($this->eventManager->hasEventsOnce());
         $this->assertSame(
-            array_merge($firstEventsOnce, $secondEventsOnce),
+            [...$firstEventsOnce, ...$secondEventsOnce],
             $this->eventManager->getEventsOnce()
         );
     }
@@ -204,7 +199,7 @@ class EventManagerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Event
+     * @return MockObject|Event
      */
     private function createEventMock()
     {

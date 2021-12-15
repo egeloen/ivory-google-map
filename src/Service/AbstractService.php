@@ -16,99 +16,58 @@ namespace Ivory\GoogleMap\Service;
  */
 abstract class AbstractService
 {
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * @var string|null
-     */
-    private $key;
+    private ?string $key = null;
 
-    /**
-     * @var BusinessAccount|null
-     */
-    private $businessAccount;
+    private ?BusinessAccount $businessAccount = null;
 
-    /**
-     * @param string $url
-     */
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->setUrl($url);
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasKey()
+    public function hasKey(): bool
     {
         return $this->key !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    /**
-     * @param string|null $key
-     */
-    public function setKey($key)
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBusinessAccount()
+    public function hasBusinessAccount(): bool
     {
         return $this->businessAccount !== null;
     }
 
-    /**
-     * @return BusinessAccount
-     */
-    public function getBusinessAccount()
+    public function getBusinessAccount(): ?BusinessAccount
     {
         return $this->businessAccount;
     }
 
-    /**
-     * @param BusinessAccount $businessAccount
-     */
     public function setBusinessAccount(BusinessAccount $businessAccount = null)
     {
         $this->businessAccount = $businessAccount;
     }
 
-    /**
-     * @param RequestInterface $request
-     *
-     * @return string
-     */
-    protected function createUrl(RequestInterface $request)
+    protected function createUrl(RequestInterface $request): string
     {
         $query = $request->buildQuery();
 
@@ -125,12 +84,7 @@ abstract class AbstractService
         return $url;
     }
 
-    /**
-     * @param RequestInterface $request
-     *
-     * @return string
-     */
-    protected function createBaseUrl(RequestInterface $request)
+    protected function createBaseUrl(RequestInterface $request): string
     {
         $url = $this->getUrl();
 

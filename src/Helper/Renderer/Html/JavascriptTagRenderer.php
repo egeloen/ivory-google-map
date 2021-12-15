@@ -20,10 +20,8 @@ class JavascriptTagRenderer extends AbstractTagRenderer
      * @param string|null $code
      * @param string[]    $attributes
      * @param bool        $newLine
-     *
-     * @return string
      */
-    public function render($code = null, array $attributes = [], $newLine = true)
+    public function render($code = null, array $attributes = [], $newLine = true): string
     {
         return $this->getTagRenderer()->render(
             'script',

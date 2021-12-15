@@ -20,23 +20,14 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 abstract class AbstractGeocoderRequest implements GeocoderRequestInterface
 {
-    /**
-     * @var string|null
-     */
-    private $language;
+    private ?string $language = null;
 
-    /**
-     * @return bool
-     */
-    public function hasLanguage()
+    public function hasLanguage(): bool
     {
         return $this->language !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -49,10 +40,7 @@ abstract class AbstractGeocoderRequest implements GeocoderRequestInterface
         $this->language = $language;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = [];
 
@@ -63,12 +51,7 @@ abstract class AbstractGeocoderRequest implements GeocoderRequestInterface
         return $query;
     }
 
-    /**
-     * @param Coordinate $place
-     *
-     * @return string
-     */
-    protected function buildCoordinate(Coordinate $place)
+    protected function buildCoordinate(Coordinate $place): string
     {
         return $place->getLatitude().','.$place->getLongitude();
     }

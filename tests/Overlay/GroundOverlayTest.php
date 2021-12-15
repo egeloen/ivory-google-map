@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
 use Ivory\GoogleMap\Overlay\GroundOverlay;
@@ -23,25 +24,16 @@ use PHPUnit\Framework\TestCase;
  */
 class GroundOverlayTest extends TestCase
 {
-    /**
-     * @var GroundOverlay
-     */
-    private $groundOverlay;
+    private GroundOverlay $groundOverlay;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     /**
      * @var Bound
      */
     private $bound;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->groundOverlay = new GroundOverlay(
             $this->url = 'https://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',
@@ -86,7 +78,7 @@ class GroundOverlayTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Bound
+     * @return MockObject|Bound
      */
     private function createBoundMock()
     {

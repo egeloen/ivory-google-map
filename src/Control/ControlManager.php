@@ -16,53 +16,29 @@ namespace Ivory\GoogleMap\Control;
  */
 class ControlManager
 {
-    /**
-     * @var FullscreenControl|null
-     */
-    private $fullscreenControl;
+    private ?FullscreenControl $fullscreenControl = null;
 
-    /**
-     * @var MapTypeControl|null
-     */
-    private $mapTypeControl;
+    private ?MapTypeControl $mapTypeControl = null;
 
-    /**
-     * @var RotateControl|null
-     */
-    private $rotateControl;
+    private ?RotateControl $rotateControl = null;
 
-    /**
-     * @var ScaleControl|null
-     */
-    private $scaleControl;
+    private ?ScaleControl $scaleControl = null;
 
-    /**
-     * @var StreetViewControl|null
-     */
-    private $streetViewControl;
+    private ?StreetViewControl $streetViewControl = null;
 
-    /**
-     * @var ZoomControl|null
-     */
-    private $zoomControl;
+    private ?ZoomControl $zoomControl = null;
 
     /**
      * @var CustomControl[]
      */
-    private $customControls = [];
+    private array $customControls = [];
 
-    /**
-     * @return bool
-     */
-    public function hasFullscreenControl()
+    public function hasFullscreenControl(): bool
     {
         return $this->fullscreenControl !== null;
     }
 
-    /**
-     * @return FullscreenControl|null
-     */
-    public function getFullscreenControl()
+    public function getFullscreenControl(): ?FullscreenControl
     {
         return $this->fullscreenControl;
     }
@@ -70,23 +46,17 @@ class ControlManager
     /**
      * @param FullscreenControl|null $fullscreenControl
      */
-    public function setFullscreenControl(FullscreenControl $fullscreenControl = null)
+    public function setFullscreenControl(FullscreenControl $fullscreenControl = null): void
     {
         $this->fullscreenControl = $fullscreenControl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMapTypeControl()
+    public function hasMapTypeControl(): bool
     {
         return $this->mapTypeControl !== null;
     }
 
-    /**
-     * @return MapTypeControl|null
-     */
-    public function getMapTypeControl()
+    public function getMapTypeControl(): ?MapTypeControl
     {
         return $this->mapTypeControl;
     }
@@ -94,23 +64,17 @@ class ControlManager
     /**
      * @param MapTypeControl|null $mapTypeControl
      */
-    public function setMapTypeControl(MapTypeControl $mapTypeControl = null)
+    public function setMapTypeControl(MapTypeControl $mapTypeControl = null): void
     {
         $this->mapTypeControl = $mapTypeControl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRotateControl()
+    public function hasRotateControl(): bool
     {
         return $this->rotateControl !== null;
     }
 
-    /**
-     * @return RotateControl|null
-     */
-    public function getRotateControl()
+    public function getRotateControl(): ?RotateControl
     {
         return $this->rotateControl;
     }
@@ -118,23 +82,17 @@ class ControlManager
     /**
      * @param RotateControl|null $rotateControl
      */
-    public function setRotateControl(RotateControl $rotateControl = null)
+    public function setRotateControl(RotateControl $rotateControl = null): void
     {
         $this->rotateControl = $rotateControl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasScaleControl()
+    public function hasScaleControl(): bool
     {
         return $this->scaleControl !== null;
     }
 
-    /**
-     * @return ScaleControl|null
-     */
-    public function getScaleControl()
+    public function getScaleControl(): ?ScaleControl
     {
         return $this->scaleControl;
     }
@@ -142,23 +100,17 @@ class ControlManager
     /**
      * @param ScaleControl|null $scaleControl
      */
-    public function setScaleControl(ScaleControl $scaleControl = null)
+    public function setScaleControl(ScaleControl $scaleControl = null): void
     {
         $this->scaleControl = $scaleControl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasStreetViewControl()
+    public function hasStreetViewControl(): bool
     {
         return $this->streetViewControl !== null;
     }
 
-    /**
-     * @return StreetViewControl|null
-     */
-    public function getStreetViewControl()
+    public function getStreetViewControl(): ?StreetViewControl
     {
         return $this->streetViewControl;
     }
@@ -166,23 +118,17 @@ class ControlManager
     /**
      * @param StreetViewControl|null $streetViewControl
      */
-    public function setStreetViewControl(StreetViewControl $streetViewControl = null)
+    public function setStreetViewControl(StreetViewControl $streetViewControl = null): void
     {
         $this->streetViewControl = $streetViewControl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasZoomControl()
+    public function hasZoomControl(): bool
     {
         return $this->zoomControl !== null;
     }
 
-    /**
-     * @return ZoomControl|null
-     */
-    public function getZoomControl()
+    public function getZoomControl(): ?ZoomControl
     {
         return $this->zoomControl;
     }
@@ -190,15 +136,12 @@ class ControlManager
     /**
      * @param ZoomControl|null $zoomControl
      */
-    public function setZoomControl(ZoomControl $zoomControl = null)
+    public function setZoomControl(ZoomControl $zoomControl = null): void
     {
         $this->zoomControl = $zoomControl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasCustomControls()
+    public function hasCustomControls(): bool
     {
         return !empty($this->customControls);
     }
@@ -206,7 +149,7 @@ class ControlManager
     /**
      * @return CustomControl[]
      */
-    public function getCustomControls()
+    public function getCustomControls(): array
     {
         return $this->customControls;
     }
@@ -214,7 +157,7 @@ class ControlManager
     /**
      * @param CustomControl[] $customControls
      */
-    public function setCustomControls(array $customControls)
+    public function setCustomControls(array $customControls): void
     {
         $this->customControls = [];
         $this->addCustomControls($customControls);
@@ -223,37 +166,26 @@ class ControlManager
     /**
      * @param CustomControl[] $customControls
      */
-    public function addCustomControls(array $customControls)
+    public function addCustomControls(array $customControls): void
     {
         foreach ($customControls as $customControl) {
             $this->addCustomControl($customControl);
         }
     }
 
-    /**
-     * @param CustomControl $customControl
-     *
-     * @return bool
-     */
-    public function hasCustomControl(CustomControl $customControl)
+    public function hasCustomControl(CustomControl $customControl): bool
     {
         return in_array($customControl, $this->customControls, true);
     }
 
-    /**
-     * @param CustomControl $customControl
-     */
-    public function addCustomControl(CustomControl $customControl)
+    public function addCustomControl(CustomControl $customControl): void
     {
         if (!$this->hasCustomControl($customControl)) {
             $this->customControls[] = $customControl;
         }
     }
 
-    /**
-     * @param CustomControl $customControl
-     */
-    public function removeCustomControl(CustomControl $customControl)
+    public function removeCustomControl(CustomControl $customControl): void
     {
         unset($this->customControls[array_search($customControl, $this->customControls, true)]);
         $this->customControls = empty($this->customControls) ? [] : array_values($this->customControls);

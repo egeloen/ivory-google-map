@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Collector\Overlay;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Helper\Collector\Overlay\InfoWindowCollector;
 use Ivory\GoogleMap\Helper\Collector\Overlay\MarkerCollector;
@@ -25,15 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowCollectorTest extends TestCase
 {
-    /**
-     * @var InfoWindowCollector
-     */
-    private $infoWindowCollector;
+    private InfoWindowCollector $infoWindowCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoWindowCollector = new InfoWindowCollector(new MarkerCollector());
     }
@@ -54,10 +49,8 @@ class InfoWindowCollectorTest extends TestCase
 
     /**
      * @param InfoWindow[] $expected
-     * @param Map          $map
      * @param int          $strategy
      * @param string|null  $type
-     *
      * @dataProvider collectProvider
      */
     public function testCollect(array $expected, Map $map, $strategy, $type = null)
@@ -107,7 +100,7 @@ class InfoWindowCollectorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MarkerCollector
+     * @return MockObject|MarkerCollector
      */
     private function createMarkerCollectorMock()
     {

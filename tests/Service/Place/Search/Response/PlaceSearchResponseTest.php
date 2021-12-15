@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Search\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Place\Base\Place;
 use Ivory\GoogleMap\Service\Place\Search\Request\PlaceSearchRequestInterface;
 use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceSearchResponseTest extends TestCase
 {
-    /**
-     * @var PlaceSearchResponse
-     */
-    private $response;
+    private PlaceSearchResponse $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->response = new PlaceSearchResponse();
     }
@@ -81,7 +76,7 @@ class PlaceSearchResponseTest extends TestCase
         $this->response->addResults($secondResults = [$this->createResultMock()]);
 
         $this->assertTrue($this->response->hasResults());
-        $this->assertSame(array_merge($firstResults, $secondResults), $this->response->getResults());
+        $this->assertSame([...$firstResults, ...$secondResults], $this->response->getResults());
     }
 
     public function testAddResult()
@@ -128,7 +123,7 @@ class PlaceSearchResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasHtmlAttributions());
         $this->assertSame(
-            array_merge($firstHtmlAttributions, $secondHtmlAttributions),
+            [...$firstHtmlAttributions, ...$secondHtmlAttributions],
             $this->response->getHtmlAttributions()
         );
     }
@@ -153,7 +148,7 @@ class PlaceSearchResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PlaceSearchRequestInterface
+     * @return MockObject|PlaceSearchRequestInterface
      */
     private function createRequestMock()
     {
@@ -161,7 +156,7 @@ class PlaceSearchResponseTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Place
+     * @return MockObject|Place
      */
     private function createResultMock()
     {

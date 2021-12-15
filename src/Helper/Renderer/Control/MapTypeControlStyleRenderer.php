@@ -20,10 +20,8 @@ class MapTypeControlStyleRenderer extends AbstractRenderer
 {
     /**
      * @param string $style
-     *
-     * @return string
      */
-    public function render($style)
+    public function render($style): string
     {
         return $this->getFormatter()->renderConstant('MapTypeControlStyle', $style);
     }

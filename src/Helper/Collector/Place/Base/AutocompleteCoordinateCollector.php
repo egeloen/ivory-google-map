@@ -20,42 +20,28 @@ use Ivory\GoogleMap\Place\Autocomplete;
  */
 class AutocompleteCoordinateCollector extends AbstractCollector
 {
-    /**
-     * @var AutocompleteBoundCollector
-     */
-    private $boundCollector;
+    private ?AutocompleteBoundCollector $boundCollector = null;
 
-    /**
-     * @param AutocompleteBoundCollector $boundCollector
-     */
     public function __construct(AutocompleteBoundCollector $boundCollector)
     {
         $this->setBoundCollector($boundCollector);
     }
 
-    /**
-     * @return AutocompleteBoundCollector
-     */
-    public function getBoundCollector()
+    public function getBoundCollector(): AutocompleteBoundCollector
     {
         return $this->boundCollector;
     }
 
-    /**
-     * @param AutocompleteBoundCollector $boundCollector
-     */
-    public function setBoundCollector(AutocompleteBoundCollector $boundCollector)
+    public function setBoundCollector(AutocompleteBoundCollector $boundCollector): void
     {
         $this->boundCollector = $boundCollector;
     }
 
     /**
-     * @param Autocomplete $autocomplete
      * @param Coordinate[] $coordinates
-     *
      * @return Coordinate[]
      */
-    public function collect(Autocomplete $autocomplete, array $coordinates = [])
+    public function collect(Autocomplete $autocomplete, array $coordinates = []): array
     {
         foreach ($this->boundCollector->collect($autocomplete) as $bound) {
             if ($bound->hasSouthWest()) {

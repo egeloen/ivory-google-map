@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Place\Autocomplete;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Ivory\GoogleMap\Place\AutocompleteType;
@@ -30,15 +31,9 @@ use Ivory\Tests\GoogleMap\Service\Place\AbstractPlaceSerializableServiceTest;
  */
 class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
 {
-    /**
-     * @var PlaceAutocompleteService
-     */
-    private $service;
+    private PlaceAutocompleteService $service;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -51,210 +46,159 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
+     * 
      */
-    public function testProcessWithAutocompleteRequest($format)
+    public function testProcessWithAutocompleteRequest()
     {
         $request = $this->createPlaceAutocompleteRequest();
-
-        $this->service->setFormat($format);
+        
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
+     * 
      */
-    public function testProcessWithAutocompleteRequestAndOffset($format)
+    public function testProcessWithAutocompleteRequestAndOffset()
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setInput('Paris, Madrid');
         $request->setOffset(5);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteRequestAndLocation($format)
+    public function testProcessWithAutocompleteRequestAndLocation()
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteRequestAndRadius($format)
+    public function testProcessWithAutocompleteRequestAndRadius()
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
         $request->setRadius(1000);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteRequestAndTypes($format)
+    public function testProcessWithAutocompleteRequestAndTypes()
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setTypes([AutocompleteType::CITIES]);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteRequestAndComponents($format)
+    public function testProcessWithAutocompleteRequestAndComponents()
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setComponents([AutocompleteComponentType::COUNTRY => 'fr']);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteRequestAndLanguage($format)
+    public function testProcessWithAutocompleteRequestAndLanguage()
     {
         $request = $this->createPlaceAutocompleteRequest();
         $request->setLanguage('fr');
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteQueryRequest($format)
+    public function testProcessWithAutocompleteQueryRequest()
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteQueryRequestAndOffset($format)
+    public function testProcessWithAutocompleteQueryRequestAndOffset()
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setInput('Paris, Madrid');
         $request->setOffset(5);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteQueryRequestAndLocation($format)
+    public function testProcessWithAutocompleteQueryRequestAndLocation()
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteQueryRequestAndRadius($format)
+    public function testProcessWithAutocompleteQueryRequestAndRadius()
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setLocation(new Coordinate(48.856556, 2.351970));
         $request->setRadius(1000);
 
-        $this->service->setFormat($format);
+        
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
     /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
      */
-    public function testProcessWithAutocompleteQueryRequestAndLanguage($format)
+    public function testProcessWithAutocompleteQueryRequestAndLanguage()
     {
         $request = $this->createPlaceAutocompleteQueryRequest();
         $request->setLanguage('fr');
 
-        $this->service->setFormat($format);
+        
         $response = $this->service->process($request);
 
         $this->assertPlaceAutocompleteResponse($response, $request);
     }
 
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createPlaceAutocompleteRequest());
@@ -276,11 +220,7 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
         return new PlaceAutocompleteQueryRequest('Paris');
     }
 
-    /**
-     * @param PlaceAutocompleteResponse         $response
-     * @param PlaceAutocompleteRequestInterface $request
-     */
-    private function assertPlaceAutocompleteResponse($response, $request)
+    private function assertPlaceAutocompleteResponse(PlaceAutocompleteResponse $response, PlaceAutocompleteRequestInterface $request)
     {
         $options = array_merge(['predictions' => []], self::$journal->getData());
         $options['status'] = PlaceAutocompleteStatus::OK;
@@ -288,7 +228,7 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertInstanceOf(PlaceAutocompleteResponse::class, $response);
 
         $this->assertSame($request, $response->getRequest());
-        $this->assertCount(count($options['predictions']), $predictions = $response->getPredictions());
+        $this->assertCount(is_countable($options['predictions']) ? count($options['predictions']) : 0, $predictions = $response->getPredictions(), sprintf("Difference in number of predictions"));
 
         foreach ($options['predictions'] as $key => $prediction) {
             $this->assertArrayHasKey($key, $predictions);
@@ -316,14 +256,14 @@ class PlaceAutocompleteServiceTest extends AbstractPlaceSerializableServiceTest
         $this->assertSame($options['description'], $prediction->getDescription());
         $this->assertSame($options['types'], $prediction->getTypes());
 
-        $this->assertCount(count($options['terms']), $terms = $prediction->getTerms());
+        $this->assertCount(is_countable($options['terms']) ? count($options['terms']) : 0, $terms = $prediction->getTerms());
 
         foreach ($options['terms'] as $key => $term) {
             $this->assertArrayHasKey($key, $terms);
             $this->assertPlaceAutocompleteTerm($terms[$key], $term);
         }
 
-        $this->assertCount(count($options['matched_substrings']), $matches = $prediction->getMatches());
+        $this->assertCount(is_countable($options['matched_substrings']) ? count($options['matched_substrings']) : 0, $matches = $prediction->getMatches());
 
         foreach ($options['matched_substrings'] as $key => $match) {
             $this->assertArrayHasKey($key, $matches);

@@ -20,22 +20,11 @@ use Psr\Http\Message\RequestInterface as PsrRequestInterface;
  */
 abstract class AbstractHttpService extends AbstractService
 {
-    /**
-     * @var HttpClient
-     */
-    private $client;
+    private ?HttpClient $client = null;
 
-    /**
-     * @var MessageFactory
-     */
-    private $messageFactory;
+    private ?MessageFactory $messageFactory = null;
 
-    /**
-     * @param string         $url
-     * @param HttpClient     $client
-     * @param MessageFactory $messageFactory
-     */
-    public function __construct($url, HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(string $url, HttpClient $client, MessageFactory $messageFactory)
     {
         parent::__construct($url);
 
@@ -43,44 +32,27 @@ abstract class AbstractHttpService extends AbstractService
         $this->setMessageFactory($messageFactory);
     }
 
-    /**
-     * @return HttpClient
-     */
-    public function getClient()
+    public function getClient(): HttpClient
     {
         return $this->client;
     }
 
-    /**
-     * @param HttpClient $client
-     */
     public function setClient(HttpClient $client)
     {
         $this->client = $client;
     }
 
-    /**
-     * @return MessageFactory
-     */
-    public function getMessageFactory()
+    public function getMessageFactory(): MessageFactory
     {
         return $this->messageFactory;
     }
 
-    /**
-     * @param MessageFactory $messageFactory
-     */
     public function setMessageFactory(MessageFactory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
     }
 
-    /**
-     * @param RequestInterface $request
-     *
-     * @return PsrRequestInterface
-     */
-    protected function createRequest(RequestInterface $request)
+    protected function createRequest(RequestInterface $request): \Psr\Http\Message\RequestInterface
     {
         return $this->messageFactory->createRequest('GET', $this->createUrl($request));
     }

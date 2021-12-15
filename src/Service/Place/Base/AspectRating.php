@@ -16,28 +16,16 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 class AspectRating
 {
-    /**
-     * @var string|null
-     */
-    private $type;
+    private ?string $type = null;
 
-    /**
-     * @var float|null
-     */
-    private $rating;
+    private ?float $rating = null;
 
-    /**
-     * @return bool
-     */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->type !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -45,23 +33,17 @@ class AspectRating
     /**
      * @param string|null $type
      */
-    public function setType($type)
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRating()
+    public function hasRating(): bool
     {
         return $this->rating !== null;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getRating()
+    public function getRating(): ?float
     {
         return $this->rating;
     }
@@ -69,7 +51,7 @@ class AspectRating
     /**
      * @param float|null $rating
      */
-    public function setRating($rating)
+    public function setRating($rating): void
     {
         $this->rating = $rating;
     }

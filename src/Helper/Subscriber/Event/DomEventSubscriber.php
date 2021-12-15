@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class DomEventSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var DomEventCollector
-     */
-    private $domEventCollector;
+    private ?DomEventCollector $domEventCollector = null;
 
-    /**
-     * @var DomEventRenderer
-     */
-    private $domEventRenderer;
+    private ?DomEventRenderer $domEventRenderer = null;
 
-    /**
-     * @param Formatter         $formatter
-     * @param DomEventCollector $domEventCollector
-     * @param DomEventRenderer  $domEventRenderer
-     */
     public function __construct(
         Formatter $formatter,
         DomEventCollector $domEventCollector,
@@ -49,42 +38,27 @@ class DomEventSubscriber extends AbstractSubscriber
         $this->setDomEventRenderer($domEventRenderer);
     }
 
-    /**
-     * @return DomEventCollector
-     */
-    public function getDomEventCollector()
+    public function getDomEventCollector(): DomEventCollector
     {
         return $this->domEventCollector;
     }
 
-    /**
-     * @param DomEventCollector $domEventCollector
-     */
-    public function setDomEventCollector(DomEventCollector $domEventCollector)
+    public function setDomEventCollector(DomEventCollector $domEventCollector): void
     {
         $this->domEventCollector = $domEventCollector;
     }
 
-    /**
-     * @return DomEventRenderer
-     */
-    public function getDomEventRenderer()
+    public function getDomEventRenderer(): DomEventRenderer
     {
         return $this->domEventRenderer;
     }
 
-    /**
-     * @param DomEventRenderer $domEventRenderer
-     */
-    public function setDomEventRenderer(DomEventRenderer $domEventRenderer)
+    public function setDomEventRenderer(DomEventRenderer $domEventRenderer): void
     {
         $this->domEventRenderer = $domEventRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class DomEventSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_EVENT_DOM_EVENT => 'handleMap'];
     }

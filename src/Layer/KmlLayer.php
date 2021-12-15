@@ -24,10 +24,7 @@ class KmlLayer implements ExtendableInterface, OptionsAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     /**
      * @param string  $url
@@ -39,10 +36,7 @@ class KmlLayer implements ExtendableInterface, OptionsAwareInterface
         $this->addOptions($options);
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -50,7 +44,7 @@ class KmlLayer implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }

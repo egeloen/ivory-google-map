@@ -29,38 +29,19 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
     use StaticOptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var Coordinate
-     */
-    private $position;
+    private ?Coordinate $position = null;
+
+    private ?string $animation = null;
+
+    private ?Icon $icon = null;
+
+    private ?Symbol $symbol = null;
+
+    private ?MarkerShape $shape = null;
+
+    private ?InfoWindow $infoWindow = null;
 
     /**
-     * @var string|null
-     */
-    private $animation;
-
-    /**
-     * @var Icon|null
-     */
-    private $icon;
-
-    /**
-     * @var Symbol|null
-     */
-    private $symbol;
-
-    /**
-     * @var MarkerShape|null
-     */
-    private $shape;
-
-    /**
-     * @var InfoWindow|null
-     */
-    private $infoWindow;
-
-    /**
-     * @param Coordinate       $position
      * @param string|null      $animation
      * @param Icon|null        $icon
      * @param MarkerShape|null $shape
@@ -87,34 +68,22 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
         }
     }
 
-    /**
-     * @return Coordinate
-     */
-    public function getPosition()
+    public function getPosition(): Coordinate
     {
         return $this->position;
     }
 
-    /**
-     * @param Coordinate $position
-     */
-    public function setPosition(Coordinate $position)
+    public function setPosition(Coordinate $position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAnimation()
+    public function hasAnimation(): bool
     {
         return $this->animation !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getAnimation()
+    public function getAnimation(): ?string
     {
         return $this->animation;
     }
@@ -122,23 +91,17 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
     /**
      * @param string|null $animation
      */
-    public function setAnimation($animation = null)
+    public function setAnimation($animation = null): void
     {
         $this->animation = $animation;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIcon()
+    public function hasIcon(): bool
     {
         return $this->icon !== null;
     }
 
-    /**
-     * @return Icon|null
-     */
-    public function getIcon()
+    public function getIcon(): ?Icon
     {
         return $this->icon;
     }
@@ -146,7 +109,7 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
     /**
      * @param Icon|null $icon
      */
-    public function setIcon(Icon $icon = null)
+    public function setIcon(Icon $icon = null): void
     {
         $this->icon = $icon;
 
@@ -155,18 +118,12 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function hasSymbol()
+    public function hasSymbol(): bool
     {
         return $this->symbol !== null;
     }
 
-    /**
-     * @return Symbol|null
-     */
-    public function getSymbol()
+    public function getSymbol(): ?Symbol
     {
         return $this->symbol;
     }
@@ -174,7 +131,7 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
     /**
      * @param Symbol|null $symbol
      */
-    public function setSymbol(Symbol $symbol = null)
+    public function setSymbol(Symbol $symbol = null): void
     {
         $this->symbol = $symbol;
 
@@ -183,18 +140,12 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function hasShape()
+    public function hasShape(): bool
     {
         return $this->shape !== null;
     }
 
-    /**
-     * @return MarkerShape|null
-     */
-    public function getShape()
+    public function getShape(): ?MarkerShape
     {
         return $this->shape;
     }
@@ -202,23 +153,17 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
     /**
      * @param MarkerShape|null $shape
      */
-    public function setShape(MarkerShape $shape = null)
+    public function setShape(MarkerShape $shape = null): void
     {
         $this->shape = $shape;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasInfoWindow()
+    public function hasInfoWindow(): bool
     {
         return $this->infoWindow !== null;
     }
 
-    /**
-     * @return InfoWindow|null
-     */
-    public function getInfoWindow()
+    public function getInfoWindow(): ?InfoWindow
     {
         return $this->infoWindow;
     }
@@ -226,7 +171,7 @@ class Marker implements ExtendableInterface, OptionsAwareInterface, StaticOption
     /**
      * @param InfoWindow|null $infoWindow
      */
-    public function setInfoWindow(InfoWindow $infoWindow = null)
+    public function setInfoWindow(InfoWindow $infoWindow = null): void
     {
         $this->infoWindow = $infoWindow;
     }

@@ -25,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GroundOverlayRendererTest extends TestCase
 {
-    /**
-     * @var GroundOverlayRenderer
-     */
-    private $groundOverlayRenderer;
+    private GroundOverlayRenderer $groundOverlayRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->groundOverlayRenderer = new GroundOverlayRenderer(new Formatter(), new JsonBuilder());
     }

@@ -25,8 +25,6 @@ class RequirementLoaderRenderer extends AbstractRenderer
      * @param string|null $requirementVariable
      * @param int         $interval
      * @param bool        $newLine
-     *
-     * @return string
      */
     public function render(
         $name,
@@ -35,7 +33,7 @@ class RequirementLoaderRenderer extends AbstractRenderer
         $requirementVariable = null,
         $interval = 10,
         $newLine = true
-    ) {
+    ): string {
         $formatter = $this->getFormatter();
 
         $intervalVariable = $intervalVariable ?: 'i';
@@ -65,15 +63,13 @@ class RequirementLoaderRenderer extends AbstractRenderer
      * @param string      $callbackVariable
      * @param string      $requirementVariable
      * @param string|null $nextStatement
-     *
-     * @return string
      */
     private function renderRequirement(
         $intervalVariable,
         $callbackVariable,
         $requirementVariable,
         $nextStatement = null
-    ) {
+    ): string {
         $formatter = $this->getFormatter();
         $codes = [$formatter->renderCall($callbackVariable, [], true)];
 

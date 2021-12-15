@@ -21,10 +21,7 @@ class GeoJsonLayer implements OptionsAwareInterface
 {
     use OptionsAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
     /**
      * @param string  $url
@@ -36,10 +33,7 @@ class GeoJsonLayer implements OptionsAwareInterface
         $this->setOptions($options);
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -47,7 +41,7 @@ class GeoJsonLayer implements OptionsAwareInterface
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }

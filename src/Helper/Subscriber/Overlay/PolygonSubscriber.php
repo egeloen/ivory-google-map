@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class PolygonSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var PolygonCollector
-     */
-    private $polygonCollector;
+    private ?PolygonCollector $polygonCollector = null;
 
-    /**
-     * @var PolygonRenderer
-     */
-    private $polygonRenderer;
+    private ?PolygonRenderer $polygonRenderer = null;
 
-    /**
-     * @param Formatter        $formatter
-     * @param PolygonCollector $polygonCollector
-     * @param PolygonRenderer  $polygonRenderer
-     */
     public function __construct(
         Formatter $formatter,
         PolygonCollector $polygonCollector,
@@ -49,42 +38,27 @@ class PolygonSubscriber extends AbstractSubscriber
         $this->setPolygonRenderer($polygonRenderer);
     }
 
-    /**
-     * @return PolygonCollector
-     */
-    public function getPolygonCollector()
+    public function getPolygonCollector(): PolygonCollector
     {
         return $this->polygonCollector;
     }
 
-    /**
-     * @param PolygonCollector $polygonCollector
-     */
-    public function setPolygonCollector(PolygonCollector $polygonCollector)
+    public function setPolygonCollector(PolygonCollector $polygonCollector): void
     {
         $this->polygonCollector = $polygonCollector;
     }
 
-    /**
-     * @return PolygonRenderer
-     */
-    public function getPolygonRenderer()
+    public function getPolygonRenderer(): PolygonRenderer
     {
         return $this->polygonRenderer;
     }
 
-    /**
-     * @param PolygonRenderer $polygonRenderer
-     */
-    public function setPolygonRenderer(PolygonRenderer $polygonRenderer)
+    public function setPolygonRenderer(PolygonRenderer $polygonRenderer): void
     {
         $this->polygonRenderer = $polygonRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class PolygonSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_POLYGON => 'handleMap'];
     }

@@ -21,12 +21,10 @@ use Ivory\GoogleMap\Overlay\Marker;
 class MarkerCollector extends AbstractCollector
 {
     /**
-     * @param Map      $map
      * @param Marker[] $markers
-     *
      * @return Marker[]
      */
-    public function collect(Map $map, array $markers = [])
+    public function collect(Map $map, array $markers = []): array
     {
         return $this->collectValues($map->getOverlayManager()->getMarkers(), $markers);
     }

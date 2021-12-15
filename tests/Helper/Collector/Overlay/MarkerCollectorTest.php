@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkerCollectorTest extends TestCase
 {
-    /**
-     * @var MarkerCollector
-     */
-    private $markerCollector;
+    private MarkerCollector $markerCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markerCollector = new MarkerCollector();
     }

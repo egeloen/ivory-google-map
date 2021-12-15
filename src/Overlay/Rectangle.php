@@ -24,13 +24,9 @@ class Rectangle implements ExtendableInterface, OptionsAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var Bound
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
     /**
-     * @param Bound   $bound
      * @param mixed[] $options
      */
     public function __construct(Bound $bound, array $options = [])
@@ -39,18 +35,12 @@ class Rectangle implements ExtendableInterface, OptionsAwareInterface
         $this->addOptions($options);
     }
 
-    /**
-     * @return Bound
-     */
-    public function getBound()
+    public function getBound(): Bound
     {
         return $this->bound;
     }
 
-    /**
-     * @param Bound $bound
-     */
-    public function setBound(Bound $bound)
+    public function setBound(Bound $bound): void
     {
         $this->bound = $bound;
     }

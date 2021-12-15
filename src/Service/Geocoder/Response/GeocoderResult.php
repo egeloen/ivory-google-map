@@ -21,53 +21,35 @@ use Ivory\GoogleMap\Service\Base\Geometry;
  */
 class GeocoderResult
 {
-    /**
-     * @var string|null
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
     /**
      * @var AddressComponent[]
      */
-    private $addressComponents = [];
+    private array $addressComponents = [];
 
-    /**
-     * @var string|null
-     */
-    private $formattedAddress;
+    private ?string $formattedAddress = null;
 
     /**
      * @var string[]
      */
-    private $postcodeLocalities = [];
+    private array $postcodeLocalities = [];
 
-    /**
-     * @var Geometry|null
-     */
-    private $geometry;
+    private ?Geometry $geometry = null;
 
-    /**
-     * @var bool|null
-     */
-    private $partialMatch;
+    private ?bool $partialMatch = null;
 
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
-    /**
-     * @return bool
-     */
-    public function hasPlaceId()
+    public function hasPlaceId(): bool
     {
         return $this->placeId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPlaceId()
+    public function getPlaceId(): ?string
     {
         return $this->placeId;
     }
@@ -75,17 +57,15 @@ class GeocoderResult
     /**
      * @param string|null $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
     /**
      * @param string|null $type
-     *
-     * @return bool
      */
-    public function hasAddressComponents($type = null)
+    public function hasAddressComponents($type = null): bool
     {
         $addresses = $this->getAddressComponents($type);
 
@@ -97,7 +77,7 @@ class GeocoderResult
      *
      * @return AddressComponent[]
      */
-    public function getAddressComponents($type = null)
+    public function getAddressComponents($type = null): array
     {
         if ($type === null) {
             return $this->addressComponents;
@@ -117,7 +97,7 @@ class GeocoderResult
     /**
      * @param AddressComponent[] $addressComponents
      */
-    public function setAddressComponents(array $addressComponents)
+    public function setAddressComponents(array $addressComponents): void
     {
         $this->addressComponents = [];
         $this->addAddressComponents($addressComponents);
@@ -126,54 +106,37 @@ class GeocoderResult
     /**
      * @param AddressComponent[] $addressComponents
      */
-    public function addAddressComponents(array $addressComponents)
+    public function addAddressComponents(array $addressComponents): void
     {
         foreach ($addressComponents as $addressComponent) {
             $this->addAddressComponent($addressComponent);
         }
     }
 
-    /**
-     * @param AddressComponent $addressComponent
-     *
-     * @return bool
-     */
-    public function hasAddressComponent(AddressComponent $addressComponent)
+    public function hasAddressComponent(AddressComponent $addressComponent): bool
     {
         return in_array($addressComponent, $this->addressComponents, true);
     }
 
-    /**
-     * @param AddressComponent $addressComponent
-     */
-    public function addAddressComponent(AddressComponent $addressComponent)
+    public function addAddressComponent(AddressComponent $addressComponent): void
     {
         if (!$this->hasAddressComponent($addressComponent)) {
             $this->addressComponents[] = $addressComponent;
         }
     }
 
-    /**
-     * @param AddressComponent $addressComponent
-     */
-    public function removeAddressComponent(AddressComponent $addressComponent)
+    public function removeAddressComponent(AddressComponent $addressComponent): void
     {
         unset($this->addressComponents[array_search($addressComponent, $this->addressComponents, true)]);
         $this->addressComponents = empty($this->addressComponents) ? [] : array_values($this->addressComponents);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasFormattedAddress()
+    public function hasFormattedAddress(): bool
     {
         return !empty($this->formattedAddress);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFormattedAddress()
+    public function getFormattedAddress(): ?string
     {
         return $this->formattedAddress;
     }
@@ -181,15 +144,12 @@ class GeocoderResult
     /**
      * @param string|null $formattedAddress
      */
-    public function setFormattedAddress($formattedAddress = null)
+    public function setFormattedAddress($formattedAddress = null): void
     {
         $this->formattedAddress = $formattedAddress;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPostcodeLocalities()
+    public function hasPostcodeLocalities(): bool
     {
         return !empty($this->postcodeLocalities);
     }
@@ -197,7 +157,7 @@ class GeocoderResult
     /**
      * @return string[]
      */
-    public function getPostcodeLocalities()
+    public function getPostcodeLocalities(): array
     {
         return $this->postcodeLocalities;
     }
@@ -205,7 +165,7 @@ class GeocoderResult
     /**
      * @param string[] $postcodeLocalities
      */
-    public function setPostcodeLocalities(array $postcodeLocalities)
+    public function setPostcodeLocalities(array $postcodeLocalities): void
     {
         $this->postcodeLocalities = [];
         $this->addPostcodeLocalities($postcodeLocalities);
@@ -214,7 +174,7 @@ class GeocoderResult
     /**
      * @param string[] $postcodeLocalities
      */
-    public function addPostcodeLocalities(array $postcodeLocalities)
+    public function addPostcodeLocalities(array $postcodeLocalities): void
     {
         foreach ($postcodeLocalities as $postcodeLocality) {
             $this->addPostcodeLocality($postcodeLocality);
@@ -223,10 +183,8 @@ class GeocoderResult
 
     /**
      * @param string $postcodeLocality
-     *
-     * @return bool
      */
-    public function hasPostcodeLocality($postcodeLocality)
+    public function hasPostcodeLocality($postcodeLocality): bool
     {
         return in_array($postcodeLocality, $this->postcodeLocalities, true);
     }
@@ -234,7 +192,7 @@ class GeocoderResult
     /**
      * @param string $postcodeLocality
      */
-    public function addPostcodeLocality($postcodeLocality)
+    public function addPostcodeLocality($postcodeLocality): void
     {
         if (!$this->hasPostcodeLocality($postcodeLocality)) {
             $this->postcodeLocalities[] = $postcodeLocality;
@@ -244,24 +202,18 @@ class GeocoderResult
     /**
      * @param string $postcodeLocality
      */
-    public function removePostcodeLocality($postcodeLocality)
+    public function removePostcodeLocality($postcodeLocality): void
     {
         unset($this->postcodeLocalities[array_search($postcodeLocality, $this->postcodeLocalities, true)]);
         $this->postcodeLocalities = empty($this->postcodeLocalities) ? [] : array_values($this->postcodeLocalities);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasGeometry()
+    public function hasGeometry(): bool
     {
         return $this->geometry !== null;
     }
 
-    /**
-     * @return Geometry|null
-     */
-    public function getGeometry()
+    public function getGeometry(): ?Geometry
     {
         return $this->geometry;
     }
@@ -269,23 +221,17 @@ class GeocoderResult
     /**
      * @param Geometry|null $geometry
      */
-    public function setGeometry(Geometry $geometry = null)
+    public function setGeometry(Geometry $geometry = null): void
     {
         $this->geometry = $geometry;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPartialMatch()
+    public function hasPartialMatch(): bool
     {
         return $this->partialMatch !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPartialMatch()
+    public function isPartialMatch(): ?bool
     {
         return $this->partialMatch;
     }
@@ -293,15 +239,12 @@ class GeocoderResult
     /**
      * @param bool|null $partialMatch
      */
-    public function setPartialMatch($partialMatch = null)
+    public function setPartialMatch($partialMatch = null): void
     {
         $this->partialMatch = $partialMatch;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -309,7 +252,7 @@ class GeocoderResult
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -317,7 +260,7 @@ class GeocoderResult
     /**
      * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -326,7 +269,7 @@ class GeocoderResult
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -335,10 +278,8 @@ class GeocoderResult
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -346,7 +287,7 @@ class GeocoderResult
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -356,7 +297,7 @@ class GeocoderResult
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);

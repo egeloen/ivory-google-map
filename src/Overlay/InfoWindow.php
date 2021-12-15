@@ -28,45 +28,21 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     use OptionsAwareTrait;
     use VariableAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $content;
+    private ?string $content = null;
 
-    /**
-     * @var string
-     */
-    private $type = InfoWindowType::DEFAULT_;
+    private string $type = InfoWindowType::DEFAULT_;
 
-    /**
-     * @var Coordinate|null
-     */
-    private $position;
+    private ?Coordinate $position = null;
 
-    /**
-     * @var Size|null
-     */
-    private $pixedOffset;
+    private ?Size $pixedOffset = null;
 
-    /**
-     * @var bool
-     */
-    private $open = false;
+    private bool $open = false;
 
-    /**
-     * @var string
-     */
-    private $openEvent = MouseEvent::CLICK;
+    private string $openEvent = MouseEvent::CLICK;
 
-    /**
-     * @var bool
-     */
-    private $autoOpen = true;
+    private bool $autoOpen = true;
 
-    /**
-     * @var bool
-     */
-    private $autoClose = true;
+    private bool $autoClose = true;
 
     /**
      * @param string          $content
@@ -80,10 +56,7 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
         $this->setPosition($position);
     }
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -91,15 +64,12 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param string $content
      */
-    public function setContent($content)
+    public function setContent($content): void
     {
         $this->content = $content;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -107,23 +77,17 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param string $type
      */
-    public function setType($type)
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPosition()
+    public function hasPosition(): bool
     {
         return $this->position !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getPosition()
+    public function getPosition(): ?Coordinate
     {
         return $this->position;
     }
@@ -131,23 +95,17 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param Coordinate|null $position
      */
-    public function setPosition(Coordinate $position = null)
+    public function setPosition(Coordinate $position = null): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPixelOffset()
+    public function hasPixelOffset(): bool
     {
         return $this->pixedOffset !== null;
     }
 
-    /**
-     * @return Size|null
-     */
-    public function getPixelOffset()
+    public function getPixelOffset(): ?Size
     {
         return $this->pixedOffset;
     }
@@ -155,15 +113,12 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param Size|null $pixelOffset
      */
-    public function setPixelOffset(Size $pixelOffset = null)
+    public function setPixelOffset(Size $pixelOffset = null): void
     {
         $this->pixedOffset = $pixelOffset;
     }
 
-    /**
-     * @return bool
-     */
-    public function isOpen()
+    public function isOpen(): bool
     {
         return $this->open;
     }
@@ -171,15 +126,12 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param bool $open
      */
-    public function setOpen($open)
+    public function setOpen($open): void
     {
         $this->open = $open;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAutoOpen()
+    public function isAutoOpen(): bool
     {
         return $this->autoOpen;
     }
@@ -187,15 +139,12 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param bool $autoOpen
      */
-    public function setAutoOpen($autoOpen)
+    public function setAutoOpen($autoOpen): void
     {
         $this->autoOpen = $autoOpen;
     }
 
-    /**
-     * @return string
-     */
-    public function getOpenEvent()
+    public function getOpenEvent(): string
     {
         return $this->openEvent;
     }
@@ -203,15 +152,12 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param string $openEvent
      */
-    public function setOpenEvent($openEvent)
+    public function setOpenEvent($openEvent): void
     {
         $this->openEvent = $openEvent;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAutoClose()
+    public function isAutoClose(): bool
     {
         return $this->autoClose;
     }
@@ -219,7 +165,7 @@ class InfoWindow implements ExtendableInterface, OptionsAwareInterface
     /**
      * @param bool $autoClose
      */
-    public function setAutoClose($autoClose)
+    public function setAutoClose($autoClose): void
     {
         $this->autoClose = $autoClose;
     }

@@ -14,95 +14,51 @@ namespace Ivory\GoogleMap\Service;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\Serializer\SerializerBuilder;
-use Ivory\Serializer\Context\ContextInterface;
-use Ivory\Serializer\Format;
-use Ivory\Serializer\SerializerInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 abstract class AbstractSerializableService extends AbstractHttpService
 {
-    const FORMAT_JSON = Format::JSON;
-    const FORMAT_XML = Format::XML;
+    const FORMAT_JSON = 'json';
+    const FORMAT_XML  = 'xml';
 
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
+    private SerializerInterface $serializer;
 
-    /**
-     * @var string
-     */
-    private $format = self::FORMAT_JSON;
-
-    /**
-     * @param string                   $url
-     * @param HttpClient               $client
-     * @param MessageFactory           $messageFactory
-     * @param SerializerInterface|null $serializer
-     */
     public function __construct(
-        $url,
+        string $url,
         HttpClient $client,
         MessageFactory $messageFactory,
-        SerializerInterface $serializer = null
-    ) {
+        ?SerializerInterface $serializer = null
+    )
+    {
         parent::__construct($url, $client, $messageFactory);
 
         $this->setSerializer($serializer ?: SerializerBuilder::create());
     }
 
-    /**
-     * @return SerializerInterface
-     */
-    public function getSerializer()
+    public function getSerializer(): SerializerInterface
     {
         return $this->serializer;
     }
 
-    /**
-     * @param SerializerInterface $serializer
-     */
     public function setSerializer(SerializerInterface $serializer)
     {
         $this->serializer = $serializer;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormat()
+    protected function createBaseUrl(RequestInterface $request): string
     {
-        return $this->format;
+        return parent::createBaseUrl($request) . '/json';
     }
 
     /**
-     * @param string $format
+     * @return object
      */
-    public function setFormat($format)
+    protected function deserialize(ResponseInterface $response, string $type, ?array $context = null)
     {
-        $this->format = $format;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function createBaseUrl(RequestInterface $request)
-    {
-        return parent::createBaseUrl($request).'/'.$this->format;
-    }
-
-    /**
-     * @param ResponseInterface     $response
-     * @param string                $type
-     * @param ContextInterface|null $context
-     *
-     * @return mixed
-     */
-    protected function deserialize(ResponseInterface $response, $type, ContextInterface $context = null)
-    {
-        return $this->serializer->deserialize((string) $response->getBody(), $type, $this->format, $context);
+        return $this->serializer->deserialize((string)$response->getBody(), $type, 'json', $context);
     }
 }

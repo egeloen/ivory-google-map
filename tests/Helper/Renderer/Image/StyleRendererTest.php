@@ -19,15 +19,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StyleRendererTest extends TestCase
 {
-    /**
-     * @var StyleRenderer
-     */
-    private $styleRenderer;
+    private StyleRenderer $styleRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->styleRenderer = new StyleRenderer();
     }

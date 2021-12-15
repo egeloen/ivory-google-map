@@ -25,15 +25,9 @@ use PHPUnit\Framework\TestCase;
  */
 class InfoWindowOpenRendererTest extends TestCase
 {
-    /**
-     * @var InfoWindowOpenRenderer
-     */
-    private $infoWindowOpenRenderer;
+    private InfoWindowOpenRenderer $infoWindowOpenRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->infoWindowOpenRenderer = new InfoWindowOpenRenderer(new Formatter());
     }

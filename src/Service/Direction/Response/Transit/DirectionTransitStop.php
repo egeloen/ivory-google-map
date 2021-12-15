@@ -18,28 +18,16 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 class DirectionTransitStop
 {
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var Coordinate|null
-     */
-    private $location;
+    private ?Coordinate $location = null;
 
-    /**
-     * @return bool
-     */
-    public function hasName()
+    public function hasName(): bool
     {
         return $this->name !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -47,23 +35,17 @@ class DirectionTransitStop
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLocation()
+    public function hasLocation(): bool
     {
         return $this->location !== null;
     }
 
-    /**
-     * @return Coordinate|null
-     */
-    public function getLocation()
+    public function getLocation(): ?Coordinate
     {
         return $this->location;
     }
@@ -71,7 +53,7 @@ class DirectionTransitStop
     /**
      * @param Coordinate|null $location
      */
-    public function setLocation(Coordinate $location = null)
+    public function setLocation(Coordinate $location = null): void
     {
         $this->location = $location;
     }

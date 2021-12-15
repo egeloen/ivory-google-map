@@ -18,33 +18,21 @@ use Ivory\GoogleMap\Service\Place\Autocomplete\Request\PlaceAutocompleteRequestI
  */
 class PlaceAutocompleteResponse
 {
-    /**
-     * @var string|null
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var PlaceAutocompleteRequestInterface|null
-     */
-    private $request;
+    private ?PlaceAutocompleteRequestInterface $request = null;
 
     /**
      * @var PlaceAutocompletePrediction[]
      */
-    private $predictions = [];
+    private array $predictions = [];
 
-    /**
-     * @return bool
-     */
-    public function hasStatus()
+    public function hasStatus(): bool
     {
         return $this->status !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -52,23 +40,17 @@ class PlaceAutocompleteResponse
     /**
      * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRequest()
+    public function hasRequest(): bool
     {
         return $this->request !== null;
     }
 
-    /**
-     * @return PlaceAutocompleteRequestInterface|null
-     */
-    public function getRequest()
+    public function getRequest(): ?PlaceAutocompleteRequestInterface
     {
         return $this->request;
     }
@@ -76,15 +58,12 @@ class PlaceAutocompleteResponse
     /**
      * @param PlaceAutocompleteRequestInterface|null $request
      */
-    public function setRequest(PlaceAutocompleteRequestInterface $request = null)
+    public function setRequest(PlaceAutocompleteRequestInterface $request = null): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPredictions()
+    public function hasPredictions(): bool
     {
         return !empty($this->predictions);
     }
@@ -92,7 +71,7 @@ class PlaceAutocompleteResponse
     /**
      * @return PlaceAutocompletePrediction[]
      */
-    public function getPredictions()
+    public function getPredictions(): array
     {
         return $this->predictions;
     }
@@ -100,7 +79,7 @@ class PlaceAutocompleteResponse
     /**
      * @param PlaceAutocompletePrediction[] $predictions
      */
-    public function setPredictions(array $predictions)
+    public function setPredictions(array $predictions): void
     {
         $this->predictions = [];
         $this->addPredictions($predictions);
@@ -109,37 +88,26 @@ class PlaceAutocompleteResponse
     /**
      * @param PlaceAutocompletePrediction[] $predictions
      */
-    public function addPredictions(array $predictions)
+    public function addPredictions(array $predictions): void
     {
         foreach ($predictions as $prediction) {
             $this->addPrediction($prediction);
         }
     }
 
-    /**
-     * @param PlaceAutocompletePrediction $prediction
-     *
-     * @return bool
-     */
-    public function hasPrediction(PlaceAutocompletePrediction $prediction)
+    public function hasPrediction(PlaceAutocompletePrediction $prediction): bool
     {
         return in_array($prediction, $this->predictions, true);
     }
 
-    /**
-     * @param PlaceAutocompletePrediction $prediction
-     */
-    public function addPrediction(PlaceAutocompletePrediction $prediction)
+    public function addPrediction(PlaceAutocompletePrediction $prediction): void
     {
         if (!$this->hasPrediction($prediction)) {
             $this->predictions[] = $prediction;
         }
     }
 
-    /**
-     * @param PlaceAutocompletePrediction $prediction
-     */
-    public function removePrediction(PlaceAutocompletePrediction $prediction)
+    public function removePrediction(PlaceAutocompletePrediction $prediction): void
     {
         unset($this->predictions[array_search($prediction, $this->predictions, true)]);
         $this->predictions = empty($this->predictions) ? [] : array_values($this->predictions);

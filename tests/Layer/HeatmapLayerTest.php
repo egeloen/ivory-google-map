@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Layer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Layer\HeatmapLayer;
 use Ivory\GoogleMap\Overlay\ExtendableInterface;
@@ -22,15 +23,9 @@ use PHPUnit\Framework\TestCase;
  */
 class HeatmapLayerTest extends TestCase
 {
-    /**
-     * @var HeatmapLayer
-     */
-    private $heatmapLayer;
+    private HeatmapLayer $heatmapLayer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->heatmapLayer = new HeatmapLayer();
     }
@@ -77,7 +72,7 @@ class HeatmapLayerTest extends TestCase
         $this->heatmapLayer->addCoordinates($secondCoordinates = [$this->createCoordinateMock()]);
 
         $this->assertTrue($this->heatmapLayer->hasCoordinates());
-        $this->assertSame(array_merge($firstCoordinates, $secondCoordinates), $this->heatmapLayer->getCoordinates());
+        $this->assertSame([...$firstCoordinates, ...$secondCoordinates], $this->heatmapLayer->getCoordinates());
     }
 
     public function testAddCoordinate()
@@ -100,7 +95,7 @@ class HeatmapLayerTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Coordinate
+     * @return MockObject|Coordinate
      */
     private function createCoordinateMock()
     {

@@ -22,140 +22,77 @@ class Place
     /**
      * @var string|null
      */
-    private $id;
+    private ?string $id = null;
 
-    /**
-     * @var string|null
-     */
-    private $placeId;
+    private ?string $placeId = null;
 
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string|null
-     */
-    private $formattedAddress;
+    private ?string $formattedAddress = null;
 
-    /**
-     * @var string|null
-     */
-    private $formattedPhoneNumber;
+    private ?string $formattedPhoneNumber = null;
 
-    /**
-     * @var string|null
-     */
-    private $internationalPhoneNumber;
+    private ?string $internationalPhoneNumber = null;
 
-    /**
-     * @var string|null
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * @var string|null
-     */
-    private $icon;
+    private ?string $icon = null;
 
-    /**
-     * @var string|null
-     */
-    private $scope;
+    private ?string $scope = null;
 
-    /**
-     * @var int|null
-     */
-    private $priceLevel;
+    private ?int $priceLevel = null;
 
-    /**
-     * @var float|null
-     */
-    private $rating;
+    private ?float $rating = null;
 
-    /**
-     * @var int|null
-     */
-    private $utcOffset;
+    private ?int $utcOffset = null;
 
-    /**
-     * @var string|null
-     */
-    private $vicinity;
+    private ?string $vicinity = null;
 
-    /**
-     * @var string|null
-     */
-    private $website;
+    private ?string $website = null;
 
-    /**
-     * @var Geometry|null
-     */
-    private $geometry;
+    private ?Geometry $geometry = null;
 
-    /**
-     * @var OpeningHours|null
-     */
-    private $openingHours;
+    private ?OpeningHours $openingHours = null;
 
     /**
      * @var AddressComponent[]
      */
-    private $addressComponents = [];
+    private array $addressComponents = [];
 
     /**
      * @var Photo[]
      */
-    private $photos = [];
+    private array $photos = [];
 
     /**
      * @var AlternatePlaceId[]
      */
-    private $alternatePlaceIds = [];
+    private array $alternatePlaceIds = [];
 
     /**
      * @var Review[]
      */
-    private $reviews = [];
+    private array $reviews = [];
 
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
-    /**
-     * @var bool|null
-     */
-    private $permanentlyClose;
+    private ?bool $permanentlyClose = null;
 
-    /**
-     * @var string|null
-     */
-    private $businessStatus;
+    private ?string $businessStatus = null;
 
-    /**
-     * @var int|null
-     */
-    private $userRatingsTotal;
+    private ?int $userRatingsTotal = null;
 
-    /**
-     * @var PlusCode|null
-     */
-    private $plusCode;
+    private ?PlusCode $plusCode = null;
 
-    /**
-     * @return bool
-     */
-    public function hasId()
+    public function hasId(): bool
     {
         return $this->id !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -163,23 +100,17 @@ class Place
     /**
      * @param string|null $id
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPlaceId()
+    public function hasPlaceId(): bool
     {
         return $this->placeId !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPlaceId()
+    public function getPlaceId(): ?string
     {
         return $this->placeId;
     }
@@ -187,23 +118,17 @@ class Place
     /**
      * @param string|null $placeId
      */
-    public function setPlaceId($placeId)
+    public function setPlaceId($placeId): void
     {
         $this->placeId = $placeId;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasName()
+    public function hasName(): bool
     {
         return $this->name !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -211,47 +136,32 @@ class Place
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasFormattedAddress()
+    public function hasFormattedAddress(): bool
     {
         return $this->formattedAddress !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFormattedAddress()
+    public function getFormattedAddress(): ?string
     {
         return $this->formattedAddress;
     }
 
-    /**
-     * @param string|null $formattedAddress
-     */
-    public function setFormattedAddress($formattedAddress)
+    public function setFormattedAddress(?string $formattedAddress): void
     {
         $this->formattedAddress = $formattedAddress;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasFormattedPhoneNumber()
+    public function hasFormattedPhoneNumber(): bool
     {
         return $this->formattedPhoneNumber !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFormattedPhoneNumber()
+    public function getFormattedPhoneNumber(): ?string
     {
         return $this->formattedPhoneNumber;
     }
@@ -259,23 +169,17 @@ class Place
     /**
      * @param string|null $formattedPhoneNumber
      */
-    public function setFormattedPhoneNumber($formattedPhoneNumber)
+    public function setFormattedPhoneNumber($formattedPhoneNumber): void
     {
         $this->formattedPhoneNumber = $formattedPhoneNumber;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasInternationalPhoneNumber()
+    public function hasInternationalPhoneNumber(): bool
     {
         return $this->internationalPhoneNumber !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getInternationalPhoneNumber()
+    public function getInternationalPhoneNumber(): ?string
     {
         return $this->internationalPhoneNumber;
     }
@@ -283,23 +187,17 @@ class Place
     /**
      * @param string|null $internationalPhoneNumber
      */
-    public function setInternationalPhoneNumber($internationalPhoneNumber)
+    public function setInternationalPhoneNumber($internationalPhoneNumber): void
     {
         $this->internationalPhoneNumber = $internationalPhoneNumber;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasUrl()
+    public function hasUrl(): bool
     {
         return $this->url !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -307,23 +205,17 @@ class Place
     /**
      * @param string|null $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIcon()
+    public function hasIcon(): bool
     {
         return $this->icon !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
@@ -331,23 +223,17 @@ class Place
     /**
      * @param string|null $icon
      */
-    public function setIcon($icon)
+    public function setIcon($icon): void
     {
         $this->icon = $icon;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasScope()
+    public function hasScope(): bool
     {
         return $this->scope !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
@@ -355,23 +241,17 @@ class Place
     /**
      * @param string|null $scope
      */
-    public function setScope($scope)
+    public function setScope($scope): void
     {
         $this->scope = $scope;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPriceLevel()
+    public function hasPriceLevel(): bool
     {
         return $this->priceLevel !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getPriceLevel()
+    public function getPriceLevel(): ?int
     {
         return $this->priceLevel;
     }
@@ -379,23 +259,17 @@ class Place
     /**
      * @param int|null $priceLevel
      */
-    public function setPriceLevel($priceLevel)
+    public function setPriceLevel($priceLevel): void
     {
         $this->priceLevel = $priceLevel;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRating()
+    public function hasRating(): bool
     {
         return $this->rating !== null;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getRating()
+    public function getRating(): ?float
     {
         return $this->rating;
     }
@@ -403,23 +277,17 @@ class Place
     /**
      * @param float|null $rating
      */
-    public function setRating($rating)
+    public function setRating($rating): void
     {
         $this->rating = $rating;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasUtcOffset()
+    public function hasUtcOffset(): bool
     {
         return $this->utcOffset !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getUtcOffset()
+    public function getUtcOffset(): ?int
     {
         return $this->utcOffset;
     }
@@ -427,23 +295,17 @@ class Place
     /**
      * @param int|null $utcOffset
      */
-    public function setUtcOffset($utcOffset)
+    public function setUtcOffset($utcOffset): void
     {
         $this->utcOffset = $utcOffset;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasVicinity()
+    public function hasVicinity(): bool
     {
         return $this->vicinity !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getVicinity()
+    public function getVicinity(): ?string
     {
         return $this->vicinity;
     }
@@ -451,23 +313,17 @@ class Place
     /**
      * @param string|null $vicinity
      */
-    public function setVicinity($vicinity)
+    public function setVicinity($vicinity): void
     {
         $this->vicinity = $vicinity;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasWebsite()
+    public function hasWebsite(): bool
     {
         return $this->website !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getWebsite()
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
@@ -475,23 +331,17 @@ class Place
     /**
      * @param string|null $website
      */
-    public function setWebsite($website)
+    public function setWebsite($website): void
     {
         $this->website = $website;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasGeometry()
+    public function hasGeometry(): bool
     {
         return $this->geometry !== null;
     }
 
-    /**
-     * @return Geometry|null
-     */
-    public function getGeometry()
+    public function getGeometry(): ?Geometry
     {
         return $this->geometry;
     }
@@ -499,23 +349,17 @@ class Place
     /**
      * @param Geometry|null $geometry
      */
-    public function setGeometry(Geometry $geometry = null)
+    public function setGeometry(Geometry $geometry = null): void
     {
         $this->geometry = $geometry;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOpeningHours()
+    public function hasOpeningHours(): bool
     {
         return $this->openingHours !== null;
     }
 
-    /**
-     * @return OpeningHours|null
-     */
-    public function getOpeningHours()
+    public function getOpeningHours(): ?OpeningHours
     {
         return $this->openingHours;
     }
@@ -523,17 +367,15 @@ class Place
     /**
      * @param OpeningHours|null $openingHours
      */
-    public function setOpeningHours(OpeningHours $openingHours = null)
+    public function setOpeningHours(OpeningHours $openingHours = null): void
     {
         $this->openingHours = $openingHours;
     }
 
     /**
      * @param string|null $type
-     *
-     * @return bool
      */
-    public function hasAddressComponents($type = null)
+    public function hasAddressComponents($type = null): bool
     {
         $addresses = $this->getAddressComponents($type);
 
@@ -545,7 +387,7 @@ class Place
      *
      * @return AddressComponent[]
      */
-    public function getAddressComponents($type = null)
+    public function getAddressComponents($type = null): array
     {
         if ($type === null) {
             return $this->addressComponents;
@@ -565,7 +407,7 @@ class Place
     /**
      * @param AddressComponent[] $addressComponents
      */
-    public function setAddressComponents(array $addressComponents)
+    public function setAddressComponents(array $addressComponents): void
     {
         $this->addressComponents = [];
         $this->addAddressComponents($addressComponents);
@@ -574,46 +416,32 @@ class Place
     /**
      * @param AddressComponent[] $addressComponents
      */
-    public function addAddressComponents(array $addressComponents)
+    public function addAddressComponents(array $addressComponents): void
     {
         foreach ($addressComponents as $addressComponent) {
             $this->addAddressComponent($addressComponent);
         }
     }
 
-    /**
-     * @param AddressComponent $addressComponent
-     *
-     * @return bool
-     */
-    public function hasAddressComponent(AddressComponent $addressComponent)
+    public function hasAddressComponent(AddressComponent $addressComponent): bool
     {
         return in_array($addressComponent, $this->addressComponents, true);
     }
 
-    /**
-     * @param AddressComponent $addressComponent
-     */
-    public function addAddressComponent(AddressComponent $addressComponent)
+    public function addAddressComponent(AddressComponent $addressComponent): void
     {
         if (!$this->hasAddressComponent($addressComponent)) {
             $this->addressComponents[] = $addressComponent;
         }
     }
 
-    /**
-     * @param AddressComponent $addressComponent
-     */
-    public function removeAddressComponent(AddressComponent $addressComponent)
+    public function removeAddressComponent(AddressComponent $addressComponent): void
     {
         unset($this->addressComponents[array_search($addressComponent, $this->addressComponents, true)]);
         $this->addressComponents = empty($this->addressComponents) ? [] : array_values($this->addressComponents);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPhotos()
+    public function hasPhotos(): bool
     {
         return !empty($this->photos);
     }
@@ -621,7 +449,7 @@ class Place
     /**
      * @return Photo[]
      */
-    public function getPhotos()
+    public function getPhotos(): array
     {
         return $this->photos;
     }
@@ -629,7 +457,7 @@ class Place
     /**
      * @param Photo[] $photos
      */
-    public function setPhotos(array $photos)
+    public function setPhotos(array $photos): void
     {
         $this->photos = [];
         $this->addPhotos($photos);
@@ -638,46 +466,32 @@ class Place
     /**
      * @param Photo[] $photos
      */
-    public function addPhotos(array $photos)
+    public function addPhotos(array $photos): void
     {
         foreach ($photos as $photo) {
             $this->addPhoto($photo);
         }
     }
 
-    /**
-     * @param Photo $photo
-     *
-     * @return bool
-     */
-    public function hasPhoto(Photo $photo)
+    public function hasPhoto(Photo $photo): bool
     {
         return in_array($photo, $this->photos, true);
     }
 
-    /**
-     * @param Photo $photo
-     */
-    public function addPhoto(Photo $photo)
+    public function addPhoto(Photo $photo): void
     {
         if (!$this->hasPhoto($photo)) {
             $this->photos[] = $photo;
         }
     }
 
-    /**
-     * @param Photo $photo
-     */
-    public function removePhoto(Photo $photo)
+    public function removePhoto(Photo $photo): void
     {
         unset($this->photos[array_search($photo, $this->photos, true)]);
         $this->photos = empty($this->photos) ? [] : array_values($this->photos);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAlternatePlaceIds()
+    public function hasAlternatePlaceIds(): bool
     {
         return !empty($this->alternatePlaceIds);
     }
@@ -685,7 +499,7 @@ class Place
     /**
      * @return AlternatePlaceId[]
      */
-    public function getAlternatePlaceIds()
+    public function getAlternatePlaceIds(): array
     {
         return $this->alternatePlaceIds;
     }
@@ -693,7 +507,7 @@ class Place
     /**
      * @param AlternatePlaceId[] $alternatePlaceIds
      */
-    public function setAlternatePlaceIds(array $alternatePlaceIds)
+    public function setAlternatePlaceIds(array $alternatePlaceIds): void
     {
         $this->alternatePlaceIds = [];
         $this->addAlternatePlaceIds($alternatePlaceIds);
@@ -702,43 +516,32 @@ class Place
     /**
      * @param AlternatePlaceId[] $alternatePlaceIds
      */
-    public function addAlternatePlaceIds(array $alternatePlaceIds)
+    public function addAlternatePlaceIds(array $alternatePlaceIds): void
     {
         foreach ($alternatePlaceIds as $alternatePlaceId) {
             $this->addAlternatePlaceId($alternatePlaceId);
         }
     }
 
-    /**
-     * @param AlternatePlaceId $alternatePlaceId
-     *
-     * @return bool
-     */
-    public function hasAlternatePlaceId(AlternatePlaceId $alternatePlaceId)
+    public function hasAlternatePlaceId(AlternatePlaceId $alternatePlaceId): bool
     {
         return in_array($alternatePlaceId, $this->alternatePlaceIds, true);
     }
 
-    public function addAlternatePlaceId(AlternatePlaceId $alternatePlaceId)
+    public function addAlternatePlaceId(AlternatePlaceId $alternatePlaceId): void
     {
         if (!$this->hasAlternatePlaceId($alternatePlaceId)) {
             $this->alternatePlaceIds[] = $alternatePlaceId;
         }
     }
 
-    /**
-     * @param AlternatePlaceId $alternatePlaceId
-     */
-    public function removeAlternatePlaceId(AlternatePlaceId $alternatePlaceId)
+    public function removeAlternatePlaceId(AlternatePlaceId $alternatePlaceId): void
     {
         unset($this->alternatePlaceIds[array_search($alternatePlaceId, $this->alternatePlaceIds, true)]);
         $this->alternatePlaceIds = empty($this->alternatePlaceIds) ? [] : array_values($this->alternatePlaceIds);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasReviews()
+    public function hasReviews(): bool
     {
         return !empty($this->reviews);
     }
@@ -746,7 +549,7 @@ class Place
     /**
      * @return Review[]
      */
-    public function getReviews()
+    public function getReviews(): array
     {
         return $this->reviews;
     }
@@ -754,7 +557,7 @@ class Place
     /**
      * @param Review[] $reviews
      */
-    public function setReviews(array $reviews)
+    public function setReviews(array $reviews): void
     {
         $this->reviews = [];
         $this->addReviews($reviews);
@@ -763,46 +566,32 @@ class Place
     /**
      * @param Review[] $reviews
      */
-    public function addReviews(array $reviews)
+    public function addReviews(array $reviews): void
     {
         foreach ($reviews as $review) {
             $this->addReview($review);
         }
     }
 
-    /**
-     * @param Review $review
-     *
-     * @return bool
-     */
-    public function hasReview(Review $review)
+    public function hasReview(Review $review): bool
     {
         return in_array($review, $this->reviews, true);
     }
 
-    /**
-     * @param Review $review
-     */
-    public function addReview(Review $review)
+    public function addReview(Review $review): void
     {
         if (!$this->hasReview($review)) {
             $this->reviews[] = $review;
         }
     }
 
-    /**
-     * @param Review $review
-     */
-    public function removeReview(Review $review)
+    public function removeReview(Review $review): void
     {
         unset($this->reviews[array_search($review, $this->reviews, true)]);
         $this->reviews = empty($this->reviews) ? [] : array_values($this->reviews);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -810,7 +599,7 @@ class Place
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -818,7 +607,7 @@ class Place
     /**
      * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -827,7 +616,7 @@ class Place
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -836,10 +625,8 @@ class Place
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -847,7 +634,7 @@ class Place
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -857,24 +644,18 @@ class Place
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPermanentlyClose()
+    public function hasPermanentlyClose(): bool
     {
         return $this->permanentlyClose !== null;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isPermanentlyClose()
+    public function isPermanentlyClose(): ?bool
     {
         return $this->permanentlyClose;
     }
@@ -882,15 +663,12 @@ class Place
     /**
      * @param bool|null $permanentlyClose
      */
-    public function setPermanentlyClose($permanentlyClose)
+    public function setPermanentlyClose($permanentlyClose): void
     {
         $this->permanentlyClose = $permanentlyClose;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getBusinessStatus()
+    public function getBusinessStatus(): ?string
     {
         return $this->businessStatus;
     }
@@ -898,15 +676,12 @@ class Place
     /**
      * @param string|null $businessStatus
      */
-    public function setBusinessStatus(string $businessStatus)
+    public function setBusinessStatus(string $businessStatus): void
     {
         $this->businessStatus = $businessStatus;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getUserRatingsTotal()
+    public function getUserRatingsTotal(): ?int
     {
         return $this->userRatingsTotal;
     }
@@ -914,15 +689,12 @@ class Place
     /**
      * @param int|null $userRatingsTotal
      */
-    public function setUserRatingsTotal(int $userRatingsTotal)
+    public function setUserRatingsTotal(int $userRatingsTotal): void
     {
         $this->userRatingsTotal = $userRatingsTotal;
     }
 
-    /**
-     * @return PlusCode|null
-     */
-    public function getPlusCode()
+    public function getPlusCode(): ?PlusCode
     {
         return $this->plusCode;
     }
@@ -930,7 +702,7 @@ class Place
     /**
      * @param PlusCode|null $plusCode
      */
-    public function setPlusCode(PlusCode $plusCode)
+    public function setPlusCode(PlusCode $plusCode): void
     {
         $this->plusCode = $plusCode;
     }

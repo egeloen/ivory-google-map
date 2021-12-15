@@ -32,12 +32,12 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @var Coordinate[]
      */
-    private $coordinates = [];
+    private array $coordinates = [];
 
     /**
      * @var IconSequence[]
      */
-    private $iconSequences = [];
+    private array $iconSequences = [];
 
     /**
      * @param Coordinate[]   $coordinates
@@ -51,10 +51,7 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
         $this->addOptions($options);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasCoordinates()
+    public function hasCoordinates(): bool
     {
         return !empty($this->coordinates);
     }
@@ -62,7 +59,7 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @return Coordinate[]
      */
-    public function getCoordinates()
+    public function getCoordinates(): array
     {
         return $this->coordinates;
     }
@@ -70,7 +67,7 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @param Coordinate[] $coordinates
      */
-    public function setCoordinates($coordinates)
+    public function setCoordinates($coordinates): void
     {
         $this->coordinates = [];
         $this->addCoordinates($coordinates);
@@ -79,44 +76,30 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @param Coordinate[] $coordinates
      */
-    public function addCoordinates($coordinates)
+    public function addCoordinates($coordinates): void
     {
         foreach ($coordinates as $coordinate) {
             $this->addCoordinate($coordinate);
         }
     }
 
-    /**
-     * @param Coordinate $coordinate
-     *
-     * @return bool
-     */
-    public function hasCoordinate(Coordinate $coordinate)
+    public function hasCoordinate(Coordinate $coordinate): bool
     {
         return in_array($coordinate, $this->coordinates, true);
     }
 
-    /**
-     * @param Coordinate $coordinate
-     */
-    public function addCoordinate(Coordinate $coordinate)
+    public function addCoordinate(Coordinate $coordinate): void
     {
         $this->coordinates[] = $coordinate;
     }
 
-    /**
-     * @param Coordinate $coordinate
-     */
-    public function removeCoordinate(Coordinate $coordinate)
+    public function removeCoordinate(Coordinate $coordinate): void
     {
         unset($this->coordinates[array_search($coordinate, $this->coordinates, true)]);
         $this->coordinates = empty($this->coordinates) ? [] : array_values($this->coordinates);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIconSequences()
+    public function hasIconSequences(): bool
     {
         return !empty($this->iconSequences);
     }
@@ -124,7 +107,7 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @return IconSequence[]
      */
-    public function getIconSequences()
+    public function getIconSequences(): array
     {
         return $this->iconSequences;
     }
@@ -132,7 +115,7 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @param IconSequence[] $iconSequences
      */
-    public function setIconSequences($iconSequences)
+    public function setIconSequences($iconSequences): void
     {
         $this->iconSequences = [];
         $this->addIconSequences($iconSequences);
@@ -141,35 +124,24 @@ class Polyline implements ExtendableInterface, OptionsAwareInterface, StaticOpti
     /**
      * @param IconSequence[] $iconSequences
      */
-    public function addIconSequences($iconSequences)
+    public function addIconSequences($iconSequences): void
     {
         foreach ($iconSequences as $iconSequence) {
             $this->addIconSequence($iconSequence);
         }
     }
 
-    /**
-     * @param IconSequence $iconSequence
-     *
-     * @return bool
-     */
-    public function hasIconSequence(IconSequence $iconSequence)
+    public function hasIconSequence(IconSequence $iconSequence): bool
     {
         return in_array($iconSequence, $this->iconSequences, true);
     }
 
-    /**
-     * @param IconSequence $iconSequence
-     */
-    public function addIconSequence(IconSequence $iconSequence)
+    public function addIconSequence(IconSequence $iconSequence): void
     {
         $this->iconSequences[] = $iconSequence;
     }
 
-    /**
-     * @param IconSequence $iconSequence
-     */
-    public function removeIconSequence(IconSequence $iconSequence)
+    public function removeIconSequence(IconSequence $iconSequence): void
     {
         unset($this->iconSequences[array_search($iconSequence, $this->iconSequences, true)]);
         $this->iconSequences = empty($this->iconSequences) ? [] : array_values($this->iconSequences);

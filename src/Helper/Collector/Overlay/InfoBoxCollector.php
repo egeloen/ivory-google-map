@@ -18,9 +18,6 @@ use Ivory\GoogleMap\Overlay\InfoWindowType;
  */
 class InfoBoxCollector extends InfoWindowCollector
 {
-    /**
-     * @param MarkerCollector $markerCollector
-     */
     public function __construct(MarkerCollector $markerCollector)
     {
         parent::__construct($markerCollector, InfoWindowType::INFO_BOX);

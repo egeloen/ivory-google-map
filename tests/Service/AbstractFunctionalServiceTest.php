@@ -32,40 +32,22 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
  */
 abstract class AbstractFunctionalServiceTest extends TestCase
 {
-    /**
-     * @var Journal
-     */
-    protected static $journal;
+    protected static ?Journal $journal = null;
 
-    /**
-     * @var HttpClient
-     */
-    protected $client;
+    protected PluginClient $client;
 
-    /**
-     * @var MessageFactory
-     */
-    protected $messageFactory;
+    protected GuzzleMessageFactory $messageFactory;
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    protected $pool;
+    protected FilesystemAdapter $pool;
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (self::$journal === null) {
             self::$journal = new Journal();
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (isset($_SERVER['CACHE_RESET']) && $_SERVER['CACHE_RESET']) {
             sleep(2);

@@ -22,10 +22,8 @@ class ObjectToArrayRenderer extends AbstractRenderer
      * @param string|null $arrayVariable
      * @param string|null $objectVariable
      * @param string|null $keyVariable
-     *
-     * @return string
      */
-    public function render($arrayVariable = null, $objectVariable = null, $keyVariable = null)
+    public function render($arrayVariable = null, $objectVariable = null, $keyVariable = null): string
     {
         $formatter = $this->getFormatter();
 

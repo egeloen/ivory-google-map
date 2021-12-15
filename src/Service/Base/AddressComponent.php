@@ -16,33 +16,21 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 class AddressComponent
 {
-    /**
-     * @var string|null
-     */
-    private $longName;
+    private ?string $longName = null;
 
-    /**
-     * @var string|null
-     */
-    private $shortName;
+    private ?string $shortName = null;
 
     /**
      * @var string[]
      */
-    private $types = [];
+    private array $types = [];
 
-    /**
-     * @return bool
-     */
-    public function hasLongName()
+    public function hasLongName(): bool
     {
         return $this->longName !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLongName()
+    public function getLongName(): ?string
     {
         return $this->longName;
     }
@@ -50,23 +38,17 @@ class AddressComponent
     /**
      * @param string|null $longName
      */
-    public function setLongName($longName = null)
+    public function setLongName($longName = null): void
     {
         $this->longName = $longName;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasShortName()
+    public function hasShortName(): bool
     {
         return $this->shortName !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getShortName()
+    public function getShortName(): ?string
     {
         return $this->shortName;
     }
@@ -74,15 +56,12 @@ class AddressComponent
     /**
      * @param string|null $shortName
      */
-    public function setShortName($shortName = null)
+    public function setShortName($shortName = null): void
     {
         $this->shortName = $shortName;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasTypes()
+    public function hasTypes(): bool
     {
         return !empty($this->types);
     }
@@ -90,7 +69,7 @@ class AddressComponent
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -98,7 +77,7 @@ class AddressComponent
     /**
      * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types): void
     {
         $this->types = [];
         $this->addTypes($types);
@@ -107,7 +86,7 @@ class AddressComponent
     /**
      * @param string[] $types
      */
-    public function addTypes(array $types)
+    public function addTypes(array $types): void
     {
         foreach ($types as $type) {
             $this->addType($type);
@@ -116,10 +95,8 @@ class AddressComponent
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return in_array($type, $this->types, true);
     }
@@ -127,7 +104,7 @@ class AddressComponent
     /**
      * @param string $type
      */
-    public function addType($type)
+    public function addType($type): void
     {
         if (!$this->hasType($type)) {
             $this->types[] = $type;
@@ -137,7 +114,7 @@ class AddressComponent
     /**
      * @param string $type
      */
-    public function removeType($type)
+    public function removeType($type): void
     {
         unset($this->types[array_search($type, $this->types, true)]);
         $this->types = empty($this->types) ? [] : array_values($this->types);

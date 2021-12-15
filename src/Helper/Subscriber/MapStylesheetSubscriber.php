@@ -21,15 +21,8 @@ use Ivory\GoogleMap\Helper\Renderer\Html\StylesheetTagRenderer;
  */
 class MapStylesheetSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var StylesheetTagRenderer
-     */
-    private $stylesheetTagRenderer;
+    private ?StylesheetTagRenderer $stylesheetTagRenderer = null;
 
-    /**
-     * @param Formatter             $formatter
-     * @param StylesheetTagRenderer $stylesheetTagRenderer
-     */
     public function __construct(Formatter $formatter, StylesheetTagRenderer $stylesheetTagRenderer)
     {
         parent::__construct($formatter);
@@ -37,26 +30,17 @@ class MapStylesheetSubscriber extends AbstractSubscriber
         $this->setStylesheetTagRenderer($stylesheetTagRenderer);
     }
 
-    /**
-     * @return StylesheetTagRenderer
-     */
-    public function getStylesheetTagRenderer()
+    public function getStylesheetTagRenderer(): StylesheetTagRenderer
     {
         return $this->stylesheetTagRenderer;
     }
 
-    /**
-     * @param StylesheetTagRenderer $stylesheetTagRenderer
-     */
-    public function setStylesheetTagRenderer(StylesheetTagRenderer $stylesheetTagRenderer)
+    public function setStylesheetTagRenderer(StylesheetTagRenderer $stylesheetTagRenderer): void
     {
         $this->stylesheetTagRenderer = $stylesheetTagRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $map = $event->getMap();
 
@@ -65,10 +49,7 @@ class MapStylesheetSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::STYLESHEET => 'handleMap'];
     }

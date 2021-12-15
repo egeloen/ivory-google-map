@@ -16,28 +16,16 @@ namespace Ivory\GoogleMap\Service\Place\Autocomplete\Response;
  */
 class PlaceAutocompleteMatch
 {
-    /**
-     * @var int|null
-     */
-    private $length;
+    private ?int $length = null;
 
-    /**
-     * @var int|null
-     */
-    private $offset;
+    private ?int $offset = null;
 
-    /**
-     * @return bool
-     */
-    public function hasLength()
+    public function hasLength(): bool
     {
         return $this->length !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getLength()
+    public function getLength(): ?int
     {
         return $this->length;
     }
@@ -45,23 +33,17 @@ class PlaceAutocompleteMatch
     /**
      * @param int|null $length
      */
-    public function setLength($length)
+    public function setLength($length): void
     {
         $this->length = $length;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasOffset()
+    public function hasOffset(): bool
     {
         return $this->offset !== null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getOffset()
+    public function getOffset(): ?int
     {
         return $this->offset;
     }
@@ -69,7 +51,7 @@ class PlaceAutocompleteMatch
     /**
      * @param int|null $offset
      */
-    public function setOffset($offset)
+    public function setOffset($offset): void
     {
         $this->offset = $offset;
     }

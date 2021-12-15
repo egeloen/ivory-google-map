@@ -18,13 +18,9 @@ use Ivory\GoogleMap\Base\Coordinate;
  */
 class NearbyPlaceSearchRequest extends AbstractTextualPlaceSearchRequest
 {
-    /**
-     * @var string
-     */
-    private $rankBy;
+    private ?string $rankBy = null;
 
     /**
-     * @param Coordinate $location
      * @param string     $rankBy
      * @param float|null $radius
      */
@@ -35,10 +31,7 @@ class NearbyPlaceSearchRequest extends AbstractTextualPlaceSearchRequest
         $this->setRadius($radius);
     }
 
-    /**
-     * @return string
-     */
-    public function getRankBy()
+    public function getRankBy(): string
     {
         return $this->rankBy;
     }
@@ -46,23 +39,17 @@ class NearbyPlaceSearchRequest extends AbstractTextualPlaceSearchRequest
     /**
      * @param string $rankBy
      */
-    public function setRankBy($rankBy)
+    public function setRankBy($rankBy): void
     {
         $this->rankBy = $rankBy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildContext()
+    public function buildContext(): string
     {
         return 'nearbysearch';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = parent::buildQuery();
         $query['rankby'] = $this->rankBy;

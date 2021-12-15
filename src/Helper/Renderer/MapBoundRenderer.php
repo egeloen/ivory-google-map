@@ -18,12 +18,7 @@ use Ivory\GoogleMap\Map;
  */
 class MapBoundRenderer extends AbstractRenderer
 {
-    /**
-     * @param Map $map
-     *
-     * @return string
-     */
-    public function render(Map $map)
+    public function render(Map $map): string
     {
         return $this->getFormatter()->renderObjectCall(
             $map,

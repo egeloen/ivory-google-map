@@ -23,21 +23,10 @@ use Ivory\GoogleMap\Helper\Subscriber\AbstractSubscriber;
  */
 class MarkerShapeSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var MarkerShapeCollector
-     */
-    private $markerShapeCollector;
+    private ?MarkerShapeCollector $markerShapeCollector = null;
 
-    /**
-     * @var MarkerShapeRenderer
-     */
-    private $markerShapeRenderer;
+    private ?MarkerShapeRenderer $markerShapeRenderer = null;
 
-    /**
-     * @param Formatter            $formatter
-     * @param MarkerShapeCollector $markerShapeCollector
-     * @param MarkerShapeRenderer  $markerShapeRenderer
-     */
     public function __construct(
         Formatter $formatter,
         MarkerShapeCollector $markerShapeCollector,
@@ -49,42 +38,27 @@ class MarkerShapeSubscriber extends AbstractSubscriber
         $this->setMarkerShapeRenderer($markerShapeRenderer);
     }
 
-    /**
-     * @return MarkerShapeCollector
-     */
-    public function getMarkerShapeCollector()
+    public function getMarkerShapeCollector(): MarkerShapeCollector
     {
         return $this->markerShapeCollector;
     }
 
-    /**
-     * @param MarkerShapeCollector $markerShapeCollector
-     */
-    public function setMarkerShapeCollector(MarkerShapeCollector $markerShapeCollector)
+    public function setMarkerShapeCollector(MarkerShapeCollector $markerShapeCollector): void
     {
         $this->markerShapeCollector = $markerShapeCollector;
     }
 
-    /**
-     * @return MarkerShapeRenderer
-     */
-    public function getMarkerShapeRenderer()
+    public function getMarkerShapeRenderer(): MarkerShapeRenderer
     {
         return $this->markerShapeRenderer;
     }
 
-    /**
-     * @param MarkerShapeRenderer $markerShapeRenderer
-     */
-    public function setMarkerShapeRenderer(MarkerShapeRenderer $markerShapeRenderer)
+    public function setMarkerShapeRenderer(MarkerShapeRenderer $markerShapeRenderer): void
     {
         $this->markerShapeRenderer = $markerShapeRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -99,10 +73,7 @@ class MarkerShapeSubscriber extends AbstractSubscriber
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_OVERLAY_MARKER_SHAPE => 'handleMap'];
     }

@@ -22,15 +22,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTypeControlStyleRendererTest extends TestCase
 {
-    /**
-     * @var MapTypeControlStyleRenderer
-     */
-    private $mapTypeControlStyleRenderer;
+    private MapTypeControlStyleRenderer $mapTypeControlStyleRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapTypeControlStyleRenderer = new MapTypeControlStyleRenderer(new Formatter());
     }

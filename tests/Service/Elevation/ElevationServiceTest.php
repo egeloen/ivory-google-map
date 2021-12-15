@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Elevation;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Service\Base\Location\CoordinateLocation;
 use Ivory\GoogleMap\Service\Base\Location\EncodedPolylineLocation;
@@ -28,15 +29,9 @@ use Ivory\Tests\GoogleMap\Service\AbstractSerializableServiceTest;
  */
 class ElevationServiceTest extends AbstractSerializableServiceTest
 {
-    /**
-     * @var ElevationService
-     */
-    protected $service;
+    protected ?ElevationService $service = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!isset($_SERVER['API_KEY'])) {
             $this->markTestSkipped();
@@ -49,83 +44,64 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessPositional($format)
+    public function testProcessPositional()
     {
         $request = $this->createRequest();
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertElevationResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessPositionalWithEncodedPolylines($format)
+    public function testProcessPositionalWithEncodedPolylines()
     {
         $request = new PositionalElevationRequest([
             new EncodedPolylineLocation('gfo}EtohhU'),
         ]);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertElevationResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessPath($format)
+    public function testProcessPath()
     {
         $request = new PathElevationRequest([
             new CoordinateLocation(new Coordinate(40.714728, -73.998672)),
             new CoordinateLocation(new Coordinate(-34.397, 150.644)),
         ], 3);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertElevationResponse($response, $request);
     }
 
     /**
-     * @param string $format
      *
-     * @dataProvider formatProvider
      */
-    public function testProcessPathWithEncodedPolylines($format)
+    public function testProcessPathWithEncodedPolylines()
     {
         $request = new PathElevationRequest([
             new EncodedPolylineLocation('gfo}EtohhUxD@bAxJmGF'),
         ], 3);
 
-        $this->service->setFormat($format);
         $response = $this->service->process($request);
 
         $this->assertElevationResponse($response, $request);
     }
 
-    /**
-     * @param string $format
-     *
-     * @dataProvider formatProvider
-     *
-     * @expectedException \Http\Client\Common\Exception\ClientErrorException
-     * @expectedExceptionMessage REQUEST_DENIED
-     */
-    public function testErrorRequest($format)
+    public function testErrorRequest()
     {
-        $this->service->setFormat($format);
+        $this->expectException(ClientErrorException::class);
+        $this->expectExceptionMessage('REQUEST_DENIED');
         $this->service->setKey('invalid');
 
         $this->service->process($this->createRequest());
@@ -155,7 +131,7 @@ class ElevationServiceTest extends AbstractSerializableServiceTest
 
         $this->assertSame($request, $response->getRequest());
         $this->assertSame($options['status'], $response->getStatus());
-        $this->assertCount(count($options['results']), $results = $response->getResults());
+        $this->assertCount(is_countable($options['results']) ? count($options['results']) : 0, $results = $response->getResults());
 
         foreach ($options['results'] as $key => $result) {
             $this->assertArrayHasKey($key, $results);

@@ -20,15 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class OptionsAwareTest extends TestCase
 {
-    /**
-     * @var OptionsAwareTrait
-     */
-    private $optionsAware;
+    private \Ivory\Tests\GoogleMap\Utility\OptionsAwareMock $optionsAware;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->optionsAware = new OptionsAwareMock();
     }

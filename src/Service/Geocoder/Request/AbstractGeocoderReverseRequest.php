@@ -21,17 +21,14 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
     /**
      * @var string[]
      */
-    private $resultTypes = [];
+    private array $resultTypes = [];
 
     /**
      * @var string[]
      */
-    private $locationTypes = [];
+    private array $locationTypes = [];
 
-    /**
-     * @return bool
-     */
-    public function hasResultTypes()
+    public function hasResultTypes(): bool
     {
         return !empty($this->resultTypes);
     }
@@ -39,7 +36,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
     /**
      * @return string[]
      */
-    public function getResultTypes()
+    public function getResultTypes(): array
     {
         return $this->resultTypes;
     }
@@ -65,10 +62,8 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
 
     /**
      * @param string $resultType
-     *
-     * @return bool
      */
-    public function hasResultType($resultType)
+    public function hasResultType($resultType): bool
     {
         return in_array($resultType, $this->resultTypes, true);
     }
@@ -92,10 +87,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
         $this->resultTypes = empty($this->resultTypes) ? [] : array_values($this->resultTypes);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLocationTypes()
+    public function hasLocationTypes(): bool
     {
         return !empty($this->locationTypes);
     }
@@ -103,7 +95,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
     /**
      * @return string[]
      */
-    public function getLocationTypes()
+    public function getLocationTypes(): array
     {
         return $this->locationTypes;
     }
@@ -129,10 +121,8 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
 
     /**
      * @param string $locationType
-     *
-     * @return bool
      */
-    public function hasLocationType($locationType)
+    public function hasLocationType($locationType): bool
     {
         return in_array($locationType, $this->locationTypes, true);
     }
@@ -156,10 +146,7 @@ abstract class AbstractGeocoderReverseRequest extends AbstractGeocoderRequest
         $this->locationTypes = empty($this->locationTypes) ? [] : array_values($this->locationTypes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = [];
 

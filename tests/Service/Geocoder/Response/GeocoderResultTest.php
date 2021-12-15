@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Service\Geocoder\Response;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Service\Base\AddressComponent;
 use Ivory\GoogleMap\Service\Base\Geometry;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
@@ -26,10 +27,7 @@ class GeocoderResultTest extends TestCase
      */
     private $result;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->result = new GeocoderResult();
     }
@@ -79,7 +77,7 @@ class GeocoderResultTest extends TestCase
 
         $this->assertTrue($this->result->hasAddressComponents());
         $this->assertSame(
-            array_merge($firstAddressComponents, $secondAddressComponents),
+            [...$firstAddressComponents, ...$secondAddressComponents],
             $this->result->getAddressComponents()
         );
     }
@@ -152,7 +150,7 @@ class GeocoderResultTest extends TestCase
         $this->result->addPostcodeLocalities($secondPostcodeLocalities = ['62000']);
 
         $this->assertTrue($this->result->hasPostcodeLocalities());
-        $this->assertSame(array_merge($firstPostcodeLocalities, $secondPostcodeLocalities), $this->result->getPostcodeLocalities());
+        $this->assertSame([...$firstPostcodeLocalities, ...$secondPostcodeLocalities], $this->result->getPostcodeLocalities());
     }
 
     public function testAddPostcodeLocality()
@@ -224,7 +222,7 @@ class GeocoderResultTest extends TestCase
         $this->result->addTypes($secondTypes = ['bar']);
 
         $this->assertTrue($this->result->hasTypes());
-        $this->assertSame(array_merge($firstTypes, $secondTypes), $this->result->getTypes());
+        $this->assertSame([...$firstTypes, ...$secondTypes], $this->result->getTypes());
     }
 
     public function testAddType()
@@ -247,7 +245,7 @@ class GeocoderResultTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AddressComponent
+     * @return MockObject|AddressComponent
      */
     private function createAddressComponentMock()
     {
@@ -255,7 +253,7 @@ class GeocoderResultTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Geometry
+     * @return MockObject|Geometry
      */
     private function createGeometryMock()
     {

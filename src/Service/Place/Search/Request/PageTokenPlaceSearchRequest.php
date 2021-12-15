@@ -18,45 +18,29 @@ use Ivory\GoogleMap\Service\Place\Search\Response\PlaceSearchResponse;
  */
 class PageTokenPlaceSearchRequest implements PlaceSearchRequestInterface
 {
-    /** @var PlaceSearchResponse */
-    private $response;
+    private ?PlaceSearchResponse $response = null;
 
-    /**
-     * @param PlaceSearchResponse $response
-     */
     public function __construct(PlaceSearchResponse $response)
     {
         $this->setResponse($response);
     }
 
-    /**
-     * @return PlaceSearchResponse
-     */
-    public function getResponse()
+    public function getResponse(): PlaceSearchResponse
     {
         return $this->response;
     }
 
-    /**
-     * @param PlaceSearchResponse $response
-     */
-    public function setResponse(PlaceSearchResponse $response)
+    public function setResponse(PlaceSearchResponse $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildContext()
+    public function buildContext(): string
     {
         return $this->response->getRequest()->buildContext();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         return ['pagetoken' => $this->response->getNextPageToken()];
     }

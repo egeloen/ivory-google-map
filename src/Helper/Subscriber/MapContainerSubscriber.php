@@ -21,15 +21,8 @@ use Ivory\GoogleMap\Helper\Renderer\MapContainerRenderer;
  */
 class MapContainerSubscriber extends AbstractSubscriber
 {
-    /**
-     * @var MapContainerRenderer
-     */
-    private $containerRenderer;
+    private ?MapContainerRenderer $containerRenderer = null;
 
-    /**
-     * @param Formatter            $formatter
-     * @param MapContainerRenderer $containerRenderer
-     */
     public function __construct(Formatter $formatter, MapContainerRenderer $containerRenderer)
     {
         parent::__construct($formatter);
@@ -37,26 +30,17 @@ class MapContainerSubscriber extends AbstractSubscriber
         $this->setContainerRenderer($containerRenderer);
     }
 
-    /**
-     * @return MapContainerRenderer
-     */
-    public function getContainerRenderer()
+    public function getContainerRenderer(): MapContainerRenderer
     {
         return $this->containerRenderer;
     }
 
-    /**
-     * @param MapContainerRenderer $containerRenderer
-     */
-    public function setContainerRenderer(MapContainerRenderer $containerRenderer)
+    public function setContainerRenderer(MapContainerRenderer $containerRenderer): void
     {
         $this->containerRenderer = $containerRenderer;
     }
 
-    /**
-     * @param MapEvent $event
-     */
-    public function handleMap(MapEvent $event)
+    public function handleMap(MapEvent $event): void
     {
         $formatter = $this->getFormatter();
         $map = $event->getMap();
@@ -67,10 +51,7 @@ class MapContainerSubscriber extends AbstractSubscriber
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [MapEvents::JAVASCRIPT_INIT_CONTAINER => 'handleMap'];
     }

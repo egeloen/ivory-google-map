@@ -21,15 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class KmlLayerCollectorTest extends TestCase
 {
-    /**
-     * @var KmlLayerCollector
-     */
-    private $kmlLayerCollector;
+    private KmlLayerCollector $kmlLayerCollector;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kmlLayerCollector = new KmlLayerCollector();
     }

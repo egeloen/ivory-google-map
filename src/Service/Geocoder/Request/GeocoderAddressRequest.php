@@ -20,25 +20,16 @@ use Ivory\GoogleMap\Base\Bound;
  */
 class GeocoderAddressRequest extends AbstractGeocoderRequest
 {
-    /**
-     * @var string
-     */
-    private $address;
+    private ?string $address = null;
 
     /**
      * @var mixed[]
      */
-    private $components = [];
+    private array $components = [];
 
-    /**
-     * @var Bound|null
-     */
-    private $bound;
+    private ?Bound $bound = null;
 
-    /**
-     * @var string|null
-     */
-    private $region;
+    private ?string $region = null;
 
     /**
      * @param string $address
@@ -48,10 +39,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
         $this->setAddress($address);
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -59,15 +47,12 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @param string $address
      */
-    public function setAddress($address)
+    public function setAddress($address): void
     {
         $this->address = $address;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasComponents()
+    public function hasComponents(): bool
     {
         return !empty($this->components);
     }
@@ -75,7 +60,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @return mixed[]
      */
-    public function getComponents()
+    public function getComponents(): array
     {
         return $this->components;
     }
@@ -83,7 +68,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @param mixed[] $components
      */
-    public function setComponents(array $components)
+    public function setComponents(array $components): void
     {
         $this->components = [];
         $this->addComponents($components);
@@ -92,7 +77,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @param mixed[] $components
      */
-    public function addComponents(array $components)
+    public function addComponents(array $components): void
     {
         foreach ($components as $type => $value) {
             $this->setComponent($type, $value);
@@ -101,10 +86,8 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
 
     /**
      * @param string $type
-     *
-     * @return bool
      */
-    public function hasComponent($type)
+    public function hasComponent($type): bool
     {
         return isset($this->components[$type]);
     }
@@ -123,7 +106,7 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
      * @param string $type
      * @param mixed  $value
      */
-    public function setComponent($type, $value)
+    public function setComponent($type, $value): void
     {
         $this->components[$type] = $value;
     }
@@ -131,23 +114,17 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @param string $type
      */
-    public function removeComponent($type)
+    public function removeComponent($type): void
     {
         unset($this->components[$type]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBound()
+    public function hasBound(): bool
     {
         return $this->bound !== null;
     }
 
-    /**
-     * @return Bound|null
-     */
-    public function getBound()
+    public function getBound(): ?Bound
     {
         return $this->bound;
     }
@@ -155,23 +132,17 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @param Bound|null $bound
      */
-    public function setBound(Bound $bound = null)
+    public function setBound(Bound $bound = null): void
     {
         $this->bound = $bound;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRegion()
+    public function hasRegion(): bool
     {
         return $this->region !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRegion()
+    public function getRegion(): ?string
     {
         return $this->region;
     }
@@ -179,22 +150,17 @@ class GeocoderAddressRequest extends AbstractGeocoderRequest
     /**
      * @param string|null $region
      */
-    public function setRegion($region = null)
+    public function setRegion($region = null): void
     {
         $this->region = $region;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildQuery()
+    public function buildQuery(): array
     {
         $query = ['address' => $this->address];
 
         if ($this->hasComponents()) {
-            $query['components'] = implode('|', array_map(function ($type, $value) {
-                return $type.':'.$value;
-            }, array_keys($this->components), $this->components));
+            $query['components'] = implode('|', array_map(fn($type, $value) => $type.':'.$value, array_keys($this->components), $this->components));
         }
 
         if ($this->hasBound()) {

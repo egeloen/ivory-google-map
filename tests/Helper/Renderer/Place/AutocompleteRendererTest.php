@@ -11,6 +11,7 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Place;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Base\Bound;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -27,15 +28,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AutocompleteRendererTest extends TestCase
 {
-    /**
-     * @var AutocompleteRenderer
-     */
-    private $autocompleteRenderer;
+    private AutocompleteRenderer $autocompleteRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->autocompleteRenderer = new AutocompleteRenderer(
             $formatter = new Formatter(),
@@ -94,7 +89,7 @@ class AutocompleteRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequirementRenderer
+     * @return MockObject|RequirementRenderer
      */
     private function createRequirementRendererMock()
     {

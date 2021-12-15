@@ -11,6 +11,8 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Renderer\Control;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Control\MapTypeControl;
 use Ivory\GoogleMap\Helper\Formatter\Formatter;
 use Ivory\GoogleMap\Helper\Renderer\AbstractJsonRenderer;
@@ -27,15 +29,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTypeControlRendererTest extends TestCase
 {
-    /**
-     * @var MapTypeControlRenderer
-     */
-    private $mapTypeControlRenderer;
+    private MapTypeControlRenderer $mapTypeControlRenderer;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapTypeControlRenderer = new MapTypeControlRenderer(
             $formatter = new Formatter(),
@@ -87,17 +83,15 @@ class MapTypeControlRendererTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected a "Ivory\GoogleMap\Control\MapTypeControl", got "string".
-     */
     public function testRenderWithInvalidControl()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a "Ivory\GoogleMap\Control\MapTypeControl", got "string".');
         $this->mapTypeControlRenderer->render('foo');
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MapTypeIdRenderer
+     * @return MockObject|MapTypeIdRenderer
      */
     private function createMapTypeIdRendererMock()
     {
@@ -105,7 +99,7 @@ class MapTypeControlRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ControlPositionRenderer
+     * @return MockObject|ControlPositionRenderer
      */
     private function createControlPositionRendererMock()
     {
@@ -113,7 +107,7 @@ class MapTypeControlRendererTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MapTypeControlStyleRenderer
+     * @return MockObject|MapTypeControlStyleRenderer
      */
     private function createMapTypeControlStyleRendererMock()
     {
