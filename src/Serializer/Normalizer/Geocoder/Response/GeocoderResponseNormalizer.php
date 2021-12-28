@@ -3,8 +3,6 @@
 namespace Ivory\GoogleMap\Serializer\Normalizer\Geocoder\Response;
 
 use Ivory\GoogleMap\Serializer\Normalizer\Normalizer;
-use Ivory\GoogleMap\Service\Elevation\Response\ElevationResponse;
-use Ivory\GoogleMap\Service\Elevation\Response\ElevationResult;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResponse;
 use Ivory\GoogleMap\Service\Geocoder\Response\GeocoderResult;
 
@@ -15,7 +13,7 @@ class GeocoderResponseNormalizer extends Normalizer
         $geocoderResponse = new GeocoderResponse();
 
         $geocoderResponse->setStatus($data['status']);
-        foreach($data['results'] as $geocodeResultDatum) {
+        foreach ($data['results'] as $geocodeResultDatum) {
             $geocoderResponse->addResult($this->denormalizer->denormalize($geocodeResultDatum, GeocoderResult::class, $format, $context));
         }
 
