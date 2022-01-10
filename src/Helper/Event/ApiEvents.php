@@ -16,9 +16,9 @@ namespace Ivory\GoogleMap\Helper\Event;
  */
 final class ApiEvents
 {
-    const JAVASCRIPT = 'api.javascript';
-    const JAVASCRIPT_MAP = 'api.javascript.map';
-    const JAVASCRIPT_AUTOCOMPLETE = 'api.javascript.autocomplete';
+    public const JAVASCRIPT              = 'api.javascript';
+    public const JAVASCRIPT_MAP          = 'api.javascript.map';
+    public const JAVASCRIPT_AUTOCOMPLETE = 'api.javascript.autocomplete';
 
     /**
      * @codeCoverageIgnore

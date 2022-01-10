@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MapTypeControlRendererTest extends TestCase
 {
-    private MapTypeControlRenderer $mapTypeControlRenderer;
+    private ?MapTypeControlRenderer $mapTypeControlRenderer;
 
     protected function setUp(): void
     {

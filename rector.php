@@ -5,13 +5,17 @@ declare(strict_types=1);
 use Rector\Core\Configuration\Option;
 use Rector\Php74\Rector\Property\TypedPropertyRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\Core\ValueObject\PhpVersion;
+use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\Symfony\Set\SymfonySetList;
 use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\Property\CompleteVarDocTypePropertyRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_74);
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::PATHS, [
 //        __DIR__ . '/src',
@@ -26,8 +30,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::PHP_74);
     $containerConfigurator->import(PHPUnitSetList::PHPUNIT_80);
 
-//    $services = $containerConfigurator->services();
-//    $services->set(CompleteVarDocTypePropertyRector::class);
-//    $services->set(TypedPropertyRector::class);
-//    $services->set(ReturnTypeDeclarationRector::class);
+    $services = $containerConfigurator->services();
+    $services->set(CompleteVarDocTypePropertyRector::class);
+    $services->set(TypedPropertyRector::class);
+    $services->set(ReturnTypeDeclarationRector::class);
 };

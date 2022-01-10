@@ -13,6 +13,7 @@ namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
 use PHPUnit\Extensions\Selenium2TestCase;
 use RuntimeException;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -71,7 +72,7 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
         }
 
         if (@fclose($file) === false) {
-            throw new\RuntimeException(sprintf('Unable to close the file "%s".', $name));
+            throw new RuntimeException(sprintf('Unable to close the file "%s".', $name));
         }
 
         $this->url();

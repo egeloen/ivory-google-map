@@ -25,7 +25,7 @@ abstract class AbstractDelegateSubscriber extends AbstractSubscriber implements 
 
         if (isset($delegates[$eventName])) {
             foreach ($delegates[$eventName] as $delegate) {
-                $eventDispatcher->dispatch($delegate, $event);
+                $eventDispatcher->dispatch($event,$delegate);
             }
         }
     }
