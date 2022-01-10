@@ -27,7 +27,7 @@
         "php": "7.4.*",
         "ext-json": "*",
         "symfony/event-dispatcher": "^4.4",
-        "validaide/common": "dev-chore/symfony-4 as 4.6.0",
+        "validaide/common": "dev-development as 4.6.0",
         "symfony/property-access": "^4.4",
         "symfony/serializer": "^4.4"
     },
@@ -37,7 +37,7 @@
         "php-http/guzzle6-adapter": "^1.0",
         "phpunit/phpunit": "8.*",
         "phpunit/phpunit-selenium": "8.*",
-        "rector/rector": "^0.12.12",
+        "rector/rector": "^0.12",
         "symfony/cache": "^4.4",
         "symfony/phpunit-bridge": "^4.4"
     },
