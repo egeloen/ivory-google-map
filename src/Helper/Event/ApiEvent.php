@@ -247,7 +247,7 @@ class ApiEvent extends AbstractEvent
     /**
      * @param string $callback
      *
-     * @return object
+     * @return object|null
      */
     public function getCallbackObject($callback)
     {
@@ -256,6 +256,8 @@ class ApiEvent extends AbstractEvent
                 return $object;
             }
         }
+
+        return null;
     }
 
     /**
