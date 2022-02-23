@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4630cd21747d9d6d2477dd88e90a20c0",
+    "content-hash": "346924d7270f76e60e015f9be4e33cfb",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -2651,16 +2651,16 @@
         },
         {
             "name": "validaide/common",
-            "version": "dev-development",
+            "version": "4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/validaide/common.git",
-                "reference": "7b75fda86fbdfcbb60bf528d657d9d37b583bec4"
+                "reference": "472e66d77e9ad3d36631ecd9c22c0d270d9ce88a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/validaide/common/zipball/7b75fda86fbdfcbb60bf528d657d9d37b583bec4",
-                "reference": "7b75fda86fbdfcbb60bf528d657d9d37b583bec4",
+                "url": "https://api.github.com/repos/validaide/common/zipball/472e66d77e9ad3d36631ecd9c22c0d270d9ce88a",
+                "reference": "472e66d77e9ad3d36631ecd9c22c0d270d9ce88a",
                 "shasum": ""
             },
             "require": {
@@ -2701,7 +2701,7 @@
                 }
             ],
             "description": "Common Library for Validaide projects",
-            "time": "2022-01-10T11:37:47+00:00"
+            "time": "2022-02-23T13:42:07+00:00"
         }
     ],
     "packages-dev": [
@@ -6640,18 +6640,9 @@
             "time": "2021-03-09T10:59:23+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "validaide/common",
-            "version": "dev-development",
-            "alias": "4.6.0",
-            "alias_normalized": "4.6.0.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "validaide/common": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
