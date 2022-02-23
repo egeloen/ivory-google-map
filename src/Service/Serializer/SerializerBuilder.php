@@ -38,26 +38,23 @@ use Ivory\GoogleMap\Serializer\Normalizer\Map\GeometryNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Overlay\EncodedPolylineNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\PhotoNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Place\AlternatePlaceIdNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\OpenClosePeriodNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\OpeningHoursNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\PeriodNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\Response\PlaceDetailResponseNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\PlaceNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\PlusCodeNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\Response\PlaceSearchResponseNormalizer;
-use Ivory\GoogleMap\Serializer\Normalizer\Place\ReviewNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Place\Autocomplete\PlaceAutocompleteMatchNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Place\Autocomplete\PlaceAutocompletePredictionNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Place\Autocomplete\PlaceAutocompleteResponseNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Place\Autocomplete\PlaceAutocompleteTermNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\OpenClosePeriodNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\OpeningHoursNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\PeriodNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\PlaceNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\PlusCodeNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\Response\PlaceDetailResponseNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\Response\PlaceSearchResponseNormalizer;
+use Ivory\GoogleMap\Serializer\Normalizer\Place\ReviewNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\TimeNormalizer;
 use Ivory\GoogleMap\Serializer\Normalizer\Timezone\Response\TimezoneResponseNormalizer;
-use Ivory\GoogleMap\Service\Place\Base\PlusCode;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -86,69 +83,73 @@ class SerializerBuilder
 //        $arrayNormalizer = new ArrayDenormalizer();
 //        $getSetMethodNormalizer = new GetSetMethodNormalizer($classMetadataFactory);
 
-        $normalizers = [
-            // Generic
-            new DistanceNormalizer(),
-            new DurationNormalizer(),
-            new TimeNormalizer(),
+        static $serializer;
 
-            // Distance Matrix
-            new DistanceMatrixResponseNormalizer(),
-            new RowNormalizer(),
-            new ElementNormalizer(),
+        if (is_null($serializer)) {
+            $normalizers = [
+                // Generic
+                new DistanceNormalizer(),
+                new DurationNormalizer(),
+                new TimeNormalizer(),
 
-            // Elevation
-            new ElevationResponseNormalizer(),
-            new ElevationResponseResultNormalizer(),
+                // Distance Matrix
+                new DistanceMatrixResponseNormalizer(),
+                new RowNormalizer(),
+                new ElementNormalizer(),
 
-            // Geocoder
-            new GeocoderResponseNormalizer(),
-            new GeocoderResponseResultNormalizer(),
+                // Elevation
+                new ElevationResponseNormalizer(),
+                new ElevationResponseResultNormalizer(),
 
-            // Overlay
-            new EncodedPolylineNormalizer(),
+                // Geocoder
+                new GeocoderResponseNormalizer(),
+                new GeocoderResponseResultNormalizer(),
 
-            // Timezone
-            new TimezoneResponseNormalizer(),
+                // Overlay
+                new EncodedPolylineNormalizer(),
 
-            // Directions
-            new DirectionResponseNormalizer(),
-            new DirectionResponseWaypointNormalizer(),
-            new DetailsNormalizer(),
-            new StopNormalizer(),
-            new LineNormalizer(),
-            new AgencyNormalizer(),
-            new VehicleNormalizer(),
-            new GeocodedWaypointNormalizer(),
-            new RouteNormalizer(),
-            new LegNormalizer(),
-            new StepNormalizer(),
+                // Timezone
+                new TimezoneResponseNormalizer(),
 
-            new PlaceAutocompleteResponseNormalizer(),
-            new PlaceSearchResponseNormalizer(),
-            new PlaceDetailResponseNormalizer(),
+                // Directions
+                new DirectionResponseNormalizer(),
+                new DirectionResponseWaypointNormalizer(),
+                new DetailsNormalizer(),
+                new StopNormalizer(),
+                new LineNormalizer(),
+                new AgencyNormalizer(),
+                new VehicleNormalizer(),
+                new GeocodedWaypointNormalizer(),
+                new RouteNormalizer(),
+                new LegNormalizer(),
+                new StepNormalizer(),
 
-            new PlaceAutocompletePredictionNormalizer(),
-            new PlaceAutocompleteTermNormalizer(),
-            new PlaceAutocompleteMatchNormalizer(),
-            new PlaceNormalizer(),
+                new PlaceAutocompleteResponseNormalizer(),
+                new PlaceSearchResponseNormalizer(),
+                new PlaceDetailResponseNormalizer(),
 
-            new GeometryNormalizer(),
-            new CoordinateNormalizer(),
-            new BoundNormalizer(),
-            new OpeningHoursNormalizer(),
-            new PeriodNormalizer(),
-            new OpenClosePeriodNormalizer(),
-            new PlusCodeNormalizer(),
-            new AddressComponentNormalizer(),
-            new PhotoNormalizer(),
-            new AlternatePlaceIdNormalizer(),
-            new ReviewNormalizer()
-        ];
+                new PlaceAutocompletePredictionNormalizer(),
+                new PlaceAutocompleteTermNormalizer(),
+                new PlaceAutocompleteMatchNormalizer(),
+                new PlaceNormalizer(),
 
-        $xmlEncoder  = new XmlEncoder();
-        $jsonEncoder = new JsonEncoder();
+                new GeometryNormalizer(),
+                new CoordinateNormalizer(),
+                new BoundNormalizer(),
+                new OpeningHoursNormalizer(),
+                new PeriodNormalizer(),
+                new OpenClosePeriodNormalizer(),
+                new PlusCodeNormalizer(),
+                new AddressComponentNormalizer(),
+                new PhotoNormalizer(),
+                new AlternatePlaceIdNormalizer(),
+                new ReviewNormalizer(),
+            ];
 
-        return new Serializer($normalizers, [$xmlEncoder, $jsonEncoder]);
+            $jsonEncoder = new JsonEncoder();
+            $serializer  = new Serializer($normalizers, [$jsonEncoder]);
+        }
+
+        return $serializer;
     }
 }

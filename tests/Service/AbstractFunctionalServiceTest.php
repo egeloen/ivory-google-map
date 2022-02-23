@@ -17,14 +17,10 @@ use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin as HttpErrorPlugin;
 use Http\Client\Common\Plugin\HistoryPlugin;
 use Http\Client\Common\PluginClient;
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Ivory\GoogleMap\Service\Plugin\ErrorPlugin;
 use Ivory\Tests\GoogleMap\Service\Utility\Journal;
 use PHPUnit\Framework\TestCase;
-use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
@@ -53,9 +49,7 @@ abstract class AbstractFunctionalServiceTest extends TestCase
             sleep(2);
         }
 
-        $this->pool           = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
-        $this->messageFactory = new GuzzleMessageFactory();
-
+        $this->pool   = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
         $this->client = new PluginClient(new Client(), [
             new HttpErrorPlugin(),
             new ErrorPlugin(),

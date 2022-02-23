@@ -60,6 +60,8 @@ class StreetViewControlRendererTest extends TestCase
         );
     }
 
+    /**
+     */
     public function testRenderWithInvalidControl()
     {
         $this->expectException(InvalidArgumentException::class);

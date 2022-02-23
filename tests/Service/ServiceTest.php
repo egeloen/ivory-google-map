@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ServiceTest extends TestCase
 {
+    /** @var MockObject|AbstractService  */
     private MockObject $service;
 
     protected function setUp(): void

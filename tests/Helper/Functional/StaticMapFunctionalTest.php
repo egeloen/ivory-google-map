@@ -11,12 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Functional;
 
+use GuzzleHttp\Psr7\Request;
 use Http\Adapter\Guzzle6\Client;
 use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\PluginClient;
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Ivory\GoogleMap\Base\Coordinate;
 use Ivory\GoogleMap\Base\Point;
@@ -28,22 +26,19 @@ use Ivory\GoogleMap\Overlay\EncodedPolyline;
 use Ivory\GoogleMap\Overlay\Icon;
 use Ivory\GoogleMap\Overlay\Marker;
 use Ivory\GoogleMap\Overlay\Polyline;
-use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  *
- * @group functional
+ * @group  functional
  */
 class StaticMapFunctionalTest extends TestCase
 {
     private StaticMapHelper $staticMapHelper;
 
     private PluginClient $client;
-
-    private GuzzleMessageFactory $messageFactory;
 
     protected FilesystemAdapter $pool;
 
@@ -59,9 +54,7 @@ class StaticMapFunctionalTest extends TestCase
 
         $this->staticMapHelper = $this->createStaticMapHelper();
 
-        $this->pool = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
-        $this->messageFactory = new GuzzleMessageFactory();
-
+        $this->pool   = new FilesystemAdapter('', 0, $_SERVER['CACHE_PATH']);
         $this->client = new PluginClient(new Client(), [
             new CachePlugin(
                 $this->pool,
@@ -153,7 +146,7 @@ class StaticMapFunctionalTest extends TestCase
                 'rules'   => [
                     'visibility' => 'simplified',
                     'color'      => '0xbababa',
-                ]
+                ],
             ],
         ]);
 
@@ -396,17 +389,14 @@ class StaticMapFunctionalTest extends TestCase
         return $polyline;
     }
 
-    /**
-     * @return EncodedPolyline
-     */
-    private function createEncodedPolyline()
+    private function createEncodedPolyline(): EncodedPolyline
     {
         return new EncodedPolyline('yv_tHizrQiGsR`HcP');
     }
 
     private function renderMap(Map $map)
     {
-        $request = $this->messageFactory->createRequest('GET', $this->staticMapHelper->render($map));
+        $request  = new Request('GET', $this->staticMapHelper->render($map));
         $response = $this->client->sendRequest($request);
 
         $this->assertSame(200, $response->getStatusCode());

@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Service;
 
+use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface as PsrRequestInterface;
@@ -22,14 +23,11 @@ abstract class AbstractHttpService extends AbstractService
 {
     private ?HttpClient $client = null;
 
-    private ?MessageFactory $messageFactory = null;
-
-    public function __construct(string $url, HttpClient $client, MessageFactory $messageFactory)
+    public function __construct(string $url, HttpClient $client)
     {
         parent::__construct($url);
 
         $this->setClient($client);
-        $this->setMessageFactory($messageFactory);
     }
 
     public function getClient(): HttpClient
@@ -42,18 +40,8 @@ abstract class AbstractHttpService extends AbstractService
         $this->client = $client;
     }
 
-    public function getMessageFactory(): MessageFactory
+    protected function createRequest(RequestInterface $request): PsrRequestInterface
     {
-        return $this->messageFactory;
-    }
-
-    public function setMessageFactory(MessageFactory $messageFactory)
-    {
-        $this->messageFactory = $messageFactory;
-    }
-
-    protected function createRequest(RequestInterface $request): \Psr\Http\Message\RequestInterface
-    {
-        return $this->messageFactory->createRequest('GET', $this->createUrl($request));
+        return new Request('GET', $this->createUrl($request));
     }
 }

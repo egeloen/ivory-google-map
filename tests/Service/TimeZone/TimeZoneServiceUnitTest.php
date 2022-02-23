@@ -28,11 +28,7 @@ class TimeZoneServiceUnitTest extends AbstractUnitServiceTest
     {
         parent::setUp();
 
-        $this->service = new TimeZoneService(
-            $this->client,
-            $this->messageFactory,
-            $this->serializer
-        );
+        $this->service = new TimeZoneService($this->client, $this->serializer);
     }
 
     public function testProcessWithBusinessAccount()
@@ -45,19 +41,9 @@ class TimeZoneServiceUnitTest extends AbstractUnitServiceTest
 
         $url = 'https://maps.googleapis.com/maps/api/timezone/json?foo=bar&signature=signature';
 
-        $this->messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo($url)
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
         $this->client
             ->expects($this->once())
             ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
             ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
 
         $httpResponse

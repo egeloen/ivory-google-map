@@ -11,14 +11,13 @@
 
 namespace Ivory\Tests\GoogleMap\Service;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\BusinessAccount;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -26,25 +25,14 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 abstract class AbstractUnitServiceTest extends TestCase
 {
-    /**
-     * @var HttpClient|MockObject
-     */
-    protected $client;
-
-    /**
-     * @var MessageFactory|MockObject
-     */
-    protected $messageFactory;
-
-    /**
-     * @var SerializerInterface|MockObject
-     */
-    protected $serializer;
+    /** @var HttpClient|MockObject */
+    protected MockObject $client;
+    /** @var SerializerInterface|MockObject */
+    protected MockObject $serializer;
 
     protected function setUp(): void
     {
-        $this->client = $this->createHttpClientMock();
-        $this->messageFactory = $this->createMessageFactoryMock();
+        $this->client     = $this->createHttpClientMock();
         $this->serializer = $this->createSerializerMock();
     }
 
@@ -54,14 +42,6 @@ abstract class AbstractUnitServiceTest extends TestCase
     protected function createHttpClientMock()
     {
         return $this->createMock(HttpClient::class);
-    }
-
-    /**
-     * @return MockObject|MessageFactory
-     */
-    protected function createMessageFactoryMock()
-    {
-        return $this->createMock(MessageFactory::class);
     }
 
     /**

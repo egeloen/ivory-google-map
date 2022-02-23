@@ -36,7 +36,7 @@ class TimeZoneServiceTest extends AbstractSerializableServiceTest
 
         parent::setUp();
 
-        $this->service = new TimeZoneService($this->client, $this->messageFactory);
+        $this->service = new TimeZoneService($this->client);
         $this->service->setKey($_SERVER['API_KEY']);
     }
 

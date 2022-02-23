@@ -28,11 +28,7 @@ class ElevationServiceUnitTest extends AbstractUnitServiceTest
     {
         parent::setUp();
 
-        $this->service = new ElevationService(
-            $this->client,
-            $this->messageFactory,
-            $this->serializer
-        );
+        $this->service = new ElevationService($this->client, $this->serializer);
     }
 
     public function testGeocodeWithBusinessAccount()
@@ -45,19 +41,9 @@ class ElevationServiceUnitTest extends AbstractUnitServiceTest
 
         $url = 'https://maps.googleapis.com/maps/api/elevation/json?foo=bar&signature=signature';
 
-        $this->messageFactory
-            ->expects($this->once())
-            ->method('createRequest')
-            ->with(
-                $this->identicalTo('GET'),
-                $this->identicalTo($url)
-            )
-            ->will($this->returnValue($httpRequest = $this->createHttpRequestMock()));
-
         $this->client
             ->expects($this->once())
             ->method('sendRequest')
-            ->with($this->identicalTo($httpRequest))
             ->will($this->returnValue($httpResponse = $this->createHttpResponseMock()));
 
         $httpResponse

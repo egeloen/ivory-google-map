@@ -24,6 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractPlaceAutocompleteRequestTest extends TestCase
 {
+    /** @var AbstractPlaceAutocompleteRequest|MockObject */
     private MockObject $request;
 
     private ?string $input = null;

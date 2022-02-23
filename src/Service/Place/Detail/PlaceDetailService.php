@@ -12,7 +12,6 @@
 namespace Ivory\GoogleMap\Service\Place\Detail;
 
 use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
 use Ivory\GoogleMap\Service\AbstractSerializableService;
 use Ivory\GoogleMap\Service\Place\Detail\Request\PlaceDetailRequestInterface;
 use Ivory\GoogleMap\Service\Place\Detail\Response\PlaceDetailResponse;
@@ -23,14 +22,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class PlaceDetailService extends AbstractSerializableService
 {
-    public function __construct(HttpClient $client, MessageFactory $messageFactory, SerializerInterface $serializer = null)
+    public function __construct(HttpClient $client, SerializerInterface $serializer = null)
     {
-        parent::__construct(
-            'https://maps.googleapis.com/maps/api/place/details',
-            $client,
-            $messageFactory,
-            $serializer
-        );
+        parent::__construct('https://maps.googleapis.com/maps/api/place/details', $client, $serializer);
     }
 
     public function process(PlaceDetailRequestInterface $request): PlaceDetailResponse
