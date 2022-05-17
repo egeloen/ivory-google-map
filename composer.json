@@ -29,7 +29,7 @@
         "symfony/event-dispatcher": "^4.4",
         "symfony/property-access": "^4.4",
         "symfony/serializer": "^4.4",
-        "validaide/common": "5.0.*"
+        "validaide/common": "5.1.*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
