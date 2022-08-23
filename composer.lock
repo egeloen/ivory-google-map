@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb02d37a98105fca0fd60037e6996fd3",
+    "content-hash": "aa45d042297b0e83fb53ddde786ded45",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -2651,16 +2651,16 @@
         },
         {
             "name": "validaide/common",
-            "version": "5.2.0",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/validaide/common.git",
-                "reference": "c024825a651a8741883f8817a5def48399f29873"
+                "reference": "533e971cc6cc384876fe4403fb2ddc3c8b9cb2a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/validaide/common/zipball/c024825a651a8741883f8817a5def48399f29873",
-                "reference": "c024825a651a8741883f8817a5def48399f29873",
+                "url": "https://api.github.com/repos/validaide/common/zipball/533e971cc6cc384876fe4403fb2ddc3c8b9cb2a2",
+                "reference": "533e971cc6cc384876fe4403fb2ddc3c8b9cb2a2",
                 "shasum": ""
             },
             "require": {
@@ -2701,7 +2701,7 @@
                 }
             ],
             "description": "Common Library for Validaide projects",
-            "time": "2022-07-05T09:16:49+00:00"
+            "time": "2022-08-23T08:47:50+00:00"
         }
     ],
     "packages-dev": [
