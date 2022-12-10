@@ -14,6 +14,7 @@ namespace Ivory\GoogleMap\Service\Plugin;
 use Http\Client\Common\Exception\ClientErrorException;
 use Http\Client\Common\Exception\ServerErrorException;
 use Http\Client\Common\Plugin;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -45,7 +46,7 @@ class ErrorPlugin implements Plugin
         '<status>%s</status>',
     ];
 
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         return $next($request)->then(function (ResponseInterface $response) use ($request) {
             $body = (string) $response->getBody();
