@@ -91,8 +91,8 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     public function testRouteWithCoordinatesFromDifferentContinents()
     {
         $request = new DirectionRequest(
-            new CoordinateLocation(new Coordinate(25.7616798,-80.1917902)),
-            new CoordinateLocation(new Coordinate(50.89717,4.483602))
+            new CoordinateLocation(new Coordinate(25.7616798, -80.1917902)),
+            new CoordinateLocation(new Coordinate(50.89717, 4.483602))
         );
 
         $response = $this->service->route($request);
@@ -470,7 +470,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
      */
     private function assertDirectionGeocoded(DirectionGeocoded $geocoded, array $options = []): void
     {
-        if(empty($options)) {
+        if (empty($options)) {
             $options['status'] = null;
         } else {
             $options['status'] = DirectionGeocodedStatus::OK;
@@ -485,7 +485,9 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
         $this->assertInstanceOf(DirectionGeocoded::class, $geocoded);
 
         $this->assertSame($options['status'], $geocoded->getStatus());
-        $this->assertSame($options['partial_match'], $geocoded->isPartialMatch());
+        if ($geocoded->hasPartialMatch()) {
+            $this->assertSame($options['partial_match'], $geocoded->isPartialMatch());
+        }
         $this->assertSame($options['place_id'], $geocoded->getPlaceId());
         $this->assertSame($options['types'], $geocoded->getTypes());
     }
@@ -631,7 +633,7 @@ class DirectionServiceTest extends AbstractSerializableServiceTest
     }
 
     /**
-     * @param string[]         $options
+     * @param string[] $options
      */
     private function assertEncodedPolyline(EncodedPolyline $encodedPolyline, array $options = []): void
     {
