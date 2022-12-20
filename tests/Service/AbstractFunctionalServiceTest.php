@@ -17,6 +17,7 @@ use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin as HttpErrorPlugin;
 use Http\Client\Common\Plugin\HistoryPlugin;
 use Http\Client\Common\PluginClient;
+use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Ivory\GoogleMap\Service\Plugin\ErrorPlugin;
 use Ivory\Tests\GoogleMap\Service\Utility\Journal;
