@@ -29,10 +29,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PlaceTest extends TestCase
 {
-    /**
-     * @var Place
-     */
-    private $result;
+    private Place $result;
 
     protected function setUp(): void
     {

@@ -16,11 +16,11 @@ namespace Ivory\GoogleMap\Service\Elevation\Response;
  */
 final class ElevationStatus
 {
-    const OK = 'OK';
-    const INVALID_REQUEST = 'INVALID_REQUEST';
-    const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
-    const REQUEST_DENIED = 'REQUEST_DENIED';
-    const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+    public const OK = 'OK';
+    public const INVALID_REQUEST = 'INVALID_REQUEST';
+    public const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
+    public const REQUEST_DENIED = 'REQUEST_DENIED';
+    public const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
     /**
      * @codeCoverageIgnore

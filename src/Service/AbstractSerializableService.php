@@ -21,8 +21,8 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 abstract class AbstractSerializableService extends AbstractHttpService
 {
-    const FORMAT_JSON = 'json';
-    const FORMAT_XML  = 'xml';
+    public const FORMAT_JSON = 'json';
+    public const FORMAT_XML  = 'xml';
 
     private SerializerInterface $serializer;
 

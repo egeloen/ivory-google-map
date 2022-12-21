@@ -16,9 +16,9 @@ namespace Ivory\GoogleMap\Overlay;
  */
 final class MarkerShapeType
 {
-    const POLY = 'poly';
-    const CIRCLE = 'circle';
-    const RECTANGLE = 'rect';
+    public const POLY = 'poly';
+    public const CIRCLE = 'circle';
+    public const RECTANGLE = 'rect';
 
     /**
      * @codeCoverageIgnore

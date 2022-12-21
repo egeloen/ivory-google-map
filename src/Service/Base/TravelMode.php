@@ -18,10 +18,10 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class TravelMode
 {
-    const BICYCLING = 'BICYCLING';
-    const DRIVING = 'DRIVING';
-    const WALKING = 'WALKING';
-    const TRANSIT = 'TRANSIT';
+    public const BICYCLING = 'BICYCLING';
+    public const DRIVING = 'DRIVING';
+    public const WALKING = 'WALKING';
+    public const TRANSIT = 'TRANSIT';
 
     /**
      * @codeCoverageIgnore

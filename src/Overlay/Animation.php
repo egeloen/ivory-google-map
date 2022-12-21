@@ -18,8 +18,8 @@ namespace Ivory\GoogleMap\Overlay;
  */
 final class Animation
 {
-    const BOUNCE = 'bounce';
-    const DROP = 'drop';
+    public const BOUNCE = 'bounce';
+    public const DROP = 'drop';
 
     /**
      * @codeCoverageIgnore

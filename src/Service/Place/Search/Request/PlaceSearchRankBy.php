@@ -16,8 +16,8 @@ namespace Ivory\GoogleMap\Service\Place\Search\Request;
  */
 final class PlaceSearchRankBy
 {
-    const PROMINENCE = 'prominence';
-    const DISTANCE = 'distance';
+    public const PROMINENCE = 'prominence';
+    public const DISTANCE = 'distance';
 
     /**
      * @codeCoverageIgnore

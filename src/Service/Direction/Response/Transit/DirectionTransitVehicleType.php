@@ -16,23 +16,23 @@ namespace Ivory\GoogleMap\Service\Direction\Response\Transit;
  */
 final class DirectionTransitVehicleType
 {
-    const RAIL = 'RAIL';
-    const METRO_RAIL = 'METRO_RAIL';
-    const SUBWAY = 'SUBWAY';
-    const TRAM = 'TRAM';
-    const MONORAIL = 'MONORAIL';
-    const HEAVY_RAIL = 'HEAVY_RAIL';
-    const COMMUTER_TRAIN = 'COMPUTER_TRAIN';
-    const HIGH_SPEED_TRAIN = 'HIGH_SPEED_TRAIN';
-    const BUS = 'BUS';
-    const INTERCITY_BUS = 'INTERCITY_BUS';
-    const TROLLEYBUS = 'TROLLEYBUS';
-    const SHARE_TAXI = 'SHARE_TAXI';
-    const FERRY = 'FERRY';
-    const CABLE_CAR = 'CABLE_CAR';
-    const GONDOLA_LIFT = 'GONDOLA_LIFT';
-    const FUNICULAR = 'FUNICULAR';
-    const OTHER = 'OTHER';
+    public const RAIL = 'RAIL';
+    public const METRO_RAIL = 'METRO_RAIL';
+    public const SUBWAY = 'SUBWAY';
+    public const TRAM = 'TRAM';
+    public const MONORAIL = 'MONORAIL';
+    public const HEAVY_RAIL = 'HEAVY_RAIL';
+    public const COMMUTER_TRAIN = 'COMPUTER_TRAIN';
+    public const HIGH_SPEED_TRAIN = 'HIGH_SPEED_TRAIN';
+    public const BUS = 'BUS';
+    public const INTERCITY_BUS = 'INTERCITY_BUS';
+    public const TROLLEYBUS = 'TROLLEYBUS';
+    public const SHARE_TAXI = 'SHARE_TAXI';
+    public const FERRY = 'FERRY';
+    public const CABLE_CAR = 'CABLE_CAR';
+    public const GONDOLA_LIFT = 'GONDOLA_LIFT';
+    public const FUNICULAR = 'FUNICULAR';
+    public const OTHER = 'OTHER';
 
     /**
      * @codeCoverageIgnore

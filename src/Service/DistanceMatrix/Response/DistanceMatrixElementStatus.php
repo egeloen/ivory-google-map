@@ -18,9 +18,9 @@ namespace Ivory\GoogleMap\Service\DistanceMatrix\Response;
  */
 final class DistanceMatrixElementStatus
 {
-    const NOT_FOUND = 'NOT_FOUND';
-    const OK = 'OK';
-    const ZERO_RESULTS = 'ZERO_RESULTS';
+    public const NOT_FOUND = 'NOT_FOUND';
+    public const OK = 'OK';
+    public const ZERO_RESULTS = 'ZERO_RESULTS';
 
     /**
      * @codeCoverageIgnore

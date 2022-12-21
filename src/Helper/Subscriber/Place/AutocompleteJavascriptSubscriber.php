@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Subscriber\Place;
 
+use Symfony\Contracts\EventDispatcher\Event;
 use Ivory\GoogleMap\Helper\Event\ApiEvent;
 use Ivory\GoogleMap\Helper\Event\ApiEvents;
 use Ivory\GoogleMap\Helper\Event\PlaceAutocompleteEvent;
@@ -21,7 +22,6 @@ use Ivory\GoogleMap\Helper\Renderer\Place\AutocompleteRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\CallbackRenderer;
 use Ivory\GoogleMap\Helper\Subscriber\AbstractDelegateSubscriber;
 use Ivory\GoogleMap\Place\Autocomplete;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

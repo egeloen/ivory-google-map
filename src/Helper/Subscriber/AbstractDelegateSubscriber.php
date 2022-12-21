@@ -11,7 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Subscriber;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

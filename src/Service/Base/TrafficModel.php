@@ -16,9 +16,9 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class TrafficModel
 {
-    const BEST_GUESS = 'best_guess';
-    const PESSIMISTIC = 'pessimistic';
-    const OPTIMISTIC = 'optimistic';
+    public const BEST_GUESS = 'best_guess';
+    public const PESSIMISTIC = 'pessimistic';
+    public const OPTIMISTIC = 'optimistic';
 
     /**
      * @codeCoverageIgnore

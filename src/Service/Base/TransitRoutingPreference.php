@@ -16,8 +16,8 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class TransitRoutingPreference
 {
-    const LESS_WALKING = 'less_walking';
-    const FEWER_TRANSFERS = 'fewer_transfers';
+    public const LESS_WALKING = 'less_walking';
+    public const FEWER_TRANSFERS = 'fewer_transfers';
 
     /**
      * @codeCoverageIgnore

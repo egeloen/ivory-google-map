@@ -16,19 +16,19 @@ namespace Ivory\GoogleMap\Helper\Event;
  */
 final class StaticMapEvents
 {
-    const HTML = 'map.static';
-    const CENTER = 'map.static.center';
-    const FORMAT = 'map.static.format';
-    const SCALE = 'map.static.scale';
-    const SIZE = 'map.static.size';
-    const STYLE = 'map.static.style';
-    const TYPE = 'map.static.type';
-    const ZOOM = 'map.static.zoom';
-    const MARKER = 'map.static.marker';
-    const POLYLINE = 'map.static.polyline';
-    const ENCODED_POLYLINE = 'map.static.encoded_polyline';
-    const EXTENDABLE = 'map.static.extendable';
-    const KEY = 'map.static.key';
+    public const HTML = 'map.static';
+    public const CENTER = 'map.static.center';
+    public const FORMAT = 'map.static.format';
+    public const SCALE = 'map.static.scale';
+    public const SIZE = 'map.static.size';
+    public const STYLE = 'map.static.style';
+    public const TYPE = 'map.static.type';
+    public const ZOOM = 'map.static.zoom';
+    public const MARKER = 'map.static.marker';
+    public const POLYLINE = 'map.static.polyline';
+    public const ENCODED_POLYLINE = 'map.static.encoded_polyline';
+    public const EXTENDABLE = 'map.static.extendable';
+    public const KEY = 'map.static.key';
 
     /**
      * @codeCoverageIgnore

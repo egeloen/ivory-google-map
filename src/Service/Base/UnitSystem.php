@@ -18,8 +18,8 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class UnitSystem
 {
-    const IMPERIAL = 'IMPERIAL';
-    const METRIC = 'METRIC';
+    public const IMPERIAL = 'IMPERIAL';
+    public const METRIC = 'METRIC';
 
     /**
      * @codeCoverageIgnore

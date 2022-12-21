@@ -40,6 +40,9 @@ class CompoundFunctionalTest extends AbstractApiFunctionalTest
         $this->mapHelper = $this->createMapHelper();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testRender()
     {
         $autocomplete = new Autocomplete();

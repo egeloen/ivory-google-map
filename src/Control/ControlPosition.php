@@ -18,18 +18,18 @@ namespace Ivory\GoogleMap\Control;
  */
 final class ControlPosition
 {
-    const BOTTOM_CENTER = 'bottom_center';
-    const BOTTOM_LEFT = 'bottom_left';
-    const BOTTOM_RIGHT = 'bottom_right';
-    const LEFT_BOTTOM = 'left_bottom';
-    const LEFT_CENTER = 'left_center';
-    const LEFT_TOP = 'left_top';
-    const RIGHT_BOTTOM = 'right_bottom';
-    const RIGHT_CENTER = 'right_center';
-    const RIGHT_TOP = 'right_top';
-    const TOP_CENTER = 'top_center';
-    const TOP_LEFT = 'top_left';
-    const TOP_RIGHT = 'top_right';
+    public const BOTTOM_CENTER = 'bottom_center';
+    public const BOTTOM_LEFT = 'bottom_left';
+    public const BOTTOM_RIGHT = 'bottom_right';
+    public const LEFT_BOTTOM = 'left_bottom';
+    public const LEFT_CENTER = 'left_center';
+    public const LEFT_TOP = 'left_top';
+    public const RIGHT_BOTTOM = 'right_bottom';
+    public const RIGHT_CENTER = 'right_center';
+    public const RIGHT_TOP = 'right_top';
+    public const TOP_CENTER = 'top_center';
+    public const TOP_LEFT = 'top_left';
+    public const TOP_RIGHT = 'top_right';
 
     /**
      * @codeCoverageIgnore

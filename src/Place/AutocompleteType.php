@@ -16,10 +16,10 @@ namespace Ivory\GoogleMap\Place;
  */
 final class AutocompleteType
 {
-    const ESTABLISHMENT = 'establishment';
-    const GEOCODE = 'geocode';
-    const REGIONS = '(regions)';
-    const CITIES = '(cities)';
+    public const ESTABLISHMENT = 'establishment';
+    public const GEOCODE = 'geocode';
+    public const REGIONS = '(regions)';
+    public const CITIES = '(cities)';
 
     /**
      * @codeCoverageIgnore

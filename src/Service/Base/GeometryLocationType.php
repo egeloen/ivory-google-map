@@ -18,10 +18,10 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class GeometryLocationType
 {
-    const APPROXIMATE = 'APPROXIMATE';
-    const GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
-    const RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
-    const ROOFTOP = 'ROOFTOP';
+    public const APPROXIMATE = 'APPROXIMATE';
+    public const GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
+    public const RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
+    public const ROOFTOP = 'ROOFTOP';
 
     /**
      * @codeCoverageIgnore

@@ -16,8 +16,8 @@ namespace Ivory\GoogleMap\Overlay;
  */
 final class InfoWindowType
 {
-    const DEFAULT_ = 'default';
-    const INFO_BOX = 'info_box';
+    public const DEFAULT_ = 'default';
+    public const INFO_BOX = 'info_box';
 
     /**
      * @codeCoverageIgnore

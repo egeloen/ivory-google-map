@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocoderResultTest extends TestCase
 {
-    /**
-     * @var GeocoderResult
-     */
-    private $result;
+    private GeocoderResult $result;
 
     protected function setUp(): void
     {

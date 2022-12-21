@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ElevationResultTest extends TestCase
 {
-    /**
-     * @var ElevationResult
-     */
-    private $result;
+    private ElevationResult $result;
 
     protected function setUp(): void
     {

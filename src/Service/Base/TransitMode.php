@@ -16,11 +16,11 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class TransitMode
 {
-    const BUS = 'bud';
-    const SUBWAY = 'subway';
-    const TRAIN = 'train';
-    const TRAM = 'tram';
-    const RAIl = 'rail';
+    public const BUS = 'bud';
+    public const SUBWAY = 'subway';
+    public const TRAIN = 'train';
+    public const TRAM = 'tram';
+    public const RAIl = 'rail';
 
     /**
      * @codeCoverageIgnore

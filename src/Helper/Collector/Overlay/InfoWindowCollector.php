@@ -20,8 +20,8 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
  */
 class InfoWindowCollector extends AbstractCollector
 {
-    const STRATEGY_MAP = 1;
-    const STRATEGY_MARKER = 2;
+    public const STRATEGY_MAP = 1;
+    public const STRATEGY_MARKER = 2;
 
     private ?MarkerCollector $markerCollector = null;
 

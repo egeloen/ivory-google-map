@@ -32,10 +32,7 @@ class ApiEvent extends AbstractEvent
      */
     private array $libraries = [];
 
-    /**
-     * @var SplObjectStorage
-     */
-    private $callbacks;
+    private SplObjectStorage $callbacks;
 
     /**
      * @var SplObjectStorage

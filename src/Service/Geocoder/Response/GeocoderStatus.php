@@ -18,13 +18,13 @@ namespace Ivory\GoogleMap\Service\Geocoder\Response;
  */
 final class GeocoderStatus
 {
-    const ERROR = 'ERROR';
-    const INVALID_REQUEST = 'INVALID_REQUEST';
-    const OK = 'OK';
-    const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
-    const REQUEST_DENIED = 'REQUEST_DENIED';
-    const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
-    const ZERO_RESULTS = 'ZERO_RESULTS';
+    public const ERROR = 'ERROR';
+    public const INVALID_REQUEST = 'INVALID_REQUEST';
+    public const OK = 'OK';
+    public const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
+    public const REQUEST_DENIED = 'REQUEST_DENIED';
+    public const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+    public const ZERO_RESULTS = 'ZERO_RESULTS';
 
     /**
      * @codeCoverageIgnore

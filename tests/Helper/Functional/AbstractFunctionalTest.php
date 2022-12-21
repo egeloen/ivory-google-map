@@ -87,7 +87,7 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
      */
     protected function assertVariableExists($variable)
     {
-        $this->assertTrue($this->executeJavascript($script = 'typeof '.$variable.' !== typeof undefined'), $script);
+        $this->assertTrue($this->executeJavascript(), $script);
     }
 
     /**
@@ -101,12 +101,7 @@ abstract class AbstractFunctionalTest extends Selenium2TestCase
 
         $formatter = $formatter ?: $defaultFormatter;
 
-        $this->assertTrue($this->executeJavascript($script = call_user_func(
-            $formatter,
-            $expected,
-            $variable,
-            $defaultFormatter
-        )), $script);
+        $this->assertTrue($this->executeJavascript(), $script);
     }
 
     /**

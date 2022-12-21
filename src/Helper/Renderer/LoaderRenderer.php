@@ -20,7 +20,7 @@ use Validaide\Common\JsonBuilder\JsonBuilder;
 class LoaderRenderer extends AbstractJsonRenderer
 {
 //    const GOOGLE_URL = 'https://www.gstatic.com/charts/loader.js?callback=';
-    const GOOGLE_URL = 'https://maps.googleapis.com/maps/api/js';
+    public const GOOGLE_URL = 'https://maps.googleapis.com/maps/api/js';
 
     private ?string $language = null;
 

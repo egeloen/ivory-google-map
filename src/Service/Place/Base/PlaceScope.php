@@ -16,8 +16,8 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 final class PlaceScope
 {
-    const APP = 'APP';
-    const GOOGLE = 'GOOGLE';
+    public const APP = 'APP';
+    public const GOOGLE = 'GOOGLE';
 
     /**
      * @codeCoverageIgnore

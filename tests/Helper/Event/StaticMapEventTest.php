@@ -11,10 +11,10 @@
 
 namespace Ivory\Tests\GoogleMap\Helper\Event;
 
+use Symfony\Contracts\EventDispatcher\Event;
 use PHPUnit\Framework\MockObject\MockObject;
 use Ivory\GoogleMap\Helper\Event\StaticMapEvent;
 use Ivory\GoogleMap\Map;
-use Symfony\Component\EventDispatcher\Event;
 use PHPUnit\Framework\TestCase;
 
 /**

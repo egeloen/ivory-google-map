@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMap\Helper\Subscriber;
 
+use Symfony\Contracts\EventDispatcher\Event;
 use Ivory\GoogleMap\Helper\Event\ApiEvent;
 use Ivory\GoogleMap\Helper\Event\ApiEvents;
 use Ivory\GoogleMap\Helper\Event\MapEvent;
@@ -20,7 +21,6 @@ use Ivory\GoogleMap\Helper\Renderer\Html\JavascriptTagRenderer;
 use Ivory\GoogleMap\Helper\Renderer\MapRenderer;
 use Ivory\GoogleMap\Helper\Renderer\Utility\CallbackRenderer;
 use Ivory\GoogleMap\Map;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

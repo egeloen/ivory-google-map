@@ -18,9 +18,9 @@ namespace Ivory\GoogleMap\Control;
  */
 final class MapTypeControlStyle
 {
-    const DEFAULT_ = 'default';
-    const DROPDOWN_MENU = 'dropdown_menu';
-    const HORIZONTAL_BAR = 'horizontal_bar';
+    public const DEFAULT_ = 'default';
+    public const DROPDOWN_MENU = 'dropdown_menu';
+    public const HORIZONTAL_BAR = 'horizontal_bar';
 
     /**
      * @codeCoverageIgnore

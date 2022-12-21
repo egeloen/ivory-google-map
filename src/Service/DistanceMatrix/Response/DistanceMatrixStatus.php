@@ -18,13 +18,13 @@ namespace Ivory\GoogleMap\Service\DistanceMatrix\Response;
  */
 final class DistanceMatrixStatus
 {
-    const INVALID_REQUEST = 'INVALID_REQUEST';
-    const MAX_DIMENSIONS_EXCEEDED = 'MAX_DIMENSIONS_EXCEEDED';
-    const MAX_ELEMENTS_EXCEEDED = 'MAX_ELEMENTS_EXCEEDED';
-    const OK = 'OK';
-    const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
-    const REQUEST_DENIED = 'REQUEST_DENIED';
-    const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+    public const INVALID_REQUEST = 'INVALID_REQUEST';
+    public const MAX_DIMENSIONS_EXCEEDED = 'MAX_DIMENSIONS_EXCEEDED';
+    public const MAX_ELEMENTS_EXCEEDED = 'MAX_ELEMENTS_EXCEEDED';
+    public const OK = 'OK';
+    public const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
+    public const REQUEST_DENIED = 'REQUEST_DENIED';
+    public const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
     /**
      * @codeCoverageIgnore

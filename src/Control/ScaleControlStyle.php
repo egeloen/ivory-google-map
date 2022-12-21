@@ -18,7 +18,7 @@ namespace Ivory\GoogleMap\Control;
  */
 final class ScaleControlStyle
 {
-    const DEFAULT_ = 'default';
+    public const DEFAULT_ = 'default';
 
     /**
      * @codeCoverageIgnore

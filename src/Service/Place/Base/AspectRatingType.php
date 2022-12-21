@@ -16,14 +16,14 @@ namespace Ivory\GoogleMap\Service\Place\Base;
  */
 final class AspectRatingType
 {
-    const APPEAL = 'appeal';
-    const ATMOSPHERE = 'atmosphere';
-    const DECOR = 'decor';
-    const FACILITIES = 'facilities';
-    const FOOD = 'food';
-    const OVERALL = 'overall';
-    const QUALITY = 'quality';
-    const SERVICE = 'service';
+    public const APPEAL = 'appeal';
+    public const ATMOSPHERE = 'atmosphere';
+    public const DECOR = 'decor';
+    public const FACILITIES = 'facilities';
+    public const FOOD = 'food';
+    public const OVERALL = 'overall';
+    public const QUALITY = 'quality';
+    public const SERVICE = 'service';
 
     /**
      * @codeCoverageIgnore

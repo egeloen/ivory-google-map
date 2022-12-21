@@ -16,19 +16,19 @@ namespace Ivory\GoogleMap\Helper\Event;
  */
 final class PlaceAutocompleteEvents
 {
-    const HTML = 'place_autocomplete.renderHtml';
-    const JAVASCRIPT = 'place_autocomplete.javascript';
-    const JAVASCRIPT_INIT = 'place_autocomplete.javascript.init';
-    const JAVASCRIPT_INIT_CONTAINER = 'place_autocomplete.javascript.init.container';
-    const JAVASCRIPT_BASE = 'place_autocomplete.javascript.base';
-    const JAVASCRIPT_BASE_COORDINATE = 'place_autocomplete.javascript.base.coordinate';
-    const JAVASCRIPT_BASE_BOUND = 'place_autocomplete.javascript.base.bound';
-    const JAVASCRIPT_AUTOCOMPLETE = 'place_autocomplete.javascript.autocomplete';
-    const JAVASCRIPT_EVENT = 'place_autocomplete.javascript.event';
-    const JAVASCRIPT_EVENT_DOM_EVENT = 'place_autocomplete.javascript.event.dom_event';
-    const JAVASCRIPT_EVENT_DOM_EVENT_ONCE = 'place_autocomplete.javascript.event.dom_event_once';
-    const JAVASCRIPT_EVENT_EVENT = 'place_autocomplete.javascript.event.event';
-    const JAVASCRIPT_EVENT_EVENT_ONCE = 'place_autocomplete.javascript.event.event_once';
+    public const HTML = 'place_autocomplete.renderHtml';
+    public const JAVASCRIPT = 'place_autocomplete.javascript';
+    public const JAVASCRIPT_INIT = 'place_autocomplete.javascript.init';
+    public const JAVASCRIPT_INIT_CONTAINER = 'place_autocomplete.javascript.init.container';
+    public const JAVASCRIPT_BASE = 'place_autocomplete.javascript.base';
+    public const JAVASCRIPT_BASE_COORDINATE = 'place_autocomplete.javascript.base.coordinate';
+    public const JAVASCRIPT_BASE_BOUND = 'place_autocomplete.javascript.base.bound';
+    public const JAVASCRIPT_AUTOCOMPLETE = 'place_autocomplete.javascript.autocomplete';
+    public const JAVASCRIPT_EVENT = 'place_autocomplete.javascript.event';
+    public const JAVASCRIPT_EVENT_DOM_EVENT = 'place_autocomplete.javascript.event.dom_event';
+    public const JAVASCRIPT_EVENT_DOM_EVENT_ONCE = 'place_autocomplete.javascript.event.dom_event_once';
+    public const JAVASCRIPT_EVENT_EVENT = 'place_autocomplete.javascript.event.event';
+    public const JAVASCRIPT_EVENT_EVENT_ONCE = 'place_autocomplete.javascript.event.event_once';
 
     /**
      * @codeCoverageIgnore

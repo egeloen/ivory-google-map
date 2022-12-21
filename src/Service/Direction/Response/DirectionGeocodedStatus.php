@@ -16,8 +16,8 @@ namespace Ivory\GoogleMap\Service\Direction\Response;
  */
 final class DirectionGeocodedStatus
 {
-    const OK = 'OK';
-    const ZERO_RESULTS = 'ZERO_RESULTS';
+    public const OK = 'OK';
+    public const ZERO_RESULTS = 'ZERO_RESULTS';
 
     /**
      * @codeCoverageIgnore

@@ -16,10 +16,10 @@ namespace Ivory\GoogleMap\Service\Base;
  */
 final class Avoid
 {
-    const TOLLS = 'tolls';
-    const HIGHWAYS = 'highways';
-    const FERRIES = 'ferries';
-    const INDOOR = 'indoor';
+    public const TOLLS = 'tolls';
+    public const HIGHWAYS = 'highways';
+    public const FERRIES = 'ferries';
+    public const INDOOR = 'indoor';
 
     /**
      * @codeCoverageIgnore
